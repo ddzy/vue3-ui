@@ -9,6 +9,9 @@ button {
 	border-radius: 6px;
 	cursor: pointer;
 	user-select: none;
+	&:hover {
+		opacity: 0.8;
+	}
 }
 
 .v3-button--default {
@@ -39,4 +42,12 @@ button {
 	background-color: $warning-color;
 	color: #fff;
 	border: 1px solid $warning-color;
+}
+
+$borderType: solid, dashed, dotted, double, groove, outset;
+
+@each $v in $borderType {
+	.#{'v3-button__border--' + $v} {
+		border-style: $v;
+	}
 }

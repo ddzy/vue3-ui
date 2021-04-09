@@ -4,6 +4,7 @@
 		:class="{
 			'v3-button': true,
 			[`v3-button--${defaultProps.type}`]: true,
+			[`v3-button__border--${defaultProps.borderType}`]: true,
 		}"
 	>
 		<slot></slot>
@@ -18,11 +19,13 @@ export default defineComponent({
 	props: {
 		type: String as () => TYPES.IButtonType,
 		nativeType: String as () => TYPES.IButtonNativeType,
+		borderType: String as () => TYPES.IButtonBorderType,
 	},
 	setup(props) {
 		const defaultProps = reactive({
 			type: 'default',
 			nativeType: 'button',
+			borderType: 'solid',
 			...toRefs(props),
 		} as typeof props);
 

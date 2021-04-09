@@ -5,8 +5,4 @@ export type IButtonType =
 	| 'default'
 	| 'warning';
 export type IButtonNativeType = 'button' | 'submit' | 'reset' | 'menu';
-
-export interface IButtonProps {
-	type?: IButtonType;
-	nativeType?: IButtonNativeType;
-}
+export type IButtonBorderType = 'solid' | 'dashed' | 'dotted' | 'double' | 'groove' | 'outset';
