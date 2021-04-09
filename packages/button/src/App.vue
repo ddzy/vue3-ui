@@ -1,27 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+	<div>
+		<V3Button type="default">默认按钮</V3Button>
+		<V3Button type="primary">主按钮</V3Button>
+		<V3Button type="success">成功按钮</V3Button>
+		<V3Button type="danger">危险按钮</V3Button>
+		<V3Button type="warning">警告按钮</V3Button>
+	</div>
 </template>
-
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent } from 'vue';
+import V3Button from './components/Button.vue';
 
 export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-})
+	components: {
+		V3Button,
+	},
+	setup() {},
+});
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
