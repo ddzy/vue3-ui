@@ -1,5 +1,6 @@
 <template>
 	<button
+		ref="buttonRef"
 		:type="defaultProps.nativeType"
 		:class="{
 			'v3-button': true,
@@ -11,7 +12,7 @@
 	</button>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, onMounted, onUnmounted, reactive, toRefs } from 'vue';
 import * as TYPES from '../index';
 
 export default defineComponent({
@@ -21,7 +22,7 @@ export default defineComponent({
 		nativeType: String as () => TYPES.IButtonNativeType,
 		borderType: String as () => TYPES.IButtonBorderType,
 	},
-	setup(props) {
+	setup(props, context) {
 		const defaultProps = reactive({
 			type: 'default',
 			nativeType: 'button',
@@ -29,8 +30,50 @@ export default defineComponent({
 			...toRefs(props),
 		} as typeof props);
 
+		function documentClickListener(e: Event) {
+			const element = e.target as HTMLElement;
+
+			if (
+				element &&
+				element.nodeName === 'BUTTON' &&
+				element.classList.contains('v3-button')
+			) {
+				element.classList.add('v3-button--active');
+			}
+		}
+
+		function documentAnimationEndListener(e: Event) {
+			const element = e.target as HTMLElement;
+
+			if (
+				element &&
+				element.nodeName === 'BUTTON' &&
+				element.classList.contains('v3-button')
+			) {
+				element.classList.remove('v3-button--active');
+			}
+		}
+
+		onMounted(() => {
+			document.addEventListener('click', documentClickListener, false);
+			document.addEventListener(
+				'animationend',
+				documentAnimationEndListener,
+				false
+			);
+		});
+		onUnmounted(() => {
+			document.removeEventListener('click', documentClickListener, false);
+			document.removeEventListener(
+				'animationend',
+				documentAnimationEndListener,
+				false
+			);
+		});
+
 		return {
 			defaultProps,
+			context,
 		};
 	},
 });

@@ -18,30 +18,45 @@ button {
 	border: 1px solid $primary-color;
 	color: $primary-color;
 	background-color: #fff;
+	&.v3-button--active {
+		animation: primaryButtonActive 0.3s ease-out 0s 1;
+	}
 }
 
 .v3-button--primary {
 	background-color: $primary-color;
 	color: #fff;
 	border: 1px solid $primary-color;
+	&.v3-button--active {
+		animation: primaryButtonActive 0.3s ease-out 0s 1;
+	}
 }
 
 .v3-button--success {
 	background-color: $success-color;
 	color: #fff;
 	border: 1px solid $success-color;
+	&.v3-button--active {
+		animation: successButtonActive 0.3s ease-out 0s 1;
+	}
 }
 
 .v3-button--danger {
 	background-color: $danger-color;
 	color: #fff;
 	border: 1px solid $danger-color;
+	&.v3-button--active {
+		animation: dangerButtonActive 0.3s ease-out 0s 1;
+	}
 }
 
 .v3-button--warning {
 	background-color: $warning-color;
 	color: #fff;
 	border: 1px solid $warning-color;
+	&.v3-button--active {
+		animation: warningButtonActive 0.3s ease-out 0s 1;
+	}
 }
 
 $borderType: solid, dashed, dotted, double, groove, outset;
@@ -49,5 +64,62 @@ $borderType: solid, dashed, dotted, double, groove, outset;
 @each $v in $borderType {
 	.#{'v3-button__border--' + $v} {
 		border-style: $v;
+	}
+}
+
+@keyframes primaryButtonActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px rgba(0, 160, 255, 0.3);
+	}
+	75% {
+		box-shadow: 0 0 4px 2px rgba(0, 160, 255, 0.3);
+	}
+	100% {
+		box-shadow: 0 0 10px 2px rgba(0, 160, 255, 0.3);
+	}
+}
+@keyframes successButtonActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px rgba(99, 185, 49, 0.3);
+	}
+	75% {
+		box-shadow: 0 0 4px 2px rgba(99, 185, 49, 0.3);
+	}
+	100% {
+		box-shadow: 0 0 10px 2px rgba(99, 185, 49, 0.3);
+	}
+}
+@keyframes dangerButtonActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px rgba(201, 27, 38, 0.3);
+	}
+	75% {
+		box-shadow: 0 0 4px 2px rgba(201, 27, 38, 0.3);
+	}
+	100% {
+		box-shadow: 0 0 10px 2px rgba(201, 27, 38, 0.3);
+	}
+}
+@keyframes warningButtonActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px rgba(237, 170, 83, 0.3);
+	}
+	75% {
+		box-shadow: 0 0 4px 2px rgba(237, 170, 83, 0.3);
+	}
+	100% {
+		box-shadow: 0 0 10px 2px rgba(237, 170, 83, 0.3);
 	}
 }
