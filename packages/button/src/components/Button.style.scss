@@ -19,6 +19,14 @@ button {
 	}
 }
 
+.v3-button--text {
+	padding: 0;
+	border-radius: 0;
+	border-width: 0;
+	background-color: #fff;
+	color: $primary-color;
+}
+
 .v3-button--default {
 	border: 1px solid $default-color;
 	color: #666;

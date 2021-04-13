@@ -167,6 +167,24 @@
 				默认按钮 + 点边框
 			</V3Button>
 		</div>
+
+		<div class="button__list">
+			<V3Button
+				class="button__item"
+				type="text"
+				@click="handleClick($event, 'default')"
+			>
+				文字按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="text"
+				:disabled="true"
+				@click="handleClick($event, 'default')"
+			>
+				文字按钮 + 禁用
+			</V3Button>
+		</div>
 	</div>
 </template>
 <script lang="ts">

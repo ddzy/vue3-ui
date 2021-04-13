@@ -4,7 +4,8 @@ export type IButtonType =
 	| 'danger'
 	| 'default'
 	| 'warning'
-	| 'info';
+	| 'info'
+	| 'text';
 export type IButtonNativeType = 'button' | 'submit' | 'reset' | 'menu';
 export type IButtonBorderType = 'solid' | 'dashed' | 'dotted' | 'double' | 'groove' | 'outset';
 export type IButtonPlain = boolean;
