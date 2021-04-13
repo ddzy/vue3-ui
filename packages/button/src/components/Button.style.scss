@@ -63,6 +63,15 @@ button {
 	}
 }
 
+.v3-button--info {
+	background-color: $info-color;
+	color: #fff;
+	border: 1px solid $info-color;
+	&.v3-button--active {
+		animation: infoButtonActive 0.3s ease-out 0s 1;
+	}
+}
+
 $borderType: solid, dashed, dotted, double, groove, outset;
 
 @each $v in $borderType {
@@ -125,5 +134,19 @@ $borderType: solid, dashed, dotted, double, groove, outset;
 	}
 	100% {
 		box-shadow: 0 0 10px 2px rgba(237, 170, 83, 0.3);
+	}
+}
+@keyframes infoButtonActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px rgba(184, 176, 176, 0.3);
+	}
+	75% {
+		box-shadow: 0 0 4px 2px rgba(184, 176, 176, 0.3);
+	}
+	100% {
+		box-shadow: 0 0 10px 2px rgba(184, 176, 176, 0.3);
 	}
 }

@@ -10,6 +10,13 @@
 			</V3Button>
 			<V3Button
 				class="button__item"
+				type="info"
+				@click="handleClick($event, 'info')"
+			>
+				信息按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
 				type="primary"
 				@click="handleClick($event, 'primary')"
 			>
@@ -53,6 +60,14 @@
 				@click="handleClick($event, 'default')"
 			>
 				默认按钮
+			</V3Button>
+			<V3Button
+				disabled
+				class="button__item"
+				type="info"
+				@click="handleClick($event, 'info')"
+			>
+				信息按钮
 			</V3Button>
 			<V3Button
 				disabled
