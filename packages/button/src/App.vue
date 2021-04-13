@@ -54,58 +54,116 @@
 
 		<div class="button__list">
 			<V3Button
-				:disabled="true"
 				class="button__item"
 				type="default"
+				:disabled="true"
 				@click="handleClick($event, 'default')"
 			>
 				默认按钮
 			</V3Button>
 			<V3Button
-				disabled
 				class="button__item"
 				type="info"
+				:disabled="true"
 				@click="handleClick($event, 'info')"
 			>
 				信息按钮
 			</V3Button>
 			<V3Button
-				disabled
 				class="button__item"
 				type="primary"
+				:disabled="true"
 				@click="handleClick($event, 'primary')"
 			>
 				主按钮
 			</V3Button>
 			<V3Button
-				disabled
 				class="button__item"
 				type="success"
+				:disabled="true"
 				@click="handleClick($event, 'success')"
 			>
 				成功按钮
 			</V3Button>
 			<V3Button
-				disabled
 				class="button__item"
 				type="danger"
+				:disabled="true"
 				@click="handleClick($event, 'danger')"
 			>
 				危险按钮
 			</V3Button>
 			<V3Button
-				disabled
 				class="button__item"
 				type="warning"
+				:disabled="true"
 				@click="handleClick($event, 'warning')"
 			>
 				警告按钮
 			</V3Button>
 
-			<V3Button disabled class="button__item" borderType="dashed">
+			<V3Button class="button__item" borderType="dashed" :disabled="true">
 				默认按钮 + 虚线边框
 			</V3Button>
-			<V3Button disabled class="button__item" borderType="dotted">
+			<V3Button class="button__item" borderType="dotted" :disabled="true">
+				默认按钮 + 点边框
+			</V3Button>
+		</div>
+
+		<div class="button__list">
+			<V3Button
+				class="button__item"
+				type="default"
+				:plain="true"
+				@click="handleClick($event, 'default')"
+			>
+				默认按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="info"
+				:plain="true"
+				@click="handleClick($event, 'info')"
+			>
+				信息按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="primary"
+				:plain="true"
+				@click="handleClick($event, 'primary')"
+			>
+				主按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="success"
+				:plain="true"
+				@click="handleClick($event, 'success')"
+			>
+				成功按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="danger"
+				:plain="true"
+				@click="handleClick($event, 'danger')"
+			>
+				危险按钮
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="warning"
+				:plain="true"
+				@click="handleClick($event, 'warning')"
+			>
+				警告按钮
+			</V3Button>
+
+			<V3Button class="button__item" borderType="dashed" :plain="true">
+				默认按钮 + 虚线边框
+			</V3Button>
+			<V3Button class="button__item" borderType="dotted" :plain="true">
 				默认按钮 + 点边框
 			</V3Button>
 		</div>

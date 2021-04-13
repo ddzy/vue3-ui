@@ -1,11 +1,14 @@
 <template>
 	<button
 		ref="buttonRef"
+		:disabled="defaultProps.disabled"
 		:type="defaultProps.nativeType"
 		:class="{
 			'v3-button': true,
 			[`v3-button--${defaultProps.type}`]: true,
 			[`v3-button__border--${defaultProps.borderType}`]: true,
+			[`v3-button--plain`]: defaultProps.plain,
+			[`v3-button--disabled`]: defaultProps.disabled,
 		}"
 	>
 		<slot></slot>
@@ -21,12 +24,16 @@ export default defineComponent({
 		type: String as () => TYPES.IButtonType,
 		nativeType: String as () => TYPES.IButtonNativeType,
 		borderType: String as () => TYPES.IButtonBorderType,
+		disabled: Boolean as () => TYPES.IButtonDisabled,
+		plain: Boolean as () => TYPES.IButtonPlain,
 	},
 	setup(props, context) {
 		const defaultProps = reactive({
 			type: 'default',
 			nativeType: 'button',
 			borderType: 'solid',
+			plain: false,
+			disabled: false,
 			...toRefs(props),
 		} as typeof props);
 

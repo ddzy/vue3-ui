@@ -9,6 +9,7 @@ button {
 	border-radius: 6px;
 	cursor: pointer;
 	user-select: none;
+	transition: all 0.15s ease;
 	&:hover {
 		opacity: 0.8;
 	}
@@ -19,11 +20,21 @@ button {
 }
 
 .v3-button--default {
-	border: 1px solid $primary-color;
-	color: $primary-color;
+	border: 1px solid $default-color;
+	color: #666;
 	background-color: #fff;
+	&:hover:not(:disabled) {
+		background-color: $primary-color-plain;
+		color: $primary-color;
+		border-color: $primary-color;
+	}
 	&.v3-button--active {
 		animation: primaryButtonActive 0.3s ease-out 0s 1;
+	}
+	&.v3-button--plain {
+		&:hover:not(:disabled) {
+			background-color: #fff;
+		}
 	}
 }
 
@@ -34,6 +45,15 @@ button {
 	&.v3-button--active {
 		animation: primaryButtonActive 0.3s ease-out 0s 1;
 	}
+	&.v3-button--plain {
+		background-color: $primary-color-plain;
+		color: $primary-color;
+		&:hover:not(:disabled) {
+			background-color: $primary-color;
+			color: #fff;
+			border-color: $primary-color;
+		}
+	}
 }
 
 .v3-button--success {
@@ -42,6 +62,15 @@ button {
 	border: 1px solid $success-color;
 	&.v3-button--active {
 		animation: successButtonActive 0.3s ease-out 0s 1;
+	}
+	&.v3-button--plain {
+		background-color: $success-color-plain;
+		color: $success-color;
+		&:hover:not(:disabled) {
+			background-color: $success-color;
+			color: #fff;
+			border-color: $success-color;
+		}
 	}
 }
 
@@ -52,6 +81,15 @@ button {
 	&.v3-button--active {
 		animation: dangerButtonActive 0.3s ease-out 0s 1;
 	}
+	&.v3-button--plain {
+		background-color: $danger-color-plain;
+		color: $danger-color;
+		&:hover:not(:disabled) {
+			background-color: $danger-color;
+			color: #fff;
+			border-color: $danger-color;
+		}
+	}
 }
 
 .v3-button--warning {
@@ -61,6 +99,15 @@ button {
 	&.v3-button--active {
 		animation: warningButtonActive 0.3s ease-out 0s 1;
 	}
+	&.v3-button--plain {
+		background-color: $warning-color-plain;
+		color: $warning-color;
+		&:hover:not(:disabled) {
+			background-color: $warning-color;
+			color: #fff;
+			border-color: $warning-color;
+		}
+	}
 }
 
 .v3-button--info {
@@ -69,6 +116,15 @@ button {
 	border: 1px solid $info-color;
 	&.v3-button--active {
 		animation: infoButtonActive 0.3s ease-out 0s 1;
+	}
+	&.v3-button--plain {
+		background-color: $info-color-plain;
+		color: $info-color;
+		&:hover:not(:disabled) {
+			background-color: $info-color;
+			color: #fff;
+			border-color: $info-color;
+		}
 	}
 }
 
