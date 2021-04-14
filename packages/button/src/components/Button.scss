@@ -17,6 +17,13 @@ button {
 		cursor: not-allowed;
 		opacity: 0.4;
 	}
+	& > * {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	& [class*='v3-icon-'] + span {
+		margin-left: 6px;
+	}
 }
 
 .v3-button--text {

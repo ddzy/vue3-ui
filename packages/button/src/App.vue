@@ -59,7 +59,7 @@
 				:disabled="true"
 				@click="handleClick($event, 'default')"
 			>
-				默认按钮
+				默认按钮 + 禁用
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -67,7 +67,7 @@
 				:disabled="true"
 				@click="handleClick($event, 'info')"
 			>
-				信息按钮
+				信息按钮 + 禁用
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -75,7 +75,7 @@
 				:disabled="true"
 				@click="handleClick($event, 'primary')"
 			>
-				主按钮
+				主按钮 + 禁用
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -83,7 +83,7 @@
 				:disabled="true"
 				@click="handleClick($event, 'success')"
 			>
-				成功按钮
+				成功按钮 + 禁用
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -91,7 +91,7 @@
 				:disabled="true"
 				@click="handleClick($event, 'danger')"
 			>
-				危险按钮
+				危险按钮 + 禁用
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -99,14 +99,14 @@
 				:disabled="true"
 				@click="handleClick($event, 'warning')"
 			>
-				警告按钮
+				警告按钮 + 禁用
 			</V3Button>
 
 			<V3Button class="button__item" borderType="dashed" :disabled="true">
-				默认按钮 + 虚线边框
+				默认按钮 + 虚线边框 + 禁用
 			</V3Button>
 			<V3Button class="button__item" borderType="dotted" :disabled="true">
-				默认按钮 + 点边框
+				默认按钮 + 点边框 + 禁用
 			</V3Button>
 		</div>
 
@@ -117,7 +117,7 @@
 				:plain="true"
 				@click="handleClick($event, 'default')"
 			>
-				默认按钮
+				默认按钮 + 朴素
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -125,7 +125,7 @@
 				:plain="true"
 				@click="handleClick($event, 'info')"
 			>
-				信息按钮
+				信息按钮 + 朴素
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -133,7 +133,7 @@
 				:plain="true"
 				@click="handleClick($event, 'primary')"
 			>
-				主按钮
+				主按钮 + 朴素
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -141,7 +141,7 @@
 				:plain="true"
 				@click="handleClick($event, 'success')"
 			>
-				成功按钮
+				成功按钮 + 朴素
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -149,7 +149,7 @@
 				:plain="true"
 				@click="handleClick($event, 'danger')"
 			>
-				危险按钮
+				危险按钮 + 朴素
 			</V3Button>
 			<V3Button
 				class="button__item"
@@ -157,14 +157,14 @@
 				:plain="true"
 				@click="handleClick($event, 'warning')"
 			>
-				警告按钮
+				警告按钮 + 朴素
 			</V3Button>
 
 			<V3Button class="button__item" borderType="dashed" :plain="true">
-				默认按钮 + 虚线边框
+				默认按钮 + 虚线边框 + 朴素
 			</V3Button>
 			<V3Button class="button__item" borderType="dotted" :plain="true">
-				默认按钮 + 点边框
+				默认按钮 + 点边框 + 朴素
 			</V3Button>
 		</div>
 
@@ -183,6 +183,80 @@
 				@click="handleClick($event, 'default')"
 			>
 				文字按钮 + 禁用
+			</V3Button>
+		</div>
+
+		<div class="button__list">
+			<V3Button
+				class="button__item"
+				:type="'default'"
+				:icon="'v3-icon-search'"
+				:plain="true"
+				@click="handleClick($event, 'default')"
+			>
+				默认按钮 + 朴素 + 图标
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="info"
+				:icon="'v3-icon-prompt'"
+				:plain="true"
+				@click="handleClick($event, 'info')"
+			>
+				信息按钮 + 朴素 + 图标
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="primary"
+				:icon="'v3-icon-upload'"
+				:plain="true"
+				@click="handleClick($event, 'primary')"
+			>
+				主按钮 + 朴素 + 图标
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="success"
+				:plain="true"
+				:icon="'v3-icon-assessed-badge'"
+				@click="handleClick($event, 'success')"
+			>
+				成功按钮 + 朴素 + 图标
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="danger"
+				:plain="true"
+				:icon="'v3-icon-close'"
+				@click="handleClick($event, 'danger')"
+			>
+				危险按钮 + 朴素 + 图标
+			</V3Button>
+			<V3Button
+				class="button__item"
+				type="warning"
+				:plain="true"
+				:icon="'v3-icon-warning'"
+				@click="handleClick($event, 'warning')"
+			>
+				警告按钮 + 朴素 + 图标
+			</V3Button>
+
+			<V3Button
+				class="button__item"
+				borderType="dashed"
+				:plain="true"
+				:icon="'v3-icon-password'"
+			>
+				默认按钮 + 虚线边框 + 图标
+			</V3Button>
+			<V3Button
+				class="button__item"
+				borderType="dotted"
+				:plain="true"
+				:icon="'v3-icon-pin'"
+			>
+				默认按钮 + 点边框 + 图标
 			</V3Button>
 		</div>
 	</div>

@@ -8,5 +8,6 @@ export type IButtonType =
 	| 'text';
 export type IButtonNativeType = 'button' | 'submit' | 'reset' | 'menu';
 export type IButtonBorderType = 'solid' | 'dashed' | 'dotted' | 'double' | 'groove' | 'outset';
-export type IButtonPlain = boolean;
-export type IButtonDisabled = boolean;
+export type IButtonPlain = boolean | undefined;
+export type IButtonDisabled = boolean | undefined;
+export type IButtonIcon = string | undefined;

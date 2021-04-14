@@ -11,11 +11,27 @@
 			[`v3-button--disabled`]: defaultProps.disabled,
 		}"
 	>
-		<slot></slot>
+		<i
+			v-if="defaultProps.icon"
+			:class="{
+				'v3-icon': !!defaultProps.icon,
+				[defaultProps.icon]: true,
+			}"
+		></i>
+		<span>
+			<slot></slot>
+		</span>
 	</button>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, reactive, toRefs } from 'vue';
+import {
+	defineComponent,
+	onMounted,
+	onUnmounted,
+	reactive,
+	ref,
+	toRefs,
+} from 'vue';
 import * as TYPES from '../index';
 
 export default defineComponent({
@@ -26,6 +42,7 @@ export default defineComponent({
 		borderType: String as () => TYPES.IButtonBorderType,
 		disabled: Boolean as () => TYPES.IButtonDisabled,
 		plain: Boolean as () => TYPES.IButtonPlain,
+		icon: String as () => TYPES.IButtonIcon,
 	},
 	setup(props, context) {
 		const defaultProps = reactive({
@@ -34,57 +51,54 @@ export default defineComponent({
 			borderType: 'solid',
 			plain: false,
 			disabled: false,
+			icon: '',
 			...toRefs(props),
 		} as typeof props);
+		const buttonRef = ref(document.createElement('button'));
 
-		function documentClickListener(e: Event) {
-			const element = e.target as HTMLElement;
+		function buttonClickListener(e: Event) {
+			const button = buttonRef.value as HTMLButtonElement;
+			const path = e.composedPath();
 
-			if (
-				element &&
-				element.nodeName === 'BUTTON' &&
-				element.classList.contains('v3-button')
-			) {
-				element.classList.add('v3-button--active');
+			if (path.includes(button)) {
+				button.classList.add('v3-button--active');
 			}
 		}
 
-		function documentAnimationEndListener(e: Event) {
-			const element = e.target as HTMLElement;
+		function buttonAnimationEndListener(e: Event) {
+			const button = buttonRef.value as HTMLButtonElement;
+			const path = e.composedPath();
 
-			if (
-				element &&
-				element.nodeName === 'BUTTON' &&
-				element.classList.contains('v3-button')
-			) {
-				element.classList.remove('v3-button--active');
+			if (path.includes(button)) {
+				button.classList.remove('v3-button--active');
 			}
 		}
 
 		onMounted(() => {
-			document.addEventListener('click', documentClickListener, false);
-			document.addEventListener(
+			const button = buttonRef.value as HTMLButtonElement;
+
+			button.addEventListener('click', buttonClickListener, false);
+			button.addEventListener(
 				'animationend',
-				documentAnimationEndListener,
+				buttonAnimationEndListener,
 				false
 			);
 		});
 		onUnmounted(() => {
-			document.removeEventListener('click', documentClickListener, false);
-			document.removeEventListener(
-				'animationend',
-				documentAnimationEndListener,
-				false
-			);
+			const button = buttonRef.value as HTMLButtonElement;
+
+			button.removeEventListener('click', buttonClickListener);
+			button.removeEventListener('animationend', buttonAnimationEndListener);
 		});
 
 		return {
 			defaultProps,
 			context,
+			buttonRef,
 		};
 	},
 });
 </script>
 <style lang="scss" scoped>
-@import './Button.style.scss';
+@import './Button.scss';
 </style>
