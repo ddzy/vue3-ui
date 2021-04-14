@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "button",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Button 组件",
 	"keywords": [
 		"button"
@@ -27,7 +27,7 @@
 		"serve": "vite preview"
 	},
 	"dependencies": {
-		"icon": "^0.0.1",
+		"icon": "^0.0.2",
 		"vue": "^3.0.5"
 	},
 	"devDependencies": {
