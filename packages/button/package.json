@@ -1,4 +1,5 @@
 {
+	"private": true,
 	"name": "button",
 	"version": "0.0.1",
 	"description": "Button 组件",
@@ -26,6 +27,7 @@
 		"serve": "vite preview"
 	},
 	"dependencies": {
+		"icon": "^0.0.1",
 		"vue": "^3.0.5"
 	},
 	"devDependencies": {
