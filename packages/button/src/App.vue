@@ -3,7 +3,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in defaultBtnList"
+				v-for="v in state.defaultBtnList"
 				:key="v.type"
 				:type="v.type"
 			>
@@ -14,7 +14,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in defaultAndCustomBorderBtnList"
+				v-for="v in state.defaultAndCustomBorderBtnList"
 				:key="v.type"
 				:type="v.type"
 				:borderType="v.borderType"
@@ -26,7 +26,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in defaultAndDisabledBtnList"
+				v-for="v in state.defaultAndDisabledBtnList"
 				:key="v.type"
 				:type="v.type"
 				:disabled="v.disabled"
@@ -38,7 +38,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in plainBtnList"
+				v-for="v in state.plainBtnList"
 				:key="v.type"
 				:type="v.type"
 				:plain="v.plain"
@@ -50,7 +50,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in plainAndIconBtnList"
+				v-for="v in state.plainAndIconBtnList"
 				:key="v.type"
 				:type="v.type"
 				:plain="v.plain"
@@ -63,7 +63,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in textBtnList"
+				v-for="v in state.textBtnList"
 				:key="v.type"
 				:type="v.type"
 			>
@@ -74,7 +74,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in textAndDisabledBtnList"
+				v-for="v in state.textAndDisabledBtnList"
 				:key="v.type"
 				:type="v.type"
 				:disabled="v.disabled"
@@ -86,7 +86,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in textAndIconBtnList"
+				v-for="v in state.textAndIconBtnList"
 				:key="v.type"
 				:type="v.type"
 				:icon="v.icon"
@@ -98,7 +98,7 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in iconBtnList"
+				v-for="v in state.iconBtnList"
 				:key="v.type"
 				:type="v.type"
 				:icon="v.icon"
@@ -110,17 +110,31 @@
 		<div class="button__list">
 			<v3-button
 				class="button__item"
-				v-for="v in iconAndCircleBtnList"
+				v-for="v in state.iconAndCircleBtnList"
 				:key="v.type"
 				:type="v.type"
 				:icon="v.icon"
 				:circle="v.circle"
 			></v3-button>
 		</div>
+
+		<div class="button__list">
+			<v3-button
+				class="button__item"
+				v-for="v in state.plainAndLoadingBtnList"
+				:key="v.type"
+				:type="v.type"
+				:loading="v.loading"
+				:plain="v.plain"
+				@click="handleLoadingBtnClick(v.type)"
+			>
+				{{ v.title }}
+			</v3-button>
+		</div>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import V3Button from './components/Button.vue';
 
 export default defineComponent({
@@ -399,8 +413,52 @@ export default defineComponent({
 				circle: true,
 			},
 		];
+		// 朴素按钮 + loading
+		const plainAndLoadingBtnList: Array<{
+			type: string;
+			plain: boolean;
+			title: string;
+			loading: boolean;
+		}> = [
+			{
+				type: 'default',
+				plain: true,
+				title: '朴素按钮 + 图标',
+				loading: false,
+			},
+			{
+				type: 'info',
+				plain: true,
+				title: '朴素按钮 + 图标',
+				loading: false,
+			},
+			{
+				type: 'primary',
+				plain: true,
+				title: '朴素按钮 + 图标',
+				loading: false,
+			},
+			{
+				type: 'success',
+				plain: true,
+				title: '朴素按钮 + 图标',
+				loading: false,
+			},
+			{
+				type: 'danger',
+				plain: true,
+				title: '朴素按钮 + 图标',
+				loading: false,
+			},
+			{
+				type: 'warning',
+				plain: true,
+				title: '朴素按钮 + 图标',
+				loading: false,
+			},
+		];
 
-		return {
+		const state = reactive({
 			defaultBtnList,
 			defaultAndCustomBorderBtnList,
 			defaultAndDisabledBtnList,
@@ -411,6 +469,28 @@ export default defineComponent({
 			textAndIconBtnList,
 			iconBtnList,
 			iconAndCircleBtnList,
+			plainAndLoadingBtnList,
+		});
+
+		function handleLoadingBtnClick(type: string) {
+			state.plainAndLoadingBtnList = state.plainAndLoadingBtnList.map(v => {
+				if (v.type === type) {
+					return {
+						...v,
+						loading: true,
+					};
+				} else {
+					return {
+						...v,
+						loading: false,
+					};
+				}
+			});
+		}
+
+		return {
+			state,
+			handleLoadingBtnClick,
 		};
 	},
 });

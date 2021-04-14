@@ -12,3 +12,4 @@ export type IButtonPlain = boolean | undefined;
 export type IButtonDisabled = boolean | undefined;
 export type IButtonIcon = string | undefined;
 export type IButtonCircle = boolean | undefined;
+export type IButtonLoading = boolean;

@@ -1,22 +1,23 @@
 <template>
 	<button
 		ref="buttonRef"
-		:disabled="defaultProps.disabled"
-		:type="defaultProps.nativeType"
+		:disabled="state.defaultProps.disabled"
+		:type="state.defaultProps.nativeType"
 		:class="{
 			'v3-button': true,
-			[`v3-button--${defaultProps.type}`]: true,
-			[`v3-button__border--${defaultProps.borderType}`]: true,
-			[`v3-button--plain`]: defaultProps.plain,
-			[`v3-button--disabled`]: defaultProps.disabled,
-			[`v3-button--circle`]: defaultProps.circle,
+			[`v3-button--${state.defaultProps.type}`]: true,
+			[`v3-button__border--${state.defaultProps.borderType}`]: true,
+			[`v3-button--plain`]: state.defaultProps.plain,
+			[`v3-button--disabled`]: state.defaultProps.disabled,
+			[`v3-button--circle`]: state.defaultProps.circle,
+			[`v3-button--loading`]: state.defaultProps.loading,
 		}"
 	>
 		<i
-			v-if="defaultProps.icon"
+			v-if="state.defaultProps.icon"
 			:class="{
-				'v3-icon': !!defaultProps.icon,
-				[defaultProps.icon]: true,
+				'v3-icon': !!state.defaultProps.icon,
+				[state.defaultProps.icon]: true,
 			}"
 		></i>
 		<span>
@@ -32,6 +33,7 @@ import {
 	reactive,
 	ref,
 	toRefs,
+	watch,
 } from 'vue';
 import * as TYPES from '../index';
 
@@ -45,18 +47,41 @@ export default defineComponent({
 		plain: Boolean as () => TYPES.IButtonPlain,
 		icon: String as () => TYPES.IButtonIcon,
 		circle: Boolean as () => TYPES.IButtonCircle,
+		loading: Boolean as () => TYPES.IButtonLoading,
 	},
 	setup(props, context) {
-		const defaultProps = reactive({
-			type: 'default',
-			nativeType: 'button',
-			borderType: 'solid',
-			plain: false,
-			disabled: false,
-			icon: '',
-			circle: false,
-			...toRefs(props),
-		} as typeof props);
+		const state = reactive({
+			defaultProps: {
+				type: 'default',
+				nativeType: 'button',
+				borderType: 'solid',
+				plain: false,
+				disabled: false,
+				icon: '',
+				circle: false,
+				loading: false,
+			},
+		});
+
+		watch(
+			props,
+			() => {
+				state.defaultProps = {
+					...state.defaultProps,
+					...reactive(props),
+					disabled: props.loading,
+					icon: props.loading
+						? 'v3-icon-loading'
+						: props.icon
+						? props.icon
+						: '',
+				};
+			},
+			{
+				immediate: true,
+			}
+		);
+
 		const buttonRef = ref(document.createElement('button'));
 
 		function buttonClickListener(e: Event) {
@@ -95,7 +120,7 @@ export default defineComponent({
 		});
 
 		return {
-			defaultProps,
+			state,
 			context,
 			buttonRef,
 		};
