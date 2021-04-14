@@ -106,6 +106,17 @@
 				{{ v.title }}
 			</v3-button>
 		</div>
+
+		<div class="button__list">
+			<v3-button
+				class="button__item"
+				v-for="v in iconAndCircleBtnList"
+				:key="v.type"
+				:type="v.type"
+				:icon="v.icon"
+				:circle="v.circle"
+			></v3-button>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -351,6 +362,43 @@ export default defineComponent({
 				icon: 'v3-icon-warning',
 			},
 		];
+		// 纯图标按钮 + 圆形
+		const iconAndCircleBtnList: Array<{
+			type: string;
+			icon: string;
+			circle: boolean;
+		}> = [
+			{
+				type: 'default',
+				icon: 'v3-icon-search',
+				circle: true,
+			},
+			{
+				type: 'info',
+				icon: 'v3-icon-prompt',
+				circle: true,
+			},
+			{
+				type: 'primary',
+				icon: 'v3-icon-upload',
+				circle: true,
+			},
+			{
+				type: 'success',
+				icon: 'v3-icon-assessed-badge',
+				circle: true,
+			},
+			{
+				type: 'danger',
+				icon: 'v3-icon-close',
+				circle: true,
+			},
+			{
+				type: 'warning',
+				icon: 'v3-icon-warning',
+				circle: true,
+			},
+		];
 
 		return {
 			defaultBtnList,
@@ -361,7 +409,8 @@ export default defineComponent({
 			textBtnList,
 			textAndDisabledBtnList,
 			textAndIconBtnList,
-			iconBtnList
+			iconBtnList,
+			iconAndCircleBtnList,
 		};
 	},
 });

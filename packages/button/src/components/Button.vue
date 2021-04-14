@@ -9,6 +9,7 @@
 			[`v3-button__border--${defaultProps.borderType}`]: true,
 			[`v3-button--plain`]: defaultProps.plain,
 			[`v3-button--disabled`]: defaultProps.disabled,
+			[`v3-button--circle`]: defaultProps.circle,
 		}"
 	>
 		<i
@@ -43,6 +44,7 @@ export default defineComponent({
 		disabled: Boolean as () => TYPES.IButtonDisabled,
 		plain: Boolean as () => TYPES.IButtonPlain,
 		icon: String as () => TYPES.IButtonIcon,
+		circle: Boolean as () => TYPES.IButtonCircle,
 	},
 	setup(props, context) {
 		const defaultProps = reactive({
@@ -52,6 +54,7 @@ export default defineComponent({
 			plain: false,
 			disabled: false,
 			icon: '',
+			circle: false,
 			...toRefs(props),
 		} as typeof props);
 		const buttonRef = ref(document.createElement('button'));
