@@ -22,7 +22,6 @@
 .v3-icon-loading {
 	-webkit-animation: loading 1s infinite;
 	animation: loading 1s linear infinite;
-	color: blue;
 }
 
 /* loading 动画 */
