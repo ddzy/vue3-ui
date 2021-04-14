@@ -21,7 +21,10 @@ button {
 		display: inline-block;
 		vertical-align: middle;
 	}
-	& [class*='v3-icon-'] + span {
+	& [class*='v3-icon-'] {
+		font-size: 20px;
+	}
+	& [class*='v3-icon-'] + span:not(:empty) {
 		margin-left: 4px;
 	}
 }
