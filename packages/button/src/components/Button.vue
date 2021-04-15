@@ -69,7 +69,7 @@ export default defineComponent({
 				state.defaultProps = {
 					...state.defaultProps,
 					...reactive(props),
-					disabled: props.loading,
+					disabled: props.disabled || props.loading,
 					icon: props.loading
 						? 'v3-icon-loading'
 						: props.icon
