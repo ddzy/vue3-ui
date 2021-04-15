@@ -131,15 +131,29 @@
 				{{ v.title }}
 			</v3-button>
 		</div>
+
+		<v3-button-group>
+			<v3-button
+				class="button__item"
+				v-for="v in state.buttonGroupList"
+				:key="v.type"
+				:type="v.type"
+				:icon="v.icon"
+			>
+				{{ v.title }}
+			</v3-button>
+		</v3-button-group>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import V3Button from './components/Button.vue';
+import V3ButtonGroup from './components/ButtonGroup.vue';
 
 export default defineComponent({
 	components: {
 		V3Button,
+		V3ButtonGroup,
 	},
 	setup() {
 		// 默认图标列表
@@ -457,6 +471,27 @@ export default defineComponent({
 				loading: false,
 			},
 		];
+		const buttonGroupList: Array<{
+			type: string;
+			title: string;
+			icon: string;
+		}> = [
+			{
+				type: 'primary',
+				title: '上一页',
+				icon: 'v3-icon-arrow-left',
+			},
+			{
+				type: 'primary',
+				title: '全选',
+				icon: 'v3-icon-assessed-badge',
+			},
+			{
+				type: 'primary',
+				title: '下一页',
+				icon: 'v3-icon-arrow-right',
+			},
+		];
 
 		const state = reactive({
 			defaultBtnList,
@@ -470,6 +505,7 @@ export default defineComponent({
 			iconBtnList,
 			iconAndCircleBtnList,
 			plainAndLoadingBtnList,
+			buttonGroupList,
 		});
 
 		function handleLoadingBtnClick(type: string) {

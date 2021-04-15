@@ -1,0 +1,17 @@
+.v3-button-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  & > ::v-deep .v3-button {
+    margin: 0;
+  }
+  & > ::v-deep .v3-button:not(:nth-last-of-type(1)) {
+    border-right: 1px solid rgba(255, 255, 255, .5);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  & > ::v-deep .v3-button:not(:nth-of-type(1)) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
