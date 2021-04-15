@@ -6,6 +6,13 @@
   "description": "vue3 ui 组件库",
   "glyphs": [
     {
+      "icon_id": "11488106",
+      "name": "reduce",
+      "font_class": "reduce",
+      "unicode": "e777",
+      "unicode_decimal": 59255
+    },
+    {
       "icon_id": "11488069",
       "name": "loading",
       "font_class": "loading",
