@@ -6,7 +6,8 @@
 		:class="{
 			'v3-button': true,
 			[`v3-button--${state.defaultProps.type}`]: true,
-			[`v3-button__border--${state.defaultProps.borderType}`]: true,
+			[`v3-button__border--${state.defaultProps.borderType}`]: !!state
+				.defaultProps.borderType,
 			[`v3-button--plain`]: state.defaultProps.plain,
 			[`v3-button--disabled`]: state.defaultProps.disabled,
 			[`v3-button--circle`]: state.defaultProps.circle,
@@ -32,7 +33,6 @@ import {
 	onUnmounted,
 	reactive,
 	ref,
-	toRefs,
 	watch,
 } from 'vue';
 import * as TYPES from '../index';
@@ -54,7 +54,7 @@ export default defineComponent({
 			defaultProps: {
 				type: 'default',
 				nativeType: 'button',
-				borderType: 'solid',
+				borderType: '',
 				plain: false,
 				disabled: false,
 				icon: '',
