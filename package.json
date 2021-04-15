@@ -2,6 +2,7 @@
 	"name": "root",
 	"private": true,
 	"devDependencies": {
+		"@vue/component-compiler-utils": "^3.2.0",
 		"@vuepress/plugin-active-header-links": "^1.8.2",
 		"@vuepress/plugin-back-to-top": "^1.8.2",
 		"@vuepress/plugin-last-updated": "^1.8.2",
@@ -9,7 +10,8 @@
 		"@vuepress/plugin-register-components": "^1.8.2",
 		"commitizen": "^4.2.3",
 		"cz-lerna-changelog": "^2.0.3",
-		"lerna": "^4.0.0"
+		"lerna": "^4.0.0",
+		"vuepress": "^2.0.0-beta.8"
 	},
 	"scripts": {
 		"commit": "git-cz",

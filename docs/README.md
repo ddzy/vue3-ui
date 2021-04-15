@@ -1,9 +1,11 @@
 ---
-home: true
+home: '/'
 heroText: vue3-ui
 tagline: 基于 vue3 + vite 的组件库
-actionText: 快速上手 →
-actionLink: /components/
+actions:
+  - text: 快速上手 →
+    link: /components/button.md
+    type: primary
 features:
 - title: 简洁至上
   details: 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。
