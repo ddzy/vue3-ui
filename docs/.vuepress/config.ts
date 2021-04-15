@@ -10,13 +10,6 @@ export default defineUserConfig<DefaultThemeOptions>({
 			level: [1, 2, 3, 4],
 		},
 	},
-	plugins: [
-		'@vuepress/active-header-links',
-		'@vuepress/back-to-top',
-		'@vuepress/last-updated',
-		'@vuepress/nprogress',
-		'@vuepress/register-components',
-	],
 	themeConfig: {
 		repo: "https://github.com/ddzy/vue3-ui",
 		themePlugins: {
