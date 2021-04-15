@@ -53,25 +53,59 @@ describe('Button 组件测试：', () => {
 
 		expect(classes2.includes('v3-button--disabled')).toBeFalsy();
 		expect(attributes2.hasOwnProperty('disabled')).toBeFalsy();
-  });
+	});
 
-  test('Button 组件的点击事件应该正常触发', async () => {
-    const component1 = {
-      components: {
-        Button,
-      },
-      template: `
+	test('Button 组件的点击事件应该正常触发', async () => {
+		const component1 = {
+			components: {
+				Button,
+			},
+			template: `
         <div>
           <span class="value">{{ count }}</span>
           <Button
+            class="btn-increment"
             type="primary"
-            icon="'v3-icon-'"
+            icon="'v3-icon-add'"
+            @click="handleClick(1)"
           >Increment</Button>
+          <Button
+            class="btn-decrement"
+            type="primary"
+            icon="'v3-icon-reduce'"
+            @click="handleClick(-1)"
+          >Decrement</Button>
         </div>
       `,
-    };
-    const wrapper1 = mount(Button, {
+			data() {
+				return {
+					count: 0,
+				};
+			},
+			methods: {
+				handleClick(count: number) {
+					let that = this as any;
 
-    })
-  });
+					that.count = that.count + count;
+				},
+			},
+		};
+		const wrapper1 = mount(component1, {});
+
+		const value1 = wrapper1.vm.count;
+		expect(value1).toBe(0);
+
+		wrapper1.vm.handleClick(1);
+		const value2 = wrapper1.vm.count;
+		expect(value2).toBe(1);
+
+		wrapper1.vm.handleClick(-9);
+		const value3 = wrapper1.vm.count;
+		expect(value3).toBe(-8);
+
+		wrapper1.find('.v3-button.btn-increment').trigger('click');
+		expect(wrapper1.emitted()).toHaveProperty('click');
+		const value4 = wrapper1.vm.count;
+		expect(value4).toBe(-7);
+	});
 });
