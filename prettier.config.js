@@ -8,4 +8,5 @@ module.exports = {
 	singleQuote: true, // 是否采用单引号
 	jsxBracketSameLine: true,
 	htmlWhitespaceSensitivity: "ignore", // HTML 元素的换行处理
+	trailingComma: true,
 };
