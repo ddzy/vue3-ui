@@ -1,19 +1,21 @@
 <template>
 	<div class="input-demo-container">
-		<v3-button
-			type="primary"
-			icon="v3-icon-search"
-			@click="search"
-		>搜索</v3-button>
-
-		<v3-input>
-			<template #prepend>
-				<span>前置元素</span>
-			</template>
-			<template #suffix>
-				<span>后缀元素</span>
-			</template>
-		</v3-input>
+		<div class="input-container">
+			<v3-input>
+				<template #prepend>
+					<span>https://</span>
+				</template>
+				<!-- <template #prefix>
+					<span>前缀元素</span>
+				</template> -->
+				<!-- <template #suffix>
+					<span>后缀元素</span>
+				</template> -->
+				<template #append>
+					<i class="v3-icon v3-icon-search"></i>
+				</template>
+			</v3-input>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -31,8 +33,12 @@ export default defineComponent({
 
 		return {
 			search,
-		}
+		};
 	},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.input-container {
+	width: 500px;
+}
+</style>
