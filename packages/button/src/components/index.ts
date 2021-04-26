@@ -13,12 +13,12 @@ interface ICompoent {
 const globalComponentList: ICompoent[] = [
 	{
 		name: 'v3-button',
-		component: V3Button
+		component: V3Button,
 	},
 	{
 		name: 'v3-button-group',
-		component: V3ButtonGroup
-	}
+		component: V3ButtonGroup,
+	},
 ];
 
 const install = function(app: App) {

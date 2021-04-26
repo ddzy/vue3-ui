@@ -1,7 +1,7 @@
 <template>
-  <div class="v3-button-group">
-    <slot></slot>
-  </div>
+	<div class="v3-button-group">
+		<slot></slot>
+	</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
