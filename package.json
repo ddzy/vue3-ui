@@ -25,8 +25,7 @@
 	},
 	"lint-staged": {
 		"packages/**/*.{ts,tsx,js,jsx,vue}": [
-			"yarn format",
-			"git add"
+			"yarn format"
 		]
 	}
 }
