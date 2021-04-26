@@ -15,16 +15,12 @@
 		"commit": "git-cz",
 		"docs": "vuepress dev docs",
 		"docs:build": "vuepress build docs",
-		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write"
+		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write",
+		"prepare": "husky install"
 	},
 	"config": {
 		"commitizen": {
 			"path": "node_modules/cz-lerna-changelog"
-		}
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
 		}
 	},
 	"lint-staged": {
