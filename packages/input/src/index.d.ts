@@ -6,3 +6,4 @@ export type IInputReadonly = boolean;
 export type IInputDisabled = boolean;
 export type IInputPrependIcon = string;
 export type IInputAppendIcon = string;
+export type IInputPlaceholder = string;

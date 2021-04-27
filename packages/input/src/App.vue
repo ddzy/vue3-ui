@@ -7,10 +7,11 @@
 				:readonly="false"
 				:disabled="false"
 				:clearable="true"
+				:placeholder="'请填写用户名'"
 			>
-				<!-- <template #prepend>
+				<template #prepend>
 					<span>https://</span>
-				</template> -->
+				</template>
 				<!-- <template #prefix>
 					<span>前缀元素</span>
 				</template> -->

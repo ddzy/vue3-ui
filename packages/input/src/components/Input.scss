@@ -137,6 +137,12 @@
 				&:disabled {
 					background-color: #fff;
 				}
+				&::placeholder {
+					color: $border-color-grey-default;
+				}
+				&:-moz-placeholder, &::-moz-placeholder {
+					opacity: 1;
+				}
 			}
 		}
 	}

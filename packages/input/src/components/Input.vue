@@ -57,6 +57,7 @@
 					:type="state.defaultProps.type"
 					:readonly="state.defaultProps.readonly"
 					:disabled="state.defaultProps.disabled"
+					:placeholder="state.defaultProps.placeholder"
 					@input="handleInput"
 					@change="handleChange"
 					@focus="handleFocus"
@@ -125,6 +126,7 @@ export default defineComponent({
 		clearable: Boolean as () => TYPES.IInputClearable,
 		readonly: Boolean as () => TYPES.IInputReadonly,
 		disabled: Boolean as () => TYPES.IInputDisabled,
+		placeholder: String as () => TYPES.IInputPlaceholder,
 		modelValue: String,
 	},
 	setup(props, context) {
@@ -138,6 +140,7 @@ export default defineComponent({
 				clearable: false,
 				readonly: false,
 				disabled: false,
+				placeholder: '请输入内容',
 			},
 			/** 是否显示【清除】按钮 */
 			isShowClearable: false,
