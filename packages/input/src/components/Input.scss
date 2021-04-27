@@ -49,6 +49,24 @@
 
 	.v3-input__inner-wrapper {
 		transition: all 0.15s ease;
+		// 无前缀，需要增加左 padding
+		&:not(.has-prefix) {
+			padding-left: 12px;
+		}
+		// 无后缀，需要增加右 padding
+		&:not(.has-suffix) {
+			padding-right: 12px;
+		}
+		// 无前置，需要增加左圆角
+		&:not(.has-prepend) {
+			border-top-left-radius: 6px;
+			border-bottom-left-radius: 6px;
+		}
+		// 无后置，需要增加右圆角
+		&:not(.has-append) {
+			border-top-right-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
 		&:hover {
 			border-color: $info-color;
 		}

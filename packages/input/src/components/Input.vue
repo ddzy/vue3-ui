@@ -19,7 +19,15 @@
 				}"
 			></i>
 		</div>
-		<div class="v3-input__inner-wrapper">
+		<div
+			:class="{
+				'v3-input__inner-wrapper': true,
+				'has-prefix': app.slots.prefix || state.defaultProps.prefixIcon,
+				'has-suffix': app.slots.suffix || state.defaultProps.suffixIcon,
+				'has-prepend': app.slots.prepend || state.defaultProps.prependIcon,
+				'has-append': app.slots.append || state.defaultProps.appendIcon,
+			}"
+		>
 			<div class="v3-input__inner">
 				<div class="v3-input__prefix" v-if="app.slots.prefix">
 					<slot name="prefix"></slot>
