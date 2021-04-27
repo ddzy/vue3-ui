@@ -5,19 +5,23 @@
 		}"
 	>
 		<!-- slot 优先级比传入的前缀、后缀、前置、后置图标高 -->
-		<div class="v3-input__prepend" v-if="app.slots.prepend">
-			<slot name="prepend"></slot>
+		<div class="v3-input__prepend-wrapper" v-if="app.slots.prepend">
+			<div class="v3-input__prepend">
+				<slot name="prepend"></slot>
+			</div>
 		</div>
 		<div
-			class="v3-input__prepend"
+			class="v3-input__prepend-wrapper"
 			v-if="!app.slots.prepend && state.defaultProps.prependIcon"
 		>
-			<i
-				:class="{
-					'v3-icon': true,
-					[state.defaultProps.prependIcon]: true,
-				}"
-			></i>
+			<div class="v3-input__prepend">
+				<i
+					:class="{
+						'v3-icon': true,
+						[state.defaultProps.prependIcon]: true,
+					}"
+				></i>
+			</div>
 		</div>
 		<div
 			:class="{
@@ -60,19 +64,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="v3-input__append" v-if="app.slots.append">
-			<slot name="append"></slot>
+		<div class="v3-input__append-wrapper" v-if="app.slots.append">
+			<div class="v3-input__append">
+				<slot name="append"></slot>
+			</div>
 		</div>
 		<div
-			class="v3-input__append"
+			class="v3-input__append-wrapper"
 			v-if="!app.slots.append && state.defaultProps.appendIcon"
 		>
-			<i
-				:class="{
-					'v3-icon': true,
-					[state.defaultProps.appendIcon]: true,
-				}"
-			></i>
+			<div class="v3-input__append">
+				<i
+					:class="{
+						'v3-icon': true,
+						[state.defaultProps.appendIcon]: true,
+					}"
+				></i>
+			</div>
 		</div>
 	</div>
 </template>
