@@ -6,9 +6,7 @@
 				:suffixIcon="'v3-icon-editor'"
 				:readonly="false"
 				:disabled="false"
-				@input="handleInput"
-				@change="handleChange"
-				@click="handleClick"
+				:clearable="true"
 			>
 				<!-- <template #prepend>
 					<span>https://</span>
@@ -39,19 +37,33 @@ export default defineComponent({
 			inputValue: '',
 		});
 
-		// function handleInput(v) {
-		// 	console.log('v :>> ', v);
-		// }
-		function handleChange(change: Event) {
-			console.log('change :>> ', (change.target as HTMLInputElement).value);
+		function handleInput(e) {
+			console.log('input_e :>> ', e);
 		}
-		// function handleClick(click) {
-		// 	console.log(click);
-		// }
+		function handleChange(e: Event) {
+			console.log('change_e :>> ', (e.target as HTMLInputElement).value);
+		}
+		function handleFocus(e) {
+			console.log('focus_e :>> ', e);
+		}
+		function handleBlur(e) {
+			console.log('blur_e :>> ', e);
+		}
+		function handleClear() {
+			console.log('cleared :>> ', 'cleared');
+		}
+		function handleKeypress() {
+			console.log('2 :>> ', 2);
+		}
 
 		return {
 			state,
 			handleChange,
+			handleFocus,
+			handleInput,
+			handleBlur,
+			handleClear,
+			handleKeypress,
 		};
 	},
 });

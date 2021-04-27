@@ -3,7 +3,11 @@
 		:class="{
 			'v3-input': true,
 			'v3-input--disabled': state.defaultProps.disabled,
+			'v3-input--clearable':
+				state.defaultProps.clearable && state.isShowClearable,
 		}"
+		@mouseenter="handleMouseEnter"
+		@mouseleave="handleMouseLeave"
 	>
 		<!-- slot 优先级比传入的前缀、后缀、前置、后置图标高 -->
 		<div class="v3-input__prepend-wrapper" v-if="app.slots.prepend">
@@ -49,9 +53,14 @@
 					></i>
 				</div>
 				<input
+					:value="props.modelValue"
 					:type="state.defaultProps.type"
 					:readonly="state.defaultProps.readonly"
 					:disabled="state.defaultProps.disabled"
+					@input="handleInput"
+					@change="handleChange"
+					@focus="handleFocus"
+					@blur="handleBlur"
 				/>
 				<div class="v3-input__suffix" v-if="app.slots.suffix">
 					<slot name="suffix"></slot>
@@ -66,6 +75,12 @@
 							[state.defaultProps.suffixIcon]: true,
 						}"
 					></i>
+				</div>
+				<div
+					class="v3-input__clear"
+					v-show="state.defaultProps.clearable && state.isShowClearable"
+				>
+					<i class="v3-icon v3-icon-reeor" @click="handleClear"></i>
 				</div>
 			</div>
 		</div>
@@ -90,7 +105,13 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, watch } from 'vue';
+import {
+	defineComponent,
+	getCurrentInstance,
+	nextTick,
+	reactive,
+	watch,
+} from 'vue';
 import * as TYPES from '../index';
 
 export default defineComponent({
@@ -104,6 +125,7 @@ export default defineComponent({
 		clearable: Boolean as () => TYPES.IInputClearable,
 		readonly: Boolean as () => TYPES.IInputReadonly,
 		disabled: Boolean as () => TYPES.IInputDisabled,
+		modelValue: String,
 	},
 	setup(props, context) {
 		const state = reactive({
@@ -117,6 +139,8 @@ export default defineComponent({
 				readonly: false,
 				disabled: false,
 			},
+			/** 是否显示【清除】按钮 */
+			isShowClearable: false,
 		});
 		const app = getCurrentInstance();
 
@@ -131,9 +155,57 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
+		function handleMouseEnter() {
+			// 鼠标移动到输入框内，显示清除按钮
+			if (props.modelValue) {
+				state.isShowClearable = true;
+			}
+		}
+
+		function handleMouseLeave() {
+			// 鼠标移出输入框，隐藏清除按钮
+			state.isShowClearable = false;
+		}
+
+		function handleChange(e: Event) {
+			const target = e.target as HTMLInputElement;
+			context.emit('update:modelValue', target.value);
+		}
+
+		function handleInput(e: Event) {
+			const target = e.target as HTMLInputElement;
+			context.emit('update:modelValue', target.value);
+
+			// 输入时需要实时显示【清空】按钮
+			if (target.value && state.defaultProps.clearable) {
+				state.isShowClearable = true;
+			}
+		}
+
+		function handleFocus(e: Event) {
+			context.emit('focus', e);
+		}
+
+		function handleBlur(e: Event) {
+			context.emit('blur', e);
+		}
+
+		function handleClear() {
+			context.emit('update:modelValue', '');
+			context.emit('clear');
+		}
+
 		return {
 			state,
+			props,
 			app,
+			handleChange,
+			handleInput,
+			handleFocus,
+			handleBlur,
+			handleClear,
+			handleMouseEnter,
+			handleMouseLeave,
 		};
 	},
 });
