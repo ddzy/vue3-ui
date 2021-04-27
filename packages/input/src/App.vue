@@ -1,19 +1,19 @@
 <template>
 	<div class="input-demo-container">
 		<div class="input-container">
-			<v3-input>
-				<template #prepend>
+			<v3-input :suffixIcon="'v3-icon-editor'">
+				<!-- <template #prepend>
 					<span>https://</span>
-				</template>
-				<template #prefix>
+				</template> -->
+				<!-- <template #prefix>
 					<span>前缀元素</span>
-				</template>
+				</template> -->
 				<!-- <template #suffix>
 					<span>后缀元素</span>
 				</template> -->
-				<template #append>
-					<i class="v3-icon v3-icon-search"></i>
-				</template>
+				<!-- <template #append>
+					<i class="v3-icon v3-icon-editor"></i>
+				</template> -->
 			</v3-input>
 		</div>
 	</div>
