@@ -52,7 +52,6 @@
 					:type="state.defaultProps.type"
 					:readonly="state.defaultProps.readonly"
 					:disabled="state.defaultProps.disabled"
-					:value="12345"
 				/>
 				<div class="v3-input__suffix" v-if="app.slots.suffix">
 					<slot name="suffix"></slot>
