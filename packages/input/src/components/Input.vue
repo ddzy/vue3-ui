@@ -2,6 +2,7 @@
 	<div
 		:class="{
 			'v3-input': true,
+			'v3-input--disabled': state.defaultProps.disabled,
 		}"
 	>
 		<!-- slot 优先级比传入的前缀、后缀、前置、后置图标高 -->
@@ -47,7 +48,12 @@
 						}"
 					></i>
 				</div>
-				<input type="text" />
+				<input
+					:type="state.defaultProps.type"
+					:readonly="state.defaultProps.readonly"
+					:disabled="state.defaultProps.disabled"
+					:value="12345"
+				/>
 				<div class="v3-input__suffix" v-if="app.slots.suffix">
 					<slot name="suffix"></slot>
 				</div>

@@ -1,10 +1,14 @@
 <template>
 	<div class="input-demo-container">
 		<div class="input-container">
-			<v3-input :suffixIcon="'v3-icon-editor'">
-				<!-- <template #prepend>
+			<v3-input
+				:suffixIcon="'v3-icon-editor'"
+				:readonly="false"
+				:disabled="false"
+			>
+				<template #prepend>
 					<span>https://</span>
-				</template> -->
+				</template>
 				<!-- <template #prefix>
 					<span>前缀元素</span>
 				</template> -->
@@ -39,6 +43,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .input-container {
-	width: 500px;
+	width: 300px;
 }
 </style>

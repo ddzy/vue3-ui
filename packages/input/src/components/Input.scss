@@ -1,4 +1,5 @@
 .v3-input {
+	position: relative;
 	display: table;
 	width: 100%;
 	height: 35px;
@@ -6,6 +7,18 @@
 	font-size: $font-size-small;
 	word-break: keep-all;
 	color: #999;
+
+	&.v3-input--disabled::after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: '';
+		width: 100%;
+		height: 100%;
+		background-color: #f1f1f1;
+		opacity: .5;
+		cursor: not-allowed;
+	}
 
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
@@ -103,6 +116,9 @@
 				appearance: none;
 				outline: 0;
 				color: #666;
+				&:disabled {
+					background-color: #fff;
+				}
 			}
 		}
 	}
