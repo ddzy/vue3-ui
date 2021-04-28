@@ -8,8 +8,9 @@
 				:disabled="false"
 				:clearable="true"
 				:showWordLimit="true"
-				:maxlength="10"
+				:maxlength="1000"
 				:placeholder="'请填写用户名'"
+				:showPassword="true"
 			>
 				<!-- <template #prepend>
 					<span>https://</span>

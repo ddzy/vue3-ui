@@ -10,3 +10,4 @@ export type IInputPlaceholder = string;
 export type IInputShowWordLimit = boolean;
 export type IInputMinLength = number;
 export type IInputMaxLength = number;
+export type IInputShowPassword = boolean;

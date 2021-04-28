@@ -94,6 +94,21 @@
 					<i class="v3-icon v3-icon-reeor" @click="handleClear"></i>
 				</div>
 
+				<!-- 切换密码区域 -->
+				<div
+					class="v3-input__password v3-input__suffix-item"
+					v-if="state.defaultProps.showPassword"
+				>
+					<i
+						:class="{
+							'v3-icon': true,
+							'v3-icon-browse': state.isPasswordClearly,
+							'v3-icon-Notvisible': !state.isPasswordClearly,
+						}"
+						@click="togglePasswordClearly"
+					></i>
+				</div>
+
 				<!-- 输入字符数目限制区域 -->
 				<!-- 当未指定【maxlength】的时候也要禁用【输入统计】 -->
 				<div
@@ -157,6 +172,7 @@ export default defineComponent({
 		showWordLimit: Boolean as () => TYPES.IInputShowWordLimit,
 		minlength: Number as () => TYPES.IInputMinLength,
 		maxlength: Number as () => TYPES.IInputMaxLength,
+		showPassword: Boolean as () => TYPES.IInputShowPassword,
 		modelValue: String,
 	},
 	setup(props, context) {
@@ -174,6 +190,7 @@ export default defineComponent({
 				minlength: -1,
 				maxlength: -1,
 				placeholder: '请输入内容',
+				showPassword: false,
 			},
 			/** 是否显示【清除】按钮 */
 			isShowClearable: false,
@@ -181,6 +198,8 @@ export default defineComponent({
 			currentWordCount: 0,
 			/** 限制的最大可输入字符数 */
 			totalWordCount: 0,
+			/** 输入的密码是否明文显示 */
+			isPasswordClearly: true,
 		});
 		const app = getCurrentInstance();
 
@@ -207,6 +226,13 @@ export default defineComponent({
 			newValue => {
 				// 实时监听输入框值的变化，更改字符统计的值
 				state.currentWordCount = newValue.length;
+			},
+			{ immediate: true }
+		);
+		watch(
+			toRef(state, 'isPasswordClearly'),
+			newValue => {
+				state.defaultProps.type = newValue ? 'text' : 'password';
 			},
 			{ immediate: true }
 		);
@@ -251,6 +277,10 @@ export default defineComponent({
 			context.emit('clear');
 		}
 
+		function togglePasswordClearly() {
+			state.isPasswordClearly = !state.isPasswordClearly;
+		}
+
 		return {
 			state,
 			props,
@@ -262,6 +292,7 @@ export default defineComponent({
 			handleClear,
 			handleMouseEnter,
 			handleMouseLeave,
+			togglePasswordClearly,
 		};
 	},
 });
