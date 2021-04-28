@@ -1,4 +1,4 @@
-export type IInputType = 'text' | 'textarea' | 'number' | 'password';
+export type IInputType = 'text' | 'password';
 export type IInputSuffixIcon = string;
 export type IInputPrefixIcon = string;
 export type IInputClearable = boolean;
@@ -11,3 +11,11 @@ export type IInputShowWordLimit = boolean;
 export type IInputMinLength = number;
 export type IInputMaxLength = number;
 export type IInputShowPassword = boolean;
+
+export type ITextareaWidth = number;
+export type ITextareaHeight = number;
+export type ITextareaResize = 'none' | 'both' | 'horizontal' | 'vertical';
+export type ITextareaAutoHeight = boolean;
+export type ITextareaDisabled = boolean;
+export type ITextareaReadonly = boolean;
+export type ITextareaPlaceholder = string;

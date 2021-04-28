@@ -27,15 +27,20 @@
 				</template> -->
 			</v3-input>
 		</div>
+		<div class="textarea-container">
+			<v3-input-textarea></v3-input-textarea>
+		</div>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import V3Input from './components/Input.vue';
+import V3InputTextarea from './components/InputTextarea.vue';
 
 export default defineComponent({
 	components: {
 		V3Input,
+		V3InputTextarea,
 	},
 	setup(props, context) {
 		const state = reactive({
