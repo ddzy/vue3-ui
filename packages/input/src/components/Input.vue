@@ -3,10 +3,6 @@
 		:class="{
 			'v3-input': true,
 			'v3-input--disabled': state.defaultProps.disabled,
-			'v3-input--clearable':
-				state.defaultProps.clearable && state.isShowClearable,
-			'v3-input--limitable':
-				state.defaultProps.showWordLimit && state.defaultProps.maxlength > 0,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
