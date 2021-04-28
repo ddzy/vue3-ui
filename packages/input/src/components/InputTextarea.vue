@@ -7,6 +7,7 @@
 		}"
 	>
 		<textarea
+			:value="props.modelValue"
 			:style="{
 				width: `${state.defaultProps.width}px`,
 				height: `${state.defaultProps.height}px`,
@@ -17,11 +18,15 @@
 			:class="{
 				[`v3-textarea--${state.defaultProps.resize}`]: true,
 			}"
+			@input="handleInput"
+			@change="handleChange"
+			@focus="handleFocus"
+			@blur="handleBlur"
 		></textarea>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, watch } from 'vue';
+import { defineComponent, getCurrentInstance, reactive, ref, watch } from 'vue';
 import * as TYPES from '../index';
 
 export default defineComponent({
@@ -60,10 +65,33 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+
+		function handleChange(e: Event) {
+			const target = e.target as HTMLTextAreaElement;
+			context.emit('update:modelValue', target.value);
+		}
+
+		function handleInput(e: Event) {
+			const target = e.target as HTMLTextAreaElement;
+			context.emit('update:modelValue', target.value);
+		}
+
+		function handleFocus(e: Event) {
+			context.emit('focus', e);
+		}
+
+		function handleBlur(e: Event) {
+			context.emit('blur', e);
+		}
+
 		return {
 			state,
 			props,
 			app,
+			handleChange,
+			handleInput,
+			handleFocus,
+			handleBlur,
 		};
 	},
 });
