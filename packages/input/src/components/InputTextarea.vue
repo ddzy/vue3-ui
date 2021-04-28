@@ -8,8 +8,8 @@
 	>
 		<textarea
 			:style="{
-				width: state.defaultProps.width,
-				height: state.defaultProps.height,
+				width: `${state.defaultProps.width}px`,
+				height: `${state.defaultProps.height}px`,
 			}"
 			:disabled="state.defaultProps.disabled"
 			:readonly="state.defaultProps.readonly"

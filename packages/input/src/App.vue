@@ -28,7 +28,11 @@
 			</v3-input>
 		</div>
 		<div class="textarea-container">
-			<v3-input-textarea></v3-input-textarea>
+			<v3-input-textarea
+				:width="300"
+				:height="300"
+				:resize="'both'"
+			></v3-input-textarea>
 		</div>
 	</div>
 </template>
