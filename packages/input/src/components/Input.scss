@@ -20,8 +20,14 @@
 		cursor: not-allowed;
 	}
 
-	&.v3-input--clearable {
+	&.v3-input--clearable, &.v3-input--limitable {
 		.v3-input__suffix {
+			margin-right: 0;
+		}
+	}
+
+	&.v3-input--clearable.v3-input--limitable {
+		.v3-input__clear {
 			margin-right: 0;
 		}
 	}
@@ -48,6 +54,10 @@
 		&:hover {
 			color: $info-color;
 		}
+	}
+
+	.v3-input__limit {
+		cursor: default;
 	}
 
 	.v3-input__prepend-wrapper,
@@ -81,7 +91,8 @@
 
 	.v3-input__prefix,
 	.v3-input__suffix,
-	.v3-input__clear {
+	.v3-input__clear,
+	.v3-input__limit {
 		display: flex;
 		align-items: center;
 		margin: 0 6px;

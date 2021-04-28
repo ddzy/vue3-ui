@@ -5,6 +5,8 @@
 			'v3-input--disabled': state.defaultProps.disabled,
 			'v3-input--clearable':
 				state.defaultProps.clearable && state.isShowClearable,
+			'v3-input--limitable':
+				state.defaultProps.showWordLimit && state.defaultProps.maxlength > 0,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
@@ -58,6 +60,8 @@
 					:readonly="state.defaultProps.readonly"
 					:disabled="state.defaultProps.disabled"
 					:placeholder="state.defaultProps.placeholder"
+					:minlength="state.defaultProps.minlength"
+					:maxlength="state.defaultProps.maxlength"
 					@input="handleInput"
 					@change="handleChange"
 					@focus="handleFocus"
@@ -79,9 +83,25 @@
 				</div>
 				<div
 					class="v3-input__clear"
-					v-show="state.defaultProps.clearable && state.isShowClearable"
+					v-if="state.defaultProps.clearable && state.isShowClearable"
 				>
 					<i class="v3-icon v3-icon-reeor" @click="handleClear"></i>
+				</div>
+
+				<!-- 当未指定【maxlength】的时候也要禁用【输入统计】 -->
+				<div
+					class="v3-input__limit"
+					v-if="
+						state.defaultProps.showWordLimit && state.defaultProps.maxlength > 0
+					"
+				>
+					<span class="limit__item limit__current">{{
+						state.currentWordCount
+					}}</span>
+					<span class="limit__item limit__separator">/</span>
+					<span class="limit__item limit__total">{{
+						state.totalWordCount
+					}}</span>
 				</div>
 			</div>
 		</div>
@@ -109,8 +129,8 @@
 import {
 	defineComponent,
 	getCurrentInstance,
-	nextTick,
 	reactive,
+	toRef,
 	watch,
 } from 'vue';
 import * as TYPES from '../index';
@@ -127,6 +147,9 @@ export default defineComponent({
 		readonly: Boolean as () => TYPES.IInputReadonly,
 		disabled: Boolean as () => TYPES.IInputDisabled,
 		placeholder: String as () => TYPES.IInputPlaceholder,
+		showWordLimit: Boolean as () => TYPES.IInputShowWordLimit,
+		minlength: Number as () => TYPES.IInputMinLength,
+		maxlength: Number as () => TYPES.IInputMaxLength,
 		modelValue: String,
 	},
 	setup(props, context) {
@@ -140,10 +163,17 @@ export default defineComponent({
 				clearable: false,
 				readonly: false,
 				disabled: false,
+				showWordLimit: false,
+				minlength: -1,
+				maxlength: -1,
 				placeholder: '请输入内容',
 			},
 			/** 是否显示【清除】按钮 */
 			isShowClearable: false,
+			/** 当前输入的字符数 */
+			currentWordCount: 0,
+			/** 限制的最大可输入字符数 */
+			totalWordCount: 0,
 		});
 		const app = getCurrentInstance();
 
@@ -154,6 +184,22 @@ export default defineComponent({
 					...state.defaultProps,
 					...reactive(props),
 				};
+			},
+			{ immediate: true }
+		);
+		watch(
+			toRef(props, 'maxlength'),
+			newValue => {
+				// 实时监听【maxlength】的变化，更新最大输入字符数
+				state.totalWordCount = newValue;
+			},
+			{ immediate: true }
+		);
+		watch(
+			toRef(props, 'modelValue'),
+			newValue => {
+				// 实时监听输入框值的变化，更改字符统计的值
+				state.currentWordCount = newValue.length;
 			},
 			{ immediate: true }
 		);

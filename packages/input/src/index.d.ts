@@ -7,3 +7,6 @@ export type IInputDisabled = boolean;
 export type IInputPrependIcon = string;
 export type IInputAppendIcon = string;
 export type IInputPlaceholder = string;
+export type IInputShowWordLimit = boolean;
+export type IInputMinLength = number;
+export type IInputMaxLength = number;

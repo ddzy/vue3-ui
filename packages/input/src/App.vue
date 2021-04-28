@@ -7,11 +7,13 @@
 				:readonly="false"
 				:disabled="false"
 				:clearable="true"
+				:showWordLimit="true"
+				:maxlength="10"
 				:placeholder="'请填写用户名'"
 			>
-				<template #prepend>
+				<!-- <template #prepend>
 					<span>https://</span>
-				</template>
+				</template> -->
 				<!-- <template #prefix>
 					<span>前缀元素</span>
 				</template> -->
