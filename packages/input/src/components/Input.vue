@@ -40,6 +40,7 @@
 			}"
 		>
 			<div class="v3-input__inner">
+				<!-- 前缀区域 -->
 				<div class="v3-input__prefix" v-if="app.slots.prefix">
 					<slot name="prefix"></slot>
 				</div>
@@ -54,6 +55,8 @@
 						}"
 					></i>
 				</div>
+
+				<!-- 输入框区域 -->
 				<input
 					:value="props.modelValue"
 					:type="state.defaultProps.type"
@@ -67,11 +70,16 @@
 					@focus="handleFocus"
 					@blur="handleBlur"
 				/>
-				<div class="v3-input__suffix" v-if="app.slots.suffix">
+
+				<!-- 后缀区域 -->
+				<div
+					class="v3-input__suffix v3-input__suffix-item"
+					v-if="app.slots.suffix"
+				>
 					<slot name="suffix"></slot>
 				</div>
 				<div
-					class="v3-input__suffix"
+					class="v3-input__suffix v3-input__suffix-item"
 					v-if="!app.slots.suffix && state.defaultProps.suffixIcon"
 				>
 					<i
@@ -81,16 +89,19 @@
 						}"
 					></i>
 				</div>
+
+				<!-- 清除按钮区域 -->
 				<div
-					class="v3-input__clear"
+					class="v3-input__clear v3-input__suffix-item"
 					v-if="state.defaultProps.clearable && state.isShowClearable"
 				>
 					<i class="v3-icon v3-icon-reeor" @click="handleClear"></i>
 				</div>
 
+				<!-- 输入字符数目限制区域 -->
 				<!-- 当未指定【maxlength】的时候也要禁用【输入统计】 -->
 				<div
-					class="v3-input__limit"
+					class="v3-input__limit v3-input__suffix-item"
 					v-if="
 						state.defaultProps.showWordLimit && state.defaultProps.maxlength > 0
 					"

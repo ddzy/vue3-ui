@@ -20,18 +20,6 @@
 		cursor: not-allowed;
 	}
 
-	&.v3-input--clearable, &.v3-input--limitable {
-		.v3-input__suffix {
-			margin-right: 0;
-		}
-	}
-
-	&.v3-input--clearable.v3-input--limitable {
-		.v3-input__clear {
-			margin-right: 0;
-		}
-	}
-
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__inner-wrapper {
@@ -43,21 +31,10 @@
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__prefix,
-	.v3-input__suffix,
-	.v3-input__clear {
+	.v3-input__suffix-item {
 		& :deep(i.v3-icon) {
 			font-size: $font-size-large;
 		}
-	}
-
-	.v3-input__clear {
-		&:hover {
-			color: $info-color;
-		}
-	}
-
-	.v3-input__limit {
-		cursor: default;
 	}
 
 	.v3-input__prepend-wrapper,
@@ -90,18 +67,16 @@
 	}
 
 	.v3-input__prefix,
-	.v3-input__suffix,
-	.v3-input__clear,
-	.v3-input__limit {
+	.v3-input__suffix-item {
 		display: flex;
 		align-items: center;
-		margin: 0 6px;
 		user-select: none;
 	}
 
-	.v3-input__clear {
-		i.v3-icon {
-			cursor: pointer;
+	.v3-input__suffix-item {
+		margin-left: 6px;
+		&:last-child {
+			margin-right: 6px;
 		}
 	}
 
@@ -132,6 +107,20 @@
 			border-color: $primary-color;
 			animation: inputActive 0.3s ease-out 0s 1;
 		}
+		.v3-input__prefix {
+			margin: 0 6px;
+		}
+		.v3-input__clear {
+			&:hover {
+				color: $info-color;
+			}
+			i.v3-icon {
+				cursor: pointer;
+			}
+		}
+		.v3-input__limit {
+			cursor: default;
+		}
 		.v3-input__inner {
 			display: flex;
 			align-items: center;
@@ -151,7 +140,8 @@
 				&::placeholder {
 					color: $border-color-grey-default;
 				}
-				&:-moz-placeholder, &::-moz-placeholder {
+				&:-moz-placeholder,
+				&::-moz-placeholder {
 					opacity: 1;
 				}
 			}
