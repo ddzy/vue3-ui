@@ -236,6 +236,15 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+		watch(
+			toRef(props, 'type'),
+			newValue => {
+				if (newValue === 'password') {
+					state.isPasswordClearly = false;
+				}
+			},
+			{ immediate: true }
+		);
 
 		function handleMouseEnter() {
 			// 鼠标移动到输入框内，显示清除按钮

@@ -3,6 +3,7 @@
 		<div class="input-container">
 			<v3-input
 				v-model="state.inputValue"
+				:type="'password'"
 				:suffixIcon="'v3-icon-editor'"
 				:readonly="false"
 				:disabled="false"
