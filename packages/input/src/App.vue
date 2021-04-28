@@ -32,7 +32,8 @@
 				:width="100"
 				:height="150"
 				:resize="'both'"
-				:disabled="true"
+				:disabled="false"
+				:readonly="true"
 			></v3-input-textarea>
 		</div>
 	</div>
