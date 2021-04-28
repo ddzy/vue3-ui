@@ -29,9 +29,10 @@
 		</div>
 		<div class="textarea-container">
 			<v3-input-textarea
-				:width="300"
-				:height="300"
+				:width="100"
+				:height="150"
 				:resize="'both'"
+				:disabled="true"
 			></v3-input-textarea>
 		</div>
 	</div>
