@@ -27,7 +27,7 @@
 			></v3-input-textarea>
 		</div> -->
 		<div class="input-container">
-			<v3-input-number></v3-input-number>
+			<v3-input-number :controlsPosition="'right'"></v3-input-number>
 		</div>
 	</div>
 </template>
@@ -81,6 +81,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .input-container {
-	width: 300px;
+	width: 200px;
 }
 </style>

@@ -5,21 +5,103 @@
 			'v3-input-number--disabled': state.defaultProps.disabled,
 		}"
 	>
-		<input
-			type="text"
+		<!-- 操作按钮组位于两边 -->
+		<v3-input
+			v-if="state.defaultProps.controlsPosition === 'both'"
+			v-model="state.inputValue"
+			:type="'text'"
 			@input="handleInput"
 			@change="handleChange"
 			@focus="handleFocus"
 			@blur="handleBlur"
-		/>
+		>
+			<template #prepend>
+				<div
+					:class="{
+						'v3-number__minus-wrapper': true,
+						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+					}"
+				>
+					<i class="v3-icon v3-icon-sami-select"></i>
+				</div>
+			</template>
+			<template #append>
+				<div
+					:class="{
+						'v3-number__plus-wrapper': true,
+						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+					}"
+				>
+					<i class="v3-icon v3-icon-add-select"></i>
+				</div>
+			</template>
+		</v3-input>
+
+		<!-- 操作按钮组位于左边 -->
+		<v3-input
+			v-if="state.defaultProps.controlsPosition === 'left'"
+			v-model="state.inputValue"
+			:type="'text'"
+			@input="handleInput"
+			@change="handleChange"
+			@focus="handleFocus"
+			@blur="handleBlur"
+		>
+			<template #prepend>
+				<div
+					:class="{
+						'v3-number__control-wrapper': true,
+						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+					}"
+				>
+					<div class="v3-number__control-plus">
+						<i class="v3-icon v3-icon-arrow-up"></i>
+					</div>
+					<div class="v3-number__control-minus">
+						<i class="v3-icon v3-icon-arrow-down"></i>
+					</div>
+				</div>
+			</template>
+		</v3-input>
+
+		<!-- 操作按钮组位于右边 -->
+		<v3-input
+			v-if="state.defaultProps.controlsPosition === 'right'"
+			v-model="state.inputValue"
+			:type="'text'"
+			@input="handleInput"
+			@change="handleChange"
+			@focus="handleFocus"
+			@blur="handleBlur"
+		>
+			<template #append>
+				<div
+					:class="{
+						'v3-number__control-wrapper': true,
+						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+					}"
+				>
+					<div class="v3-number__control-plus">
+						<i class="v3-icon v3-icon-arrow-up"></i>
+					</div>
+					<div class="v3-number__control-minus">
+						<i class="v3-icon v3-icon-arrow-down"></i>
+					</div>
+				</div>
+			</template>
+		</v3-input>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, getCurrentInstance, reactive, ref, watch } from 'vue';
+import V3Input from './Input.vue';
 import * as TYPES from '../index';
 
 export default defineComponent({
 	name: 'V3InputNumber',
+	components: {
+		V3Input,
+	},
 	props: {
 		min: Number as () => TYPES.INumberMin,
 		max: Number as () => TYPES.INumberMax,
@@ -45,9 +127,9 @@ export default defineComponent({
 				controlsPosition: 'both',
 				placeholder: '请输入内容',
 			},
+			inputValue: '',
 		});
 		const app = getCurrentInstance();
-		const textareaRef = ref(document.createElement('textarea'));
 
 		watch(
 			props,
@@ -86,11 +168,10 @@ export default defineComponent({
 			handleInput,
 			handleFocus,
 			handleBlur,
-			textareaRef,
 		};
 	},
 });
 </script>
 <style lang="scss" scoped>
-@import './InputTextarea.scss';
+@import './InputNumber.scss';
 </style>

@@ -1,3 +1,31 @@
 .v3-input-number {
+	// 控制组位于两边
+	.v3-number__minus-wrapper,
+	.v3-number__plus-wrapper {
+		cursor: pointer;
+		&:hover {
+			color: $primary-color;
+		}
 
+		&.v3-number__control--both {
+			padding: 0 6px;
+		}
+	}
+
+	// 控制组位于【左/右】边
+	.v3-number__control-wrapper {
+		line-height: 1;
+		.v3-number__control-plus,
+		.v3-number__control-minus {
+			padding: 0 12px;
+			cursor: pointer;
+			&:hover {
+				color: $primary-color;
+			}
+		}
+
+		.v3-number__control-plus {
+			border-bottom: 1px solid $border-color-grey-default;
+		}
+	}
 }
