@@ -27,7 +27,7 @@
 			></v3-input-textarea>
 		</div> -->
 		<div class="input-container">
-			<v3-input-number :controlsPosition="'right'"></v3-input-number>
+			<v3-input-number :controlsPosition="'both'"></v3-input-number>
 		</div>
 	</div>
 </template>

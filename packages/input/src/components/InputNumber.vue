@@ -5,9 +5,7 @@
 			'v3-input-number--disabled': state.defaultProps.disabled,
 		}"
 	>
-		<!-- 操作按钮组位于两边 -->
 		<v3-input
-			v-if="state.defaultProps.controlsPosition === 'both'"
 			v-model="state.inputValue"
 			:type="'text'"
 			@input="handleInput"
@@ -15,8 +13,9 @@
 			@focus="handleFocus"
 			@blur="handleBlur"
 		>
-			<template #prepend>
+			<template #prepend v-if="state.defaultProps.controlsPosition !== 'right'">
 				<div
+					v-if="state.defaultProps.controlsPosition === 'both'"
 					:class="{
 						'v3-number__minus-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
@@ -24,31 +23,9 @@
 				>
 					<i class="v3-icon v3-icon-sami-select"></i>
 				</div>
-			</template>
-			<template #append>
-				<div
-					:class="{
-						'v3-number__plus-wrapper': true,
-						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
-					}"
-				>
-					<i class="v3-icon v3-icon-add-select"></i>
-				</div>
-			</template>
-		</v3-input>
 
-		<!-- 操作按钮组位于左边 -->
-		<v3-input
-			v-if="state.defaultProps.controlsPosition === 'left'"
-			v-model="state.inputValue"
-			:type="'text'"
-			@input="handleInput"
-			@change="handleChange"
-			@focus="handleFocus"
-			@blur="handleBlur"
-		>
-			<template #prepend>
 				<div
+					v-if="state.defaultProps.controlsPosition === 'left'"
 					:class="{
 						'v3-number__control-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
@@ -62,20 +39,20 @@
 					</div>
 				</div>
 			</template>
-		</v3-input>
 
-		<!-- 操作按钮组位于右边 -->
-		<v3-input
-			v-if="state.defaultProps.controlsPosition === 'right'"
-			v-model="state.inputValue"
-			:type="'text'"
-			@input="handleInput"
-			@change="handleChange"
-			@focus="handleFocus"
-			@blur="handleBlur"
-		>
-			<template #append>
+			<template #append v-if="state.defaultProps.controlsPosition !== 'left'">
 				<div
+					v-if="state.defaultProps.controlsPosition === 'both'"
+					:class="{
+						'v3-number__plus-wrapper': true,
+						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+					}"
+				>
+					<i class="v3-icon v3-icon-add-select"></i>
+				</div>
+
+				<div
+					v-if="state.defaultProps.controlsPosition === 'right'"
 					:class="{
 						'v3-number__control-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
