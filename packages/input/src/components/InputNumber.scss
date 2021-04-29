@@ -29,6 +29,15 @@
 		}
 	}
 
+  // 控制按钮禁用状态
+  .v3-number__control--disabled {
+    cursor: not-allowed;
+    color: $border-color-grey-default;
+    &:hover {
+      color: $border-color-grey-default;
+    }
+  }
+
   & :deep(input) {
     text-align: center;
   }

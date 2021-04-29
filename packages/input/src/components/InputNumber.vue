@@ -20,6 +20,7 @@
 					:class="{
 						'v3-number__minus-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+						'v3-number__control--disabled': state.isMinusDisabled,
 					}"
 					@click="handleMinus"
 				>
@@ -33,10 +34,22 @@
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
 					}"
 				>
-					<div class="v3-number__control-plus" @click="handlePlus">
+					<div
+						:class="{
+							'v3-number__control-plus': true,
+							'v3-number__control--disabled': state.isPlusDisabled,
+						}"
+						@click="handlePlus"
+					>
 						<i class="v3-icon v3-icon-arrow-up"></i>
 					</div>
-					<div class="v3-number__control-minus" @click="handleMinus">
+					<div
+						:class="{
+							'v3-number__control-minus': true,
+							'v3-number__control--disabled': state.isMinusDisabled,
+						}"
+						@click="handleMinus"
+					>
 						<i class="v3-icon v3-icon-arrow-down"></i>
 					</div>
 				</div>
@@ -48,6 +61,7 @@
 					:class="{
 						'v3-number__plus-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+						'v3-number__control--disabled': state.isPlusDisabled,
 					}"
 					@click="handlePlus"
 				>
@@ -61,10 +75,22 @@
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
 					}"
 				>
-					<div class="v3-number__control-plus" @click="handlePlus">
+					<div
+						:class="{
+							'v3-number__control-plus': true,
+							'v3-number__control--disabled': state.isPlusDisabled,
+						}"
+						@click="handlePlus"
+					>
 						<i class="v3-icon v3-icon-arrow-up"></i>
 					</div>
-					<div class="v3-number__control-minus" @click="handleMinus">
+					<div
+						:class="{
+							'v3-number__control-minus': true,
+							'v3-number__control--disabled': state.isMinusDisabled,
+						}"
+						@click="handleMinus"
+					>
 						<i class="v3-icon v3-icon-arrow-down"></i>
 					</div>
 				</div>
@@ -103,8 +129,8 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			defaultProps: {
-				min: 0,
-				max: 0,
+				min: null,
+				max: null,
 				step: 1,
 				stepStrictly: false,
 				precision: 0,
@@ -115,6 +141,10 @@ export default defineComponent({
 				modelValue: null,
 			},
 			inputValue: '',
+			/** 【递增】按钮的禁用状态 */
+			isPlusDisabled: false,
+			/** 【递减】按钮的禁用状态 */
+			isMinusDisabled: false,
 		});
 		const app = getCurrentInstance();
 
@@ -132,7 +162,28 @@ export default defineComponent({
 			toRef(props, 'modelValue'),
 			newValue => {
 				if (typeof newValue === 'number' && !isNaN(newValue)) {
-					state.inputValue = `${newValue}`;
+					// 如果超出最大值或者低于最小值，则自动重置为最大值或最小值
+					if (newValue < props.min && props.min !== null) {
+						const valToNumber = Number.parseFloat(
+							props.min.toFixed(state.defaultProps.precision)
+						);
+
+						state.inputValue = `${valToNumber}`;
+						context.emit('update:modelValue', valToNumber);
+					} else if (newValue > props.max && props.min !== null) {
+						const valToNumber = Number.parseFloat(
+							props.max.toFixed(state.defaultProps.precision)
+						);
+
+						state.inputValue = `${props.max}`;
+						context.emit('update:modelValue', valToNumber);
+					} else {
+						state.inputValue = `${newValue}`;
+					}
+
+					// 同时需要设置控制按钮的禁用状态
+					state.isMinusDisabled = props.min !== null && newValue === props.min;
+					state.isPlusDisabled = props.min !== null && newValue === props.max;
 				}
 			},
 			{ immediate: true }
@@ -140,17 +191,14 @@ export default defineComponent({
 
 		function handleChange(e: Event) {
 			const target = e.target as HTMLTextAreaElement;
-
-			context.emit(
-				'update:modelValue',
-				Number.parseFloat(
-					Number.parseFloat(target.value).toFixed(state.defaultProps.precision)
-				)
-			);
-			// 再次格式化输入框中的值
-			state.inputValue = `${Number.parseFloat(target.value).toFixed(
+			let valToString = Number.parseFloat(target.value).toFixed(
 				state.defaultProps.precision
-			)}`;
+			);
+			let valToNumber = Number.parseFloat(valToString);
+
+			context.emit('update:modelValue', valToNumber);
+			// 再次格式化输入框中的值
+			state.inputValue = valToString;
 		}
 
 		function handleFocus(e: Event) {
@@ -165,20 +213,34 @@ export default defineComponent({
 		 * 递增
 		 */
 		function handlePlus() {
-			context.emit(
-				'update:modelValue',
-				state.defaultProps.modelValue + state.defaultProps.step
-			);
+			// 在禁用、只读或者超出最大值的状态下不可点击
+			if (
+				!state.defaultProps.disabled &&
+				!state.defaultProps.readonly &&
+				!state.isPlusDisabled
+			) {
+				context.emit(
+					'update:modelValue',
+					state.defaultProps.modelValue + state.defaultProps.step
+				);
+			}
 		}
 
 		/**
 		 * 递减
 		 */
 		function handleMinus() {
-			context.emit(
-				'update:modelValue',
-				state.defaultProps.modelValue - state.defaultProps.step
-			);
+			// 在禁用、只读或者超出最大值的状态下不可点击
+			if (
+				!state.defaultProps.disabled &&
+				!state.defaultProps.readonly &&
+				!state.isMinusDisabled
+			) {
+				context.emit(
+					'update:modelValue',
+					state.defaultProps.modelValue - state.defaultProps.step
+				);
+			}
 		}
 
 		return {

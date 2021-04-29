@@ -30,10 +30,12 @@
 			<v3-input-number
 				v-model="state.inputValue"
 				:controlsPosition="'both'"
-				:precision="2"
+				:precision="0"
 				:disabled="false"
 				:readonly="false"
-				:step="10"
+				:step="1"
+				:min="0"
+				:max="10"
 			></v3-input-number>
 		</div>
 	</div>
