@@ -8,6 +8,8 @@
 		<v3-input
 			v-model="state.inputValue"
 			:type="'text'"
+			:disabled="state.defaultProps.disabled"
+			:readonly="state.defaultProps.readonly"
 			@input="handleInput"
 			@change="handleChange"
 			@focus="handleFocus"
