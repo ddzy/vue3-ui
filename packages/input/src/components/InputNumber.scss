@@ -28,4 +28,8 @@
 			border-bottom: 1px solid $border-color-grey-default;
 		}
 	}
+
+  & :deep(input) {
+    text-align: center;
+  }
 }

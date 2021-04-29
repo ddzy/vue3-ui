@@ -10,7 +10,6 @@
 			:type="'text'"
 			:disabled="state.defaultProps.disabled"
 			:readonly="state.defaultProps.readonly"
-			@input="handleInput"
 			@change="handleChange"
 			@focus="handleFocus"
 			@blur="handleBlur"
@@ -72,7 +71,13 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, ref, watch } from 'vue';
+import {
+	defineComponent,
+	getCurrentInstance,
+	reactive,
+	toRef,
+	watch,
+} from 'vue';
 import V3Input from './Input.vue';
 import * as TYPES from '../index';
 
@@ -91,7 +96,7 @@ export default defineComponent({
 		readonly: Boolean as () => TYPES.INumberReadonly,
 		controlsPosition: String as () => TYPES.INumberControlsPosition,
 		placeholder: String as () => TYPES.INumberPlaceholder,
-		modelValue: String,
+		modelValue: Number,
 	},
 	setup(props, context) {
 		const state = reactive({
@@ -105,6 +110,7 @@ export default defineComponent({
 				readonly: false,
 				controlsPosition: 'both',
 				placeholder: '请输入内容',
+				modelValue: null,
 			},
 			inputValue: '',
 		});
@@ -120,15 +126,29 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+		watch(
+			toRef(props, 'modelValue'),
+			newValue => {
+				if (typeof newValue === 'number' && !isNaN(newValue)) {
+					state.inputValue = `${newValue}`;
+				}
+			},
+			{ immediate: true }
+		);
 
 		function handleChange(e: Event) {
 			const target = e.target as HTMLTextAreaElement;
-			context.emit('update:modelValue', target.value);
-		}
 
-		function handleInput(e: Event) {
-			const target = e.target as HTMLTextAreaElement;
-			context.emit('update:modelValue', target.value);
+			context.emit(
+				'update:modelValue',
+				Number.parseFloat(
+					Number.parseFloat(target.value).toFixed(state.defaultProps.precision)
+				)
+			);
+			// 再次格式化输入框中的值
+			state.inputValue = `${Number.parseFloat(target.value).toFixed(
+				state.defaultProps.precision
+			)}`;
 		}
 
 		function handleFocus(e: Event) {
@@ -144,7 +164,6 @@ export default defineComponent({
 			props,
 			app,
 			handleChange,
-			handleInput,
 			handleFocus,
 			handleBlur,
 		};

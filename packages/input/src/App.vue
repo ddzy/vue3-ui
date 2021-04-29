@@ -28,9 +28,11 @@
 		</div> -->
 		<div class="input-container">
 			<v3-input-number
+				v-model="state.inputValue"
 				:controlsPosition="'both'"
+				:precision="2"
 				:disabled="false"
-				:readonly="true"
+				:readonly="false"
 			></v3-input-number>
 		</div>
 	</div>
@@ -49,7 +51,11 @@ export default defineComponent({
 	},
 	setup(props, context) {
 		const state = reactive({
-			inputValue: '',
+			inputValue: 12,
+		});
+
+		watch(state, () => {
+			console.log('state :>> ', state);
 		});
 
 		function handleInput(e) {
