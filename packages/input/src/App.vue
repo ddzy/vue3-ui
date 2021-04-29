@@ -15,7 +15,7 @@
 			>
 			</v3-input>
 		</div> -->
-		<div class="textarea-container">
+		<!-- <div class="input-container">
 			<v3-input-textarea
 				v-model="state.inputValue"
 				:width="100"
@@ -25,6 +25,9 @@
 				:readonly="false"
 				:autoHeight="true"
 			></v3-input-textarea>
+		</div> -->
+		<div class="input-container">
+			<v3-input-number></v3-input-number>
 		</div>
 	</div>
 </template>
@@ -32,11 +35,13 @@
 import { defineComponent, reactive, ref, watch } from 'vue';
 import V3Input from './components/Input.vue';
 import V3InputTextarea from './components/InputTextarea.vue';
+import V3InputNumber from './components/InputNumber.vue';
 
 export default defineComponent({
 	components: {
 		V3Input,
 		V3InputTextarea,
+		V3InputNumber,
 	},
 	setup(props, context) {
 		const state = reactive({
