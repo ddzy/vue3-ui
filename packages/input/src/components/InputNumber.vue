@@ -191,9 +191,17 @@ export default defineComponent({
 
 		function handleChange(e: Event) {
 			const target = e.target as HTMLTextAreaElement;
-			let valToString = Number.parseFloat(target.value).toFixed(
-				state.defaultProps.precision
-			);
+			let value = null;
+
+			// 如果限制了输入值只能是步数（step）的倍数
+			if (state.defaultProps.stepStrictly) {
+				value = Number.parseInt(target.value);
+				value += value % state.defaultProps.step === 0 ? 0 : 1;
+			} else {
+				value = Number.parseFloat(target.value);
+			}
+
+			let valToString = value.toFixed(state.defaultProps.precision);
 			let valToNumber = Number.parseFloat(valToString);
 
 			context.emit('update:modelValue', valToNumber);
