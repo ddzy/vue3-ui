@@ -21,6 +21,7 @@
 						'v3-number__minus-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
 					}"
+					@click="handleMinus"
 				>
 					<i class="v3-icon v3-icon-sami-select"></i>
 				</div>
@@ -32,10 +33,10 @@
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
 					}"
 				>
-					<div class="v3-number__control-plus">
+					<div class="v3-number__control-plus" @click="handlePlus">
 						<i class="v3-icon v3-icon-arrow-up"></i>
 					</div>
-					<div class="v3-number__control-minus">
+					<div class="v3-number__control-minus" @click="handleMinus">
 						<i class="v3-icon v3-icon-arrow-down"></i>
 					</div>
 				</div>
@@ -48,6 +49,7 @@
 						'v3-number__plus-wrapper': true,
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
 					}"
+					@click="handlePlus"
 				>
 					<i class="v3-icon v3-icon-add-select"></i>
 				</div>
@@ -59,10 +61,10 @@
 						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
 					}"
 				>
-					<div class="v3-number__control-plus">
+					<div class="v3-number__control-plus" @click="handlePlus">
 						<i class="v3-icon v3-icon-arrow-up"></i>
 					</div>
-					<div class="v3-number__control-minus">
+					<div class="v3-number__control-minus" @click="handleMinus">
 						<i class="v3-icon v3-icon-arrow-down"></i>
 					</div>
 				</div>
@@ -159,6 +161,26 @@ export default defineComponent({
 			context.emit('blur', e);
 		}
 
+		/**
+		 * 递增
+		 */
+		function handlePlus() {
+			context.emit(
+				'update:modelValue',
+				state.defaultProps.modelValue + state.defaultProps.step
+			);
+		}
+
+		/**
+		 * 递减
+		 */
+		function handleMinus() {
+			context.emit(
+				'update:modelValue',
+				state.defaultProps.modelValue - state.defaultProps.step
+			);
+		}
+
 		return {
 			state,
 			props,
@@ -166,6 +188,8 @@ export default defineComponent({
 			handleChange,
 			handleFocus,
 			handleBlur,
+			handlePlus,
+			handleMinus,
 		};
 	},
 });

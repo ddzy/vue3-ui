@@ -33,6 +33,7 @@
 				:precision="2"
 				:disabled="false"
 				:readonly="false"
+				:step="10"
 			></v3-input-number>
 		</div>
 	</div>
