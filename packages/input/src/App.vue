@@ -23,6 +23,7 @@
 				:resize="'both'"
 				:disabled="false"
 				:readonly="false"
+				:autoHeight="true"
 			></v3-input-textarea>
 		</div>
 	</div>

@@ -7,11 +7,12 @@
 		}"
 	>
 		<textarea
-			:value="props.modelValue"
+			ref="textareaRef"
 			:style="{
 				width: `${state.defaultProps.width}px`,
 				height: `${state.defaultProps.height}px`,
 			}"
+			:value="props.modelValue"
 			:disabled="state.defaultProps.disabled"
 			:readonly="state.defaultProps.readonly"
 			:placeholder="state.defaultProps.placeholder"
@@ -26,7 +27,14 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, ref, watch } from 'vue';
+import {
+	defineComponent,
+	getCurrentInstance,
+	reactive,
+	ref,
+	toRef,
+	watch,
+} from 'vue';
 import * as TYPES from '../index';
 
 export default defineComponent({
@@ -54,6 +62,7 @@ export default defineComponent({
 			},
 		});
 		const app = getCurrentInstance();
+		const textareaRef = ref(document.createElement('textarea'));
 
 		watch(
 			props,
@@ -65,6 +74,38 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+		watch(
+			toRef(props, 'modelValue'),
+			() => {
+				if (state.defaultProps.autoHeight && props.modelValue) {
+					_autoHeight();
+				}
+			},
+			{ immediate: true }
+		);
+
+		/**
+		 * textarea 高度自适应
+		 */
+		function _autoHeight() {
+			const paddingBottom = Number.parseFloat(
+				window
+					.getComputedStyle(textareaRef.value)
+					.paddingBottom.replace('px', '')
+			);
+			const borderBottom = Number.parseFloat(
+				window
+					.getComputedStyle(textareaRef.value)
+					.borderBottomWidth.replace('px', '')
+			);
+
+			textareaRef.value.style.height = 'auto';
+			state.defaultProps.height =
+				textareaRef.value.scrollHeight -
+				paddingBottom -
+				borderBottom -
+				borderBottom;
+		}
 
 		function handleChange(e: Event) {
 			const target = e.target as HTMLTextAreaElement;
@@ -92,6 +133,7 @@ export default defineComponent({
 			handleInput,
 			handleFocus,
 			handleBlur,
+			textareaRef,
 		};
 	},
 });
