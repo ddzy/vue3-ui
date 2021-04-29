@@ -8,7 +8,7 @@
 		}
 
 		&.v3-number__control--both {
-			padding: 0 6px;
+			padding: 0 $padding-small;
 		}
 	}
 
@@ -17,7 +17,7 @@
 		line-height: 1;
 		.v3-number__control-plus,
 		.v3-number__control-minus {
-			padding: 0 12px;
+			padding: 0 $padding-medium;
 			cursor: pointer;
 			&:hover {
 				color: $primary-color;
