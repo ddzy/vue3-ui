@@ -1,20 +1,8 @@
 <template>
 	<div class="input-demo-container">
-		<!-- <div class="input-container">
-			<v3-input
-				v-model="state.inputValue"
-				:type="'password'"
-				:suffixIcon="'v3-icon-editor'"
-				:readonly="false"
-				:disabled="false"
-				:clearable="true"
-				:showWordLimit="true"
-				:maxlength="1000"
-				:placeholder="'请填写用户名'"
-				:showPassword="true"
-			>
-			</v3-input>
-		</div> -->
+		<div class="input-container">
+			<v3-input :type="'text'"> </v3-input>
+		</div>
 		<!-- <div class="input-container">
 			<v3-input-textarea
 				v-model="state.inputValue"
@@ -26,7 +14,7 @@
 				:autoHeight="true"
 			></v3-input-textarea>
 		</div> -->
-		<div class="input-container">
+		<!-- <div class="input-container">
 			<v3-input-number
 				v-model="state.inputValue"
 				:controlsPosition="'both'"
@@ -38,7 +26,7 @@
 				:max="20"
 				:stepStrictly="true"
 			></v3-input-number>
-		</div>
+		</div> -->
 	</div>
 </template>
 <script lang="ts">

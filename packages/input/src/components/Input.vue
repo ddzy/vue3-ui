@@ -225,7 +225,7 @@ export default defineComponent({
 			toRef(props, 'modelValue'),
 			newValue => {
 				// 实时监听输入框值的变化，更改字符统计的值
-				state.currentWordCount = newValue.length;
+				state.currentWordCount = newValue && newValue.length;
 			},
 			{ immediate: true }
 		);
