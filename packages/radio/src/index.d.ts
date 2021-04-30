@@ -1,0 +1,31 @@
+export type IInputType = 'text' | 'password';
+export type IInputSuffixIcon = string;
+export type IInputPrefixIcon = string;
+export type IInputClearable = boolean;
+export type IInputReadonly = boolean;
+export type IInputDisabled = boolean;
+export type IInputPrependIcon = string;
+export type IInputAppendIcon = string;
+export type IInputPlaceholder = string;
+export type IInputShowWordLimit = boolean;
+export type IInputMinLength = number;
+export type IInputMaxLength = number;
+export type IInputShowPassword = boolean;
+
+export type ITextareaWidth = number;
+export type ITextareaHeight = number;
+export type ITextareaResize = 'none' | 'both' | 'horizontal' | 'vertical';
+export type ITextareaAutoHeight = boolean;
+export type ITextareaDisabled = boolean;
+export type ITextareaReadonly = boolean;
+export type ITextareaPlaceholder = string;
+
+export type INumberMin = number;
+export type INumberMax = number;
+export type INumberStep = number;
+export type INumberStepStrictly = boolean;
+export type INumberPrecision = number;
+export type INumberDisabled = boolean;
+export type INumberReadonly = boolean;
+export type INumberControlsPosition = 'both' | 'right' | 'left';
+export type INumberPlaceholder = string;

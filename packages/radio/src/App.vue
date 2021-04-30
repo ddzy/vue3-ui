@@ -1,0 +1,94 @@
+<template>
+	<div class="input-demo-container">
+		<div class="input-container">
+			<v3-input
+				v-model="state.inputValue"
+				:type="'text'"
+				:maxlength="10"
+				:showWordLimit="true"
+			>
+			</v3-input>
+		</div>
+		<!-- <div class="input-container">
+			<v3-input-textarea
+				v-model="state.inputValue"
+				:width="100"
+				:height="150"
+				:resize="'both'"
+				:disabled="false"
+				:readonly="false"
+				:autoHeight="true"
+			></v3-input-textarea>
+		</div> -->
+		<!-- <div class="input-container">
+			<v3-input-number
+				v-model="state.inputValue"
+				:controlsPosition="'both'"
+				:precision="0"
+				:disabled="false"
+				:readonly="false"
+				:step="2"
+				:min="0"
+				:max="20"
+				:stepStrictly="true"
+			></v3-input-number>
+		</div> -->
+	</div>
+</template>
+<script lang="ts">
+import { defineComponent, reactive, ref, watch } from 'vue';
+import V3Input from './components/Input.vue';
+import V3InputTextarea from './components/InputTextarea.vue';
+import V3InputNumber from './components/InputNumber.vue';
+
+export default defineComponent({
+	components: {
+		V3Input,
+		V3InputTextarea,
+		V3InputNumber,
+	},
+	setup(props, context) {
+		const state = reactive({
+			inputValue: '测试值123456789',
+		});
+
+		watch(state, () => {
+			console.log('state :>> ', state);
+		});
+
+		function handleInput(e) {
+			console.log('input_e :>> ', e);
+		}
+		function handleChange(e: Event) {
+			console.log('change_e :>> ', (e.target as HTMLInputElement).value);
+		}
+		function handleFocus(e) {
+			console.log('focus_e :>> ', e);
+		}
+		function handleBlur(e) {
+			console.log('blur_e :>> ', e);
+		}
+		function handleClear() {
+			console.log('cleared :>> ', 'cleared');
+		}
+		function handleKeypress() {
+			console.log('2 :>> ', 2);
+		}
+
+		return {
+			state,
+			handleChange,
+			handleFocus,
+			handleInput,
+			handleBlur,
+			handleClear,
+			handleKeypress,
+		};
+	},
+});
+</script>
+<style lang="scss" scoped>
+.input-container {
+	width: 200px;
+}
+</style>
