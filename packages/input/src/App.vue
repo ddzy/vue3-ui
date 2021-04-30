@@ -1,7 +1,13 @@
 <template>
 	<div class="input-demo-container">
 		<div class="input-container">
-			<v3-input :type="'text'"> </v3-input>
+			<v3-input
+				v-model="state.inputValue"
+				:type="'text'"
+				:maxlength="10"
+				:showWordLimit="true"
+			>
+			</v3-input>
 		</div>
 		<!-- <div class="input-container">
 			<v3-input-textarea
@@ -43,7 +49,7 @@ export default defineComponent({
 	},
 	setup(props, context) {
 		const state = reactive({
-			inputValue: 12,
+			inputValue: '测试值123456789',
 		});
 
 		watch(state, () => {

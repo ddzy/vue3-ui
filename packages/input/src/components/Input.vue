@@ -3,6 +3,7 @@
 		:class="{
 			'v3-input': true,
 			'v3-input--disabled': state.defaultProps.disabled,
+			'v3-input--invalid': !state.isValidSuccess,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
@@ -200,6 +201,8 @@ export default defineComponent({
 			totalWordCount: 0,
 			/** 输入的密码是否明文显示 */
 			isPasswordClearly: true,
+			/** 是否验证成功 */
+			isValidSuccess: false,
 		});
 		const app = getCurrentInstance();
 
@@ -218,14 +221,25 @@ export default defineComponent({
 			newValue => {
 				// 实时监听【maxlength】的变化，更新最大输入字符数
 				state.totalWordCount = newValue;
+
+				if (props.modelValue) {
+					// 如果最大值小于当前的输入值的长度，并且最小值大于最大值，那么验证失败
+					state.isValidSuccess =
+						newValue >= props.modelValue.length && newValue > props.minlength;
+				}
 			},
 			{ immediate: true }
 		);
 		watch(
 			toRef(props, 'modelValue'),
 			newValue => {
-				// 实时监听输入框值的变化，更改字符统计的值
-				state.currentWordCount = newValue && newValue.length;
+				if (newValue) {
+					// 实时监听输入框值的变化，更改字符统计的值
+					state.currentWordCount = newValue.length;
+					// 如果值的长度大于已限制的最大数目，那么验证失败
+					state.isValidSuccess =
+						state.defaultProps.maxlength >= newValue.length;
+				}
 			},
 			{ immediate: true }
 		);

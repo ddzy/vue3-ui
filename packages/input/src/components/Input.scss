@@ -20,6 +20,23 @@
 		cursor: not-allowed;
 	}
 
+	// 验证失败状态
+	&.v3-input--invalid {
+		.v3-input__inner-wrapper {
+			border-color: $danger-color;
+			&:hover {
+				border-color: $danger-color;
+			}
+			&:focus-within {
+				border-color: $danger-color;
+				animation-name: inputInvalidActive;
+			}
+		}
+		.v3-input__limit {
+			color: $danger-color;
+		}
+	}
+
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__inner-wrapper {
@@ -155,12 +172,26 @@
 		box-shadow: none;
 	}
 	50% {
-		box-shadow: 0 0 2px 2px rgba(0, 160, 255, 0.1);
+		box-shadow: 0 0 2px 2px $primary-color-plain;
 	}
 	75% {
-		box-shadow: 0 0 4px 2px rgba(0, 160, 255, 0.1);
+		box-shadow: 0 0 4px 2px $primary-color-plain;
 	}
 	100% {
-		box-shadow: 0 0 10px 2px rgba(0, 160, 255, 0.1);
+		box-shadow: 0 0 10px 2px $primary-color-plain;
+	}
+}
+@keyframes inputInvalidActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px $danger-color-plain;
+	}
+	75% {
+		box-shadow: 0 0 4px 2px $danger-color-plain;
+	}
+	100% {
+		box-shadow: 0 0 10px 2px $danger-color-plain;
 	}
 }
