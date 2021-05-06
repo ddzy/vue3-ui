@@ -51,24 +51,36 @@
 				>单选4</v3-radio
 			>
 		</div>
+		<div class="demo__inner">
+			<v3-radio-group v-model="state.radioValue2" @change="handleChange">
+				<v3-radio :label="1">单选1</v3-radio>
+				<v3-radio :label="2">单选2</v3-radio>
+				<v3-radio :label="3">单选3</v3-radio>
+				<v3-radio :label="4">单选4</v3-radio>
+			</v3-radio-group>
+		</div>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import V3Radio from './components/Radio.vue';
+import V3RadioGroup from './components/RadioGroup.vue';
 
 export default defineComponent({
 	components: {
 		V3Radio,
+		V3RadioGroup,
 	},
 	setup(props, context) {
 		const state = reactive({
 			inputValue: '测试值123456789',
 			radioValue: 3,
+			radioValue2: 2,
+			radioValue3: 1,
 		});
 
-		function handleChange(e) {
-			console.log('e :>> ', e);
+		function handleChange(v) {
+			console.log('v :>> ', v);
 		}
 
 		return {

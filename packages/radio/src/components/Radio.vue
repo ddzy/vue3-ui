@@ -35,8 +35,13 @@ import {
 	ref,
 	toRef,
 	watch,
+	inject,
 } from 'vue';
 import * as TYPES from '../index';
+import {
+	RADIO_GROUP_CHANGE_FUNC_PROVIDE,
+	RADIO_GROUP_INSTANCE_PROVIDE,
+} from '../../../../packages/common/constants/provide-symbol';
 
 export default defineComponent({
 	name: 'V3Radio',
@@ -55,9 +60,21 @@ export default defineComponent({
 			},
 			/** 单选框的值 */
 			radioValue: null,
+			/** RadioGroup 的 change 事件 */
+			injectedOnRadioGroupChange: null,
+			/** RadioGroup 实例 */
+			injectedRadioGroupInstance: null,
 		});
 		const app = getCurrentInstance();
 		const radioRef = ref(document.createElement('input'));
+		const isRadioGroup = checkIsRadioGroup();
+
+		if (isRadioGroup) {
+			state.injectedOnRadioGroupChange = inject(
+				RADIO_GROUP_CHANGE_FUNC_PROVIDE
+			);
+			state.injectedRadioGroupInstance = inject(RADIO_GROUP_INSTANCE_PROVIDE);
+		}
 
 		watch(
 			props,
@@ -71,16 +88,41 @@ export default defineComponent({
 		);
 
 		watch(
-			toRef(props, 'modelValue'),
+			toRef(
+				isRadioGroup ? state.injectedRadioGroupInstance.props : props,
+				'modelValue'
+			),
 			newValue => {
 				state.radioValue = newValue;
 			},
 			{ immediate: true }
 		);
 
+		/**
+		 * 检查当前单选器的父级是否存在单选器组
+		 */
+		function checkIsRadioGroup() {
+			let parent = app.parent;
+			let result = false;
+
+			while (parent) {
+				if (parent.type.name === 'V3RadioGroup') {
+					result = true;
+					break;
+				}
+				parent = parent.parent;
+			}
+
+			return result;
+		}
+
 		function handleChange(e) {
-			context.emit('update:modelValue', state.radioValue);
-			context.emit('change', props.label, e);
+			if (isRadioGroup) {
+				state.injectedOnRadioGroupChange(state.radioValue, e);
+			} else {
+				context.emit('update:modelValue', state.radioValue);
+				context.emit('change', props.label, state.radioValue, e);
+			}
 		}
 
 		return {
@@ -91,6 +133,7 @@ export default defineComponent({
 			radioRef,
 		};
 	},
+	methods: {},
 });
 </script>
 <style lang="scss" scoped>
