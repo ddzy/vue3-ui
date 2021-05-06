@@ -2,12 +2,14 @@
 	display: inline-block;
 	margin-left: $margin-medium;
 
+	// 禁用状态
 	&.v3-radio--disabled {
 		.v3-radio__label-wrapper {
 			cursor: not-allowed;
 		}
 	}
 
+	// 有边框的单选框
 	&.v3-radio--bordered {
 		.v3-radio__label-wrapper {
 			border: 1px solid $border-color-grey-default;
@@ -79,6 +81,9 @@
 			height: 14px;
 			border: 1px solid $info-color;
 			border-radius: 50%;
+			&:hover {
+				border-color: $primary-color;
+			}
 		}
 
 		.v3-radio__select::after {
