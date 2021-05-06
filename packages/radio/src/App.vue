@@ -24,7 +24,11 @@
 			<v3-radio v-model="state.radioValue" :label="1" @change="handleChange"
 				>单选1</v3-radio
 			>
-			<v3-radio v-model="state.radioValue" :label="2" @change="handleChange"
+			<v3-radio
+				v-model="state.radioValue"
+				:label="2"
+				:disabled="true"
+				@change="handleChange"
 				>单选2</v3-radio
 			>
 			<v3-radio v-model="state.radioValue" :label="3" @change="handleChange"
@@ -47,7 +51,7 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			inputValue: '测试值123456789',
-			radioValue: 1,
+			radioValue: 2,
 		});
 
 		function handleChange(e) {
@@ -63,7 +67,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .demo__inner {
-	width: 200px;
+	min-width: 200px;
 	margin-top: 20px;
 }
 </style>

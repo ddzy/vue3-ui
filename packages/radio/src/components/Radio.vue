@@ -2,6 +2,7 @@
 	<div
 		:class="{
 			'v3-radio': true,
+			'v3-radio--disabled': state.defaultProps.disabled,
 		}"
 	>
 		<label
@@ -15,6 +16,7 @@
 				v-model="state.radioValue"
 				:value="props.label"
 				:id="`v3-radio__input--${props.label}`"
+				:disabled="state.defaultProps.disabled"
 				@change="handleChange"
 			/>
 
