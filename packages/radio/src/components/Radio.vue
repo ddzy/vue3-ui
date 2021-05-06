@@ -7,17 +7,14 @@
 			'v3-radio--checked': props.label === state.radioValue,
 		}"
 	>
-		<label
-			class="v3-radio__label-wrapper"
-			:for="`v3-radio__input--${props.label}`"
-		>
+		<label class="v3-radio__label-wrapper" :for="`v3-radio__input--${app.uid}`">
 			<input
 				ref="radioRef"
 				type="radio"
 				class="v3-radio__input"
 				v-model="state.radioValue"
 				:value="props.label"
-				:id="`v3-radio__input--${props.label}`"
+				:id="`v3-radio__input--${app.uid}`"
 				:disabled="state.defaultProps.disabled"
 				@change="handleChange"
 			/>
