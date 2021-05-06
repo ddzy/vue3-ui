@@ -2,6 +2,12 @@
 	display: inline-block;
 	margin-left: $margin-medium;
 
+	&.v3-radio--disabled {
+		.v3-radio__label-wrapper {
+			cursor: not-allowed;
+		}
+	}
+
 	.v3-radio__label-wrapper {
 		display: flex;
 		justify-content: flex-start;
