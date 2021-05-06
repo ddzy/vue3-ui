@@ -3,6 +3,8 @@
 		:class="{
 			'v3-radio': true,
 			'v3-radio--disabled': state.defaultProps.disabled,
+			'v3-radio--bordered': state.defaultProps.border,
+			'v3-radio--checked': props.label === state.radioValue,
 		}"
 	>
 		<label
