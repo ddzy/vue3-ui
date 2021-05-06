@@ -47,7 +47,6 @@ import {
 export default defineComponent({
 	name: 'V3RadioButton',
 	props: {
-		border: Boolean as PropType<TYPES.IRadioBorder>,
 		disabled: Boolean as PropType<TYPES.IRadioDisabled>,
 		label: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
 		modelValue: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
@@ -56,7 +55,6 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			defaultProps: {
-				border: false,
 				disabled: false,
 			},
 			/** 单选框的值 */
