@@ -4,12 +4,18 @@
 			'v3-radio': true,
 		}"
 	>
-		<label for="v3-radio__input" class="v3-radio__label-wrapper">
+		<label
+			class="v3-radio__label-wrapper"
+			:for="`v3-radio__input--${props.label}`"
+		>
 			<input
-				id="v3-radio__input"
+				ref="radioRef"
 				type="radio"
 				class="v3-radio__input"
-				:value="state.defaultProps.label"
+				v-model="state.radioValue"
+				:value="props.label"
+				:id="`v3-radio__input--${props.label}`"
+				@change="handleChange"
 			/>
 
 			<div class="v3-radio__select"></div>
@@ -25,6 +31,7 @@ import {
 	getCurrentInstance,
 	PropType,
 	reactive,
+	ref,
 	toRef,
 	watch,
 } from 'vue';
@@ -35,26 +42,21 @@ export default defineComponent({
 	props: {
 		border: Boolean as PropType<TYPES.IRadioBorder>,
 		disabled: Boolean as PropType<TYPES.IRadioDisabled>,
-		label: {
-			type: (Boolean || String || Number) as PropType<TYPES.IRadioLabel>,
-			validator(label) {
-				return (
-					typeof label === 'boolean' ||
-					typeof label === 'string' ||
-					typeof label === 'number'
-				);
-			},
-		},
+		label: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+		modelValue: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
 	},
+	emits: ['change', 'update:modelValue'],
 	setup(props, context) {
 		const state = reactive({
 			defaultProps: {
 				border: false,
 				disabled: false,
-				label: '',
 			},
+			/** 单选框的值 */
+			radioValue: null,
 		});
 		const app = getCurrentInstance();
+		const radioRef = ref(document.createElement('input'));
 
 		watch(
 			props,
@@ -66,10 +68,26 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+
+		watch(
+			toRef(props, 'modelValue'),
+			newValue => {
+				state.radioValue = newValue;
+			},
+			{ immediate: true }
+		);
+
+		function handleChange(e) {
+			context.emit('update:modelValue', state.radioValue);
+			context.emit('change', props.label, e);
+		}
+
 		return {
 			state,
 			props,
 			app,
+			handleChange,
+			radioRef,
 		};
 	},
 });
