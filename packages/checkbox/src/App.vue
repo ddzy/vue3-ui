@@ -71,16 +71,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import V3Radio from './components/Radio.vue';
-import V3RadioGroup from './components/RadioGroup.vue';
-import V3RadioButton from './components/RadioButton.vue';
 
 export default defineComponent({
-	components: {
-		V3Radio,
-		V3RadioGroup,
-		V3RadioButton,
-	},
 	setup(props, context) {
 		const state = reactive({
 			inputValue: '测试值123456789',
