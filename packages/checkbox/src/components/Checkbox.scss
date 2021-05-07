@@ -46,9 +46,6 @@
 				& ~ .v3-checkbox__select {
 					i {
 						color: $primary-color;
-						&:not(.v3-checkbox__select--indeterminated) {
-							animation: checkboxActive 0.3s ease-out 0s 1;
-						}
 					}
 				}
 				& ~ .v3-checkbox__label {
@@ -82,20 +79,5 @@
 		.v3-checkbox__label {
 			margin-left: $padding-small;
 		}
-	}
-}
-
-@keyframes checkboxActive {
-	0% {
-		box-shadow: none;
-	}
-	50% {
-		box-shadow: 0 0 2px 2px rgba(0, 160, 255, 0.3);
-	}
-	75% {
-		box-shadow: 0 0 4px 2px rgba(0, 160, 255, 0.3);
-	}
-	100% {
-		box-shadow: 0 0 8px 2px rgba(0, 160, 255, 0.3);
 	}
 }
