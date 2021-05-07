@@ -75,13 +75,18 @@
 				:indeterminatedIcon="'v3-icon-sami-select'"
 				>多选1</v3-checkbox
 			>
-			<v3-checkbox v-model="state.radioValue5" :indeterminate="true"
+			<v3-checkbox
+				v-model="state.radioValue5"
+				:indeterminate="true"
+				:border="true"
 				>多选2</v3-checkbox
 			>
 			<v3-checkbox v-model="state.radioValue6" :disabled="true"
 				>多选3</v3-checkbox
 			>
-			<v3-checkbox v-model="state.radioValue7">多选4</v3-checkbox>
+			<v3-checkbox v-model="state.radioValue7" :border="true"
+				>多选4</v3-checkbox
+			>
 		</div>
 	</div>
 </template>
