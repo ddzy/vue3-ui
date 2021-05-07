@@ -4,7 +4,7 @@
 			'v3-checkbox': true,
 			'v3-checkbox--disabled': state.defaultProps.disabled,
 			'v3-checkbox--bordered': state.defaultProps.border,
-			'v3-checkbox--checked': props.label === state.checkboxValue,
+			'v3-checkbox--checked': !!state.checkboxValue,
 		}"
 	>
 		<label
@@ -22,7 +22,35 @@
 				@change="handleChange"
 			/>
 
-			<div class="v3-checkbox__select"></div>
+			<div class="v3-checkbox__select">
+				<!--
+          有三种状态的图标
+          其中，如果状态为【indeterminate】，则图标不能发生变化
+          反之，则切换【选中】or【不选中】的图标
+        -->
+				<i
+					v-if="state.defaultProps.indeterminate"
+					:class="{
+						'v3-icon': true,
+						'v3-checkbox__select--indeterminated': true,
+						[state.defaultProps.indeterminatedIcon]: true,
+					}"
+				></i>
+				<i
+					v-else-if="!state.defaultProps.indeterminate && state.checkboxValue"
+					:class="{
+						'v3-icon': true,
+						[state.defaultProps.selectedIcon]: true,
+					}"
+				></i>
+				<i
+					v-else-if="!state.defaultProps.indeterminate && !state.checkboxValue"
+					:class="{
+						'v3-icon': true,
+						[state.defaultProps.defaultIcon]: true,
+					}"
+				></i>
+			</div>
 			<div class="v3-checkbox__label">
 				<slot v-if="app.slots.default"></slot>
 				<span v-else>{{
@@ -58,10 +86,6 @@ export default defineComponent({
 		disabled: Boolean as PropType<TYPES.ICheckboxDisabled>,
 		/** 复选框的值 */
 		label: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
-		/** 限制最小的选中个数 */
-		min: Number as PropType<TYPES.ICheckboxMin>,
-		/** 限制最大的选中个数 */
-		max: Number as PropType<TYPES.ICheckboxMax>,
 		/** 复选框是否为不确定状态 */
 		indeterminate: Boolean as PropType<TYPES.ICheckboxIndeterminate>,
 		/** 选中时的复选框图标 */
@@ -70,7 +94,7 @@ export default defineComponent({
 		indeterminatedIcon: String as PropType<TYPES.ICheckboxIndeterminatedIcon>,
 		/** 未选中状态下的复选框图标 */
 		defaultIcon: String as PropType<TYPES.ICheckboxDefaultIcon>,
-		modelValue: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+		modelValue: Boolean as PropType<boolean>,
 	},
 	emits: ['change', 'update:modelValue'],
 	setup(props, context) {
@@ -79,12 +103,14 @@ export default defineComponent({
 				border: false,
 				disabled: false,
 				indeterminate: false,
-				selectedIcon: 'v3-icon-check-box',
-				indeterminatedIcon: '',
-				defaultIcon: 'v3-icon-check-box',
+				selectedIcon: 'v3-icon-checkbox-selected',
+				indeterminatedIcon: 'v3-icon-checkbox-indeterminated',
+				defaultIcon: 'v3-icon-checkbox-default',
 			},
-			/** 复选框的值 */
-			checkboxValue: null,
+			/**
+			 * 复选框的值
+			 */
+			checkboxValue: false,
 			/** CheckboxGroup 的 change 事件 */
 			injectedOnCheckboxGroupChange: null,
 			/** CheckboxGroup 实例 */
@@ -120,7 +146,12 @@ export default defineComponent({
 				'modelValue'
 			),
 			newValue => {
-				state.checkboxValue = newValue;
+				// 判断选中状态
+				if (isCheckboxGroup) {
+					state.checkboxValue = newValue.includes(props.label);
+				} else {
+					state.checkboxValue = (newValue as unknown) as boolean;
+				}
 			},
 			{ immediate: true }
 		);
@@ -145,7 +176,11 @@ export default defineComponent({
 
 		function handleChange(e) {
 			if (isCheckboxGroup) {
-				state.injectedOnCheckboxGroupChange(state.checkboxValue, e);
+				state.injectedOnCheckboxGroupChange(
+					state.checkboxValue,
+					props.label,
+					e
+				);
 			} else {
 				context.emit('update:modelValue', state.checkboxValue);
 				context.emit('change', props.label, state.checkboxValue, e);

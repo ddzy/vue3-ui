@@ -9,7 +9,7 @@
 		}
 	}
 
-	// 有边框的单选框
+	// 有边框的复选框
 	&.v3-checkbox--bordered {
 		.v3-checkbox__label-wrapper {
 			border: 1px solid $border-color-grey-default;
@@ -41,32 +41,26 @@
 
 		.v3-checkbox__input {
 			display: none;
-			&:checked {
-				// & ~ .v3-checkbox__select {
-				// 	&::after {
-				// 		transform: scale(1);
-				// 	}
-				// }
-			}
+
 			&:checked:not(:disabled) {
-				// & ~ .v3-checkbox__select {
-				// 	border-color: $primary-color;
-				// 	animation: checkboxActive 0.3s ease-out 0s 1;
-				// 	&::after {
-				// 		transform: scale(1);
-				// 	}
-				// }
+				& ~ .v3-checkbox__select {
+					i {
+						color: $primary-color;
+						&:not(.v3-checkbox__select--indeterminated) {
+							animation: checkboxActive 0.3s ease-out 0s 1;
+						}
+					}
+				}
 				& ~ .v3-checkbox__label {
 					color: $primary-color;
 				}
 			}
 			&:disabled {
-				// & ~ .v3-checkbox__select {
-				// 	border-color: $border-color-grey-default;
-				// 	&::after {
-				// 		background-color: $info-color;
-				// 	}
-				// }
+				& ~ .v3-checkbox__select {
+					i {
+						color: $border-color-grey-default;
+					}
+				}
 				& ~ .v3-checkbox__label {
 					color: $info-color;
 				}
@@ -74,22 +68,16 @@
 		}
 
 		.v3-checkbox__select {
-			position: relative;
-			box-sizing: border-box;
-			width: 14px;
-			height: 14px;
+			display: flex;
+			align-items: center;
+			i {
+				font-size: $font-size-large;
+				color: $info-color;
+				&.v3-checkbox__select--indeterminated {
+					color: $primary-color;
+				}
+			}
 		}
-
-		// .v3-checkbox__select::after {
-		// 	content: '';
-		// 	display: block;
-		// 	width: 100%;
-		// 	height: 100%;
-		// 	border-radius: 50%;
-		// 	background-color: $primary-color;
-		// 	transition: all 0.15s ease;
-		// 	transform: scale(0);
-		// }
 
 		.v3-checkbox__label {
 			margin-left: $padding-small;

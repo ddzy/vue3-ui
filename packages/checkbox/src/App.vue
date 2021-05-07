@@ -68,14 +68,25 @@
 			</v3-radio-group>
 		</div>
 		<div class="demo__inner">
-			<v3-checkbox v-model="state.radioValue4">多选1</v3-checkbox>
-			<v3-checkbox v-model="state.radioValue5">多选2</v3-checkbox>
-			<v3-checkbox v-model="state.radioValue6">多选3</v3-checkbox>
+			<v3-checkbox
+				v-model="state.radioValue4"
+				:defaultIcon="'v3-icon-like'"
+				:selectedIcon="'v3-icon-like1'"
+				:indeterminatedIcon="'v3-icon-sami-select'"
+				>多选1</v3-checkbox
+			>
+			<v3-checkbox v-model="state.radioValue5" :indeterminate="true"
+				>多选2</v3-checkbox
+			>
+			<v3-checkbox v-model="state.radioValue6" :disabled="true"
+				>多选3</v3-checkbox
+			>
+			<v3-checkbox v-model="state.radioValue7">多选4</v3-checkbox>
 		</div>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, toRef, watch } from 'vue';
 import V3Checkbox from './components/Checkbox.vue';
 
 export default defineComponent({
@@ -90,7 +101,12 @@ export default defineComponent({
 			radioValue3: 1,
 			radioValue4: true,
 			radioValue5: true,
-			radioValue6: true,
+			radioValue6: false,
+			radioValue7: false,
+		});
+
+		watch(toRef(state, 'radioValue4'), newValue => {
+			console.log('state.radioValue4 :>> ', state.radioValue4);
 		});
 
 		function handleChange(v) {
