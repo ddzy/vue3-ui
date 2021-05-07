@@ -6,6 +6,41 @@
   "description": "vue3 ui 组件库",
   "glyphs": [
     {
+      "icon_id": "46292",
+      "name": "Like",
+      "font_class": "like",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "1190823",
+      "name": "like",
+      "font_class": "like1",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "736604",
+      "name": "check-box-outline-blank",
+      "font_class": "checkboxoutlineblank",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "6988497",
+      "name": "check-box",
+      "font_class": "check-box",
+      "unicode": "ec58",
+      "unicode_decimal": 60504
+    },
+    {
+      "icon_id": "10914858",
+      "name": "checkbox-indeterminate-fill",
+      "font_class": "checkbox-indeterminate-fill",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
       "icon_id": "12011691",
       "name": "arrow-down",
       "font_class": "arrow-down",
