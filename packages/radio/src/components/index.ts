@@ -13,15 +13,15 @@ interface ICompoent {
  */
 const globalComponentList: ICompoent[] = [
 	{
-		name: 'v3-input',
+		name: 'v3-radio',
 		component: V3Radio,
 	},
 	{
-		name: 'v3-button-textarea',
+		name: 'v3-radio-button',
 		component: V3RadioButton,
 	},
 	{
-		name: 'v3-button-number',
+		name: 'v3-radio-group',
 		component: V3RadioGroup,
 	},
 ];
