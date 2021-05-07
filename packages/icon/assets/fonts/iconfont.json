@@ -22,21 +22,21 @@
     {
       "icon_id": "736604",
       "name": "check-box-outline-blank",
-      "font_class": "checkboxoutlineblank",
+      "font_class": "checkbox-default",
       "unicode": "e63b",
       "unicode_decimal": 58939
     },
     {
       "icon_id": "6988497",
       "name": "check-box",
-      "font_class": "check-box",
+      "font_class": "checkbox-selected",
       "unicode": "ec58",
       "unicode_decimal": 60504
     },
     {
       "icon_id": "10914858",
       "name": "checkbox-indeterminate-fill",
-      "font_class": "checkbox-indeterminate-fill",
+      "font_class": "checkbox-indeterminated",
       "unicode": "e650",
       "unicode_decimal": 58960
     },

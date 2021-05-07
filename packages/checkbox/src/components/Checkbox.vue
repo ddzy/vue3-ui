@@ -25,7 +25,9 @@
 			<div class="v3-checkbox__select"></div>
 			<div class="v3-checkbox__label">
 				<slot v-if="app.slots.default"></slot>
-				<span v-else>{{ props.label }}</span>
+				<span v-else>{{
+					isCheckboxGroup ? props.modelValue : props.label
+				}}</span>
 			</div>
 		</label>
 	</div>
@@ -77,9 +79,9 @@ export default defineComponent({
 				border: false,
 				disabled: false,
 				indeterminate: false,
-				selectedIcon: '',
+				selectedIcon: 'v3-icon-check-box',
 				indeterminatedIcon: '',
-				defaultIcon: '',
+				defaultIcon: 'v3-icon-check-box',
 			},
 			/** 复选框的值 */
 			checkboxValue: null,
@@ -156,6 +158,7 @@ export default defineComponent({
 			app,
 			handleChange,
 			checkboxRef,
+			isCheckboxGroup,
 		};
 	},
 	methods: {},
