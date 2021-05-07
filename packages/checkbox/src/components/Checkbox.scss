@@ -1,0 +1,119 @@
+.v3-checkbox {
+	display: inline-block;
+	margin-left: $margin-medium;
+
+	// 禁用状态
+	&.v3-checkbox--disabled {
+		.v3-checkbox__label-wrapper {
+			cursor: not-allowed;
+		}
+	}
+
+	// 有边框的单选框
+	&.v3-checkbox--bordered {
+		.v3-checkbox__label-wrapper {
+			border: 1px solid $border-color-grey-default;
+			border-radius: 6px;
+			padding: $padding-small $padding-medium;
+		}
+	}
+
+	&.v3-checkbox--disabled.v3-checkbox--bordered {
+		.v3-checkbox__label-wrapper {
+			border-color: $border-color-grey-small;
+		}
+	}
+
+	&.v3-checkbox--bordered.v3-checkbox--checked:not(.v3-checkbox--disabled) {
+		.v3-checkbox__label-wrapper {
+			border-color: $primary-color;
+		}
+	}
+
+	.v3-checkbox__label-wrapper {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		user-select: none;
+		cursor: pointer;
+		font-size: $font-size-small;
+		color: $font-color-default;
+
+		.v3-checkbox__input {
+			display: none;
+			&:checked {
+				& ~ .v3-checkbox__select {
+					&::after {
+						transform: scale(1);
+					}
+				}
+			}
+			&:checked:not(:disabled) {
+				& ~ .v3-checkbox__select {
+					border-color: $primary-color;
+					animation: checkboxActive 0.3s ease-out 0s 1;
+					&::after {
+						transform: scale(1);
+					}
+				}
+				& ~ .v3-checkbox__label {
+					color: $primary-color;
+				}
+			}
+			&:disabled {
+				& ~ .v3-checkbox__select {
+					border-color: $border-color-grey-default;
+					&::after {
+						background-color: $info-color;
+					}
+				}
+				& ~ .v3-checkbox__label {
+					color: $info-color;
+				}
+			}
+		}
+
+		.v3-checkbox__select {
+			position: relative;
+			box-sizing: border-box;
+			padding: 3px;
+			width: 14px;
+			height: 14px;
+			border: 1px solid $info-color;
+			border-radius: 50%;
+			&:hover {
+				border-color: $primary-color;
+			}
+		}
+
+		.v3-checkbox__select::after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background-color: $primary-color;
+			transition: all 0.15s ease;
+			transform: scale(0);
+		}
+
+		.v3-checkbox__label {
+			margin-left: $padding-small;
+		}
+	}
+}
+
+@keyframes checkboxActive {
+	0% {
+		box-shadow: none;
+	}
+	50% {
+		box-shadow: 0 0 2px 2px rgba(0, 160, 255, 0.3);
+	}
+	75% {
+		box-shadow: 0 0 4px 2px rgba(0, 160, 255, 0.3);
+	}
+	100% {
+		box-shadow: 0 0 8px 2px rgba(0, 160, 255, 0.3);
+	}
+}

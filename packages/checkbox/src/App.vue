@@ -67,18 +67,30 @@
 				<v3-radio-button :label="4">单选4</v3-radio-button>
 			</v3-radio-group>
 		</div>
+		<div class="demo__inner">
+			<v3-checkbox v-model="state.radioValue4">多选1</v3-checkbox>
+			<v3-checkbox v-model="state.radioValue5">多选2</v3-checkbox>
+			<v3-checkbox v-model="state.radioValue6">多选3</v3-checkbox>
+		</div>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import V3Checkbox from './components/Checkbox.vue';
 
 export default defineComponent({
+	components: {
+		V3Checkbox,
+	},
 	setup(props, context) {
 		const state = reactive({
 			inputValue: '测试值123456789',
 			radioValue: 3,
 			radioValue2: 2,
 			radioValue3: 1,
+			radioValue4: true,
+			radioValue5: true,
+			radioValue6: true,
 		});
 
 		function handleChange(v) {
