@@ -1,0 +1,20 @@
+.v3-checkbox-group {
+	display: flex;
+	justify-content: flex-start;
+	& :deep(.v3-checkbox-button) {
+		margin-left: 0;
+		&:not(:last-child) {
+			.v3-checkbox-button__label-wrapper {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+		&:not(:first-child) {
+			.v3-checkbox-button__label-wrapper {
+				border-left: 0;
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
+}
