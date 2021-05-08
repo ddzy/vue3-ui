@@ -14,6 +14,7 @@ import {
 	PropType,
 	reactive,
 	provide,
+	watch,
 } from 'vue';
 import * as TYPES from '../index';
 import {
@@ -25,12 +26,32 @@ export default defineComponent({
 	name: 'V3CheckboxGroup',
 	props: {
 		modelValue: Array as PropType<TYPES.ICheckboxLabel[]>,
+		/** 限制的最小选择个数 */
+		min: Number as PropType<TYPES.ICheckboxGroupMin>,
+		/** 限制的最大选择个数 */
+		max: Number as PropType<TYPES.ICheckboxGroupMax>,
 	},
 	emits: ['change', 'update:modelValue'],
 
 	setup(props, context) {
-		const state = reactive({});
+		const state = reactive({
+			defaultProps: {
+				min: 0,
+				max: 0,
+			},
+		});
 		const app = getCurrentInstance();
+
+		watch(
+			props,
+			() => {
+				state.defaultProps = {
+					...state.defaultProps,
+					...reactive(props),
+				};
+			},
+			{ immediate: true }
+		);
 
 		function handleChange(newValue, label, e) {
 			// 如果【选中】的话，把该复选框的值加到数组里面

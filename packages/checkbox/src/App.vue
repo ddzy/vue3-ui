@@ -75,6 +75,19 @@
 				>
 			</v3-checkbox-group>
 		</div>
+
+		<div class="demo__inner">
+			<h3>【多选框组 + 限制最大/最小选择数量】：</h3>
+			<v3-checkbox-group v-model="state.checkboxValue12">
+				<v3-checkbox
+					v-for="v in state.checkboxOriginValue12"
+					:key="v._id"
+					:label="v._id"
+					:disabled="v.disabled"
+					>{{ v.name }}</v3-checkbox
+				>
+			</v3-checkbox-group>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -120,6 +133,29 @@ export default defineComponent({
 			],
 			checkboxValue11: false,
 			checkboxIndeterminate11: false,
+			checkboxValue12: [],
+			checkboxOriginValue12: [
+				{
+					_id: 'banana',
+					name: '多选项1',
+					disabled: false,
+				},
+				{
+					_id: 'apple',
+					name: '多选项2',
+					disabled: false,
+				},
+				{
+					_id: 'orange',
+					name: '多选项3',
+					disabled: true,
+				},
+				{
+					_id: 'grape',
+					name: '多选项4',
+					disabled: false,
+				},
+			],
 		});
 
 		watch(reactive(state), newValue => {
