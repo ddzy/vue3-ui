@@ -183,7 +183,7 @@ export default defineComponent({
 				);
 			} else {
 				context.emit('update:modelValue', state.checkboxValue);
-				context.emit('change', props.label, state.checkboxValue, e);
+				context.emit('change', state.checkboxValue, e);
 			}
 		}
 
