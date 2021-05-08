@@ -15,11 +15,15 @@ import {
 	reactive,
 	provide,
 	watch,
+	Component,
+	toRef,
+	nextTick,
 } from 'vue';
 import * as TYPES from '../index';
 import {
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_INSTANCE_PROVIDE,
+	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 } from '../../../../packages/common/constants/provide-symbol';
 
 export default defineComponent({
@@ -35,23 +39,65 @@ export default defineComponent({
 
 	setup(props, context) {
 		const state = reactive({
-			defaultProps: {
-				min: 0,
-				max: 0,
-			},
+			/** checkbox 实例列表 */
+			checkboxInstanceList: [],
 		});
 		const app = getCurrentInstance();
 
 		watch(
 			props,
 			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
+				let min = props.min >= 0 ? props.min : 0;
+				let max = props.max;
+
+				if (min === max) {
+					return;
+				}
+
+				// 如果做了最大/最小选择个数的限制，则要做相应的处理
+				else if (max) {
+					// 如果已选中的个数大于等于最大值，那么禁用其它还未选中的复选框
+					if (props.modelValue.length >= max) {
+						nextTick(() => {
+							state.checkboxInstanceList.forEach(instance => {
+								if (!props.modelValue.includes(instance.proxy.label)) {
+									instance.proxy.state.defaultProps.disabled = true;
+								}
+							});
+						});
+					}
+					// 如果已选中的个数小于等于最小值，那么禁用已选中的
+					else if (props.modelValue.length <= min) {
+						nextTick(() => {
+							state.checkboxInstanceList.forEach(instance => {
+								if (props.modelValue.includes(instance.proxy.label)) {
+									instance.proxy.state.defaultProps.disabled = true;
+								}
+							});
+						});
+					}
+
+					// 如果已选中的个数大于最小值并且小于最大值，那么对于所有原本不为 disabled 状态的复选框，取消禁用
+					else if (
+						props.modelValue.length > min &&
+						props.modelValue.length < max
+					) {
+						nextTick(() => {
+							state.checkboxInstanceList.forEach(instance => {
+								if (!instance.proxy.disabled) {
+									instance.proxy.state.defaultProps.disabled = false;
+								}
+							});
+						});
+					}
+				}
 			},
 			{ immediate: true }
 		);
+
+		provide(CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE, handleChange);
+		provide(CHECKBOX_GROUP_INSTANCE_PROVIDE, app);
+		provide(CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE, addCheckboxInstance);
 
 		function handleChange(newValue, label, e) {
 			// 如果【选中】的话，把该复选框的值加到数组里面
@@ -66,8 +112,12 @@ export default defineComponent({
 			context.emit('change', newModelValue, e);
 		}
 
-		provide(CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE, handleChange);
-		provide(CHECKBOX_GROUP_INSTANCE_PROVIDE, app);
+		/**
+		 * 将子 Checkbox 的实例统一追加到列表中
+		 */
+		function addCheckboxInstance(instance: Component) {
+			state.checkboxInstanceList = state.checkboxInstanceList.concat(instance);
+		}
 
 		return {
 			state,

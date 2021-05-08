@@ -78,7 +78,7 @@
 
 		<div class="demo__inner">
 			<h3>【多选框组 + 限制最大/最小选择数量】：</h3>
-			<v3-checkbox-group v-model="state.checkboxValue12">
+			<v3-checkbox-group v-model="state.checkboxValue12" :max="4" :min="2">
 				<v3-checkbox
 					v-for="v in state.checkboxOriginValue12"
 					:key="v._id"
@@ -91,7 +91,7 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRef, toRefs, watch } from 'vue';
+import { defineComponent, reactive, watch } from 'vue';
 import V3Checkbox from './components/Checkbox.vue';
 import V3CheckboxGroup from './components/CheckboxGroup.vue';
 
@@ -133,7 +133,7 @@ export default defineComponent({
 			],
 			checkboxValue11: false,
 			checkboxIndeterminate11: false,
-			checkboxValue12: [],
+			checkboxValue12: ['banana', 'orange'],
 			checkboxOriginValue12: [
 				{
 					_id: 'banana',
@@ -153,6 +153,16 @@ export default defineComponent({
 				{
 					_id: 'grape',
 					name: '多选项4',
+					disabled: false,
+				},
+				{
+					_id: 'watermelon',
+					name: '多选项5',
+					disabled: false,
+				},
+				{
+					_id: 'peach',
+					name: '多选项6',
 					disabled: false,
 				},
 			],

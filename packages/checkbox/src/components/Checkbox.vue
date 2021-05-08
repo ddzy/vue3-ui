@@ -70,11 +70,13 @@ import {
 	toRef,
 	watch,
 	inject,
+	onMounted,
 } from 'vue';
 import * as TYPES from '../index';
 import {
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_INSTANCE_PROVIDE,
+	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 } from '../../../../packages/common/constants/provide-symbol';
 
 export default defineComponent({
@@ -115,8 +117,10 @@ export default defineComponent({
 			injectedOnCheckboxGroupChange: null,
 			/** CheckboxGroup 实例 */
 			injectedCheckboxGroupInstance: null,
+			/** CheckboxGroup 的追加当前实例方法 */
+			injectedCheckboxGroupAppendInstance: null,
 		});
-		const app = getCurrentInstance();
+		const app = ref(getCurrentInstance());
 		const checkboxRef = ref(document.createElement('input'));
 		const isCheckboxGroup = checkIsCheckboxGroup();
 
@@ -126,6 +130,9 @@ export default defineComponent({
 			);
 			state.injectedCheckboxGroupInstance = inject(
 				CHECKBOX_GROUP_INSTANCE_PROVIDE
+			);
+			state.injectedCheckboxGroupAppendInstance = inject(
+				CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE
 			);
 		}
 
@@ -156,11 +163,17 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
+		onMounted(() => {
+			if (isCheckboxGroup) {
+				state.injectedCheckboxGroupAppendInstance(app.value);
+			}
+		});
+
 		/**
 		 * 检查当前单选器的父级是否存在单选器组
 		 */
 		function checkIsCheckboxGroup() {
-			let parent = app.parent;
+			let parent = app.value.parent;
 			let result = false;
 
 			while (parent) {
@@ -190,7 +203,7 @@ export default defineComponent({
 		return {
 			state,
 			props,
-			app,
+			app: app.value,
 			handleChange,
 			checkboxRef,
 			isCheckboxGroup,
