@@ -88,17 +88,32 @@
 				>
 			</v3-checkbox-group>
 		</div>
+
+		<div class="demo__inner">
+			<h3>【多选框组 + 按钮样式】：</h3>
+			<v3-checkbox-group v-model="state.checkboxValue13">
+				<v3-checkbox-button
+					v-for="v in state.checkboxOriginValue13"
+					:key="v._id"
+					:label="v._id"
+					:disabled="v.disabled"
+					>{{ v.name }}</v3-checkbox-button
+				>
+			</v3-checkbox-group>
+		</div>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive, watch } from 'vue';
 import V3Checkbox from './components/Checkbox.vue';
 import V3CheckboxGroup from './components/CheckboxGroup.vue';
+import V3CheckboxButton from './components/CheckboxButton.vue';
 
 export default defineComponent({
 	components: {
 		V3Checkbox,
 		V3CheckboxGroup,
+		V3CheckboxButton,
 	},
 	setup(props, context) {
 		const state = reactive({
@@ -135,6 +150,39 @@ export default defineComponent({
 			checkboxIndeterminate11: false,
 			checkboxValue12: ['banana', 'orange'],
 			checkboxOriginValue12: [
+				{
+					_id: 'banana',
+					name: '多选项1',
+					disabled: false,
+				},
+				{
+					_id: 'apple',
+					name: '多选项2',
+					disabled: false,
+				},
+				{
+					_id: 'orange',
+					name: '多选项3',
+					disabled: true,
+				},
+				{
+					_id: 'grape',
+					name: '多选项4',
+					disabled: false,
+				},
+				{
+					_id: 'watermelon',
+					name: '多选项5',
+					disabled: false,
+				},
+				{
+					_id: 'peach',
+					name: '多选项6',
+					disabled: false,
+				},
+			],
+			checkboxValue13: ['banana', 'orange'],
+			checkboxOriginValue13: [
 				{
 					_id: 'banana',
 					name: '多选项1',
