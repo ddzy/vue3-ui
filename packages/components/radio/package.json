@@ -1,0 +1,24 @@
+{
+	"private": true,
+	"name": "radio",
+	"version": "0.0.3",
+	"description": "Radio 组件",
+	"keywords": [
+		"radio"
+	],
+	"author": "ddzy <1766083035@qq.com>",
+	"homepage": "https://github.com/ddzy/vue3-ui#readme",
+	"license": "MIT",
+	"main": "main.ts",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ddzy/vue3-ui.git"
+	}
+}
