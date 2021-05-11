@@ -7,6 +7,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+	name: 'V3ButtonGroup',
 	setup() {},
 });
 </script>
