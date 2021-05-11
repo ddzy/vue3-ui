@@ -1,3 +1,10 @@
-import Input from './src/components/index';
+import { App } from 'vue';
+import Input from './src/components/Input.vue';
 
-export default Input;
+const install = function(app: App) {
+	app.component(Input.name, Input);
+};
+
+export { Input };
+
+export default install;

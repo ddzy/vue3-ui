@@ -1,10 +1,10 @@
 {
 	"private": true,
-	"name": "checkbox",
+	"name": "button-group",
 	"version": "0.0.3",
-	"description": "Checkbox 组件",
+	"description": "ButtonGroup 组件",
 	"keywords": [
-		"checkbox"
+		"button-group"
 	],
 	"author": "ddzy <1766083035@qq.com>",
 	"homepage": "https://github.com/ddzy/vue3-ui#readme",

@@ -1,5 +1,5 @@
-import V3Button from '../../packages/button/src/components/Button.vue';
+import V3UI from '../../packages/components/index.ts';
 
-export default ({ Vue }) => {
-	Vue.component('V3Button', V3Button);
+export default ({ app }) => {
+	app.use(V3UI);
 };

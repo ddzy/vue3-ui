@@ -1,3 +1,10 @@
-import Radio from './src/components/index';
+import { App } from 'vue';
+import Radio from './src/components/Radio.vue';
 
-export default Radio;
+const install = function(app: App) {
+	app.component(Radio.name, Radio);
+};
+
+export { Radio };
+
+export default install;

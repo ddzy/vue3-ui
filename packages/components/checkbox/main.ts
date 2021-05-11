@@ -1,3 +1,10 @@
-import Checkbox from './src/components/index';
+import { App } from 'vue';
+import Checkbox from './src/components/Checkbox.vue';
 
-export default Checkbox;
+const install = function(app: App) {
+	app.component(Checkbox.name, Checkbox);
+};
+
+export { Checkbox };
+
+export default install;

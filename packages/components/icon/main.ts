@@ -1,1 +1,3 @@
-import './assets/fonts/iconfont.css';
+import * as Icon from './assets/fonts/iconfont.css';
+
+export default Icon;
