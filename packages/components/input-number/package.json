@@ -1,10 +1,10 @@
 {
 	"private": true,
-	"name": "input",
+	"name": "input-number",
 	"version": "0.0.3",
-	"description": "Input 组件",
+	"description": "InputNumber 组件",
 	"keywords": [
-		"input-textarea"
+		"input-number"
 	],
 	"author": "ddzy <1766083035@qq.com>",
 	"homepage": "https://github.com/ddzy/vue3-ui#readme",
