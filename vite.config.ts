@@ -7,7 +7,7 @@ export default defineConfig({
 	plugins: [vue()],
 	resolve: {
 		// alias: {
-		// 	'@vendor/': path.resolve(__dirname, '/packages/components'),
+		// 	'@components/': path.resolve(__dirname, '/packages/components'),
 		// 	'@common/': path.resolve(__dirname, '/packages/common'),
 		// },
 		alias: [
@@ -16,7 +16,7 @@ export default defineConfig({
 				replacement: path.resolve(__dirname, '/packages/common'),
 			},
 			{
-				find: '@vendor',
+				find: '@components',
 				replacement: path.resolve(__dirname, '/packages/components'),
 			},
 		],
