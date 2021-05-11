@@ -1,6 +1,11 @@
-import { defineUserConfig, DefaultThemeOptions } from 'vuepress';
+import {
+	defineUserConfig,
+	DefaultThemeOptions,
+	WebpackBundlerOptions,
+} from 'vuepress';
+import * as path from 'path';
 
-export default defineUserConfig<DefaultThemeOptions>({
+export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 	title: 'vue3-ui',
 	markdown: {
 		code: {
@@ -11,11 +16,11 @@ export default defineUserConfig<DefaultThemeOptions>({
 		},
 	},
 	themeConfig: {
-		repo: "https://github.com/ddzy/vue3-ui",
+		repo: 'https://github.com/ddzy/vue3-ui',
 		themePlugins: {
 			activeHeaderLinks: true,
 			backToTop: true,
-			nprogress: true
+			nprogress: true,
 		},
 		navbar: [
 			{ text: '首页', link: '/' },
@@ -27,20 +32,46 @@ export default defineUserConfig<DefaultThemeOptions>({
 				{
 					text: '快速开始',
 					link: '/guide/quick-start/',
-					children: []
+					children: [],
 				},
 			],
 			'/components/': [
 				{
 					isGroup: true,
-					text: "基础组件",
-					children: [
-						'/components/button.md',
-						'/components/icon.md',
-					]
+					text: '基础组件',
+					children: ['/components/button.md', '/components/icon.md'],
 				},
 			],
 		},
 	},
+	open: true,
+	host: '127.0.0.1',
+	port: 4000,
+	alias: {
+		'@common': path.resolve(__dirname, '../../packages/common'),
+		'@components': path.resolve(__dirname, '../../packages/components'),
+	},
+	// bundlerConfig: {
+	// 	scss: {
+	// 		additionalData: async (content, loaderContext) => {
+	// 			// const newContent = `@import "${path.resolve(
+	// 			// 	__dirname,
+	// 			// 	'../../packages/common/styles/global-variable'
+	// 			// )}"; ${content}`;
 
-})
+	// 			// console.log('newContent :>> ', newContent);
+
+	// 			// return newContent;
+
+	// 			const { resourcePath, rootContext } = loaderContext;
+	// 			const relativePath = path.relative(rootContext, resourcePath);
+
+	// 			if (relativePath === 'styles/foo.scss') {
+	// 				return '$value: 100px;' + content;
+	// 			}
+
+	// 			return '$value: 200px;' + content;
+	// 		},
+	// 	},
+	// },
+});
