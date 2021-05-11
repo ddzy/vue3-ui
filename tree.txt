@@ -1,0 +1,27 @@
+.
+├── docs
+│   ├── components
+│   ├── guide
+│   └── README.md
+├── packages
+│   ├── common
+│   └── components
+├── public
+│   └── favicon.ico
+├── types
+│   └── shims-vue.d.ts
+├── LICENSE
+├── README.md
+├── index.html
+├── jest.config.js
+├── lerna-debug.log
+├── lerna.json
+├── package.json
+├── prettier.config.js
+├── result.txt
+├── tree.txt
+├── tsconfig.json
+├── vite.config.ts
+└── yarn.lock
+
+8 directories, 16 files

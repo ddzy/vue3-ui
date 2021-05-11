@@ -23,7 +23,8 @@
 		"docs": "vuepress dev docs",
 		"docs:build": "vuepress build docs",
 		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"tree": "tree -L 2 -I 'node_modules' -o ./tree.txt --dirsfirst"
 	},
 	"config": {
 		"commitizen": {
