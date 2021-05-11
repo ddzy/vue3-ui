@@ -6,10 +6,6 @@ import * as path from 'path';
 export default defineConfig({
 	plugins: [vue()],
 	resolve: {
-		// alias: {
-		// 	'@components/': path.resolve(__dirname, '/packages/components'),
-		// 	'@common/': path.resolve(__dirname, '/packages/common'),
-		// },
 		alias: [
 			{
 				find: '@common',
@@ -29,6 +25,21 @@ export default defineConfig({
 			/** 配置 scss 全局变量的引入方式 */
 			scss: {
 				additionalData: `@import "./packages/common/styles/global-variable";`,
+			},
+		},
+	},
+	build: {
+		lib: {
+			entry: path.resolve(__dirname, 'packages/components/main.ts'),
+			name: 'v3-ui',
+		},
+		rollupOptions: {
+			external: ['vue'],
+			output: {
+				// 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+				globals: {
+					vue: 'Vue',
+				},
 			},
 		},
 	},

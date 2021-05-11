@@ -13,10 +13,21 @@
 	"workspaces": [
 		"packages/components/*"
 	],
-	"main": "./packages/components/main.ts",
+	"files": [
+		"dist"
+	],
+	"main": "./dist/v3-ui.umd.js",
+	"module": "./dist/v3-ui.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/v3-ui.es.js",
+			"require": "./dist/v3-ui.umd.js"
+		}
+	},
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
+		"build": "vite build",
+		"build:check": "vue-tsc --noEmit && vite build",
 		"serve": "yarn dev",
 		"test": "jest",
 		"commit": "git-cz",

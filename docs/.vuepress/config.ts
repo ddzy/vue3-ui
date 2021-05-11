@@ -3,7 +3,6 @@ import {
 	DefaultThemeOptions,
 	WebpackBundlerOptions,
 } from 'vuepress';
-import * as path from 'path';
 
 export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 	title: 'vue3-ui',
@@ -47,31 +46,4 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 	open: true,
 	host: '127.0.0.1',
 	port: 4000,
-	alias: {
-		'@common': path.resolve(__dirname, '../../packages/common'),
-		'@components': path.resolve(__dirname, '../../packages/components'),
-	},
-	// bundlerConfig: {
-	// 	scss: {
-	// 		additionalData: async (content, loaderContext) => {
-	// 			// const newContent = `@import "${path.resolve(
-	// 			// 	__dirname,
-	// 			// 	'../../packages/common/styles/global-variable'
-	// 			// )}"; ${content}`;
-
-	// 			// console.log('newContent :>> ', newContent);
-
-	// 			// return newContent;
-
-	// 			const { resourcePath, rootContext } = loaderContext;
-	// 			const relativePath = path.relative(rootContext, resourcePath);
-
-	// 			if (relativePath === 'styles/foo.scss') {
-	// 				return '$value: 100px;' + content;
-	// 			}
-
-	// 			return '$value: 200px;' + content;
-	// 		},
-	// 	},
-	// },
 });
