@@ -25,8 +25,11 @@
     }
 	}
   .v3-demo-block__code {
-    padding: $padding-medium;
+    padding: $padding-small;
     border-top: 1px solid $border-color-grey-small;
+    pre {
+      margin: 0;
+    }
   }
   .v3-demo-block__functional {
     display: flex;

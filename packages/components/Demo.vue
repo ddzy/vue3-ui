@@ -1,13 +1,13 @@
 <template>
 	<div class="demo-container">
 		<div class="demo__item">
-			<v3-demo-block>
+			<v3-demo-block :hasCopy="true" :hasCodeSandbox="true" :code="state.code">
 				<template #default>
 					<v3-button>默认按钮</v3-button>
 					<v3-button type="primary">主按钮</v3-button>
 				</template>
 				<template #description>
-					简单描述简单描述
+					按钮有六种类型，分别是【默认】、【主要】、【危险】、【成功】、【警告】、【信息】
 				</template>
 			</v3-demo-block>
 		</div>
@@ -17,7 +17,23 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	setup() {},
+	setup() {
+		const state = {
+			code: `
+        const a = 1;
+
+        function test() {
+          return document.querySelector('all');
+        }
+
+        let a = 1;
+      `,
+		};
+
+		return {
+			state,
+		};
+	},
 });
 </script>
 <style lang="scss" scoped>
