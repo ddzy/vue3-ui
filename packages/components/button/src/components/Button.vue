@@ -69,7 +69,7 @@ export default defineComponent({
 				state.defaultProps = {
 					...state.defaultProps,
 					...reactive(props),
-					disabled: props.disabled || props.loading,
+					disabled: !!props.disabled || !!props.loading,
 					icon: props.loading
 						? 'v3-icon-loading'
 						: props.icon
@@ -115,8 +115,9 @@ export default defineComponent({
 		onUnmounted(() => {
 			const button = buttonRef.value as HTMLButtonElement;
 
-			button.removeEventListener('click', buttonClickListener);
-			button.removeEventListener('animationend', buttonAnimationEndListener);
+			button && button.removeEventListener('click', buttonClickListener);
+			button &&
+				button.removeEventListener('animationend', buttonAnimationEndListener);
 		});
 
 		return {
