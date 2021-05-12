@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import { App, createApp } from 'vue';
 
 import './icon/assets/fonts/iconfont.css';
 import ButtonInstallation, { Button } from './button/main';
@@ -18,6 +18,13 @@ import InputTextareaInstallation, {
 import RadioInstallation, { Radio } from './radio/main';
 import RadioButtonInstallation, { RadioButton } from './radio-button/main';
 import RadioGroupInstallation, { RadioGroup } from './radio-group/main';
+import DemoBlockInstallation, { DemoBlock } from './demo-block/main';
+
+// test
+import Demo from './Demo.vue';
+const app = createApp(Demo);
+app.use(install);
+app.mount('#app');
 
 export {
 	ButtonInstallation,
@@ -31,6 +38,7 @@ export {
 	RadioInstallation,
 	RadioButtonInstallation,
 	RadioGroupInstallation,
+	DemoBlockInstallation,
 };
 
 export default function install(app: App) {
@@ -45,4 +53,5 @@ export default function install(app: App) {
 	app.component(Radio.name, Radio);
 	app.component(RadioButton.name, RadioButton);
 	app.component(RadioGroup.name, RadioGroup);
+	app.component(DemoBlock.name, DemoBlock);
 }
