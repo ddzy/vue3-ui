@@ -7,4 +7,8 @@ module.exports = {
 	},
 	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
 	moduleFileExtensions: ['vue', 'js', 'ts'],
+	moduleNameMapper: {
+		'^@/(.*)$': '<rootDir>/$1',
+		'^@common/(.*)$': '<rootDir>/packages/common/$1',
+	},
 };
