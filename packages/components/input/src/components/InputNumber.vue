@@ -154,7 +154,7 @@ export default defineComponent({
 				state.defaultProps = {
 					...state.defaultProps,
 					...reactive(props),
-				};
+				} as any;
 			},
 			{ immediate: true }
 		);
@@ -163,16 +163,16 @@ export default defineComponent({
 			newValue => {
 				if (typeof newValue === 'number' && !isNaN(newValue)) {
 					// 如果超出最大值或者低于最小值，则自动重置为最大值或最小值
-					if (newValue < props.min && props.min !== null) {
+					if (newValue < props.min! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
 							props.min.toFixed(state.defaultProps.precision)
 						);
 
 						state.inputValue = `${valToNumber}`;
 						context.emit('update:modelValue', valToNumber);
-					} else if (newValue > props.max && props.min !== null) {
+					} else if (newValue > props.max! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.max.toFixed(state.defaultProps.precision)
+							props.max!.toFixed(state.defaultProps.precision)
 						);
 
 						state.inputValue = `${props.max}`;
@@ -182,8 +182,10 @@ export default defineComponent({
 					}
 
 					// 同时需要设置控制按钮的禁用状态
-					state.isMinusDisabled = props.min !== null && newValue === props.min;
-					state.isPlusDisabled = props.min !== null && newValue === props.max;
+					state.isMinusDisabled =
+						typeof props.min === 'number' && newValue === props.min;
+					state.isPlusDisabled =
+						typeof props.min === 'number' && newValue === props.max;
 				}
 			},
 			{ immediate: true }
@@ -229,7 +231,7 @@ export default defineComponent({
 			) {
 				context.emit(
 					'update:modelValue',
-					state.defaultProps.modelValue + state.defaultProps.step
+					state.defaultProps.modelValue! + state.defaultProps.step
 				);
 			}
 		}
@@ -246,7 +248,7 @@ export default defineComponent({
 			) {
 				context.emit(
 					'update:modelValue',
-					state.defaultProps.modelValue - state.defaultProps.step
+					state.defaultProps.modelValue! - state.defaultProps.step
 				);
 			}
 		}

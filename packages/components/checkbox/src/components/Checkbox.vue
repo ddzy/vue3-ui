@@ -71,6 +71,7 @@ import {
 	watch,
 	inject,
 	onMounted,
+	ComponentOptionsWithObjectProps,
 } from 'vue';
 import * as TYPES from '@/public/types/checkbox';
 import {
@@ -127,13 +128,13 @@ export default defineComponent({
 		if (isCheckboxGroup) {
 			state.injectedOnCheckboxGroupChange = inject(
 				CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE
-			);
+			)!;
 			state.injectedCheckboxGroupInstance = inject(
 				CHECKBOX_GROUP_INSTANCE_PROVIDE
-			);
+			)!;
 			state.injectedCheckboxGroupAppendInstance = inject(
 				CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE
-			);
+			)!;
 		}
 
 		watch(
@@ -149,13 +150,18 @@ export default defineComponent({
 
 		watch(
 			toRef(
-				isCheckboxGroup ? state.injectedCheckboxGroupInstance.props : props,
+				isCheckboxGroup
+					? (state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps)
+							.props
+					: props,
 				'modelValue'
 			),
 			newValue => {
 				// 判断选中状态
 				if (isCheckboxGroup) {
-					state.checkboxValue = newValue.includes(props.label);
+					state.checkboxValue = (newValue as TYPES.ICheckboxLabel[]).includes(
+						props.label!
+					);
 				} else {
 					state.checkboxValue = (newValue as unknown) as boolean;
 				}
@@ -165,7 +171,9 @@ export default defineComponent({
 
 		onMounted(() => {
 			if (isCheckboxGroup) {
-				state.injectedCheckboxGroupAppendInstance(app.value);
+				((state.injectedCheckboxGroupAppendInstance as unknown) as Function)(
+					app.value
+				);
 			}
 		});
 
@@ -173,7 +181,7 @@ export default defineComponent({
 		 * 检查当前单选器的父级是否存在单选器组
 		 */
 		function checkIsCheckboxGroup() {
-			let parent = app.value.parent;
+			let parent = app.value!.parent;
 			let result = false;
 
 			while (parent) {
@@ -187,9 +195,9 @@ export default defineComponent({
 			return result;
 		}
 
-		function handleChange(e) {
+		function handleChange(e: MouseEvent) {
 			if (isCheckboxGroup) {
-				state.injectedOnCheckboxGroupChange(
+				((state.injectedOnCheckboxGroupChange as unknown) as Function)(
 					state.checkboxValue,
 					props.label,
 					e

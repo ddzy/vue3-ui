@@ -32,7 +32,7 @@ export default defineComponent({
 		const state = reactive({});
 		const app = getCurrentInstance();
 
-		function handleChange(v, e) {
+		function handleChange(v: MouseEvent, e: TYPES.IRadioLabel) {
 			context.emit('update:modelValue', v);
 			context.emit('change', v, e);
 		}

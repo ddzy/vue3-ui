@@ -220,12 +220,13 @@ export default defineComponent({
 			toRef(props, 'maxlength'),
 			newValue => {
 				// 实时监听【maxlength】的变化，更新最大输入字符数
-				state.totalWordCount = newValue;
+				state.totalWordCount = newValue!;
 
 				if (props.modelValue && state.defaultProps.showWordLimit) {
 					// 如果最大值小于当前的输入值的长度，并且最小值大于最大值，那么验证失败
 					state.isValidSuccess =
-						newValue >= props.modelValue.length && newValue > props.minlength;
+						newValue! >= props.modelValue.length &&
+						newValue! > state.defaultProps.minlength;
 				} else {
 					state.isValidSuccess = true;
 				}

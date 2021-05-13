@@ -102,7 +102,7 @@ export default defineComponent({
 		 * 检查当前单选器的父级是否存在单选器组
 		 */
 		function checkIsRadioGroup() {
-			let parent = app.parent;
+			let parent = app!.parent;
 			let result = false;
 
 			while (parent) {
@@ -116,9 +116,12 @@ export default defineComponent({
 			return result;
 		}
 
-		function handleChange(e) {
+		function handleChange(e: MouseEvent) {
 			if (isRadioGroup) {
-				state.injectedOnRadioGroupChange(state.radioValue, e);
+				((state.injectedOnRadioGroupChange as unknown) as Function)(
+					state.radioValue,
+					e
+				);
 			} else {
 				context.emit('update:modelValue', state.radioValue);
 				context.emit('change', props.label, state.radioValue, e);

@@ -37,6 +37,7 @@ import {
 	toRef,
 	watch,
 	inject,
+	ComponentOptionsWithObjectProps,
 } from 'vue';
 import * as TYPES from '@/public/types/radio';
 import {
@@ -69,10 +70,12 @@ export default defineComponent({
 		const isRadioGroup = checkIsRadioGroup();
 
 		if (isRadioGroup) {
-			state.injectedOnRadioGroupChange = inject(
+			((state.injectedOnRadioGroupChange as unknown) as Function) = inject(
 				RADIO_GROUP_CHANGE_FUNC_PROVIDE
-			);
-			state.injectedRadioGroupInstance = inject(RADIO_GROUP_INSTANCE_PROVIDE);
+			)!;
+			((state.injectedRadioGroupInstance as unknown) as Function) = inject(
+				RADIO_GROUP_INSTANCE_PROVIDE
+			)!;
 		}
 
 		watch(
@@ -88,11 +91,14 @@ export default defineComponent({
 
 		watch(
 			toRef(
-				isRadioGroup ? state.injectedRadioGroupInstance.props : props,
+				isRadioGroup
+					? (state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps)
+							.props
+					: props,
 				'modelValue'
 			),
 			newValue => {
-				state.radioValue = newValue;
+				state.radioValue = newValue as any;
 			},
 			{ immediate: true }
 		);
@@ -101,7 +107,7 @@ export default defineComponent({
 		 * 检查当前单选器的父级是否存在单选器组
 		 */
 		function checkIsRadioGroup() {
-			let parent = app.parent;
+			let parent = app!.parent;
 			let result = false;
 
 			while (parent) {
@@ -115,9 +121,12 @@ export default defineComponent({
 			return result;
 		}
 
-		function handleChange(e) {
+		function handleChange(e: MouseEvent) {
 			if (isRadioGroup) {
-				state.injectedOnRadioGroupChange(state.radioValue, e);
+				((state.injectedOnRadioGroupChange as unknown) as Function)(
+					state.radioValue,
+					e
+				);
 			} else {
 				context.emit('update:modelValue', state.radioValue);
 				context.emit('change', props.label, state.radioValue, e);
