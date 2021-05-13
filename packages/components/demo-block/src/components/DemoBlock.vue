@@ -58,6 +58,7 @@ import {
 } from 'vue';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
+import { toClipboard } from '@soerenmartius/vue3-clipboard';
 
 import * as TYPES from '../../index';
 import * as UTILS from '@common/utils/index';
@@ -122,6 +123,7 @@ export default defineComponent({
 						{
 							icon: 'v3-icon-similar-product',
 							title: '在 CodeSandbox 中打开',
+							action: 'codesandbox',
 						},
 					] as TYPES.IDemoBlockExtraItem[]).concat(
 						state.defaultProps.extraList
@@ -133,6 +135,7 @@ export default defineComponent({
 						{
 							icon: 'v3-icon-confirm',
 							title: '复制',
+							action: 'copy',
 						},
 					] as TYPES.IDemoBlockExtraItem[]).concat(
 						state.defaultProps.extraList
@@ -151,6 +154,9 @@ export default defineComponent({
 	},
 	methods: {
 		handleExtraItemClick(v: TYPES.IDemoBlockExtraItem) {
+			if (v.action === 'copy') {
+				toClipboard(this.code || '');
+			}
 			this.$emit('extraClick', v);
 		},
 		/**

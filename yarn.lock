@@ -1409,6 +1409,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@soerenmartius/vue3-clipboard@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@soerenmartius/vue3-clipboard/-/vue3-clipboard-0.1.2.tgz#83927f65b48da71bde044a276cdf858c1c021c38"
+  integrity sha512-a5er6cFGcFIQ/3qg6kWvU0yFqIz9iWoQGEVs9azjevyRyMAKvj1w3JuLH9y6+u0WhMNby3kn7nuR8nktSnDesg==
+  dependencies:
+    clipboard "^2.0.0"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
