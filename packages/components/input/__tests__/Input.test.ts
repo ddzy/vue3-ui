@@ -22,22 +22,6 @@ describe('Input 组件测试：', () => {
 	});
 
 	test('Input 组件应该正常进行双向绑定', async () => {
-		// const wrapper1 = mount(V3Input, {
-		// 	props: {
-		// 		modelValue: '初始值',
-		// 	},
-		// });
-		// expect(wrapper1.find('input').element.value).toBe('初始值');
-
-		// await wrapper1.setProps({
-		// 	modelValue: '第一次改变值',
-		// });
-		// expect(wrapper1.find('input').element.value).toBe('第一次改变值');
-
-		// await wrapper1.setValue('第二次改变值');
-		// expect(wrapper1.find('input').element.value).toBe('第二次改变值');
-		// expect(wrapper1.vm.modelValue).toBe('第二次改变值');
-
 		const wrapper1 = mount({
 			template: `
         <div>
