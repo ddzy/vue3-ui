@@ -1,32 +1,40 @@
 <template>
 	<div class="v3-demo-block">
-		<div class="v3-demo-block__view" v-if="app.slots.default">
+		<div
+			class="v3-demo-block__view v3-demo-block__common"
+			v-if="app.slots.default"
+		>
 			<slot></slot>
 		</div>
-		<div class="v3-demo-block__description" v-if="app.slots.description">
-			<div class="description__tip">
+		<div
+			class="v3-demo-block__description v3-demo-block__common"
+			v-if="app.slots.description"
+		>
+			<div class="description__tip" v-if="state.defaultProps.descriptionTip">
 				{{ state.defaultProps.descriptionTip }}
 			</div>
-			<div class="description__content">
+			<div class="description__detail">
 				<slot name="description"></slot>
 			</div>
 		</div>
-		<transition @enter="transitionEnter" @leave="transitionLeave">
+		<transition
+			v-if="app.slots.detail"
+			@enter="transitionEnter"
+			@leave="transitionLeave"
+		>
 			<div
-				class="v3-demo-block__code"
-				v-if="state.defaultProps.code"
-				v-highlight
-				v-show="state.isCodeAreaExpand"
+				class="v3-demo-block__detail v3-demo-block__common"
+				v-show="state.isDetailAreaExpand"
 			>
-				<pre>
-        <code>{{ state.defaultProps.code }}</code>
-      </pre>
+				<slot name="detail"></slot>
 			</div>
 		</transition>
-		<div class="v3-demo-block__functional">
+		<div class="v3-demo-block__functional v3-demo-block__common">
 			<div class="functional__expand">
-				<span @click="expandCodeArea">{{
-					state.isCodeAreaExpand ? '点击收缩' : '点击展开'
+				<span @click="expandDetailArea">{{
+					state.isDetailAreaExpand
+						? state.defaultProps.expandedBtnText
+						: state.defaultProps.defaultBtnText
 				}}</span>
 			</div>
 			<div class="functional__extra">
@@ -56,9 +64,6 @@ import {
 	reactive,
 	watch,
 } from 'vue';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
-import { toClipboard } from '@soerenmartius/vue3-clipboard';
 
 import * as TYPES from '@/public/types/demo-block';
 import * as UTILS from '@common/utils/index';
@@ -66,43 +71,26 @@ import * as UTILS from '@common/utils/index';
 export default defineComponent({
 	name: 'V3DemoBlock',
 	props: {
-		/** 描述区域的提示（默认为【概述】） */
-		descriptionTip: String as PropType<TYPES.IDemoBlcokDescriptionTip>,
+		/** 描述区域的提示*/
+		descriptionTip: String as PropType<TYPES.IDemoBlockDescriptionTip>,
 		/** 功能按钮列表 */
 		extraList: Array as PropType<TYPES.IDemoBlockExtraItem[]>,
-		/** 是否需要显示默认的【复制】功能按钮 */
-		hasCopy: Boolean as PropType<TYPES.IDemoBlockHasCopy>,
-		/** 代码块中展示的【代码】 */
-		code: String as PropType<TYPES.IDemoBlockCode>,
+		/** 详情区域展开时的按钮文本 */
+		expandedBtnText: String as PropType<TYPES.IDemoBlockExpandedBtnText>,
+		/** 详情区域收缩时的按钮文本 */
+		defaultBtnText: String as PropType<TYPES.IDemoBlockDefaultBtnText>,
 	},
 	emits: ['extraClick'],
-	directives: {
-		highlight: {
-			mounted(el) {
-				const blocks = el.querySelectorAll('pre code');
-				blocks.forEach((block: any) => {
-					hljs.highlightBlock(block);
-				});
-			},
-		},
-	},
-	setup(props, context) {
+	setup(props) {
 		const state = reactive({
 			defaultProps: {
-				descriptionTip: '概述',
+				descriptionTip: '',
 				extraList: [],
-				hasCopy: false,
-				code: '',
-			} as {
-				descriptionTip: TYPES.IDemoBlcokDescriptionTip;
-				extraList: TYPES.IDemoBlockExtraItem[];
-				hasCopy: TYPES.IDemoBlockHasCopy;
-				code: TYPES.IDemoBlockCode;
-			},
-			/** 代码区域的高度（配合点击【展开/收缩】）*/
-			codeAreaHeight: 0,
-			/** 代码区域是否展开 */
-			isCodeAreaExpand: false,
+				expandedBtnText: '点击收缩',
+				defaultBtnText: '点击展开',
+			} as {},
+			/** 详情区域是否展开 */
+			isDetailAreaExpand: false,
 		});
 		const app = getCurrentInstance();
 
@@ -113,18 +101,6 @@ export default defineComponent({
 					...state.defaultProps,
 					...reactive(props),
 				};
-
-				if (state.defaultProps.hasCopy) {
-					state.defaultProps.extraList = ([
-						{
-							icon: 'v3-icon-confirm',
-							title: '复制',
-							action: 'copy',
-						},
-					] as TYPES.IDemoBlockExtraItem[]).concat(
-						state.defaultProps.extraList
-					);
-				}
 			},
 			{
 				immediate: true,
@@ -138,16 +114,13 @@ export default defineComponent({
 	},
 	methods: {
 		handleExtraItemClick(v: TYPES.IDemoBlockExtraItem) {
-			if (v.action === 'copy') {
-				toClipboard(this.code || '');
-			}
 			this.$emit('extraClick', v);
 		},
 		/**
-		 * 展开 or 收缩代码区域
+		 * 展开 or 收缩内容区域
 		 */
-		expandCodeArea() {
-			this.state.isCodeAreaExpand = !this.state.isCodeAreaExpand;
+		expandDetailArea() {
+			this.state.isDetailAreaExpand = !this.state.isDetailAreaExpand;
 		},
 		transitionEnter(el: HTMLElement) {
 			UTILS.handleTransitionEnter(el);
