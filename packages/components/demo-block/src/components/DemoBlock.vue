@@ -72,8 +72,6 @@ export default defineComponent({
 		extraList: Array as PropType<TYPES.IDemoBlockExtraItem[]>,
 		/** 是否需要显示默认的【复制】功能按钮 */
 		hasCopy: Boolean as PropType<TYPES.IDemoBlockHasCopy>,
-		/** 是否需要显示默认的【CodeSandbox】功能按钮 */
-		hasCodeSandbox: Boolean as PropType<TYPES.IDemoBlockHasCodesandbox>,
 		/** 代码块中展示的【代码】 */
 		code: String as PropType<TYPES.IDemoBlockCode>,
 	},
@@ -94,13 +92,11 @@ export default defineComponent({
 				descriptionTip: '概述',
 				extraList: [],
 				hasCopy: false,
-				hasCodeSandbox: false,
 				code: '',
 			} as {
 				descriptionTip: TYPES.IDemoBlcokDescriptionTip;
 				extraList: TYPES.IDemoBlockExtraItem[];
 				hasCopy: TYPES.IDemoBlockHasCopy;
-				hasCodeSandbox: TYPES.IDemoBlockHasCodesandbox;
 				code: TYPES.IDemoBlockCode;
 			},
 			/** 代码区域的高度（配合点击【展开/收缩】）*/
@@ -117,18 +113,6 @@ export default defineComponent({
 					...state.defaultProps,
 					...reactive(props),
 				};
-
-				if (state.defaultProps.hasCodeSandbox) {
-					state.defaultProps.extraList = ([
-						{
-							icon: 'v3-icon-similar-product',
-							title: '在 CodeSandbox 中打开',
-							action: 'codesandbox',
-						},
-					] as TYPES.IDemoBlockExtraItem[]).concat(
-						state.defaultProps.extraList
-					);
-				}
 
 				if (state.defaultProps.hasCopy) {
 					state.defaultProps.extraList = ([

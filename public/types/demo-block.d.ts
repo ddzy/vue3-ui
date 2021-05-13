@@ -5,5 +5,4 @@ export interface IDemoBlockExtraItem {
 	action?: string;
 }
 export type IDemoBlockHasCopy = boolean;
-export type IDemoBlockHasCodesandbox = boolean;
 export type IDemoBlockCode = string;
