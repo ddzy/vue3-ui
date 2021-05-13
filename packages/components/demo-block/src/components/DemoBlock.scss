@@ -25,8 +25,10 @@
     }
 	}
   .v3-demo-block__code {
-    padding: $padding-small;
+    overflow: hidden;
+    padding: 0 $padding-small;
     border-top: 1px solid $border-color-grey-small;
+    transition: height .5s ease;
     pre {
       margin: 0;
     }
@@ -42,8 +44,10 @@
     }
     .functional__expand {
       text-align: right;
-      cursor: pointer;
       color: $primary-color;
+      span {
+        cursor: pointer;
+      }
     }
     .functional__extra {
       display: flex;

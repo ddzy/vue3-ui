@@ -11,21 +11,30 @@
 				<slot name="description"></slot>
 			</div>
 		</div>
-		<div class="v3-demo-block__code" v-if="state.defaultProps.code" v-highlight>
-			<pre>
+		<transition @enter="transitionEnter" @leave="transitionLeave">
+			<div
+				class="v3-demo-block__code"
+				v-if="state.defaultProps.code"
+				v-highlight
+				v-show="state.isCodeAreaExpand"
+			>
+				<pre>
         <code>{{ state.defaultProps.code }}</code>
       </pre>
-		</div>
+			</div>
+		</transition>
 		<div class="v3-demo-block__functional">
 			<div class="functional__expand">
-				<span>点击展开</span>
+				<span @click="expandCodeArea">{{
+					state.isCodeAreaExpand ? '点击收缩' : '点击展开'
+				}}</span>
 			</div>
 			<div class="functional__extra">
 				<div
 					class="functional-extra__item"
 					v-for="v in state.defaultProps.extraList"
 					:key="v.icon"
-					@click="handleExtraClick(v)"
+					@click="handleExtraItemClick(v)"
 				>
 					<i
 						:class="{
@@ -51,6 +60,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 
 import * as TYPES from '../../index';
+import * as UTILS from '@common/utils/index';
 
 export default defineComponent({
 	name: 'V3DemoBlock',
@@ -92,6 +102,10 @@ export default defineComponent({
 				hasCodeSandbox: TYPES.IDemoBlockHasCodesandbox;
 				code: TYPES.IDemoBlockCode;
 			},
+			/** 代码区域的高度（配合点击【展开/收缩】）*/
+			codeAreaHeight: 0,
+			/** 代码区域是否展开 */
+			isCodeAreaExpand: false,
 		});
 		const app = getCurrentInstance();
 
@@ -136,8 +150,20 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		handleExtraClick(v: TYPES.IDemoBlockExtraItem) {
+		handleExtraItemClick(v: TYPES.IDemoBlockExtraItem) {
 			this.$emit('extraClick', v);
+		},
+		/**
+		 * 展开 or 收缩代码区域
+		 */
+		expandCodeArea() {
+			this.state.isCodeAreaExpand = !this.state.isCodeAreaExpand;
+		},
+		transitionEnter(el: HTMLElement) {
+			UTILS.handleTransitionEnter(el);
+		},
+		transitionLeave(el: HTMLElement) {
+			UTILS.handleTransitionLeave(el);
 		},
 	},
 });

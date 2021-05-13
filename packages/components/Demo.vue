@@ -18,16 +18,12 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
 	setup() {
+		const json = {
+			a: 1,
+			b: 2,
+		};
 		const state = {
-			code: `
-        const a = 1;
-
-        function test() {
-          return document.querySelector('all');
-        }
-
-        let a = 1;
-      `,
+			code: `${JSON.stringify(json, null, 2)}`,
 		};
 
 		return {
