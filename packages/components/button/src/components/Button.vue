@@ -35,7 +35,7 @@ import {
 	ref,
 	watch,
 } from 'vue';
-import * as TYPES from '../../index';
+import * as TYPES from '@/public/types/button';
 
 export default defineComponent({
 	name: 'V3Button',

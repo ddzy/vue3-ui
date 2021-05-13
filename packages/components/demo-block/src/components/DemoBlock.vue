@@ -60,7 +60,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import { toClipboard } from '@soerenmartius/vue3-clipboard';
 
-import * as TYPES from '../../index';
+import * as TYPES from '@/public/types/demo-block';
 import * as UTILS from '@common/utils/index';
 
 export default defineComponent({

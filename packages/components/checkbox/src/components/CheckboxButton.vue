@@ -42,7 +42,7 @@ import {
 	inject,
 	onMounted,
 } from 'vue';
-import * as TYPES from '../../index';
+import * as TYPES from '@/public/types/checkbox';
 import {
 	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
