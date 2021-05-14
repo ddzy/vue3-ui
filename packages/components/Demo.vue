@@ -36,9 +36,15 @@
 		</div>
 		<div class="demo__item">
 			<v3-row :gutter="20" :type="'flex'">
-				<v3-col>123</v3-col>
-				<v3-col>456</v3-col>
-				<v3-col>789</v3-col>
+				<v3-col :span="4">
+					<div>123</div>
+				</v3-col>
+				<v3-col :span="4">
+					<div>456</div>
+				</v3-col>
+				<v3-col :span="8">
+					<div>789</div>
+				</v3-col>
 			</v3-row>
 		</div>
 	</div>
@@ -77,6 +83,14 @@ export default defineComponent({
 .demo__item {
 	.v3-button {
 		margin-left: 12px;
+	}
+	.v3-col {
+		margin-top: 20px;
+	}
+	.v3-col div {
+		line-height: 50px;
+		background-color: #f3f4f5;
+		border-radius: 6px;
 	}
 }
 </style>

@@ -5,7 +5,7 @@ $align-list: start, end, center, flex-start, flex-end;
 .v3-row {
 	&.v3-row--flex {
 		display: flex;
-		flex: 1;
+    flex-wrap: wrap;
 
 		@each $justify in $justify-list {
 			&.is-justify-#{$justify} {

@@ -1,5 +1,10 @@
 <template>
-	<div class="v3-col">
+	<div
+		:class="{
+			'v3-col': true,
+			[`v3-col-span-${props.span}`]: props.span,
+		}"
+	>
 		<slot></slot>
 	</div>
 </template>
