@@ -34,6 +34,13 @@
 				</template>
 			</v3-demo-block>
 		</div>
+		<div class="demo__item">
+			<v3-row :gutter="20" :type="'flex'">
+				<v3-col>123</v3-col>
+				<v3-col>456</v3-col>
+				<v3-col>789</v3-col>
+			</v3-row>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -68,7 +75,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .demo__item {
-	width: 500px;
 	.v3-button {
 		margin-left: 12px;
 	}
