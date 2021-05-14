@@ -19,6 +19,8 @@ import RadioInstallation, { Radio } from './radio/main';
 import RadioButtonInstallation, { RadioButton } from './radio-button/main';
 import RadioGroupInstallation, { RadioGroup } from './radio-group/main';
 import DemoBlockInstallation, { DemoBlock } from './demo-block/main';
+import RowInstallation, { Row } from './row/main';
+import ColInstallation, { Col } from './col/main';
 
 // test
 import Demo from './Demo.vue';
@@ -39,6 +41,8 @@ export {
 	RadioButtonInstallation,
 	RadioGroupInstallation,
 	DemoBlockInstallation,
+	RowInstallation,
+	ColInstallation,
 };
 
 export default function install(app: App) {
@@ -54,4 +58,6 @@ export default function install(app: App) {
 	app.component(RadioButton.name, RadioButton);
 	app.component(RadioGroup.name, RadioGroup);
 	app.component(DemoBlock.name, DemoBlock);
+	app.component(Row.name, Row);
+	app.component(Col.name, Col);
 }
