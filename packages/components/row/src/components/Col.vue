@@ -3,6 +3,7 @@
 		:class="{
 			'v3-col': true,
 			[`v3-col-span-${props.span}`]: props.span,
+			[`v3-col-offset-${props.offset}`]: props.offset,
 		}"
 		:style="{
 			[state.injectedRowInstance

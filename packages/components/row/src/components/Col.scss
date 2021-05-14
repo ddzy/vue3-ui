@@ -1,10 +1,20 @@
-$MIN_SPAN: 1;
-$MAX_SPAN: 12;
+$MIN_COL: 1;
+$MAX_COL: 12;
+
+[class^='v3-col'] {
+	box-sizing: border-box;
+}
 
 .v3-col {
-	@for $span from $MIN_SPAN to $MAX_SPAN {
+	@for $span from $MIN_COL to $MAX_COL {
 		&.v3-col-span-#{$span} {
-			width: $span * 100 / $MAX_SPAN * 1%;
+			width: $span * 100 / $MAX_COL * 1%;
+		}
+	}
+
+	@for $offset from $MIN_COL to $MAX_COL {
+		&.v3-col-offset-#{$offset} {
+			margin-left: $offset * 100 / $MAX_COL * 1%;
 		}
 	}
 }
