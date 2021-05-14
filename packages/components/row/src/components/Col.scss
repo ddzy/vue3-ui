@@ -1,8 +1,11 @@
 $MIN_COL: 1;
 $MAX_COL: 12;
 
-[class^='v3-col'] {
+[class*='v3-col'] {
 	box-sizing: border-box;
+}
+[class*='v3-col-push-'], [class*='v3-col-pull-'] {
+  position: relative;
 }
 
 .v3-col {
@@ -15,6 +18,18 @@ $MAX_COL: 12;
 	@for $offset from $MIN_COL to $MAX_COL {
 		&.v3-col-offset-#{$offset} {
 			margin-left: $offset * 100 / $MAX_COL * 1%;
+		}
+	}
+
+  @for $push from $MIN_COL to $MAX_COL {
+		&.v3-col-push-#{$push} {
+			left: $push * 100 / $MAX_COL * 1%;
+		}
+	}
+
+  @for $pull from $MIN_COL to $MAX_COL {
+		&.v3-col-pull-#{$pull} {
+			right: $pull * 100 / $MAX_COL * 1%;
 		}
 	}
 }

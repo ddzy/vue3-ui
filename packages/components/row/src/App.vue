@@ -36,6 +36,32 @@
 					<div>def</div>
 				</v3-col>
 			</v3-row>
+
+			<h3>相对于自身向右位移（push）</h3>
+			<v3-row>
+				<v3-col :span="4">
+					<div>abc</div>
+				</v3-col>
+				<v3-col :span="4" :push="2">
+					<div>def</div>
+				</v3-col>
+				<v3-col :span="4">
+					<div>ghi</div>
+				</v3-col>
+			</v3-row>
+
+			<h3>左右同时位移（push + pull）</h3>
+			<v3-row>
+				<v3-col :span="4">
+					<div>abc</div>
+				</v3-col>
+				<v3-col :span="4" :push="2">
+					<div>def</div>
+				</v3-col>
+				<v3-col :span="4" :pull="6">
+					<div>ghi</div>
+				</v3-col>
+			</v3-row>
 		</div>
 	</div>
 </template>

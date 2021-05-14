@@ -4,6 +4,8 @@
 			'v3-col': true,
 			[`v3-col-span-${props.span}`]: props.span,
 			[`v3-col-offset-${props.offset}`]: props.offset,
+			[`v3-col-push-${props.push}`]: props.push,
+			[`v3-col-pull-${props.pull}`]: props.pull,
 		}"
 		:style="{
 			[state.injectedRowInstance
