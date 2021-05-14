@@ -62,6 +62,48 @@
 					<div>ghi</div>
 				</v3-col>
 			</v3-row>
+
+			<h3>数字类型的响应式</h3>
+			<v3-row>
+				<v3-col :span="4" :md="8">
+					<div>abc</div>
+				</v3-col>
+				<v3-col :span="4" :md="12" :lg="6" :xl="2">
+					<div>def</div>
+				</v3-col>
+				<v3-col :span="4" :md="8">
+					<div>ghi</div>
+				</v3-col>
+			</v3-row>
+
+			<h3>对象类型的响应式</h3>
+			<v3-row>
+				<v3-col
+					:span="4"
+					:md="{
+						span: 8,
+						offset: 2,
+					}"
+				>
+					<div>abc</div>
+				</v3-col>
+				<v3-col
+					:span="4"
+					:md="{
+						span: 12,
+					}"
+				>
+					<div>def</div>
+				</v3-col>
+				<v3-col
+					:span="4"
+					:md="{
+						span: 8,
+					}"
+				>
+					<div>ghi</div>
+				</v3-col>
+			</v3-row>
 		</div>
 	</div>
 </template>
