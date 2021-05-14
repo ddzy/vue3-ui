@@ -1,44 +1,22 @@
+$justify-list: start, end, center, space-around, space-between, flex-start,
+	flex-end;
+$align-list: start, end, center, flex-start, flex-end;
+
 .v3-row {
 	&.v3-row--flex {
 		display: flex;
 		flex: 1;
 
-		&.is-justify-start {
-			justify-content: start;
-		}
-		&.is-justify-end {
-			justify-content: end;
-		}
-		&.is-justify-center {
-			justify-content: center;
-		}
-		&.is-justify-space-around {
-			justify-content: space-around;
-		}
-		&.is-justify-space-between {
-			justify-content: space-between;
-		}
-		&.is-justify-flex-start {
-			justify-content: flex-start;
-		}
-		&.is-justify-flex-end {
-			justify-content: flex-end;
+		@each $justify in $justify-list {
+			&.is-justify-#{$justify} {
+				justify-content: $justify;
+			}
 		}
 
-		&.is-align-start {
-			align-items: start;
-		}
-		&.is-align-end {
-			align-items: end;
-		}
-		&.is-align-center {
-			align-items: center;
-		}
-		&.is-align-flex-start {
-			align-items: flex-start;
-		}
-		&.is-align-flex-end {
-			align-items: flex-end;
+		@each $align in $align-list {
+			&.is-align-#{$align} {
+				align-items: $align;
+			}
 		}
 	}
 }
