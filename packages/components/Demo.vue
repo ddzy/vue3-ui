@@ -39,11 +39,23 @@
 				<v3-col :span="4">
 					<div>123</div>
 				</v3-col>
+
 				<v3-col :span="4">
 					<div>456</div>
 				</v3-col>
 				<v3-col :span="8">
 					<div>789</div>
+				</v3-col>
+			</v3-row>
+			<v3-row :gutter="20" :type="'flex'">
+				<v3-col :span="4">
+					<div>abc</div>
+				</v3-col>
+				<v3-col :span="4">
+					<div>def</div>
+				</v3-col>
+				<v3-col :span="2">
+					<div>ghi</div>
 				</v3-col>
 			</v3-row>
 		</div>

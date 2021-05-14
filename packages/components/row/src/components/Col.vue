@@ -4,6 +4,18 @@
 			'v3-col': true,
 			[`v3-col-span-${props.span}`]: props.span,
 		}"
+		:style="{
+			[state.injectedRowInstance
+				? 'padding-left'
+				: '']: state.injectedRowInstance
+				? `${state.injectedRowInstance.props.gutter / 2}px`
+				: 0,
+			[state.injectedRowInstance
+				? 'padding-right'
+				: '']: state.injectedRowInstance
+				? `${state.injectedRowInstance.props.gutter / 2}px`
+				: 0,
+		}"
 	>
 		<slot></slot>
 	</div>
