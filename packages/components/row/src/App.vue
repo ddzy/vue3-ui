@@ -84,12 +84,24 @@
 						span: 8,
 						offset: 2,
 					}"
+					:sm="{
+						span: 12,
+					}"
+					:xs="{
+						span: 12,
+					}"
 				>
 					<div>abc</div>
 				</v3-col>
 				<v3-col
 					:span="4"
 					:md="{
+						span: 12,
+					}"
+					:sm="{
+						span: 12,
+					}"
+					:xs="{
 						span: 12,
 					}"
 				>
@@ -99,6 +111,12 @@
 					:span="4"
 					:md="{
 						span: 8,
+					}"
+					:sm="{
+						span: 12,
+					}"
+					:xs="{
+						span: 12,
 					}"
 				>
 					<div>ghi</div>

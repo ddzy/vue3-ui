@@ -79,7 +79,7 @@ export default defineComponent({
 			type: [Number, Object] as PropType<TYPES.IColLG>,
 			default: 0,
 		},
-		/** < 1400px */
+		/** > 1201px */
 		xl: {
 			type: [Number, Object] as PropType<TYPES.IColXL>,
 			default: 0,
@@ -102,10 +102,10 @@ export default defineComponent({
 			} as TYPES.IColProps,
 
 			xsMedia: window.matchMedia('(max-width: 576px)'),
-			smMedia: window.matchMedia('(max-width: 768px)'),
-			mdMedia: window.matchMedia('(max-width: 992px)'),
-			lgMedia: window.matchMedia('(max-width: 1200px)'),
-			xlMedia: window.matchMedia('(max-width: 1400px)'),
+			smMedia: window.matchMedia('(min-width: 577px) and (max-width: 768px)'),
+			mdMedia: window.matchMedia('(min-width: 769px) and (max-width: 992px)'),
+			lgMedia: window.matchMedia('(min-width: 993px) and (max-width: 1200px)'),
+			xlMedia: window.matchMedia('(min-width: 1201px)'),
 		});
 		const app = getCurrentInstance();
 		const isDirectRow = checkIsDirectRow();
@@ -144,9 +144,11 @@ export default defineComponent({
 				// 响应式相关的 props 字段可能是数字，代表 span
 				// 也有可能是键值对
 				if (typeof this[id as keyof TYPES.IColProps] === 'number') {
-					this.state.defaultProps.span = this[
-						id as keyof TYPES.IColProps
-					] as number;
+					setTimeout(() => {
+						this.state.defaultProps.span = this[
+							id as keyof TYPES.IColProps
+						] as number;
+					}, 0);
 				} else if (
 					{}.toString.call(this[id as keyof TYPES.IColProps]) ===
 					'[object Object]'
@@ -158,7 +160,9 @@ export default defineComponent({
 							];
 
 							if (typeof value === 'number') {
-								this.state.defaultProps[key as keyof TYPES.IColProps] = value;
+								setTimeout(() => {
+									this.state.defaultProps[key as keyof TYPES.IColProps] = value;
+								}, 0);
 							}
 						}
 					}

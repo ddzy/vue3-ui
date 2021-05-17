@@ -20,5 +20,6 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/ddzy/vue3-ui.git"
-	}
+	},
+	"dependencies": {}
 }
