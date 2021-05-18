@@ -110,23 +110,6 @@ export default defineComponent({
 		const state = reactive({
 			/** 父级 v3-row 实例 */
 			injectedRowInstance: null,
-			defaultProps: {
-				span: 0,
-				offset: 0,
-				push: 0,
-				pull: 0,
-				xs: 0,
-				sm: 0,
-				md: 0,
-				lg: 0,
-				xl: 0,
-			} as TYPES.IColProps,
-
-			xsMedia: window.matchMedia('(max-width: 576px)'),
-			smMedia: window.matchMedia('(min-width: 577px) and (max-width: 768px)'),
-			mdMedia: window.matchMedia('(min-width: 769px) and (max-width: 992px)'),
-			lgMedia: window.matchMedia('(min-width: 993px) and (max-width: 1200px)'),
-			xlMedia: window.matchMedia('(min-width: 1201px)'),
 
 			/** 各响应式尺寸对应的类名 */
 			xsClass: '',
@@ -163,11 +146,6 @@ export default defineComponent({
 		watch(
 			props,
 			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
-
 				// 根据传入的响应式 prop 的类型，计算出相应的 class 类名
 				if (app) {
 					state.xsClass = computeResponsiveClass('xs', props.xs, 'span');
