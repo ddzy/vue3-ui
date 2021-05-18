@@ -58,7 +58,7 @@ describe('V3Col 组件测试：', () => {
 		});
 
 		// 正常区间内的值（1 - 12）
-		expect(wrapper1.findAll('.v3-col-span-4').length).toBe(3);
+		expect(wrapper1.findAll('.v3-col-4').length).toBe(3);
 	});
 
 	test('V3Col 应该正常接收【offset】配置项，用来自定义列的偏移量', async () => {
@@ -91,7 +91,7 @@ describe('V3Col 组件测试：', () => {
 
 		expect(
 			wrapper1
-				.find('.v3-col-span-4')
+				.find('.v3-col-4')
 				.classes()
 				.includes('v3-col-offset-4')
 		);
@@ -142,5 +142,104 @@ describe('V3Col 组件测试：', () => {
 		// 1 - 12 区间的值
 		expect(wrapper1.find('.v3-col-push-2').exists()).toBeTruthy();
 		expect(wrapper1.find('.v3-col-pull-6').exists()).toBeTruthy();
+	});
+
+	test('V3Col 应该正常接收数字类型的【xs、sm、md、lg、xl】配置项，用来自定义响应式的布局', async () => {
+		const wrapper1 = mount({
+			template: `
+        <div>
+          <v3-row>
+						<v3-col :span="4" :md="8">
+							<div>abc</div>
+						</v3-col>
+						<v3-col :span="4" :md="12" :lg="6" :xl="2">
+							<div>def</div>
+						</v3-col>
+						<v3-col :span="4" :md="8">
+							<div>ghi</div>
+						</v3-col>
+			    </v3-row>
+        </div>
+      `,
+			components: {
+				V3Row,
+				V3Col,
+			},
+			setup(props, context) {
+				const state = reactive({});
+
+				return {
+					state,
+					props,
+				};
+			},
+		});
+
+		expect(wrapper1.findAll('.v3-col').length).toBe(3);
+		expect(wrapper1.findAll('.v3-col')[1].classes()).toEqual([
+			'v3-col',
+			'v3-col-4',
+			'v3-col-md-12',
+			'v3-col-lg-6',
+			'v3-col-xl-2',
+		]);
+	});
+
+	test('V3Col 应该正常接收对象类型的【xs、sm、md、lg、xl】配置项，用来自定义响应式的布局', async () => {
+		const wrapper1 = mount({
+			template: `
+        <div>
+          <v3-row>
+						<v3-col :span="4" :md="8">
+							<div>abc</div>
+						</v3-col>
+						<v3-col :span="4" :md="12" :lg="6" :xl="2">
+							<div>def</div>
+						</v3-col>
+						<v3-col
+							:span="4"
+							:md="{
+								span: 8,
+								offset: 2,
+								push: 3,
+								pull: 6,
+							}"
+							:sm="{
+								span: 12,
+							}"
+							:xs="{
+								span: 12,
+							}"
+						>
+							<div>ghi</div>
+						</v3-col>
+			    </v3-row>
+        </div>
+      `,
+			components: {
+				V3Row,
+				V3Col,
+			},
+			setup(props, context) {
+				const state = reactive({});
+
+				return {
+					state,
+					props,
+				};
+			},
+		});
+
+		expect(wrapper1.findAll('.v3-col').length).toBe(3);
+		expect(wrapper1.findAll('.v3-col')[2].classes()).toEqual([
+			'v3-col',
+			'v3-col-4',
+			'v3-col-xs-12',
+			'v3-col-sm-12',
+			'v3-col-md-8',
+			'v3-col-md-offset-2',
+			'v3-col-md-push-3',
+			'v3-col-md-pull-6',
+		]);
 	});
 });
