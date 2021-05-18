@@ -2,10 +2,30 @@
 	<div
 		:class="{
 			'v3-col': true,
-			[`v3-col-span-${state.defaultProps.span}`]: state.defaultProps.span,
-			[`v3-col-offset-${state.defaultProps.offset}`]: state.defaultProps.offset,
-			[`v3-col-push-${state.defaultProps.push}`]: state.defaultProps.push,
-			[`v3-col-pull-${state.defaultProps.pull}`]: state.defaultProps.pull,
+			[`v3-col-${props.span}`]: props.span,
+			[`v3-col-offset-${props.offset}`]: props.offset,
+			[`v3-col-push-${props.push}`]: props.push,
+			[`v3-col-pull-${props.pull}`]: props.pull,
+			[`${state.xsClass}`]: true,
+			[`${state.smClass}`]: true,
+			[`${state.mdClass}`]: true,
+			[`${state.lgClass}`]: true,
+			[`${state.xlClass}`]: true,
+			[`${state.xsOffsetClass}`]: true,
+			[`${state.smOffsetClass}`]: true,
+			[`${state.mdOffsetClass}`]: true,
+			[`${state.lgOffsetClass}`]: true,
+			[`${state.xlOffsetClass}`]: true,
+			[`${state.xsPushClass}`]: true,
+			[`${state.smPushClass}`]: true,
+			[`${state.mdPushClass}`]: true,
+			[`${state.lgPushClass}`]: true,
+			[`${state.xlPushClass}`]: true,
+			[`${state.xsPullClass}`]: true,
+			[`${state.smPullClass}`]: true,
+			[`${state.mdPullClass}`]: true,
+			[`${state.lgPullClass}`]: true,
+			[`${state.xlPullClass}`]: true,
 		}"
 		:style="{
 			[state.injectedRowInstance
@@ -34,6 +54,7 @@ import {
 } from 'vue';
 
 import * as TYPES from '@/public/types/row';
+import * as UTILS from '@common/utils/index';
 import { ROW_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
 export default defineComponent({
@@ -106,6 +127,31 @@ export default defineComponent({
 			mdMedia: window.matchMedia('(min-width: 769px) and (max-width: 992px)'),
 			lgMedia: window.matchMedia('(min-width: 993px) and (max-width: 1200px)'),
 			xlMedia: window.matchMedia('(min-width: 1201px)'),
+
+			/** 各响应式尺寸对应的类名 */
+			xsClass: '',
+			smClass: '',
+			mdClass: '',
+			lgClass: '',
+			xlClass: '',
+
+			xsOffsetClass: '',
+			smOffsetClass: '',
+			mdOffsetClass: '',
+			lgOffsetClass: '',
+			xlOffsetClass: '',
+
+			xsPushClass: '',
+			smPushClass: '',
+			mdPushClass: '',
+			lgPushClass: '',
+			xlPushClass: '',
+
+			xsPullClass: '',
+			smPullClass: '',
+			mdPullClass: '',
+			lgPullClass: '',
+			xlPullClass: '',
 		});
 		const app = getCurrentInstance();
 		const isDirectRow = checkIsDirectRow();
@@ -121,6 +167,53 @@ export default defineComponent({
 					...state.defaultProps,
 					...reactive(props),
 				};
+
+				// 根据传入的响应式 prop 的类型，计算出相应的 class 类名
+				if (app) {
+					state.xsClass = computeResponsiveClass('xs', props.xs, 'span');
+					state.smClass = computeResponsiveClass('sm', props.sm, 'span');
+					state.mdClass = computeResponsiveClass('md', props.md, 'span');
+					state.lgClass = computeResponsiveClass('lg', props.lg, 'span');
+					state.xlClass = computeResponsiveClass('xl', props.xl, 'span');
+
+					state.xsOffsetClass = computeResponsiveClass(
+						'xs',
+						props.xs,
+						'offset'
+					);
+					state.smOffsetClass = computeResponsiveClass(
+						'sm',
+						props.sm,
+						'offset'
+					);
+					state.mdOffsetClass = computeResponsiveClass(
+						'md',
+						props.md,
+						'offset'
+					);
+					state.lgOffsetClass = computeResponsiveClass(
+						'lg',
+						props.lg,
+						'offset'
+					);
+					state.xlOffsetClass = computeResponsiveClass(
+						'xl',
+						props.xl,
+						'offset'
+					);
+
+					state.xsPushClass = computeResponsiveClass('xs', props.xs, 'push');
+					state.smPushClass = computeResponsiveClass('sm', props.sm, 'push');
+					state.mdPushClass = computeResponsiveClass('md', props.md, 'push');
+					state.lgPushClass = computeResponsiveClass('lg', props.lg, 'push');
+					state.xlPushClass = computeResponsiveClass('xl', props.xl, 'push');
+
+					state.xsPullClass = computeResponsiveClass('xs', props.xs, 'pull');
+					state.smPullClass = computeResponsiveClass('sm', props.sm, 'pull');
+					state.mdPullClass = computeResponsiveClass('md', props.md, 'pull');
+					state.lgPullClass = computeResponsiveClass('lg', props.lg, 'pull');
+					state.xlPullClass = computeResponsiveClass('xl', props.xl, 'pull');
+				}
 			},
 			{ immediate: true }
 		);
@@ -132,6 +225,30 @@ export default defineComponent({
 			return app && app.parent && app.parent.type.name === 'V3Row';
 		}
 
+		/**
+		 * 计算各响应式 prop 对应的 class 类名
+		 */
+		function computeResponsiveClass(
+			baseId: string,
+			val: any,
+			childId: string
+		): string {
+			if (UTILS.isStrictNumber(val) && val) {
+				return childId === 'span' ? `v3-col-${baseId}-${val}` : '';
+			} else if (
+				UTILS.isStrictObject(val) &&
+				val.hasOwnProperty(childId) &&
+				UTILS.isStrictNumber(val[childId]) &&
+				val[childId]
+			) {
+				return childId === 'span'
+					? `v3-col-${baseId}-${val[childId]}`
+					: `v3-col-${baseId}-${childId}-${val[childId]}`;
+			} else {
+				return '';
+			}
+		}
+
 		return {
 			app,
 			state,
@@ -140,40 +257,39 @@ export default defineComponent({
 	},
 	methods: {
 		commonMediaChange(e: MediaQueryListEvent, id: string) {
-			if (e.matches && this[id as keyof TYPES.IColProps]) {
-				// 响应式相关的 props 字段可能是数字，代表 span
-				// 也有可能是键值对
-				if (typeof this[id as keyof TYPES.IColProps] === 'number') {
-					setTimeout(() => {
-						this.state.defaultProps.span = this[
-							id as keyof TYPES.IColProps
-						] as number;
-					}, 0);
-				} else if (
-					{}.toString.call(this[id as keyof TYPES.IColProps]) ===
-					'[object Object]'
-				) {
-					for (const key in this[id as keyof TYPES.IColProps] as any) {
-						if (this.state.defaultProps.hasOwnProperty(key)) {
-							const value = this[id as keyof {}][
-								key as keyof TYPES.IColBaseOption
-							];
-
-							if (typeof value === 'number') {
-								setTimeout(() => {
-									this.state.defaultProps[key as keyof TYPES.IColProps] = value;
-								}, 0);
-							}
-						}
-					}
-				}
-			} else {
-				// 如果没有匹配到宽度，那么就重置为 props 传下来的默认的非响应式的字段（offset、push、pull、span）
-				this.state.defaultProps.span = this.span || 0;
-				this.state.defaultProps.offset = this.offset || 0;
-				this.state.defaultProps.push = this.push || 0;
-				this.state.defaultProps.pull = this.pull || 0;
-			}
+			// if (e.matches && this[id as keyof TYPES.IColProps]) {
+			// 	// 响应式相关的 props 字段可能是数字，代表 span
+			// 	// 也有可能是键值对
+			// 	if (UTILS.isStrictNumber(this[id as keyof TYPES.IColProps])) {
+			// 		setTimeout(() => {
+			// 			this.state.defaultProps.span = this[
+			// 				id as keyof TYPES.IColProps
+			// 			] as number;
+			// 		}, 0);
+			// 	} else if (
+			// 		{}.toString.call(this[id as keyof TYPES.IColProps]) ===
+			// 		'[object Object]'
+			// 	) {
+			// 		for (const key in this[id as keyof TYPES.IColProps] as any) {
+			// 			if (this.state.defaultProps.hasOwnProperty(key)) {
+			// 				const value = this[id as keyof {}][
+			// 					key as keyof TYPES.IColBaseOption
+			// 				];
+			// 				if (UTILS.isStrictNumber(value)) {
+			// 					setTimeout(() => {
+			// 						this.state.defaultProps[key as keyof TYPES.IColProps] = value;
+			// 					}, 0);
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// } else {
+			// 	// 如果没有匹配到宽度，那么就重置为 props 传下来的默认的非响应式的字段（offset、push、pull、span）
+			// 	this.state.defaultProps.span = this.span || 0;
+			// 	this.state.defaultProps.offset = this.offset || 0;
+			// 	this.state.defaultProps.push = this.push || 0;
+			// 	this.state.defaultProps.pull = this.pull || 0;
+			// }
 		},
 		xsMediaChange(e: MediaQueryListEvent) {
 			this.commonMediaChange(e, 'xs');
