@@ -29,7 +29,7 @@
 		"build": "vite build",
 		"build:check": "vue-tsc --noEmit && vite build",
 		"serve": "yarn dev",
-		"test": "jest",
+		"test": "jest --coverage",
 		"commit": "git-cz",
 		"docs": "vuepress dev docs",
 		"docs:build": "vuepress build docs",
