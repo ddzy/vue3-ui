@@ -17,13 +17,17 @@ export interface IInputProps {
   modelValue: string;
 }
 
-export type ITextareaWidth = number;
-export type ITextareaHeight = number;
 export type ITextareaResize = 'none' | 'both' | 'horizontal' | 'vertical';
-export type ITextareaAutoHeight = boolean;
-export type ITextareaDisabled = boolean;
-export type ITextareaReadonly = boolean;
-export type ITextareaPlaceholder = string;
+export interface ITextareaProps {
+  width: number;
+  height: number;
+  resize: ITextareaResize;
+  autoHeight: boolean;
+  disabled: boolean;
+  readonly: boolean;
+  placeholder: string;
+  modelValue: string;
+}
 
 export type INumberMin = number | undefined;
 export type INumberMax = number | undefined;

@@ -2,22 +2,22 @@
 	<div
 		:class="{
 			'v3-input-textarea': true,
-			'v3-textarea--autoheight': state.defaultProps.autoHeight,
-			'v3-textarea--disabled': state.defaultProps.disabled,
+			'v3-textarea--autoheight': props.autoHeight,
+			'v3-textarea--disabled': props.disabled,
 		}"
 	>
 		<textarea
 			ref="textareaRef"
 			:style="{
-				width: `${state.defaultProps.width}px`,
+				width: `${props.width}px`,
 				height: `${state.defaultProps.height}px`,
 			}"
 			:value="props.modelValue"
-			:disabled="state.defaultProps.disabled"
-			:readonly="state.defaultProps.readonly"
-			:placeholder="state.defaultProps.placeholder"
+			:disabled="props.disabled"
+			:readonly="props.readonly"
+			:placeholder="props.placeholder"
 			:class="{
-				[`v3-textarea--${state.defaultProps.resize}`]: true,
+				[`v3-textarea--${props.resize}`]: true,
 			}"
 			@input="handleInput"
 			@change="handleChange"
@@ -30,6 +30,7 @@
 import {
 	defineComponent,
 	getCurrentInstance,
+	PropType,
 	reactive,
 	ref,
 	toRef,
@@ -40,25 +41,52 @@ import * as TYPES from '@/public/types/input';
 export default defineComponent({
 	name: 'V3InputTextarea',
 	props: {
-		width: Number as () => TYPES.ITextareaWidth,
-		height: Number as () => TYPES.ITextareaHeight,
-		resize: String as () => TYPES.ITextareaResize,
-		autoHeight: Boolean as () => TYPES.ITextareaAutoHeight,
-		disabled: Boolean as () => TYPES.ITextareaDisabled,
-		readonly: Boolean as () => TYPES.ITextareaReadonly,
-		placeholder: String as () => TYPES.ITextareaPlaceholder,
-		modelValue: String,
+		/** 输入框的宽度 */
+		width: {
+			type: Number,
+			default: 150,
+		},
+		/** 输入框的高度 */
+		height: {
+			type: Number,
+			default: 150,
+		},
+		/** 高度是否自适应 */
+		autoHeight: {
+			type: Boolean,
+			default: false,
+		},
+		/** 拉伸的方向 */
+		resize: {
+			type: String as PropType<TYPES.ITextareaResize>,
+			default: 'vertical',
+			validator: (v: string) => {
+				return ['none', 'both', 'horizontal', 'vertical'].includes(v);
+			},
+		},
+		/** 是否禁用 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		placeholder: {
+			type: String,
+			default: '请输入内容',
+		},
+		/** 是否只读 */
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		modelValue: {
+			type: String,
+			default: '',
+		},
 	},
-	setup(props, context) {
+	setup(props: TYPES.ITextareaProps, context) {
 		const state = reactive({
 			defaultProps: {
-				width: 150,
-				height: 150,
-				autoHeight: false,
-				resize: 'vertical',
-				disabled: false,
-				placeholder: '请输入内容',
-				readonly: false,
+				height: 0,
 			},
 		});
 		const app = getCurrentInstance();
@@ -67,17 +95,14 @@ export default defineComponent({
 		watch(
 			props,
 			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
+				state.defaultProps.height = props.height;
 			},
 			{ immediate: true }
 		);
 		watch(
 			toRef(props, 'modelValue'),
 			() => {
-				if (state.defaultProps.autoHeight && props.modelValue) {
+				if (props.autoHeight && props.modelValue) {
 					_autoHeight();
 				}
 			},
