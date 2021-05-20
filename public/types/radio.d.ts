@@ -12,3 +12,6 @@ export interface IRadioButtonProps {
   label: IRadioLabel;
   modelValue: IRadioLabel;
 }
+export interface IRadioGroupProps {
+  modelValue: IRadioLabel;
+}

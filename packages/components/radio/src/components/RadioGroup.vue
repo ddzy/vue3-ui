@@ -24,11 +24,14 @@ import {
 export default defineComponent({
 	name: 'V3RadioGroup',
 	props: {
-		modelValue: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+		modelValue: {
+			type: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+			default: '',
+		},
 	},
 	emits: ['change', 'update:modelValue'],
 
-	setup(props, context) {
+	setup(props: TYPES.IRadioGroupProps, context) {
 		const state = reactive({});
 		const app = getCurrentInstance();
 
