@@ -53,9 +53,20 @@ import {
 export default defineComponent({
 	name: 'V3CheckboxButton',
 	props: {
-		disabled: Boolean as PropType<TYPES.ICheckboxDisabled>,
-		label: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
-		modelValue: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+		/** 复选框禁用状态 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		/** 复选框的值 */
+		label: {
+			type: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+			default: '',
+		},
+		modelValue: {
+			type: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+			default: '',
+		},
 	},
 	emits: ['change', 'update:modelValue'],
 	setup(props, context) {
@@ -91,10 +102,7 @@ export default defineComponent({
 		watch(
 			props,
 			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
+				state.defaultProps.disabled = props.disabled;
 			},
 			{ immediate: true }
 		);
