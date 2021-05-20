@@ -2,16 +2,15 @@
 	<button
 		ref="buttonRef"
 		:disabled="state.defaultProps.disabled"
-		:type="state.defaultProps.nativeType"
+		:type="props.nativeType"
 		:class="{
 			'v3-button': true,
-			[`v3-button--${state.defaultProps.type}`]: true,
-			[`v3-button__border--${state.defaultProps.borderType}`]: !!state
-				.defaultProps.borderType,
-			[`v3-button--plain`]: state.defaultProps.plain,
+			[`v3-button--${props.type}`]: true,
+			[`v3-button__border--${props.borderType}`]: !!props.borderType,
+			[`v3-button--plain`]: props.plain,
 			[`v3-button--disabled`]: state.defaultProps.disabled,
-			[`v3-button--circle`]: state.defaultProps.circle,
-			[`v3-button--loading`]: state.defaultProps.loading,
+			[`v3-button--circle`]: props.circle,
+			[`v3-button--loading`]: props.loading,
 		}"
 	>
 		<i
@@ -27,62 +26,111 @@
 	</button>
 </template>
 <script lang="ts">
+import * as TYPES from '@/public/types/button';
 import {
 	defineComponent,
+	nextTick,
 	onMounted,
 	onUnmounted,
+	PropType,
 	reactive,
 	ref,
+	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/types/button';
 
 export default defineComponent({
 	name: 'V3Button',
 	props: {
-		type: String as () => TYPES.IButtonType,
-		nativeType: String as () => TYPES.IButtonNativeType,
-		borderType: String as () => TYPES.IButtonBorderType,
-		disabled: Boolean as () => TYPES.IButtonDisabled,
-		plain: Boolean as () => TYPES.IButtonPlain,
-		icon: String as () => TYPES.IButtonIcon,
-		circle: Boolean as () => TYPES.IButtonCircle,
-		loading: Boolean as () => TYPES.IButtonLoading,
+		/** 按钮的类型 */
+		type: {
+			type: String as PropType<TYPES.IButtonType>,
+			default: 'default',
+			validator: (v: string) => {
+				return [
+					'primary',
+					'success',
+					'danger',
+					'default',
+					'warning',
+					'info',
+					'text',
+				].includes(v);
+			},
+		},
+		/** 按钮的原生类型 */
+		nativeType: {
+			type: String as PropType<TYPES.IButtonNativeType>,
+			default: 'button',
+			validator: (v: string) => {
+				return ['button', 'submit', 'reset', 'menu'].includes(v);
+			},
+		},
+		/** 边框类型 */
+		borderType: {
+			type: String as PropType<TYPES.IButtonBorderType>,
+			default: '',
+			validator: (v: string) => {
+				return [
+					'',
+					'solid',
+					'dashed',
+					'dotted',
+					'double',
+					'groove',
+					'outset',
+				].includes(v);
+			},
+		},
+		/** 按钮是否禁用 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否为朴素按钮 */
+		plain: {
+			type: Boolean,
+			default: false,
+		},
+		/** 按钮上的图标 */
+		icon: {
+			type: String,
+			default: '',
+		},
+		/** 是否为圆形按钮 */
+		circle: {
+			type: Boolean,
+			default: false,
+		},
+		/** 按钮的 loading 状态 */
+		loading: {
+			type: Boolean,
+			default: false,
+		},
 	},
-	setup(props, context) {
+	setup(props: TYPES.IButtonProps, context) {
 		const state = reactive({
 			defaultProps: {
-				type: 'default',
-				nativeType: 'button',
-				borderType: '',
-				plain: false,
-				disabled: false,
 				icon: '',
-				circle: false,
-				loading: false,
+				disabled: false,
 			},
 		});
+		const buttonRef = ref(document.createElement('button'));
 
 		watch(
 			props,
-			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-					disabled: !!props.disabled || !!props.loading,
-					icon: props.loading
-						? 'v3-icon-loading'
-						: props.icon
-						? props.icon
-						: '',
-				};
+			newValue => {
+				// 按钮 loading 时展示特定的 icon
+				state.defaultProps.icon = newValue.loading
+					? 'v3-icon-loading'
+					: newValue.icon
+					? newValue.icon
+					: '';
+				// 按钮 loading 时也为禁用状态
+				state.defaultProps.disabled = !!newValue.disabled || !!newValue.loading;
 			},
-			{
-				immediate: true,
-			}
+			{ immediate: true }
 		);
-
-		const buttonRef = ref(document.createElement('button'));
 
 		function buttonClickListener(e: Event) {
 			const button = buttonRef.value as HTMLButtonElement;
@@ -122,6 +170,7 @@ export default defineComponent({
 
 		return {
 			state,
+			props,
 			context,
 			buttonRef,
 		};

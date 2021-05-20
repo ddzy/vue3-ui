@@ -14,8 +14,13 @@ export type IButtonBorderType =
 	| 'double'
 	| 'groove'
 	| 'outset';
-export type IButtonPlain = boolean | undefined;
-export type IButtonDisabled = boolean | undefined;
-export type IButtonIcon = string | undefined;
-export type IButtonCircle = boolean | undefined;
-export type IButtonLoading = boolean;
+export interface IButtonProps {
+	type: IButtonType;
+	nativeType: IButtonNativeType;
+	borderType: IButtonBorderType;
+	disabled: boolean;
+	plain: boolean;
+	icon: string;
+	circle: boolean;
+	loading: boolean;
+}

@@ -23,7 +23,7 @@ import RowInstallation, { Row } from './row/main';
 import ColInstallation, { Col } from './col/main';
 
 // test
-import Demo from './row/src/App.vue';
+import Demo from './button/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
