@@ -2,8 +2,8 @@
 	<div
 		:class="{
 			'v3-radio': true,
-			'v3-radio--disabled': state.defaultProps.disabled,
-			'v3-radio--bordered': state.defaultProps.border,
+			'v3-radio--disabled': props.disabled,
+			'v3-radio--bordered': props.border,
 			'v3-radio--checked': props.label === state.radioValue,
 		}"
 	>
@@ -15,7 +15,7 @@
 				v-model="state.radioValue"
 				:value="props.label"
 				:id="`v3-radio__input--${app.uid}`"
-				:disabled="state.defaultProps.disabled"
+				:disabled="props.disabled"
 				@change="handleChange"
 			/>
 
@@ -46,18 +46,29 @@ import {
 export default defineComponent({
 	name: 'V3Radio',
 	props: {
-		border: Boolean as PropType<TYPES.IRadioBorder>,
-		disabled: Boolean as PropType<TYPES.IRadioDisabled>,
-		label: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
-		modelValue: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+		/** 是否带边框 */
+		border: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否禁用 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		/** 单选框的值 */
+		label: {
+			type: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+			default: '',
+		},
+		modelValue: {
+			type: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+			default: '',
+		},
 	},
 	emits: ['change', 'update:modelValue'],
-	setup(props, context) {
+	setup(props: TYPES.IRadioProps, context) {
 		const state = reactive({
-			defaultProps: {
-				border: false,
-				disabled: false,
-			},
 			/** 单选框的值 */
 			radioValue: null,
 			/** RadioGroup 的 change 事件 */
@@ -75,17 +86,6 @@ export default defineComponent({
 			);
 			state.injectedRadioGroupInstance = inject(RADIO_GROUP_INSTANCE_PROVIDE);
 		}
-
-		watch(
-			props,
-			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
-			},
-			{ immediate: true }
-		);
 
 		watch(
 			toRef(

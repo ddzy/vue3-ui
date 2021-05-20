@@ -23,7 +23,7 @@ import RowInstallation, { Row } from './row/main';
 import ColInstallation, { Col } from './col/main';
 
 // test
-import Demo from './checkbox/src/App.vue';
+import Demo from './radio/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
