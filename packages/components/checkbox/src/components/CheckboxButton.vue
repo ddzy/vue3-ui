@@ -69,7 +69,7 @@ export default defineComponent({
 		},
 	},
 	emits: ['change', 'update:modelValue'],
-	setup(props, context) {
+	setup(props: TYPES.ICheckboxButtonProps, context) {
 		const state = reactive({
 			defaultProps: {
 				disabled: false,
