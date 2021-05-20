@@ -2,24 +2,24 @@
 	<div
 		:class="{
 			'v3-input-number': true,
-			'v3-input-number--disabled': state.defaultProps.disabled,
+			'v3-input-number--disabled': props.disabled,
 		}"
 	>
 		<v3-input
 			v-model="state.inputValue"
 			:type="'text'"
-			:disabled="state.defaultProps.disabled"
-			:readonly="state.defaultProps.readonly"
+			:disabled="props.disabled"
+			:readonly="props.readonly"
 			@change="handleChange"
 			@focus="handleFocus"
 			@blur="handleBlur"
 		>
-			<template #prepend v-if="state.defaultProps.controlsPosition !== 'right'">
+			<template #prepend v-if="props.controlsPosition !== 'right'">
 				<div
-					v-if="state.defaultProps.controlsPosition === 'both'"
+					v-if="props.controlsPosition === 'both'"
 					:class="{
 						'v3-number__minus-wrapper': true,
-						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+						[`v3-number__control--${props.controlsPosition}`]: true,
 						'v3-number__control--disabled': state.isMinusDisabled,
 					}"
 					@click="handleMinus"
@@ -28,10 +28,10 @@
 				</div>
 
 				<div
-					v-if="state.defaultProps.controlsPosition === 'left'"
+					v-if="props.controlsPosition === 'left'"
 					:class="{
 						'v3-number__control-wrapper': true,
-						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+						[`v3-number__control--${props.controlsPosition}`]: true,
 					}"
 				>
 					<div
@@ -55,12 +55,12 @@
 				</div>
 			</template>
 
-			<template #append v-if="state.defaultProps.controlsPosition !== 'left'">
+			<template #append v-if="props.controlsPosition !== 'left'">
 				<div
-					v-if="state.defaultProps.controlsPosition === 'both'"
+					v-if="props.controlsPosition === 'both'"
 					:class="{
 						'v3-number__plus-wrapper': true,
-						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+						[`v3-number__control--${props.controlsPosition}`]: true,
 						'v3-number__control--disabled': state.isPlusDisabled,
 					}"
 					@click="handlePlus"
@@ -69,10 +69,10 @@
 				</div>
 
 				<div
-					v-if="state.defaultProps.controlsPosition === 'right'"
+					v-if="props.controlsPosition === 'right'"
 					:class="{
 						'v3-number__control-wrapper': true,
-						[`v3-number__control--${state.defaultProps.controlsPosition}`]: true,
+						[`v3-number__control--${props.controlsPosition}`]: true,
 					}"
 				>
 					<div
@@ -102,6 +102,7 @@
 import {
 	defineComponent,
 	getCurrentInstance,
+	PropType,
 	reactive,
 	toRef,
 	watch,
@@ -115,18 +116,59 @@ export default defineComponent({
 		V3Input,
 	},
 	props: {
-		min: Number as () => TYPES.INumberMin,
-		max: Number as () => TYPES.INumberMax,
-		step: Number as () => TYPES.INumberStep,
-		stepStrictly: Boolean as () => TYPES.INumberStepStrictly,
-		precision: Number as () => TYPES.INumberPrecision,
-		disabled: Boolean as () => TYPES.INumberDisabled,
-		readonly: Boolean as () => TYPES.INumberReadonly,
-		controlsPosition: String as () => TYPES.INumberControlsPosition,
-		placeholder: String as () => TYPES.INumberPlaceholder,
-		modelValue: Number,
+		/** 限制输入的最小值 */
+		min: {
+			type: [Number, undefined] as PropType<TYPES.INumberMin>,
+			default: undefined,
+		},
+		/** 限制输入的最大值 */
+		max: {
+			type: [Number, undefined] as PropType<TYPES.INumberMax>,
+			default: undefined,
+		},
+		/** 步数 */
+		step: {
+			type: Number,
+			default: 1,
+		},
+		/** 输入值是否只能为 step 的倍数 */
+		stepStrictly: {
+			type: Boolean,
+			default: false,
+		},
+		/** 保留的小数位数 */
+		precision: {
+			type: Number,
+			default: 0,
+		},
+		/** 是否禁用 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否只读 */
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		/** 控制栏的位置 */
+		controlsPosition: {
+			type: String as PropType<TYPES.INumberControlsPosition>,
+			default: 'both',
+			validator: (v: string) => {
+				return ['both', 'right', 'left'].includes(v);
+			},
+		},
+		placeholder: {
+			type: String,
+			default: '请输入内容',
+		},
+		modelValue: {
+			type: Number,
+			required: true,
+		},
 	},
-	setup(props, context) {
+	setup(props: TYPES.IInputNumberProps, context) {
 		const state = reactive({
 			defaultProps: {
 				min: null,
@@ -149,30 +191,20 @@ export default defineComponent({
 		const app = getCurrentInstance();
 
 		watch(
-			props,
-			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				} as any;
-			},
-			{ immediate: true }
-		);
-		watch(
 			toRef(props, 'modelValue'),
 			newValue => {
 				if (typeof newValue === 'number' && !isNaN(newValue)) {
 					// 如果超出最大值或者低于最小值，则自动重置为最大值或最小值
 					if (newValue < props.min! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.min.toFixed(state.defaultProps.precision)
+							props.min.toFixed(props.precision)
 						);
 
 						state.inputValue = `${valToNumber}`;
 						context.emit('update:modelValue', valToNumber);
 					} else if (newValue > props.max! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.max!.toFixed(state.defaultProps.precision)
+							props.max!.toFixed(props.precision)
 						);
 
 						state.inputValue = `${props.max}`;
@@ -196,14 +228,14 @@ export default defineComponent({
 			let value = null;
 
 			// 如果限制了输入值只能是步数（step）的倍数
-			if (state.defaultProps.stepStrictly) {
+			if (props.stepStrictly) {
 				value = Number.parseInt(target.value);
-				value += value % state.defaultProps.step === 0 ? 0 : 1;
+				value += value % props.step === 0 ? 0 : 1;
 			} else {
 				value = Number.parseFloat(target.value);
 			}
 
-			let valToString = value.toFixed(state.defaultProps.precision);
+			let valToString = value.toFixed(props.precision);
 			let valToNumber = Number.parseFloat(valToString);
 
 			context.emit('update:modelValue', valToNumber);
@@ -224,15 +256,8 @@ export default defineComponent({
 		 */
 		function handlePlus() {
 			// 在禁用、只读或者超出最大值的状态下不可点击
-			if (
-				!state.defaultProps.disabled &&
-				!state.defaultProps.readonly &&
-				!state.isPlusDisabled
-			) {
-				context.emit(
-					'update:modelValue',
-					state.defaultProps.modelValue! + state.defaultProps.step
-				);
+			if (!props.disabled && !props.readonly && !state.isPlusDisabled) {
+				context.emit('update:modelValue', props.modelValue! + props.step);
 			}
 		}
 
@@ -241,15 +266,8 @@ export default defineComponent({
 		 */
 		function handleMinus() {
 			// 在禁用、只读或者超出最大值的状态下不可点击
-			if (
-				!state.defaultProps.disabled &&
-				!state.defaultProps.readonly &&
-				!state.isMinusDisabled
-			) {
-				context.emit(
-					'update:modelValue',
-					state.defaultProps.modelValue! - state.defaultProps.step
-				);
+			if (!props.disabled && !props.readonly && !state.isMinusDisabled) {
+				context.emit('update:modelValue', props.modelValue! - props.step);
 			}
 		}
 

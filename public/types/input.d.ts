@@ -25,12 +25,18 @@ export type ITextareaDisabled = boolean;
 export type ITextareaReadonly = boolean;
 export type ITextareaPlaceholder = string;
 
-export type INumberMin = number;
-export type INumberMax = number;
-export type INumberStep = number;
-export type INumberStepStrictly = boolean;
-export type INumberPrecision = number;
-export type INumberDisabled = boolean;
-export type INumberReadonly = boolean;
+export type INumberMin = number | undefined;
+export type INumberMax = number | undefined;
 export type INumberControlsPosition = 'both' | 'right' | 'left';
-export type INumberPlaceholder = string;
+export interface IInputNumberProps {
+  min: INumberMin;
+  max: INumberMax;
+  step: number;
+  stepStrictly: boolean;
+  precision: number;
+  disabled: boolean;
+  readonly: boolean;
+  controlsPosition: INumberControlsPosition;
+  placeholder: string;
+  modelValue: number;
+}
