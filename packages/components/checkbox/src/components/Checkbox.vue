@@ -3,7 +3,7 @@
 		:class="{
 			'v3-checkbox': true,
 			'v3-checkbox--disabled': state.defaultProps.disabled,
-			'v3-checkbox--bordered': state.defaultProps.border,
+			'v3-checkbox--bordered': props.border,
 			'v3-checkbox--checked': !!state.checkboxValue,
 		}"
 	>
@@ -29,25 +29,25 @@
           反之，则切换【选中】or【不选中】的图标
         -->
 				<i
-					v-if="state.defaultProps.indeterminate"
+					v-if="props.indeterminate"
 					:class="{
 						'v3-icon': true,
 						'v3-checkbox__select--indeterminated': true,
-						[state.defaultProps.indeterminatedIcon]: true,
+						[props.indeterminatedIcon]: true,
 					}"
 				></i>
 				<i
-					v-else-if="!state.defaultProps.indeterminate && state.checkboxValue"
+					v-else-if="!props.indeterminate && state.checkboxValue"
 					:class="{
 						'v3-icon': true,
-						[state.defaultProps.selectedIcon]: true,
+						[props.selectedIcon]: true,
 					}"
 				></i>
 				<i
-					v-else-if="!state.defaultProps.indeterminate && !state.checkboxValue"
+					v-else-if="!props.indeterminate && !state.checkboxValue"
 					:class="{
 						'v3-icon': true,
-						[state.defaultProps.defaultIcon]: true,
+						[props.defaultIcon]: true,
 					}"
 				></i>
 			</div>
@@ -84,31 +84,51 @@ export default defineComponent({
 	name: 'V3Checkbox',
 	props: {
 		/** 是否带有边框 */
-		border: Boolean as PropType<TYPES.ICheckboxBorder>,
+		border: {
+			type: Boolean,
+			default: false,
+		},
 		/** 禁用状态 */
-		disabled: Boolean as PropType<TYPES.ICheckboxDisabled>,
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 		/** 复选框的值 */
-		label: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+		label: {
+			type: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+			default: '',
+		},
 		/** 复选框是否为不确定状态 */
-		indeterminate: Boolean as PropType<TYPES.ICheckboxIndeterminate>,
+		indeterminate: {
+			type: Boolean,
+			default: false,
+		},
 		/** 选中时的复选框图标 */
-		selectedIcon: String as PropType<TYPES.ICheckboxSelectedIcon>,
+		selectedIcon: {
+			type: String,
+			default: 'v3-icon-checkbox-selected',
+		},
 		/** 不确定时的复选框图标 */
-		indeterminatedIcon: String as PropType<TYPES.ICheckboxIndeterminatedIcon>,
+		indeterminatedIcon: {
+			type: String,
+			default: 'v3-icon-checkbox-indeterminated',
+		},
 		/** 未选中状态下的复选框图标 */
-		defaultIcon: String as PropType<TYPES.ICheckboxDefaultIcon>,
-		modelValue: Boolean as PropType<boolean>,
+		defaultIcon: {
+			type: String,
+			default: 'v3-icon-checkbox-default',
+		},
+
+		modelValue: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['change', 'update:modelValue'],
-	setup(props, context) {
+	setup(props: TYPES.ICheckboxProps, context) {
 		const state = reactive({
 			defaultProps: {
-				border: false,
 				disabled: false,
-				indeterminate: false,
-				selectedIcon: 'v3-icon-checkbox-selected',
-				indeterminatedIcon: 'v3-icon-checkbox-indeterminated',
-				defaultIcon: 'v3-icon-checkbox-default',
 			},
 			/**
 			 * 复选框的值
@@ -140,10 +160,7 @@ export default defineComponent({
 		watch(
 			props,
 			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
+				state.defaultProps.disabled = props.disabled;
 			},
 			{ immediate: true }
 		);
