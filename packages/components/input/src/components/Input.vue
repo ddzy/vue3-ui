@@ -2,7 +2,7 @@
 	<div
 		:class="{
 			'v3-input': true,
-			'v3-input--disabled': state.defaultProps.disabled,
+			'v3-input--disabled': props.disabled,
 			'v3-input--invalid': !state.isValidSuccess,
 		}"
 		@mouseenter="handleMouseEnter"
@@ -16,13 +16,13 @@
 		</div>
 		<div
 			class="v3-input__prepend-wrapper"
-			v-if="!app.slots.prepend && state.defaultProps.prependIcon"
+			v-if="!app.slots.prepend && props.prependIcon"
 		>
 			<div class="v3-input__prepend">
 				<i
 					:class="{
 						'v3-icon': true,
-						[state.defaultProps.prependIcon]: true,
+						[props.prependIcon]: true,
 					}"
 				></i>
 			</div>
@@ -30,10 +30,10 @@
 		<div
 			:class="{
 				'v3-input__inner-wrapper': true,
-				'has-prefix': app.slots.prefix || state.defaultProps.prefixIcon,
-				'has-suffix': app.slots.suffix || state.defaultProps.suffixIcon,
-				'has-prepend': app.slots.prepend || state.defaultProps.prependIcon,
-				'has-append': app.slots.append || state.defaultProps.appendIcon,
+				'has-prefix': app.slots.prefix || props.prefixIcon,
+				'has-suffix': app.slots.suffix || props.suffixIcon,
+				'has-prepend': app.slots.prepend || props.prependIcon,
+				'has-append': app.slots.append || props.appendIcon,
 			}"
 		>
 			<div class="v3-input__inner">
@@ -43,12 +43,12 @@
 				</div>
 				<div
 					class="v3-input__prefix"
-					v-if="!app.slots.prefix && state.defaultProps.prefixIcon"
+					v-if="!app.slots.prefix && props.prefixIcon"
 				>
 					<i
 						:class="{
 							'v3-icon': true,
-							[state.defaultProps.prefixIcon]: true,
+							[props.prefixIcon]: true,
 						}"
 					></i>
 				</div>
@@ -57,11 +57,11 @@
 				<input
 					:value="props.modelValue"
 					:type="state.defaultProps.type"
-					:readonly="state.defaultProps.readonly"
-					:disabled="state.defaultProps.disabled"
-					:placeholder="state.defaultProps.placeholder"
-					:minlength="state.defaultProps.minlength"
-					:maxlength="state.defaultProps.maxlength"
+					:readonly="props.readonly"
+					:disabled="props.disabled"
+					:placeholder="props.placeholder"
+					:minlength="props.minlength"
+					:maxlength="props.maxlength"
 					@input="handleInput"
 					@change="handleChange"
 					@focus="handleFocus"
@@ -77,12 +77,12 @@
 				</div>
 				<div
 					class="v3-input__suffix v3-input__suffix-item"
-					v-if="!app.slots.suffix && state.defaultProps.suffixIcon"
+					v-if="!app.slots.suffix && props.suffixIcon"
 				>
 					<i
 						:class="{
 							'v3-icon': true,
-							[state.defaultProps.suffixIcon]: true,
+							[props.suffixIcon]: true,
 						}"
 					></i>
 				</div>
@@ -90,7 +90,7 @@
 				<!-- 清除按钮区域 -->
 				<div
 					class="v3-input__clear v3-input__suffix-item"
-					v-if="state.defaultProps.clearable && state.isShowClearable"
+					v-if="props.clearable && state.isShowClearable"
 				>
 					<i class="v3-icon v3-icon-reeor" @click="handleClear"></i>
 				</div>
@@ -98,7 +98,7 @@
 				<!-- 切换密码区域 -->
 				<div
 					class="v3-input__password v3-input__suffix-item"
-					v-if="state.defaultProps.showPassword"
+					v-if="props.showPassword"
 				>
 					<i
 						:class="{
@@ -114,9 +114,7 @@
 				<!-- 当未指定【maxlength】的时候也要禁用【输入统计】 -->
 				<div
 					class="v3-input__limit v3-input__suffix-item"
-					v-if="
-						state.defaultProps.showWordLimit && state.defaultProps.maxlength > 0
-					"
+					v-if="props.showWordLimit && props.maxlength > 0"
 				>
 					<span class="limit__item limit__current">{{
 						state.currentWordCount
@@ -135,13 +133,13 @@
 		</div>
 		<div
 			class="v3-input__append-wrapper"
-			v-if="!app.slots.append && state.defaultProps.appendIcon"
+			v-if="!app.slots.append && props.appendIcon"
 		>
 			<div class="v3-input__append">
 				<i
 					:class="{
 						'v3-icon': true,
-						[state.defaultProps.appendIcon]: true,
+						[props.appendIcon]: true,
 					}"
 				></i>
 			</div>
@@ -152,6 +150,7 @@
 import {
 	defineComponent,
 	getCurrentInstance,
+	PropType,
 	reactive,
 	toRef,
 	watch,
@@ -161,37 +160,82 @@ import * as TYPES from '@/public/types/input';
 export default defineComponent({
 	name: 'V3Input',
 	props: {
-		type: String as () => TYPES.IInputType,
-		suffixIcon: String as () => TYPES.IInputSuffixIcon,
-		prefixIcon: String as () => TYPES.IInputPrefixIcon,
-		prependIcon: String as () => TYPES.IInputPrependIcon,
-		appendIcon: String as () => TYPES.IInputAppendIcon,
-		clearable: Boolean as () => TYPES.IInputClearable,
-		readonly: Boolean as () => TYPES.IInputReadonly,
-		disabled: Boolean as () => TYPES.IInputDisabled,
-		placeholder: String as () => TYPES.IInputPlaceholder,
-		showWordLimit: Boolean as () => TYPES.IInputShowWordLimit,
-		minlength: Number as () => TYPES.IInputMinLength,
-		maxlength: Number as () => TYPES.IInputMaxLength,
-		showPassword: Boolean as () => TYPES.IInputShowPassword,
-		modelValue: String,
+		/** 输入框的类型 */
+		type: {
+			type: String as PropType<TYPES.IInputType>,
+			default: 'text',
+			validator: (v: string) => {
+				return ['text', 'password'].includes(v);
+			},
+		},
+		/** 后缀图标 */
+		suffixIcon: {
+			type: String,
+			default: '',
+		},
+		/** 前缀图标 */
+		prefixIcon: {
+			type: String,
+			default: '',
+		},
+		/** 前置图标 */
+		prependIcon: {
+			type: String,
+			default: '',
+		},
+		/** 后置图标 */
+		appendIcon: {
+			type: String,
+			default: '',
+		},
+		/** 是否显示清除按钮 */
+		clearable: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否只读 */
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否禁用 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否显示字数统计 */
+		showWordLimit: {
+			type: Boolean,
+			default: false,
+		},
+		/** 限制输入的最小数目 */
+		minlength: {
+			type: Number,
+			default: -1,
+		},
+		/** 限制输入的最大数目 */
+		maxlength: {
+			type: Number,
+			default: -1,
+		},
+		placeholder: {
+			type: String,
+			default: '请输入内容',
+		},
+		/** 是否显示切换密码按钮 */
+		showPassword: {
+			type: Boolean,
+			default: false,
+		},
+		modelValue: {
+			type: String,
+			default: '',
+		},
 	},
-	setup(props, context) {
+	setup(props: TYPES.IInputProps, context) {
 		const state = reactive({
 			defaultProps: {
-				type: 'text',
-				suffixIcon: '',
-				prefixIcon: '',
-				prependIcon: '',
-				appendIcon: '',
-				clearable: false,
-				readonly: false,
-				disabled: false,
-				showWordLimit: false,
-				minlength: -1,
-				maxlength: -1,
-				placeholder: '请输入内容',
-				showPassword: false,
+				type: '',
 			},
 			/** 是否显示【清除】按钮 */
 			isShowClearable: false,
@@ -209,10 +253,7 @@ export default defineComponent({
 		watch(
 			props,
 			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
+				state.defaultProps.type = props.type;
 			},
 			{ immediate: true }
 		);
@@ -222,11 +263,10 @@ export default defineComponent({
 				// 实时监听【maxlength】的变化，更新最大输入字符数
 				state.totalWordCount = newValue!;
 
-				if (props.modelValue && state.defaultProps.showWordLimit) {
+				if (props.modelValue && props.showWordLimit) {
 					// 如果最大值小于当前的输入值的长度，并且最小值大于最大值，那么验证失败
 					state.isValidSuccess =
-						newValue! >= props.modelValue.length &&
-						newValue! > state.defaultProps.minlength;
+						newValue! >= props.modelValue.length && newValue! > props.minlength;
 				} else {
 					state.isValidSuccess = true;
 				}
@@ -240,10 +280,9 @@ export default defineComponent({
 					// 实时监听输入框值的变化，更改字符统计的值
 					state.currentWordCount = newValue.length;
 
-					if (state.defaultProps.showWordLimit) {
+					if (props.showWordLimit) {
 						// 如果值的长度大于已限制的最大数目，那么验证失败
-						state.isValidSuccess =
-							state.defaultProps.maxlength >= newValue.length;
+						state.isValidSuccess = props.maxlength >= newValue.length;
 					}
 				} else {
 					state.currentWordCount = 0;
@@ -291,7 +330,7 @@ export default defineComponent({
 			context.emit('update:modelValue', target.value);
 
 			// 输入时需要实时显示【清空】按钮
-			if (target.value && state.defaultProps.clearable) {
+			if (target.value && props.clearable) {
 				state.isShowClearable = true;
 			}
 		}

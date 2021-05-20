@@ -9,9 +9,9 @@
 			>
 			</v3-input>
 		</div>
-		<!-- <div class="input-container">
+		<div class="input-container">
 			<v3-input-textarea
-				v-model="state.inputValue"
+				v-model="state.inputValue2"
 				:width="100"
 				:height="150"
 				:resize="'both'"
@@ -19,10 +19,10 @@
 				:readonly="false"
 				:autoHeight="true"
 			></v3-input-textarea>
-		</div> -->
-		<!-- <div class="input-container">
+		</div>
+		<div class="input-container">
 			<v3-input-number
-				v-model="state.inputValue"
+				v-model="state.inputValue3"
 				:controlsPosition="'both'"
 				:precision="0"
 				:disabled="false"
@@ -32,7 +32,7 @@
 				:max="20"
 				:stepStrictly="true"
 			></v3-input-number>
-		</div> -->
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -50,6 +50,8 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			inputValue: '测试值123456789',
+			inputValue2: '',
+			inputValue3: 0,
 		});
 
 		watch(state, () => {

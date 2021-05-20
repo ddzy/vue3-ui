@@ -1,16 +1,21 @@
 export type IInputType = 'text' | 'password';
-export type IInputSuffixIcon = string;
-export type IInputPrefixIcon = string;
-export type IInputClearable = boolean;
-export type IInputReadonly = boolean;
-export type IInputDisabled = boolean;
-export type IInputPrependIcon = string;
-export type IInputAppendIcon = string;
-export type IInputPlaceholder = string;
-export type IInputShowWordLimit = boolean;
-export type IInputMinLength = number;
-export type IInputMaxLength = number;
-export type IInputShowPassword = boolean;
+
+export interface IInputProps {
+  type: IInputType;
+  suffixIcon: string;
+  prefixIcon: string;
+  prependIcon: string;
+  appendIcon: string;
+  clearable: boolean;
+  readonly: boolean;
+  disabled: boolean;
+  showWordLimit: boolean;
+  minlength: number;
+  maxlength: number;
+  placeholder: string;
+  showPassword: boolean;
+  modelValue: string;
+}
 
 export type ITextareaWidth = number;
 export type ITextareaHeight = number;
