@@ -7,3 +7,8 @@ export interface IRadioProps {
   label: IRadioLabel;
   modelValue: IRadioLabel;
 }
+export interface IRadioButtonProps {
+  disabled: boolean;
+  label: IRadioLabel;
+  modelValue: IRadioLabel;
+}
