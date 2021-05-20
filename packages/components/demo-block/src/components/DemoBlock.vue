@@ -10,8 +10,8 @@
 			class="v3-demo-block__description v3-demo-block__common"
 			v-if="app.slots.description"
 		>
-			<div class="description__tip" v-if="state.defaultProps.descriptionTip">
-				{{ state.defaultProps.descriptionTip }}
+			<div class="description__tip" v-if="props.descriptionTip">
+				{{ props.descriptionTip }}
 			</div>
 			<div class="description__detail">
 				<slot name="description"></slot>
@@ -33,14 +33,14 @@
 			<div class="functional__expand">
 				<span @click="expandDetailArea">{{
 					state.isDetailAreaExpand
-						? state.defaultProps.expandedBtnText
-						: state.defaultProps.defaultBtnText
+						? props.expandedBtnText
+						: props.defaultBtnText
 				}}</span>
 			</div>
 			<div class="functional__extra">
 				<div
 					class="functional-extra__item"
-					v-for="v in state.defaultProps.extraList"
+					v-for="v in props.extraList"
 					:key="v.icon"
 					@click="handleExtraItemClick(v)"
 				>
@@ -72,44 +72,38 @@ export default defineComponent({
 	name: 'V3DemoBlock',
 	props: {
 		/** 描述区域的提示*/
-		descriptionTip: String as PropType<TYPES.IDemoBlockDescriptionTip>,
+		descriptionTip: {
+			type: String,
+			default: '',
+		},
 		/** 功能按钮列表 */
-		extraList: Array as PropType<TYPES.IDemoBlockExtraItem[]>,
+		extraList: {
+			type: Array as PropType<TYPES.IDemoBlockExtraItem[]>,
+			default: [],
+		},
 		/** 详情区域展开时的按钮文本 */
-		expandedBtnText: String as PropType<TYPES.IDemoBlockExpandedBtnText>,
+		expandedBtnText: {
+			type: String,
+			default: '点击收缩',
+		},
 		/** 详情区域收缩时的按钮文本 */
-		defaultBtnText: String as PropType<TYPES.IDemoBlockDefaultBtnText>,
+		defaultBtnText: {
+			type: String,
+			default: '点击展开',
+		},
 	},
 	emits: ['extraClick'],
-	setup(props) {
+	setup(props: TYPES.IDemoBlockProps) {
 		const state = reactive({
-			defaultProps: {
-				descriptionTip: '',
-				extraList: [],
-				expandedBtnText: '点击收缩',
-				defaultBtnText: '点击展开',
-			} as {},
 			/** 详情区域是否展开 */
 			isDetailAreaExpand: false,
 		});
 		const app = getCurrentInstance();
 
-		watch(
-			props,
-			() => {
-				state.defaultProps = {
-					...state.defaultProps,
-					...reactive(props),
-				};
-			},
-			{
-				immediate: true,
-			}
-		);
-
 		return {
 			app,
 			state,
+			props,
 		};
 	},
 	methods: {
