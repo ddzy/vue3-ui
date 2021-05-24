@@ -25,12 +25,12 @@ export default defineComponent({
 		submitSuccess() {
 			const instance = this.$message({
 				type: 'success',
-				duration: 0,
+				duration: 2000,
 				showClose: true,
 				center: false,
 				dangerouslyUseHTMLString: true,
 				icon: '',
-				offset: 100,
+				offset: 10,
 				customClass: `message-1 message-2  message-3 message-4    `,
 				message: `
 					修改成功！

@@ -57,7 +57,7 @@ export default defineComponent({
 		/** 持续时间 */
 		duration: {
 			type: Number,
-			default: 1,
+			default: 3000,
 		},
 		/** 消息框的类型 */
 		type: {
