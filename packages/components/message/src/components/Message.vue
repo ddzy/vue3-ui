@@ -1,5 +1,5 @@
 <template>
-	<transition name="slide-fade" appear mode="out-in">
+	<transition name="v3-slide-fade" appear mode="out-in">
 		<div>message：{{ app.uid }}</div>
 	</transition>
 </template>
