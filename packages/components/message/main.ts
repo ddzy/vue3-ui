@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Message from './src/components/Message.vue';
+import Message from './src/components/MessageConstructor';
 
 const install = function(app: App) {
 	app.config.globalProperties.$message = Message;

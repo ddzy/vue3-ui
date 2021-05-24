@@ -1,5 +1,6 @@
 import { App, createApp } from 'vue';
 
+import * as TYEPS_MESSAGE from '@/public/types/message';
 import './icon/assets/fonts/iconfont.css';
 import ButtonInstallation, { Button } from './button/main';
 import ButtonGroupInstallation, { ButtonGroup } from './button-group/main';
@@ -25,7 +26,7 @@ import MessageInstallation, { Message } from './message/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
-		$message: Promise<unknown>;
+		$message: TYEPS_MESSAGE.IMessageContructor;
 	}
 }
 

@@ -23,13 +23,12 @@ export default defineComponent({
 	},
 	methods: {
 		submitSuccess() {
-			this.state.isSuccessBtnLoading = true;
+			const instance = this.$message({
+				type: 'success',
+				duration: 3000,
+			});
 
-			setTimeout(() => {
-				this.state.isSuccessBtnLoading = false;
-			}, 2000);
-
-			console.log('this.$message :>> ', this.$message);
+			console.log('instance :>> ', instance);
 		},
 	},
 });
