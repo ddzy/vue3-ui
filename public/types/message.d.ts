@@ -10,12 +10,17 @@ export interface IMessageProps {
 	showClose: boolean;
 	center: boolean;
 	offset: number;
-  onClose: IMessageOnClose;
+	onClose: IMessageOnClose;
 }
 export type IMessageType = 'success' | 'warning' | 'info' | 'danger';
 export type IMessageMessage = string | VNode;
-export type IMessageOnClose = (instance: ComponentPublicInstance) => void;
+export type IMessageOnClose = (instance: ComponentPublicInstance) => boolean;
 
 export type IMessageContructor = (
-  options: Partial<IMessageProps>
-) => ComponentPublicInstance;
+	options: Partial<IMessageProps>
+) => ComponentPublicInstance<
+	IMessageProps,
+	{
+		close: () => void;
+	}
+>;

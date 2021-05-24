@@ -24,7 +24,10 @@ export default <TYPES.IMessageContructor>(
 				showClose: false,
 				center: false,
 				offset: 20,
-				onClose: () => {},
+				onClose: () => {
+					return true;
+				},
+				onInternalClose,
 			},
 			options
 		);
@@ -51,14 +54,19 @@ export default <TYPES.IMessageContructor>(
 		const instance = messageApp.mount(div);
 		state.messageList = state.messageList.concat(instance);
 
-		// 到时间后自动移除该消息框
-		if (defaultOptions.duration) {
-			setTimeout(() => {
+		// 关闭消息框（可供实例调用）
+		function onInternalClose() {
+			try {
 				document.body.removeChild(div);
 				state.messageList = state.messageList.filter(v => {
 					return v !== instance;
 				});
-			}, defaultOptions.duration);
+			} catch (err) {}
+		}
+
+		// 到时间后自动移除该消息框
+		if (defaultOptions.duration) {
+			setTimeout(onInternalClose, defaultOptions.duration);
 		}
 
 		// 返回当前消息框的实例

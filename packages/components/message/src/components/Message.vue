@@ -32,7 +32,7 @@
 					></span>
 					<span v-else>{{ message }}</span>
 				</div>
-				<div class="v3-message__close" v-if="props.showClose">
+				<div class="v3-message__close" v-if="props.showClose" @click="close">
 					<i class="v3-icon v3-icon-close"></i>
 				</div>
 			</div>
@@ -109,6 +109,10 @@ export default defineComponent({
 				return () => {};
 			},
 		},
+		onInternalClose: {
+			type: Function,
+			required: true,
+		},
 	},
 	setup(props: TYPES.IMessageProps) {
 		const state = reactive({
@@ -132,6 +136,19 @@ export default defineComponent({
 			props,
 			VARIABLE,
 		};
+	},
+	methods: {
+		/**
+		 * 关闭当前消息框（可在外部调用 `instance.close()`
+		 */
+		async close() {
+			const isContinue = await this.onClose(this);
+
+			// onClose 回调返回 true 时才会关闭消息框，反之则不会关闭
+			if (isContinue) {
+				this.onInternalClose();
+			}
+		},
 	},
 });
 </script>
