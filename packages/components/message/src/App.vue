@@ -25,10 +25,16 @@ export default defineComponent({
 		submitSuccess() {
 			const instance = this.$message({
 				type: 'success',
-				duration: 3000,
+				duration: 0,
+				showClose: true,
+				center: false,
+				dangerouslyUseHTMLString: true,
+				icon: '',
+				offset: 100,
+				message: `
+					修改成功！
+				`,
 			});
-
-			console.log('instance :>> ', instance);
 		},
 	},
 });

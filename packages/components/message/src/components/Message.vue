@@ -1,12 +1,56 @@
 <template>
-	<transition name="v3-slide-fade" appear mode="out-in">
-		<div>message：{{ app.uid }}</div>
+	<transition name="v3-message-slide-fade" appear mode="out-in">
+		<div
+			:class="{
+				'v3-message': true,
+				[`v3-message--${props.type}`]: true,
+			}"
+			:style="{
+				top: `${props.offset}px`,
+				zIndex: ++VARIABLE.zIndex,
+			}"
+		>
+			<div class="v3-message__inner">
+				<div class="v3-message__icon">
+					<i
+						:class="{
+							'v3-icon': true,
+							[state.defaultProps.icon]: true,
+						}"
+					></i>
+				</div>
+				<div
+					:class="{
+						'v3-message__content': true,
+						[`is-center`]: props.center,
+					}"
+				>
+					<span
+						v-if="props.dangerouslyUseHTMLString"
+						v-html="props.message"
+					></span>
+					<span v-else>{{ message }}</span>
+				</div>
+				<div class="v3-message__close" v-if="props.showClose">
+					<i class="v3-icon v3-icon-close"></i>
+				</div>
+			</div>
+		</div>
 	</transition>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, PropType, reactive } from 'vue';
+import {
+	defineComponent,
+	getCurrentInstance,
+	PropType,
+	reactive,
+	watch,
+} from 'vue';
 
 import * as TYPES from '@/public/types/message';
+import VARIABLE from '@common/constants/internal-variable';
+
+console.log('VARIABLE :>> ', VARIABLE);
 
 export default defineComponent({
 	name: 'V3Message',
@@ -68,13 +112,26 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.IMessageProps) {
-		const state = reactive({});
+		const state = reactive({
+			defaultProps: {
+				icon: '',
+			},
+		});
 		const app = getCurrentInstance();
+
+		watch(
+			props,
+			() => {
+				state.defaultProps.icon = props.icon || `v3-icon-${props.type}-fill`;
+			},
+			{ immediate: true }
+		);
 
 		return {
 			app,
 			state,
 			props,
+			VARIABLE,
 		};
 	},
 });

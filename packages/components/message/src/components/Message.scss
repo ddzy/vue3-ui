@@ -1,0 +1,77 @@
+@import '@common/styles/global-animation.scss';
+
+.v3-message {
+	position: fixed;
+	left: 50%;
+	margin-left: -188px;
+	overflow: hidden;
+	box-sizing: border-box;
+	width: 376px;
+	border-radius: $border-radius-width-default;
+	word-wrap: break-word;
+
+	&.v3-message--info {
+		background-color: $info-color-plain;
+		color: $info-color-little;
+		.v3-message__icon {
+			color: $info-color;
+		}
+	}
+	&.v3-message--success {
+		background-color: $success-color-plain;
+		color: $success-color-little;
+		.v3-message__icon {
+			color: $success-color;
+		}
+	}
+	&.v3-message--danger {
+		background-color: $danger-color-plain;
+		color: $danger-color-little;
+		.v3-message__icon {
+			color: $danger-color;
+		}
+	}
+	&.v3-message--warning {
+		background-color: $warning-color-plain;
+		color: $warning-color-little;
+		.v3-message__icon {
+			color: $warning-color;
+		}
+	}
+
+	.v3-message__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: $padding-medium;
+
+		.v3-message__icon,
+		.v3-message__close {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.v3-message__icon {
+			i {
+				font-size: $font-size-large-2;
+			}
+		}
+
+		.v3-message__content {
+			width: 100%;
+			padding: 0 $padding-medium;
+			font-size: $font-size-small;
+			&.is-center {
+				text-align: center;
+			}
+		}
+
+		.v3-message__close {
+			cursor: pointer;
+			i {
+				font-size: $font-size-large-2;
+			}
+		}
+	}
+}

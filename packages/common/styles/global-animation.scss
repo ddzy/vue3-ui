@@ -1,13 +1,13 @@
-.v3-slide-fade-enter-active {
+.v3-message-slide-fade-enter-active {
 	transition: all 0.3s ease-out;
 }
 
-.v3-slide-fade-leave-active {
+.v3-message-slide-fade-leave-active {
 	transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.v3-slide-fade-enter-from,
-.v3-slide-fade-leave-to {
-	transform: translateX(20px);
+.v3-message-slide-fade-enter-from,
+.v3-message-slide-fade-leave-to {
+	transform: translateX(50%);
 	opacity: 0;
 }

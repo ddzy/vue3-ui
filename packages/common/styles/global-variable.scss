@@ -1,8 +1,7 @@
-@import './global-animation.scss';
-
 $font-size-normal: 16px;
 $font-size-small: 14px;
 $font-size-large: 18px;
+$font-size-large-2: 20px;
 
 $default-color: rgba(0, 0, 0, 0.1);
 $primary-color: rgba(0, 160, 255, 1);
@@ -10,6 +9,13 @@ $success-color: rgba(99, 185, 49, 1);
 $danger-color: rgba(201, 27, 38, 1);
 $warning-color: rgba(237, 170, 83, 1);
 $info-color: rgba(184, 176, 176, 1);
+
+$default-color-little: rgba(0, 0, 0, 0.8);
+$primary-color-little: rgba(0, 160, 255, 0.8);
+$success-color-little: rgba(99, 185, 49, 0.8);
+$danger-color-little: rgba(201, 27, 38, 0.8);
+$warning-color-little: rgba(237, 170, 83, 0.8);
+$info-color-little: rgba(184, 176, 176, 0.8);
 
 $default-color-plain: rgba(0, 0, 0, 0.1);
 $primary-color-plain: rgba(0, 160, 255, 0.1);

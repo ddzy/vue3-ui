@@ -1,10 +1,4 @@
-import {
-	ComponentPublicInstance,
-	createApp,
-	reactive,
-	toRef,
-	watch,
-} from 'vue';
+import { ComponentPublicInstance, createApp, reactive } from 'vue';
 import Message from './Message.vue';
 import * as TYPES from '@/public/types/message';
 
