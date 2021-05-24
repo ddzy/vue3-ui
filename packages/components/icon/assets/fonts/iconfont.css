@@ -1,16 +1,16 @@
 @font-face {
-  font-family: "v3-icon"; /* Project id 2484628 */
-  src: url('iconfont.woff2?t=1620374293413') format('woff2'),
-       url('iconfont.woff?t=1620374293413') format('woff'),
-       url('iconfont.ttf?t=1620374293413') format('truetype');
+	font-family: 'v3-icon'; /* Project id 2484628 */
+	src: url('iconfont.woff2?t=1621838007867') format('woff2'),
+		url('iconfont.woff?t=1621838007867') format('woff'),
+		url('iconfont.ttf?t=1621838007867') format('truetype');
 }
 
 .v3-icon {
-  font-family: "v3-icon" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: 'v3-icon' !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .v3-icon-loading {
@@ -40,335 +40,350 @@
 	}
 }
 
+.v3-icon-danger-fill:before {
+	content: '\e658';
+}
+
+.v3-icon-error-fill-triangle:before {
+	content: '\e86f';
+}
+
+.v3-icon-warning-fill:before {
+	content: '\e71b';
+}
+
+.v3-icon-info-fill:before {
+	content: '\e730';
+}
+
 .v3-icon-like:before {
-  content: "\e65c";
+	content: '\e65c';
 }
 
 .v3-icon-like1:before {
-  content: "\e64d";
+	content: '\e64d';
 }
 
 .v3-icon-checkbox-default:before {
-  content: "\e63b";
+	content: '\e63b';
 }
 
 .v3-icon-checkbox-selected:before {
-  content: "\ec58";
+	content: '\ec58';
 }
 
 .v3-icon-checkbox-indeterminated:before {
-  content: "\e650";
+	content: '\e650';
 }
 
 .v3-icon-arrow-down:before {
-  content: "\e7b2";
+	content: '\e7b2';
 }
 
 .v3-icon-resonserate:before {
-  content: "\e779";
+	content: '\e779';
 }
 
 .v3-icon-seleted:before {
-  content: "\e77a";
+	content: '\e77a';
 }
 
 .v3-icon-success:before {
-  content: "\e77b";
+	content: '\e77b';
 }
 
 .v3-icon-success-fill:before {
-  content: "\e78d";
+	content: '\e78d';
 }
 
 .v3-icon-add-select:before {
-  content: "\e7b0";
+	content: '\e7b0';
 }
 
 .v3-icon-sami-select:before {
-  content: "\e7b1";
+	content: '\e7b1';
 }
 
 .v3-icon-favorites:before {
-  content: "\e7b3";
+	content: '\e7b3';
 }
 
 .v3-icon-block:before {
-  content: "\e7de";
+	content: '\e7de';
 }
 
 .v3-icon-reduce:before {
-  content: "\e777";
+	content: '\e777';
 }
 
 .v3-icon-loading:before {
-  content: "\e776";
+	content: '\e776';
 }
 
 .v3-icon-viewlarger:before {
-  content: "\e775";
+	content: '\e775';
 }
 
 .v3-icon-search:before {
-  content: "\e67d";
+	content: '\e67d';
 }
 
 .v3-icon-editor:before {
-  content: "\e6f6";
+	content: '\e6f6';
 }
 
 .v3-icon-gift:before {
-  content: "\e6f9";
+	content: '\e6f9';
 }
 
 .v3-icon-integral:before {
-  content: "\e6fa";
+	content: '\e6fa';
 }
 
 .v3-icon-nav-list:before {
-  content: "\e6fd";
+	content: '\e6fd';
 }
 
 .v3-icon-pic:before {
-  content: "\e6ff";
+	content: '\e6ff';
 }
 
 .v3-icon-Notvisible:before {
-  content: "\e6fe";
+	content: '\e6fe';
 }
 
 .v3-icon-play:before {
-  content: "\e701";
+	content: '\e701';
 }
 
 .v3-icon-rising:before {
-  content: "\e703";
+	content: '\e703';
 }
 
 .v3-icon-QRcode:before {
-  content: "\e704";
+	content: '\e704';
 }
 
 .v3-icon-rmb:before {
-  content: "\e705";
+	content: '\e705';
 }
 
 .v3-icon-similar-product:before {
-  content: "\e707";
+	content: '\e707';
 }
 
 .v3-icon-Exportservices:before {
-  content: "\e702";
+	content: '\e702';
 }
 
 .v3-icon-sendinquiry:before {
-  content: "\e70d";
+	content: '\e70d';
 }
 
 .v3-icon-add-account:before {
-  content: "\e741";
+	content: '\e741';
 }
 
 .v3-icon-add:before {
-  content: "\e742";
+	content: '\e742';
 }
 
 .v3-icon-add-cart:before {
-  content: "\e743";
+	content: '\e743';
 }
 
 .v3-icon-arrow-right:before {
-  content: "\e744";
+	content: '\e744';
 }
 
 .v3-icon-arrow-left:before {
-  content: "\e745";
+	content: '\e745';
 }
 
 .v3-icon-arrow-up:before {
-  content: "\e746";
+	content: '\e746';
 }
 
 .v3-icon-ashbin:before {
-  content: "\e747";
+	content: '\e747';
 }
 
 .v3-icon-atm:before {
-  content: "\e748";
+	content: '\e748';
 }
 
 .v3-icon-bad:before {
-  content: "\e749";
+	content: '\e749';
 }
 
 .v3-icon-attachent:before {
-  content: "\e74a";
+	content: '\e74a';
 }
 
 .v3-icon-browse:before {
-  content: "\e74b";
+	content: '\e74b';
 }
 
 .v3-icon-beauty:before {
-  content: "\e74c";
+	content: '\e74c';
 }
 
 .v3-icon-atm-away:before {
-  content: "\e74d";
+	content: '\e74d';
 }
 
 .v3-icon-assessed-badge:before {
-  content: "\e74e";
+	content: '\e74e';
 }
 
 .v3-icon-calendar:before {
-  content: "\e74f";
+	content: '\e74f';
 }
 
 .v3-icon-cart-full:before {
-  content: "\e750";
+	content: '\e750';
 }
 
 .v3-icon-calculator:before {
-  content: "\e751";
+	content: '\e751';
 }
 
 .v3-icon-category:before {
-  content: "\e752";
+	content: '\e752';
 }
 
 .v3-icon-close:before {
-  content: "\e753";
+	content: '\e753';
 }
 
 .v3-icon-certified-supplier:before {
-  content: "\e754";
+	content: '\e754';
 }
 
 .v3-icon-cart-Empty:before {
-  content: "\e755";
+	content: '\e755';
 }
 
 .v3-icon-code:before {
-  content: "\e756";
+	content: '\e756';
 }
 
 .v3-icon-confirm:before {
-  content: "\e757";
+	content: '\e757';
 }
 
 .v3-icon-cry:before {
-  content: "\e758";
+	content: '\e758';
 }
 
 .v3-icon-clock:before {
-  content: "\e759";
+	content: '\e759';
 }
 
 .v3-icon-CurrencyConverter:before {
-  content: "\e75a";
+	content: '\e75a';
 }
 
 .v3-icon-Customermanagement:before {
-  content: "\e75b";
+	content: '\e75b';
 }
 
 .v3-icon-discount:before {
-  content: "\e75c";
+	content: '\e75c';
 }
 
 .v3-icon-download:before {
-  content: "\e75d";
+	content: '\e75d';
 }
 
 .v3-icon-ellipsis:before {
-  content: "\e75e";
+	content: '\e75e';
 }
 
 .v3-icon-email:before {
-  content: "\e75f";
+	content: '\e75f';
 }
 
 .v3-icon-help:before {
-  content: "\e760";
+	content: '\e760';
 }
 
 .v3-icon-good:before {
-  content: "\e761";
+	content: '\e761';
 }
 
 .v3-icon-link:before {
-  content: "\e762";
+	content: '\e762';
 }
 
 .v3-icon-map:before {
-  content: "\e763";
+	content: '\e763';
 }
 
 .v3-icon-notice:before {
-  content: "\e764";
+	content: '\e764';
 }
 
 .v3-icon-password:before {
-  content: "\e765";
+	content: '\e765';
 }
 
 .v3-icon-Notvisible1:before {
-  content: "\e766";
+	content: '\e766';
 }
 
 .v3-icon-pin:before {
-  content: "\e767";
+	content: '\e767';
 }
 
 .v3-icon-prompt:before {
-  content: "\e768";
+	content: '\e768';
 }
 
 .v3-icon-reeor:before {
-  content: "\e769";
+	content: '\e769';
 }
 
 .v3-icon-responsetime:before {
-  content: "\e76a";
+	content: '\e76a';
 }
 
 .v3-icon-return:before {
-  content: "\e76b";
+	content: '\e76b';
 }
 
 .v3-icon-scanning:before {
-  content: "\e76c";
+	content: '\e76c';
 }
 
 .v3-icon-sound-Mute:before {
-  content: "\e76d";
+	content: '\e76d';
 }
 
 .v3-icon-sound-filling:before {
-  content: "\e76e";
+	content: '\e76e';
 }
 
 .v3-icon-switch:before {
-  content: "\e76f";
+	content: '\e76f';
 }
 
 .v3-icon-upload:before {
-  content: "\e770";
+	content: '\e770';
 }
 
 .v3-icon-warning:before {
-  content: "\e771";
+	content: '\e771';
 }
 
 .v3-icon-set:before {
-  content: "\e772";
+	content: '\e772';
 }
 
 .v3-icon-unlock:before {
-  content: "\e773";
+	content: '\e773';
 }
 
 .v3-icon-exchangerate:before {
-  content: "\e774";
+	content: '\e774';
 }
-

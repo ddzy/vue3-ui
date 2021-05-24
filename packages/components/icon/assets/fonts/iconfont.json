@@ -6,6 +6,34 @@
   "description": "vue3 ui 组件库",
   "glyphs": [
     {
+      "icon_id": "15167668",
+      "name": "error",
+      "font_class": "danger-fill",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "4936688",
+      "name": "error-fill",
+      "font_class": "error-fill-triangle",
+      "unicode": "e86f",
+      "unicode_decimal": 59503
+    },
+    {
+      "icon_id": "7008988",
+      "name": "prompt_fill",
+      "font_class": "warning-fill",
+      "unicode": "e71b",
+      "unicode_decimal": 59163
+    },
+    {
+      "icon_id": "11481359",
+      "name": "prompt-fill",
+      "font_class": "info-fill",
+      "unicode": "e730",
+      "unicode_decimal": 59184
+    },
+    {
       "icon_id": "46292",
       "name": "Like",
       "font_class": "like",
