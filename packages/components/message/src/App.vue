@@ -1,20 +1,37 @@
 <template>
 	<div class="demo-container">
-		<v3-message></v3-message>
+		<v3-button
+			type="success"
+			:loading="state.isSuccessBtnLoading"
+			@click="submitSuccess"
+			>成功的消息提示</v3-button
+		>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
 	setup() {
-		const state = {};
+		const state = reactive({
+			isSuccessBtnLoading: false,
+		});
 
 		return {
 			state,
 		};
 	},
-	methods: {},
+	methods: {
+		submitSuccess() {
+			this.state.isSuccessBtnLoading = true;
+
+			setTimeout(() => {
+				this.state.isSuccessBtnLoading = false;
+			}, 2000);
+
+			console.log('this.$message :>> ', this.$message);
+		},
+	},
 });
 </script>
 <style lang="scss" scoped>

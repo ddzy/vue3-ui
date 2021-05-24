@@ -23,6 +23,12 @@ import RowInstallation, { Row } from './row/main';
 import ColInstallation, { Col } from './col/main';
 import MessageInstallation, { Message } from './message/main';
 
+declare module '@vue/runtime-core' {
+	interface ComponentCustomProperties {
+		$message: Promise<unknown>;
+	}
+}
+
 // test
 import Demo from './message/src/App.vue';
 const app = createApp(Demo);
@@ -62,5 +68,5 @@ export default function install(app: App) {
 	app.component(DemoBlock.name, DemoBlock);
 	app.component(Row.name, Row);
 	app.component(Col.name, Col);
-	app.component(Message.name, Message);
+	app.config.globalProperties.$message = Message;
 }
