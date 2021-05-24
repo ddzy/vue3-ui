@@ -1,14 +1,15 @@
 <template>
 	<transition name="v3-message-slide-fade" appear mode="out-in">
 		<div
-			:class="{
-				'v3-message': true,
-				[`v3-message--${props.type}`]: true,
-			}"
 			:style="{
 				top: `${props.offset}px`,
 				zIndex: ++VARIABLE.zIndex,
 			}"
+			:class="[
+				'v3-message',
+				`v3-message--${props.type}`,
+				`${props.customClass}`,
+			]"
 		>
 			<div class="v3-message__inner">
 				<div class="v3-message__icon">
@@ -49,8 +50,6 @@ import {
 
 import * as TYPES from '@/public/types/message';
 import VARIABLE from '@common/constants/internal-variable';
-
-console.log('VARIABLE :>> ', VARIABLE);
 
 export default defineComponent({
 	name: 'V3Message',
