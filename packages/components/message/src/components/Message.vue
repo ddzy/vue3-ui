@@ -1,6 +1,7 @@
 <template>
 	<transition name="v3-message-slide-fade" appear mode="out-in">
 		<div
+			v-show="state.isShow"
 			:style="{
 				top: `${props.offset}px`,
 				zIndex: ++VARIABLE.zIndex,
@@ -43,6 +44,7 @@
 import {
 	defineComponent,
 	getCurrentInstance,
+	onMounted,
 	PropType,
 	reactive,
 	watch,
@@ -119,6 +121,7 @@ export default defineComponent({
 			defaultProps: {
 				icon: '',
 			},
+			isShow: false,
 		});
 		const app = getCurrentInstance();
 
@@ -129,6 +132,10 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+
+		onMounted(() => {
+			state.isShow = true;
+		});
 
 		return {
 			app,

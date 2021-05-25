@@ -1,4 +1,4 @@
-import { ComponentPublicInstance, createApp, reactive } from 'vue';
+import { ComponentPublicInstance, createApp, nextTick, reactive } from 'vue';
 import Message from './Message.vue';
 import * as TYPES from '@/public/types/message';
 
@@ -51,13 +51,13 @@ export default <TYPES.IMessageContructor>(
 		div.setAttribute('id', `message--${messageApp._uid}`);
 		document.body.appendChild(div);
 
-		const instance = messageApp.mount(div);
+		const instance = messageApp.mount(div) as ComponentPublicInstance<any, any>;
 		state.messageList = state.messageList.concat(instance);
 
 		// 关闭消息框（可供实例调用）
 		function onInternalClose() {
 			try {
-				document.body.removeChild(div);
+				instance.state.isShow = false;
 				state.messageList = state.messageList.filter(v => {
 					return v !== instance;
 				});
