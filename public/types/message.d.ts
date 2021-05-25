@@ -10,6 +10,7 @@ export interface IMessageProps {
 	showClose: boolean;
 	center: boolean;
 	offset: number;
+	closeOnHover: boolean;
 	onClose: IMessageOnClose;
 }
 export type IMessageType = 'success' | 'warning' | 'info' | 'danger';

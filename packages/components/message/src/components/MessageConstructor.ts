@@ -33,6 +33,7 @@ export default <TYPES.IMessageContructor>(
 				showClose: false,
 				center: false,
 				offset: 20,
+				closeOnHover: false,
 			},
 			options
 		);
@@ -63,6 +64,8 @@ export default <TYPES.IMessageContructor>(
 			.proxy as ComponentPublicInstance;
 
 		state.messageList.push(instance);
+
+		return instance;
 	}
 );
 

@@ -11,6 +11,8 @@
 				`v3-message--${props.type}`,
 				`${props.customClass}`,
 			]"
+			@mouseenter="mouseEnter"
+			@mouseleave="mouseLeave"
 		>
 			<div class="v3-message__inner">
 				<div class="v3-message__icon">
@@ -41,17 +43,15 @@
 	</transition>
 </template>
 <script lang="ts">
+import * as TYPES from '@/public/types/message';
+import VARIABLE from '@common/constants/internal-variable';
 import {
 	defineComponent,
 	getCurrentInstance,
-	onMounted,
 	PropType,
 	reactive,
 	watch,
 } from 'vue';
-
-import * as TYPES from '@/public/types/message';
-import VARIABLE from '@common/constants/internal-variable';
 import { close } from './MessageConstructor';
 
 export default defineComponent({
@@ -105,6 +105,11 @@ export default defineComponent({
 			type: Number,
 			default: 20,
 		},
+		/** 鼠标移到消息框上时，是否依然要关闭 */
+		closeOnHover: {
+			type: Boolean,
+			default: false,
+		},
 		/** 关闭时触发的事件 */
 		onClose: {
 			type: Function as PropType<TYPES.IMessageOnClose>,
@@ -145,6 +150,19 @@ export default defineComponent({
 		 */
 		async close() {
 			close(this);
+		},
+		/**
+		 * 鼠标停留/移开，根据需要来取消/继续消息框的关闭
+		 */
+		mouseEnter() {
+			if (!this.props.closeOnHover) {
+				clearTimeout(this.state.timer);
+			}
+		},
+		mouseLeave() {
+			if (!this.props.closeOnHover && this.props.duration) {
+				this.state.timer = setTimeout(this.close, this.props.duration);
+			}
 		},
 	},
 	mounted() {

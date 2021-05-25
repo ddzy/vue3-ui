@@ -32,6 +32,7 @@ export default defineComponent({
 				icon: '',
 				offset: 10,
 				customClass: `message-1 message-2  message-3 message-4    `,
+				closeOnHover: false,
 				message: `
 					修改成功！
 				`,
