@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(ButtonGroup.name, ButtonGroup);
 };
 
-export { ButtonGroup };
-
-export default install;
+export default Object.assign(ButtonGroup, { install });
