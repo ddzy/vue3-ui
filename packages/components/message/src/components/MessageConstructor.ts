@@ -1,14 +1,23 @@
-import { ComponentPublicInstance, createApp, nextTick, reactive } from 'vue';
-import Message from './Message.vue';
 import * as TYPES from '@/public/types/message';
+import {
+	ComponentInternalInstance,
+	ComponentPublicInstance,
+	createVNode,
+	reactive,
+	render,
+} from 'vue';
+import Message from './Message.vue';
 
 interface IState {
-	messageList: ComponentPublicInstance[];
+	messageList: ComponentPublicInstance<any, any>[];
+	instanceWrapper: HTMLElement;
 }
 
 const state: IState = reactive({
 	/** 消息列表 */
 	messageList: [],
+
+	instanceWrapper: document.createElement('div'),
 });
 
 export default <TYPES.IMessageContructor>(
@@ -24,10 +33,6 @@ export default <TYPES.IMessageContructor>(
 				showClose: false,
 				center: false,
 				offset: 20,
-				onClose: () => {
-					return true;
-				},
-				onInternalClose,
 			},
 			options
 		);
@@ -42,34 +47,31 @@ export default <TYPES.IMessageContructor>(
 			defaultOptions.offset = prevRectBottom + defaultOptions.offset;
 		}
 
-		const messageApp = createApp(Message, {
+		// 利用 VNode 的形式来挂载消息框，避免多余的 DOM 元素
+		// const instanceWrapper = document.createElement('div');
+		state.instanceWrapper = document.createElement('div');
+		const instanceVNode = createVNode(Message, {
 			...defaultOptions,
 		});
 
-		// 装载消息框的容器
-		const div = document.createElement('div');
-		div.setAttribute('id', `message--${messageApp._uid}`);
-		document.body.appendChild(div);
+		render(instanceVNode, state.instanceWrapper);
+		document.body.appendChild(
+			state.instanceWrapper.firstElementChild as HTMLElement
+		);
 
-		const instance = messageApp.mount(div) as ComponentPublicInstance<any, any>;
-		state.messageList = state.messageList.concat(instance);
+		const instance = (instanceVNode.component as ComponentInternalInstance)
+			.proxy as ComponentPublicInstance;
 
-		// 关闭消息框（可供实例调用）
-		function onInternalClose() {
-			try {
-				instance.state.isShow = false;
-				state.messageList = state.messageList.filter(v => {
-					return v !== instance;
-				});
-			} catch (err) {}
-		}
-
-		// 到时间后自动移除该消息框
-		if (defaultOptions.duration) {
-			setTimeout(onInternalClose, defaultOptions.duration);
-		}
-
-		// 返回当前消息框的实例
-		return instance;
+		state.messageList.push(instance);
 	}
 );
+
+export function close(instance: ComponentPublicInstance) {
+	state.messageList.forEach((message, index) => {
+		if (instance === message) {
+			// 关闭消息框并从消息队列中移除
+			message.state.isShow = false;
+			state.messageList.splice(index, 1);
+		}
+	});
+}

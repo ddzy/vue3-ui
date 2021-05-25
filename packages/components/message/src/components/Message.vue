@@ -1,10 +1,10 @@
 <template>
 	<transition name="v3-message-slide-fade" appear mode="out-in">
 		<div
-			v-show="state.isShow"
+			v-if="state.isShow"
 			:style="{
 				top: `${props.offset}px`,
-				zIndex: ++VARIABLE.zIndex,
+				zIndex: VARIABLE.getNextZIndex(),
 			}"
 			:class="[
 				'v3-message',
@@ -52,6 +52,7 @@ import {
 
 import * as TYPES from '@/public/types/message';
 import VARIABLE from '@common/constants/internal-variable';
+import { close } from './MessageConstructor';
 
 export default defineComponent({
 	name: 'V3Message',
@@ -111,18 +112,16 @@ export default defineComponent({
 				return () => {};
 			},
 		},
-		onInternalClose: {
-			type: Function,
-			required: true,
-		},
 	},
 	setup(props: TYPES.IMessageProps) {
 		const state = reactive({
 			defaultProps: {
 				icon: '',
 			},
-			isShow: false,
-		});
+			/** 控制当前的消息框是否显示 */
+			isShow: true,
+			timer: 0,
+		}) as any;
 		const app = getCurrentInstance();
 
 		watch(
@@ -132,10 +131,6 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
-
-		onMounted(() => {
-			state.isShow = true;
-		});
 
 		return {
 			app,
@@ -149,13 +144,13 @@ export default defineComponent({
 		 * 关闭当前消息框（可在外部调用 `instance.close()`
 		 */
 		async close() {
-			const isContinue = await this.onClose(this);
-
-			// onClose 回调返回 true 时才会关闭消息框，反之则不会关闭
-			if (isContinue) {
-				this.onInternalClose();
-			}
+			close(this);
 		},
+	},
+	mounted() {
+		if (this.props.duration) {
+			this.state.timer = setTimeout(this.close, this.props.duration);
+		}
 	},
 });
 </script>
