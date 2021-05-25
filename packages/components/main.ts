@@ -22,11 +22,11 @@ import RadioGroupInstallation, { RadioGroup } from './radio-group/main';
 import DemoBlockInstallation, { DemoBlock } from './demo-block/main';
 import RowInstallation, { Row } from './row/main';
 import ColInstallation, { Col } from './col/main';
-import MessageInstallation, { Message } from './message/main';
+import V3Message from './message/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
-		$message: TYEPS_MESSAGE.IMessageContructor;
+		$message: TYEPS_MESSAGE.IMessageConstructor;
 	}
 }
 
@@ -51,7 +51,7 @@ export {
 	DemoBlockInstallation,
 	RowInstallation,
 	ColInstallation,
-	MessageInstallation,
+	V3Message,
 };
 
 export default function install(app: App) {
@@ -69,5 +69,5 @@ export default function install(app: App) {
 	app.component(DemoBlock.name, DemoBlock);
 	app.component(Row.name, Row);
 	app.component(Col.name, Col);
-	app.config.globalProperties.$message = Message;
+	app.config.globalProperties.$message = V3Message;
 }

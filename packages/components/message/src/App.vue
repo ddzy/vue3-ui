@@ -7,9 +7,15 @@
 			>成功的消息提示</v3-button
 		>
 	</div>
+	<v3-row>
+		<v3-col>
+			<v3-button type="danger" @click="submitFail">错误的消息提示</v3-button>
+		</v3-col>
+	</v3-row>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import V3Message from '@components/message/main';
 
 export default defineComponent({
 	setup() {
@@ -43,6 +49,11 @@ export default defineComponent({
 				message: `
 					修改成功！
 				`,
+			});
+		},
+		submitFail() {
+			V3Message.danger({
+				message: '修改失败！',
 			});
 		},
 	},

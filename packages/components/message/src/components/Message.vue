@@ -153,7 +153,7 @@ export default defineComponent({
 		 */
 		async close() {
 			// 只有 `props.onClose` 返回 true 才会关闭，否则不会关闭
-			const isContinue = await this.props.onClose(this);
+			const isContinue = await (this.props.onClose as Function)(this);
 
 			if (isContinue) {
 				close(this);
