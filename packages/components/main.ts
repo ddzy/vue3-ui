@@ -2,7 +2,7 @@ import { App, createApp } from 'vue';
 
 import * as TYEPS_MESSAGE from '@/public/types/message';
 import './icon/assets/fonts/iconfont.css';
-import ButtonInstallation, { Button } from './button/main';
+import V3Button from './button/main';
 import ButtonGroupInstallation, { ButtonGroup } from './button-group/main';
 import CheckboxInstallation, { Checkbox } from './checkbox/main';
 import CheckboxButtonInstallation, {
@@ -37,7 +37,7 @@ app.use(install);
 app.mount('#app');
 
 export {
-	ButtonInstallation,
+	V3Button,
 	ButtonGroupInstallation,
 	CheckboxInstallation,
 	CheckboxButtonInstallation,
@@ -55,7 +55,7 @@ export {
 };
 
 export default function install(app: App) {
-	app.component(Button.name, Button);
+	app.component(V3Button.name, V3Button);
 	app.component(ButtonGroup.name, ButtonGroup);
 	app.component(Checkbox.name, Checkbox);
 	app.component(CheckboxButton.name, CheckboxButton);
