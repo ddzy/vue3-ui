@@ -110,11 +110,13 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
-		/** 关闭时触发的事件 */
+		/** 关闭时触发的事件，返回 Promise<true> 或者 true 时消息框永远不会关闭 */
 		onClose: {
 			type: Function as PropType<TYPES.IMessageOnClose>,
 			default() {
-				return () => {};
+				return () => {
+					return true;
+				};
 			},
 		},
 	},
@@ -149,7 +151,12 @@ export default defineComponent({
 		 * 关闭当前消息框（可在外部调用 `instance.close()`
 		 */
 		async close() {
-			close(this);
+			// 只有 `props.onClose` 返回 true 才会关闭，否则不会关闭
+			const isContinue = await this.props.onClose(this);
+
+			if (isContinue) {
+				close(this);
+			}
 		},
 		/**
 		 * 鼠标停留/移开，根据需要来取消/继续消息框的关闭

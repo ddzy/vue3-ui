@@ -34,6 +34,9 @@ export default <TYPES.IMessageContructor>(
 				center: false,
 				offset: 20,
 				closeOnHover: false,
+				onClose() {
+					return true;
+				},
 			},
 			options
 		);

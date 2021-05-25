@@ -33,6 +33,13 @@ export default defineComponent({
 				offset: 10,
 				customClass: `message-1 message-2  message-3 message-4    `,
 				closeOnHover: false,
+				onClose() {
+					return new Promise(resolve => {
+						setTimeout(() => {
+							resolve(true);
+						}, 1000);
+					});
+				},
 				message: `
 					修改成功！
 				`,
