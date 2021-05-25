@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(Radio.name, Radio);
 };
 
-export { Radio };
-
-export default install;
+export default Object.assign(Radio, { install });

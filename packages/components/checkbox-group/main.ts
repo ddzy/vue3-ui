@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(CheckboxGroup.name, CheckboxGroup);
 };
 
-export { CheckboxGroup };
-
-export default install;
+export default Object.assign(CheckboxGroup, { install });

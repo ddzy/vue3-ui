@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(CheckboxButton.name, CheckboxButton);
 };
 
-export { CheckboxButton };
-
-export default install;
+export default Object.assign(CheckboxButton, { install });

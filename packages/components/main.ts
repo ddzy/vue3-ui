@@ -4,24 +4,18 @@ import * as TYEPS_MESSAGE from '@/public/types/message';
 import './icon/assets/fonts/iconfont.css';
 import V3Button from './button/main';
 import V3ButtonGroup from './button-group/main';
-import CheckboxInstallation, { Checkbox } from './checkbox/main';
-import CheckboxButtonInstallation, {
-	CheckboxButton,
-} from './checkbox-button/main';
-import CheckboxGroupInstallation, {
-	CheckboxGroup,
-} from './checkbox-group/main';
-import InputInstallation, { Input } from './input/main';
-import InputNumberInstallation, { InputNumber } from './input-number/main';
-import InputTextareaInstallation, {
-	InputTextarea,
-} from './input-textarea/main';
-import RadioInstallation, { Radio } from './radio/main';
-import RadioButtonInstallation, { RadioButton } from './radio-button/main';
-import RadioGroupInstallation, { RadioGroup } from './radio-group/main';
-import DemoBlockInstallation, { DemoBlock } from './demo-block/main';
-import RowInstallation, { Row } from './row/main';
-import ColInstallation, { Col } from './col/main';
+import V3Checkbox from './checkbox/main';
+import V3CheckboxButton from './checkbox-button/main';
+import V3CheckboxGroup from './checkbox-group/main';
+import V3Input from './input/main';
+import V3InputNumber from './input-number/main';
+import V3InputTextarea from './input-textarea/main';
+import V3Radio from './radio/main';
+import V3RadioButton from './radio-button/main';
+import V3RadioGroup from './radio-group/main';
+import V3DemoBlock from './demo-block/main';
+import V3Row from './row/main';
+import V3Col from './col/main';
 import V3Message from './message/main';
 
 declare module '@vue/runtime-core' {
@@ -31,7 +25,7 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './button/src/App.vue';
+import Demo from './message/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
@@ -39,35 +33,35 @@ app.mount('#app');
 export {
 	V3Button,
 	V3ButtonGroup,
-	CheckboxInstallation,
-	CheckboxButtonInstallation,
-	CheckboxGroupInstallation,
-	InputInstallation,
-	InputNumberInstallation,
-	InputTextareaInstallation,
-	RadioInstallation,
-	RadioButtonInstallation,
-	RadioGroupInstallation,
-	DemoBlockInstallation,
-	RowInstallation,
-	ColInstallation,
+	V3Checkbox,
+	V3CheckboxButton,
+	V3CheckboxGroup,
+	V3Input,
+	V3InputNumber,
+	V3InputTextarea,
+	V3Radio,
+	V3RadioButton,
+	V3RadioGroup,
+	V3DemoBlock,
+	V3Row,
+	V3Col,
 	V3Message,
 };
 
 export default function install(app: App) {
 	app.component(V3Button.name, V3Button);
 	app.component(V3ButtonGroup.name, V3ButtonGroup);
-	app.component(Checkbox.name, Checkbox);
-	app.component(CheckboxButton.name, CheckboxButton);
-	app.component(CheckboxGroup.name, CheckboxGroup);
-	app.component(Input.name, Input);
-	app.component(InputNumber.name, InputNumber);
-	app.component(InputTextarea.name, InputTextarea);
-	app.component(Radio.name, Radio);
-	app.component(RadioButton.name, RadioButton);
-	app.component(RadioGroup.name, RadioGroup);
-	app.component(DemoBlock.name, DemoBlock);
-	app.component(Row.name, Row);
-	app.component(Col.name, Col);
+	app.component(V3Checkbox.name, V3Checkbox);
+	app.component(V3CheckboxButton.name, V3CheckboxButton);
+	app.component(V3CheckboxGroup.name, V3CheckboxGroup);
+	app.component(V3Input.name, V3Input);
+	app.component(V3InputNumber.name, V3InputNumber);
+	app.component(V3InputTextarea.name, V3InputTextarea);
+	app.component(V3Radio.name, V3Radio);
+	app.component(V3RadioButton.name, V3RadioButton);
+	app.component(V3RadioGroup.name, V3RadioGroup);
+	app.component(V3DemoBlock.name, V3DemoBlock);
+	app.component(V3Row.name, V3Row);
+	app.component(V3Col.name, V3Col);
 	app.config.globalProperties.$message = V3Message;
 }

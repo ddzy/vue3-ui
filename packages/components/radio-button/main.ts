@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(RadioButton.name, RadioButton);
 };
 
-export { RadioButton };
-
-export default install;
+export default Object.assign(RadioButton, { install });

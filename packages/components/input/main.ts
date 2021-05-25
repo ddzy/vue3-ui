@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(Input.name, Input);
 };
 
-export { Input };
-
-export default install;
+export default Object.assign(Input, { install });

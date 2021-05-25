@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(Row.name, Row);
 };
 
-export { Row };
-
-export default install;
+export default Object.assign(Row, { install });

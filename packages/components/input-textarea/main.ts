@@ -5,6 +5,4 @@ const install = function(app: App) {
 	app.component(InputTextarea.name, InputTextarea);
 };
 
-export { InputTextarea };
-
-export default install;
+export default Object.assign(InputTextarea, { install });
