@@ -143,7 +143,7 @@ describe('Message 组件测试：', () => {
 		const message1 = wrapper1.$message({
 			type: 'success',
 			message: '测试文本',
-			duration: 0.0000000000001,
+			duration: 0,
 			showClose: true,
 		});
 
