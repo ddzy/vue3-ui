@@ -5,7 +5,17 @@
 		}"
 	>
 		<div ref="triggerRef" class="v3-select__trigger">
-			<v3-input :readonly="true"></v3-input>
+			<v3-input :readonly="true">
+				<template #suffix>
+					<i
+						:class="[
+							'v3-icon',
+							'v3-icon-arrow-down',
+							state.showDropdown ? 'is-visible' : '',
+						]"
+					></i>
+				</template>
+			</v3-input>
 		</div>
 		<div ref="dropdownRef" class="v3-select__dropdown"></div>
 	</div>
@@ -35,7 +45,10 @@ export default defineComponent({
 	setup(props: TYPES.ISelectProps) {
 		const triggerRef = ref(document.createElement('div'));
 		const dropdownRef = ref(document.createElement('div'));
-		const state = reactive({});
+		const state = reactive({
+			/** 当前的下拉框是否显示 */
+			showDropdown: false,
+		});
 		const app = getCurrentInstance() as ComponentInternalInstance;
 
 		onMounted(() => {
@@ -56,6 +69,12 @@ export default defineComponent({
 					appendTo: dropdownRef.value,
 					placement: 'bottom',
 					offset: [0, 10],
+					onShow() {
+						state.showDropdown = true;
+					},
+					onHide() {
+						state.showDropdown = false;
+					},
 				},
 				{ mount: true }
 			);

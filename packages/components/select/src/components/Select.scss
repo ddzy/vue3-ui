@@ -8,6 +8,15 @@
 		padding-left: 0;
 		padding-right: 0;
 	}
+	.v3-select__trigger {
+    // 下拉图标的动画
+		:deep(.v3-input__suffix i) {
+			transition: all 0.3s ease;
+			&.is-visible {
+				transform: rotateZ(180deg);
+			}
+		}
+	}
 	.v3-select-dropdown__item {
 		padding: 0 $padding-medium;
 		user-select: none;
