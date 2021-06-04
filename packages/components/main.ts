@@ -17,6 +17,7 @@ import V3DemoBlock from './demo-block/main';
 import V3Row from './row/main';
 import V3Col from './col/main';
 import V3Message from './message/main';
+import V3Select from './select/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -25,7 +26,7 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './message/src/App.vue';
+import Demo from './select/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
@@ -46,6 +47,7 @@ export {
 	V3Row,
 	V3Col,
 	V3Message,
+	V3Select,
 };
 
 export default function install(app: App) {
@@ -63,5 +65,6 @@ export default function install(app: App) {
 	app.component(V3DemoBlock.name, V3DemoBlock);
 	app.component(V3Row.name, V3Row);
 	app.component(V3Col.name, V3Col);
+	app.component(V3Select.name, V3Select);
 	app.config.globalProperties.$message = V3Message;
 }
