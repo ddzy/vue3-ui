@@ -1,11 +1,34 @@
 .v3-select {
-  li, ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+	:deep(.tippy-content) {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.v3-select-dropdown__item {
+		padding: 0 $padding-medium;
+		user-select: none;
+		line-height: 35px;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		&:not(.is-disabled):hover {
+			background-color: $primary-color-plain;
+		}
 
-  // .v3-select__dropdown {
-  //   width: 100%;
-  // }
+		&.is-disabled {
+			color: $info-color-little;
+			cursor: not-allowed;
+		}
+
+		&.is-disabled.is-selected {
+			color: $primary-color-middle;
+		}
+
+		&.is-selected:not(.is-disabled) {
+			color: $primary-color;
+		}
+	}
 }
