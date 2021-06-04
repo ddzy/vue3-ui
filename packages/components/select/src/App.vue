@@ -1,6 +1,15 @@
 <template>
 	<div class="demo-container">
-		<v3-select>123</v3-select>
+		<v3-row>
+			<v3-col>
+				<h3>基本用法：</h3>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="2">
+				<v3-select></v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
