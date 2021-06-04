@@ -1,10 +1,10 @@
 {
 	"private": true,
-	"name": "row",
+	"name": "select",
 	"version": "0.0.3",
-	"description": "Row 组件",
+	"description": "Select 组件",
 	"keywords": [
-		"row"
+		"select"
 	],
 	"author": "ddzy <1766083035@qq.com>",
 	"homepage": "https://github.com/ddzy/vue3-ui#readme",
