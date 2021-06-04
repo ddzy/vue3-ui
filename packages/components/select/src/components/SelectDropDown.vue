@@ -7,53 +7,14 @@
 			width: `${props.width}px`,
 		}"
 	>
-		<li
-			:class="{
-				[`v3-select-dropdown__item`]: true,
-				[`is-disabled`]: true,
-				[`is-selected`]: true,
-			}"
-		>
-			选项1
-		</li>
-		<li
-			:class="{
-				[`v3-select-dropdown__item`]: true,
-				[`is-selected`]: true,
-			}"
-		>
-			选项2
-		</li>
-		<li
-			:class="{
-				[`v3-select-dropdown__item`]: true,
-				[`is-disabled`]: true,
-			}"
-		>
-			选项3
-		</li>
-		<li
-			:class="{
-				[`v3-select-dropdown__item`]: true,
-			}"
-		>
-			选项4
-		</li>
-		<li
-			:class="{
-				[`v3-select-dropdown__item`]: true,
-			}"
-		>
-			选项5
-		</li>
+		<slot></slot>
 	</ul>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/select';
 import { defineComponent, getCurrentInstance, reactive } from 'vue';
 
 export default defineComponent({
-	name: 'V3Select',
+	name: 'V3SelectDropDown',
 	props: {
 		/** 下拉框的宽度（与 v3-select-trigger 相同） */
 		width: {

@@ -43,7 +43,7 @@ export default defineComponent({
 		/** 下拉框的值 */
 		modelValue: {
 			type: [String, Boolean, Number, Object] as PropType<TYPES.ISelectValue>,
-			default: '',
+			required: true,
 		},
 		/** 是否开启多选 */
 		multiple: {
@@ -132,7 +132,7 @@ export default defineComponent({
 	components: {
 		SelectDropdown,
 	},
-	setup(props: TYPES.ISelectProps) {
+	setup(props: TYPES.ISelectProps, context) {
 		const triggerRef = ref(document.createElement('div'));
 		const dropdownRef = ref(document.createElement('div'));
 		const state = reactive({
@@ -145,9 +145,13 @@ export default defineComponent({
 			const { tippy } = useTippy(
 				triggerRef,
 				{
-					content: createVNode(SelectDropdown, {
-						width: triggerRef.value.getBoundingClientRect().width || 0,
-					}),
+					content: createVNode(
+						SelectDropdown,
+						{
+							width: triggerRef.value.getBoundingClientRect().width || 0,
+						},
+						context.slots.default
+					),
 					animation: 'v3-select-slide-fade',
 					theme: 'light-border',
 					trigger: 'click',

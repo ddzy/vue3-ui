@@ -20,3 +20,9 @@ export interface ISelectProps {
 	noMatchText: string;
 	noDataText: string;
 }
+
+export interface ISelectOptionProps {
+  label: string;
+  value: ISelectValue;
+  disabled: boolean;
+}
