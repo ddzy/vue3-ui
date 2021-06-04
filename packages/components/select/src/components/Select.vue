@@ -30,6 +30,7 @@ import {
 	defineComponent,
 	getCurrentInstance,
 	onMounted,
+	PropType,
 	reactive,
 	ref,
 } from 'vue';
@@ -38,7 +39,96 @@ import SelectDropdown from './SelectDropDown.vue';
 
 export default defineComponent({
 	name: 'V3Select',
-	props: {},
+	props: {
+		/** 下拉框的值 */
+		modelValue: {
+			type: [String, Boolean, Number, Object] as PropType<TYPES.ISelectValue>,
+			default: '',
+		},
+		/** 是否开启多选 */
+		multiple: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否禁用下拉框 */
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		/** 当 modelValue 的值为对象类型，该值为 modelValue 的唯一 key */
+		valueKey: {
+			type: String,
+			default: '',
+		},
+		/** 是否可清空所选值 */
+		clearable: {
+			type: Boolean,
+			default: false,
+		},
+		/** 在多选状态下，选中多个值，合并为一个展示，可节省空间 */
+		collapseTags: {
+			type: Boolean,
+			default: false,
+		},
+		/** 多选状态下，限制选择的数量 */
+		multipleLimit: {
+			type: Number,
+			default: -1,
+		},
+		placeholder: {
+			type: String,
+			default: '请选择内容',
+		},
+		/** 是否启用本地模糊搜索 */
+		filterable: {
+			type: Boolean,
+			default: false,
+		},
+		/** 在 filterable 状态下，是否创建新的条目 */
+		allowCreate: {
+			type: Boolean,
+			default: false,
+		},
+		/** 是否启用远程搜索 */
+		remote: {
+			type: Boolean,
+			default: false,
+		},
+		/** 下拉框的加载状态 */
+		loading: {
+			type: Boolean,
+			default: false,
+		},
+		/** 加载时显示的文本 */
+		loadingText: {
+			type: String,
+			default: '获取数据中',
+		},
+		/** 在 filterable 状态下，没有匹配的数据时显示的文本 */
+		noMatchText: {
+			type: String,
+			default: '无匹配数据',
+		},
+		/** 在 remote 或选项为空的状态下显示的文本 */
+		noDataText: {
+			type: String,
+			default: '无数据',
+		},
+		/** 自定义本地过滤的方法 */
+		filterMethod: {
+			type: Function as PropType<TYPES.ISelectFilterMethod>,
+			default() {
+				return () => {};
+			},
+		},
+		/** 自定义远程搜索的方法 */
+		remoteMethod: {
+			type: Function as PropType<TYPES.ISelectRemoteMethod>,
+			default() {
+				return () => {};
+			},
+		},
+	},
 	components: {
 		SelectDropdown,
 	},

@@ -55,12 +55,13 @@ import { defineComponent, getCurrentInstance, reactive } from 'vue';
 export default defineComponent({
 	name: 'V3Select',
 	props: {
+		/** 下拉框的宽度（与 v3-select-trigger 相同） */
 		width: {
 			type: Number,
 			required: true,
 		},
 	},
-	setup(props: TYPES.ISelectProps) {
+	setup(props) {
 		const state = reactive({});
 		const app = getCurrentInstance();
 
