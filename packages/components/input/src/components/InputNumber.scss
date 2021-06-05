@@ -22,6 +22,15 @@
 			&:hover {
 				color: $primary-color;
 			}
+
+			// 控制按钮禁用状态
+			&.v3-number__control--disabled {
+				cursor: not-allowed;
+				color: $border-color-grey-default;
+				&:hover {
+					color: $border-color-grey-default;
+				}
+			}
 		}
 
 		.v3-number__control-plus {
@@ -29,16 +38,7 @@
 		}
 	}
 
-  // 控制按钮禁用状态
-  .v3-number__control--disabled {
-    cursor: not-allowed;
-    color: $border-color-grey-default;
-    &:hover {
-      color: $border-color-grey-default;
-    }
-  }
-
-  & :deep(input) {
-    text-align: center;
-  }
+	& :deep(input) {
+		text-align: center;
+	}
 }
