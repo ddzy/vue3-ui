@@ -26,7 +26,7 @@ import { defineComponent, reactive } from 'vue';
 export default defineComponent({
 	setup() {
 		const state = reactive({
-			selectValue1: '上海',
+			selectValue1: 'Beijing',
 			selectOptions1: [
 				{
 					label: '北京',

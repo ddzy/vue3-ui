@@ -5,7 +5,7 @@
 		}"
 	>
 		<div ref="triggerRef" class="v3-select__trigger">
-			<v3-input :readonly="true">
+			<v3-input v-model="state.selectedLabel" :readonly="true">
 				<template #suffix>
 					<i
 						:class="[
@@ -25,7 +25,6 @@ import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
 import 'tippy.js/themes/light-border.css';
 import {
-	ComponentInternalInstance,
 	createVNode,
 	defineComponent,
 	getCurrentInstance,
@@ -36,6 +35,17 @@ import {
 } from 'vue';
 import { useTippy } from 'vue-tippy';
 import SelectDropdown from './SelectDropDown.vue';
+
+interface IState {
+	showDropdown: boolean;
+	tippy: {
+		hide: () => void;
+		show: () => void;
+		unmount: () => void;
+		mount: () => void;
+	} | null;
+	selectedLabel: string;
+}
 
 export default defineComponent({
 	name: 'V3Select',
@@ -135,20 +145,25 @@ export default defineComponent({
 	setup(props: TYPES.ISelectProps, context) {
 		const triggerRef = ref(document.createElement('div'));
 		const dropdownRef = ref(document.createElement('div'));
-		const state = reactive({
+		const state: IState = reactive({
 			/** 当前的下拉框是否显示 */
 			showDropdown: false,
+			/** tippy相关 */
+			tippy: null,
+			/** 当前选中的下拉选项的 label 值 */
+			selectedLabel: '',
 		});
-		const app = getCurrentInstance() as ComponentInternalInstance;
+		const app = ref(getCurrentInstance());
 
 		onMounted(() => {
-			const { tippy } = useTippy(
+			state.tippy = useTippy(
 				triggerRef,
 				{
 					content: createVNode(
 						SelectDropdown,
 						{
 							width: triggerRef.value.getBoundingClientRect().width || 0,
+							selectInstance: app.value,
 						},
 						context.slots.default
 					),
@@ -174,12 +189,26 @@ export default defineComponent({
 			);
 		});
 
+		function handleChange(value: TYPES.ISelectValue, label: string) {
+			context.emit('update:modelValue', value);
+			context.emit('change', value);
+
+			// 更新输入框中显示的值
+			state.selectedLabel = label;
+
+			// 关闭下拉框
+			if (state.tippy) {
+				state.tippy.hide();
+			}
+		}
+
 		return {
 			app,
 			state,
 			props,
 			triggerRef,
 			dropdownRef,
+			handleChange,
 		};
 	},
 });

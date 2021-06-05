@@ -21,6 +21,10 @@ export default defineComponent({
 			type: Number,
 			required: true,
 		},
+		selectInstance: {
+			type: Object,
+			required: true,
+		},
 	},
 	setup(props) {
 		const state = reactive({});
