@@ -21,6 +21,7 @@ export default defineComponent({
 			type: Number,
 			required: true,
 		},
+		/** V3Select 的实例 */
 		selectInstance: {
 			type: Object,
 			required: true,

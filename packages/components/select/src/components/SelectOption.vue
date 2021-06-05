@@ -23,6 +23,8 @@ import {
 	watch,
 } from 'vue';
 
+import * as UTILS from '@common/utils/index';
+
 export default defineComponent({
 	name: 'V3SelectOption',
 	props: {
@@ -60,7 +62,19 @@ export default defineComponent({
 		watch(
 			toRef(selectPublicInstance, 'modelValue'),
 			newValue => {
-				state.isSelected = props.value === newValue;
+				// 如果值是对象类型，那么需要以【value-key】作比对，判断是否选中
+				if (
+					UTILS.isStrictObject(props.value) &&
+					UTILS.isStrictObject(newValue)
+				) {
+					state.isSelected =
+						props.value[
+							selectPublicInstance.valueKey as keyof TYPES.ISelectValue
+						] === newValue[selectPublicInstance.valueKey];
+				} else {
+					// 如果值是其它可用类型，那么直接比对即可
+					state.isSelected = props.value === newValue;
+				}
 
 				// 设置默认选中的项
 				if (state.isSelected) {
