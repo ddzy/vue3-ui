@@ -25,11 +25,18 @@
 				</v3-input>
 			</v3-col>
 		</v3-row>
+		<h3>密码框</h3>
+		<v3-row>
+			<v3-col>
+				<v3-input v-model="state.inputValue4" :showPassword="true"> </v3-input>
+			</v3-col>
+		</v3-row>
+
 		<h3>自定义前缀/后缀图标</h3>
 		<v3-row>
 			<v3-col>
 				<v3-input
-					v-model="state.inputValue4"
+					v-model="state.inputValue5"
 					:type="'text'"
 					:prefixIcon="'v3-icon-editor'"
 				>
@@ -43,7 +50,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input
-					v-model="state.inputValue5"
+					v-model="state.inputValue6"
 					:type="'text'"
 					:prefixIcon="'v3-icon-set'"
 				>
@@ -57,7 +64,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input
-					v-model="state.inputValue6"
+					v-model="state.inputValue7"
 					:type="'text'"
 					:appendIcon="'v3-icon-search'"
 				>
@@ -71,15 +78,15 @@
 		<v3-row>
 			<v3-col>
 				<v3-input
-					v-model="state.inputValue7"
+					v-model="state.inputValue8"
 					:type="'text'"
 					:appendIcon="'v3-icon-pin'"
 				>
 					<template #prepend>
-						<span>前置元素</span>
+						<span style="padding: 0 12px;">前置元素</span>
 					</template>
 					<template #append>
-						<span>后置元素</span>
+						<span style="padding: 0 12px;">后置元素</span>
 					</template>
 				</v3-input>
 			</v3-col>
@@ -89,7 +96,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-textarea
-					v-model="state.inputValue8"
+					v-model="state.inputValue9"
 					:width="100"
 					:height="150"
 					:resize="'both'"
@@ -104,7 +111,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-number
-					v-model="state.inputValue9"
+					v-model="state.inputValue10"
 					:controlsPosition="'both'"
 					:precision="0"
 					:disabled="false"
@@ -117,7 +124,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-number
-					v-model="state.inputValue10"
+					v-model="state.inputValue11"
 					:controlsPosition="'both'"
 					:precision="0"
 					:disabled="false"
@@ -133,7 +140,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-number
-					v-model="state.inputValue11"
+					v-model="state.inputValue12"
 					:controlsPosition="'right'"
 					:precision="0"
 					:disabled="false"
@@ -163,9 +170,13 @@ export default defineComponent({
 			inputValue3: '',
 			inputValue4: '',
 			inputValue5: '',
-			inputValue6: 0,
-			inputValue7: 0,
-			inputValue8: 0,
+			inputValue6: '',
+			inputValue7: '',
+			inputValue8: '',
+			inputValue9: '',
+			inputValue10: 0,
+			inputValue11: 0,
+			inputValue12: 0,
 		});
 
 		watch(state, () => {

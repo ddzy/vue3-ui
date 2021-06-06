@@ -7,8 +7,16 @@
 			color: $primary-color;
 		}
 
-		&.v3-number__control--both {
-			padding: 0 $padding-small;
+		&.is-position-both {
+			padding: 0 $padding-medium;
+		}
+		// 控制按钮禁用状态
+		&.is-disabled {
+			cursor: not-allowed;
+			color: $border-color-grey-default;
+			&:hover {
+				color: $border-color-grey-default;
+			}
 		}
 	}
 
@@ -24,7 +32,7 @@
 			}
 
 			// 控制按钮禁用状态
-			&.v3-number__control--disabled {
+			&.is-disabled {
 				cursor: not-allowed;
 				color: $border-color-grey-default;
 				&:hover {

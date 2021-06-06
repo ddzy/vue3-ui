@@ -19,8 +19,8 @@
 					v-if="props.controlsPosition === 'both'"
 					:class="{
 						'v3-number__minus-wrapper': true,
-						[`v3-number__control--${props.controlsPosition}`]: true,
-						'v3-number__control--disabled': state.isMinusDisabled,
+						[`is-position-${props.controlsPosition}`]: true,
+						'is-disabled': state.isMinusDisabled,
 					}"
 					@click="handleMinus"
 				>
@@ -31,13 +31,13 @@
 					v-if="props.controlsPosition === 'left'"
 					:class="{
 						'v3-number__control-wrapper': true,
-						[`v3-number__control--${props.controlsPosition}`]: true,
+						[`is-position-${props.controlsPosition}`]: true,
 					}"
 				>
 					<div
 						:class="{
 							'v3-number__control-plus': true,
-							'v3-number__control--disabled': state.isPlusDisabled,
+							'is-disabled': state.isPlusDisabled,
 						}"
 						@click="handlePlus"
 					>
@@ -46,7 +46,7 @@
 					<div
 						:class="{
 							'v3-number__control-minus': true,
-							'v3-number__control--disabled': state.isMinusDisabled,
+							'is-disabled': state.isMinusDisabled,
 						}"
 						@click="handleMinus"
 					>
@@ -60,8 +60,8 @@
 					v-if="props.controlsPosition === 'both'"
 					:class="{
 						'v3-number__plus-wrapper': true,
-						[`v3-number__control--${props.controlsPosition}`]: true,
-						'v3-number__control--disabled': state.isPlusDisabled,
+						[`is-position-${props.controlsPosition}`]: true,
+						'is-disabled': state.isPlusDisabled,
 					}"
 					@click="handlePlus"
 				>
@@ -72,13 +72,13 @@
 					v-if="props.controlsPosition === 'right'"
 					:class="{
 						'v3-number__control-wrapper': true,
-						[`v3-number__control--${props.controlsPosition}`]: true,
+						[`is-position-${props.controlsPosition}`]: true,
 					}"
 				>
 					<div
 						:class="{
 							'v3-number__control-plus': true,
-							'v3-number__control--disabled': state.isPlusDisabled,
+							'is-disabled': state.isPlusDisabled,
 						}"
 						@click="handlePlus"
 					>
@@ -87,7 +87,7 @@
 					<div
 						:class="{
 							'v3-number__control-minus': true,
-							'v3-number__control--disabled': state.isMinusDisabled,
+							'is-disabled': state.isMinusDisabled,
 						}"
 						@click="handleMinus"
 					>

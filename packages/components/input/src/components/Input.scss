@@ -70,8 +70,6 @@
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__inner-wrapper {
-		display: table-cell;
-		vertical-align: middle;
 		border: 1px solid $border-color-grey-default;
 	}
 
@@ -86,7 +84,9 @@
 
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper {
-		padding: 0 $padding-medium;
+		&:not(.is-slot) {
+			padding: 0 $padding-medium;
+		}
 		text-align: center;
 		background-color: #f1f1f1;
 		user-select: none;
