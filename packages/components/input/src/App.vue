@@ -9,13 +9,7 @@
 		<h3>可清空输入框</h3>
 		<v3-row>
 			<v3-col>
-				<v3-input
-					v-model="state.inputValue2"
-					:type="'text'"
-					:clearable="true"
-					:showPassword="true"
-					:suffixIcon="'v3-icon-editor'"
-				>
+				<v3-input v-model="state.inputValue2" :type="'text'" :clearable="true">
 				</v3-input>
 			</v3-col>
 		</v3-row>

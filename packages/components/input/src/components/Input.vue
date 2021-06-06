@@ -4,6 +4,18 @@
 			'v3-input': true,
 			'is-disabled': props.disabled,
 			'is-invalid': !state.isValidSuccess,
+			'has-prefix': app.slots.prefix || props.prefixIcon,
+			'has-suffix':
+				app.slots.suffix ||
+				props.suffixIcon ||
+				props.clearable ||
+				props.showPassword ||
+				(props.showWordLimit && props.maxlength > 0),
+			'has-prepend': app.slots.prepend || props.prependIcon,
+			'has-append': app.slots.append || props.appendIcon,
+			'has-clear': props.clearable,
+			'has-password': props.showPassword,
+			'has-word-limit': props.showWordLimit,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
@@ -30,11 +42,6 @@
 		<div
 			:class="{
 				'v3-input__inner-wrapper': true,
-				'has-prefix': app.slots.prefix || props.prefixIcon,
-				'has-suffix': app.slots.suffix || props.suffixIcon,
-				'has-prepend': app.slots.prepend || props.prependIcon,
-				'has-append': app.slots.append || props.appendIcon,
-				'has-clear': props.clearable,
 			}"
 		>
 			<div class="v3-input__inner">
@@ -66,7 +73,16 @@
 				/>
 
 				<!-- 后缀区域 -->
-				<div class="v3-input__suffix">
+				<div
+					class="v3-input__suffix"
+					v-if="
+						app.slots.suffix ||
+							props.suffixIcon ||
+							props.clearable ||
+							props.showPassword ||
+							(props.showWordLimit && props.maxlength > 0)
+					"
+				>
 					<div class="v3-input__suffix-inner">
 						<!-- 后缀图标区域 -->
 						<slot name="suffix" v-if="app.slots.suffix"></slot>
