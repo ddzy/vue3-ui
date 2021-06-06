@@ -40,7 +40,7 @@
 	&:not(.has-prefix) {
 		.v3-input__inner-wrapper {
 			.v3-input__inner {
-				padding-left: 12px;
+				padding-left: $padding-medium;
 			}
 		}
 	}
@@ -48,22 +48,22 @@
 	&:not(.has-suffix) {
 		.v3-input__inner-wrapper {
 			.v3-input__inner {
-				padding-right: 12px;
+				padding-right: $padding-medium;
 			}
 		}
 	}
 	// 无前置，需要增加左圆角
 	&:not(.has-prepend) {
 		.v3-input__inner-wrapper {
-			border-top-left-radius: 6px;
-			border-bottom-left-radius: 6px;
+			border-top-left-radius: $border-radius-width-default;
+			border-bottom-left-radius: $border-radius-width-default;
 		}
 	}
 	// 无后置，需要增加右圆角
 	&:not(.has-append) {
 		.v3-input__inner-wrapper {
-			border-top-right-radius: 6px;
-			border-bottom-right-radius: 6px;
+			border-top-right-radius: $border-radius-width-default;
+			border-bottom-right-radius: $border-radius-width-default;
 		}
 	}
 
@@ -86,7 +86,7 @@
 
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper {
-		padding: 0 12px;
+		padding: 0 $padding-medium;
 		text-align: center;
 		background-color: #f1f1f1;
 		user-select: none;
@@ -100,14 +100,14 @@
 	}
 
 	.v3-input__prepend-wrapper {
-		border-top-left-radius: 6px;
-		border-bottom-left-radius: 6px;
+		border-top-left-radius: $border-radius-width-default;
+		border-bottom-left-radius: $border-radius-width-default;
 		border-right: 0;
 	}
 
 	.v3-input__append-wrapper {
-		border-top-right-radius: 6px;
-		border-bottom-right-radius: 6px;
+		border-top-right-radius: $border-radius-width-default;
+		border-bottom-right-radius: $border-radius-width-default;
 		border-left: 0;
 	}
 
@@ -157,11 +157,11 @@
 			.v3-input__suffix {
 				right: 0;
 				.v3-input__suffix-item {
-					margin-left: 6px;
+					margin-left: $margin-small;
 					cursor: pointer;
 					user-select: none;
 					&:last-child {
-						margin-right: 6px;
+						margin-right: $margin-small;
 					}
 				}
 				.v3-input__suffix-inner {
