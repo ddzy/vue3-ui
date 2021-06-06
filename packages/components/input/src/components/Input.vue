@@ -34,22 +34,19 @@
 				'has-suffix': app.slots.suffix || props.suffixIcon,
 				'has-prepend': app.slots.prepend || props.prependIcon,
 				'has-append': app.slots.append || props.appendIcon,
+				'has-clear': props.clearable,
 			}"
 		>
 			<div class="v3-input__inner">
 				<!-- 前缀区域 -->
-				<div class="v3-input__prefix" v-if="app.slots.prefix">
-					<slot name="prefix"></slot>
-				</div>
-				<div
-					class="v3-input__prefix"
-					v-if="!app.slots.prefix && props.prefixIcon"
-				>
+				<div class="v3-input__prefix">
+					<slot name="prefix" v-if="app.slots.prefix"></slot>
 					<i
 						:class="{
 							'v3-icon': true,
 							[props.prefixIcon]: true,
 						}"
+						v-else-if="!app.slots.prefix && props.prefixIcon"
 					></i>
 				</div>
 
@@ -69,60 +66,50 @@
 				/>
 
 				<!-- 后缀区域 -->
-				<div
-					class="v3-input__suffix v3-input__suffix-item"
-					v-if="app.slots.suffix"
-				>
-					<slot name="suffix"></slot>
-				</div>
-				<div
-					class="v3-input__suffix v3-input__suffix-item"
-					v-if="!app.slots.suffix && props.suffixIcon"
-				>
-					<i
-						:class="{
-							'v3-icon': true,
-							[props.suffixIcon]: true,
-						}"
-					></i>
-				</div>
-
-				<!-- 清除按钮区域 -->
-				<div
-					class="v3-input__clear v3-input__suffix-item"
-					v-if="props.clearable && state.isShowClearable"
-				>
-					<i class="v3-icon v3-icon-reeor" @click="handleClear"></i>
-				</div>
-
-				<!-- 切换密码区域 -->
-				<div
-					class="v3-input__password v3-input__suffix-item"
-					v-if="props.showPassword"
-				>
-					<i
-						:class="{
-							'v3-icon': true,
-							'v3-icon-browse': state.isPasswordClearly,
-							'v3-icon-Notvisible': !state.isPasswordClearly,
-						}"
-						@click="togglePasswordClearly"
-					></i>
-				</div>
-
-				<!-- 输入字符数目限制区域 -->
-				<!-- 当未指定【maxlength】的时候也要禁用【输入统计】 -->
-				<div
-					class="v3-input__limit v3-input__suffix-item"
-					v-if="props.showWordLimit && props.maxlength > 0"
-				>
-					<span class="limit__item limit__current">{{
-						state.currentWordCount
-					}}</span>
-					<span class="limit__item limit__separator">/</span>
-					<span class="limit__item limit__total">{{
-						state.totalWordCount
-					}}</span>
+				<div class="v3-input__suffix">
+					<div class="v3-input__suffix-inner">
+						<!-- 后缀图标区域 -->
+						<slot name="suffix" v-if="app.slots.suffix"></slot>
+						<i
+							v-else-if="!app.slots.suffix && props.suffixIcon"
+							:class="{
+								'v3-icon': true,
+								[props.suffixIcon]: true,
+								'v3-input__suffix-item': true,
+							}"
+						></i>
+						<!-- 清除按钮区域 -->
+						<i
+							class="v3-icon v3-icon-reeor v3-input__clear v3-input__suffix-item"
+							v-if="props.clearable && state.isShowClearable"
+							@click="handleClear"
+						></i>
+						<!-- 密码区域 -->
+						<i
+							v-if="props.showPassword"
+							:class="{
+								'v3-icon': true,
+								'v3-icon-browse': state.isPasswordClearly,
+								'v3-icon-Notvisible': !state.isPasswordClearly,
+								'v3-input__password': true,
+								'v3-input__suffix-item': true,
+							}"
+							@click="togglePasswordClearly"
+						></i>
+						<!-- 字符数量限制区域 -->
+						<div
+							class="v3-input__limit v3-input__suffix-item"
+							v-if="props.showWordLimit && props.maxlength > 0"
+						>
+							<span class="limit__item limit__current">{{
+								state.currentWordCount
+							}}</span>
+							<span class="limit__item limit__separator">/</span>
+							<span class="limit__item limit__total">{{
+								state.totalWordCount
+							}}</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

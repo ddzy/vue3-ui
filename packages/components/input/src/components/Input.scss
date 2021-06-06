@@ -2,12 +2,11 @@
 	position: relative;
 	display: table;
 	width: 100%;
-	height: 35px;
-	line-height: 35px;
 	font-size: $font-size-small;
 	word-break: keep-all;
 	color: #999;
 
+	// 禁用状态
 	&.is-disabled::after {
 		position: absolute;
 		top: 0;
@@ -19,7 +18,6 @@
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
-
 	// 验证失败状态
 	&.is-invalid {
 		.v3-input__inner-wrapper {
@@ -48,7 +46,7 @@
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__prefix,
-	.v3-input__suffix-item {
+	.v3-input__suffix {
 		& :deep(i.v3-icon) {
 			font-size: $font-size-large;
 		}
@@ -83,29 +81,22 @@
 		}
 	}
 
-	.v3-input__prefix,
-	.v3-input__suffix-item {
-		display: flex;
-		align-items: center;
-		user-select: none;
-	}
-
-	.v3-input__suffix-item {
-		margin-left: 6px;
-		&:last-child {
-			margin-right: 6px;
-		}
-	}
-
 	.v3-input__inner-wrapper {
+		position: relative;
+		height: 35px;
+		line-height: 35px;
 		transition: all 0.15s ease;
 		// 无前缀，需要增加左 padding
 		&:not(.has-prefix) {
-			padding-left: 12px;
+			.v3-input__inner {
+				padding-left: 12px;
+			}
 		}
-		// 无后缀，需要增加右 padding
-		&:not(.has-suffix) {
-			padding-right: 12px;
+		// 无后缀并且无清除按钮，需要增加右 padding
+		&:not(.has-suffix):not(.has-clear) {
+			.v3-input__inner {
+				padding-right: 12px;
+			}
 		}
 		// 无前置，需要增加左圆角
 		&:not(.has-prepend) {
@@ -124,25 +115,10 @@
 			border-color: $primary-color;
 			animation: inputActive 0.3s ease-out 0s 1;
 		}
-		.v3-input__prefix {
-			margin: 0 6px;
-		}
-		.v3-input__clear,
-		.v3-input__password {
-			&:hover {
-				color: $info-color;
-			}
-			i.v3-icon {
-				cursor: pointer;
-			}
-		}
-		.v3-input__limit {
-			cursor: default;
-		}
 		.v3-input__inner {
-			display: flex;
-			align-items: center;
 			height: 100%;
+			padding-right: 30px;
+			padding-left: 30px;
 			input {
 				display: block;
 				width: 100%;
@@ -161,6 +137,42 @@
 				&:-moz-placeholder,
 				&::-moz-placeholder {
 					opacity: 1;
+				}
+			}
+			.v3-input__prefix,
+			.v3-input__suffix {
+				position: absolute;
+				top: 0;
+				height: 100%;
+			}
+			.v3-input__prefix {
+				left: 6px;
+			}
+			.v3-input__suffix {
+				right: 0;
+				.v3-input__suffix-item {
+					margin-left: 6px;
+					cursor: pointer;
+					&:last-child {
+						margin-right: 6px;
+					}
+				}
+				.v3-input__suffix-inner {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					.v3-input__clear,
+					.v3-input__password {
+						&:hover {
+							color: $info-color;
+						}
+						i.v3-icon {
+							cursor: pointer;
+						}
+					}
+					.v3-input__limit {
+						cursor: default;
+					}
 				}
 			}
 		}
