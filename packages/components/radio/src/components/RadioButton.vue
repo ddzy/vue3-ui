@@ -2,8 +2,8 @@
 	<div
 		:class="{
 			'v3-radio-button': true,
-			'v3-radio-button--disabled': props.disabled,
-			'v3-radio-button--checked': props.label === state.radioValue,
+			'is-disabled': props.disabled,
+			'is-checked': props.label === state.radioValue,
 		}"
 	>
 		<label

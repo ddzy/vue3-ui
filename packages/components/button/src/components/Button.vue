@@ -7,10 +7,10 @@
 			'v3-button': true,
 			[`v3-button--${props.type}`]: true,
 			[`v3-button__border--${props.borderType}`]: !!props.borderType,
-			[`v3-button--plain`]: props.plain,
-			[`v3-button--disabled`]: state.defaultProps.disabled,
-			[`v3-button--circle`]: props.circle,
-			[`v3-button--loading`]: props.loading,
+			[`is-plain`]: props.plain,
+			[`is-disabled`]: state.defaultProps.disabled,
+			[`is-circle`]: props.circle,
+			[`is-loading`]: props.loading,
 		}"
 	>
 		<i

@@ -88,7 +88,7 @@ describe('Checkbox 组件测试：', () => {
 		});
 
 		// 默认为【非禁用】状态
-		expect(wrapper1.find('.v3-checkbox--disabled').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-disabled').exists()).toBeFalsy();
 		expect(
 			wrapper1.find('input[type="checkbox"]').attributes().disabled
 		).toBeFalsy();
@@ -97,7 +97,7 @@ describe('Checkbox 组件测试：', () => {
 		await wrapper1.setProps({
 			disabled: true,
 		});
-		expect(wrapper1.find('.v3-checkbox--disabled').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
 		expect(wrapper1.find('input[type="checkbox"]').attributes().disabled).toBe(
 			''
 		);
@@ -146,13 +146,13 @@ describe('Checkbox 组件测试：', () => {
 		});
 
 		// 默认不显示边框
-		expect(wrapper1.find('.v3-checkbox--bordered').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-bordered').exists()).toBeFalsy();
 
 		// 手动设置为【显示】边框
 		await wrapper1.setProps({
 			border: true,
 		});
-		expect(wrapper1.find('.v3-checkbox--bordered').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-bordered').exists()).toBeTruthy();
 	});
 
 	test('Checkbox 组件应该正常接收【indeterminate】并进入不确定状态', async () => {

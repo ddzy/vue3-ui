@@ -2,9 +2,9 @@
 	<div
 		:class="{
 			'v3-radio': true,
-			'v3-radio--disabled': props.disabled,
-			'v3-radio--bordered': props.border,
-			'v3-radio--checked': props.label === state.radioValue,
+			'is-disabled': props.disabled,
+			'is-bordered': props.border,
+			'is-checked': props.label === state.radioValue,
 		}"
 	>
 		<label class="v3-radio__label-wrapper" :for="`v3-radio__input--${app.uid}`">

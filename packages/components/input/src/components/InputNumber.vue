@@ -2,7 +2,7 @@
 	<div
 		:class="{
 			'v3-input-number': true,
-			'v3-input-number--disabled': props.disabled,
+			'is-disabled': props.disabled,
 		}"
 	>
 		<v3-input

@@ -57,15 +57,15 @@ describe('Radio 组件测试：', () => {
 		const radioList = wrapper1.findAll('.v3-radio');
 
 		// 双向绑定同一个变量的所有单选框，同一时间只能选中一个
-		expect(wrapper1.findAll('.v3-radio--checked').length).toBe(1);
+		expect(wrapper1.findAll('.is-checked').length).toBe(1);
 
 		// 默认选中第三个单选框
-		expect(wrapper1.find('.v3-radio--checked')).toStrictEqual(radioList[2]);
+		expect(wrapper1.find('.is-checked')).toStrictEqual(radioList[2]);
 
 		// 手动选中第一个单选框
 		await wrapper1.find('input[type="radio"][value="1"]').setValue();
-		expect(wrapper1.findAll('.v3-radio--checked').length).toBe(1);
-		expect(wrapper1.find('.v3-radio--checked')).toStrictEqual(radioList[0]);
+		expect(wrapper1.findAll('.is-checked').length).toBe(1);
+		expect(wrapper1.find('.is-checked')).toStrictEqual(radioList[0]);
 
 		// change 事件应该正常触发
 		expect(wrapper1.emitted()).toHaveProperty('change');
@@ -75,25 +75,25 @@ describe('Radio 组件测试：', () => {
 		const wrapper1 = mount(V3Radio);
 
 		// 默认状态下，不带有边框
-		expect(wrapper1.find('.v3-radio--bordered').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-bordered').exists()).toBeFalsy();
 
 		// 手动设置 border
 		await wrapper1.setProps({
 			border: true,
 		});
-		expect(wrapper1.find('.v3-radio--bordered').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-bordered').exists()).toBeTruthy();
 	});
 
 	test('Radio 组件应该正常接收【disabled】属性，并禁用特定的单选按钮', async () => {
 		const wrapper1 = mount(V3Radio);
 
 		// 默认状态下，都是可用的
-		expect(wrapper1.findAll('.v3-radio--disabled').length).toBe(0);
+		expect(wrapper1.findAll('.is-disabled').length).toBe(0);
 
 		// 手动禁用单选按钮
 		await wrapper1.setProps({
 			disabled: true,
 		});
-		expect(wrapper1.find('.v3-radio--disabled').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
 	});
 });

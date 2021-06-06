@@ -40,7 +40,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		// 默认选中第二个
 		expect(
 			wrapper1
-				.find('.v3-checkbox--checked')
+				.find('.is-checked')
 				.find('input[type="checkbox"]')
 				.attributes().value
 		).toBe('2');
@@ -93,7 +93,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		});
 
 		// 默认全都不选中
-		expect(wrapper1.find('.v3-checkbox--checked').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-checked').exists()).toBeFalsy();
 
 		// 手动全部选中
 		await wrapper1.find('input[type="checkbox"][value="庆阳"]').setValue(true);
@@ -149,7 +149,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		});
 
 		// 默认选中三个
-		expect(wrapper1.findAll('.v3-checkbox--checked').length).toBe(3);
+		expect(wrapper1.findAll('.is-checked').length).toBe(3);
 
 		// 手动全部选中
 		await wrapper1.find('input[type="checkbox"][value="false"]').setValue(true);
@@ -262,9 +262,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		});
 
 		// 默认全部【不选中】
-		expect(
-			wrapper1.find('.selector').findAll('.v3-checkbox--checked').length
-		).toBe(0);
+		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(0);
 
 		// 手动全选
 		await wrapper1
@@ -272,9 +270,7 @@ describe('CheckboxGroup 组件测试：', () => {
 			.find('input[type="checkbox"]')
 			.setValue(true);
 		await nextTick();
-		expect(
-			wrapper1.find('.selector').findAll('.v3-checkbox--checked').length
-		).toBe(4);
+		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(4);
 		// 全选之后图标也要变化
 		expect(
 			wrapper1
@@ -289,9 +285,7 @@ describe('CheckboxGroup 组件测试：', () => {
 			.find('input[type="checkbox"]')
 			.setValue(false);
 		await nextTick();
-		expect(
-			wrapper1.find('.selector').findAll('.v3-checkbox--checked').length
-		).toBe(0);
+		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(0);
 		// 全不选之后图标也要变化
 		expect(
 			wrapper1
@@ -315,9 +309,7 @@ describe('CheckboxGroup 组件测试：', () => {
 			.setValue(false);
 		await nextTick();
 		expect(wrapper1.vm.state.checkboxValue2.length).toBe(2);
-		expect(
-			wrapper1.find('.selector').findAll('.v3-checkbox--checked').length
-		).toBe(2);
+		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(2);
 		// 图标也要变为不确定状态
 		expect(
 			wrapper1
@@ -332,9 +324,7 @@ describe('CheckboxGroup 组件测试：', () => {
 			.setValue(true);
 		await nextTick();
 		expect(wrapper1.vm.state.checkboxValue2.length).toBe(4);
-		expect(
-			wrapper1.find('.selector').findAll('.v3-checkbox--checked').length
-		).toBe(4);
+		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(4);
 	});
 
 	test('CheckboxGroup 多选框组 + 限制【最大/最小】选择数量示例', async () => {
@@ -406,9 +396,9 @@ describe('CheckboxGroup 组件测试：', () => {
 		});
 
 		// 默认选中第一、第三个，并且是禁用状态
-		expect(wrapper1.findAll('.v3-checkbox--checked').length).toBe(2);
+		expect(wrapper1.findAll('.is-checked').length).toBe(2);
 		await nextTick();
-		expect(wrapper1.findAll('.v3-checkbox--disabled').length).toBe(2);
+		expect(wrapper1.findAll('.is-disabled').length).toBe(2);
 
 		// 继续选中第二、第四个，达到最大选择数目
 		await wrapper1
@@ -419,7 +409,7 @@ describe('CheckboxGroup 组件测试：', () => {
 			.findAll('.v3-checkbox')[3]
 			.find('input[type="checkbox"]')
 			.setValue(true);
-		expect(wrapper1.findAll('.v3-checkbox--checked').length).toBe(4);
-		expect(wrapper1.findAll('.v3-checkbox--disabled').length).toBe(3);
+		expect(wrapper1.findAll('.is-checked').length).toBe(4);
+		expect(wrapper1.findAll('.is-disabled').length).toBe(3);
 	});
 });

@@ -2,8 +2,8 @@
 	<div
 		:class="{
 			'v3-input-textarea': true,
-			'v3-textarea--autoheight': props.autoHeight,
-			'v3-textarea--disabled': props.disabled,
+			'is-autoheight': props.autoHeight,
+			'is-disabled': props.disabled,
 		}"
 	>
 		<textarea

@@ -8,7 +8,7 @@
 	word-break: keep-all;
 	color: #999;
 
-	&.v3-input--disabled::after {
+	&.is-disabled::after {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -21,7 +21,7 @@
 	}
 
 	// 验证失败状态
-	&.v3-input--invalid {
+	&.is-invalid {
 		.v3-input__inner-wrapper {
 			border-color: $danger-color;
 			&:hover {

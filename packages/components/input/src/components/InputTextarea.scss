@@ -3,7 +3,7 @@
 	display: inline-block;
   font-size: 0;
 
-	&.v3-textarea--disabled::after {
+	&.is-disabled::after {
 		position: absolute;
 		top: 0;
 		left: 0;

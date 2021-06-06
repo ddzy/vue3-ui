@@ -165,7 +165,7 @@ describe('Input 组件测试：', () => {
 			modelValue: '测试值123456789',
 		});
 		expect(wrapper1.vm.state.currentWordCount).toBe(12);
-		expect(wrapper1.find('.v3-input--invalid').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-invalid').exists()).toBeTruthy();
 	});
 
 	test('Input 组件应该接收【clearable】，可以点击【清除按钮】并清空输入框中的值', async () => {

@@ -11,7 +11,7 @@
 				`v3-message--${props.type}`,
 				`${props.customClass}`,
 			]"
-			:id="[`message--${app.uid}`]"
+			:id="[`v3-message--${app.uid}`]"
 			@mouseenter="mouseEnter"
 			@mouseleave="mouseLeave"
 		>

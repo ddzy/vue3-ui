@@ -3,14 +3,14 @@
 	margin-left: $margin-medium;
 
 	// 禁用状态
-	&.v3-radio--disabled {
+	&.is-disabled {
 		.v3-radio__label-wrapper {
 			cursor: not-allowed;
 		}
 	}
 
 	// 有边框的单选框
-	&.v3-radio--bordered {
+	&.is-bordered {
 		.v3-radio__label-wrapper {
 			border: 1px solid $border-color-grey-default;
 			border-radius: 6px;
@@ -18,13 +18,13 @@
 		}
 	}
 
-	&.v3-radio--disabled.v3-radio--bordered {
+	&.is-disabled.is-bordered {
 		.v3-radio__label-wrapper {
 			border-color: $border-color-grey-small;
 		}
 	}
 
-	&.v3-radio--bordered.v3-radio--checked:not(.v3-radio--disabled) {
+	&.is-bordered.is-checked:not(.is-disabled) {
 		.v3-radio__label-wrapper {
 			border-color: $primary-color;
 		}

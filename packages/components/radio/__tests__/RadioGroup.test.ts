@@ -40,11 +40,11 @@ describe('RadioGroup 组件测试：', () => {
 		const radioList = wrapper1.findAll('.v3-radio');
 
 		// 默认选中第二个单选框
-		expect(wrapper1.find('.v3-radio--checked')).toEqual(radioList[1]);
+		expect(wrapper1.find('.is-checked')).toEqual(radioList[1]);
 
 		// 手动选中第四个单选框
 		await wrapper1.find('input[type="radio"][value="4"]').setValue();
-		expect(wrapper1.find('.v3-radio--checked')).toEqual(radioList[3]);
+		expect(wrapper1.find('.is-checked')).toEqual(radioList[3]);
 
 		// change 事件应该正常触发
 		expect(wrapper1.emitted()).toHaveProperty('change');

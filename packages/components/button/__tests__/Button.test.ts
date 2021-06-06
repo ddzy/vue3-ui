@@ -149,13 +149,13 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认不为简洁类型
-		expect(wrapper1.find('.v3-button--plain').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-plain').exists()).toBeFalsy();
 
 		// 手动修改
 		await wrapper1.setProps({
 			plain: true,
 		});
-		expect(wrapper1.find('.v3-button--plain').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-plain').exists()).toBeTruthy();
 	});
 
 	test('Button 组件应该正常接收【icon】配置项，用来自定义按钮上显示的图标', async () => {
@@ -215,12 +215,12 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认不是圆形
-		expect(wrapper1.find('.v3-button--circle').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-circle').exists()).toBeFalsy();
 
 		await wrapper1.setProps({
 			circle: true,
 		});
-		expect(wrapper1.find('.v3-button--circle').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-circle').exists()).toBeTruthy();
 	});
 
 	test('Button 组件应该正常接收【loading】配置项，用来自定义 loading 加载状态', async () => {
@@ -247,13 +247,13 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认不处于加载状态
-		expect(wrapper1.find('.v3-button--loading').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-loading').exists()).toBeFalsy();
 
 		// 手动开启加载中状态
 		await wrapper1.setProps({
 			loading: true,
 		});
-		expect(wrapper1.find('.v3-button--loading').exists()).toBeTruthy();
+		expect(wrapper1.find('.is-loading').exists()).toBeTruthy();
 	});
 
 	test('Button 组件应该正常禁用', async () => {
@@ -267,7 +267,7 @@ describe('Button 组件测试：', () => {
 			.find('.v3-button')
 			.attributes();
 
-		expect(classes1.includes('v3-button--disabled')).toBeTruthy();
+		expect(classes1.includes('is-disabled')).toBeTruthy();
 		expect(attributes1.hasOwnProperty('disabled')).toBeTruthy();
 
 		// 解除禁用后
@@ -279,7 +279,7 @@ describe('Button 组件测试：', () => {
 			.find('.v3-button')
 			.attributes();
 
-		expect(classes2.includes('v3-button--disabled')).toBeFalsy();
+		expect(classes2.includes('is-disabled')).toBeFalsy();
 		expect(attributes2.hasOwnProperty('disabled')).toBeFalsy();
 	});
 

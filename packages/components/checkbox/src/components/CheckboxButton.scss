@@ -3,7 +3,7 @@
 	margin-left: $margin-medium;
 
 	// 禁用状态
-	&.v3-checkbox-button--disabled {
+	&.is-disabled {
 		.v3-checkbox-button__label-wrapper {
 			cursor: not-allowed;
 			border-color: $border-color-grey-small;
@@ -12,14 +12,14 @@
 	}
 
 	// 选中时处于非禁用状态的项
-	&.v3-checkbox-button--checked:not(.v3-checkbox-button--disabled) {
+	&.is-checked:not(.is-disabled) {
 		.v3-checkbox-button__label-wrapper {
 			background-color: $primary-color;
 		}
 	}
 
 	// 选中禁用状态的项（初始值）
-	&.v3-checkbox-button--checked.v3-checkbox-button--disabled {
+	&.is-checked.is-disabled {
 		.v3-checkbox-button__label-wrapper {
 			background-color: $primary-color-plain;
 			border-color: $primary-color-plain;

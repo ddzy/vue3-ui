@@ -2,8 +2,8 @@
 	<div
 		:class="{
 			'v3-input': true,
-			'v3-input--disabled': props.disabled,
-			'v3-input--invalid': !state.isValidSuccess,
+			'is-disabled': props.disabled,
+			'is-invalid': !state.isValidSuccess,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"

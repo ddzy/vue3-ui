@@ -88,7 +88,7 @@ describe('CheckboxButton 组件测试：', () => {
 		});
 
 		// 默认为【非禁用】状态
-		expect(wrapper1.find('.v3-checkbox-button--disabled').exists()).toBeFalsy();
+		expect(wrapper1.find('.is-disabled').exists()).toBeFalsy();
 		expect(
 			wrapper1.find('input[type="checkbox"]').attributes().disabled
 		).toBeFalsy();
@@ -97,9 +97,7 @@ describe('CheckboxButton 组件测试：', () => {
 		await wrapper1.setProps({
 			disabled: true,
 		});
-		expect(
-			wrapper1.find('.v3-checkbox-button--disabled').exists()
-		).toBeTruthy();
+		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
 		expect(wrapper1.find('input[type="checkbox"]').attributes().disabled).toBe(
 			''
 		);

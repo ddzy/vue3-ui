@@ -2,9 +2,9 @@
 	<div
 		:class="{
 			'v3-checkbox': true,
-			'v3-checkbox--disabled': state.defaultProps.disabled,
-			'v3-checkbox--bordered': props.border,
-			'v3-checkbox--checked': !!state.checkboxValue,
+			'is-disabled': state.defaultProps.disabled,
+			'is-bordered': props.border,
+			'is-checked': !!state.checkboxValue,
 		}"
 	>
 		<label

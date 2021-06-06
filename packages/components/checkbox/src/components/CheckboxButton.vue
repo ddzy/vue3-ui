@@ -2,8 +2,8 @@
 	<div
 		:class="{
 			'v3-checkbox-button': true,
-			'v3-checkbox-button--disabled': state.defaultProps.disabled,
-			'v3-checkbox-button--checked': !!state.checkboxValue,
+			'is-disabled': state.defaultProps.disabled,
+			'is-checked': !!state.checkboxValue,
 		}"
 	>
 		<label
