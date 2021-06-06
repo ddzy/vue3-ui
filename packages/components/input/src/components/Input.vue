@@ -8,18 +8,16 @@
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
 	>
+		<!-- 前置区域 -->
 		<!-- slot 优先级比传入的前缀、后缀、前置、后置图标高 -->
-		<div class="v3-input__prepend-wrapper" v-if="app.slots.prepend">
-			<div class="v3-input__prepend">
-				<slot name="prepend"></slot>
-			</div>
-		</div>
 		<div
 			class="v3-input__prepend-wrapper"
-			v-if="!app.slots.prepend && props.prependIcon"
+			v-if="app.slots.prepend || props.prependIcon"
 		>
 			<div class="v3-input__prepend">
+				<slot name="prepend" v-if="app.slots.prepend"></slot>
 				<i
+					v-else-if="!app.slots.prepend && props.prependIcon"
 					:class="{
 						'v3-icon': true,
 						[props.prependIcon]: true,
@@ -27,6 +25,8 @@
 				></i>
 			</div>
 		</div>
+
+		<!-- 输入框区域 -->
 		<div
 			:class="{
 				'v3-input__inner-wrapper': true,
@@ -113,17 +113,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="v3-input__append-wrapper" v-if="app.slots.append">
-			<div class="v3-input__append">
-				<slot name="append"></slot>
-			</div>
-		</div>
+
+		<!-- 后置区域 -->
 		<div
 			class="v3-input__append-wrapper"
-			v-if="!app.slots.append && props.appendIcon"
+			v-if="app.slots.append || props.appendIcon"
 		>
 			<div class="v3-input__append">
+				<slot name="append" v-if="app.slots.append"></slot>
 				<i
+					v-if="!app.slots.append && props.appendIcon"
 					:class="{
 						'v3-icon': true,
 						[props.appendIcon]: true,
