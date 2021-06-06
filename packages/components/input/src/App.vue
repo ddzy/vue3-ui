@@ -3,7 +3,7 @@
 		<h3>基本的输入框</h3>
 		<v3-row>
 			<v3-col>
-				<v3-input v-model="state.inputValue" :type="'text'"> </v3-input>
+				<v3-input v-model="state.inputValue1" :type="'text'"> </v3-input>
 			</v3-col>
 		</v3-row>
 		<h3>可清空输入框</h3>
@@ -29,10 +29,27 @@
 		<v3-row>
 			<v3-col>
 				<v3-input
-					v-model="state.inputValue3"
+					v-model="state.inputValue4"
 					:type="'text'"
 					:prefixIcon="'v3-icon-editor'"
 				>
+				</v3-input>
+			</v3-col>
+		</v3-row>
+		<h3>
+			通过 slot="prefix/suffix" 来传入前缀/后缀元素，优先级比
+			prefixIcon/suffixIcon 高
+		</h3>
+		<v3-row>
+			<v3-col>
+				<v3-input
+					v-model="state.inputValue5"
+					:type="'text'"
+					:prefixIcon="'v3-icon-set'"
+				>
+					<template #prefix>
+						<i class="v3-icon v3-icon-unlock"></i>
+					</template>
 				</v3-input>
 			</v3-col>
 		</v3-row>
@@ -40,10 +57,27 @@
 		<v3-row>
 			<v3-col>
 				<v3-input
-					v-model="state.inputValue4"
+					v-model="state.inputValue6"
 					:type="'text'"
 					:appendIcon="'v3-icon-search'"
 				>
+				</v3-input>
+			</v3-col>
+		</v3-row>
+		<h3>
+			通过 slot="prepend/append" 来传入前置/后置元素，优先级比
+			prependIcon/appendIcon 高
+		</h3>
+		<v3-row>
+			<v3-col>
+				<v3-input
+					v-model="state.inputValue7"
+					:type="'text'"
+					:appendIcon="'v3-icon-pin'"
+				>
+					<template #append>
+						<span>后置元素</span>
+					</template>
 				</v3-input>
 			</v3-col>
 		</v3-row>
@@ -52,7 +86,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-textarea
-					v-model="state.inputValue5"
+					v-model="state.inputValue8"
 					:width="100"
 					:height="150"
 					:resize="'both'"
@@ -67,7 +101,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-number
-					v-model="state.inputValue6"
+					v-model="state.inputValue9"
 					:controlsPosition="'both'"
 					:precision="0"
 					:disabled="false"
@@ -80,7 +114,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-number
-					v-model="state.inputValue7"
+					v-model="state.inputValue10"
 					:controlsPosition="'both'"
 					:precision="0"
 					:disabled="false"
@@ -96,7 +130,7 @@
 		<v3-row>
 			<v3-col>
 				<v3-input-number
-					v-model="state.inputValue8"
+					v-model="state.inputValue11"
 					:controlsPosition="'right'"
 					:precision="0"
 					:disabled="false"
