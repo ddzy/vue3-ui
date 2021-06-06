@@ -75,6 +75,9 @@
 					:type="'text'"
 					:appendIcon="'v3-icon-pin'"
 				>
+					<template #prepend>
+						<span>前置元素</span>
+					</template>
 					<template #append>
 						<span>后置元素</span>
 					</template>
