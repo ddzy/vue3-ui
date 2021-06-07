@@ -8,6 +8,7 @@
 			<v3-input v-model="state.selectedLabel" :readonly="true">
 				<template #suffix>
 					<i
+						style="margin-right: 6px;"
 						:class="[
 							'v3-icon',
 							'v3-icon-arrow-down',
