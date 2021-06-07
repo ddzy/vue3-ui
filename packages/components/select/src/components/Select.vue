@@ -3,10 +3,15 @@
 		:class="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
+			['is-disabled']: props.disabled,
 		}"
 	>
 		<div ref="triggerRef" class="v3-select__trigger">
-			<v3-input v-model="state.selectedLabel" :readonly="true">
+			<v3-input
+				v-model="state.selectedLabel"
+				:readonly="true"
+				:placeholder="'请选择内容'"
+			>
 				<template #suffix>
 					<i
 						style="margin-right: 6px;"
@@ -177,7 +182,13 @@ export default defineComponent({
 					placement: 'bottom',
 					offset: [0, 10],
 					onShow() {
-						state.showDropdown = true;
+						// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
+						const showDropdown = !props.disabled;
+						state.showDropdown = showDropdown;
+
+						if (!showDropdown) {
+							return showDropdown;
+						}
 					},
 					onHide() {
 						state.showDropdown = false;

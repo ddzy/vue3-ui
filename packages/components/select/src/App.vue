@@ -56,6 +56,29 @@
 				</v3-select>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col>
+				<h3>禁用下拉框：</h3>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="2">
+				<v3-select
+					v-model="state.selectValue4"
+					value-key="_id"
+					:disabled="true"
+				>
+					<v3-select-option
+						v-for="v in state.selectOptions4"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+						:disabled="v.disabled"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -114,6 +137,46 @@ export default defineComponent({
 
 			selectValue3: '',
 			selectOptions3: [
+				{
+					label: '对象1',
+					value: {
+						_id: 1,
+						name: 1,
+						age: 1,
+					},
+					disabled: false,
+				},
+				{
+					label: '对象2',
+					value: {
+						_id: 2,
+						name: 2,
+						age: 2,
+					},
+					disabled: false,
+				},
+				{
+					label: '对象3',
+					value: {
+						_id: 3,
+						name: 3,
+						age: 3,
+					},
+					disabled: false,
+				},
+				{
+					label: '对象4',
+					value: {
+						_id: 4,
+						name: 4,
+						age: 4,
+					},
+					disabled: false,
+				},
+			],
+
+			selectValue4: '',
+			selectOptions4: [
 				{
 					label: '对象1',
 					value: {

@@ -1,17 +1,31 @@
 .v3-select {
+	position: relative;
 	ul {
 		margin: 0;
 		padding: 0;
 		list-style-type: none;
 	}
-	// 下拉图标的动画
+
+	// 下拉菜单的显隐状态
 	&.is-visible {
 		.v3-select__trigger {
-			// 下拉图标的动画
 			:deep(.v3-input__suffix i) {
 				transform: rotateZ(180deg);
 			}
 		}
+	}
+	// 下拉组件的禁用状态
+	&.is-disabled::after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: '';
+		width: 100%;
+		height: 100%;
+		background-color: #f1f1f1;
+		border-radius: $border-radius-width-default;
+		opacity: 0.5;
+		cursor: not-allowed;
 	}
 
 	:deep(.tippy-content) {
