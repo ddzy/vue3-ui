@@ -2,6 +2,7 @@
 	<div
 		:class="{
 			['v3-select']: true,
+			['is-visible']: state.showDropdown,
 		}"
 	>
 		<div ref="triggerRef" class="v3-select__trigger">
@@ -9,11 +10,7 @@
 				<template #suffix>
 					<i
 						style="margin-right: 6px;"
-						:class="[
-							'v3-icon',
-							'v3-icon-arrow-down',
-							state.showDropdown ? 'is-visible' : '',
-						]"
+						:class="['v3-icon', 'v3-icon-arrow-down']"
 					></i>
 				</template>
 			</v3-input>
