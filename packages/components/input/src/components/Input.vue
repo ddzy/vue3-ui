@@ -354,6 +354,9 @@ export default defineComponent({
 		function handleClear() {
 			context.emit('update:modelValue', '');
 			context.emit('clear');
+
+			// 清空值后需要隐藏清空按钮
+			state.isShowClearable = false;
 		}
 
 		function togglePasswordClearly() {
