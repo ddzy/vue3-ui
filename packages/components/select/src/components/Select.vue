@@ -251,6 +251,13 @@ export default defineComponent({
 			context.emit('change', '');
 		}
 
+		/**
+		 * 设置默认选中的值，SelectOption 直接调用
+		 */
+		function handleInit(value: TYPES.ISelectValue, label: string) {
+			state.selectedLabel = label;
+		}
+
 		return {
 			app,
 			state,
@@ -261,6 +268,7 @@ export default defineComponent({
 			handleMouseEnter,
 			handleMouseLeave,
 			handleClear,
+			handleInit,
 		};
 	},
 });

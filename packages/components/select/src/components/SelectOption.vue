@@ -5,7 +5,7 @@
 			[`is-disabled`]: props.disabled,
 			[`is-selected`]: state.isSelected,
 		}"
-		@click="handleClick(false)"
+		@click="handleClick"
 	>
 		{{ props.label || props.value }}
 	</li>
@@ -77,8 +77,11 @@ export default defineComponent({
 				}
 
 				// 设置默认选中的项
-				if (state.isSelected) {
-					handleClick(true);
+				if (state.isSelected && selectPublicInstance) {
+					selectPublicInstance.handleInit(
+						props.value,
+						props.label || props.value
+					);
 				}
 			},
 			{ immediate: true }
@@ -102,18 +105,13 @@ export default defineComponent({
 			return result;
 		}
 
-		/**
-		 * @param isInitial 是否初次改变值
-		 */
-		function handleClick(isInitial: boolean) {
-			// 如果处于禁用状态或者非首次改变值，那么不做任何处理
-			if (isInitial || !props.disabled) {
-				if (selectPublicInstance) {
-					selectPublicInstance.handleChange(
-						props.value,
-						props.label || props.value
-					);
-				}
+		function handleClick() {
+			// 如果处于禁用状态，那么不做任何处理
+			if (!props.disabled && selectPublicInstance) {
+				selectPublicInstance.handleChange(
+					props.value,
+					props.label || props.value
+				);
 			}
 		}
 
