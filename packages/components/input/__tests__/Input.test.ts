@@ -6,7 +6,7 @@ describe('Input 组件测试：', () => {
 	test('Input 组件应该正常接收 type，即输入框的类型必须为【text】或【password】', () => {
 		const wrapper1 = mount(V3Input, {
 			props: {
-				type: 'input',
+				type: 'text',
 			},
 		});
 		const wrapper2 = mount(V3Input, {

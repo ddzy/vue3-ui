@@ -259,13 +259,6 @@ export default defineComponent({
 		const app = getCurrentInstance();
 
 		watch(
-			props,
-			() => {
-				state.defaultProps.type = props.type;
-			},
-			{ immediate: true }
-		);
-		watch(
 			toRef(props, 'maxlength'),
 			newValue => {
 				// 实时监听【maxlength】的变化，更新最大输入字符数
@@ -309,9 +302,8 @@ export default defineComponent({
 		watch(
 			toRef(props, 'type'),
 			newValue => {
-				if (newValue === 'password') {
-					state.isPasswordClearly = false;
-				}
+				state.isPasswordClearly = newValue !== 'password';
+				state.defaultProps.type = newValue;
 			},
 			{ immediate: true }
 		);
