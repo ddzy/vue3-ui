@@ -6,8 +6,8 @@
 		list-style-type: none;
 	}
 
-	// 下拉菜单的显隐状态
-	&.is-visible {
+	// 下拉框的按钮动画
+	&.is-visible:not(.is-clearable) {
 		.v3-select__trigger {
 			:deep(.v3-input__suffix i) {
 				transform: rotateZ(180deg);

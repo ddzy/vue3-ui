@@ -4,7 +4,10 @@
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
 			['is-disabled']: props.disabled,
+			['is-clearable']: state.showClear,
 		}"
+		@mouseenter="handleMouseEnter"
+		@mouseleave="handleMouseLeave"
 	>
 		<div ref="triggerRef" class="v3-select__trigger">
 			<v3-input
@@ -15,7 +18,20 @@
 				<template #suffix>
 					<i
 						style="margin-right: 6px;"
-						:class="['v3-icon', 'v3-icon-arrow-down']"
+						v-if="!state.showClear"
+						:class="{
+							'v3-icon': true,
+							'v3-icon-arrow-down': true,
+						}"
+					></i>
+					<i
+						style="margin-right: 6px; cursor: pointer"
+						v-else
+						:class="{
+							'v3-icon': true,
+							'v3-icon-reeor': true,
+						}"
+						@click.stop="handleClear"
 					></i>
 				</template>
 			</v3-input>
@@ -35,6 +51,8 @@ import {
 	PropType,
 	reactive,
 	ref,
+	toRef,
+	watch,
 } from 'vue';
 import { useTippy } from 'vue-tippy';
 import SelectDropdown from './SelectDropDown.vue';
@@ -48,6 +66,7 @@ interface IState {
 		mount: () => void;
 	} | null;
 	selectedLabel: string;
+	showClear: boolean;
 }
 
 export default defineComponent({
@@ -155,6 +174,8 @@ export default defineComponent({
 			tippy: null,
 			/** 当前选中的下拉选项的 label 值 */
 			selectedLabel: '',
+			/** 当前的下拉框是否处于清空状态，即是否显示清空按钮 */
+			showClear: false,
 		});
 		const app = ref(getCurrentInstance());
 
@@ -210,6 +231,26 @@ export default defineComponent({
 			}
 		}
 
+		function handleMouseEnter() {
+			// 鼠标移入下拉框，如果可清空并且已选中值，则显示清空按钮
+			if (props.clearable && state.selectedLabel) {
+				state.showClear = true;
+			}
+		}
+
+		function handleMouseLeave() {
+			// 鼠标移出，隐藏清空按钮
+			state.showClear = false;
+		}
+
+		function handleClear() {
+			state.selectedLabel = '';
+			state.showClear = false;
+
+			context.emit('update:modelValue', '');
+			context.emit('change', '');
+		}
+
 		return {
 			app,
 			state,
@@ -217,6 +258,9 @@ export default defineComponent({
 			triggerRef,
 			dropdownRef,
 			handleChange,
+			handleMouseEnter,
+			handleMouseLeave,
+			handleClear,
 		};
 	},
 });
