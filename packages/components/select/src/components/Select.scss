@@ -39,27 +39,39 @@
 			transition: all 0.3s ease;
 		}
 	}
-	.v3-select-dropdown__item {
-		padding: 0 $padding-medium;
-		user-select: none;
-		line-height: 35px;
-		cursor: pointer;
-		transition: all 0.15s ease;
-		&:not(.is-disabled):hover {
-			background-color: $primary-color-plain;
+	.v3-select__dropdown {
+		// 自动适配下拉框的宽度
+		& > :deep([data-tippy-root]),
+		.tippy-box,
+		.tippy-content {
+			width: 100%;
 		}
 
-		&.is-disabled {
-			color: $info-color-little;
-			cursor: not-allowed;
+		.v3-select-dropdown__list {
+			width: 100%;
 		}
+		.v3-select-dropdown__item {
+			padding: 0 $padding-medium;
+			user-select: none;
+			line-height: 35px;
+			cursor: pointer;
+			transition: all 0.15s ease;
+			&:not(.is-disabled):hover {
+				background-color: $primary-color-plain;
+			}
 
-		&.is-disabled.is-selected {
-			color: $primary-color-middle;
-		}
+			&.is-disabled {
+				color: $info-color-little;
+				cursor: not-allowed;
+			}
 
-		&.is-selected:not(.is-disabled) {
-			color: $primary-color;
+			&.is-disabled.is-selected {
+				color: $primary-color-middle;
+			}
+
+			&.is-selected:not(.is-disabled) {
+				color: $primary-color;
+			}
 		}
 	}
 }

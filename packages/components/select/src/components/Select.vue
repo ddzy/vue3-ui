@@ -165,7 +165,6 @@ export default defineComponent({
 					content: createVNode(
 						SelectDropdown,
 						{
-							width: triggerRef.value.getBoundingClientRect().width || 0,
 							selectInstance: app.value,
 						},
 						context.slots.default

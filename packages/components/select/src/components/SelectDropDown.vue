@@ -3,9 +3,6 @@
 		:class="{
 			[`v3-select-dropdown__list`]: true,
 		}"
-		:style="{
-			width: `${props.width}px`,
-		}"
 	>
 		<slot></slot>
 	</ul>
@@ -16,11 +13,6 @@ import { defineComponent, getCurrentInstance, reactive } from 'vue';
 export default defineComponent({
 	name: 'V3SelectDropDown',
 	props: {
-		/** 下拉框的宽度（与 v3-select-trigger 相同） */
-		width: {
-			type: Number,
-			required: true,
-		},
 		/** V3Select 的实例 */
 		selectInstance: {
 			type: Object,
