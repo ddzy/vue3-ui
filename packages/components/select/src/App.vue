@@ -113,6 +113,7 @@
 					v-model="state.selectValue6"
 					:clearable="true"
 					:noDataText="'暂时没有数据'"
+					:filterable="true"
 				>
 					<v3-select-option
 						v-for="v in state.selectOptions6"
@@ -283,30 +284,29 @@ export default defineComponent({
 				},
 			],
 
-			selectValue6: 'Beijing',
-			selectOptions6: [],
-			// selectOptions6: [
-			// 	{
-			// 		label: '北京',
-			// 		value: 'Beijing',
-			// 		disabled: false,
-			// 	},
-			// 	{
-			// 		label: '上海',
-			// 		value: 'Shanghai',
-			// 		disabled: true,
-			// 	},
-			// 	{
-			// 		label: '广州',
-			// 		value: 'Guangzhou',
-			// 		disabled: false,
-			// 	},
-			// 	{
-			// 		label: '深圳',
-			// 		value: 'Shenzhen',
-			// 		disabled: false,
-			// 	},
-			// ],
+			selectValue6: '',
+			selectOptions6: [
+				{
+					label: '北京',
+					value: 'Beijing',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: true,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
 		});
 
 		return {

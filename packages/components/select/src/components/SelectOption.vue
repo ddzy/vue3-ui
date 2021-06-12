@@ -1,5 +1,6 @@
 <template>
 	<li
+		v-show="state.isShow"
 		:class="{
 			[`v3-select-dropdown__item`]: true,
 			[`is-disabled`]: props.disabled,
@@ -16,6 +17,7 @@ import {
 	ComponentInternalInstance,
 	defineComponent,
 	getCurrentInstance,
+	onMounted,
 	PropType,
 	reactive,
 	ref,
@@ -48,6 +50,8 @@ export default defineComponent({
 		const state = reactive({
 			/** 当前下拉选项是否选中 */
 			isSelected: false,
+			/** 当前下拉选项是否显示（由 V3Select 来控制） */
+			isShow: true,
 		});
 		const app = ref(getCurrentInstance());
 		// V3Select 实例
@@ -86,6 +90,12 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+
+		onMounted(() => {
+			// 把当前实例追加到 V3Select 列表中
+			selectPublicInstance &&
+				selectPublicInstance.appendSelectOptionList(app.value);
+		});
 
 		/**
 		 * 当前下拉选项的父组件并不是 V3Select 而是 V3SelectDropDown

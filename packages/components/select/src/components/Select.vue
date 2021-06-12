@@ -12,8 +12,11 @@
 		<div ref="triggerRef" class="v3-select__trigger">
 			<v3-input
 				v-model="state.selectedLabel"
-				:readonly="true"
-				:placeholder="'请选择内容'"
+				:readonly="!props.filterable"
+				:placeholder="state.placeholder"
+				@input="handleInput"
+				@focus="handleFocus"
+				@blur="handleBlur"
 			>
 				<template #suffix>
 					<i
@@ -51,9 +54,12 @@ import {
 	PropType,
 	reactive,
 	ref,
+	toRef,
+	watch,
 } from 'vue';
 import { useTippy } from 'vue-tippy';
 import SelectDropdown from './SelectDropDown.vue';
+import { useDebounce } from '@common/hooks/index';
 
 interface IState {
 	showDropdown: boolean;
@@ -64,7 +70,11 @@ interface IState {
 		mount: () => void;
 	} | null;
 	selectedLabel: string;
+	prevSelectedLabel: string;
 	showClear: boolean;
+	selectOptionList: any[];
+	initialPlaceholder: string;
+	placeholder: string;
 }
 
 export default defineComponent({
@@ -172,10 +182,24 @@ export default defineComponent({
 			tippy: null,
 			/** 当前选中的下拉选项的 label 值 */
 			selectedLabel: '',
+			/** 上一个选中的下拉选项的 label 值 */
+			prevSelectedLabel: '',
 			/** 当前的下拉框是否处于清空状态，即是否显示清空按钮 */
 			showClear: false,
+			/** 下拉选项（SelectOption）实例列表 */
+			selectOptionList: [],
+			initialPlaceholder: '',
+			placeholder: '',
 		});
 		const app = ref(getCurrentInstance());
+
+		watch(
+			toRef(props, 'placeholder'),
+			() => {
+				state.initialPlaceholder = state.placeholder = props.placeholder;
+			},
+			{ immediate: true }
+		);
 
 		onMounted(() => {
 			// 根据是否有 slot，来判断是否显示空状态
@@ -232,12 +256,20 @@ export default defineComponent({
 			);
 		});
 
+		/**
+		 * 把 V3SelectOption 实例追加到列表，统一管理
+		 */
+		function appendSelectOptionList(instance: any) {
+			state.selectOptionList = state.selectOptionList.concat(instance);
+		}
+
 		function handleChange(value: TYPES.ISelectValue, label: string) {
 			context.emit('update:modelValue', value);
 			context.emit('change', value);
 
 			// 更新输入框中显示的值
 			state.selectedLabel = label;
+			state.prevSelectedLabel = label;
 
 			// 关闭下拉框
 			if (state.tippy) {
@@ -260,6 +292,7 @@ export default defineComponent({
 		function handleClear() {
 			state.selectedLabel = '';
 			state.showClear = false;
+			state.placeholder = state.initialPlaceholder;
 
 			context.emit('update:modelValue', '');
 			context.emit('change', '');
@@ -272,17 +305,52 @@ export default defineComponent({
 			state.selectedLabel = label;
 		}
 
+		function handleInput(e: Event) {
+			const target = e.target as HTMLInputElement;
+
+			state.selectOptionList.forEach(v => {
+				// 没有输入值时，需要显示全部的下拉选项
+				v.proxy.state.isShow = target.value
+					? v.proxy.label.includes(target.value)
+					: true;
+			});
+		}
+
+		function handleFocus() {
+			// 输入框聚焦时，如果当前处于 filterable 状态，那么就把 placeholder 的值设为上次选中的值，同时清空输入框
+			if (props.filterable) {
+				state.placeholder = state.selectedLabel || state.initialPlaceholder;
+				state.selectedLabel = '';
+
+				state.selectOptionList.forEach(v => {
+					v.proxy.state.isShow = true;
+				});
+			}
+		}
+
+		function handleBlur() {
+			// 输入框失去焦点时，如果当前处于 filterable 状态，那么把 placeholder 的值设为选中的值（避免闪动），同时把已选中的 label 重置为其上一个值
+			if (props.filterable) {
+				state.placeholder = state.selectedLabel;
+				state.selectedLabel = state.prevSelectedLabel;
+			}
+		}
+
 		return {
 			app,
 			state,
 			props,
 			triggerRef,
 			dropdownRef,
+			appendSelectOptionList,
 			handleChange,
 			handleMouseEnter,
 			handleMouseLeave,
 			handleClear,
 			handleInit,
+			handleInput: useDebounce(handleInput, 200),
+			handleFocus,
+			handleBlur,
 		};
 	},
 });
