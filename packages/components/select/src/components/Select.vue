@@ -51,8 +51,6 @@ import {
 	PropType,
 	reactive,
 	ref,
-	toRef,
-	watch,
 } from 'vue';
 import { useTippy } from 'vue-tippy';
 import SelectDropdown from './SelectDropDown.vue';
@@ -180,6 +178,12 @@ export default defineComponent({
 		const app = ref(getCurrentInstance());
 
 		onMounted(() => {
+			// 根据是否有 slot，来判断是否显示空状态
+			const defaultSlot = context.slots.default ? context.slots.default() : [];
+			const hasSelectOption = defaultSlot.length
+				? (defaultSlot[0] as any).children.length
+				: 0;
+
 			state.tippy = useTippy(
 				triggerRef,
 				{
@@ -188,7 +192,17 @@ export default defineComponent({
 						{
 							selectInstance: app.value,
 						},
-						context.slots.default
+						!!hasSelectOption
+							? context.slots.default
+							: [
+									createVNode(
+										'p',
+										{
+											class: 'v3-select-dropdown__empty',
+										},
+										props.noDataText
+									),
+							  ]
 					),
 					animation: 'v3-select-slide-fade',
 					theme: 'light-border',

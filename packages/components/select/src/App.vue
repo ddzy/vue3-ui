@@ -101,6 +101,28 @@
 				</v3-select>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col>
+				<h3>可过滤选项：</h3>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="2">
+				<v3-select
+					v-model="state.selectValue6"
+					:clearable="true"
+					:noDataText="'暂时没有数据'"
+				>
+					<v3-select-option
+						v-for="v in state.selectOptions6"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -260,6 +282,31 @@ export default defineComponent({
 					disabled: false,
 				},
 			],
+
+			selectValue6: 'Beijing',
+			selectOptions6: [],
+			// selectOptions6: [
+			// 	{
+			// 		label: '北京',
+			// 		value: 'Beijing',
+			// 		disabled: false,
+			// 	},
+			// 	{
+			// 		label: '上海',
+			// 		value: 'Shanghai',
+			// 		disabled: true,
+			// 	},
+			// 	{
+			// 		label: '广州',
+			// 		value: 'Guangzhou',
+			// 		disabled: false,
+			// 	},
+			// 	{
+			// 		label: '深圳',
+			// 		value: 'Shenzhen',
+			// 		disabled: false,
+			// 	},
+			// ],
 		});
 
 		return {

@@ -73,5 +73,12 @@
 				color: $primary-color;
 			}
 		}
+		// 无数据
+		:deep(.v3-select-dropdown__empty) {
+			margin: 0;
+			padding: $padding-small 0;
+			text-align: center;
+			color: $info-color-little;
+		}
 	}
 }
