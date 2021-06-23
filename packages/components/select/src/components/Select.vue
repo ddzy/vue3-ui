@@ -11,7 +11,7 @@
 	>
 		<div ref="triggerRef" class="v3-select__trigger">
 			<v3-input
-				v-model="state.selectedLabel"
+				v-model="state.inputValue"
 				:readonly="!props.filterable"
 				:placeholder="state.placeholder"
 				@input="handleInput"
@@ -50,6 +50,7 @@ import {
 	createVNode,
 	defineComponent,
 	getCurrentInstance,
+	nextTick,
 	onMounted,
 	PropType,
 	reactive,
@@ -59,6 +60,7 @@ import {
 } from 'vue';
 import { useTippy } from 'vue-tippy';
 import SelectDropdown from './SelectDropDown.vue';
+import SelectOption from './SelectOption.vue';
 import { useDebounce } from '@common/hooks/index';
 
 interface IState {
@@ -69,12 +71,14 @@ interface IState {
 		unmount: () => void;
 		mount: () => void;
 	} | null;
+	inputValue: string;
 	selectedLabel: string;
-	prevSelectedLabel: string;
 	showClear: boolean;
 	selectOptionList: any[];
 	initialPlaceholder: string;
 	placeholder: string;
+	selectDropDownInstance: any;
+	hasInit: boolean;
 }
 
 export default defineComponent({
@@ -171,6 +175,7 @@ export default defineComponent({
 	},
 	components: {
 		SelectDropdown,
+		SelectOption,
 	},
 	setup(props: TYPES.ISelectProps, context) {
 		const triggerRef = ref(document.createElement('div'));
@@ -180,16 +185,20 @@ export default defineComponent({
 			showDropdown: false,
 			/** tippy相关 */
 			tippy: null,
+			/** 当前下拉输入框的值 */
+			inputValue: '',
 			/** 当前选中的下拉选项的 label 值 */
 			selectedLabel: '',
-			/** 上一个选中的下拉选项的 label 值 */
-			prevSelectedLabel: '',
 			/** 当前的下拉框是否处于清空状态，即是否显示清空按钮 */
 			showClear: false,
 			/** 下拉选项（SelectOption）实例列表 */
 			selectOptionList: [],
+			/** 下拉菜单（SelectDropDown）实例 */
+			selectDropDownInstance: null,
 			initialPlaceholder: '',
 			placeholder: '',
+			/** 是否已经初始化过默认值 */
+			hasInit: false,
 		});
 		const app = ref(getCurrentInstance());
 
@@ -263,13 +272,20 @@ export default defineComponent({
 			state.selectOptionList = state.selectOptionList.concat(instance);
 		}
 
+		/**
+		 * 把 V3SelectDropDown 实例保存至本地
+		 */
+		function setSelectDropDownInstance(instance: any) {
+			state.selectDropDownInstance = instance;
+		}
+
 		function handleChange(value: TYPES.ISelectValue, label: string) {
 			context.emit('update:modelValue', value);
 			context.emit('change', value);
 
 			// 更新输入框中显示的值
+			state.inputValue = label;
 			state.selectedLabel = label;
-			state.prevSelectedLabel = label;
 
 			// 关闭下拉框
 			if (state.tippy) {
@@ -279,7 +295,7 @@ export default defineComponent({
 
 		function handleMouseEnter() {
 			// 鼠标移入下拉框，如果可清空并且已选中值，则显示清空按钮
-			if (props.clearable && state.selectedLabel) {
+			if (props.clearable && (state.inputValue || state.selectedLabel)) {
 				state.showClear = true;
 			}
 		}
@@ -290,9 +306,16 @@ export default defineComponent({
 		}
 
 		function handleClear() {
+			// 清空的时候，关闭下拉框
+			if (state.tippy) {
+				state.tippy.hide();
+			}
+
+			state.inputValue = '';
 			state.selectedLabel = '';
 			state.showClear = false;
 			state.placeholder = state.initialPlaceholder;
+			state.selectDropDownInstance.proxy.state.isNoMatchData = false;
 
 			context.emit('update:modelValue', '');
 			context.emit('change', '');
@@ -302,26 +325,40 @@ export default defineComponent({
 		 * 设置默认选中的值，SelectOption 直接调用
 		 */
 		function handleInit(value: TYPES.ISelectValue, label: string) {
+			if (state.hasInit) {
+				// 保证下拉组件的默认值只初始化一次
+				return;
+			}
 			state.selectedLabel = label;
+			state.inputValue = label;
+			state.hasInit = true;
 		}
 
 		function handleInput(e: Event) {
 			const target = e.target as HTMLInputElement;
 
+			// 没有输入值时，需要显示全部的下拉选项
 			state.selectOptionList.forEach(v => {
-				// 没有输入值时，需要显示全部的下拉选项
 				v.proxy.state.isShow = target.value
 					? v.proxy.label.includes(target.value)
 					: true;
 			});
+
+			// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
+			const isEmpty = state.selectOptionList.every(v => {
+				return !v.proxy.state.isShow;
+			});
+			state.selectDropDownInstance.proxy.state.isNoMatchData = isEmpty;
+
+			// 输入的时候，如果有输入值，那么就显示清空按钮
+			state.showClear = !!target.value;
 		}
 
 		function handleFocus() {
-			// 输入框聚焦时，如果当前处于 filterable 状态，那么就把 placeholder 的值设为上次选中的值，同时清空输入框
+			// 输入框聚焦时，如果当前处于 filterable 状态，那么就把已选中的值作为 placeholder
 			if (props.filterable) {
+				state.inputValue = '';
 				state.placeholder = state.selectedLabel || state.initialPlaceholder;
-				state.selectedLabel = '';
-
 				state.selectOptionList.forEach(v => {
 					v.proxy.state.isShow = true;
 				});
@@ -329,10 +366,10 @@ export default defineComponent({
 		}
 
 		function handleBlur() {
-			// 输入框失去焦点时，如果当前处于 filterable 状态，那么把 placeholder 的值设为选中的值（避免闪动），同时把已选中的 label 重置为其上一个值
+			// 输入框失去焦点时，如果当前处于 filterable 状态，那么把已选中的值作为输入框的值
 			if (props.filterable) {
-				state.placeholder = state.selectedLabel;
-				state.selectedLabel = state.prevSelectedLabel;
+				state.inputValue = state.selectedLabel;
+				state.selectDropDownInstance.proxy.state.isNoMatchData = false;
 			}
 		}
 
@@ -343,6 +380,7 @@ export default defineComponent({
 			triggerRef,
 			dropdownRef,
 			appendSelectOptionList,
+			setSelectDropDownInstance,
 			handleChange,
 			handleMouseEnter,
 			handleMouseLeave,

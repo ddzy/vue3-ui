@@ -49,6 +49,17 @@
 
 		.v3-select-dropdown__list {
 			width: 100%;
+			// 模糊搜索没有匹配的数据
+			&.is-no-match-data {
+				p {
+					margin: 0;
+					padding: 0;
+					line-height: 20px;
+					text-align: center;
+					color: #bbb;
+					font-size: $font-size-small;
+				}
+			}
 		}
 		.v3-select-dropdown__item {
 			padding: 0 $padding-medium;
