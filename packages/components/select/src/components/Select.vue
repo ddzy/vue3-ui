@@ -32,6 +32,8 @@
 					@input="handleInput"
 					@focus="handleFocus"
 					@blur="handleBlur"
+					@compositionstart="handleCompositionStart"
+					@compositionend="handleCompositionEnd"
 				>
 					<template #suffix>
 						<i
@@ -111,6 +113,7 @@ interface IState {
 	hasInit: boolean;
 	nextZIndex: number;
 	isNoMatchData: boolean;
+	isCompositionStart: boolean;
 }
 
 export default defineComponent({
@@ -230,6 +233,8 @@ export default defineComponent({
 			nextZIndex: VARIABLE.getNextZIndex(),
 			/** 是否为未搜索到本地数据的状态 */
 			isNoMatchData: false,
+			/** 是否为输入开始阶段 */
+			isCompositionStart: false,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 		/** slot 是否为空，即是否具有 SelectOption */
@@ -259,7 +264,6 @@ export default defineComponent({
 
 		function handleHide() {
 			state.showDropdown = false;
-			state.selectOptionList = [];
 		}
 
 		function handleMount(instance: ILocalTippyInstance) {
@@ -331,6 +335,11 @@ export default defineComponent({
 		function handleInput(e: Event) {
 			const target = e.target as HTMLInputElement;
 
+			// 输入中文的过程中，不需要触发 input 事件，只在最终选取字符时才继续做处理
+			if (state.isCompositionStart) {
+				return;
+			}
+
 			// 没有输入值时，需要显示全部的下拉选项
 			state.selectOptionList.forEach(v => {
 				v.proxy.state.isShow = target.value
@@ -367,6 +376,14 @@ export default defineComponent({
 			}
 		}
 
+		function handleCompositionStart() {
+			state.isCompositionStart = true;
+		}
+
+		function handleCompositionEnd() {
+			state.isCompositionStart = false;
+		}
+
 		return {
 			app,
 			state,
@@ -383,6 +400,8 @@ export default defineComponent({
 			handleShow,
 			handleHide,
 			handleMount,
+			handleCompositionStart,
+			handleCompositionEnd,
 			computedHasSelection,
 		};
 	},
