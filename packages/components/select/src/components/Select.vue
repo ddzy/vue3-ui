@@ -225,8 +225,8 @@ export default defineComponent({
 			showClear: false,
 			/** 下拉选项（SelectOption）实例列表 */
 			selectOptionList: [],
-			initialPlaceholder: '',
-			placeholder: '',
+			initialPlaceholder: props.placeholder,
+			placeholder: props.placeholder,
 			/** 是否已经初始化过默认值 */
 			hasInit: false,
 			/** 下拉菜单的 z-index（统一管理） */
@@ -243,14 +243,6 @@ export default defineComponent({
 		});
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
-
-		watch(
-			toRef(props, 'placeholder'),
-			() => {
-				state.initialPlaceholder = state.placeholder = props.placeholder;
-			},
-			{ immediate: true }
-		);
 
 		function handleShow() {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
