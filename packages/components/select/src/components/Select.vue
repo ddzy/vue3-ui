@@ -9,76 +9,108 @@
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
 	>
-		<div ref="triggerRef" class="v3-select__trigger">
-			<v3-input
-				v-model="state.inputValue"
-				:readonly="!props.filterable"
-				:placeholder="state.placeholder"
-				@input="handleInput"
-				@focus="handleFocus"
-				@blur="handleBlur"
-			>
-				<template #suffix>
-					<i
-						style="margin-right: 6px;"
-						v-if="!state.showClear"
+		<tippy
+			trigger="click"
+			theme="light-border"
+			animation="v3-select-slide-fade"
+			placement="bottom"
+			:zIndex="state.nextZIndex"
+			:arrow="false"
+			:interactive="true"
+			:allowHTML="true"
+			:delay="0"
+			:offset="[0, 5]"
+			:onShow="handleShow"
+			:onHide="handleHide"
+			:onMount="handleMount"
+		>
+			<div class="v3-select__trigger">
+				<v3-input
+					v-model="state.inputValue"
+					:readonly="!props.filterable"
+					:placeholder="state.placeholder"
+					@input="handleInput"
+					@focus="handleFocus"
+					@blur="handleBlur"
+				>
+					<template #suffix>
+						<i
+							style="margin-right: 6px;"
+							v-if="!state.showClear"
+							:class="{
+								'v3-icon': true,
+								'v3-icon-arrow-down': true,
+							}"
+						></i>
+						<i
+							style="margin-right: 6px; cursor: pointer"
+							v-else
+							:class="{
+								'v3-icon': true,
+								'v3-icon-reeor': true,
+							}"
+							@click.stop="handleClear"
+						></i>
+					</template>
+				</v3-input>
+			</div>
+			<template #content>
+				<div class="v3-select__dropdown">
+					<ul
 						:class="{
-							'v3-icon': true,
-							'v3-icon-arrow-down': true,
+							[`v3-select-dropdown__list`]: true,
+							'is-no-match-data': state.isNoMatchData,
 						}"
-					></i>
-					<i
-						style="margin-right: 6px; cursor: pointer"
-						v-else
-						:class="{
-							'v3-icon': true,
-							'v3-icon-reeor': true,
-						}"
-						@click.stop="handleClear"
-					></i>
-				</template>
-			</v3-input>
-		</div>
-		<div ref="dropdownRef" class="v3-select__dropdown"></div>
+					>
+						<slot v-if="!state.isNoMatchData"></slot>
+						<p v-else>{{ props.noMatchText }}</p>
+					</ul>
+				</div>
+			</template>
+		</tippy>
 	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
+import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
+import { useDebounce } from '@common/hooks/index';
 import 'tippy.js/themes/light-border.css';
 import {
-	createVNode,
+	ComponentInternalInstance,
+	computed,
 	defineComponent,
 	getCurrentInstance,
-	nextTick,
-	onMounted,
 	PropType,
+	provide,
 	reactive,
 	ref,
 	toRef,
 	watch,
 } from 'vue';
-import { useTippy } from 'vue-tippy';
-import SelectDropdown from './SelectDropDown.vue';
-import SelectOption from './SelectOption.vue';
-import { useDebounce } from '@common/hooks/index';
+import { Tippy, TippyInstance } from 'vue-tippy';
+
+type ILocalTippyInstance =
+	| (TippyInstance & {
+			hide: () => void;
+			show: () => void;
+			unmount: () => void;
+			mount: () => void;
+	  })
+	| null;
 
 interface IState {
 	showDropdown: boolean;
-	tippy: {
-		hide: () => void;
-		show: () => void;
-		unmount: () => void;
-		mount: () => void;
-	} | null;
+	tippy: ILocalTippyInstance;
 	inputValue: string;
 	selectedLabel: string;
 	showClear: boolean;
 	selectOptionList: any[];
 	initialPlaceholder: string;
 	placeholder: string;
-	selectDropDownInstance: any;
 	hasInit: boolean;
+	nextZIndex: number;
+	isNoMatchData: boolean;
 }
 
 export default defineComponent({
@@ -174,16 +206,13 @@ export default defineComponent({
 		},
 	},
 	components: {
-		SelectDropdown,
-		SelectOption,
+		Tippy,
 	},
 	setup(props: TYPES.ISelectProps, context) {
-		const triggerRef = ref(document.createElement('div'));
-		const dropdownRef = ref(document.createElement('div'));
 		const state: IState = reactive({
 			/** 当前的下拉框是否显示 */
 			showDropdown: false,
-			/** tippy相关 */
+			/** tippy 实例 */
 			tippy: null,
 			/** 当前下拉输入框的值 */
 			inputValue: '',
@@ -193,14 +222,22 @@ export default defineComponent({
 			showClear: false,
 			/** 下拉选项（SelectOption）实例列表 */
 			selectOptionList: [],
-			/** 下拉菜单（SelectDropDown）实例 */
-			selectDropDownInstance: null,
 			initialPlaceholder: '',
 			placeholder: '',
 			/** 是否已经初始化过默认值 */
 			hasInit: false,
+			/** 下拉菜单的 z-index（统一管理） */
+			nextZIndex: VARIABLE.getNextZIndex(),
+			/** 是否为未搜索到本地数据的状态 */
+			isNoMatchData: false,
 		});
-		const app = ref(getCurrentInstance());
+		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
+		/** slot 是否为空，即是否具有 SelectOption */
+		const computedHasSelection = computed(() => {
+			return !!app.slots.default;
+		});
+
+		provide(SELECT_INSTANCE_PROVIDE, app);
 
 		watch(
 			toRef(props, 'placeholder'),
@@ -210,73 +247,30 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		onMounted(() => {
-			// 根据是否有 slot，来判断是否显示空状态
-			const defaultSlot = context.slots.default ? context.slots.default() : [];
-			const hasSelectOption = defaultSlot.length
-				? (defaultSlot[0] as any).children.length
-				: 0;
+		function handleShow() {
+			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
+			const showDropdown = !props.disabled;
+			state.showDropdown = showDropdown;
 
-			state.tippy = useTippy(
-				triggerRef,
-				{
-					content: createVNode(
-						SelectDropdown,
-						{
-							selectInstance: app.value,
-						},
-						!!hasSelectOption
-							? context.slots.default
-							: [
-									createVNode(
-										'p',
-										{
-											class: 'v3-select-dropdown__empty',
-										},
-										props.noDataText
-									),
-							  ]
-					),
-					animation: 'v3-select-slide-fade',
-					theme: 'light-border',
-					trigger: 'click',
-					arrow: true,
-					interactive: true,
-					allowHTML: true,
-					delay: 0,
-					zIndex: VARIABLE.getNextZIndex(),
-					appendTo: dropdownRef.value,
-					placement: 'bottom',
-					offset: [0, 10],
-					onShow() {
-						// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
-						const showDropdown = !props.disabled;
-						state.showDropdown = showDropdown;
+			if (!showDropdown) {
+				return showDropdown;
+			}
+		}
 
-						if (!showDropdown) {
-							return showDropdown;
-						}
-					},
-					onHide() {
-						state.showDropdown = false;
-					},
-				},
-				{ mount: true }
-			);
-		});
+		function handleHide() {
+			state.showDropdown = false;
+			state.selectOptionList = [];
+		}
+
+		function handleMount(instance: ILocalTippyInstance) {
+			state.tippy = instance;
+		}
 
 		/**
 		 * 把 V3SelectOption 实例追加到列表，统一管理
 		 */
 		function appendSelectOptionList(instance: any) {
 			state.selectOptionList = state.selectOptionList.concat(instance);
-		}
-
-		/**
-		 * 把 V3SelectDropDown 实例保存至本地
-		 */
-		function setSelectDropDownInstance(instance: any) {
-			state.selectDropDownInstance = instance;
 		}
 
 		function handleChange(value: TYPES.ISelectValue, label: string) {
@@ -315,7 +309,7 @@ export default defineComponent({
 			state.selectedLabel = '';
 			state.showClear = false;
 			state.placeholder = state.initialPlaceholder;
-			state.selectDropDownInstance.proxy.state.isNoMatchData = false;
+			state.isNoMatchData = false;
 
 			context.emit('update:modelValue', '');
 			context.emit('change', '');
@@ -348,7 +342,7 @@ export default defineComponent({
 			const isEmpty = state.selectOptionList.every(v => {
 				return !v.proxy.state.isShow;
 			});
-			state.selectDropDownInstance.proxy.state.isNoMatchData = isEmpty;
+			state.isNoMatchData = isEmpty;
 
 			// 输入的时候，如果有输入值，那么就显示清空按钮
 			state.showClear = !!target.value;
@@ -369,7 +363,7 @@ export default defineComponent({
 			// 输入框失去焦点时，如果当前处于 filterable 状态，那么把已选中的值作为输入框的值
 			if (props.filterable) {
 				state.inputValue = state.selectedLabel;
-				state.selectDropDownInstance.proxy.state.isNoMatchData = false;
+				state.isNoMatchData = false;
 			}
 		}
 
@@ -377,10 +371,7 @@ export default defineComponent({
 			app,
 			state,
 			props,
-			triggerRef,
-			dropdownRef,
 			appendSelectOptionList,
-			setSelectDropDownInstance,
 			handleChange,
 			handleMouseEnter,
 			handleMouseLeave,
@@ -389,6 +380,10 @@ export default defineComponent({
 			handleInput: useDebounce(handleInput, 200),
 			handleFocus,
 			handleBlur,
+			handleShow,
+			handleHide,
+			handleMount,
+			computedHasSelection,
 		};
 	},
 });

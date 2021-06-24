@@ -25,3 +25,8 @@ export const CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE = Symbol(
  * v3-row
  */
 export const ROW_INSTANCE_PROVIDE = Symbol('ROW_INSTANCE_PROVIDE');
+
+/**
+ * v3-select
+ */
+export const SELECT_INSTANCE_PROVIDE = Symbol('SELECT_INSTANCE_PROVIDE');

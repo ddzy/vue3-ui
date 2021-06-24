@@ -10,13 +10,14 @@ export default function useDebounce(
 	callback: (...args: any[]) => void,
 	timestamp: number = 200
 ) {
-	let timer = ref(null);
+	let timer: any = ref(null);
 
 	return function(...args: any[]) {
 		if (timer.value) {
 			clearTimeout(timer.value);
 		}
 		timer.value = setTimeout(function() {
+			// @ts-ignore
 			callback.apply(this, args);
 		}, timestamp);
 	};

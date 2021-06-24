@@ -10087,7 +10087,7 @@ tiny-emitter@^2.0.0:
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
-tippy.js@^6.2.6:
+tippy.js@^6.2.6, tippy.js@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.1.tgz#3788a007be7015eee0fd589a66b98fb3f8f10181"
   integrity sha512-JnFncCq+rF1dTURupoJ4yPie5Cof978inW6/4S6kmWV7LL9YOSEVMifED3KdrVPEG+Z/TFH2CDNJcQEfaeuQww==
@@ -10597,6 +10597,13 @@ vue-tippy@^6.0.0-alpha.20:
   integrity sha512-XGWir2QL5lM41bMT5SxfXjxIycvK1uk3N581AQzl1K9+sj2g5qHSnMjuDRFf7poCNhjIvdjldTZWWxtTE80JYA==
   dependencies:
     tippy.js "^6.2.6"
+
+vue-tippy@^6.0.0-alpha.30:
+  version "6.0.0-alpha.30"
+  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-6.0.0-alpha.30.tgz#9816509f289bdae7ae90dc01a4c2f983a46908ff"
+  integrity sha512-Rzn+6mDB24e79z70ui6qlwSnB8wYlUsAyHbV2gRX1bmE7jlR0p3l8QCwpKDErxJtnP3ZqMBRJe8vZaQ0lWV/tQ==
+  dependencies:
+    tippy.js "^6.3.1"
 
 vue-tsc@^0.0.15:
   version "0.0.15"

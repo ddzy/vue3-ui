@@ -13,10 +13,13 @@
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/select';
+import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
+import * as UTILS from '@common/utils/index';
 import {
 	ComponentInternalInstance,
 	defineComponent,
 	getCurrentInstance,
+	inject,
 	onMounted,
 	PropType,
 	reactive,
@@ -25,7 +28,11 @@ import {
 	watch,
 } from 'vue';
 
-import * as UTILS from '@common/utils/index';
+interface IState {
+	isSelected: boolean;
+	isShow: boolean;
+	injectedSelectInstance: any;
+}
 
 export default defineComponent({
 	name: 'V3SelectOption',
@@ -47,24 +54,31 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const state = reactive({
+		const state: IState = reactive({
 			/** 当前下拉选项是否选中 */
 			isSelected: false,
 			/** 当前下拉选项是否显示（由 V3Select 来控制） */
 			isShow: true,
+			/** V3Select 实例 */
+			injectedSelectInstance: {},
 		});
 		const app = ref(getCurrentInstance());
-		// V3Select 实例
-		const selectInstance = findSelectInstance();
-		const selectPublicInstance: any = selectInstance
-			? selectInstance.proxy
-			: null;
+		const isSelect = checkIsSelect();
+
+		if (isSelect) {
+			const internalSelectInstance = inject(
+				SELECT_INSTANCE_PROVIDE
+			) as ComponentInternalInstance | null;
+			state.injectedSelectInstance = internalSelectInstance
+				? internalSelectInstance.proxy
+				: {};
+		}
 
 		/**
 		 * 实时监听下拉框的值变化，判断当前下拉选项是否选中
 		 */
 		watch(
-			toRef(selectPublicInstance, 'modelValue'),
+			toRef(state.injectedSelectInstance, 'modelValue'),
 			newValue => {
 				// 如果值是对象类型，那么需要以【value-key】作比对，判断是否选中
 				if (
@@ -73,16 +87,16 @@ export default defineComponent({
 				) {
 					state.isSelected =
 						props.value[
-							selectPublicInstance.valueKey as keyof TYPES.ISelectValue
-						] === newValue[selectPublicInstance.valueKey];
+							state.injectedSelectInstance.valueKey as keyof TYPES.ISelectValue
+						] === newValue[state.injectedSelectInstance.valueKey];
 				} else {
 					// 如果值是其它可用类型，那么直接比对即可
 					state.isSelected = props.value === newValue;
 				}
 
 				// 设置默认选中的项
-				if (state.isSelected && selectPublicInstance) {
-					selectPublicInstance.handleInit(
+				if (state.isSelected && state.injectedSelectInstance) {
+					state.injectedSelectInstance.handleInit(
 						props.value,
 						props.label || props.value
 					);
@@ -93,20 +107,20 @@ export default defineComponent({
 
 		onMounted(() => {
 			// 把当前实例追加到 V3Select 列表中
-			selectPublicInstance &&
-				selectPublicInstance.appendSelectOptionList(app.value);
+			state.injectedSelectInstance &&
+				state.injectedSelectInstance.appendSelectOptionList(app.value);
 		});
 
 		/**
-		 * 当前下拉选项的父组件并不是 V3Select 而是 V3SelectDropDown
+		 * 检查当前下拉选项的父级是否存在下拉框
 		 */
-		function findSelectInstance(): ComponentInternalInstance | null {
-			let parent = (app.value as ComponentInternalInstance).parent;
-			let result = null;
+		function checkIsSelect() {
+			let parent = app.value!.parent;
+			let result = false;
 
 			while (parent) {
-				if (parent.type.name === 'V3SelectDropDown') {
-					result = parent.props.selectInstance as ComponentInternalInstance;
+				if (parent.type.name === 'V3Select') {
+					result = true;
 					break;
 				}
 				parent = parent.parent;
@@ -117,8 +131,8 @@ export default defineComponent({
 
 		function handleClick() {
 			// 如果处于禁用状态，那么不做任何处理
-			if (!props.disabled && selectPublicInstance) {
-				selectPublicInstance.handleChange(
+			if (!props.disabled && state.injectedSelectInstance) {
+				state.injectedSelectInstance.handleChange(
 					props.value,
 					props.label || props.value
 				);
@@ -130,7 +144,6 @@ export default defineComponent({
 			state,
 			props,
 			handleClick,
-			selectPublicInstance,
 		};
 	},
 });
