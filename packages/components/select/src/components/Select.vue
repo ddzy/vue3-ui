@@ -278,9 +278,6 @@ export default defineComponent({
 		}
 
 		function handleChange(value: TYPES.ISelectValue, label: string) {
-			context.emit('update:modelValue', value);
-			context.emit('change', value);
-
 			// 更新输入框中显示的值
 			state.inputValue = label;
 			state.selectedLabel = label;
@@ -289,6 +286,9 @@ export default defineComponent({
 			if (state.tippy) {
 				state.tippy.hide();
 			}
+
+			context.emit('update:modelValue', value);
+			context.emit('change', value);
 		}
 
 		function handleMouseEnter() {
@@ -369,9 +369,8 @@ export default defineComponent({
 		}
 
 		function handleBlur() {
-			// 输入框失去焦点时，如果当前处于 filterable 状态，那么把已选中的值作为输入框的值
+			// 输入框失去焦点时，如果当前处于 filterable 状态，那么需要重置【未匹配到数据】的状态
 			if (props.filterable) {
-				state.inputValue = state.selectedLabel;
 				state.isNoMatchData = false;
 			}
 		}
