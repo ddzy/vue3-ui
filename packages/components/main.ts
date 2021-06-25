@@ -19,6 +19,7 @@ import V3Col from './col/main';
 import V3Message from './message/main';
 import V3Select from './select/main';
 import V3SelectOption from './select-option/main';
+import V3Tag from './tag/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -27,7 +28,7 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './select/src/App.vue';
+import Demo from './tag/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
@@ -50,6 +51,7 @@ export {
 	V3Message,
 	V3Select,
 	V3SelectOption,
+	V3Tag,
 };
 
 export default function install(app: App) {
@@ -69,5 +71,6 @@ export default function install(app: App) {
 	app.component(V3Col.name, V3Col);
 	app.component(V3Select.name, V3Select);
 	app.component(V3SelectOption.name, V3SelectOption);
+	app.component(V3Tag.name, V3Tag);
 	app.config.globalProperties.$message = V3Message;
 }
