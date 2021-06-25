@@ -118,12 +118,6 @@
 					@clear="handleClear6"
 					@visible="handleVisible6"
 				>
-					<v3-select-option
-						v-for="v in state.selectOptions6"
-						:key="v.value"
-						:value="v.value"
-						:label="v.label"
-					></v3-select-option>
 				</v3-select>
 			</v3-col>
 		</v3-row>

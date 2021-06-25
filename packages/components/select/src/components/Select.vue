@@ -5,6 +5,8 @@
 			['is-visible']: state.showDropdown,
 			['is-disabled']: props.disabled,
 			['is-clearable']: state.showClear,
+			['is-no-match-data']: state.isNoMatchData,
+			['is-no-data']: !computedChildrenLength,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
@@ -61,11 +63,15 @@
 					<ul
 						:class="{
 							[`v3-select-dropdown__list`]: true,
-							'is-no-match-data': state.isNoMatchData,
 						}"
 					>
-						<slot v-if="!state.isNoMatchData"></slot>
-						<p v-else>{{ props.noMatchText }}</p>
+						<slot v-if="computedChildrenLength"></slot>
+						<template v-else>
+							<!-- 未匹配到数据（优先级比【无数据】高） -->
+							<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
+							<!-- 无数据 -->
+							<p v-else>{{ props.noDataText }}</p>
+						</template>
 					</ul>
 				</div>
 			</template>
@@ -77,9 +83,11 @@ import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce } from '@common/hooks/index';
+import { Slot } from '@vue/test-utils/dist/types';
 import 'tippy.js/themes/light-border.css';
 import {
 	ComponentInternalInstance,
+	computed,
 	defineComponent,
 	getCurrentInstance,
 	PropType,
@@ -237,6 +245,21 @@ export default defineComponent({
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
 
+		/**
+		 * 计算 slot 的长度（即判断内容是否为空）
+		 */
+		const computedChildrenLength = computed<number>(() => {
+			const defaultSlot: Function | undefined = context.slots.default;
+
+			if (typeof defaultSlot !== 'function') {
+				return 0;
+			}
+
+			const defaultChildren = defaultSlot()[0].children;
+
+			return defaultChildren.length;
+		});
+
 		watch(toRef(state, 'showDropdown'), () => {
 			context.emit('visible', state.showDropdown);
 		});
@@ -343,11 +366,8 @@ export default defineComponent({
 			if (typeof props.filterMethod === 'function') {
 				props.filterMethod(target.value);
 
-				const defaultSlot = context.slots.default as any;
-				const defaultChildren = defaultSlot()[0].children;
-
 				// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-				state.isNoMatchData = !defaultChildren.length;
+				state.isNoMatchData = !computedChildrenLength.value;
 				state.selectOptionList.forEach(v => {
 					v.proxy.state.isShow = true;
 				});
@@ -402,6 +422,7 @@ export default defineComponent({
 			app,
 			state,
 			props,
+			computedChildrenLength,
 			appendSelectOptionList,
 			subtractSelectOptionList,
 			handleChange,

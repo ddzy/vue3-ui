@@ -27,6 +27,22 @@
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
+	// 模糊搜索没有匹配的数据/无数据
+	&.is-no-match-data,
+	&.is-no-data {
+		:deep(.tippy-content) {
+			.v3-select-dropdown__list {
+				p {
+					margin: 0;
+					padding: $padding-small 0;
+					line-height: 20px;
+					text-align: center;
+					color: #bbb;
+					font-size: $font-size-small;
+				}
+			}
+		}
+	}
 
 	.v3-select__trigger {
 		cursor: text;
@@ -47,17 +63,6 @@
 		.v3-select__dropdown {
 			.v3-select-dropdown__list {
 				width: 100%;
-				// 模糊搜索没有匹配的数据
-				&.is-no-match-data {
-					p {
-						margin: 0;
-						padding: $padding-small 0;
-						line-height: 20px;
-						text-align: center;
-						color: #bbb;
-						font-size: $font-size-small;
-					}
-				}
 			}
 			.v3-select-dropdown__item {
 				padding: 0 $padding-medium;
