@@ -83,7 +83,6 @@ import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce } from '@common/hooks/index';
-import { Slot } from '@vue/test-utils/dist/types';
 import 'tippy.js/themes/light-border.css';
 import {
 	ComponentInternalInstance,
