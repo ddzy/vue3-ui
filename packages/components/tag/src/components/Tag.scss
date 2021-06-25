@@ -3,71 +3,119 @@ $tag-type-list: (
 		borderColor: $primary-color,
 		color: #fff,
 		backgroundColor: $primary-color,
+		iconHoverBackgroundColor: #fff,
+		iconHoverColor: $primary-color,
 		plainBorderColor: $primary-color-little,
 		plainColor: $primary-color,
 		plainBackgroundColor: $primary-color-plain,
+		plainIconHoverBackgroundColor: $primary-color-little,
+		plainIconHoverColor: #fff,
 	),
 	success: (
 		borderColor: $success-color,
 		color: #fff,
 		backgroundColor: $success-color,
+		iconHoverBackgroundColor: #fff,
+		iconHoverColor: $success-color,
 		plainBorderColor: $success-color-little,
 		plainColor: $success-color,
 		plainBackgroundColor: $success-color-plain,
+		plainIconHoverBackgroundColor: $success-color-little,
+		plainIconHoverColor: #fff,
 	),
 	danger: (
 		borderColor: $danger-color,
 		color: #fff,
 		backgroundColor: $danger-color,
+		iconHoverBackgroundColor: #fff,
+		iconHoverColor: $danger-color,
 		plainBorderColor: $danger-color-little,
 		plainColor: $danger-color,
 		plainBackgroundColor: $danger-color-plain,
+		plainIconHoverBackgroundColor: $danger-color-little,
+		plainIconHoverColor: #fff,
 	),
 	warning: (
 		borderColor: $warning-color,
 		color: #fff,
 		backgroundColor: $warning-color,
+		iconHoverBackgroundColor: #fff,
+		iconHoverColor: $warning-color,
 		plainBorderColor: $warning-color-little,
 		plainColor: $warning-color,
 		plainBackgroundColor: $warning-color-plain,
+		plainIconHoverBackgroundColor: $warning-color-little,
+		plainIconHoverColor: #fff,
 	),
 	info: (
 		borderColor: $info-color,
 		color: #fff,
 		backgroundColor: $info-color,
+		iconHoverBackgroundColor: #fff,
+		iconHoverColor: $info-color,
 		plainBorderColor: $info-color-little,
 		plainColor: $info-color,
 		plainBackgroundColor: $info-color-plain,
+		plainIconHoverBackgroundColor: $info-color-little,
+		plainIconHoverColor: #fff,
 	),
 );
 $tag-size-list: (
 	small: (
 		fontSize: $font-size-mini,
 		padding: 0 $padding-small,
+		marginLeft: 1px,
 	),
 	medium: (
 		fontSize: $font-size-mini,
 		padding: 3px $padding-small + 3,
+		marginLeft: 4px,
 	),
 	large: (
 		fontSize: $font-size-mini,
 		padding: 5px $padding-small + 6,
+		marginLeft: 7px,
 	),
 );
 
 .v3-tag {
+	display: flex;
+	align-items: center;
 	cursor: default;
 	border-radius: $border-radius-width-small;
+
+	i.v3-icon {
+		border-radius: 50%;
+		cursor: pointer;
+	}
 
 	@each $key, $value in $tag-type-list {
 		&.v3-tag--#{$key} {
 			background-color: map-get($map: $value, $key: backgroundColor);
 			border: 1px solid map-get($map: $value, $key: borderColor);
 			color: map-get($map: $value, $key: color);
+			i.v3-icon {
+				&:hover {
+					background-color: map-get(
+						$map: $value,
+						$key: iconHoverBackgroundColor
+					);
+					color: map-get($map: $value, $key: iconHoverColor);
+				}
+			}
 			&.is-plain {
 				background-color: map-get($map: $value, $key: plainBackgroundColor);
 				border: 1px solid map-get($map: $value, $key: plainBorderColor);
 				color: map-get($map: $value, $key: plainColor);
+				i.v3-icon {
+					&:hover {
+						background-color: map-get(
+							$map: $value,
+							$key: plainIconHoverBackgroundColor
+						);
+						color: map-get($map: $value, $key: plainIconHoverColor);
+					}
+				}
 			}
 		}
 	}
@@ -76,6 +124,10 @@ $tag-size-list: (
 		&.is-size--#{$key} {
 			font-size: map-get($map: $value, $key: fontSize);
 			padding: map-get($map: $value, $key: padding);
+			i.v3-icon {
+				margin-left: map-get($map: $value, $key: marginLeft);
+				font-size: map-get($map: $value, $key: fontSize);
+			}
 		}
 	}
 }

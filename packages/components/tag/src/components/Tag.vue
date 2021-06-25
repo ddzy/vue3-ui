@@ -1,19 +1,31 @@
 <template>
-	<div
-		:class="{
-			'v3-tag': true,
-			[`v3-tag--${props.type}`]: true,
-			[`is-plain`]: props.plain,
-			[`is-closeable`]: props.closeable,
-			[`is-size--${props.size}`]: true,
-		}"
-	>
-		<slot></slot>
-	</div>
+	<transition>
+		<div
+			v-if="state.isShow"
+			:class="{
+				'v3-tag': true,
+				[`v3-tag--${props.type}`]: true,
+				[`is-plain`]: props.plain,
+				[`is-closeable`]: props.closeable,
+				[`is-size--${props.size}`]: true,
+			}"
+		>
+			<slot></slot>
+			<i
+				class="v3-icon v3-icon-close"
+				v-if="props.closeable"
+				@click="handleClose"
+			></i>
+		</div>
+	</transition>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, reactive } from 'vue';
 import * as TYPES from '@/public/types/tag';
+
+interface IState {
+	isShow: boolean;
+}
 
 export default defineComponent({
 	name: 'V3Tag',
@@ -56,8 +68,21 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.ITagProps, context) {
+		const state: IState = reactive({
+			/** 是否显示当前标签 */
+			isShow: true,
+		});
+
+		function handleClose() {
+			state.isShow = false;
+
+			context.emit('close');
+		}
+
 		return {
 			props,
+			state,
+			handleClose,
 		};
 	},
 });

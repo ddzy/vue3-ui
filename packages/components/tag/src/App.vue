@@ -3,7 +3,7 @@
 		<v3-row>
 			<v3-col><h3>默认标签：</h3></v3-col>
 		</v3-row>
-		<v3-row gutter="12">
+		<v3-row :gutter="12">
 			<v3-col>
 				<v3-tag type="primary">标签1</v3-tag>
 			</v3-col>
@@ -24,7 +24,7 @@
 		<v3-row>
 			<v3-col><h3>三种尺寸：</h3></v3-col>
 		</v3-row>
-		<v3-row gutter="12">
+		<v3-row :gutter="12">
 			<v3-col>
 				<v3-tag size="small">小号</v3-tag>
 			</v3-col>
@@ -39,7 +39,7 @@
 		<v3-row>
 			<v3-col><h3>填充主题：</h3></v3-col>
 		</v3-row>
-		<v3-row gutter="12">
+		<v3-row :gutter="12">
 			<v3-col>
 				<v3-tag type="primary" :plain="false">标签1</v3-tag>
 			</v3-col>
@@ -56,17 +56,72 @@
 				<v3-tag type="info" :plain="false">标签5</v3-tag>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col><h3>可关闭：</h3></v3-col>
+		</v3-row>
+		<v3-row :gutter="12">
+			<v3-col>
+				<v3-tag
+					type="primary"
+					:plain="false"
+					:closeable="true"
+					@close="handleClose"
+					>标签1</v3-tag
+				>
+			</v3-col>
+			<v3-col>
+				<v3-tag
+					type="success"
+					:plain="false"
+					:closeable="true"
+					@close="handleClose"
+					>标签2</v3-tag
+				>
+			</v3-col>
+			<v3-col>
+				<v3-tag
+					type="danger"
+					:plain="true"
+					:closeable="true"
+					@close="handleClose"
+					>标签3</v3-tag
+				>
+			</v3-col>
+			<v3-col>
+				<v3-tag
+					type="warning"
+					:plain="true"
+					:closeable="true"
+					@close="handleClose"
+					>标签4</v3-tag
+				>
+			</v3-col>
+			<v3-col>
+				<v3-tag type="info" :plain="true" :closeable="true" @close="handleClose"
+					>标签5</v3-tag
+				>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import V3Message from '@components/message/main';
 
 export default defineComponent({
 	setup() {
 		const state = reactive({});
 
+		function handleClose() {
+			V3Message.success({
+				message: '已关闭！',
+			});
+		}
+
 		return {
 			state,
+			handleClose,
 		};
 	},
 	methods: {},
