@@ -1,5 +1,5 @@
 <template>
-	<transition>
+	<transition v-bind:name="props.animation ? 'v3-tag-shrink' : ''">
 		<div
 			v-if="state.isShow"
 			:class="{
@@ -65,6 +65,11 @@ export default defineComponent({
 		color: {
 			type: String,
 			default: '',
+		},
+		/** 是否开启动画 */
+		animation: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	setup(props: TYPES.ITagProps, context) {

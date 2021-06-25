@@ -66,6 +66,7 @@
 					type="primary"
 					:plain="false"
 					:closeable="true"
+					:animation="false"
 					@close="handleClose"
 					>标签1</v3-tag
 				>
@@ -75,6 +76,7 @@
 					type="success"
 					:plain="false"
 					:closeable="true"
+					:animation="false"
 					@close="handleClose"
 					>标签2</v3-tag
 				>
@@ -84,6 +86,7 @@
 					type="danger"
 					:plain="true"
 					:closeable="true"
+					:animation="false"
 					@close="handleClose"
 					>标签3</v3-tag
 				>
@@ -93,14 +96,41 @@
 					type="warning"
 					:plain="true"
 					:closeable="true"
+					:animation="false"
 					@close="handleClose"
 					>标签4</v3-tag
 				>
 			</v3-col>
 			<v3-col>
-				<v3-tag type="info" :plain="true" :closeable="true" @close="handleClose"
+				<v3-tag
+					type="info"
+					:plain="true"
+					:closeable="true"
+					:animation="false"
+					@close="handleClose"
 					>标签5</v3-tag
 				>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col><h3>动画效果：</h3></v3-col>
+		</v3-row>
+		<v3-row :gutter="12">
+			<v3-col>
+				<v3-tag type="primary" :plain="false" :closeable="true">标签1</v3-tag>
+			</v3-col>
+			<v3-col>
+				<v3-tag type="success" :plain="false" :closeable="true">标签2</v3-tag>
+			</v3-col>
+			<v3-col>
+				<v3-tag type="danger" :plain="true" :closeable="true">标签3</v3-tag>
+			</v3-col>
+			<v3-col>
+				<v3-tag type="warning" :plain="true" :closeable="true">标签4</v3-tag>
+			</v3-col>
+			<v3-col>
+				<v3-tag type="info" :plain="true" :closeable="true">标签5</v3-tag>
 			</v3-col>
 		</v3-row>
 	</div>
