@@ -26,13 +26,13 @@
 		</v3-row>
 		<v3-row :gutter="12">
 			<v3-col>
-				<v3-tag size="small">小号</v3-tag>
+				<v3-tag size="small" type="primary">小号</v3-tag>
 			</v3-col>
 			<v3-col>
-				<v3-tag size="medium">中等</v3-tag>
+				<v3-tag size="medium" type="primary">中等</v3-tag>
 			</v3-col>
 			<v3-col>
-				<v3-tag size="large">大号</v3-tag>
+				<v3-tag size="large" type="primary">大号</v3-tag>
 			</v3-col>
 		</v3-row>
 
@@ -131,6 +131,23 @@
 			</v3-col>
 			<v3-col>
 				<v3-tag type="info" :plain="true" :closeable="true">标签5</v3-tag>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col><h3>自定义背景色和文本颜色</h3></v3-col>
+		</v3-row>
+		<v3-row :gutter="12">
+			<v3-col>
+				<v3-tag color="#fff" backgroundColor="#1890ff" closeable>标签1</v3-tag>
+			</v3-col>
+			<v3-col>
+				<v3-tag
+					color="#fff"
+					backgroundColor="rgba(218, 112, 214, .5)"
+					borderColor="rgba(218, 112, 214, 1)"
+					>标签2</v3-tag
+				>
 			</v3-col>
 		</v3-row>
 	</div>

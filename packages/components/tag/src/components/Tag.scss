@@ -83,6 +83,8 @@ $tag-size-list: (
 	align-items: center;
 	cursor: default;
 	border-radius: $border-radius-width-small;
+	border-width: 1px;
+	border-style: solid;
 
 	i.v3-icon {
 		border-radius: 50%;
@@ -92,7 +94,7 @@ $tag-size-list: (
 	@each $key, $value in $tag-type-list {
 		&.v3-tag--#{$key} {
 			background-color: map-get($map: $value, $key: backgroundColor);
-			border: 1px solid map-get($map: $value, $key: borderColor);
+			border-color: map-get($map: $value, $key: borderColor);
 			color: map-get($map: $value, $key: color);
 			i.v3-icon {
 				&:hover {
@@ -105,7 +107,7 @@ $tag-size-list: (
 			}
 			&.is-plain {
 				background-color: map-get($map: $value, $key: plainBackgroundColor);
-				border: 1px solid map-get($map: $value, $key: plainBorderColor);
+				border-color: map-get($map: $value, $key: plainBorderColor);
 				color: map-get($map: $value, $key: plainColor);
 				i.v3-icon {
 					&:hover {

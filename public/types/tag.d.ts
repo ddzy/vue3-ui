@@ -7,5 +7,6 @@ export interface ITagProps {
 	size: ITagSize;
 	backgroundColor: string;
 	color: string;
+	borderColor: string;
 	animation: boolean;
 }

@@ -1,13 +1,19 @@
 <template>
-	<transition v-bind:name="props.animation ? 'v3-tag-shrink' : ''">
+	<transition :name="props.animation ? 'v3-tag-shrink' : ''">
 		<div
 			v-if="state.isShow"
-			:class="{
-				'v3-tag': true,
-				[`v3-tag--${props.type}`]: true,
-				[`is-plain`]: props.plain,
-				[`is-closeable`]: props.closeable,
-				[`is-size--${props.size}`]: true,
+			:class="[
+				'v3-tag',
+				props.type ? `v3-tag--${props.type}` : '',
+				props.plain ? 'is-plain' : '',
+				props.closeable ? 'is-closeable' : '',
+				props.size ? `is-size--${props.size}` : '',
+				props.animation ? 'is-animation' : '',
+			]"
+			:style="{
+				backgroundColor: props.backgroundColor,
+				color: props.color,
+				borderColor: props.borderColor,
 			}"
 		>
 			<slot></slot>
@@ -33,9 +39,11 @@ export default defineComponent({
 		/** 标签的类型（与 V3Button 大体相同） */
 		type: {
 			type: String as PropType<TYPES.ITagType>,
-			default: 'primary',
+			default: '',
 			validator(v: any) {
-				return ['primary', 'success', 'danger', 'warning', 'info'].includes(v);
+				return ['', 'primary', 'success', 'danger', 'warning', 'info'].includes(
+					v
+				);
 			},
 		},
 		/** 是否可关闭标签 */
@@ -63,6 +71,11 @@ export default defineComponent({
 		},
 		/** 自定义标签的文字颜色 */
 		color: {
+			type: String,
+			default: '',
+		},
+		/** 自定义标签的边框颜色 */
+		borderColor: {
 			type: String,
 			default: '',
 		},
