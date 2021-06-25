@@ -164,6 +164,10 @@ export default defineComponent({
 			type: String,
 			default: '请选择内容',
 		},
+		remotePlaceholder: {
+			type: String,
+			default: '请输入关键字',
+		},
 		/** 是否启用本地模糊搜索 */
 		filterable: {
 			type: Boolean,
@@ -207,9 +211,7 @@ export default defineComponent({
 		/** 自定义远程搜索的方法 */
 		remoteMethod: {
 			type: Function as PropType<TYPES.ISelectRemoteMethod>,
-			default() {
-				return () => {};
-			},
+			default: null,
 		},
 	},
 	components: {
@@ -229,8 +231,10 @@ export default defineComponent({
 			showClear: false,
 			/** 下拉选项（SelectOption）实例列表 */
 			selectOptionList: [],
-			initialPlaceholder: props.placeholder,
-			placeholder: props.placeholder,
+			initialPlaceholder: props.remote
+				? props.remotePlaceholder
+				: props.placeholder,
+			placeholder: props.remote ? props.remotePlaceholder : props.placeholder,
 			/** 是否已经初始化过默认值 */
 			hasInit: false,
 			/** 下拉菜单的 z-index（统一管理） */
@@ -361,28 +365,35 @@ export default defineComponent({
 				return;
 			}
 
-			// 如果有自定义的过滤方法，就用自定义的；反之，直接用内置的
-			if (typeof props.filterMethod === 'function') {
-				props.filterMethod(target.value);
-
-				// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-				state.isNoMatchData = !computedChildrenLength.value;
-				state.selectOptionList.forEach(v => {
-					v.proxy.state.isShow = true;
-				});
+			// 如果是远程搜索，就为远程搜索模式；反之，则判断是否为过滤模式
+			if (props.remote) {
+				if (typeof props.remoteMethod === 'function') {
+					props.remoteMethod(target.value);
+				}
 			} else {
-				// 没有输入值时，需要显示全部的下拉选项
-				state.selectOptionList.forEach(v => {
-					v.proxy.state.isShow = target.value
-						? v.proxy.label.includes(target.value)
-						: true;
-				});
+				// 如果有自定义的过滤方法，就用自定义的；反之，直接用内置的
+				if (typeof props.filterMethod === 'function') {
+					props.filterMethod(target.value);
 
-				// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-				const isEmpty = state.selectOptionList.every(v => {
-					return !v.proxy.state.isShow;
-				});
-				state.isNoMatchData = isEmpty;
+					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
+					state.isNoMatchData = !computedChildrenLength.value;
+					state.selectOptionList.forEach(v => {
+						v.proxy.state.isShow = true;
+					});
+				} else {
+					// 没有输入值时，需要显示全部的下拉选项
+					state.selectOptionList.forEach(v => {
+						v.proxy.state.isShow = target.value
+							? v.proxy.label.includes(target.value)
+							: true;
+					});
+
+					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
+					const isEmpty = state.selectOptionList.every(v => {
+						return !v.proxy.state.isShow;
+					});
+					state.isNoMatchData = isEmpty;
+				}
 			}
 
 			// 输入的时候，如果有输入值，那么就显示清空按钮
@@ -397,6 +408,11 @@ export default defineComponent({
 				state.selectOptionList.forEach(v => {
 					v.proxy.state.isShow = true;
 				});
+
+				// 如果开启了远程搜索，那么需要触发一次搜索
+				if (props.remote) {
+					props.remoteMethod(state.selectedLabel);
+				}
 			}
 		}
 

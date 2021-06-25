@@ -1,6 +1,6 @@
 export type ISelectValue = string | boolean | number | object;
 export type ISelectFilterMethod = (keyword: string) => void | null;
-export type ISelectRemoteMethod = (keyword: string) => void;
+export type ISelectRemoteMethod = (keyword: string) => void | null;
 export interface ISelectProps {
 	modelValue: ISelectValue;
 	multiple: boolean;
@@ -10,6 +10,7 @@ export interface ISelectProps {
 	collapseTags: boolean;
 	multipleLimit: number;
 	placeholder: string;
+	remotePlaceholder: string;
 	filterable: boolean;
 	allowCreate: boolean;
 	filterMethod: ISelectFilterMethod;

@@ -127,6 +127,33 @@
 				</v3-select>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col>
+				<h3>可开启远程搜索：</h3>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="2">
+				<v3-select
+					v-model="state.selectValue7"
+					:clearable="true"
+					:noDataText="'暂时没有数据'"
+					:filterable="true"
+					:remote="true"
+					:remoteMethod="remoteMethod7"
+					@clear="handleClear7"
+					@visible="handleVisible7"
+				>
+					<v3-select-option
+						v-for="v in state.selectOptions7"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -332,6 +359,46 @@ export default defineComponent({
 					disabled: false,
 				},
 			],
+
+			selectValue7: '',
+			selectOptions7: [],
+			selectOptions7Copy: [
+				{
+					label: '北京',
+					value: 'Beijing',
+					disabled: false,
+				},
+				{
+					label: '北京1',
+					value: 'Beijing1',
+					disabled: false,
+				},
+				{
+					label: '北京2',
+					value: 'Beijing2',
+					disabled: false,
+				},
+				{
+					label: '北京3',
+					value: 'Beijing3',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: false,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
 		});
 
 		/**
@@ -357,11 +424,42 @@ export default defineComponent({
 			}
 		}
 
+		/**
+		 * 自定义远程搜索方法
+		 */
+		async function remoteMethod7(keyword: string) {
+			if (!keyword) {
+				state.selectOptions7 = [];
+				return;
+			}
+
+			const result = state.selectOptions7Copy.filter(v => {
+				return v.label.includes(keyword);
+			});
+
+			setTimeout(() => {
+				(state.selectOptions7 as typeof state.selectOptions7Copy) = result;
+			}, 1000);
+		}
+
+		function handleClear7() {
+			(state.selectOptions7 as typeof state.selectOptions7Copy) = state.selectOptions7Copy.slice();
+		}
+
+		function handleVisible7(visible: boolean) {
+			if (!visible) {
+				state.selectOptions7 = [];
+			}
+		}
+
 		return {
 			state,
 			filterMethod6,
 			handleClear6,
 			handleVisible6,
+			remoteMethod7,
+			handleClear7,
+			handleVisible7,
 		};
 	},
 	methods: {
