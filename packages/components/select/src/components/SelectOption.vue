@@ -20,6 +20,7 @@ import {
 	defineComponent,
 	getCurrentInstance,
 	inject,
+	onBeforeUnmount,
 	onMounted,
 	PropType,
 	reactive,
@@ -109,6 +110,11 @@ export default defineComponent({
 			// 把当前实例追加到 V3Select 列表中
 			state.injectedSelectInstance &&
 				state.injectedSelectInstance.appendSelectOptionList(app.value);
+		});
+
+		onBeforeUnmount(() => {
+			state.injectedSelectInstance &&
+				state.injectedSelectInstance.subtractSelectOptionList(app.value);
 		});
 
 		/**

@@ -114,6 +114,9 @@
 					:clearable="true"
 					:noDataText="'暂时没有数据'"
 					:filterable="true"
+					:filterMethod="filterMethod6"
+					@clear="handleClear6"
+					@visible="handleVisible6"
 				>
 					<v3-select-option
 						v-for="v in state.selectOptions6"
@@ -294,7 +297,29 @@ export default defineComponent({
 				{
 					label: '上海',
 					value: 'Shanghai',
-					disabled: true,
+					disabled: false,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
+			selectOptions6Copy: [
+				{
+					label: '北京',
+					value: 'Beijing',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: false,
 				},
 				{
 					label: '广州',
@@ -309,8 +334,34 @@ export default defineComponent({
 			],
 		});
 
+		/**
+		 * 自定义过滤方法
+		 */
+		function filterMethod6(keyword: string) {
+			if (!keyword) {
+				state.selectOptions6 = state.selectOptions6Copy.slice();
+			} else {
+				state.selectOptions6 = state.selectOptions6Copy.filter(v => {
+					return v.label.includes(keyword);
+				});
+			}
+		}
+
+		function handleClear6() {
+			state.selectOptions6 = state.selectOptions6Copy.slice();
+		}
+
+		function handleVisible6(visible: boolean) {
+			if (!visible) {
+				state.selectOptions6 = state.selectOptions6Copy.slice();
+			}
+		}
+
 		return {
 			state,
+			filterMethod6,
+			handleClear6,
+			handleVisible6,
 		};
 	},
 	methods: {

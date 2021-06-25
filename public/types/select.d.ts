@@ -1,5 +1,5 @@
 export type ISelectValue = string | boolean | number | object;
-export type ISelectFilterMethod = () => void;
+export type ISelectFilterMethod = (keyword: string) => void | null;
 export type ISelectRemoteMethod = (keyword: string) => void;
 export interface ISelectProps {
 	modelValue: ISelectValue;

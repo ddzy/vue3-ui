@@ -80,7 +80,6 @@ import { useDebounce } from '@common/hooks/index';
 import 'tippy.js/themes/light-border.css';
 import {
 	ComponentInternalInstance,
-	computed,
 	defineComponent,
 	getCurrentInstance,
 	PropType,
@@ -196,9 +195,7 @@ export default defineComponent({
 		/** 自定义本地过滤的方法 */
 		filterMethod: {
 			type: Function as PropType<TYPES.ISelectFilterMethod>,
-			default() {
-				return () => {};
-			},
+			default: null,
 		},
 		/** 自定义远程搜索的方法 */
 		remoteMethod: {
@@ -237,12 +234,12 @@ export default defineComponent({
 			isCompositionStart: false,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
-		/** slot 是否为空，即是否具有 SelectOption */
-		const computedHasSelection = computed(() => {
-			return !!app.slots.default;
-		});
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
+
+		watch(toRef(state, 'showDropdown'), () => {
+			context.emit('visible', state.showDropdown);
+		});
 
 		function handleShow() {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
@@ -269,10 +266,20 @@ export default defineComponent({
 			state.selectOptionList = state.selectOptionList.concat(instance);
 		}
 
+		/**
+		 * 把 V3SelectOption 实例从列表中移除
+		 */
+		function subtractSelectOptionList(instance: any) {
+			state.selectOptionList = state.selectOptionList.filter(
+				v => v !== instance
+			);
+		}
+
 		function handleChange(value: TYPES.ISelectValue, label: string) {
 			// 更新输入框中显示的值
 			state.inputValue = label;
 			state.selectedLabel = label;
+			state.placeholder = label;
 
 			// 关闭下拉框
 			if (state.tippy) {
@@ -332,18 +339,32 @@ export default defineComponent({
 				return;
 			}
 
-			// 没有输入值时，需要显示全部的下拉选项
-			state.selectOptionList.forEach(v => {
-				v.proxy.state.isShow = target.value
-					? v.proxy.label.includes(target.value)
-					: true;
-			});
+			// 如果有自定义的过滤方法，就用自定义的；反之，直接用内置的
+			if (typeof props.filterMethod === 'function') {
+				props.filterMethod(target.value);
 
-			// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-			const isEmpty = state.selectOptionList.every(v => {
-				return !v.proxy.state.isShow;
-			});
-			state.isNoMatchData = isEmpty;
+				const defaultSlot = context.slots.default as any;
+				const defaultChildren = defaultSlot()[0].children;
+
+				// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
+				state.isNoMatchData = !defaultChildren.length;
+				state.selectOptionList.forEach(v => {
+					v.proxy.state.isShow = true;
+				});
+			} else {
+				// 没有输入值时，需要显示全部的下拉选项
+				state.selectOptionList.forEach(v => {
+					v.proxy.state.isShow = target.value
+						? v.proxy.label.includes(target.value)
+						: true;
+				});
+
+				// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
+				const isEmpty = state.selectOptionList.every(v => {
+					return !v.proxy.state.isShow;
+				});
+				state.isNoMatchData = isEmpty;
+			}
 
 			// 输入的时候，如果有输入值，那么就显示清空按钮
 			state.showClear = !!target.value;
@@ -365,6 +386,8 @@ export default defineComponent({
 			if (props.filterable) {
 				state.isNoMatchData = false;
 			}
+			// 失去焦点时，需要把输入框的值设为已选中的值
+			state.inputValue = state.selectedLabel;
 		}
 
 		function handleCompositionStart() {
@@ -380,6 +403,7 @@ export default defineComponent({
 			state,
 			props,
 			appendSelectOptionList,
+			subtractSelectOptionList,
 			handleChange,
 			handleMouseEnter,
 			handleMouseLeave,
@@ -393,7 +417,6 @@ export default defineComponent({
 			handleMount,
 			handleCompositionStart,
 			handleCompositionEnd,
-			computedHasSelection,
 		};
 	},
 });
