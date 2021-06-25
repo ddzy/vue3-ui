@@ -1,3 +1,81 @@
-.v3-tag {
+$tag-type-list: (
+	primary: (
+		borderColor: $primary-color,
+		color: #fff,
+		backgroundColor: $primary-color,
+		plainBorderColor: $primary-color-little,
+		plainColor: $primary-color,
+		plainBackgroundColor: $primary-color-plain,
+	),
+	success: (
+		borderColor: $success-color,
+		color: #fff,
+		backgroundColor: $success-color,
+		plainBorderColor: $success-color-little,
+		plainColor: $success-color,
+		plainBackgroundColor: $success-color-plain,
+	),
+	danger: (
+		borderColor: $danger-color,
+		color: #fff,
+		backgroundColor: $danger-color,
+		plainBorderColor: $danger-color-little,
+		plainColor: $danger-color,
+		plainBackgroundColor: $danger-color-plain,
+	),
+	warning: (
+		borderColor: $warning-color,
+		color: #fff,
+		backgroundColor: $warning-color,
+		plainBorderColor: $warning-color-little,
+		plainColor: $warning-color,
+		plainBackgroundColor: $warning-color-plain,
+	),
+	info: (
+		borderColor: $info-color,
+		color: #fff,
+		backgroundColor: $info-color,
+		plainBorderColor: $info-color-little,
+		plainColor: $info-color,
+		plainBackgroundColor: $info-color-plain,
+	),
+);
+$tag-size-list: (
+	small: (
+		fontSize: $font-size-mini,
+		padding: 0 $padding-small,
+	),
+	medium: (
+		fontSize: $font-size-mini,
+		padding: 3px $padding-small + 3,
+	),
+	large: (
+		fontSize: $font-size-mini,
+		padding: 5px $padding-small + 6,
+	),
+);
 
+.v3-tag {
+	cursor: default;
+	border-radius: $border-radius-width-small;
+
+	@each $key, $value in $tag-type-list {
+		&.v3-tag--#{$key} {
+			background-color: map-get($map: $value, $key: backgroundColor);
+			border: 1px solid map-get($map: $value, $key: borderColor);
+			color: map-get($map: $value, $key: color);
+			&.is-plain {
+				background-color: map-get($map: $value, $key: plainBackgroundColor);
+				border: 1px solid map-get($map: $value, $key: plainBorderColor);
+				color: map-get($map: $value, $key: plainColor);
+			}
+		}
+	}
+
+	@each $key, $value in $tag-size-list {
+		&.is-size--#{$key} {
+			font-size: map-get($map: $value, $key: fontSize);
+			padding: map-get($map: $value, $key: padding);
+		}
+	}
 }

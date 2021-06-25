@@ -1,5 +1,13 @@
 <template>
-	<div class="v3-tag">
+	<div
+		:class="{
+			'v3-tag': true,
+			[`v3-tag--${props.type}`]: true,
+			[`is-plain`]: props.plain,
+			[`is-closeable`]: props.closeable,
+			[`is-size--${props.size}`]: true,
+		}"
+	>
 		<slot></slot>
 	</div>
 </template>
@@ -13,16 +21,9 @@ export default defineComponent({
 		/** 标签的类型（与 V3Button 大体相同） */
 		type: {
 			type: String as PropType<TYPES.ITagType>,
-			default: 'default',
+			default: 'primary',
 			validator(v: any) {
-				return [
-					'primary',
-					'success',
-					'danger',
-					'default',
-					'warning',
-					'info',
-				].includes(v);
+				return ['primary', 'success', 'danger', 'warning', 'info'].includes(v);
 			},
 		},
 		/** 是否可关闭标签 */
@@ -54,7 +55,11 @@ export default defineComponent({
 			default: '',
 		},
 	},
-	setup(props: TYPES.ITagProps, context) {},
+	setup(props: TYPES.ITagProps, context) {
+		return {
+			props,
+		};
+	},
 });
 </script>
 <style lang="scss" scoped>

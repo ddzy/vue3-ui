@@ -1,10 +1,4 @@
-export type ITagType =
-	| 'primary'
-	| 'success'
-	| 'danger'
-	| 'default'
-	| 'warning'
-	| 'info';
+export type ITagType = 'primary' | 'success' | 'danger' | 'warning' | 'info';
 export type ITagSize = 'small' | 'medium' | 'large';
 export interface ITagProps {
 	type: ITagType;
