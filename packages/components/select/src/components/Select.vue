@@ -1,6 +1,5 @@
 <template>
 	<div
-		ref="selectWrapperRef"
 		:class="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
@@ -31,9 +30,8 @@
 			:onHide="handleHide"
 			:onMount="handleMount"
 		>
-			<div class="v3-select__trigger" ref="triggerWrapperRef">
+			<div class="v3-select__trigger">
 				<v3-input
-					ref="inputWrapperRef"
 					v-model="state.inputValue"
 					:readonly="!props.filterable"
 					:placeholder="
@@ -297,10 +295,7 @@ export default defineComponent({
 			pendingInputHeight: 35,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
-		const inputWrapperRef = ref(null);
 		const tagWrapperRef = ref(null);
-		const triggerWrapperRef = ref(null);
-		const selectWrapperRef = ref(null);
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
 
@@ -565,10 +560,7 @@ export default defineComponent({
 			state,
 			props,
 			computedChildrenLength,
-			inputWrapperRef,
 			tagWrapperRef,
-			triggerWrapperRef,
-			selectWrapperRef,
 			appendSelectOptionList,
 			subtractSelectOptionList,
 			handleChange,
