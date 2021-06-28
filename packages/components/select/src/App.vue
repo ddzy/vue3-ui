@@ -154,6 +154,24 @@
 				</v3-select>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col>
+				<h3>多选：</h3>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="2">
+				<v3-select v-model="state.selectValue8" :multiple="true">
+					<v3-select-option
+						v-for="v in state.selectOptions8"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -381,6 +399,30 @@ export default defineComponent({
 				{
 					label: '北京3',
 					value: 'Beijing3',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: false,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
+
+			selectValue8: [],
+			selectOptions8: [
+				{
+					label: '北京',
+					value: 'Beijing',
 					disabled: false,
 				},
 				{

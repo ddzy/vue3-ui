@@ -45,7 +45,9 @@ export default defineComponent({
 		},
 		/** 对应的值 */
 		value: {
-			type: [String, Boolean, Number, Object] as PropType<TYPES.ISelectValue>,
+			type: [String, Boolean, Number, Object] as PropType<
+				TYPES.ISelectOptionValue
+			>,
 			required: true,
 		},
 		/** 是否禁用当前选项 */
@@ -88,8 +90,12 @@ export default defineComponent({
 				) {
 					state.isSelected =
 						props.value[
-							state.injectedSelectInstance.valueKey as keyof TYPES.ISelectValue
+							state.injectedSelectInstance
+								.valueKey as keyof TYPES.ISelectOptionValue
 						] === newValue[state.injectedSelectInstance.valueKey];
+				} else if (UTILS.isStrictArray(newValue)) {
+					// 如果值是数组，则需要遍历比对
+					state.isSelected = newValue.includes(props.value);
 				} else {
 					// 如果值是其它可用类型，那么直接比对即可
 					state.isSelected = props.value === newValue;

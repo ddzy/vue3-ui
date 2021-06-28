@@ -1,5 +1,6 @@
 <template>
 	<div
+		ref="selectWrapperRef"
 		:class="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
@@ -7,6 +8,10 @@
 			['is-clearable']: state.showClear,
 			['is-no-match-data']: state.isNoMatchData,
 			['is-no-data']: !computedChildrenLength,
+			['is-multiple']: props.multiple,
+		}"
+		:style="{
+			height: `${state.initialInputHeight}px`,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
@@ -26,11 +31,21 @@
 			:onHide="handleHide"
 			:onMount="handleMount"
 		>
-			<div class="v3-select__trigger">
+			<div class="v3-select__trigger" ref="triggerWrapperRef">
 				<v3-input
+					ref="inputWrapperRef"
 					v-model="state.inputValue"
 					:readonly="!props.filterable"
-					:placeholder="state.placeholder"
+					:placeholder="
+						state.selectedOptionList.length ? '' : state.placeholder
+					"
+					:style="{
+						height: `${
+							state.selectedOptionList.length
+								? state.pendingInputHeight
+								: state.initialInputHeight
+						}px`,
+					}"
 					@input="handleInput"
 					@focus="handleFocus"
 					@blur="handleBlur"
@@ -57,6 +72,23 @@
 						></i>
 					</template>
 				</v3-input>
+
+				<ul
+					ref="tagWrapperRef"
+					class="v3-select__tag"
+					v-if="props.multiple && state.selectedOptionList.length"
+				>
+					<li
+						class="v3-select__tag-item"
+						v-for="v in state.selectedOptionList"
+						:key="v"
+					>
+						<v3-tag closeable type="info" @close="handleTagClose(v)">{{
+							v.label
+						}}</v3-tag>
+					</li>
+					<input type="text" />
+				</ul>
 			</div>
 			<template #content>
 				<div class="v3-select__dropdown">
@@ -86,17 +118,24 @@ import { useDebounce } from '@common/hooks/index';
 import 'tippy.js/themes/light-border.css';
 import {
 	ComponentInternalInstance,
+	ComponentPublicInstance,
 	computed,
+	createVNode,
 	defineComponent,
 	getCurrentInstance,
+	nextTick,
+	onMounted,
 	PropType,
 	provide,
 	reactive,
 	ref,
 	toRef,
+	VNode,
 	watch,
 } from 'vue';
 import { Tippy, TippyInstance } from 'vue-tippy';
+import V3Input from '@components/input/main';
+import V3Tag from '@components/tag/main';
 
 type ILocalTippyInstance =
 	| (TippyInstance & {
@@ -113,13 +152,16 @@ interface IState {
 	inputValue: string;
 	selectedLabel: string;
 	showClear: boolean;
-	selectOptionList: any[];
+	selectOptionInstanceList: any[];
 	initialPlaceholder: string;
 	placeholder: string;
 	hasInit: boolean;
 	nextZIndex: number;
 	isNoMatchData: boolean;
 	isCompositionStart: boolean;
+	selectedOptionList: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>[];
+	initialInputHeight: number;
+	pendingInputHeight: number;
 }
 
 export default defineComponent({
@@ -127,7 +169,9 @@ export default defineComponent({
 	props: {
 		/** 下拉框的值 */
 		modelValue: {
-			type: [String, Boolean, Number, Object] as PropType<TYPES.ISelectValue>,
+			type: [String, Boolean, Number, Object, Array] as PropType<
+				TYPES.ISelectValue
+			>,
 			required: true,
 		},
 		/** 是否开启多选 */
@@ -216,6 +260,8 @@ export default defineComponent({
 	},
 	components: {
 		Tippy,
+		V3Input,
+		V3Tag,
 	},
 	setup(props: TYPES.ISelectProps, context) {
 		const state: IState = reactive({
@@ -230,7 +276,7 @@ export default defineComponent({
 			/** 当前的下拉框是否处于清空状态，即是否显示清空按钮 */
 			showClear: false,
 			/** 下拉选项（SelectOption）实例列表 */
-			selectOptionList: [],
+			selectOptionInstanceList: [],
 			initialPlaceholder: props.remote
 				? props.remotePlaceholder
 				: props.placeholder,
@@ -243,8 +289,18 @@ export default defineComponent({
 			isNoMatchData: false,
 			/** 是否为输入开始阶段 */
 			isCompositionStart: false,
+			/** 多选状态下已选中的条目列表 */
+			selectedOptionList: [],
+			/** 下拉框的初始高度 */
+			initialInputHeight: 35,
+			/** 下拉框的最新高度 */
+			pendingInputHeight: 35,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
+		const inputWrapperRef = ref(null);
+		const tagWrapperRef = ref(null);
+		const triggerWrapperRef = ref(null);
+		const selectWrapperRef = ref(null);
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
 
@@ -281,6 +337,26 @@ export default defineComponent({
 			state.showDropdown = false;
 		}
 
+		/**
+		 * 关闭标签
+		 */
+		function handleTagClose(
+			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>
+		) {
+			// 关闭标签时，从已选中的列表中移除该项
+			state.selectedOptionList = state.selectedOptionList.filter(v => {
+				return v.label !== data.label && v.value !== data.value;
+			});
+
+			// 重新计算下拉框的高度
+			computeInputHeight();
+
+			const selectedValueList = state.selectedOptionList.map(v => v.value);
+
+			context.emit('update:modelValue', selectedValueList);
+			context.emit('change', selectedValueList);
+		}
+
 		function handleMount(instance: ILocalTippyInstance) {
 			state.tippy = instance;
 		}
@@ -289,31 +365,63 @@ export default defineComponent({
 		 * 把 V3SelectOption 实例追加到列表，统一管理
 		 */
 		function appendSelectOptionList(instance: any) {
-			state.selectOptionList = state.selectOptionList.concat(instance);
+			state.selectOptionInstanceList = state.selectOptionInstanceList.concat(
+				instance
+			);
 		}
 
 		/**
 		 * 把 V3SelectOption 实例从列表中移除
 		 */
 		function subtractSelectOptionList(instance: any) {
-			state.selectOptionList = state.selectOptionList.filter(
+			state.selectOptionInstanceList = state.selectOptionInstanceList.filter(
 				v => v !== instance
 			);
 		}
 
 		function handleChange(value: TYPES.ISelectValue, label: string) {
-			// 更新输入框中显示的值
-			state.inputValue = label;
-			state.selectedLabel = label;
-			state.placeholder = label;
+			// 如果是多选
+			if (props.multiple) {
+				const foundSelectedOption = state.selectedOptionList.findIndex(
+					v => v.label === label && v.value === value
+				);
 
-			// 关闭下拉框
-			if (state.tippy) {
-				state.tippy.hide();
+				// 如果列表中本来就有该值，那么表明是取消勾选，从列表中移除该项
+				if (foundSelectedOption !== -1) {
+					state.selectedOptionList = state.selectedOptionList.filter(
+						(_, i) => i !== foundSelectedOption
+					);
+				} else {
+					// 反之添加到列表中
+					state.selectedOptionList = state.selectedOptionList.concat({
+						label,
+						value,
+					});
+				}
+
+				// 动态计算下拉框的高度
+				computeInputHeight();
+
+				const selectedValueList = state.selectedOptionList.map(v => v.value);
+
+				context.emit('update:modelValue', selectedValueList);
+				context.emit('change', selectedValueList);
 			}
+			// 反之，如果是正常的单选
+			else {
+				// 更新输入框中显示的值
+				state.inputValue = label;
+				state.selectedLabel = label;
+				state.placeholder = label;
 
-			context.emit('update:modelValue', value);
-			context.emit('change', value);
+				// 关闭下拉框
+				if (state.tippy) {
+					state.tippy.hide();
+				}
+
+				context.emit('update:modelValue', value);
+				context.emit('change', value);
+			}
 		}
 
 		function handleMouseEnter() {
@@ -348,10 +456,11 @@ export default defineComponent({
 		 * 设置默认选中的值，SelectOption 直接调用
 		 */
 		function handleInit(value: TYPES.ISelectValue, label: string) {
-			if (state.hasInit) {
-				// 保证下拉组件的默认值只初始化一次
+			// 保证下拉组件的默认值只初始化一次；并且多选的情况下，也不需要初始化
+			if (state.hasInit || props.multiple) {
 				return;
 			}
+
 			state.selectedLabel = label;
 			state.inputValue = label;
 			state.hasInit = true;
@@ -377,19 +486,19 @@ export default defineComponent({
 
 					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
 					state.isNoMatchData = !computedChildrenLength.value;
-					state.selectOptionList.forEach(v => {
+					state.selectOptionInstanceList.forEach(v => {
 						v.proxy.state.isShow = true;
 					});
 				} else {
 					// 没有输入值时，需要显示全部的下拉选项
-					state.selectOptionList.forEach(v => {
+					state.selectOptionInstanceList.forEach(v => {
 						v.proxy.state.isShow = target.value
 							? v.proxy.label.includes(target.value)
 							: true;
 					});
 
 					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-					const isEmpty = state.selectOptionList.every(v => {
+					const isEmpty = state.selectOptionInstanceList.every(v => {
 						return !v.proxy.state.isShow;
 					});
 					state.isNoMatchData = isEmpty;
@@ -405,7 +514,7 @@ export default defineComponent({
 			if (props.filterable) {
 				state.inputValue = '';
 				state.placeholder = state.selectedLabel || state.initialPlaceholder;
-				state.selectOptionList.forEach(v => {
+				state.selectOptionInstanceList.forEach(v => {
 					v.proxy.state.isShow = true;
 				});
 
@@ -433,11 +542,29 @@ export default defineComponent({
 			state.isCompositionStart = false;
 		}
 
+		/**
+		 * 计算下拉框的高度
+		 */
+		function computeInputHeight() {
+			nextTick(() => {
+				if (tagWrapperRef.value) {
+					const tagEl = (tagWrapperRef.value as unknown) as HTMLDivElement;
+					const newHeight = tagEl.getBoundingClientRect().height;
+
+					state.pendingInputHeight = newHeight;
+				}
+			});
+		}
+
 		return {
 			app,
 			state,
 			props,
 			computedChildrenLength,
+			inputWrapperRef,
+			tagWrapperRef,
+			triggerWrapperRef,
+			selectWrapperRef,
 			appendSelectOptionList,
 			subtractSelectOptionList,
 			handleChange,
@@ -453,6 +580,7 @@ export default defineComponent({
 			handleMount,
 			handleCompositionStart,
 			handleCompositionEnd,
+			handleTagClose,
 		};
 	},
 });

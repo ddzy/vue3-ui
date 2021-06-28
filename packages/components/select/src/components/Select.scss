@@ -44,10 +44,34 @@
 		}
 	}
 
+	:deep(.v3-input) {
+		.v3-input__suffix i {
+			transition: all 0.3s ease;
+		}
+	}
+
 	.v3-select__trigger {
 		cursor: text;
-		:deep(.v3-input__suffix i) {
-			transition: all 0.3s ease;
+		.v3-select__tag {
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: $padding-small / 2;
+			.v3-select__tag-item {
+				display: inline-block;
+				margin: $margin-small / 2;
+			}
+			input {
+				box-sizing: border-box;
+				border: 0;
+				outline: 0;
+				padding: 0;
+				width: 100%;
+				height: 25px;
+				padding: $padding-small / 2;
+				line-height: 25px;
+				color: $font-color-medium;
+			}
 		}
 	}
 

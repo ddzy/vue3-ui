@@ -1,4 +1,6 @@
-export type ISelectValue = string | boolean | number | object;
+export type IBaseSelectValue = string | boolean | number | object;
+export type ISelectValue = IBaseSelectValue | IBaseSelectValue[];
+export type ISelectOptionValue = IBaseSelectValue;
 export type ISelectFilterMethod = (keyword: string) => void | null;
 export type ISelectRemoteMethod = (keyword: string) => void | null;
 export interface ISelectProps {
@@ -23,7 +25,7 @@ export interface ISelectProps {
 }
 
 export interface ISelectOptionProps {
-  label: string;
-  value: ISelectValue;
-  disabled: boolean;
+	label: string;
+	value: ISelectValue;
+	disabled: boolean;
 }

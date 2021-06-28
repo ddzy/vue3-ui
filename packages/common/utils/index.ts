@@ -41,3 +41,6 @@ export function isNumber(v: any) {
 export function isStrictNumber(v: any) {
 	return typeof v === 'number' && !isNaN(v);
 }
+export function isStrictArray(v: any) {
+	return Array.isArray(v);
+}
