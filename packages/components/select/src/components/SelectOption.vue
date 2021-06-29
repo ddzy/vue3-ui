@@ -33,6 +33,7 @@ interface IState {
 	isSelected: boolean;
 	isShow: boolean;
 	injectedSelectInstance: any;
+	hasInit: boolean;
 }
 
 export default defineComponent({
@@ -64,6 +65,8 @@ export default defineComponent({
 			isShow: true,
 			/** V3Select 实例 */
 			injectedSelectInstance: {},
+			/** 是否已经初始化过默认值 */
+			hasInit: false,
 		});
 		const app = ref(getCurrentInstance());
 		const isSelect = checkIsSelect();
@@ -102,12 +105,18 @@ export default defineComponent({
 				}
 
 				// 设置默认选中的项
-				if (state.isSelected && state.injectedSelectInstance) {
+				if (
+					state.isSelected &&
+					state.injectedSelectInstance &&
+					!state.hasInit
+				) {
 					state.injectedSelectInstance.handleInit(
 						props.value,
 						props.label || props.value
 					);
 				}
+
+				state.hasInit = true;
 			},
 			{ immediate: true }
 		);

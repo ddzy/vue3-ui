@@ -85,7 +85,7 @@
 							v.label
 						}}</v3-tag>
 					</li>
-					<input type="text" />
+					<input type="text" v-if="props.allowCreate" />
 				</ul>
 			</div>
 			<template #content>
@@ -153,7 +153,6 @@ interface IState {
 	selectOptionInstanceList: any[];
 	initialPlaceholder: string;
 	placeholder: string;
-	hasInit: boolean;
 	nextZIndex: number;
 	isNoMatchData: boolean;
 	isCompositionStart: boolean;
@@ -279,8 +278,6 @@ export default defineComponent({
 				? props.remotePlaceholder
 				: props.placeholder,
 			placeholder: props.remote ? props.remotePlaceholder : props.placeholder,
-			/** 是否已经初始化过默认值 */
-			hasInit: false,
 			/** 下拉菜单的 z-index（统一管理） */
 			nextZIndex: VARIABLE.getNextZIndex(),
 			/** 是否为未搜索到本地数据的状态 */
@@ -455,14 +452,20 @@ export default defineComponent({
 		 * 设置默认选中的值，SelectOption 直接调用
 		 */
 		function handleInit(value: TYPES.ISelectValue, label: string) {
-			// 保证下拉组件的默认值只初始化一次；并且多选的情况下，也不需要初始化
-			if (state.hasInit || props.multiple) {
-				return;
-			}
+			// 如果是多选状态，需要将默认选中的条目录追加到列表中
+			if (props.multiple) {
+				state.selectedOptionList = state.selectedOptionList.concat({
+					label,
+					value,
+				});
 
-			state.selectedLabel = label;
-			state.inputValue = label;
-			state.hasInit = true;
+				// 重新计算高度
+				computeInputHeight();
+			} else {
+				// 反之，则直接设置
+				state.selectedLabel = label;
+				state.inputValue = label;
+			}
 		}
 
 		function handleInput(e: Event) {

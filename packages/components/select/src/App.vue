@@ -418,7 +418,7 @@ export default defineComponent({
 				},
 			],
 
-			selectValue8: [],
+			selectValue8: ['Beijing', 'Shanghai'],
 			selectOptions8: [
 				{
 					label: '北京',
