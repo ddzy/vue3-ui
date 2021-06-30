@@ -111,7 +111,6 @@
 							}}</v3-tag>
 						</li>
 					</template>
-					<input type="text" v-if="props.allowCreate" />
 				</ul>
 			</div>
 			<template #content>
@@ -139,27 +138,23 @@ import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce } from '@common/hooks/index';
+import V3Input from '@components/input/main';
+import V3Tag from '@components/tag/main';
 import 'tippy.js/themes/light-border.css';
 import {
 	ComponentInternalInstance,
-	ComponentPublicInstance,
 	computed,
-	createVNode,
 	defineComponent,
 	getCurrentInstance,
 	nextTick,
-	onMounted,
 	PropType,
 	provide,
 	reactive,
 	ref,
 	toRef,
-	VNode,
 	watch,
 } from 'vue';
 import { Tippy, TippyInstance } from 'vue-tippy';
-import V3Input from '@components/input/main';
-import V3Tag from '@components/tag/main';
 
 type ILocalTippyInstance =
 	| (TippyInstance & {
@@ -237,11 +232,6 @@ export default defineComponent({
 		},
 		/** 是否启用本地模糊搜索 */
 		filterable: {
-			type: Boolean,
-			default: false,
-		},
-		/** 在 filterable 状态下，是否创建新的条目 */
-		allowCreate: {
 			type: Boolean,
 			default: false,
 		},

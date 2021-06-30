@@ -14,7 +14,6 @@ export interface ISelectProps {
 	placeholder: string;
 	remotePlaceholder: string;
 	filterable: boolean;
-	allowCreate: boolean;
 	filterMethod: ISelectFilterMethod;
 	remote: boolean;
 	remoteMethod: ISelectRemoteMethod;
