@@ -76,15 +76,41 @@
 					class="v3-select__tag"
 					v-if="props.multiple && state.selectedOptionList.length"
 				>
-					<li
-						class="v3-select__tag-item"
-						v-for="v in state.selectedOptionList"
-						:key="v"
+					<!-- 不合并标签 -->
+					<template v-if="!props.collapseTags">
+						<li
+							class="v3-select__tag-item"
+							v-for="v in state.selectedOptionList"
+							:key="v"
+						>
+							<v3-tag closeable type="info" @close="handleTagClose(v)">{{
+								v.label
+							}}</v3-tag>
+						</li>
+					</template>
+					<!-- 合并标签（只显示第一个标签和数量） -->
+					<template
+						v-else-if="props.collapseTags && state.selectedOptionList.length"
 					>
-						<v3-tag closeable type="info" @close="handleTagClose(v)">{{
-							v.label
-						}}</v3-tag>
-					</li>
+						<li class="v3-select__tag-item">
+							<v3-tag
+								closeable
+								type="info"
+								v-for="v in state.selectedOptionList.slice(0, 1)"
+								:key="v"
+								@close="handleTagClose(v)"
+								>{{ v.label }}</v3-tag
+							>
+						</li>
+						<li
+							class="v3-select__tag-item"
+							v-if="state.selectedOptionList.length > 1"
+						>
+							<v3-tag type="info">{{
+								`+ ${state.selectedOptionList.length - 1}`
+							}}</v3-tag>
+						</li>
+					</template>
 					<input type="text" v-if="props.allowCreate" />
 				</ul>
 			</div>

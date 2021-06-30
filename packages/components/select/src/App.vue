@@ -172,6 +172,28 @@
 				</v3-select>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col>
+				<h3>合并多选的值（节省空间）：</h3>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="2">
+				<v3-select
+					v-model="state.selectValue9"
+					:multiple="true"
+					:collapseTags="true"
+				>
+					<v3-select-option
+						v-for="v in state.selectOptions9"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -420,6 +442,30 @@ export default defineComponent({
 
 			selectValue8: ['Beijing', 'Shanghai'],
 			selectOptions8: [
+				{
+					label: '北京',
+					value: 'Beijing',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: false,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
+
+			selectValue9: ['Beijing', 'Guangzhou'],
+			selectOptions9: [
 				{
 					label: '北京',
 					value: 'Beijing',
