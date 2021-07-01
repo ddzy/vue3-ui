@@ -1,21 +1,78 @@
-<template> </template>
+<template>
+	<transition name="v3-backdrop-fade">
+		<div
+			class="v3-backdrop"
+			v-show="props.visible"
+			:style="{
+				zIndex: VARIABLE.getNextZIndex(),
+			}"
+			:class="props.customClass"
+		>
+			<slot></slot>
+		</div>
+	</transition>
+</template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue';
+import { defineComponent, reactive, toRef, watch } from 'vue';
 import * as TYPES from '@/public/types/backdrop';
+import VARIABLE from '@common/constants/internal-variable';
 
 export default defineComponent({
 	name: 'V3Backdrop',
-	props: {},
+	props: {
+		/** 遮罩层的显隐状态 */
+		visible: {
+			type: Boolean,
+			required: true,
+		},
+		/** 是否避免滚动穿透 */
+		fixed: {
+			type: Boolean,
+			default: false,
+		},
+		/** 自定义遮罩层的类名 */
+		customClass: {
+			type: String,
+			default: '',
+		},
+	},
 	setup(props: TYPES.IBackdropProps, context) {
 		const state = reactive({});
+
+		watch(
+			toRef(props, 'visible'),
+			() => {
+				computeBodyClass();
+			},
+			{ immediate: true }
+		);
+
+		/**
+		 * 解决滚动穿透
+		 */
+		function computeBodyClass() {
+			if (props.visible) {
+				if (props.fixed) {
+					document.body.classList.add('v3-body--fixed');
+				}
+			} else {
+				document.body.classList.remove('v3-body--fixed');
+			}
+		}
 
 		return {
 			props,
 			state,
+			VARIABLE,
 		};
 	},
 });
 </script>
+<style lang="scss">
+.v3-body--fixed {
+	overflow: hidden;
+}
+</style>
 <style lang="scss" scoped>
 @import './Backdrop.scss';
 </style>

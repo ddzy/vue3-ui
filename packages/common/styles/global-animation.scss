@@ -42,3 +42,18 @@
 .v3-tag-shrink-leave-active {
 	transition: all 0.3s ease;
 }
+
+.v3-backdrop-fade-enter-from {
+	opacity: 0;
+}
+.v3-backdrop-fade-enter-active,
+.v3-backdrop-fade-leave-active {
+	transition: opacity 0.15s ease-out;
+}
+.v3-backdrop-fade-enter-to,
+.v3-backdrop-fade-leave-from {
+	opacity: 1;
+}
+.v3-backdrop-fade-leave-to {
+	opacity: 0;
+}
