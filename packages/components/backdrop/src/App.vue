@@ -10,7 +10,7 @@
 				<v3-button type="primary" @click="handleClick1">打开遮罩层</v3-button>
 				<v3-backdrop
 					customClass="backdrop-1"
-					:visible="state.showBackdrop1"
+					v-model="state.showBackdrop1"
 					@click="state.showBackdrop1 = false"
 				>
 					<img
@@ -33,7 +33,7 @@
 				<v3-button type="primary" @click="handleClick2">打开遮罩层</v3-button>
 				<v3-backdrop
 					customClass="backdrop-2"
-					:visible="state.showBackdrop2"
+					v-model="state.showBackdrop2"
 					:fixed="true"
 					@click="state.showBackdrop2 = false"
 				>
@@ -52,7 +52,7 @@
 				<v3-button type="primary" @click="handleClick3">打开遮罩层</v3-button>
 				<v3-backdrop
 					customClass="backdrop-3"
-					:visible="state.showBackdrop3"
+					v-model="state.showBackdrop3"
 					:fixed="true"
 					@click="state.showBackdrop3 = false"
 				>

@@ -2,7 +2,7 @@
 	<transition name="v3-backdrop-fade">
 		<div
 			class="v3-backdrop"
-			v-show="props.visible"
+			v-show="props.modelValue"
 			:id="`v3-backdrop-${app.uid}`"
 			:style="{
 				zIndex: VARIABLE.getNextZIndex(),
@@ -29,7 +29,7 @@ export default defineComponent({
 	name: 'V3Backdrop',
 	props: {
 		/** 遮罩层的显隐状态 */
-		visible: {
+		modelValue: {
 			type: Boolean,
 			required: true,
 		},
@@ -49,7 +49,7 @@ export default defineComponent({
 		const app = ref(getCurrentInstance()).value;
 
 		watch(
-			toRef(props, 'visible'),
+			toRef(props, 'modelValue'),
 			() => {
 				computeBodyClass();
 			},
@@ -60,7 +60,7 @@ export default defineComponent({
 		 * 解决滚动穿透
 		 */
 		function computeBodyClass() {
-			if (props.visible) {
+			if (props.modelValue) {
 				if (props.fixed) {
 					document.body.classList.add('v3-body--fixed');
 				}
