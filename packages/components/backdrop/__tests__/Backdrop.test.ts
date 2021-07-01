@@ -14,7 +14,7 @@ describe('Backdrop 组件测试：', () => {
         <v3-button type="primary" @click="handleClick">打开遮罩层</v3-button>
         <v3-backdrop
           customClass="backdrop-1"
-          :visible="showBackdrop"
+          v-model="showBackdrop"
           @click="showBackdrop = false"
         >
           <img
@@ -57,7 +57,7 @@ describe('Backdrop 组件测试：', () => {
         <v3-button type="primary" @click="handleClick">打开遮罩层</v3-button>
         <v3-backdrop
           customClass="backdrop-1"
-          :visible="showBackdrop"
+          v-model="showBackdrop"
           :fixed="true"
           @click="showBackdrop = false"
         >
@@ -92,7 +92,7 @@ describe('Backdrop 组件测试：', () => {
         <v3-button type="primary" @click="handleClick">打开遮罩层</v3-button>
         <v3-backdrop
           customClass="backdrop-1"
-          :visible="showBackdrop"
+          v-model="showBackdrop"
           @click="showBackdrop = false"
         >
           <img src="" height="1200" alt="" />
@@ -125,7 +125,7 @@ describe('Backdrop 组件测试：', () => {
 			template: `
         <v3-button type="primary" @click="handleClick">打开遮罩层</v3-button>
         <v3-backdrop
-          :visible="showBackdrop"
+          v-model="showBackdrop"
           @click="showBackdrop = false"
         >
           <img src="" height="1200" alt="" />
