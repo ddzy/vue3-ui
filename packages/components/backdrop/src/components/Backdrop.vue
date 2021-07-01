@@ -3,6 +3,7 @@
 		<div
 			class="v3-backdrop"
 			v-show="props.visible"
+			:id="`v3-backdrop-${app.uid}`"
 			:style="{
 				zIndex: VARIABLE.getNextZIndex(),
 			}"
@@ -13,7 +14,14 @@
 	</transition>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRef, watch } from 'vue';
+import {
+	defineComponent,
+	getCurrentInstance,
+	reactive,
+	ref,
+	toRef,
+	watch,
+} from 'vue';
 import * as TYPES from '@/public/types/backdrop';
 import VARIABLE from '@common/constants/internal-variable';
 
@@ -38,6 +46,7 @@ export default defineComponent({
 	},
 	setup(props: TYPES.IBackdropProps, context) {
 		const state = reactive({});
+		const app = ref(getCurrentInstance()).value;
 
 		watch(
 			toRef(props, 'visible'),
@@ -63,6 +72,7 @@ export default defineComponent({
 		return {
 			props,
 			state,
+			app,
 			VARIABLE,
 		};
 	},
