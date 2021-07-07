@@ -5,6 +5,7 @@ export interface IDialogProps {
 	title: string;
 	width: string;
 	center: boolean;
+	top: string;
 	fullscreen: boolean;
 	backdrop: boolean;
 	fixed: boolean;

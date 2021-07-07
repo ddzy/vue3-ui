@@ -1,40 +1,35 @@
 .v3-backdrop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 	.v3-dialog {
 		box-sizing: border-box;
 		padding: $padding-large-2;
 		background-color: #fff;
-    border-radius: $border-radius-width-small;
-    .v3-dialog__header {
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .v3-dialog-header__title {
-        h3 {
-          margin: 0;
-          font-size: $font-size-large-2;
-          font-weight: normal;
-        }
-      }
-      .v3-dialog-header__action {
-        :deep(.v3-button) {
-          &:not(:first-child) {
-            margin-left: $margin-medium;
-          }
-        }
-        i.v3-icon.v3-icon-close {
-          cursor: pointer;
-        }
-      }
-    }
-    .v3-dialog__body {
-
-    }
-    .v3-dialog__footer {
-
-    }
+		border-radius: $border-radius-width-small;
+		.v3-dialog__header {
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.v3-dialog-header__title {
+				h3 {
+					margin: 0;
+					font-size: $font-size-large-2;
+					font-weight: normal;
+				}
+			}
+			.v3-dialog-header__action {
+				:deep(.v3-button) {
+					&:not(:first-child) {
+						margin-left: $margin-medium;
+					}
+				}
+				i.v3-icon.v3-icon-close {
+					cursor: pointer;
+				}
+			}
+		}
+		.v3-dialog__body {
+		}
+		.v3-dialog__footer {
+		}
 	}
 }

@@ -1,11 +1,12 @@
 <template>
-	<v3-backdrop v-model="state.syncedModelValue">
+	<v3-backdrop v-model="state.syncedModelValue" :center="props.center">
 		<transition name="v3-dialog-translate">
 			<div
 				class="v3-dialog"
 				v-if="state.syncedModelValue"
 				:style="{
 					width: props.width,
+					marginTop: props.top,
 				}"
 			>
 				<div class="v3-dialog__header">
@@ -79,6 +80,11 @@ export default defineComponent({
 		center: {
 			type: Boolean,
 			default: true,
+		},
+		/** 弹窗距离顶部的距离 */
+		top: {
+			type: String,
+			default: '',
 		},
 		/** 是否全屏展示 */
 		fullscreen: {
