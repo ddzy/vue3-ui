@@ -1,5 +1,41 @@
 <template>
-	<div class="v3-dialog">123</div>
+	<v3-backdrop v-model="state.syncedModelValue">
+		<div
+			class="v3-dialog"
+			v-if="state.syncedModelValue"
+			:style="{
+				width: props.width,
+			}"
+		>
+			<div class="v3-dialog__header">
+				<div class="v3-dialog-header__title">
+					<!-- slot 优先级比 title props 高 -->
+					<slot name="title" v-if="context.slots.title"></slot>
+					<h3 v-else-if="!context.slots.title && props.title">
+						{{ props.title }}
+					</h3>
+				</div>
+				<div class="v3-dialog-header__action">
+					<!-- 自定义的按钮组优先级比内置关闭按钮高 -->
+					<template v-if="props.headerActions.length">
+						<v3-button
+							v-for="(v, i) in props.headerActions"
+							v-bind="v.buttonProps"
+							:key="i"
+							@click="v.handler"
+						>
+							{{ v.text }}
+						</v3-button>
+					</template>
+					<i class="v3-icon v3-icon-close" v-else @click="handleClose"></i>
+				</div>
+			</div>
+			<div class="v3-dialog__body">
+				<slot></slot>
+			</div>
+			<div class="v3-dialog__footer"></div>
+		</div>
+	</v3-backdrop>
 </template>
 <script lang="ts">
 import {
@@ -8,11 +44,19 @@ import {
 	PropType,
 	reactive,
 	ref,
+	toRef,
+	watch,
 } from 'vue';
 import * as TYPES from '@/public/types/dialog';
+import V3Backdrop from '@components/backdrop/src/components/Backdrop.vue';
+import V3Button from '@components/button/src/components/Button.vue';
 
 export default defineComponent({
 	name: 'V3Dialog',
+	components: {
+		V3Backdrop,
+		V3Button,
+	},
 	props: {
 		/** 弹窗的显隐状态 */
 		modelValue: {
@@ -76,14 +120,25 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.IDialogProps, context) {
-		const state = reactive({});
+		const state = reactive({
+			syncedModelValue: false,
+		});
 		const app = ref(getCurrentInstance()).value;
+
+		watch(toRef(props, 'modelValue'), () => {
+			state.syncedModelValue = props.modelValue;
+		});
+
+		function handleClose() {
+			context.emit('update:modelValue', false);
+		}
 
 		return {
 			props,
 			context,
 			state,
 			app,
+			handleClose,
 		};
 	},
 });

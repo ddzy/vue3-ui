@@ -1,3 +1,5 @@
+import * as ButtonTypes from '@/public/types/button';
+
 export interface IDialogProps {
 	modelValue: boolean;
 	title: string;
@@ -14,9 +16,7 @@ export interface IDialogProps {
 }
 export type IDialogBeforeClose = (done: () => void) => void;
 export interface IDialogHeaderActionItem {
-	type: string;
 	text: string;
-	icon: string;
-	loading: boolean;
+	buttonProps: ButtonTypes.IButtonProps;
 	handler: (...args: any[]) => void;
 }
