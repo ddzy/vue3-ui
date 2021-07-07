@@ -7,7 +7,7 @@
 			:style="{
 				zIndex: VARIABLE.getNextZIndex(),
 			}"
-			:class="props.customClass"
+			:class="`${props.customClass} ${props.center ? 'is-center' : ''}`"
 		>
 			<slot></slot>
 		</div>
@@ -42,6 +42,11 @@ export default defineComponent({
 		customClass: {
 			type: String,
 			default: '',
+		},
+		/** 内部的元素是否要水平垂直居中 */
+		center: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	setup(props: TYPES.IBackdropProps, context) {

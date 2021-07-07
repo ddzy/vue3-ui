@@ -1,5 +1,6 @@
 export interface IBackdropProps {
   modelValue: boolean;
   fixed: boolean;
-	customClass: string;
+  customClass: string;
+  center: boolean;
 }
