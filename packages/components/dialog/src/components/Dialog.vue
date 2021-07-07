@@ -1,5 +1,9 @@
 <template>
-	<v3-backdrop v-model="state.syncedModelValue" :center="props.center">
+	<v3-backdrop
+		v-model="state.syncedModelValue"
+		:center="props.center"
+		@click="handleBackdropClick($event)"
+	>
 		<transition name="v3-dialog-translate">
 			<div
 				class="v3-dialog"
@@ -141,12 +145,28 @@ export default defineComponent({
 			context.emit('update:modelValue', false);
 		}
 
+		function handleBackdropClick(e: MouseEvent) {
+			// 点击遮罩层时，要根据 closeOnClickBackdrop 来判断是否可以关闭弹窗
+			if (props.closeOnClickBackdrop) {
+				const target = e.target as HTMLElement;
+
+				// 只有点击遮罩层本身才会关闭弹窗，点击其内部子元素则不会关闭
+				if (
+					target.nodeName === 'DIV' &&
+					target.classList.contains('v3-backdrop')
+				) {
+					handleClose();
+				}
+			}
+		}
+
 		return {
 			props,
 			context,
 			state,
 			app,
 			handleClose,
+			handleBackdropClick,
 		};
 	},
 });
