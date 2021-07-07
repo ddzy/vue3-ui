@@ -6,7 +6,7 @@ button {
 
 .v3-button {
 	padding: 6px 12px;
-	border-radius: 6px;
+	border-radius: $border-radius-width-small;
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.15s ease;
