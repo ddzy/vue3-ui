@@ -81,6 +81,9 @@
 	.tippy-content {
 		width: 100%;
 	}
+	:deep(.tippy-box) {
+		max-width: 100% !important;
+	}
 	:deep(.tippy-content) {
 		padding-left: 0;
 		padding-right: 0;
