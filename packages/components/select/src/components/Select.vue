@@ -317,12 +317,20 @@ export default defineComponent({
 		 */
 		const computedChildrenLength = computed<number>(() => {
 			const defaultSlot: Function | undefined = context.slots.default;
-
 			if (typeof defaultSlot !== 'function') {
 				return 0;
 			}
 
-			const defaultChildren = defaultSlot()[0].children;
+			const defaultChildren = defaultSlot();
+			// 通过 v-for 遍历的组件，如果没有匹配到，那么 slot 也会存在
+			if (
+				defaultChildren.length === 1 &&
+				defaultChildren[0] &&
+				Array.isArray(defaultChildren[0].children) &&
+				!defaultChildren[0].children.length
+			) {
+				return 0;
+			}
 
 			return defaultChildren.length;
 		});
