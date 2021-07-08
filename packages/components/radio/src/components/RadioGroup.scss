@@ -17,4 +17,9 @@
 			}
 		}
 	}
+	& :deep(.v3-radio) {
+		&:first-child {
+			margin-left: 0;
+		}
+	}
 }
