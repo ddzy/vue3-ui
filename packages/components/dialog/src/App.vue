@@ -103,6 +103,7 @@
 				<v3-dialog
 					title="提示"
 					width="25%"
+					customClass="dialog-4"
 					v-model="state.showDialog4"
 					:closeOnClickBackdrop="false"
 				>
@@ -211,24 +212,26 @@ body {
 }
 </style>
 <style lang="scss" scoped>
-.dialog-content-4 {
-	display: flex;
-	align-items: center;
-	i.v3-icon {
-		font-size: 20px;
-		color: rgba(237, 170, 83, 1);
+.dialog-4 {
+	.dialog-content-4 {
+		display: flex;
+		align-items: center;
+		i.v3-icon {
+			font-size: 20px;
+			color: rgba(237, 170, 83, 1);
+		}
+		span {
+			display: block;
+			margin-left: 6px;
+		}
 	}
-	span {
-		display: block;
-		margin-left: 6px;
-	}
-}
-.dialog-footer-4 {
-	display: flex;
-	justify-content: flex-end;
-	:deep(.v3-button) {
-		&:not(:first-child) {
-			margin-left: 12px;
+	.dialog-footer-4 {
+		display: flex;
+		justify-content: flex-end;
+		:deep(.v3-button) {
+			&:not(:first-child) {
+				margin-left: 12px;
+			}
 		}
 	}
 }

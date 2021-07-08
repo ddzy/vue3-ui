@@ -13,6 +13,7 @@
 					width: props.width,
 					marginTop: props.top,
 				}"
+				:class="[props.customClass]"
 			>
 				<div class="v3-dialog__header">
 					<div class="v3-dialog-header__title">
