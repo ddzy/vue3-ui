@@ -103,11 +103,6 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
-		/** 是否显示遮罩层 */
-		backdrop: {
-			type: Boolean,
-			default: true,
-		},
 		/** 是否禁止滚动穿透 */
 		fixed: {
 			type: Boolean,

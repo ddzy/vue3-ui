@@ -7,7 +7,6 @@ export interface IDialogProps {
 	center: boolean;
 	top: string;
 	fullscreen: boolean;
-	backdrop: boolean;
 	fixed: boolean;
 	customClass: string;
 	closeOnClickBackdrop: boolean;
