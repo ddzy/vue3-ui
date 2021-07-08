@@ -2,6 +2,7 @@
 	<v3-backdrop
 		v-model="state.syncedModelValue"
 		:center="props.center"
+		:fixed="props.fixed"
 		@click="handleBackdropClick($event)"
 	>
 		<transition name="v3-dialog-translate">

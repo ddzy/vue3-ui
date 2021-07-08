@@ -205,7 +205,11 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+body {
+	height: 1200px;
+}
+</style>
 <style lang="scss" scoped>
 .dialog-content-4 {
 	display: flex;
