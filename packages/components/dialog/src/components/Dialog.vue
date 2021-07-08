@@ -145,7 +145,14 @@ export default defineComponent({
 		});
 
 		function handleClose() {
-			context.emit('update:modelValue', false);
+			// 关闭之前的处理
+			if (typeof props.beforeClose === 'function') {
+				props.beforeClose(() => {
+					context.emit('update:modelValue', false);
+				});
+			} else {
+				context.emit('update:modelValue', false);
+			}
 		}
 
 		function handleBackdropClick(e: MouseEvent) {
