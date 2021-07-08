@@ -35,7 +35,11 @@
 								{{ v.text }}
 							</v3-button>
 						</template>
-						<i class="v3-icon v3-icon-close" v-else @click="handleClose"></i>
+						<i
+							class="v3-icon v3-icon-close"
+							v-else-if="!props.headerActions.length && props.showClose"
+							@click="handleClose"
+						></i>
 					</div>
 				</div>
 				<div class="v3-dialog__body">
