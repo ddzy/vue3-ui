@@ -15,7 +15,14 @@
 					:title="'基本用法'"
 					:headerActions="state.headerActions1"
 				>
-					<div class="dialog-content-1"></div>
+					<div class="dialog-content-1">
+						天下之患，最不可为者，名为治平无事，而其实有不测之忧，坐观其变，而不为之所，则恐至于不可救，起而强为之则天下狃于治平之安，而不吾信
+						——《苏东坡 晁错论》
+						大汉开国元勋淮阴侯韩信死于长乐钟室，年仅三十五岁。随后，韩信三族被诛，数千无辜，血染长安，哭号之声，传荡千古，当是时，寒风凛冽，长空飘雪，长安满城人尽嗟叹，无不悲怆，皆言淮阴侯一饭千金，不忘漂母；解衣推食，宁负汉皇？萧何一言便强入贺，欲谋逆者怎会坦率如斯？是侯不负汉，而汉忍于负侯，侯之死，冤乎哉！
+						不日，蒯通被带到，高祖亲自审问。「当日汝与韩信之言，究竟为何？」
+						蒯通道「吾相韩信，言其面不过封侯，背则贵不可言。因说之背汉自立，则可三分天下也。」
+						高祖又问：「然信有何言？」 蒯通长叹一声道：
+					</div>
 				</v3-dialog>
 			</v3-col>
 		</v3-row>
@@ -34,7 +41,25 @@
 					v-model="state.showDialog2"
 					:headerActions="state.headerActions2"
 				>
-					<div class="dialog-content-2"></div>
+					<div class="dialog-content-2">
+						<h4 style="margin: 0; margin-bottom: 12px">姓名：</h4>
+						<v3-input></v3-input>
+						<h4 style="margin: 20px 0;">性别：</h4>
+						<v3-radio-group v-model="state.radioValue2">
+							<v3-radio label="male">男</v3-radio>
+							<v3-radio label="female">女</v3-radio>
+						</v3-radio-group>
+						<h4 style="margin: 20px 0;">工作地：</h4>
+						<v3-select v-model="state.selectValue2">
+							<v3-select-option
+								v-for="v in state.selectOptions2"
+								:key="v.value"
+								:value="v.value"
+								:label="v.label"
+								:disabled="v.disabled"
+							></v3-select-option>
+						</v3-select>
+					</div>
 				</v3-dialog>
 			</v3-col>
 		</v3-row>
@@ -53,7 +78,14 @@
 					<template #title>
 						<span style="color: rgba(237, 170, 83, 1)">slot 自定义标题</span>
 					</template>
-					<div class="dialog-content-3"></div>
+					<div class="dialog-content-3">
+						天下之患，最不可为者，名为治平无事，而其实有不测之忧，坐观其变，而不为之所，则恐至于不可救，起而强为之则天下狃于治平之安，而不吾信
+						——《苏东坡 晁错论》
+						大汉开国元勋淮阴侯韩信死于长乐钟室，年仅三十五岁。随后，韩信三族被诛，数千无辜，血染长安，哭号之声，传荡千古，当是时，寒风凛冽，长空飘雪，长安满城人尽嗟叹，无不悲怆，皆言淮阴侯一饭千金，不忘漂母；解衣推食，宁负汉皇？萧何一言便强入贺，欲谋逆者怎会坦率如斯？是侯不负汉，而汉忍于负侯，侯之死，冤乎哉！
+						不日，蒯通被带到，高祖亲自审问。「当日汝与韩信之言，究竟为何？」
+						蒯通道「吾相韩信，言其面不过封侯，背则贵不可言。因说之背汉自立，则可三分天下也。」
+						高祖又问：「然信有何言？」 蒯通长叹一声道：
+					</div>
 				</v3-dialog>
 			</v3-col>
 		</v3-row>
@@ -102,6 +134,30 @@ export default defineComponent({
 		const state = reactive({
 			showDialog1: false,
 			showDialog2: false,
+			radioValue2: 'male',
+			selectValue2: 'beijing',
+			selectOptions2: [
+				{
+					label: '北京',
+					value: 'Beijing',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: true,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
 			showDialog3: false,
 			showDialog4: false,
 			headerActions2: [
@@ -151,11 +207,6 @@ export default defineComponent({
 </script>
 <style lang="scss"></style>
 <style lang="scss" scoped>
-.dialog-content-1,
-.dialog-content-2,
-.dialog-content-3 {
-	height: 500px;
-}
 .dialog-content-4 {
 	display: flex;
 	align-items: center;
