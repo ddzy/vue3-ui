@@ -28,8 +28,12 @@
 			}
 		}
 		.v3-dialog__body {
+      padding: $padding-large-2 + 10px 0 $padding-large-2;
+      font-size: $font-size-small;
+      color: $font-color-default;
 		}
 		.v3-dialog__footer {
+      padding: $padding-large-2 0;
 		}
 	}
 }

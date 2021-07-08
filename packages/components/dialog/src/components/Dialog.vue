@@ -39,7 +39,9 @@
 				<div class="v3-dialog__body">
 					<slot></slot>
 				</div>
-				<div class="v3-dialog__footer"></div>
+				<div class="v3-dialog__footer" v-if="context.slots.footer">
+					<slot name="footer"></slot>
+				</div>
 			</div>
 		</transition>
 	</v3-backdrop>
