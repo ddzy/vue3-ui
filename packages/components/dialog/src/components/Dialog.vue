@@ -10,10 +10,10 @@
 				class="v3-dialog"
 				v-if="state.syncedModelValue"
 				:style="{
-					width: props.width,
+					width: !props.fullscreen ? props.width : '100%',
 					marginTop: props.top,
 				}"
-				:class="[props.customClass]"
+				:class="[props.customClass, props.fullscreen ? 'is-fullscreen' : '']"
 			>
 				<div class="v3-dialog__header">
 					<div class="v3-dialog-header__title">
