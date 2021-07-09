@@ -24,7 +24,7 @@
 			}"
 			>{{ props.inactiveLabel }}</label
 		>
-		<div class="v3-switch__select">123</div>
+		<div class="v3-switch__select" @click="handleSwitch"></div>
 		<label
 			v-if="props.activeLabel || props.activeIcon"
 			:for="state.isChecked ? '' : `v3-switch__input--${app.uid}`"
@@ -128,7 +128,17 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		function handleChange(e: MouseEvent) {}
+		function handleChange(e: MouseEvent) {
+			if (typeof props.modelValue === 'boolean') {
+				context.emit('update:modelValue', state.isChecked);
+			}
+		}
+
+		function handleSwitch() {
+			if (typeof props.modelValue === 'boolean') {
+				context.emit('update:modelValue', !state.isChecked);
+			}
+		}
 
 		return {
 			props,
@@ -136,6 +146,7 @@ export default defineComponent({
 			app,
 			state,
 			handleChange,
+			handleSwitch,
 		};
 	},
 });
