@@ -1,5 +1,40 @@
 <template>
-	<div class="v3-switch">1</div>
+	<div
+		:class="{
+			'v3-switch': true,
+			'is-disabled': props.disabled,
+			'is-loading': props.loading,
+			'is-active': state.isChecked,
+		}"
+	>
+		<input
+			ref="checkboxRef"
+			type="checkbox"
+			class="v3-switch__input"
+			v-model="state.isChecked"
+			:id="`v3-switch__input--${app.uid}`"
+			@change="handleChange"
+		/>
+		<label
+			v-if="props.inactiveLabel || props.inactiveIcon"
+			:for="state.isChecked ? `v3-switch__input--${app.uid}` : ''"
+			:class="{
+				'v3-switch__label': true,
+				'v3-switch__inactive': true,
+			}"
+			>{{ props.inactiveLabel }}</label
+		>
+		<div class="v3-switch__select">123</div>
+		<label
+			v-if="props.activeLabel || props.activeIcon"
+			:for="state.isChecked ? '' : `v3-switch__input--${app.uid}`"
+			:class="{
+				'v3-switch__label': true,
+				'v3-switch__active': true,
+			}"
+			>{{ props.activeLabel }}</label
+		>
+	</div>
 </template>
 <script lang="ts">
 import {
@@ -8,10 +43,13 @@ import {
 	PropType,
 	reactive,
 	ref,
+	toRef,
+	watch,
 } from 'vue';
 import * as TYPES from '@/public/types/switch';
 
 export default defineComponent({
+	name: 'V3Switch',
 	props: {
 		/** 绑定值，默认为 true/false */
 		modelValue: {
@@ -75,14 +113,29 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.ISwitchProps, context) {
-		const state = reactive({});
+		const state = reactive({
+			isChecked: false,
+		});
 		const app = ref(getCurrentInstance()).value;
+
+		watch(
+			toRef(props, 'modelValue'),
+			() => {
+				if (typeof props.modelValue === 'boolean') {
+					state.isChecked = props.modelValue;
+				}
+			},
+			{ immediate: true }
+		);
+
+		function handleChange(e: MouseEvent) {}
 
 		return {
 			props,
 			context,
 			app,
 			state,
+			handleChange,
 		};
 	},
 });

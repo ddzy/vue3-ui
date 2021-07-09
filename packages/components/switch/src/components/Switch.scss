@@ -1,3 +1,37 @@
 .v3-switch {
+	// 选中状态
+	&.is-active {
+		.v3-switch__inactive {
+			color: $font-color-default;
+		}
+		.v3-switch__active {
+			color: $success-color;
+		}
+		.v3-switch__select {
+			color: $success-color;
+		}
+	}
+	&:not(.is-active) {
+		.v3-switch__inactive {
+			color: $danger-color;
+		}
+		.v3-switch__active {
+			color: $font-color-default;
+		}
+		.v3-switch__select {
+			color: $danger-color;
+		}
+	}
 
+	.v3-switch__label {
+		color: $font-color-default;
+		user-select: none;
+		cursor: pointer;
+	}
+	.v3-switch__select {
+		cursor: pointer;
+	}
+	.v3-switch__input {
+		display: none;
+	}
 }
