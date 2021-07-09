@@ -15,6 +15,7 @@
 			&::before {
 				left: calc(100% - 16px);
 				background-color: var(--active-color);
+				animation: switchActive 0.3s ease-out 0s 1;
 			}
 		}
 	}
@@ -31,7 +32,16 @@
 			&::before {
 				left: -2px;
 				background-color: var(--inactive-color);
+				animation: switchInactive 0.3s ease-out 0s 1;
 			}
+		}
+	}
+	// 禁用状态
+	&.is-disabled {
+		opacity: 0.4;
+		.v3-switch__label,
+		.v3-switch__select {
+			cursor: not-allowed;
 		}
 	}
 
@@ -52,16 +62,6 @@
 	}
 	.v3-switch__input {
 		display: none;
-		&:checked ~ .v3-switch__select {
-			&::before {
-				animation: switchActive 0.3s ease-out 0s 1;
-			}
-		}
-		&:not(:checked) ~ .v3-switch__select {
-			&::before {
-				animation: switchInactive 0.3s ease-out 0s 1;
-			}
-		}
 	}
 	.v3-switch__select {
 		position: relative;

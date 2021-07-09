@@ -5,6 +5,7 @@
 			'is-disabled': props.disabled,
 			'is-loading': props.loading,
 			'is-active': state.isChecked,
+			'is-disabled': props.disabled,
 		}"
 		:style="{
 			'--active-color': hexToRgba(props.activeColor, 1),
@@ -18,9 +19,8 @@
 		<input
 			type="checkbox"
 			class="v3-switch__input"
-			v-model="state.isChecked"
+			:value="state.isChecked"
 			:id="`v3-switch__input--${app.uid}`"
-			@change="handleChange"
 		/>
 
 		<label
@@ -30,6 +30,7 @@
 				'v3-switch__label': true,
 				'v3-switch__inactive': true,
 			}"
+			@click="handleSwitch"
 		>
 			<!-- 状态图标比文字的优先级高 -->
 			<i
@@ -51,6 +52,7 @@
 				'v3-switch__label': true,
 				'v3-switch__active': true,
 			}"
+			@click="handleSwitch"
 		>
 			<!-- 状态图标比文字的优先级高 -->
 			<i
@@ -158,13 +160,11 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		function handleChange(e: MouseEvent) {
-			if (typeof props.modelValue === 'boolean') {
-				context.emit('update:modelValue', state.isChecked);
-			}
-		}
-
 		function handleSwitch() {
+			if (props.disabled) {
+				return;
+			}
+
 			if (typeof props.modelValue === 'boolean') {
 				context.emit('update:modelValue', !state.isChecked);
 			}
@@ -176,7 +176,6 @@ export default defineComponent({
 			app,
 			state,
 			hexToRgba,
-			handleChange,
 			handleSwitch,
 		};
 	},

@@ -38,7 +38,15 @@
 					inactiveLabel="关"
 					activeIcon="v3-icon-notice"
 					inactiveIcon="v3-icon-sound-Mute"
+					disabled
 				></v3-switch>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12"><h3>禁用状态：</h3></v3-col>
+			<v3-col>
+				<v3-switch v-model="state.switchValue5" :disabled="true"></v3-switch>
 			</v3-col>
 		</v3-row>
 	</div>
@@ -53,6 +61,7 @@ export default defineComponent({
 			switchValue2: true,
 			switchValue3: false,
 			switchValue4: false,
+			switchValue5: false,
 		});
 
 		return {
