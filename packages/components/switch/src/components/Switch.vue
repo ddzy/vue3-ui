@@ -14,6 +14,7 @@
 			'--inactive-color-half': hexToRgba(props.inactiveColor, 0.5),
 			'--active-color-little': hexToRgba(props.activeColor, 0.3),
 			'--inactive-color-little': hexToRgba(props.inactiveColor, 0.3),
+			'--move-duration': `${state.duration}s`,
 		}"
 	>
 		<input
@@ -43,7 +44,13 @@
 			}}</span>
 		</label>
 
-		<div class="v3-switch__select" @click="handleSwitch"></div>
+		<div
+			class="v3-switch__select"
+			:style="{
+				width: `${props.width}px`,
+			}"
+			@click="handleSwitch"
+		></div>
 
 		<label
 			v-if="props.activeLabel || props.activeIcon"
@@ -100,7 +107,7 @@ export default defineComponent({
 		/** 开关的宽度（px） */
 		width: {
 			type: Number,
-			default: 60,
+			default: 35,
 		},
 		/** 开启状态下的图标（会覆盖 activeLabel） */
 		activeIcon: {
@@ -147,6 +154,8 @@ export default defineComponent({
 		const state = reactive({
 			/** 当前开关是否选中 */
 			isChecked: false,
+			/** 动画的过渡时间 */
+			duration: 0.15,
 		});
 		const app = ref(getCurrentInstance()).value;
 
@@ -156,6 +165,15 @@ export default defineComponent({
 				if (typeof props.modelValue === 'boolean') {
 					state.isChecked = props.modelValue;
 				}
+			},
+			{ immediate: true }
+		);
+
+		watch(
+			toRef(props, 'width'),
+			() => {
+				// 根据不同的宽度，动态计算动画的过渡时间
+				state.duration = (0.15 * props.width) / 35;
 			},
 			{ immediate: true }
 		);

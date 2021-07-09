@@ -49,6 +49,13 @@
 				<v3-switch v-model="state.switchValue5" :disabled="true"></v3-switch>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12"><h3>自定义宽度：</h3></v3-col>
+			<v3-col>
+				<v3-switch v-model="state.switchValue6" :width="60"></v3-switch>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -62,6 +69,7 @@ export default defineComponent({
 			switchValue3: false,
 			switchValue4: false,
 			switchValue5: false,
+			switchValue6: false,
 		});
 
 		return {
