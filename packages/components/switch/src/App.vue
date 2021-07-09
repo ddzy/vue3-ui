@@ -17,6 +17,17 @@
 				></v3-switch>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12"><h3>在不同状态下显示的文本：</h3></v3-col>
+			<v3-col>
+				<v3-switch
+					v-model="state.switchValue3"
+					activeLabel="开"
+					inactiveLabel="关"
+				></v3-switch>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -27,6 +38,7 @@ export default defineComponent({
 		const state = reactive({
 			switchValue1: true,
 			switchValue2: true,
+			switchValue3: false,
 		});
 
 		return {
