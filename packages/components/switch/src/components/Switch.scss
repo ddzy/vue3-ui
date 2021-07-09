@@ -1,7 +1,7 @@
 .v3-switch {
 	display: flex;
 	align-items: center;
-  font-size: $font-size-small;
+	font-size: $font-size-small;
 	// 选中状态
 	&.is-active {
 		.v3-switch__inactive {
@@ -39,14 +39,17 @@
 		color: $font-color-default;
 		user-select: none;
 		cursor: pointer;
+		i.v3-icon {
+			font-size: $font-size-large-2;
+		}
 	}
 
-  .v3-switch__active {
-    padding-left: $padding-medium;
-  }
-  .v3-switch__inactive {
-    padding-right: $padding-medium;
-  }
+	.v3-switch__active {
+		padding-left: $padding-medium;
+	}
+	.v3-switch__inactive {
+		padding-right: $padding-medium;
+	}
 	.v3-switch__input {
 		display: none;
 		&:checked ~ .v3-switch__select {

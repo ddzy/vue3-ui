@@ -28,6 +28,19 @@
 				></v3-switch>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12"><h3>可以用图标代替文本：</h3></v3-col>
+			<v3-col>
+				<v3-switch
+					v-model="state.switchValue4"
+					activeLabel="开"
+					inactiveLabel="关"
+					activeIcon="v3-icon-notice"
+					inactiveIcon="v3-icon-sound-Mute"
+				></v3-switch>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -39,6 +52,7 @@ export default defineComponent({
 			switchValue1: true,
 			switchValue2: true,
 			switchValue3: false,
+			switchValue4: false,
 		});
 
 		return {

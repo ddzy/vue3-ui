@@ -16,13 +16,13 @@
 		}"
 	>
 		<input
-			ref="checkboxRef"
 			type="checkbox"
 			class="v3-switch__input"
 			v-model="state.isChecked"
 			:id="`v3-switch__input--${app.uid}`"
 			@change="handleChange"
 		/>
+
 		<label
 			v-if="props.inactiveLabel || props.inactiveIcon"
 			:for="state.isChecked ? `v3-switch__input--${app.uid}` : ''"
@@ -30,9 +30,20 @@
 				'v3-switch__label': true,
 				'v3-switch__inactive': true,
 			}"
-			>{{ props.inactiveLabel }}</label
 		>
+			<!-- 状态图标比文字的优先级高 -->
+			<i
+				class="v3-icon"
+				v-if="props.inactiveIcon"
+				:class="[props.inactiveIcon || '']"
+			></i>
+			<span v-if="!props.inactiveIcon && props.inactiveLabel">{{
+				props.inactiveLabel
+			}}</span>
+		</label>
+
 		<div class="v3-switch__select" @click="handleSwitch"></div>
+
 		<label
 			v-if="props.activeLabel || props.activeIcon"
 			:for="state.isChecked ? '' : `v3-switch__input--${app.uid}`"
@@ -40,8 +51,17 @@
 				'v3-switch__label': true,
 				'v3-switch__active': true,
 			}"
-			>{{ props.activeLabel }}</label
 		>
+			<!-- 状态图标比文字的优先级高 -->
+			<i
+				class="v3-icon"
+				v-if="props.activeIcon"
+				:class="[props.activeIcon || '']"
+			></i>
+			<span v-else-if="!props.activeIcon && props.activeLabel">{{
+				props.activeLabel
+			}}</span>
+		</label>
 	</div>
 </template>
 <script lang="ts">
