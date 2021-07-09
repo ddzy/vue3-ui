@@ -7,16 +7,13 @@
 			color: $font-color-default;
 		}
 		.v3-switch__active {
-			color: $success-color;
+			color: var(--active-color);
 		}
 		.v3-switch__select {
-			color: $success-color;
-		}
-		.v3-switch__select {
-			background-color: $success-color-middle;
+			background-color: var(--active-color-half);
 			&::before {
 				left: calc(100% - 16px);
-				background-color: $success-color;
+				background-color: var(--active-color);
 			}
 		}
 	}
@@ -29,13 +26,10 @@
 			color: $font-color-default;
 		}
 		.v3-switch__select {
-			color: $danger-color;
-		}
-		.v3-switch__select {
-			background-color: $danger-color-middle;
+			background-color: var(--inactive-color-half);
 			&::before {
 				left: -2px;
-				background-color: $danger-color;
+				background-color: var(--inactive-color);
 			}
 		}
 	}
@@ -52,12 +46,12 @@
 		display: none;
 		&:checked ~ .v3-switch__select {
 			&::before {
-				animation: successButtonActive 0.3s ease-out 0s 1;
+				animation: switchActive 0.3s ease-out 0s 1;
 			}
 		}
 		&:not(:checked) ~ .v3-switch__select {
 			&::before {
-				animation: dangerButtonActive 0.3s ease-out 0s 1;
+				animation: switchInactive 0.3s ease-out 0s 1;
 			}
 		}
 	}
@@ -80,31 +74,31 @@
 	}
 }
 
-@keyframes successButtonActive {
+@keyframes switchActive {
 	0% {
 		box-shadow: none;
 	}
 	50% {
-		box-shadow: 0 0 2px 2px rgba(99, 185, 49, 0.3);
+		box-shadow: 0 0 2px 2px var(--active-color-little);
 	}
 	75% {
-		box-shadow: 0 0 4px 2px rgba(99, 185, 49, 0.3);
+		box-shadow: 0 0 4px 2px var(--active-color-little);
 	}
 	100% {
-		box-shadow: 0 0 10px 2px rgba(99, 185, 49, 0.3);
+		box-shadow: 0 0 10px 2px var(--active-color-little);
 	}
 }
-@keyframes dangerButtonActive {
+@keyframes switchInactive {
 	0% {
 		box-shadow: none;
 	}
 	50% {
-		box-shadow: 0 0 2px 2px rgba(201, 27, 38, 0.3);
+		box-shadow: 0 0 2px 2px var(--inactive-color-little);
 	}
 	75% {
-		box-shadow: 0 0 4px 2px rgba(201, 27, 38, 0.3);
+		box-shadow: 0 0 4px 2px var(--inactive-color-little);
 	}
 	100% {
-		box-shadow: 0 0 10px 2px rgba(201, 27, 38, 0.3);
+		box-shadow: 0 0 10px 2px var(--inactive-color-little);
 	}
 }

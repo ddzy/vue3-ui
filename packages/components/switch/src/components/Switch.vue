@@ -6,6 +6,14 @@
 			'is-loading': props.loading,
 			'is-active': state.isChecked,
 		}"
+		:style="{
+			'--active-color': hexToRgba(props.activeColor, 1),
+			'--inactive-color': hexToRgba(props.inactiveColor, 1),
+			'--active-color-half': hexToRgba(props.activeColor, 0.5),
+			'--inactive-color-half': hexToRgba(props.inactiveColor, 0.5),
+			'--active-color-little': hexToRgba(props.activeColor, 0.3),
+			'--inactive-color-little': hexToRgba(props.inactiveColor, 0.3),
+		}"
 	>
 		<input
 			ref="checkboxRef"
@@ -38,6 +46,7 @@
 </template>
 <script lang="ts">
 import {
+	computed,
 	defineComponent,
 	getCurrentInstance,
 	PropType,
@@ -46,6 +55,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
+import { hexToRgba } from '@common/utils/index';
 import * as TYPES from '@/public/types/switch';
 
 export default defineComponent({
@@ -101,19 +111,20 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
-		/** 开启状态下的颜色 */
+		/** 开启状态下的颜色（必须为16进制格式） */
 		activeColor: {
 			type: String,
-			default: 'rgba(99, 185, 49, 1)',
+			default: '#63B931',
 		},
-		/** 关闭状态下的颜色 */
+		/** 关闭状态下的颜色（必须为16进制格式） */
 		inactiveColor: {
 			type: String,
-			default: 'rgba(201, 27, 38, 1)',
+			default: '#C91B26',
 		},
 	},
 	setup(props: TYPES.ISwitchProps, context) {
 		const state = reactive({
+			/** 当前开关是否选中 */
 			isChecked: false,
 		});
 		const app = ref(getCurrentInstance()).value;
@@ -145,6 +156,7 @@ export default defineComponent({
 			context,
 			app,
 			state,
+			hexToRgba,
 			handleChange,
 			handleSwitch,
 		};

@@ -44,3 +44,15 @@ export function isStrictNumber(v: any) {
 export function isStrictArray(v: any) {
 	return Array.isArray(v);
 }
+
+/**
+ * 将 16 进制颜色值转换为 rgba 格式
+ * @param hex 16 进制颜色值
+ * @param opacity 透明度
+ * @returns
+ */
+export function hexToRgba(hex: string, opacity: number) {
+	return `rgba(${parseInt('0x' + hex.slice(1, 3))}, ${parseInt(
+		'0x' + hex.slice(3, 5)
+	)}, ${parseInt('0x' + hex.slice(5, 7))}, ${opacity})`;
+}
