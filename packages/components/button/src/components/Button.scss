@@ -197,34 +197,33 @@ $button-border-type: dashed, dotted, double, groove, outset;
 // 按钮点击时的动画
 $button-box-shadow-map: (
 	primary: (
-		color: rgba(0, 160, 255, 0.3),
+		startColor: rgba(0, 160, 255, 0.6),
+		endColor: rgba(0, 160, 255, 0),
 	),
 	success: (
-		color: rgba(99, 185, 49, 0.3),
+		startColor: rgba(99, 185, 49, 0.6),
+		endColor: rgba(99, 185, 49, 0),
 	),
 	danger: (
-		color: rgba(201, 27, 38, 0.3),
+		startColor: rgba(201, 27, 38, 0.6),
+		endColor: rgba(201, 27, 38, 0),
 	),
 	warning: (
-		color: rgba(237, 170, 83, 0.3),
+		startColor: rgba(201, 27, 38, 0.6),
+		endColor: rgba(201, 27, 38, 0),
 	),
 	info: (
-		color: rgba(184, 176, 176, 0.3),
+		startColor: rgba(184, 176, 176, 0.6),
+		endColor: rgba(184, 176, 176, 0),
 	),
 );
 @each $key, $value in $button-box-shadow-map {
 	@keyframes #{$key}ButtonActive {
 		0% {
-			box-shadow: none;
-		}
-		50% {
-			box-shadow: 0 0 2px 2px map-get($map: $value, $key: color);
-		}
-		75% {
-			box-shadow: 0 0 4px 2px map-get($map: $value, $key: color);
+			box-shadow: 0 0 0 0 map-get($map: $value, $key: startColor);
 		}
 		100% {
-			box-shadow: 0 0 10px 2px map-get($map: $value, $key: color);
+			box-shadow: 0 0 0 4px map-get($map: $value, $key: endColor);
 		}
 	}
 }
