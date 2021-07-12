@@ -26,3 +26,4 @@ vue3 组件库
 |     Select     |       下拉选项       | :white_check_mark: | :white_check_mark: |
 |    Backdrop    |        遮罩层        | :white_check_mark: | :white_check_mark: |
 |     Dialog     |         弹窗         | :white_check_mark: | :white_check_mark: |
+|     Switch     |         开关         | :white_check_mark: | :white_check_mark: |
