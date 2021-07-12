@@ -1,148 +1,209 @@
 <template>
-	<div class="button-container">
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.defaultBtnList"
-				:key="v.type"
-				:type="v.type"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+	<div class="demo-container">
+		<v3-row>
+			<v3-col :span="12">
+				<h3>默认按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList1"
+					:key="v.type"
+					:type="v.type"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.defaultAndCustomBorderBtnList"
-				:key="v.type"
-				:type="v.type"
-				:borderType="v.borderType"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>可自定义边框：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList2"
+					:key="v.type"
+					:type="v.type"
+					:borderType="v.borderType"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.defaultAndDisabledBtnList"
-				:key="v.type"
-				:type="v.type"
-				:disabled="v.disabled"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>禁用状态：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList3"
+					:key="v.type"
+					:type="v.type"
+					:disabled="v.disabled"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.plainBtnList"
-				:key="v.type"
-				:type="v.type"
-				:plain="v.plain"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>朴素按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList4"
+					:key="v.type"
+					:type="v.type"
+					:plain="v.plain"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.plainAndIconBtnList"
-				:key="v.type"
-				:type="v.type"
-				:plain="v.plain"
-				:icon="v.icon"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>带图标的朴素按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList5"
+					:key="v.type"
+					:type="v.type"
+					:plain="v.plain"
+					:icon="v.icon"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.textBtnList"
-				:key="v.type"
-				:type="v.type"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>文字按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList6"
+					:key="v.type"
+					:type="v.type"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.textAndDisabledBtnList"
-				:key="v.type"
-				:type="v.type"
-				:disabled="v.disabled"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>禁用的文字按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList7"
+					:key="v.type"
+					:type="v.type"
+					:disabled="v.disabled"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.textAndIconBtnList"
-				:key="v.type"
-				:type="v.type"
-				:icon="v.icon"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>带图标的文字按钮</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList8"
+					:key="v.type"
+					:type="v.type"
+					:icon="v.icon"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.iconBtnList"
-				:key="v.type"
-				:type="v.type"
-				:icon="v.icon"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>纯图标按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList9"
+					:key="v.type"
+					:type="v.type"
+					:icon="v.icon"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.iconAndCircleBtnList"
-				:key="v.type"
-				:type="v.type"
-				:icon="v.icon"
-				:circle="v.circle"
-			></v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>圆形图标按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList10"
+					:key="v.type"
+					:type="v.type"
+					:icon="v.icon"
+					:circle="v.circle"
+				></v3-button>
+			</v3-col>
+		</v3-row>
 
-		<div class="button__list">
-			<v3-button
-				class="button__item"
-				v-for="v in state.plainAndLoadingBtnList"
-				:key="v.type"
-				:type="v.type"
-				:loading="v.loading"
-				:plain="v.plain"
-				@click="handleLoadingBtnClick(v.type)"
-			>
-				{{ v.title }}
-			</v3-button>
-		</div>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>加载中的按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button
+					class="button__item"
+					v-for="v in state.btnList11"
+					:key="v.type"
+					:type="v.type"
+					:loading="v.loading"
+					:plain="v.plain"
+					@click="handleLoadingBtnClick(v.type)"
+				>
+					{{ v.title }}
+				</v3-button>
+			</v3-col>
+		</v3-row>
 
-		<v3-button-group>
-			<v3-button
-				class="button__item"
-				v-for="v in state.buttonGroupList"
-				:key="v.type"
-				:type="v.type"
-				:icon="v.icon"
-			>
-				{{ v.title }}
-			</v3-button>
-		</v3-button-group>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>按钮组：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-button-group>
+					<v3-button
+						v-for="v in state.btnList12"
+						:key="v.type"
+						:type="v.type"
+						:icon="v.icon"
+					>
+						{{ v.title }}
+					</v3-button>
+				</v3-button-group>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -157,7 +218,7 @@ export default defineComponent({
 	},
 	setup() {
 		// 默认图标列表
-		const defaultBtnList: Array<{
+		const btnList1: Array<{
 			type: string;
 			title: string;
 		}> = [
@@ -187,7 +248,7 @@ export default defineComponent({
 			},
 		];
 		// 默认按钮 + 自定义边框列表
-		const defaultAndCustomBorderBtnList: Array<{
+		const btnList2: Array<{
 			type: string;
 			borderType: string;
 			title: string;
@@ -204,7 +265,7 @@ export default defineComponent({
 			},
 		];
 		// 默认按钮 + 禁用列表
-		const defaultAndDisabledBtnList: Array<{
+		const btnList3: Array<{
 			type: string;
 			disabled: boolean;
 			title: string;
@@ -241,7 +302,7 @@ export default defineComponent({
 			},
 		];
 		// 朴素按钮列表
-		const plainBtnList: Array<{
+		const btnList4: Array<{
 			type: string;
 			plain: boolean;
 			title: string;
@@ -278,7 +339,7 @@ export default defineComponent({
 			},
 		];
 		// 朴素按钮 + 图标列表
-		const plainAndIconBtnList: Array<{
+		const btnList5: Array<{
 			type: string;
 			plain: boolean;
 			title: string;
@@ -322,7 +383,7 @@ export default defineComponent({
 			},
 		];
 		// 文字按钮列表
-		const textBtnList: Array<{
+		const btnList6: Array<{
 			type: string;
 			title: string;
 		}> = [
@@ -332,7 +393,7 @@ export default defineComponent({
 			},
 		];
 		// 文字按钮 + 禁用按钮列表
-		const textAndDisabledBtnList: Array<{
+		const btnList7: Array<{
 			type: string;
 			title: string;
 			disabled: boolean;
@@ -344,7 +405,7 @@ export default defineComponent({
 			},
 		];
 		// 文字按钮 + 图标列表
-		const textAndIconBtnList: Array<{
+		const btnList8: Array<{
 			type: string;
 			title: string;
 			icon: string;
@@ -361,7 +422,7 @@ export default defineComponent({
 			},
 		];
 		// 纯图标按钮
-		const iconBtnList: Array<{
+		const btnList9: Array<{
 			type: string;
 			icon: string;
 		}> = [
@@ -391,7 +452,7 @@ export default defineComponent({
 			},
 		];
 		// 纯图标按钮 + 圆形
-		const iconAndCircleBtnList: Array<{
+		const btnList10: Array<{
 			type: string;
 			icon: string;
 			circle: boolean;
@@ -428,7 +489,7 @@ export default defineComponent({
 			},
 		];
 		// 朴素按钮 + loading
-		const plainAndLoadingBtnList: Array<{
+		const btnList11: Array<{
 			type: string;
 			plain: boolean;
 			title: string;
@@ -471,7 +532,7 @@ export default defineComponent({
 				loading: false,
 			},
 		];
-		const buttonGroupList: Array<{
+		const btnList12: Array<{
 			type: string;
 			title: string;
 			icon: string;
@@ -494,22 +555,22 @@ export default defineComponent({
 		];
 
 		const state = reactive({
-			defaultBtnList,
-			defaultAndCustomBorderBtnList,
-			defaultAndDisabledBtnList,
-			plainBtnList,
-			plainAndIconBtnList,
-			textBtnList,
-			textAndDisabledBtnList,
-			textAndIconBtnList,
-			iconBtnList,
-			iconAndCircleBtnList,
-			plainAndLoadingBtnList,
-			buttonGroupList,
+			btnList1,
+			btnList2,
+			btnList3,
+			btnList4,
+			btnList5,
+			btnList6,
+			btnList7,
+			btnList8,
+			btnList9,
+			btnList10,
+			btnList11,
+			btnList12,
 		});
 
 		function handleLoadingBtnClick(type: string) {
-			state.plainAndLoadingBtnList = state.plainAndLoadingBtnList.map(v => {
+			state.btnList11 = state.btnList11.map(v => {
 				if (v.type === type) {
 					return {
 						...v,
@@ -532,16 +593,9 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.button-container {
-	.button__list {
-		display: flex;
-		justify-content: flex-start;
-		&:not(:first-child) {
-			margin-top: 20px;
-		}
-		.button__item {
-			margin-left: 12px;
-		}
+.demo-container {
+	.button__item {
+		margin-left: 12px;
 	}
 }
 </style>
