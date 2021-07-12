@@ -122,7 +122,7 @@ describe('Button 组件测试：', () => {
 		await wrapper1.setProps({
 			borderType: 'dashed',
 		});
-		expect(wrapper1.find('.v3-button__border--dashed').exists()).toBeTruthy();
+		expect(wrapper1.find('.has-border--dashed').exists()).toBeTruthy();
 	});
 
 	test('Button 组件应该正常接收【plain】配置项，用来启用简洁按钮', async () => {
