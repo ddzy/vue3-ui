@@ -6,7 +6,7 @@
 		:class="{
 			'v3-button': true,
 			[`v3-button--${props.type}`]: true,
-			[`v3-button__border--${props.borderType}`]: !!props.borderType,
+			[`has-border--${props.borderType}`]: !!props.borderType,
 			[`is-plain`]: props.plain,
 			[`is-disabled`]: state.defaultProps.disabled,
 			[`is-circle`]: props.circle,
@@ -29,13 +29,11 @@
 import * as TYPES from '@/public/types/button';
 import {
 	defineComponent,
-	nextTick,
 	onMounted,
 	onUnmounted,
 	PropType,
 	reactive,
 	ref,
-	toRef,
 	watch,
 } from 'vue';
 
@@ -137,7 +135,7 @@ export default defineComponent({
 			const path = e.composedPath();
 
 			if (path.includes(button)) {
-				button.classList.add('v3-button--active');
+				button.classList.add('is-active');
 			}
 		}
 
@@ -146,7 +144,7 @@ export default defineComponent({
 			const path = e.composedPath();
 
 			if (path.includes(button)) {
-				button.classList.remove('v3-button--active');
+				button.classList.remove('is-active');
 			}
 		}
 
