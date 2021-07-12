@@ -13,16 +13,30 @@
 			[`is-loading`]: props.loading,
 		}"
 	>
-		<i
-			v-if="state.defaultProps.icon"
-			:class="{
-				'v3-icon': !!state.defaultProps.icon,
-				[state.defaultProps.icon]: true,
-			}"
-		></i>
-		<span>
-			<slot></slot>
-		</span>
+		<a href="javascript: void 0;" v-if="props.type === 'text'">
+			<i
+				v-if="state.defaultProps.icon"
+				:class="{
+					'v3-icon': !!state.defaultProps.icon,
+					[state.defaultProps.icon]: true,
+				}"
+			></i>
+			<span>
+				<slot></slot>
+			</span>
+		</a>
+		<template v-else>
+			<i
+				v-if="state.defaultProps.icon"
+				:class="{
+					'v3-icon': !!state.defaultProps.icon,
+					[state.defaultProps.icon]: true,
+				}"
+			></i>
+			<span>
+				<slot></slot>
+			</span>
+		</template>
 	</button>
 </template>
 <script lang="ts">

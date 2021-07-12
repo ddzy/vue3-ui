@@ -16,6 +16,12 @@ button {
 	&:disabled {
 		cursor: not-allowed;
 		opacity: 0.4;
+		& > a {
+			cursor: not-allowed;
+			&:active {
+				color: $primary-color;
+			}
+		}
 	}
 	&.is-loading:disabled {
 		cursor: default;
@@ -29,9 +35,10 @@ button {
 			height: 20px;
 		}
 	}
-	& > * {
+	& > *,
+	& > a > * {
 		display: inline-block;
-		vertical-align: middle;
+		vertical-align: top;
 	}
 	& [class*='v3-icon-'] {
 		font-size: 18px;
@@ -48,6 +55,9 @@ $button-type-map: (
 		border-width: 0,
 		background-color: #fff,
 		color: $primary-color,
+		text-decoration: none,
+		link-color: $primary-color,
+		active-color: $primary-color-little,
 	),
 	default: (
 		border-color: $default-color,
@@ -143,6 +153,16 @@ $button-type-map: (
 			border-width: map-get($map: $value, $key: border-width);
 			background-color: map-get($map: $value, $key: background-color);
 			color: map-get($map: $value, $key: color);
+			& > a {
+				text-decoration: map-get($map: $value, $key: text-decoration);
+				&:link,
+				&:visited {
+					color: map-get($map: $value, $key: link-color);
+				}
+				&:active {
+					color: map-get($map: $value, $key: active-color);
+				}
+			}
 		} @else {
 			background-color: map-get($map: $value, $key: background-color);
 			color: map-get($map: $value, $key: color);
