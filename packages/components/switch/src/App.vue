@@ -38,7 +38,6 @@
 					inactiveLabel="关"
 					activeIcon="v3-icon-notice"
 					inactiveIcon="v3-icon-sound-Mute"
-					disabled
 				></v3-switch>
 			</v3-col>
 		</v3-row>
@@ -56,13 +55,36 @@
 				<v3-switch v-model="state.switchValue6" :width="60"></v3-switch>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12"
+				><h3>可以绑定多种类型的值（string、boolean、number）：</h3></v3-col
+			>
+			<v3-col :span="1">
+				<v3-switch
+					v-model="state.switchValue7"
+					:activeValue="1"
+					:inactiveValue="0"
+					@change="handleChange"
+				></v3-switch>
+			</v3-col>
+			<v3-col :span="1">
+				<v3-switch
+					v-model="state.switchValue8"
+					:activeValue="'Beijing'"
+					:inactiveValue="'Shanghai'"
+					@change="handleChange"
+				></v3-switch>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import V3Message from '@components/message/main';
+import { defineComponent, reactive, toRef, watch } from 'vue';
 
 export default defineComponent({
-	setup() {
+	setup(props, context) {
 		const state = reactive({
 			switchValue1: true,
 			switchValue2: true,
@@ -70,10 +92,19 @@ export default defineComponent({
 			switchValue4: false,
 			switchValue5: false,
 			switchValue6: false,
+			switchValue7: 1,
+			switchValue8: 'Shanghai',
 		});
+
+		function handleChange(v: any) {
+			V3Message.success({
+				message: `选中的值为：${v}`,
+			});
+		}
 
 		return {
 			state,
+			handleChange,
 		};
 	},
 	methods: {},

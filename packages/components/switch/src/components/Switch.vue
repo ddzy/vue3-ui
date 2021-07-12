@@ -164,6 +164,8 @@ export default defineComponent({
 			() => {
 				if (typeof props.modelValue === 'boolean') {
 					state.isChecked = props.modelValue;
+				} else {
+					state.isChecked = props.modelValue === props.activeValue;
 				}
 			},
 			{ immediate: true }
@@ -185,6 +187,16 @@ export default defineComponent({
 
 			if (typeof props.modelValue === 'boolean') {
 				context.emit('update:modelValue', !state.isChecked);
+				context.emit('change', !state.isChecked);
+			} else {
+				context.emit(
+					'change',
+					!state.isChecked ? props.activeValue : props.inactiveValue
+				);
+				context.emit(
+					'update:modelValue',
+					!state.isChecked ? props.activeValue : props.inactiveValue
+				);
 			}
 		}
 
