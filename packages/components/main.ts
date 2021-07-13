@@ -23,6 +23,7 @@ import V3Tag from './tag/main';
 import V3Backdrop from './backdrop/main';
 import V3Dialog from './dialog/main';
 import V3Switch from './switch/main';
+import V3Tooltip from './tooltip/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -31,7 +32,7 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './button/src/App.vue';
+import Demo from './tooltip/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
@@ -58,6 +59,7 @@ export {
 	V3Backdrop,
 	V3Dialog,
 	V3Switch,
+	V3Tooltip,
 };
 
 export default function install(app: App) {
@@ -81,5 +83,6 @@ export default function install(app: App) {
 	app.component(V3Backdrop.name, V3Backdrop);
 	app.component(V3Dialog.name, V3Dialog);
 	app.component(V3Switch.name, V3Switch);
+	app.component(V3Tooltip.name, V3Tooltip);
 	app.config.globalProperties.$message = V3Message;
 }
