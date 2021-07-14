@@ -67,10 +67,6 @@ export default defineComponent({
 		Tippy,
 	},
 	props: {
-		modelValue: {
-			type: Boolean,
-			required: true,
-		},
 		/** 主题色（黑/白） */
 		theme: {
 			type: String as PropType<TYPES.ITooltipTheme>,

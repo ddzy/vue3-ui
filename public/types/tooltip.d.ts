@@ -19,7 +19,6 @@ export type ITooltipOffset = [number, number];
 export type ITooltipDelay = [number, number];
 
 export interface ITooltipProps {
-	modelValue: boolean;
 	theme: ITooltipTheme;
 	content: string;
 	placement: ITooltipPlacement;
