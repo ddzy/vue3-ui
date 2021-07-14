@@ -130,7 +130,7 @@ export default defineComponent({
 		/** 触发的方式 */
 		trigger: {
 			type: String,
-			default: 'click',
+			default: 'mouseenter',
 		},
 	},
 	setup(props: TYPES.ITooltipProps, context) {
