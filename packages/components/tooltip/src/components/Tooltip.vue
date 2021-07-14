@@ -7,6 +7,7 @@
 		}"
 	>
 		<tippy
+			:hideOnClick="props.trigger !== 'mouseenter'"
 			:trigger="props.trigger"
 			:theme="props.theme === 'dark' ? 'material' : 'light'"
 			:animation="props.animation"
@@ -129,7 +130,7 @@ export default defineComponent({
 		/** 触发的方式 */
 		trigger: {
 			type: String,
-			default: 'mouseenter',
+			default: 'click',
 		},
 	},
 	setup(props: TYPES.ITooltipProps, context) {
