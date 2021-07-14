@@ -2,6 +2,8 @@
 	<div
 		:class="{
 			'v3-tooltip': true,
+			'is-show': state.showDropdown,
+			'is-disabled': props.disabled,
 		}"
 	>
 		<tippy
