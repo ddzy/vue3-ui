@@ -4,11 +4,11 @@
 			<v3-col :span="12">
 				<h3>基本用法：</h3>
 			</v3-col>
-			<v3-col>
+			<v3-col style="margin: 0 auto">
 				<v3-row justify="center" :gutter="20">
 					<v3-col>
 						<v3-tooltip
-							content="上左"
+							content="我是上左的内容。。。。。。"
 							placement="top-start"
 							v-model="state.showTopStart"
 						>

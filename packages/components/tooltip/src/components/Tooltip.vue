@@ -6,7 +6,7 @@
 	>
 		<tippy
 			:trigger="props.trigger"
-			:theme="props.theme === 'dark' ? 'material' : 'light-border'"
+			:theme="props.theme === 'dark' ? 'material' : 'light'"
 			:animation="props.animation"
 			:placement="props.placement"
 			:zIndex="state.nextZIndex"
@@ -44,7 +44,7 @@ import {
 import * as TYPES from '@/public/types/tooltip';
 import VARIABLE from '@common/constants/internal-variable';
 import { Tippy, TippyInstance } from 'vue-tippy';
-import 'tippy.js/themes/light-border.css';
+import 'tippy.js/themes/light.css';
 import 'tippy.js/themes/material.css';
 
 type ILocalTippyInstance =
@@ -131,7 +131,7 @@ export default defineComponent({
 		/** 触发的方式 */
 		trigger: {
 			type: String,
-			default: 'mouseenter',
+			default: 'click',
 		},
 	},
 	setup(props: TYPES.ITooltipProps, context) {
