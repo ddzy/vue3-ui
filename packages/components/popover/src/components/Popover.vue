@@ -1,7 +1,7 @@
 <template>
 	<div
 		:class="{
-			'v3-tooltip': true,
+			'v3-popover': true,
 			'is-visible': state.showDropdown,
 			'is-disabled': props.disabled,
 		}"
@@ -22,15 +22,20 @@
 			:onHide="handleHide"
 			:onMount="handleMount"
 		>
-			<div class="v3-tooltip__trigger">
+			<div class="v3-popover__trigger">
 				<slot></slot>
 			</div>
 			<template #content>
-				<div class="v3-tooltip__dropdown">
-					<slot v-if="context.slots.content" name="content"></slot>
-					<template v-else>
-						{{ props.content }}
-					</template>
+				<div class="v3-popover__dropdown">
+					<div class="v3-popover-dropdown__title" v-if="props.title">
+						<h3>{{ props.title }}</h3>
+					</div>
+					<div class="v3-popover-dropdown__content">
+						<slot v-if="context.slots.content" name="content"></slot>
+						<template v-else>
+							{{ props.content }}
+						</template>
+					</div>
 				</div>
 			</template>
 		</tippy>
@@ -44,7 +49,7 @@ import {
 	reactive,
 	ref,
 } from 'vue';
-import * as TYPES from '@/public/types/tooltip';
+import * as TYPES from '@/public/types/popover';
 import VARIABLE from '@common/constants/internal-variable';
 import { Tippy, TippyInstance } from 'vue-tippy';
 import 'tippy.js/themes/light.css';
@@ -72,20 +77,24 @@ export default defineComponent({
 	props: {
 		/** 主题色（黑/白） */
 		theme: {
-			type: String as PropType<TYPES.ITooltipTheme>,
+			type: String as PropType<TYPES.IPopoverTheme>,
 			default: 'dark',
 			validator(v: string) {
 				return ['dark', 'light'].includes(v);
 			},
 		},
-		/** tooltip 内容，也可以通过 slot="content" 传入 */
+		/** popover 内容，也可以通过 slot="content" 传入 */
 		content: {
+			type: String,
+			default: '',
+		},
+		title: {
 			type: String,
 			default: '',
 		},
 		/** 弹出位置 */
 		placement: {
-			type: String as PropType<TYPES.ITooltipPlacement>,
+			type: String as PropType<TYPES.IPopoverPlacement>,
 			default: 'auto',
 			validator(v: string) {
 				return [
@@ -114,17 +123,17 @@ export default defineComponent({
 		},
 		/** 距离触发器的距离 */
 		offset: {
-			type: Object as PropType<TYPES.ITooltipOffset>,
+			type: Object as PropType<TYPES.IPopoverOffset>,
 			default: [0, 5],
 		},
 		/** 自定义弹出的动画 */
 		animation: {
 			type: String,
-			default: 'v3-tooltip-slide-fade',
+			default: 'v3-popover-slide-fade',
 		},
 		/** 显示/隐藏的延迟 */
 		delay: {
-			type: Object as PropType<TYPES.ITooltipDelay>,
+			type: Object as PropType<TYPES.IPopoverDelay>,
 			default: [0, 0],
 		},
 		/** 触发的方式 */
@@ -133,11 +142,11 @@ export default defineComponent({
 			default: 'mouseenter',
 		},
 	},
-	setup(props: TYPES.ITooltipProps, context) {
+	setup(props: TYPES.IPopoverProps, context) {
 		const state: IState = reactive({
-			/** tooltip 的 z-index（统一管理） */
+			/** popover 的 z-index（统一管理） */
 			nextZIndex: VARIABLE.getNextZIndex(),
-			/** tooltip 的显隐状态 */
+			/** popover 的显隐状态 */
 			showDropdown: false,
 			/** tippy 实例 */
 			tippy: null,
