@@ -44,7 +44,7 @@ $textarea-resize-list: none, horizontal, vertical, both;
 		}
 
 		@each $key in $textarea-resize-list {
-			&.v3-textarea--#{$key} {
+			&.is-resize-#{$key} {
 				resize: $key;
 			}
 		}

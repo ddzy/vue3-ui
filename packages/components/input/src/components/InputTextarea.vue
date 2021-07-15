@@ -17,7 +17,7 @@
 			:readonly="props.readonly"
 			:placeholder="props.placeholder"
 			:class="{
-				[`v3-textarea--${props.resize}`]: true,
+				[`is-resize-${props.resize}`]: true,
 			}"
 			@input="handleInput"
 			@change="handleChange"
