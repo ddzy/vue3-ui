@@ -96,7 +96,6 @@ describe('Tag 组件测试：', () => {
 		await wrapper.find('.v3-tag .v3-icon').trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-tag').text()).toBe('标签2');
-		console.log('wrapper.emitted() :>> ', wrapper.emitted());
 		expect(wrapper.emitted()).toHaveProperty('click');
 	});
 
