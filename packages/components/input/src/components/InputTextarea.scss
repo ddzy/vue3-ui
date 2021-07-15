@@ -1,30 +1,37 @@
+$textarea-resize-list: none, horizontal, vertical, both;
+
 .v3-input-textarea {
 	position: relative;
-	display: inline-block;
-	font-size: 0;
+	padding: $padding-small $padding-medium;
+	border: 1px solid $border-color-grey-default;
+	border-radius: $border-radius-width-default;
+	transition: all 0.15s ease;
 
 	&.is-disabled::after {
 		position: absolute;
 		top: 0;
 		left: 0;
+		bottom: 0;
+		right: 0;
 		content: '';
-		width: 100%;
-		height: 100%;
 		background-color: #f1f1f1;
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
+	&:focus-within {
+		border-color: $primary-color;
+		animation: inputTextareaActive 0.3s ease-out 0s 1;
+	}
+
 	textarea {
-		padding: 6px 12px;
-		border: 1px solid $border-color-grey-default;
-		border-radius: 6px;
+		padding: 0;
+		border: 0;
 		appearance: none;
 		outline: 0;
 		word-break: keep-all;
 		font-size: $font-size-small;
-		color: #666;
-		transition: all 0.15s ease;
+		color: $font-color-medium;
 
 		&::placeholder {
 			color: $border-color-grey-default;
@@ -32,25 +39,14 @@
 		&:hover {
 			border-color: $info-color;
 		}
-		&:focus {
-			border-color: $primary-color;
-			animation: inputTextareaActive 0.3s ease-out 0s 1;
-		}
 		&:disabled {
 			background-color: #fff;
 		}
 
-		&.v3-textarea--none {
-			resize: none;
-		}
-		&.v3-textarea--horizontal {
-			resize: horizontal;
-		}
-		&.v3-textarea--vertical {
-			resize: vertical;
-		}
-		&.v3-textarea--both {
-			resize: both;
+		@each $key in $textarea-resize-list {
+			&.v3-textarea--#{$key} {
+				resize: $key;
+			}
 		}
 	}
 }

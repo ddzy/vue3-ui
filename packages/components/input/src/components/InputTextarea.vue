@@ -113,23 +113,9 @@ export default defineComponent({
 		 * textarea 高度自适应
 		 */
 		function _autoHeight() {
-			const paddingBottom = Number.parseFloat(
-				window
-					.getComputedStyle(textareaRef.value)
-					.paddingBottom.replace('px', '')
-			);
-			const borderBottom = Number.parseFloat(
-				window
-					.getComputedStyle(textareaRef.value)
-					.borderBottomWidth.replace('px', '')
-			);
+			const { scrollHeight } = textareaRef.value;
 
-			textareaRef.value.style.height = 'auto';
-			state.defaultProps.height =
-				textareaRef.value.scrollHeight -
-				paddingBottom -
-				borderBottom -
-				borderBottom;
+			state.defaultProps.height = scrollHeight;
 		}
 
 		function handleChange(e: Event) {

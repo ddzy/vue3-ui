@@ -97,12 +97,11 @@
 			<v3-col>
 				<v3-input-textarea
 					v-model="state.inputValue9"
-					:width="100"
-					:height="150"
 					:resize="'both'"
 					:disabled="false"
 					:readonly="false"
 					:autoHeight="true"
+					:height="30"
 				></v3-input-textarea>
 			</v3-col>
 		</v3-row>
