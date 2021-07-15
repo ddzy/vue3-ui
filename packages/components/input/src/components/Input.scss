@@ -189,29 +189,17 @@
 
 @keyframes inputActive {
 	0% {
-		box-shadow: none;
-	}
-	50% {
-		box-shadow: 0 0 2px 2px $primary-color-plain;
-	}
-	75% {
-		box-shadow: 0 0 4px 2px $primary-color-plain;
+		box-shadow: 0 0 0 0 rgba(0, 160, 255, 0.4);
 	}
 	100% {
-		box-shadow: 0 0 10px 2px $primary-color-plain;
+		box-shadow: 0 0 0 4px rgba(0, 160, 255, 0);
 	}
 }
 @keyframes inputInvalidActive {
 	0% {
-		box-shadow: none;
-	}
-	50% {
-		box-shadow: 0 0 2px 2px $danger-color-plain;
-	}
-	75% {
-		box-shadow: 0 0 4px 2px $danger-color-plain;
+		box-shadow: 0 0 0 0 rgba(201, 27, 38, 0.4);
 	}
 	100% {
-		box-shadow: 0 0 10px 2px $danger-color-plain;
+		box-shadow: 0 0 0 4px rgba(201, 27, 38, 0);
 	}
 }
