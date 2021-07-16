@@ -1,0 +1,17 @@
+body {
+	font-size: $font-size-small;
+	font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC',
+		'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei',
+		sans-serif;
+	line-height: 1.5;
+	color: $font-color-default;
+	text-rendering: optimizeLegibility;
+}
+
+@for $key from 1 to 7 {
+	h#{$key} {
+		margin: $margin-medium 0;
+		font-weight: 800 - $key * 100;
+		font-size: 24px - $key * 2;
+	}
+}
