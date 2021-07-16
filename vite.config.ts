@@ -24,7 +24,7 @@ export default defineConfig({
 		preprocessorOptions: {
 			/** 配置 scss 全局变量的引入方式 */
 			scss: {
-				additionalData: `@import "./packages/common/styles/global-variable";`,
+				additionalData: `@import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-animation";`,
 			},
 		},
 	},
