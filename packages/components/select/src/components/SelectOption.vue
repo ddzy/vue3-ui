@@ -169,9 +169,6 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss">
-@import '@common/styles/global-animation.scss';
-</style>
 <style lang="scss" scoped>
 @import './Select.scss';
 </style>

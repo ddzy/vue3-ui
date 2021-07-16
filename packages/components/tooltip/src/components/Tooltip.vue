@@ -125,7 +125,7 @@ export default defineComponent({
 		/** 自定义弹出的动画 */
 		animation: {
 			type: String,
-			default: 'v3-tooltip-slide-fade',
+			default: 'v3-popper-slide-fade',
 		},
 		/** 显示/隐藏的延迟 */
 		delay: {
@@ -179,9 +179,6 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss">
-@import '@common/styles/global-animation.scss';
-</style>
 <style lang="scss" scoped>
 @import './Tooltip.scss';
 </style>

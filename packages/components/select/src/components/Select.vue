@@ -18,7 +18,7 @@
 		<tippy
 			trigger="click"
 			theme="light-border"
-			animation="v3-select-slide-fade"
+			animation="v3-popper-slide-fade"
 			placement="bottom"
 			:zIndex="state.nextZIndex"
 			:arrow="false"
@@ -608,9 +608,6 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss">
-@import '@common/styles/global-animation.scss';
-</style>
 <style lang="scss" scoped>
 @import './Select.scss';
 </style>

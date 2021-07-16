@@ -33,7 +33,7 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './tooltip/src/App.vue';
+import Demo from './popover/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
