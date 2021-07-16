@@ -3,7 +3,7 @@
 		:class="{
 			'v3-divider': true,
 			[`is-${props.direction}`]: !!props.direction,
-			[`is-position--${props.contentPosition}`]: !!props.contentPosition,
+			[`is-content--${props.contentPosition}`]: !!props.contentPosition,
 		}"
 	>
 		<div class="v3-divider__content" v-if="context.slots.default">
