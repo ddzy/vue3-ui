@@ -17,8 +17,10 @@ export type ITooltipPlacement =
 	| 'auto-end';
 export type ITooltipOffset = [number, number];
 export type ITooltipDelay = [number, number];
+export type ITooltipMaxWidth = 'none' | number;
 
 export interface ITooltipProps {
+	maxWidth: ITooltipMaxWidth;
 	theme: ITooltipTheme;
 	content: string;
 	placement: ITooltipPlacement;

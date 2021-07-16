@@ -16,6 +16,7 @@
 			:arrow="false"
 			:interactive="true"
 			:allowHTML="true"
+			:maxWidth="props.maxWidth"
 			:delay="props.delay"
 			:offset="props.offset"
 			:onShow="handleShow"
@@ -70,6 +71,10 @@ export default defineComponent({
 		Tippy,
 	},
 	props: {
+		maxWidth: {
+			type: [String, Number] as PropType<TYPES.ITooltipMaxWidth>,
+			default: 300,
+		},
 		/** 主题色（黑/白） */
 		theme: {
 			type: String as PropType<TYPES.ITooltipTheme>,

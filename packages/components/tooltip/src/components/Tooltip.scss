@@ -1,6 +1,5 @@
 .v3-tooltip {
 	:deep(.tippy-box) {
-    max-width: 100% !important;
 		border-radius: $border-radius-width-small;
 		&[data-theme~='light'] {
 			color: $font-color-default;
