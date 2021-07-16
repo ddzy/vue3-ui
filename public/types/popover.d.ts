@@ -17,8 +17,10 @@ export type IPopoverPlacement =
 	| 'auto-end';
 export type IPopoverOffset = [number, number];
 export type IPopoverDelay = [number, number];
+export type IPopoverMaxWidth = 'none' | number;
 
 export interface IPopoverProps {
+	maxWidth: IPopoverMaxWidth;
 	theme: IPopoverTheme;
 	content: string;
 	title: string;

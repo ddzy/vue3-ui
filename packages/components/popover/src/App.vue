@@ -69,7 +69,9 @@
 					<v3-button type="primary">保存</v3-button>
 					<template #content>
 						<div class="content">
-							<p>确定要保存吗？</p>
+							<p>
+								确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？
+							</p>
 							<div class="action">
 								<v3-button type="text">取消</v3-button>
 								<v3-button type="primary">确定</v3-button>
@@ -97,7 +99,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .content {
-	width: 180px;
 	.action {
 		display: flex;
 		align-items: center;

@@ -16,6 +16,7 @@
 			:arrow="false"
 			:interactive="true"
 			:allowHTML="true"
+			:maxWidth="props.maxWidth"
 			:delay="props.delay"
 			:offset="props.offset"
 			:onShow="handleShow"
@@ -65,6 +66,11 @@ export default defineComponent({
 		Tippy,
 	},
 	props: {
+		/** 最大宽度 */
+		maxWidth: {
+			type: [Number, String] as PropType<TYPES.IPopoverMaxWidth>,
+			default: 300,
+		},
 		/** 主题色（黑/白） */
 		theme: {
 			type: String as PropType<TYPES.IPopoverTheme>,
