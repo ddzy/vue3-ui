@@ -1,5 +1,15 @@
 <template>
-	<div class="v3-divider">divider</div>
+	<div
+		:class="{
+			'v3-divider': true,
+			[`is-${props.direction}`]: !!props.direction,
+			[`is-position--${props.contentPosition}`]: !!props.contentPosition,
+		}"
+	>
+		<div class="v3-divider__content" v-if="context.slots.default">
+			<slot></slot>
+		</div>
+	</div>
 </template>
 <script lang="ts">
 import {
@@ -38,6 +48,7 @@ export default defineComponent({
 		return {
 			state,
 			props,
+			context,
 			app,
 		};
 	},

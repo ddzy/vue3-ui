@@ -1,3 +1,16 @@
 .v3-divider {
-
+	&.is-vertical {
+		display: inline-block;
+		width: 1px;
+		height: 1em;
+		margin: 0 $margin-small + 2;
+		background-color: $info-color-middle;
+		vertical-align: middle;
+	}
+	&.is-horizontal {
+		width: 100%;
+		height: 1px;
+		background-color: $info-color-middle;
+		margin: $margin-large-2 0;
+	}
 }
