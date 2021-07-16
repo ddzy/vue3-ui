@@ -25,6 +25,7 @@ import V3Dialog from './dialog/main';
 import V3Switch from './switch/main';
 import V3Tooltip from './tooltip/main';
 import V3Popover from './popover/main';
+import V3Divider from './divider/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -87,5 +88,6 @@ export default function install(app: App) {
 	app.component(V3Switch.name, V3Switch);
 	app.component(V3Tooltip.name, V3Tooltip);
 	app.component(V3Popover.name, V3Popover);
+	app.component(V3Divider.name, V3Divider);
 	app.config.globalProperties.$message = V3Message;
 }
