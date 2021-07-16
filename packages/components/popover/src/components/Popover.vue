@@ -20,7 +20,6 @@
 			:offset="props.offset"
 			:onShow="handleShow"
 			:onHide="handleHide"
-			:onMount="handleMount"
 		>
 			<div class="v3-popover__trigger">
 				<slot></slot>
@@ -42,6 +41,10 @@
 	</div>
 </template>
 <script lang="ts">
+import * as TYPES from '@/public/types/popover';
+import VARIABLE from '@common/constants/internal-variable';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/themes/material.css';
 import {
 	defineComponent,
 	getCurrentInstance,
@@ -49,24 +52,11 @@ import {
 	reactive,
 	ref,
 } from 'vue';
-import * as TYPES from '@/public/types/popover';
-import VARIABLE from '@common/constants/internal-variable';
-import { Tippy, TippyInstance } from 'vue-tippy';
-import 'tippy.js/themes/light.css';
-import 'tippy.js/themes/material.css';
+import { Tippy } from 'vue-tippy';
 
-type ILocalTippyInstance =
-	| (TippyInstance & {
-			hide: () => void;
-			show: () => void;
-			unmount: () => void;
-			mount: () => void;
-	  })
-	| null;
 interface IState {
 	nextZIndex: number;
 	showDropdown: boolean;
-	tippy: ILocalTippyInstance;
 }
 
 export default defineComponent({
@@ -148,8 +138,6 @@ export default defineComponent({
 			nextZIndex: VARIABLE.getNextZIndex(),
 			/** popover 的显隐状态 */
 			showDropdown: false,
-			/** tippy 实例 */
-			tippy: null,
 		});
 		const app = ref(getCurrentInstance()).value;
 
@@ -167,10 +155,6 @@ export default defineComponent({
 			state.showDropdown = false;
 		}
 
-		function handleMount(instance: ILocalTippyInstance) {
-			state.tippy = instance;
-		}
-
 		return {
 			state,
 			app,
@@ -178,7 +162,6 @@ export default defineComponent({
 			context,
 			handleShow,
 			handleHide,
-			handleMount,
 		};
 	},
 });

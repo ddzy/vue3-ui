@@ -11,7 +11,7 @@
 					trigger="click"
 					theme="light"
 				>
-					<v3-button>鼠标移上来</v3-button>
+					<v3-button>点我</v3-button>
 				</v3-popover>
 			</v3-col>
 		</v3-row>
