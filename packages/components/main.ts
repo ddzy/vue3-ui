@@ -26,6 +26,7 @@ import V3Switch from './switch/main';
 import V3Tooltip from './tooltip/main';
 import V3Popover from './popover/main';
 import V3Divider from './divider/main';
+import V3Space from './space/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -34,7 +35,7 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './divider/src/App.vue';
+import Demo from './space/src/App.vue';
 const app = createApp(Demo);
 app.use(install);
 app.mount('#app');
@@ -63,6 +64,7 @@ export {
 	V3Switch,
 	V3Tooltip,
 	V3Popover,
+	V3Space,
 };
 
 export default function install(app: App) {
@@ -89,5 +91,6 @@ export default function install(app: App) {
 	app.component(V3Tooltip.name, V3Tooltip);
 	app.component(V3Popover.name, V3Popover);
 	app.component(V3Divider.name, V3Divider);
+	app.component(V3Space.name, V3Space);
 	app.config.globalProperties.$message = V3Message;
 }
