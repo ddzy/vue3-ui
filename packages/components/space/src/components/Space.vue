@@ -1,15 +1,19 @@
-<template>
-	<div class="v3-space">space</div>
-</template>
 <script lang="ts">
 import {
 	defineComponent,
-	getCurrentInstance,
+	h,
 	PropType,
 	reactive,
-	ref,
+	toRef,
+	VNode,
+	watch,
 } from 'vue';
 import * as TYPES from '@/public/types/space';
+
+interface IState {
+	children: VNode[];
+	wrapValue: 'wrap' | 'nowrap';
+}
 
 export default defineComponent({
 	name: 'V3Space',
@@ -52,15 +56,52 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.ISpaceProps, context) {
-		const state = reactive({});
-		const app = ref(getCurrentInstance()).value;
+		const state: IState = reactive({
+			/** 重新组装的子元素列表 */
+			children: [],
+			/** flex-wrap 值 */
+			wrapValue: 'wrap',
+		});
 
-		return {
-			state,
-			props,
-			context,
-			app,
-		};
+		if (context.slots.default && typeof context.slots.default === 'function') {
+			const children = context.slots.default();
+			const newChildren = children.map(v => {
+				return h(
+					'div',
+					{
+						class: 'v3-space__item',
+						style: {
+							margin: `0 ${props.size}px ${props.size}px 0`,
+						},
+					},
+					v
+				);
+			});
+
+			state.children = newChildren;
+		}
+
+		watch(
+			toRef(props, 'wrap'),
+			() => {
+				state.wrapValue = props.wrap ? 'wrap' : 'nowrap';
+			},
+			{ immediate: true }
+		);
+
+		return () =>
+			h(
+				'div',
+				{
+					class: `v3-space ${props.customClass}`,
+					style: {
+						'flex-direction': props.direction,
+						'align-items': props.align,
+						'flex-wrap': state.wrapValue,
+					},
+				},
+				state.children
+			);
 	},
 });
 </script>

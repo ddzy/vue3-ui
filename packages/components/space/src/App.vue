@@ -5,7 +5,13 @@
 				<h3>基本用法：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-space></v3-space>
+				<v3-space>
+					<v3-button type="primary">按钮1</v3-button>
+					<v3-button type="success">按钮2</v3-button>
+					<v3-button type="danger">按钮3</v3-button>
+					<v3-button type="warning">按钮4</v3-button>
+					<v3-button type="info">按钮5</v3-button>
+				</v3-space>
 			</v3-col>
 		</v3-row>
 	</div>
