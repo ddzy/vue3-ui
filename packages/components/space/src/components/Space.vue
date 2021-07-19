@@ -26,7 +26,7 @@ export default defineComponent({
 		/** 同 flex 布局的 align-items */
 		align: {
 			type: String as PropType<TYPES.ISpaceAlign>,
-			default: 'flex-start',
+			default: 'center',
 			validator(v: string) {
 				return ['start', 'end', 'center', 'flex-start', 'flex-end'].includes(v);
 			},
@@ -65,8 +65,10 @@ export default defineComponent({
 
 		if (context.slots.default && typeof context.slots.default === 'function') {
 			const children = context.slots.default();
-			const newChildren = children.map(v => {
-				return h(
+			const newChildren: VNode[] = [];
+
+			children.forEach((v, i) => {
+				const spaceItem = h(
 					'div',
 					{
 						class: 'v3-space__item',
@@ -76,6 +78,26 @@ export default defineComponent({
 					},
 					v
 				);
+
+				// 如果有自定义的分隔符，就需要创建一个分割元素
+				// 最后一项不需要添加分隔符
+				if (props.separator && i !== children.length - 1) {
+					newChildren.push(spaceItem);
+					newChildren.push(
+						h(
+							'span',
+							{
+								class: 'v3-space__separator',
+								style: {
+									margin: `0 ${props.size}px ${props.size}px 0`,
+								},
+							},
+							props.separator
+						)
+					);
+				} else {
+					newChildren.push(spaceItem);
+				}
 			});
 
 			state.children = newChildren;

@@ -76,14 +76,42 @@
 				</v3-space>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义分隔符（默认为空格）：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-space separator="|">
+					<v3-button type="text">按钮1</v3-button>
+					<v3-button type="text">按钮2</v3-button>
+					<v3-button type="text">按钮3</v3-button>
+					<v3-button type="text">按钮4</v3-button>
+					<v3-button type="text">按钮5</v3-button>
+					<v3-button type="text">按钮1</v3-button>
+				</v3-space>
+			</v3-col>
+			<v3-col>
+				<v3-space :separator="state.separator" :size="12">
+					<v3-button type="primary">按钮1</v3-button>
+					<v3-button type="success">按钮2</v3-button>
+					<v3-button type="danger">按钮3</v3-button>
+					<v3-button type="warning">按钮4</v3-button>
+					<v3-button type="info">按钮5</v3-button>
+				</v3-space>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, h, reactive } from 'vue';
+import V3Divider from '@components/divider/main';
 
 export default defineComponent({
 	setup(props, context) {
-		const state = reactive({});
+		const state = reactive({
+			separator: h(V3Divider),
+		});
 
 		return {
 			state,
