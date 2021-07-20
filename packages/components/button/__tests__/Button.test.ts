@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
 import V3Button from '../src/components/Button.vue';
 
-describe('Button 组件测试：', () => {
-	test('Button 组件应该正常接收 props', () => {
-		const wrapper1 = mount(V3Button, {
+describe('V3Button 组件测试：', () => {
+	test('V3Button 组件应该正常接收 props', () => {
+		const wrapper = mount(V3Button, {
 			props: {
 				type: 'primary',
 			},
@@ -11,9 +11,7 @@ describe('Button 组件测试：', () => {
 				default: '主按钮',
 			},
 		});
-		const classes1: string[] = wrapper1.find('.v3-button').classes();
-
-		expect(classes1.length).toBe(2);
+		expect(wrapper.find('.v3-button').classes().length).toBe(3);
 
 		const wrapper2 = mount(V3Button, {
 			props: {
@@ -23,13 +21,11 @@ describe('Button 组件测试：', () => {
 				nativeType: 'submit',
 			},
 		});
-		const classes2: string[] = wrapper2.find('.v3-button').classes();
-
-		expect(classes2.length).toBe(4);
+		expect(wrapper2.find('.v3-button').classes().length).toBe(5);
 	});
 
-	test('Button 组件应该正常接收【type】配置项，用来自定义按钮的类型', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【type】配置项，用来自定义按钮的类型', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:type="props.type"
@@ -52,18 +48,18 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 按钮默认为【default】类型
-		expect(wrapper1.find('.v3-button--default').exists()).toBeTruthy();
+		expect(wrapper.find('.v3-button--default').exists()).toBeTruthy();
 
 		// 手动修改类型
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			type: 'success',
 		});
-		expect(wrapper1.find('.v3-button--default').exists()).toBeFalsy();
-		expect(wrapper1.find('.v3-button--success').exists()).toBeTruthy();
+		expect(wrapper.find('.v3-button--default').exists()).toBeFalsy();
+		expect(wrapper.find('.v3-button--success').exists()).toBeTruthy();
 	});
 
-	test('Button 组件应该正常接收【nativeType】配置项，用来自定义按钮的原生类型', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【nativeType】配置项，用来自定义按钮的原生类型', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:nativeType="props.nativeType"
@@ -86,17 +82,17 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 按钮原生类型默认为【button】
-		expect(wrapper1.find('.v3-button').attributes().type).toBe('button');
+		expect(wrapper.find('.v3-button').attributes().type).toBe('button');
 
 		// 手动修改类型
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			nativeType: 'submit',
 		});
-		expect(wrapper1.find('.v3-button').attributes().type).toBe('submit');
+		expect(wrapper.find('.v3-button').attributes().type).toBe('submit');
 	});
 
-	test('Button 组件应该正常接收【borderType】配置项，用来自定义按钮的边框类型', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【borderType】配置项，用来自定义按钮的边框类型', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:borderType="props.borderType"
@@ -119,14 +115,14 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 手动修改边框类型
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			borderType: 'dashed',
 		});
-		expect(wrapper1.find('.has-border--dashed').exists()).toBeTruthy();
+		expect(wrapper.find('.has-border--dashed').exists()).toBeTruthy();
 	});
 
-	test('Button 组件应该正常接收【plain】配置项，用来启用简洁按钮', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【plain】配置项，用来启用简洁按钮', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:plain="props.plain"
@@ -149,17 +145,17 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认不为简洁类型
-		expect(wrapper1.find('.is-plain').exists()).toBeFalsy();
+		expect(wrapper.find('.is-plain').exists()).toBeFalsy();
 
 		// 手动修改
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			plain: true,
 		});
-		expect(wrapper1.find('.is-plain').exists()).toBeTruthy();
+		expect(wrapper.find('.is-plain').exists()).toBeTruthy();
 	});
 
-	test('Button 组件应该正常接收【icon】配置项，用来自定义按钮上显示的图标', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【icon】配置项，用来自定义按钮上显示的图标', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:icon="props.icon"
@@ -182,17 +178,17 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认没有图标
-		expect(wrapper1.find('.v3-icon').exists()).toBeFalsy();
+		expect(wrapper.find('.v3-icon').exists()).toBeFalsy();
 
 		// 添加图标
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			icon: 'v3-icon-editor',
 		});
-		expect(wrapper1.find('.v3-icon-editor').exists()).toBeTruthy();
+		expect(wrapper.find('.v3-icon-editor').exists()).toBeTruthy();
 	});
 
-	test('Button 组件应该正常接收【circle】配置项，用来决定是否启用圆形按钮', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【circle】配置项，用来决定是否启用圆形按钮', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:circle="props.circle"
@@ -215,16 +211,16 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认不是圆形
-		expect(wrapper1.find('.is-circle').exists()).toBeFalsy();
+		expect(wrapper.find('.is-circle').exists()).toBeFalsy();
 
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			circle: true,
 		});
-		expect(wrapper1.find('.is-circle').exists()).toBeTruthy();
+		expect(wrapper.find('.is-circle').exists()).toBeTruthy();
 	});
 
-	test('Button 组件应该正常接收【loading】配置项，用来自定义 loading 加载状态', async () => {
-		const wrapper1 = mount({
+	test('V3Button 组件应该正常接收【loading】配置项，用来自定义 loading 加载状态', async () => {
+		const wrapper = mount({
 			template: `
 				<v3-button
 					:loading="props.loading"
@@ -247,23 +243,23 @@ describe('Button 组件测试：', () => {
 		});
 
 		// 默认不处于加载状态
-		expect(wrapper1.find('.is-loading').exists()).toBeFalsy();
+		expect(wrapper.find('.is-loading').exists()).toBeFalsy();
 
 		// 手动开启加载中状态
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			loading: true,
 		});
-		expect(wrapper1.find('.is-loading').exists()).toBeTruthy();
+		expect(wrapper.find('.is-loading').exists()).toBeTruthy();
 	});
 
-	test('Button 组件应该正常禁用', async () => {
-		const wrapper1 = mount(V3Button, {
+	test('V3Button 组件应该正常禁用', async () => {
+		const wrapper = mount(V3Button, {
 			props: {
 				disabled: true,
 			},
 		});
-		const classes1: string[] = wrapper1.find('.v3-button').classes();
-		const attributes1: Record<string, string> = wrapper1
+		const classes1: string[] = wrapper.find('.v3-button').classes();
+		const attributes1: Record<string, string> = wrapper
 			.find('.v3-button')
 			.attributes();
 
@@ -271,11 +267,11 @@ describe('Button 组件测试：', () => {
 		expect(attributes1.hasOwnProperty('disabled')).toBeTruthy();
 
 		// 解除禁用后
-		await wrapper1.setProps({
+		await wrapper.setProps({
 			disabled: false,
 		});
-		const classes2: string[] = wrapper1.find('.v3-button').classes();
-		const attributes2: Record<string, string> = wrapper1
+		const classes2: string[] = wrapper.find('.v3-button').classes();
+		const attributes2: Record<string, string> = wrapper
 			.find('.v3-button')
 			.attributes();
 
@@ -283,7 +279,7 @@ describe('Button 组件测试：', () => {
 		expect(attributes2.hasOwnProperty('disabled')).toBeFalsy();
 	});
 
-	test('Button 组件的点击事件应该正常触发', async () => {
+	test('V3Button 组件的点击事件应该正常触发', async () => {
 		const component1 = {
 			components: {
 				V3Button,
@@ -318,22 +314,80 @@ describe('Button 组件测试：', () => {
 				},
 			},
 		};
-		const wrapper1 = mount(component1, {});
+		const wrapper = mount(component1, {});
 
-		const value1 = wrapper1.vm.count;
+		const value1 = wrapper.vm.count;
 		expect(value1).toBe(0);
 
-		wrapper1.vm.handleClick(1);
-		const value2 = wrapper1.vm.count;
+		wrapper.vm.handleClick(1);
+		const value2 = wrapper.vm.count;
 		expect(value2).toBe(1);
 
-		wrapper1.vm.handleClick(-9);
-		const value3 = wrapper1.vm.count;
+		wrapper.vm.handleClick(-9);
+		const value3 = wrapper.vm.count;
 		expect(value3).toBe(-8);
 
-		wrapper1.find('.v3-button.btn-increment').trigger('click');
-		expect(wrapper1.emitted()).toHaveProperty('click');
-		const value4 = wrapper1.vm.count;
+		wrapper.find('.v3-button.btn-increment').trigger('click');
+		expect(wrapper.emitted()).toHaveProperty('click');
+		const value4 = wrapper.vm.count;
 		expect(value4).toBe(-7);
+	});
+
+	test('V3Button 组件可以接收【size】配置项，用来控制按钮的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3Button,
+			},
+			template: `
+				<v3-button
+					v-for="v in btnList"
+					:key="v.type"
+					:type="v.type"
+					:size="v.size"
+				>
+					{{ v.title }}
+				</v3-button>
+			`,
+			data() {
+				return {
+					btnList: [
+						{
+							type: 'primary',
+							title: '小尺寸',
+							size: 'small',
+						},
+						{
+							type: 'primary',
+							title: '中尺寸',
+							size: 'medium',
+						},
+						{
+							type: 'primary',
+							title: '大尺寸',
+							size: 'large',
+						},
+					],
+				};
+			},
+		});
+
+		expect(
+			wrapper
+				.findAll('.v3-button')[0]
+				.classes()
+				.includes('is-size--small')
+		).toBeTruthy();
+		expect(
+			wrapper
+				.findAll('.v3-button')[1]
+				.classes()
+				.includes('is-size--medium')
+		).toBeTruthy();
+		expect(
+			wrapper
+				.findAll('.v3-button')[2]
+				.classes()
+				.includes('is-size--large')
+		).toBeTruthy();
 	});
 });
