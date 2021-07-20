@@ -14,6 +14,7 @@ export type IButtonBorderType =
 	| 'double'
 	| 'groove'
 	| 'outset';
+export type IButtonSize = 'small' | 'medium' | 'large';
 export interface IButtonProps {
 	type: IButtonType;
 	nativeType: IButtonNativeType;
@@ -23,4 +24,5 @@ export interface IButtonProps {
 	icon: string;
 	circle: boolean;
 	loading: boolean;
+	size: IButtonSize;
 }

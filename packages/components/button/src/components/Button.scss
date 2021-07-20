@@ -1,3 +1,21 @@
+$button-size-map: (
+	small: (
+		padding: $padding-small / 2 $padding-medium,
+		circle-padding: $padding-small,
+		font-size: $font-size-large,
+	),
+	medium: (
+		padding: $padding-small $padding-medium,
+		circle-padding: $padding-medium - 2,
+		font-size: $font-size-large-2,
+	),
+	large: (
+		padding: $padding-small + 2 $padding-medium,
+		circle-padding: $padding-medium + 2,
+		font-size: $font-size-large-2,
+	),
+);
+
 button {
 	appearance: none;
 	border: none;
@@ -10,6 +28,19 @@ button {
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.15s ease;
+
+	@each $key, $value in $button-size-map {
+		&.is-size--#{$key} {
+			padding: map-get($map: $value, $key: padding);
+			&.is-circle {
+				padding: map-get($map: $value, $key: circle-padding);
+			}
+			& [class*='v3-icon-'] {
+				font-size: map-get($map: $value, $key: font-size);
+			}
+		}
+	}
+
 	&:hover {
 		opacity: 0.8;
 	}
@@ -38,7 +69,7 @@ button {
 	& > *,
 	& > a > * {
 		display: inline-block;
-		vertical-align: top;
+		vertical-align: middle;
 	}
 	& [class*='v3-icon-'] {
 		font-size: 18px;

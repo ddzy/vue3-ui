@@ -207,6 +207,24 @@
 				</v3-button-group>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同尺寸的按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-space :size="12">
+					<v3-button
+						v-for="v in state.btnList13"
+						:key="v.type"
+						:type="v.type"
+						:size="v.size"
+					>
+						{{ v.title }}
+					</v3-button>
+				</v3-space>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -556,6 +574,28 @@ export default defineComponent({
 				icon: 'v3-icon-arrow-right',
 			},
 		];
+		// 不同尺寸的按钮
+		const btnList13: Array<{
+			type: string;
+			title: string;
+			size: string;
+		}> = [
+			{
+				type: 'primary',
+				title: '小尺寸',
+				size: 'small',
+			},
+			{
+				type: 'primary',
+				title: '中尺寸',
+				size: 'medium',
+			},
+			{
+				type: 'primary',
+				title: '大尺寸',
+				size: 'large',
+			},
+		];
 
 		const state = reactive({
 			btnList1,
@@ -570,6 +610,7 @@ export default defineComponent({
 			btnList10,
 			btnList11,
 			btnList12,
+			btnList13,
 		});
 
 		function handleLoadingBtnClick(type: string) {

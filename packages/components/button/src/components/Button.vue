@@ -11,6 +11,7 @@
 			[`is-disabled`]: state.defaultProps.disabled,
 			[`is-circle`]: props.circle,
 			[`is-loading`]: props.loading,
+			[`is-size--${props.size}`]: props.size,
 		}"
 	>
 		<a href="javascript: void 0;" v-if="props.type === 'text'">
@@ -118,6 +119,14 @@ export default defineComponent({
 		loading: {
 			type: Boolean,
 			default: false,
+		},
+		/** 按钮尺寸 */
+		size: {
+			type: String as PropType<TYPES.IButtonSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
 		},
 	},
 	setup(props: TYPES.IButtonProps, context) {
