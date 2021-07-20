@@ -48,11 +48,6 @@
 		]
 	},
 	"dependencies": {
-		"button": "^0.0.3",
-		"checkbox": "^0.0.3",
-		"icon": "^0.0.3",
-		"input": "^0.0.3",
-		"radio": "^0.0.3",
 		"vue": "^3.0.5"
 	},
 	"devDependencies": {
