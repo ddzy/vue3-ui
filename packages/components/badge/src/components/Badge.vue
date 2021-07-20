@@ -1,7 +1,21 @@
 <template>
-	<div class="v3-badge">
+	<div
+		:class="{
+			'v3-badge': true,
+			'is-dot': props.dot,
+			[`v3-badge--${props.type}`]: true,
+		}"
+	>
 		<slot></slot>
-		<div class="v3-badge__content"></div>
+		<sup
+			class="v3-badge__content"
+			:style="{
+				backgroundColor: props.backgroundColor,
+				color: props.color,
+			}"
+		>
+			<span v-if="!props.dot">{{ props.value }}</span>
+		</sup>
 	</div>
 </template>
 <script lang="ts">
@@ -26,12 +40,12 @@ export default defineComponent({
 				return ['primary', 'success', 'danger', 'warning', 'info'].includes(v);
 			},
 		},
-		/** 自定义徽标的背景颜色（优先级比 type 高） */
+		/** 自定义徽标的背景颜色（优先级比 type 高），必须和 color 一起设置 */
 		backgroundColor: {
 			type: String,
 			default: '',
 		},
-		/** 自定义徽标的文本颜色（优先级比 type 高） */
+		/** 自定义徽标的文本颜色（优先级比 type 高），必须和 backgroundColor 一起设置 */
 		color: {
 			type: String,
 			default: '',

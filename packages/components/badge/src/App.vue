@@ -4,10 +4,40 @@
 			<v3-col :span="12">
 				<h3>基本用法：</h3>
 			</v3-col>
-			<v3-col>
-				<v3-badge>
-					<v3-button plain>按钮1</v3-button>
-				</v3-badge>
+			<v3-col :span="12">
+				<v3-space :size="40">
+					<v3-badge :value="9">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge :value="99" type="success">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge :value="999" type="danger">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge :value="9999" type="warning">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge :value="99999" type="info">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+				</v3-space>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-space :size="30">
+					<v3-badge :value="9">
+						<v3-button type="primary">按钮1</v3-button>
+					</v3-badge>
+					<v3-badge :value="99" type="success">
+						<v3-button type="success">按钮1</v3-button>
+					</v3-badge>
+					<v3-badge value="new1" type="warning">
+						<v3-button type="text">按钮1</v3-button>
+					</v3-badge>
+					<v3-badge value="new2" type="info">
+						<v3-button type="text">按钮1</v3-button>
+					</v3-badge>
+				</v3-space>
 			</v3-col>
 		</v3-row>
 	</div>
