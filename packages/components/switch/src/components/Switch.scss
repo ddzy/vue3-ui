@@ -4,6 +4,14 @@
 	font-size: $font-size-small;
 	// 选中状态
 	&.is-active {
+		// 首次挂载时不需要动画
+		&.has-animation {
+			.v3-switch__select {
+				&::before {
+					animation: switchActive 0.3s ease-out 0s 1;
+				}
+			}
+		}
 		.v3-switch__inactive {
 			color: $font-color-default;
 		}
@@ -15,12 +23,19 @@
 			&::before {
 				left: calc(100% - 16px);
 				background-color: var(--active-color);
-				animation: switchActive 0.3s ease-out 0s 1;
 			}
 		}
 	}
 	// 非选中状态
 	&:not(.is-active) {
+		// 首次挂载时不需要动画
+		&.has-animation {
+			.v3-switch__select {
+				&::before {
+					animation: switchInactive 0.3s ease-out 0s 1;
+				}
+			}
+		}
 		.v3-switch__inactive {
 			color: $danger-color;
 		}
@@ -32,7 +47,6 @@
 			&::before {
 				left: -2px;
 				background-color: var(--inactive-color);
-				animation: switchInactive 0.3s ease-out 0s 1;
 			}
 		}
 	}

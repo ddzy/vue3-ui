@@ -6,6 +6,7 @@
 			'is-loading': props.loading,
 			'is-active': state.isChecked,
 			'is-disabled': props.disabled,
+			'has-animation': ![0, 1].includes(state.checkedCount),
 		}"
 		:style="{
 			'--active-color': hexToRgba(props.activeColor, 1),
@@ -158,6 +159,8 @@ export default defineComponent({
 			isChecked: false,
 			/** 动画的过渡时间 */
 			duration: 0.15,
+			/** 记录选中的次数 */
+			checkedCount: 0,
 		});
 		const app = ref(getCurrentInstance()).value;
 
@@ -169,6 +172,8 @@ export default defineComponent({
 				} else {
 					state.isChecked = props.modelValue === props.activeValue;
 				}
+
+				state.checkedCount += 1;
 			},
 			{ immediate: true }
 		);
