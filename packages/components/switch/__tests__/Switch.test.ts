@@ -60,7 +60,7 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(wrapper.find('.v3-switch').attributes().style).toBe(
-			`--active-color: rgba(0, 160, 255, 1); --inactive-color: rgba(184, 176, 176, 1); --active-color-half: rgba(0, 160, 255, 0.5); --inactive-color-half: rgba(184, 176, 176, 0.5); --active-color-little: rgba(0, 160, 255, 0.3); --inactive-color-little: rgba(184, 176, 176, 0.3); --move-duration: 0.15s;`
+			`--active-color: rgba(0, 160, 255, 1); --inactive-color: rgba(184, 176, 176, 1); --active-color-shadow: rgba(0, 160, 255, 0.8); --inactive-color-shadow: rgba(184, 176, 176, 0.8); --active-color-track: rgba(0, 160, 255, 0.4); --inactive-color-track: rgba(184, 176, 176, 0.4); --active-color-transparent: rgba(0, 160, 255, 0); --inactive-color-transparent: rgba(184, 176, 176, 0); --move-duration: 0.15s;`
 		);
 	});
 
