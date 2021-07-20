@@ -6,11 +6,9 @@
 			</v3-col>
 			<v3-col>
 				<v3-space>
-					<v3-button type="primary">按钮1</v3-button>
-					<v3-button type="success">按钮2</v3-button>
-					<v3-button type="danger">按钮3</v3-button>
-					<v3-button type="warning">按钮4</v3-button>
-					<v3-button type="info">按钮5</v3-button>
+					<v3-button v-for="(v, i) in state.btnList1" :key="i" :type="v.type">{{
+						v.text
+					}}</v3-button>
 				</v3-space>
 			</v3-col>
 		</v3-row>
@@ -111,6 +109,28 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			separator: h(V3Divider),
+			btnList1: [
+				{
+					type: 'primary',
+					text: '按钮1',
+				},
+				{
+					type: 'success',
+					text: '按钮2',
+				},
+				{
+					type: 'danger',
+					text: '按钮3',
+				},
+				{
+					type: 'warning',
+					text: '按钮4',
+				},
+				{
+					type: 'info',
+					text: '按钮5',
+				},
+			],
 		});
 
 		return {

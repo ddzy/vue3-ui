@@ -64,8 +64,17 @@ export default defineComponent({
 		});
 
 		if (context.slots.default && typeof context.slots.default === 'function') {
-			const children = context.slots.default();
+			let children = context.slots.default();
 			const newChildren: VNode[] = [];
+
+			// slot 有可能是通过 v-for 遍历出来的
+			if (
+				children.length === 1 &&
+				children[0] &&
+				Array.isArray(children[0].children)
+			) {
+				children = children[0].children as VNode[];
+			}
 
 			children.forEach((v, i) => {
 				const spaceItem = h(
