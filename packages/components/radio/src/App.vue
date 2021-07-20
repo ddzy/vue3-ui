@@ -89,7 +89,7 @@ export default defineComponent({
 			radioValue3: 1,
 		});
 
-		function handleChange(v) {
+		function handleChange(v: MouseEvent) {
 			console.log('v :>> ', v);
 		}
 
