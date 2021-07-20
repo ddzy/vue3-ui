@@ -68,6 +68,35 @@
 				</v3-space>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义颜色：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-space :size="30">
+					<v3-badge backgroundColor="red" color="#fff" :value="9">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge
+						backgroundColor="pink"
+						color="darkred"
+						:value="99"
+						type="success"
+					>
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge
+						backgroundColor="purple"
+						color="#fff"
+						:value="999"
+						type="danger"
+					>
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+				</v3-space>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
