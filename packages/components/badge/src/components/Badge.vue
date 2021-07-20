@@ -14,15 +14,17 @@
 				color: props.color,
 			}"
 		>
-			<span v-if="!props.dot">{{ props.value }}</span>
+			<span v-if="!props.dot">{{ state.value }}</span>
 		</sup>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue';
+import { defineComponent, PropType, reactive, toRef, watch } from 'vue';
 import * as TYPES from '@/public/types/badge';
 
-interface IState {}
+interface IState {
+	value: TYPES.IBadgeValue;
+}
 
 export default defineComponent({
 	name: 'V3Badge',
@@ -40,12 +42,12 @@ export default defineComponent({
 				return ['primary', 'success', 'danger', 'warning', 'info'].includes(v);
 			},
 		},
-		/** 自定义徽标的背景颜色（优先级比 type 高），必须和 color 一起设置 */
+		/** 自定义徽标的背景颜色（优先级比 type 高） */
 		backgroundColor: {
 			type: String,
 			default: '',
 		},
-		/** 自定义徽标的文本颜色（优先级比 type 高），必须和 backgroundColor 一起设置 */
+		/** 自定义徽标的文本颜色（优先级比 type 高） */
 		color: {
 			type: String,
 			default: '',
@@ -62,7 +64,23 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.IBadgeProps, context) {
-		const state: IState = reactive({});
+		const state: IState = reactive({
+			value: '',
+		});
+
+		watch(
+			toRef(props, 'value'),
+			() => {
+				if (typeof props.value === 'number' && props.max > 0) {
+					// 如果超出最大值则显示最大值，反之显示当前值
+					state.value =
+						props.value >= props.max ? `${props.max}+` : props.value;
+				} else {
+					state.value = props.value;
+				}
+			},
+			{ immediate: true }
+		);
 
 		return {
 			state,

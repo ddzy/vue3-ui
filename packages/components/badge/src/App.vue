@@ -97,6 +97,22 @@
 				</v3-space>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>限制最大值：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-space :size="40">
+					<v3-badge :value="99" :max="99" type="warning">
+						<v3-button plain>按钮1</v3-button>
+					</v3-badge>
+					<v3-badge :value="20" :max="99" type="info">
+						<v3-button plain>按钮2</v3-button>
+					</v3-badge>
+				</v3-space>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
