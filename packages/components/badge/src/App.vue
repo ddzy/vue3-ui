@@ -6,7 +6,7 @@
 			</v3-col>
 			<v3-col>
 				<v3-badge>
-					<v3-button>按钮1</v3-button>
+					<v3-button plain>按钮1</v3-button>
 				</v3-badge>
 			</v3-col>
 		</v3-row>
