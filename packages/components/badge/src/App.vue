@@ -40,6 +40,34 @@
 				</v3-space>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>圆点样式：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-space :size="30">
+					<v3-badge dot type="primary">
+						<v3-button type="primary" icon="v3-icon-assessed-badge"></v3-button>
+					</v3-badge>
+					<v3-badge dot type="success">
+						<v3-button type="success" icon="v3-icon-cart-full"></v3-button>
+					</v3-badge>
+					<v3-badge dot type="danger">
+						<v3-button
+							type="danger"
+							icon="v3-icon-CurrencyConverter"
+						></v3-button>
+					</v3-badge>
+					<v3-badge dot type="warning">
+						文本4
+					</v3-badge>
+					<v3-badge dot type="info">
+						文本5
+					</v3-badge>
+				</v3-space>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">

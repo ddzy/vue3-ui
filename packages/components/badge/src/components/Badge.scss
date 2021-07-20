@@ -36,9 +36,9 @@ $badge-type-map: (
 	&.is-dot {
 		.v3-badge__content {
 			right: 0;
+			padding: 4px;
 			border-radius: 50%;
-			padding: $padding-small / 2;
-			transform: translate(100%, -50%);
+			transform: translate(50%, -50%);
 		}
 	}
 
@@ -48,7 +48,7 @@ $badge-type-map: (
 		top: 0;
 		right: 10px;
 		padding: 0 $padding-small;
-    border: 1px solid #fff;
+		border: 1px solid #fff;
 		border-radius: $border-radius-width-large;
 		font-size: $font-size-mini;
 		transform: translate(100%, -50%);
