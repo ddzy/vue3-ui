@@ -175,18 +175,17 @@
 				<h3>加载中的按钮：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-space :size="12">
-					<v3-button
-						v-for="v in state.btnList11"
-						:key="v.type"
-						:type="v.type"
-						:loading="v.loading"
-						:plain="v.plain"
-						@click="handleLoadingBtnClick(v.type)"
-					>
-						{{ v.title }}
-					</v3-button>
-				</v3-space>
+				<v3-button
+					class="btn__item"
+					v-for="v in state.btnList11"
+					:key="v.type"
+					:type="v.type"
+					:loading="v.loading"
+					:plain="v.plain"
+					@click="handleLoadingBtnClick(v.type)"
+				>
+					{{ v.title }}
+				</v3-button>
 			</v3-col>
 		</v3-row>
 
@@ -639,5 +638,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .demo-container {
 	padding: 20px;
+	.btn__item {
+		display: inline-block;
+		margin-right: 12px;
+	}
 }
 </style>
