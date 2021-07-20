@@ -11,7 +11,7 @@
 			color: var(--active-color);
 		}
 		.v3-switch__select {
-			background-color: var(--active-color-half);
+			background-color: var(--active-color-track);
 			&::before {
 				left: calc(100% - 16px);
 				background-color: var(--active-color);
@@ -28,7 +28,7 @@
 			color: $font-color-default;
 		}
 		.v3-switch__select {
-			background-color: var(--inactive-color-half);
+			background-color: var(--inactive-color-track);
 			&::before {
 				left: -2px;
 				background-color: var(--inactive-color);
@@ -82,29 +82,17 @@
 
 @keyframes switchActive {
 	0% {
-		box-shadow: none;
-	}
-	50% {
-		box-shadow: 0 0 2px 2px var(--active-color-little);
-	}
-	75% {
-		box-shadow: 0 0 4px 2px var(--active-color-little);
+		box-shadow: 0 0 0 0 var(--active-color-shadow);
 	}
 	100% {
-		box-shadow: 0 0 10px 2px var(--active-color-little);
+		box-shadow: 0 0 0 4px var(--active-color-transparent);
 	}
 }
 @keyframes switchInactive {
 	0% {
-		box-shadow: none;
-	}
-	50% {
-		box-shadow: 0 0 2px 2px var(--inactive-color-little);
-	}
-	75% {
-		box-shadow: 0 0 4px 2px var(--inactive-color-little);
+		box-shadow: 0 0 0 0 var(--inactive-color-shadow);
 	}
 	100% {
-		box-shadow: 0 0 10px 2px var(--inactive-color-little);
+		box-shadow: 0 0 0 4px var(--inactive-color-transparent);
 	}
 }

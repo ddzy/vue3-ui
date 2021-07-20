@@ -10,10 +10,12 @@
 		:style="{
 			'--active-color': hexToRgba(props.activeColor, 1),
 			'--inactive-color': hexToRgba(props.inactiveColor, 1),
-			'--active-color-half': hexToRgba(props.activeColor, 0.5),
-			'--inactive-color-half': hexToRgba(props.inactiveColor, 0.5),
-			'--active-color-little': hexToRgba(props.activeColor, 0.3),
-			'--inactive-color-little': hexToRgba(props.inactiveColor, 0.3),
+			'--active-color-shadow': hexToRgba(props.activeColor, 0.8),
+			'--inactive-color-shadow': hexToRgba(props.inactiveColor, 0.8),
+			'--active-color-track': hexToRgba(props.activeColor, 0.4),
+			'--inactive-color-track': hexToRgba(props.inactiveColor, 0.4),
+			'--active-color-transparent': hexToRgba(props.activeColor, 0),
+			'--inactive-color-transparent': hexToRgba(props.inactiveColor, 0),
 			'--move-duration': `${state.duration}s`,
 		}"
 	>
