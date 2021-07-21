@@ -180,6 +180,41 @@
 				></v3-input-number>
 			</v3-col>
 		</v3-row>
+
+		<v3-row :gutter="12">
+			<v3-col :span="12">
+				<h3>不同尺寸的输入框：</h3>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px">
+				<v3-input
+					size="large"
+					v-model="state.inputValue13"
+					:type="'text'"
+					:maxlength="10"
+					:showWordLimit="true"
+				>
+				</v3-input>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px">
+				<v3-input
+					size="medium"
+					v-model="state.inputValue14"
+					:type="'text'"
+					:appendIcon="'v3-icon-pin'"
+				>
+					<template #prepend>
+						<span style="padding: 0 12px;">前置元素</span>
+					</template>
+					<template #append>
+						<span style="padding: 0 12px;">后置元素</span>
+					</template>
+				</v3-input>
+			</v3-col>
+			<v3-col>
+				<v3-input size="small" v-model="state.inputValue15" :type="'text'">
+				</v3-input>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -208,6 +243,9 @@ export default defineComponent({
 			inputValue10: 0,
 			inputValue11: 0,
 			inputValue12: 0,
+			inputValue13: '',
+			inputValue14: '',
+			inputValue15: '',
 		});
 
 		watch(state, () => {

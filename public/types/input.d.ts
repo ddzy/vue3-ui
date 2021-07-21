@@ -1,4 +1,5 @@
 export type IInputType = 'text' | 'password';
+export type IInputSize = 'small' | 'medium' | 'large';
 
 export interface IInputProps {
   type: IInputType;
@@ -14,6 +15,7 @@ export interface IInputProps {
   maxlength: number;
   placeholder: string;
   showPassword: boolean;
+  size: IInputSize;
   modelValue: string;
 }
 
@@ -42,5 +44,6 @@ export interface IInputNumberProps {
   readonly: boolean;
   controlsPosition: INumberControlsPosition;
   placeholder: string;
+  size: IInputSize;
   modelValue: number;
 }

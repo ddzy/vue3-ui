@@ -1,4 +1,24 @@
+$input-number-size-map: (
+	small: (
+		icon-font-size: $font-size-small,
+	),
+	medium: (
+		icon-font-size: $font-size-normal,
+	),
+	large: (
+		icon-font-size: $font-size-large,
+	),
+);
+
 .v3-input-number {
+	@each $key, $value in $input-number-size-map {
+		& :deep(.v3-input.is-size--#{$key}) {
+			i.v3-icon {
+				font-size: map-get($map: $value, $key: icon-font-size);
+			}
+		}
+	}
+
 	// 控制组位于两边
 	.v3-number__minus-wrapper,
 	.v3-number__plus-wrapper {

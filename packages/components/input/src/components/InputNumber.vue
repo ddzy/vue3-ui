@@ -10,6 +10,7 @@
 			:type="'text'"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
+			:size="props.size"
 			@change="handleChange"
 			@focus="handleFocus"
 			@blur="handleBlur"
@@ -162,6 +163,14 @@ export default defineComponent({
 		placeholder: {
 			type: String,
 			default: '请输入内容',
+		},
+		/** 输入框的尺寸 */
+		size: {
+			type: String as PropType<TYPES.IInputSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
 		},
 		modelValue: {
 			type: Number,

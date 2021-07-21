@@ -16,6 +16,7 @@
 			'has-clear': props.clearable,
 			'has-password': props.showPassword,
 			'has-word-limit': props.showWordLimit,
+			[`is-size--${props.size}`]: props.size,
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
@@ -234,6 +235,14 @@ export default defineComponent({
 		showPassword: {
 			type: Boolean,
 			default: false,
+		},
+		/** 输入框的尺寸 */
+		size: {
+			type: String as PropType<TYPES.IInputSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
 		},
 		modelValue: {
 			type: String,
