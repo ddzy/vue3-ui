@@ -20,7 +20,14 @@
 				@change="handleChange"
 			/>
 
-			<div class="v3-radio__select"></div>
+			<div
+				:class="{
+					'v3-radio__select': true,
+					'has-animation':
+						props.label === state.radioValue &&
+						![0, 1].includes(state.checkedCount),
+				}"
+			></div>
 			<div class="v3-radio__label">
 				<slot></slot>
 			</div>
@@ -84,6 +91,8 @@ export default defineComponent({
 			injectedOnRadioGroupChange: null || undefined,
 			/** RadioGroup 实例 */
 			injectedRadioGroupInstance: null || undefined,
+			/** 记录单选框选中的次数 */
+			checkedCount: 0,
 		});
 		const app = getCurrentInstance();
 		const radioRef = ref(document.createElement('input'));
@@ -103,6 +112,7 @@ export default defineComponent({
 			),
 			(newValue: any) => {
 				state.radioValue = newValue;
+				state.checkedCount += 1;
 			},
 			{ immediate: true }
 		);

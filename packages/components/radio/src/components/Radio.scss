@@ -91,7 +91,9 @@ $radio-size-map: (
 			&:checked:not(:disabled) {
 				& ~ .v3-radio__select {
 					border-color: $primary-color;
-					animation: radioActive 0.3s ease-out 0s 1;
+					&.has-animation {
+						animation: radioActive 0.3s ease-out 0s 1;
+					}
 					&::after {
 						transform: scale(1);
 					}
