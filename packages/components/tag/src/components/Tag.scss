@@ -1,86 +1,86 @@
 $tag-type-list: (
 	primary: (
-		borderColor: $primary-color,
+		border-color: $primary-color,
 		color: #fff,
-		backgroundColor: $primary-color,
-		iconHoverBackgroundColor: #fff,
-		iconHoverColor: $primary-color,
-		plainBorderColor: $primary-color-little,
-		plainColor: $primary-color,
-		plainBackgroundColor: $primary-color-plain,
-		plainIconHoverBackgroundColor: $primary-color-little,
-		plainIconHoverColor: #fff,
+		background-color: $primary-color,
+		icon-hover-background-color: #fff,
+		icon-hover-color: $primary-color,
+		plain-border-color: $primary-color-little,
+		plain-color: $primary-color,
+		plain-background-color: $primary-color-plain,
+		plain-icon-hover-background-color: $primary-color-little,
+		plain-icon-hover-color: #fff,
 	),
 	success: (
-		borderColor: $success-color,
+		border-color: $success-color,
 		color: #fff,
-		backgroundColor: $success-color,
-		iconHoverBackgroundColor: #fff,
-		iconHoverColor: $success-color,
-		plainBorderColor: $success-color-little,
-		plainColor: $success-color,
-		plainBackgroundColor: $success-color-plain,
-		plainIconHoverBackgroundColor: $success-color-little,
-		plainIconHoverColor: #fff,
+		background-color: $success-color,
+		icon-hover-background-color: #fff,
+		icon-hover-color: $success-color,
+		plain-border-color: $success-color-little,
+		plain-color: $success-color,
+		plain-background-color: $success-color-plain,
+		plain-icon-hover-background-color: $success-color-little,
+		plain-icon-hover-color: #fff,
 	),
 	danger: (
-		borderColor: $danger-color,
+		border-color: $danger-color,
 		color: #fff,
-		backgroundColor: $danger-color,
-		iconHoverBackgroundColor: #fff,
-		iconHoverColor: $danger-color,
-		plainBorderColor: $danger-color-little,
-		plainColor: $danger-color,
-		plainBackgroundColor: $danger-color-plain,
-		plainIconHoverBackgroundColor: $danger-color-little,
-		plainIconHoverColor: #fff,
+		background-color: $danger-color,
+		icon-hover-background-color: #fff,
+		icon-hover-color: $danger-color,
+		plain-border-color: $danger-color-little,
+		plain-color: $danger-color,
+		plain-background-color: $danger-color-plain,
+		plain-icon-hover-background-color: $danger-color-little,
+		plain-icon-hover-color: #fff,
 	),
 	warning: (
-		borderColor: $warning-color,
+		border-color: $warning-color,
 		color: #fff,
-		backgroundColor: $warning-color,
-		iconHoverBackgroundColor: #fff,
-		iconHoverColor: $warning-color,
-		plainBorderColor: $warning-color-little,
-		plainColor: $warning-color,
-		plainBackgroundColor: $warning-color-plain,
-		plainIconHoverBackgroundColor: $warning-color-little,
-		plainIconHoverColor: #fff,
+		background-color: $warning-color,
+		icon-hover-background-color: #fff,
+		icon-hover-color: $warning-color,
+		plain-border-color: $warning-color-little,
+		plain-color: $warning-color,
+		plain-background-color: $warning-color-plain,
+		plain-icon-hover-background-color: $warning-color-little,
+		plain-icon-hover-color: #fff,
 	),
 	info: (
-		borderColor: $info-color,
+		border-color: $info-color,
 		color: #fff,
-		backgroundColor: $info-color,
-		iconHoverBackgroundColor: #fff,
-		iconHoverColor: $info-color,
-		plainBorderColor: $info-color-little,
-		plainColor: $info-color,
-		plainBackgroundColor: $info-color-plain,
-		plainIconHoverBackgroundColor: $info-color-little,
-		plainIconHoverColor: #fff,
+		background-color: $info-color,
+		icon-hover-background-color: #fff,
+		icon-hover-color: $info-color,
+		plain-border-color: $info-color-little,
+		plain-color: $info-color,
+		plain-background-color: $info-color-plain,
+		plain-icon-hover-background-color: $info-color-little,
+		plain-icon-hover-color: #fff,
 	),
 );
 $tag-size-list: (
 	small: (
-		fontSize: $font-size-mini,
+		font-size: $font-size-mini,
 		padding: 0 $padding-small,
-		marginLeft: 1px,
+		margin-left: 1px,
 		icon-width: 12px,
 		icon-height: 12px,
 		icon-line-height: 12px,
 	),
 	medium: (
-		fontSize: $font-size-mini,
+		font-size: $font-size-mini,
 		padding: 3px $padding-small + 3,
-		marginLeft: 4px,
+		margin-left: 4px,
 		icon-width: 14px,
 		icon-height: 14px,
 		icon-line-height: 14px,
 	),
 	large: (
-		fontSize: $font-size-mini,
+		font-size: $font-size-mini,
 		padding: 5px $padding-small + 6,
-		marginLeft: 7px,
+		margin-left: 7px,
 		icon-width: 16px,
 		icon-height: 16px,
 		icon-line-height: 16px,
@@ -103,29 +103,29 @@ $tag-size-list: (
 
 	@each $key, $value in $tag-type-list {
 		&.v3-tag--#{$key} {
-			background-color: map-get($map: $value, $key: backgroundColor);
-			border-color: map-get($map: $value, $key: borderColor);
+			background-color: map-get($map: $value, $key: background-color);
+			border-color: map-get($map: $value, $key: border-color);
 			color: map-get($map: $value, $key: color);
 			i.v3-icon {
 				&:hover {
 					background-color: map-get(
 						$map: $value,
-						$key: iconHoverBackgroundColor
+						$key: icon-hover-background-color
 					);
-					color: map-get($map: $value, $key: iconHoverColor);
+					color: map-get($map: $value, $key: icon-hover-color);
 				}
 			}
 			&.is-plain {
-				background-color: map-get($map: $value, $key: plainBackgroundColor);
-				border-color: map-get($map: $value, $key: plainBorderColor);
-				color: map-get($map: $value, $key: plainColor);
+				background-color: map-get($map: $value, $key: plain-background-color);
+				border-color: map-get($map: $value, $key: plain-border-color);
+				color: map-get($map: $value, $key: plain-color);
 				i.v3-icon {
 					&:hover {
 						background-color: map-get(
 							$map: $value,
-							$key: plainIconHoverBackgroundColor
+							$key: plain-icon-hover-background-color
 						);
-						color: map-get($map: $value, $key: plainIconHoverColor);
+						color: map-get($map: $value, $key: plain-icon-hover-color);
 					}
 				}
 			}
@@ -134,13 +134,13 @@ $tag-size-list: (
 
 	@each $key, $value in $tag-size-list {
 		&.is-size--#{$key} {
-			font-size: map-get($map: $value, $key: fontSize);
+			font-size: map-get($map: $value, $key: font-size);
 			padding: map-get($map: $value, $key: padding);
 			i.v3-icon {
 				width: map-get($map: $value, $key: icon-width);
 				height: map-get($map: $value, $key: icon-height);
-				margin-left: map-get($map: $value, $key: marginLeft);
-				font-size: map-get($map: $value, $key: fontSize);
+				margin-left: map-get($map: $value, $key: margin-left);
+				font-size: map-get($map: $value, $key: font-size);
 				line-height: map-get($map: $value, $key: icon-line-height);
 			}
 		}
