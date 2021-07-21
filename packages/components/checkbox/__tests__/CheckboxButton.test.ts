@@ -1,9 +1,10 @@
 import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
 import V3CheckboxButton from '../src/components/CheckboxButton.vue';
+import V3CheckboxGroup from '../src/components/CheckboxGroup.vue';
 
-describe('CheckboxButton 组件测试：', () => {
-	test('单一的 CheckboxButton 组件进行双向绑定的值应该是【布尔值】', async () => {
+describe('V3CheckboxButton 组件测试：', () => {
+	test('单一的 V3CheckboxButton 组件进行双向绑定的值应该是【布尔值】', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -105,5 +106,76 @@ describe('CheckboxButton 组件测试：', () => {
 		// 【禁用】状态下点击
 		await wrapper1.find('input[type="checkbox"]').trigger('click');
 		expect(wrapper1.vm.state.checkboxValue).toBeFalsy();
+	});
+
+	test('V3CheckboxButton 组件可以接收【size】配置项，用来控制复选按钮的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3CheckboxButton,
+				V3CheckboxGroup,
+			},
+			template: `
+				<v3-checkbox-group v-model="checkboxValue">
+					<v3-checkbox-button
+						size="small"
+						v-for="v in checkboxOriginValue"
+						:key="v._id"
+						:label="v._id"
+						:disabled="v.disabled"
+						>{{ v.name }}</v3-checkbox-button
+					>
+				</v3-checkbox-group>
+
+				<v3-checkbox-group v-model="checkboxValue">
+					<v3-checkbox-button
+						size="medium"
+						v-for="v in checkboxOriginValue"
+						:key="v._id"
+						:label="v._id"
+						:disabled="v.disabled"
+						>{{ v.name }}</v3-checkbox-button
+					>
+				</v3-checkbox-group>
+
+				<v3-checkbox-group v-model="checkboxValue">
+					<v3-checkbox-button
+						size="large"
+						v-for="v in checkboxOriginValue"
+						:key="v._id"
+						:label="v._id"
+						:disabled="v.disabled"
+						>{{ v.name }}</v3-checkbox-button
+					>
+				</v3-checkbox-group>
+			`,
+			data() {
+				return {
+					checkboxValue: [],
+					checkboxOriginValue: [
+						{
+							_id: 'banana',
+							name: '多选项1',
+							disabled: false,
+						},
+						{
+							_id: 'apple',
+							name: '多选项2',
+							disabled: false,
+						},
+					],
+				};
+			},
+		});
+
+		expect(wrapper.findAll('.v3-checkbox-group').length).toBe(3);
+		expect(wrapper.findAll('.v3-checkbox-button.is-size--small').length).toBe(
+			2
+		);
+		expect(wrapper.findAll('.v3-checkbox-button.is-size--medium').length).toBe(
+			2
+		);
+		expect(wrapper.findAll('.v3-checkbox-button.is-size--large').length).toBe(
+			2
+		);
 	});
 });

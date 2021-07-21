@@ -2,8 +2,8 @@ import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
 import V3Checkbox from '../src/components/Checkbox.vue';
 
-describe('Checkbox 组件测试：', () => {
-	test('单一的 Checkbox 组件进行双向绑定的值应该是【布尔值】', async () => {
+describe('V3Checkbox 组件测试：', () => {
+	test('单一的 V3Checkbox 组件进行双向绑定的值应该是【布尔值】', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -49,7 +49,7 @@ describe('Checkbox 组件测试：', () => {
 		expect(wrapper1.emitted()).toHaveProperty('change');
 	});
 
-	test('Checkbox 组件应该正常接收【disabled】并禁用', async () => {
+	test('V3Checkbox 组件应该正常接收【disabled】并禁用', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -107,7 +107,7 @@ describe('Checkbox 组件测试：', () => {
 		expect(wrapper1.vm.state.checkboxValue).toBeFalsy();
 	});
 
-	test('Checkbox 组件应该正常接收【border】属性并展示为带边框的复选框', async () => {
+	test('V3Checkbox 组件应该正常接收【border】属性并展示为带边框的复选框', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -155,7 +155,7 @@ describe('Checkbox 组件测试：', () => {
 		expect(wrapper1.find('.is-bordered').exists()).toBeTruthy();
 	});
 
-	test('Checkbox 组件应该正常接收【indeterminate】并进入不确定状态', async () => {
+	test('V3Checkbox 组件应该正常接收【indeterminate】并进入不确定状态', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -207,7 +207,7 @@ describe('Checkbox 组件测试：', () => {
 		).toBeTruthy();
 	});
 
-	test('Checkbox 组件应该正常接收【selectedIcon、indeterminatedIcon、defaultIcon】并可分别自定义【选中时、不确定时、默认】状态的图标', async () => {
+	test('V3Checkbox 组件应该正常接收【selectedIcon、indeterminatedIcon、defaultIcon】并可分别自定义【选中时、不确定时、默认】状态的图标', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -271,5 +271,76 @@ describe('Checkbox 组件测试：', () => {
 			indeterminate: true,
 		});
 		expect(wrapper1.find('.v3-icon-sami-select').exists()).toBeTruthy();
+	});
+
+	test('V3Checkbox 组件可以接收【size】配置项，用来控制复选框的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3Checkbox,
+			},
+			template: `
+				<v3-checkbox
+					style="margin-bottom: 12px"
+					size="small"
+					v-model="checkboxValue1"
+					:defaultIcon="'v3-icon-like'"
+					:selectedIcon="'v3-icon-like1'"
+					:indeterminatedIcon="'v3-icon-sami-select'"
+					>小尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="small"
+					v-model="checkboxValue1"
+					:indeterminate="true"
+					:border="true"
+					>小尺寸</v3-checkbox
+				>
+
+				<v3-checkbox
+					style="margin-bottom: 12px"
+					size="medium"
+					v-model="checkboxValue2"
+					:defaultIcon="'v3-icon-like'"
+					:selectedIcon="'v3-icon-like1'"
+					:indeterminatedIcon="'v3-icon-sami-select'"
+					>默认尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="medium"
+					v-model="checkboxValue2"
+					:indeterminate="true"
+					:border="true"
+					>默认尺寸</v3-checkbox
+				>
+
+				<v3-checkbox
+					style="margin-bottom: 12px"
+					size="large"
+					v-model="checkboxValue3"
+					:defaultIcon="'v3-icon-like'"
+					:selectedIcon="'v3-icon-like1'"
+					:indeterminatedIcon="'v3-icon-sami-select'"
+					>大尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="large"
+					v-model="checkboxValue3"
+					:indeterminate="true"
+					:border="true"
+					>大尺寸</v3-checkbox
+				>
+			`,
+			data() {
+				return {
+					checkboxValue1: false,
+					checkboxValue2: false,
+					checkboxValue3: false,
+				};
+			},
+		});
+
+		expect(wrapper.findAll('.v3-checkbox.is-size--small').length).toBe(2);
+		expect(wrapper.findAll('.v3-checkbox.is-size--medium').length).toBe(2);
+		expect(wrapper.findAll('.v3-checkbox.is-size--large').length).toBe(2);
 	});
 });
