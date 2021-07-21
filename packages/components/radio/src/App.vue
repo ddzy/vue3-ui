@@ -62,6 +62,94 @@
 				</v3-radio-group>
 			</v3-col>
 		</v3-row>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同尺寸的带边框的单选框：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-radio
+					size="small"
+					v-model="state.radioValue4"
+					:label="1"
+					:border="true"
+					>小尺寸</v3-radio
+				>
+				<v3-radio
+					size="medium"
+					v-model="state.radioValue4"
+					:label="2"
+					:border="true"
+					>默认尺寸</v3-radio
+				>
+				<v3-radio
+					size="large"
+					v-model="state.radioValue4"
+					:label="3"
+					:border="true"
+					>大尺寸</v3-radio
+				>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同尺寸的单选框组：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-radio size="small" v-model="state.radioValue5" :label="1"
+					>小尺寸</v3-radio
+				>
+				<v3-radio size="medium" v-model="state.radioValue5" :label="2"
+					>默认尺寸</v3-radio
+				>
+				<v3-radio size="large" v-model="state.radioValue5" :label="3"
+					>大尺寸</v3-radio
+				>
+			</v3-col>
+		</v3-row>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同尺寸的按钮形式的单选框组：</h3>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px" :span="12">
+				<v3-radio-group v-model="state.radioValue6">
+					<v3-radio-button :label="1" :disabled="false" :size="'small'"
+						>小尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="2" :disabled="false" :size="'small'"
+						>小尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="3" :disabled="false" :size="'small'"
+						>小尺寸</v3-radio-button
+					>
+				</v3-radio-group>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px" :span="12">
+				<v3-radio-group v-model="state.radioValue6">
+					<v3-radio-button :label="4" :disabled="false" :size="'medium'"
+						>默认</v3-radio-button
+					>
+					<v3-radio-button :label="5" :disabled="false" :size="'medium'"
+						>默认</v3-radio-button
+					>
+					<v3-radio-button :label="6" :disabled="false" :size="'medium'"
+						>默认</v3-radio-button
+					>
+				</v3-radio-group>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-radio-group v-model="state.radioValue6">
+					<v3-radio-button :label="7" :disabled="false" :size="'large'"
+						>大尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="8" :disabled="false" :size="'large'"
+						>大尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="9" :disabled="false" :size="'large'"
+						>大尺寸</v3-radio-button
+					>
+				</v3-radio-group>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -82,6 +170,9 @@ export default defineComponent({
 			radioValue: 3,
 			radioValue2: 2,
 			radioValue3: 1,
+			radioValue4: 1,
+			radioValue5: 1,
+			radioValue6: 1,
 		});
 
 		function handleChange(v: MouseEvent) {

@@ -4,6 +4,7 @@
 			'v3-radio-button': true,
 			'is-disabled': props.disabled,
 			'is-checked': props.label === state.radioValue,
+			[`is-size--${props.size}`]: props.size,
 		}"
 	>
 		<label
@@ -61,6 +62,14 @@ export default defineComponent({
 		modelValue: {
 			type: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
 			default: '',
+		},
+		/** 单选框尺寸 */
+		size: {
+			type: String as PropType<TYPES.IRadioSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
 		},
 	},
 	emits: ['change', 'update:modelValue'],

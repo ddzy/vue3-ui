@@ -1,6 +1,30 @@
+$radio-button-size-map: (
+	small: (
+		padding: $padding-small / 2 $padding-medium,
+		font-size: $font-size-mini,
+	),
+	medium: (
+		padding: $padding-small $padding-medium,
+		font-size: $font-size-small,
+	),
+	large: (
+		padding: $padding-small + 2 $padding-medium,
+		font-size: $font-size-small,
+	),
+);
+
 .v3-radio-button {
 	display: inline-block;
 	margin-left: $margin-medium;
+
+	@each $key, $value in $radio-button-size-map {
+		&.is-size--#{$key} {
+			.v3-radio-button__label-wrapper {
+				padding: map-get($map: $value, $key: padding);
+				font-size: map-get($map: $value, $key: font-size);
+			}
+		}
+	}
 
 	// 禁用状态
 	&.is-disabled {
@@ -11,7 +35,7 @@
 		}
 	}
 
-  // 选中时处于非禁用状态的项
+	// 选中时处于非禁用状态的项
 	&.is-checked:not(.is-disabled) {
 		.v3-radio-button__label-wrapper {
 			background-color: $primary-color;
@@ -19,7 +43,7 @@
 		}
 	}
 
-  // 选中禁用状态的项（初始值）
+	// 选中禁用状态的项（初始值）
 	&.is-checked.is-disabled {
 		.v3-radio-button__label-wrapper {
 			background-color: $primary-color-plain;
@@ -34,7 +58,7 @@
 		padding: $padding-small $padding-medium;
 		background-color: #fff;
 		border: 1px solid $border-color-grey-default;
-		border-radius: 6px;
+		border-radius: $border-radius-width-small;
 		user-select: none;
 		cursor: pointer;
 		font-size: $font-size-small;
@@ -64,20 +88,5 @@
 		.v3-radio-button__label {
 			transition: all 0.15s ease;
 		}
-	}
-}
-
-@keyframes radioActive {
-	0% {
-		box-shadow: none;
-	}
-	50% {
-		box-shadow: 0 0 2px 2px rgba(0, 160, 255, 0.3);
-	}
-	75% {
-		box-shadow: 0 0 4px 2px rgba(0, 160, 255, 0.3);
-	}
-	100% {
-		box-shadow: 0 0 8px 2px rgba(0, 160, 255, 0.3);
 	}
 }

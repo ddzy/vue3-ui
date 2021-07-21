@@ -1,6 +1,46 @@
+$radio-size-map: (
+	small: (
+		padding: $padding-small / 2 $padding-medium,
+		radio-width: 12px,
+		radio-height: 12px,
+		label-font-size: $font-size-mini,
+	),
+	medium: (
+		padding: $padding-small $padding-medium,
+		radio-width: 14px,
+		radio-height: 14px,
+		label-font-size: $font-size-small,
+	),
+	large: (
+		padding: $padding-small + 2 $padding-medium,
+		radio-width: 16px,
+		radio-height: 16px,
+		label-font-size: $font-size-small,
+	),
+);
+
 .v3-radio {
 	display: inline-block;
 	margin-left: $margin-medium;
+
+	@each $key, $value in $radio-size-map {
+		&.is-bordered.is-size--#{$key} {
+			.v3-radio__label-wrapper {
+				padding: map-get($map: $value, $key: padding);
+			}
+		}
+		&.is-size--#{$key} {
+			.v3-radio__label-wrapper {
+				.v3-radio__select {
+					width: map-get($map: $value, $key: radio-width);
+					height: map-get($map: $value, $key: radio-height);
+				}
+				.v3-radio__label {
+					font-size: map-get($map: $value, $key: label-font-size);
+				}
+			}
+		}
+	}
 
 	// 禁用状态
 	&.is-disabled {
@@ -13,7 +53,7 @@
 	&.is-bordered {
 		.v3-radio__label-wrapper {
 			border: 1px solid $border-color-grey-default;
-			border-radius: 6px;
+			border-radius: $border-radius-width-small;
 			padding: $padding-small $padding-medium;
 		}
 	}

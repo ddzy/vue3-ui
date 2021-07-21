@@ -5,6 +5,7 @@
 			'is-disabled': props.disabled,
 			'is-bordered': props.border,
 			'is-checked': props.label === state.radioValue,
+			[`is-size--${props.size}`]: props.size,
 		}"
 	>
 		<label class="v3-radio__label-wrapper" :for="`v3-radio__input--${app.uid}`">
@@ -64,6 +65,14 @@ export default defineComponent({
 		modelValue: {
 			type: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
 			default: '',
+		},
+		/** 单选框尺寸 */
+		size: {
+			type: String as PropType<TYPES.IRadioSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
 		},
 	},
 	emits: ['change', 'update:modelValue'],
