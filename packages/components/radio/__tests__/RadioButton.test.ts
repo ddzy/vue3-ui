@@ -1,9 +1,10 @@
 import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
 import V3RadioButton from '../src/components/RadioButton.vue';
+import V3RadioGroup from '../src/components/RadioGroup.vue';
 
-describe('RadioButton 组件测试：', () => {
-	test('RadioButton 组件应该正常进行值的【双向绑定】', async () => {
+describe('V3RadioButton 组件测试：', () => {
+	test('V3RadioButton 组件应该正常进行值的【双向绑定】', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -71,7 +72,7 @@ describe('RadioButton 组件测试：', () => {
 		expect(wrapper1.emitted()).toHaveProperty('change');
 	});
 
-	test('RadioButton 组件应该正常接收【disabled】属性，并禁用特定的单选按钮', async () => {
+	test('V3RadioButton 组件应该正常接收【disabled】属性，并禁用特定的单选按钮', async () => {
 		const wrapper1 = mount(V3RadioButton);
 
 		// 默认状态下，都是可用的
@@ -82,5 +83,62 @@ describe('RadioButton 组件测试：', () => {
 			disabled: true,
 		});
 		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
+	});
+
+	test('V3RadioButton 组件可以接收【size】配置项，用来控制单选框的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3RadioButton,
+				V3RadioGroup,
+			},
+			template: `
+				<v3-radio-group v-model="radioValue">
+					<v3-radio-button :label="1" :disabled="false" :size="'small'"
+						>小尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="2" :disabled="false" :size="'small'"
+						>小尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="3" :disabled="false" :size="'small'"
+						>小尺寸</v3-radio-button
+					>
+				</v3-radio-group>
+
+				<v3-radio-group v-model="radioValue">
+					<v3-radio-button :label="4" :disabled="false" :size="'medium'"
+						>默认</v3-radio-button
+					>
+					<v3-radio-button :label="5" :disabled="false" :size="'medium'"
+						>默认</v3-radio-button
+					>
+					<v3-radio-button :label="6" :disabled="false" :size="'medium'"
+						>默认</v3-radio-button
+					>
+				</v3-radio-group>
+
+				<v3-radio-group v-model="radioValue">
+					<v3-radio-button :label="7" :disabled="false" :size="'large'"
+						>大尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="8" :disabled="false" :size="'large'"
+						>大尺寸</v3-radio-button
+					>
+					<v3-radio-button :label="9" :disabled="false" :size="'large'"
+						>大尺寸</v3-radio-button
+					>
+				</v3-radio-group>
+			`,
+			data() {
+				return {
+					radioValue: 1,
+				};
+			},
+		});
+
+		expect(wrapper.findAll('.v3-radio-group').length).toBe(3);
+		expect(wrapper.findAll('.v3-radio-button').length).toBe(9);
+		expect(wrapper.findAll('.v3-radio-button.is-size--small').length).toBe(3);
+		expect(wrapper.findAll('.v3-radio-button.is-size--medium').length).toBe(3);
+		expect(wrapper.findAll('.v3-radio-button.is-size--large').length).toBe(3);
 	});
 });
