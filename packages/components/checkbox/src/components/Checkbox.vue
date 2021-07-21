@@ -5,6 +5,7 @@
 			'is-disabled': state.defaultProps.disabled,
 			'is-bordered': props.border,
 			'is-checked': !!state.checkboxValue,
+			[`is-size--${props.size}`]: props.size,
 		}"
 	>
 		<label
@@ -118,7 +119,14 @@ export default defineComponent({
 			type: String,
 			default: 'v3-icon-checkbox-default',
 		},
-
+		/** 复选框的尺寸 */
+		size: {
+			type: String as PropType<TYPES.ICheckboxSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
+		},
 		modelValue: {
 			type: Boolean,
 			default: false,

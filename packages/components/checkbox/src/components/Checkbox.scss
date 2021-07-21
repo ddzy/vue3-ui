@@ -1,6 +1,42 @@
+$checkbox-size-map: (
+	small: (
+		padding: 0 $padding-medium,
+		checkbox-font-size: $font-size-normal,
+		label-font-size: $font-size-mini,
+	),
+	medium: (
+		padding: 3px $padding-medium,
+		checkbox-font-size: $font-size-large,
+		label-font-size: $font-size-small,
+	),
+	large: (
+		padding: 4px $padding-medium,
+		checkbox-font-size: $font-size-large-2,
+		label-font-size: $font-size-small,
+	),
+);
+
 .v3-checkbox {
 	display: inline-block;
 	margin-left: $margin-medium;
+
+	@each $key, $value in $checkbox-size-map {
+		&.is-size--#{$key}.is-bordered {
+			.v3-checkbox__label-wrapper {
+				padding: map-get($map: $value, $key: padding);
+			}
+		}
+		&.is-size--#{$key} {
+			.v3-checkbox__label-wrapper {
+				font-size: map-get($map: $value, $key: label-font-size);
+				.v3-checkbox__select {
+					i {
+						font-size: map-get($map: $value, $key: checkbox-font-size);
+					}
+				}
+			}
+		}
+	}
 
 	// 禁用状态
 	&.is-disabled {
@@ -13,7 +49,7 @@
 	&.is-bordered {
 		.v3-checkbox__label-wrapper {
 			border: 1px solid $border-color-grey-default;
-			border-radius: 6px;
+			border-radius: $border-radius-width-small;
 			padding: $padding-small $padding-medium;
 		}
 	}

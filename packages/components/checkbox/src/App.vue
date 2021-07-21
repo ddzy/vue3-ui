@@ -132,6 +132,126 @@
 				</v3-checkbox-group>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同尺寸的复选框：</h3>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px" :span="12">
+				<v3-checkbox
+					style="margin-bottom: 12px"
+					size="small"
+					v-model="state.checkboxValue14"
+					:defaultIcon="'v3-icon-like'"
+					:selectedIcon="'v3-icon-like1'"
+					:indeterminatedIcon="'v3-icon-sami-select'"
+					>小尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="small"
+					v-model="state.checkboxValue14"
+					:indeterminate="true"
+					:border="true"
+					>小尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="small"
+					v-model="state.checkboxValue14"
+					:disabled="true"
+					>小尺寸</v3-checkbox
+				>
+				<v3-checkbox size="small" v-model="state.checkboxValue14" :border="true"
+					>小尺寸</v3-checkbox
+				>
+				<v3-checkbox-group v-model="state.checkboxValue17">
+					<v3-checkbox-button
+						size="small"
+						v-for="v in state.checkboxOriginValue17"
+						:key="v._id"
+						:label="v._id"
+						:disabled="v.disabled"
+						>{{ v.name }}</v3-checkbox-button
+					>
+				</v3-checkbox-group>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px" :span="12">
+				<v3-checkbox
+					style="margin-bottom: 12px"
+					size="medium"
+					v-model="state.checkboxValue15"
+					:defaultIcon="'v3-icon-like'"
+					:selectedIcon="'v3-icon-like1'"
+					:indeterminatedIcon="'v3-icon-sami-select'"
+					>默认尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="medium"
+					v-model="state.checkboxValue15"
+					:indeterminate="true"
+					:border="true"
+					>默认尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="medium"
+					v-model="state.checkboxValue15"
+					:disabled="true"
+					>默认尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="medium"
+					v-model="state.checkboxValue15"
+					:border="true"
+					>默认尺寸</v3-checkbox
+				>
+				<v3-checkbox-group v-model="state.checkboxValue17">
+					<v3-checkbox-button
+						size="medium"
+						v-for="v in state.checkboxOriginValue17"
+						:key="v._id"
+						:label="v._id"
+						:disabled="v.disabled"
+						>{{ v.name }}</v3-checkbox-button
+					>
+				</v3-checkbox-group>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px" :span="12">
+				<v3-checkbox
+					style="margin-bottom: 12px"
+					size="large"
+					v-model="state.checkboxValue16"
+					:defaultIcon="'v3-icon-like'"
+					:selectedIcon="'v3-icon-like1'"
+					:indeterminatedIcon="'v3-icon-sami-select'"
+					>大尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="large"
+					v-model="state.checkboxValue16"
+					:indeterminate="true"
+					:border="true"
+					>大尺寸</v3-checkbox
+				>
+				<v3-checkbox
+					size="large"
+					v-model="state.checkboxValue16"
+					:disabled="true"
+					>大尺寸</v3-checkbox
+				>
+				<v3-checkbox size="large" v-model="state.checkboxValue16" :border="true"
+					>大尺寸</v3-checkbox
+				>
+				<v3-checkbox-group v-model="state.checkboxValue17">
+					<v3-checkbox-button
+						size="large"
+						v-for="v in state.checkboxOriginValue17"
+						:key="v._id"
+						:label="v._id"
+						:disabled="v.disabled"
+						>{{ v.name }}</v3-checkbox-button
+					>
+				</v3-checkbox-group>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -214,6 +334,43 @@ export default defineComponent({
 			],
 			checkboxValue13: ['banana', 'orange'],
 			checkboxOriginValue13: [
+				{
+					_id: 'banana',
+					name: '多选项1',
+					disabled: false,
+				},
+				{
+					_id: 'apple',
+					name: '多选项2',
+					disabled: false,
+				},
+				{
+					_id: 'orange',
+					name: '多选项3',
+					disabled: true,
+				},
+				{
+					_id: 'grape',
+					name: '多选项4',
+					disabled: false,
+				},
+				{
+					_id: 'watermelon',
+					name: '多选项5',
+					disabled: false,
+				},
+				{
+					_id: 'peach',
+					name: '多选项6',
+					disabled: false,
+				},
+			],
+
+			checkboxValue14: '',
+			checkboxValue15: '',
+			checkboxValue16: '',
+			checkboxValue17: [],
+			checkboxOriginValue17: [
 				{
 					_id: 'banana',
 					name: '多选项1',

@@ -1,6 +1,30 @@
+$checkbox-button-size-map: (
+	small: (
+		padding: $padding-small / 2 $padding-medium,
+		font-size: $font-size-mini,
+	),
+	medium: (
+		padding: $padding-small $padding-medium,
+		font-size: $font-size-small,
+	),
+	large: (
+		padding: $padding-small + 2 $padding-medium,
+		font-size: $font-size-small,
+	),
+);
+
 .v3-checkbox-button {
 	display: inline-block;
 	margin-left: $margin-medium;
+
+	@each $key, $value in $checkbox-button-size-map {
+		&.is-size--#{$key} {
+			.v3-checkbox-button__label-wrapper {
+				padding: map-get($map: $value, $key: padding);
+				font-size: map-get($map: $value, $key: font-size);
+			}
+		}
+	}
 
 	// 禁用状态
 	&.is-disabled {
@@ -33,7 +57,7 @@
 		padding: $padding-small $padding-medium;
 		background-color: #fff;
 		border: 1px solid $border-color-grey-default;
-		border-radius: 6px;
+		border-radius: $border-radius-width-small;
 		user-select: none;
 		cursor: pointer;
 		font-size: $font-size-small;
