@@ -1,20 +1,28 @@
 <template>
-	<div class="input-demo-container">
-		<h3>基本的输入框</h3>
+	<div class="demo-container">
 		<v3-row>
+			<v3-col :span="12">
+				<h3>基本的输入框：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input v-model="state.inputValue1" :type="'text'"> </v3-input>
 			</v3-col>
 		</v3-row>
-		<h3>可清空输入框</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>可清空输入框：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input v-model="state.inputValue2" :type="'text'" :clearable="true">
 				</v3-input>
 			</v3-col>
 		</v3-row>
-		<h3>限制输入字符数量</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>限制输入字符数量：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input
 					v-model="state.inputValue3"
@@ -25,15 +33,20 @@
 				</v3-input>
 			</v3-col>
 		</v3-row>
-		<h3>密码框</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>密码框：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input v-model="state.inputValue4" :showPassword="true"> </v3-input>
 			</v3-col>
 		</v3-row>
 
-		<h3>自定义前缀/后缀图标</h3>
 		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义前缀/后缀图标：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input
 					v-model="state.inputValue5"
@@ -43,11 +56,14 @@
 				</v3-input>
 			</v3-col>
 		</v3-row>
-		<h3>
-			通过 slot="prefix/suffix" 来传入前缀/后缀元素，优先级比
-			prefixIcon/suffixIcon 高
-		</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>
+					通过 slot="prefix/suffix" 来传入前缀/后缀元素，优先级比
+					prefixIcon/suffixIcon 高：
+				</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input
 					v-model="state.inputValue6"
@@ -60,8 +76,11 @@
 				</v3-input>
 			</v3-col>
 		</v3-row>
-		<h3>自定义前置/后置图标</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义前置/后置图标：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input
 					v-model="state.inputValue7"
@@ -71,11 +90,14 @@
 				</v3-input>
 			</v3-col>
 		</v3-row>
-		<h3>
-			通过 slot="prepend/append" 来传入前置/后置元素，优先级比
-			prependIcon/appendIcon 高
-		</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>
+					通过 slot="prepend/append" 来传入前置/后置元素，优先级比
+					prependIcon/appendIcon 高：
+				</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input
 					v-model="state.inputValue8"
@@ -92,8 +114,10 @@
 			</v3-col>
 		</v3-row>
 
-		<h3>高度自动撑开</h3>
 		<v3-row>
+			<v3-col :span="12">
+				<h3>高度自动撑开：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input-textarea
 					v-model="state.inputValue9"
@@ -106,8 +130,10 @@
 			</v3-col>
 		</v3-row>
 
-		<h3>基本的计数器</h3>
 		<v3-row>
+			<v3-col :span="12">
+				<h3>基本的计数器：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input-number
 					v-model="state.inputValue10"
@@ -119,8 +145,11 @@
 				></v3-input-number>
 			</v3-col>
 		</v3-row>
-		<h3>限制步长和最大值</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>限制步长和最大值：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input-number
 					v-model="state.inputValue11"
@@ -135,8 +164,11 @@
 				></v3-input-number>
 			</v3-col>
 		</v3-row>
-		<h3>可调整控制按钮组的位置</h3>
+
 		<v3-row>
+			<v3-col :span="12">
+				<h3>可调整控制按钮组的位置：</h3>
+			</v3-col>
 			<v3-col>
 				<v3-input-number
 					v-model="state.inputValue12"
@@ -214,11 +246,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.input-container {
-	width: 200px;
-	h3 {
-		margin: 0;
-		padding: 0;
-	}
+.demo-container {
+	padding: 20px;
 }
 </style>
