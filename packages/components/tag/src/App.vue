@@ -26,13 +26,13 @@
 		</v3-row>
 		<v3-row :gutter="12">
 			<v3-col>
-				<v3-tag size="small" type="primary">小号</v3-tag>
+				<v3-tag size="small" type="primary" closeable>小号</v3-tag>
 			</v3-col>
 			<v3-col>
-				<v3-tag size="medium" type="primary">中等</v3-tag>
+				<v3-tag size="medium" type="primary" closeable>中等</v3-tag>
 			</v3-col>
 			<v3-col>
-				<v3-tag size="large" type="primary">大号</v3-tag>
+				<v3-tag size="large" type="primary" closeable>大号</v3-tag>
 			</v3-col>
 		</v3-row>
 
@@ -174,4 +174,8 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.demo-container {
+	padding: 20px;
+}
+</style>

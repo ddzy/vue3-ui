@@ -65,16 +65,25 @@ $tag-size-list: (
 		fontSize: $font-size-mini,
 		padding: 0 $padding-small,
 		marginLeft: 1px,
+		icon-width: 12px,
+		icon-height: 12px,
+		icon-line-height: 12px,
 	),
 	medium: (
 		fontSize: $font-size-mini,
 		padding: 3px $padding-small + 3,
 		marginLeft: 4px,
+		icon-width: 14px,
+		icon-height: 14px,
+		icon-line-height: 14px,
 	),
 	large: (
 		fontSize: $font-size-mini,
 		padding: 5px $padding-small + 6,
 		marginLeft: 7px,
+		icon-width: 16px,
+		icon-height: 16px,
+		icon-line-height: 16px,
 	),
 );
 
@@ -89,6 +98,7 @@ $tag-size-list: (
 	i.v3-icon {
 		border-radius: 50%;
 		cursor: pointer;
+		text-align: center;
 	}
 
 	@each $key, $value in $tag-type-list {
@@ -127,8 +137,11 @@ $tag-size-list: (
 			font-size: map-get($map: $value, $key: fontSize);
 			padding: map-get($map: $value, $key: padding);
 			i.v3-icon {
+				width: map-get($map: $value, $key: icon-width);
+				height: map-get($map: $value, $key: icon-height);
 				margin-left: map-get($map: $value, $key: marginLeft);
 				font-size: map-get($map: $value, $key: fontSize);
+				line-height: map-get($map: $value, $key: icon-line-height);
 			}
 		}
 	}
