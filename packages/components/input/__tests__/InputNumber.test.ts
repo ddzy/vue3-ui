@@ -2,8 +2,8 @@ import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
 import V3InputNumber from '../src/components/InputNumber.vue';
 
-describe('InputNumber 组件测试：', () => {
-	test('InputNumber 应该正常接收【step】，并按照指定的步长来递增或递减', async () => {
+describe('V3InputNumber 组件测试：', () => {
+	test('V3InputNumber 应该正常接收【step】，并按照指定的步长来递增或递减', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -52,7 +52,7 @@ describe('InputNumber 组件测试：', () => {
 		expect(wrapper1.vm.state.inputValue).toBe(0);
 	});
 
-	test('InputNumber 应该正常接收【stepStrictly】，限制输入值只能是步数（step）的倍数', async () => {
+	test('V3InputNumber 应该正常接收【stepStrictly】，限制输入值只能是步数（step）的倍数', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -106,7 +106,7 @@ describe('InputNumber 组件测试：', () => {
 		expect(wrapper1.vm.state.inputValue).toBe(2);
 	});
 
-	test('InputNumber 应该正常接收【precision】参数，即限制最终值需要保留的位数', async () => {
+	test('V3InputNumber 应该正常接收【precision】参数，即限制最终值需要保留的位数', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -157,7 +157,7 @@ describe('InputNumber 组件测试：', () => {
 		expect(wrapper1.vm.state.inputValue).toBe(2.36);
 	});
 
-	test('InputNumber 组件应该正常接收【disabled、readonly】并进入【禁用、只读】状态', async () => {
+	test('V3InputNumber 组件应该正常接收【disabled、readonly】并进入【禁用、只读】状态', async () => {
 		const wrapper1 = mount(V3InputNumber);
 
 		await wrapper1.setProps({
@@ -179,7 +179,7 @@ describe('InputNumber 组件测试：', () => {
 		expect(wrapper1.vm.modelValue).toBe(0);
 	});
 
-	test('InputNumber 组件应该正常接收【min、max】参数，在值变化的时候禁用控制按钮并且重置输入框中的值', async () => {
+	test('V3InputNumber 组件应该正常接收【min、max】参数，在值变化的时候禁用控制按钮并且重置输入框中的值', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -229,5 +229,59 @@ describe('InputNumber 组件测试：', () => {
 		await nextTick();
 		expect(wrapper1.find('input').element.value).toBe('0');
 		expect(wrapper1.vm.state.inputValue).toBe(0);
+	});
+
+	test('V3InputNumber 组件可以接收【size】配置项，用来控制输入框的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3InputNumber,
+			},
+			template: `
+				<v3-input-number
+					size="small"
+					v-model="inputValue"
+					:controlsPosition="'both'"
+					:precision="0"
+					:disabled="false"
+					:readonly="false"
+					:stepStrictly="true"
+				></v3-input-number>
+
+				<v3-input-number
+					size="medium"
+					v-model="inputValue"
+					:controlsPosition="'both'"
+					:precision="0"
+					:disabled="false"
+					:readonly="false"
+					:stepStrictly="true"
+				></v3-input-number>
+
+				<v3-input-number
+					size="large"
+					v-model="inputValue"
+					:controlsPosition="'both'"
+					:precision="0"
+					:disabled="false"
+					:readonly="false"
+					:stepStrictly="true"
+				></v3-input-number>
+			`,
+			data() {
+				return {
+					inputValue: 0,
+				};
+			},
+		});
+
+		expect(
+			wrapper.findAll('.v3-input-number .v3-input.is-size--small').length
+		).toBe(1);
+		expect(
+			wrapper.findAll('.v3-input-number .v3-input.is-size--medium').length
+		).toBe(1);
+		expect(
+			wrapper.findAll('.v3-input-number .v3-input.is-size--large').length
+		).toBe(1);
 	});
 });

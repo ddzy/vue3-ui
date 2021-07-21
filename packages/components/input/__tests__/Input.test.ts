@@ -2,8 +2,8 @@ import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
 import V3Input from '../src/components/Input.vue';
 
-describe('Input 组件测试：', () => {
-	test('Input 组件应该正常接收 type，即输入框的类型必须为【text】或【password】', () => {
+describe('V3Input 组件测试：', () => {
+	test('V3Input 组件应该正常接收 type，即输入框的类型必须为【text】或【password】', () => {
 		const wrapper1 = mount(V3Input, {
 			props: {
 				type: 'text',
@@ -21,7 +21,7 @@ describe('Input 组件测试：', () => {
 		expect(wrapper2.find('input').attributes().type).toBe('password');
 	});
 
-	test('Input 组件应该正常进行双向绑定', async () => {
+	test('V3Input 组件应该正常进行双向绑定', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -68,7 +68,7 @@ describe('Input 组件测试：', () => {
 		expect(wrapper1.emitted()).toHaveProperty('change');
 	});
 
-	test('Input 组件应该正常接收【前置、后置、前缀、后缀】图标', () => {
+	test('V3Input 组件应该正常接收【前置、后置、前缀、后缀】图标', () => {
 		const wrapper1 = mount(V3Input, {
 			props: {
 				suffixIcon: 'v3-icon-search',
@@ -108,7 +108,7 @@ describe('Input 组件测试：', () => {
 		).toBeTruthy();
 	});
 
-	test('Input 组件应该正常接收【disabled、readonly】并进入【禁用、只读】状态', async () => {
+	test('V3Input 组件应该正常接收【disabled、readonly】并进入【禁用、只读】状态', async () => {
 		const wrapper1 = mount(V3Input);
 
 		await wrapper1.setProps({
@@ -135,7 +135,7 @@ describe('Input 组件测试：', () => {
 		expect(wrapper1.find('input').element.value).toBe('解除只读状态');
 	});
 
-	test('Input 组件应该接收【showWordLimit、maxlength】并显示字符统计', async () => {
+	test('V3Input 组件应该接收【showWordLimit、maxlength】并显示字符统计', async () => {
 		const wrapper1 = mount(V3Input);
 
 		// showWordLimit 和 maxlength 两者必须同时存在，才能显示字符统计
@@ -168,7 +168,7 @@ describe('Input 组件测试：', () => {
 		expect(wrapper1.find('.is-invalid').exists()).toBeTruthy();
 	});
 
-	test('Input 组件应该接收【clearable】，可以点击【清除按钮】并清空输入框中的值', async () => {
+	test('V3Input 组件应该接收【clearable】，可以点击【清除按钮】并清空输入框中的值', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -200,7 +200,7 @@ describe('Input 组件测试：', () => {
 		});
 	});
 
-	test('Input 组件应该接收【showPassword】，可以手动切换输入框中值的可见状态', async () => {
+	test('V3Input 组件应该接收【showPassword】，可以手动切换输入框中值的可见状态', async () => {
 		const wrapper1 = mount(V3Input, {
 			props: {
 				modelValue: '初始值',
@@ -211,5 +211,49 @@ describe('Input 组件测试：', () => {
 
 		await wrapper1.find('.v3-icon-browse').trigger('click');
 		expect(wrapper1.find('input').element.value).toBe('初始值');
+	});
+
+	test('V3Input 组件可以接收【size】配置项，用来控制输入框的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3Input,
+			},
+			template: `
+				<v3-input
+					size="large"
+					v-model="inputValue"
+					:type="'text'"
+					:maxlength="10"
+					:showWordLimit="true"
+				>
+				</v3-input>
+
+				<v3-input
+					size="medium"
+					v-model="inputValue"
+					:type="'text'"
+					:appendIcon="'v3-icon-pin'"
+				>
+					<template #prepend>
+						<span style="padding: 0 12px;">前置元素</span>
+					</template>
+					<template #append>
+						<span style="padding: 0 12px;">后置元素</span>
+					</template>
+				</v3-input>
+
+				<v3-input size="small" v-model="inputValue" :type="'text'">
+				</v3-input>
+			`,
+			data() {
+				return {
+					inputValue: '',
+				};
+			},
+		});
+
+		expect(wrapper.findAll('.v3-input.is-size--small').length).toBe(1);
+		expect(wrapper.findAll('.v3-input.is-size--medium').length).toBe(1);
+		expect(wrapper.findAll('.v3-input.is-size--large').length).toBe(1);
 	});
 });
