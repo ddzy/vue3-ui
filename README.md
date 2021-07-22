@@ -30,3 +30,4 @@ vue3 组件库
 |    Tooltip     |       工具提示       | :white_check_mark: | :white_check_mark: |
 |    Popover     |       弹出窗口       | :white_check_mark: | :white_check_mark: |
 |     Space      |       间隔组件       | :white_check_mark: | :white_check_mark: |
+|     Badge      |         徽标         | :white_check_mark: | :white_check_mark: |
