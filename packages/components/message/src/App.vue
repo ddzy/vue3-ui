@@ -63,6 +63,17 @@
 				</v3-space>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>可通过 onClose 事件来阻止关闭：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-space :size="12">
+					<v3-button type="success" @click="handleClick6">成功</v3-button>
+				</v3-space>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -112,6 +123,20 @@ export default defineComponent({
 					<p>可以传入 <mark>HTML</mark> 片段~</p>
 				`,
 				dangerouslyUseHTMLString: true,
+			});
+		},
+		handleClick6() {
+			this.$message({
+				type: 'success',
+				message: `
+					可通过 <mark>onClose</mark> 方法阻止关闭~
+				`,
+				dangerouslyUseHTMLString: true,
+				onClose(done) {
+					setTimeout(() => {
+						done();
+					}, 2000);
+				},
 			});
 		},
 	},

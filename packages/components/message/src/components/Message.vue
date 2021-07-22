@@ -144,8 +144,8 @@ export default defineComponent({
 		onClose: {
 			type: Function as PropType<TYPES.IMessageOnClose>,
 			default() {
-				return () => {
-					return true;
+				return (done: () => void) => {
+					done();
 				};
 			},
 		},
@@ -182,11 +182,10 @@ export default defineComponent({
 		 * 关闭当前消息框（可在外部调用 `instance.close()`
 		 */
 		async close() {
-			// 只有 `props.onClose` 返回 true 才会关闭，否则不会关闭
-			const isContinue = await (this.props.onClose as Function)(this);
-
-			if (isContinue) {
-				close(this);
+			if (typeof this.props.onClose === 'function') {
+				this.props.onClose(() => {
+					close(this);
+				});
 			}
 		},
 		/**

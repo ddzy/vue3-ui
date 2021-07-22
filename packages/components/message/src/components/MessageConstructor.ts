@@ -37,8 +37,8 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 			center: false,
 			offset: 20,
 			closeOnHover: false,
-			onClose() {
-				return true;
+			onClose(done) {
+				done();
 			},
 		},
 		options

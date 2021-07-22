@@ -15,9 +15,7 @@ export interface IMessageProps {
 }
 export type IMessageType = 'success' | 'warning' | 'info' | 'danger';
 export type IMessageMessage = string | VNode;
-export type IMessageOnClose = (
-	instance: ComponentPublicInstance
-) => boolean | Promise<boolean>;
+export type IMessageOnClose = (done: () => void) => void;
 
 export type IMessageConstructorReturn = ComponentPublicInstance<IMessageProps>;
 export type IMessageConstructorMethod = Omit<IMessageProps, 'type'> & {
