@@ -2,18 +2,18 @@
 	<transition :name="props.animation ? 'v3-tag-shrink' : ''">
 		<div
 			v-if="state.isShow"
-			:class="[
-				'v3-tag',
-				props.type ? `v3-tag--${props.type}` : '',
-				props.plain ? 'is-plain' : '',
-				props.closeable ? 'is-closeable' : '',
-				props.size ? `is-size--${props.size}` : '',
-				props.animation ? 'is-animation' : '',
-			]"
 			:style="{
 				backgroundColor: props.backgroundColor,
 				color: props.color,
 				borderColor: props.borderColor,
+			}"
+			:class="{
+				'v3-tag': true,
+				'is-plain': props.plain,
+				'is-closeable': props.closeable,
+				'is-animation': props.animation,
+				[`v3-tag--${props.type}`]: true,
+				[`is-size--${props.size}`]: props.size,
 			}"
 		>
 			<slot></slot>
