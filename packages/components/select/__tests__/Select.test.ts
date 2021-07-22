@@ -356,4 +356,97 @@ describe('V3Select 组件测试：', () => {
 		expect(wrapper.findAll('.v3-tag')[1].text()).toBe('+ 1');
 		expect(wrapper.vm.selectedValue).toEqual(['Guangzhou', 'Shenzhen']);
 	});
+
+	test('V3Select 组件可以接收【size】配置项，用来控制下拉框的尺寸', async () => {
+		const wrapper = mount({
+			components: {
+				V3Select,
+				V3SelectOption,
+			},
+			template: `
+				<v3-select size="small" v-model="selectValue" :multiple="true">
+					<v3-select-option
+						v-for="v in selectOptions"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+
+				<v3-select size="medium" v-model="selectValue" :multiple="true">
+					<v3-select-option
+						v-for="v in selectOptions"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+
+				<v3-select size="large" v-model="selectValue" :multiple="true">
+					<v3-select-option
+						v-for="v in selectOptions"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			`,
+			data() {
+				return {
+					selectValue: ['Beijing', 'Shanghai'],
+					selectOptions: [
+						{
+							label: '北京',
+							value: 'Beijing',
+							disabled: false,
+						},
+						{
+							label: '上海',
+							value: 'Shanghai',
+							disabled: false,
+						},
+						{
+							label: '广州',
+							value: 'Guangzhou',
+							disabled: false,
+						},
+						{
+							label: '深圳',
+							value: 'Shenzhen',
+							disabled: false,
+						},
+					],
+				};
+			},
+		});
+
+		expect(wrapper.findAll('.v3-select').length).toBe(3);
+		expect(wrapper.findAll('.v3-select .v3-input.is-size--small').length).toBe(
+			1
+		);
+		expect(wrapper.findAll('.v3-select .v3-input.is-size--medium').length).toBe(
+			1
+		);
+		expect(wrapper.findAll('.v3-select .v3-input.is-size--large').length).toBe(
+			1
+		);
+		expect(
+			wrapper
+				.findAll('.v3-input')[0]
+				.classes()
+				.includes('is-size--small')
+		).toBeTruthy();
+		expect(
+			wrapper
+				.findAll('.v3-input')[1]
+				.classes()
+				.includes('is-size--medium')
+		).toBeTruthy();
+		expect(
+			wrapper
+				.findAll('.v3-input')[2]
+				.classes()
+				.includes('is-size--large')
+		).toBeTruthy();
+	});
 });
