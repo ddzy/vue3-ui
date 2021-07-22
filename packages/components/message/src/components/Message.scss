@@ -1,21 +1,21 @@
 $message-type-map: (
 	success: (
-		background-color: rgba(236, 247, 234, 1),
+		background-color: $success-color-plain,
 		color: $success-color-little,
 		icon-color: $success-color,
 	),
 	danger: (
-		background-color: rgba(249, 232, 232, 1),
+		background-color: $danger-color-plain,
 		color: $danger-color-little,
 		icon-color: $danger-color,
 	),
 	warning: (
-		background-color: rgba(253, 245, 237, 1),
+		background-color: $warning-color-plain,
 		color: $warning-color-little,
 		icon-color: $warning-color,
 	),
 	info: (
-		background-color: rgba(239, 237, 237, 1),
+		background-color: $info-color-plain,
 		color: $info-color,
 		icon-color: $info-color,
 	),
