@@ -36,9 +36,18 @@ declare module '@vue/runtime-core' {
 }
 
 // test
-import Demo from './tag/src/App.vue';
+import Demo from './main.vue';
+import router from './router';
+
+router.beforeEach(to => {
+	if (to.meta && to.meta.title) {
+		document.title = `v3-ui--${to.meta.title}`;
+	}
+});
+
 const app = createApp(Demo);
 app.use(install);
+app.use(router);
 app.mount('#app');
 
 export {
