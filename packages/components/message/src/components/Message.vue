@@ -30,10 +30,21 @@
 						[`is-center`]: props.center,
 					}"
 				>
+					<!-- message 为 HTML 字符串 -->
 					<span
 						v-if="props.dangerouslyUseHTMLString"
 						v-html="props.message"
 					></span>
+
+					<!-- message 为 VNode -->
+					<RenderVNode
+						v-else-if="
+							!props.dangerouslyUseHTMLString && isVNode(props.message)
+						"
+						:vnode="props.message"
+					/>
+
+					<!-- message 为普通字符串 -->
 					<span v-else>{{ message }}</span>
 				</div>
 				<div class="v3-message__close" v-if="props.showClose" @click="close">
@@ -52,11 +63,28 @@ import {
 	PropType,
 	reactive,
 	watch,
+	h,
+	isVNode,
+	VNode,
 } from 'vue';
 import { close } from './MessageConstructor';
 
 export default defineComponent({
 	name: 'V3Message',
+	components: {
+		/** 当 message 为 VNode 类型时，启用此组件渲染 */
+		RenderVNode: defineComponent({
+			props: {
+				vnode: {
+					type: Object as PropType<VNode>,
+					default: null,
+				},
+			},
+			setup(props) {
+				return () => h(props.vnode);
+			},
+		}),
+	},
 	props: {
 		/** 持续时间 */
 		duration: {
@@ -145,6 +173,7 @@ export default defineComponent({
 			state,
 			props,
 			VARIABLE,
+			isVNode,
 		};
 	},
 	methods: {
