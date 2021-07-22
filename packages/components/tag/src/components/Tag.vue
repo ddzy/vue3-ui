@@ -39,11 +39,9 @@ export default defineComponent({
 		/** 标签的类型（与 V3Button 大体相同） */
 		type: {
 			type: String as PropType<TYPES.ITagType>,
-			default: '',
-			validator(v: any) {
-				return ['', 'primary', 'success', 'danger', 'warning', 'info'].includes(
-					v
-				);
+			default: 'primary',
+			validator(v: string) {
+				return ['primary', 'success', 'danger', 'warning', 'info'].includes(v);
 			},
 		},
 		/** 是否可关闭标签 */
@@ -60,7 +58,7 @@ export default defineComponent({
 		size: {
 			type: String as PropType<TYPES.ITagSize>,
 			default: 'medium',
-			validator(v: any) {
+			validator(v: string) {
 				return ['small', 'medium', 'large'].includes(v);
 			},
 		},
