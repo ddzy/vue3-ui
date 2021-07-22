@@ -10,6 +10,8 @@
 				'v3-message',
 				`v3-message--${props.type}`,
 				`${props.customClass}`,
+				props.center ? 'is-center' : '',
+				props.showClose ? 'is-closeable' : '',
 			]"
 			:id="[`v3-message--${app.uid}`]"
 			@mouseenter="mouseEnter"
@@ -27,7 +29,6 @@
 				<div
 					:class="{
 						'v3-message__content': true,
-						[`is-center`]: props.center,
 					}"
 				>
 					<!-- message 为 HTML 字符串 -->

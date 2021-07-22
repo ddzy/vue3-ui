@@ -41,6 +41,14 @@ $message-type-map: (
 		}
 	}
 
+	&.is-center {
+		.v3-message__inner {
+			.v3-message__content {
+				text-align: center;
+			}
+		}
+	}
+
 	.v3-message__inner {
 		display: flex;
 		align-items: center;
@@ -64,9 +72,6 @@ $message-type-map: (
 			width: 100%;
 			padding: 0 $padding-medium;
 			font-size: $font-size-small;
-			&.is-center {
-				text-align: center;
-			}
 		}
 
 		.v3-message__close {
