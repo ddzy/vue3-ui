@@ -1,22 +1,16 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router';
 import Home from './home.vue';
 import V3ButtonDemo from './button/src/App.vue';
-import V3ButtonGroupDemo from './button/src/App.vue';
 import V3CheckboxDemo from './checkbox/src/App.vue';
-import V3CheckboxButtonDemo from './checkbox/src/App.vue';
-import V3CheckboxGroupDemo from './checkbox/src/App.vue';
 import V3InputDemo from './input/src/App.vue';
 import V3InputNumberDemo from './input/src/App.vue';
 import V3InputTextareaDemo from './input/src/App.vue';
 import V3RadioDemo from './radio/src/App.vue';
-import V3RadioButtonDemo from './radio/src/App.vue';
-import V3RadioGroupDemo from './radio/src/App.vue';
 import V3DemoBlockDemo from './demo-block/src/App.vue';
 import V3RowDemo from './row/src/App.vue';
 import V3ColDemo from './row/src/App.vue';
 import V3MessageDemo from './message/src/App.vue';
 import V3SelectDemo from './select/src/App.vue';
-import V3SelectOptionDemo from './select/src/App.vue';
 import V3TagDemo from './tag/src/App.vue';
 import V3BackdropDemo from './backdrop/src/App.vue';
 import V3DialogDemo from './dialog/src/App.vue';
@@ -37,35 +31,11 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		},
 	},
 	{
-		path: '/button-group',
-		name: 'V3ButtonGroup',
-		component: V3ButtonGroupDemo,
-		meta: {
-			title: '按钮组',
-		},
-	},
-	{
 		path: '/checkbox',
 		name: 'V3Checkbox',
 		component: V3CheckboxDemo,
 		meta: {
 			title: '复选框',
-		},
-	},
-	{
-		path: '/checkbox-button',
-		name: 'V3CheckboxButton',
-		component: V3CheckboxButtonDemo,
-		meta: {
-			title: '复选按钮',
-		},
-	},
-	{
-		path: '/checkbox-group',
-		name: 'V3CheckboxGroup',
-		component: V3CheckboxGroupDemo,
-		meta: {
-			title: '复选框组',
 		},
 	},
 	{
@@ -98,22 +68,6 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3RadioDemo,
 		meta: {
 			title: '单选框',
-		},
-	},
-	{
-		path: '/radio-button',
-		name: 'V3RadioButton',
-		component: V3RadioButtonDemo,
-		meta: {
-			title: '单选按钮',
-		},
-	},
-	{
-		path: '/radio-group',
-		name: 'V3RadioGroup',
-		component: V3RadioGroupDemo,
-		meta: {
-			title: '单选框组',
 		},
 	},
 	{
@@ -154,14 +108,6 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3SelectDemo,
 		meta: {
 			title: '下拉框',
-		},
-	},
-	{
-		path: '/select-option',
-		name: 'V3SelectOption',
-		component: V3SelectOptionDemo,
-		meta: {
-			title: '下拉选项',
 		},
 	},
 	{
