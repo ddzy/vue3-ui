@@ -637,7 +637,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .demo-container {
-	padding: 20px;
 	.btn__item {
 		display: inline-block;
 		margin-right: 12px;

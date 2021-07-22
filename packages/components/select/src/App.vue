@@ -599,8 +599,4 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped>
-.demo-container {
-	padding: 20px;
-}
-</style>
+<style lang="scss" scoped></style>
