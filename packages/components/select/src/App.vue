@@ -1,11 +1,9 @@
 <template>
 	<div class="demo-container">
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>基本用法（绑定字符串值）：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select v-model="state.selectValue1">
 					<v3-select-option
@@ -20,11 +18,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>基本用法（绑定数字值）：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select v-model="state.selectValue2">
 					<v3-select-option
@@ -39,11 +35,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>基本用法（绑定对象值，需指定【value-key】属性）：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select v-model="state.selectValue3" value-key="_id">
 					<v3-select-option
@@ -58,11 +52,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>禁用下拉框：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select
 					v-model="state.selectValue4"
@@ -81,11 +73,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>可清空所选值：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select
 					v-model="state.selectValue5"
@@ -103,11 +93,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>可过滤选项：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select
 					v-model="state.selectValue6"
@@ -129,11 +117,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>可开启远程搜索：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select
 					v-model="state.selectValue7"
@@ -156,11 +142,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>多选：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select v-model="state.selectValue8" :multiple="true">
 					<v3-select-option
@@ -174,11 +158,9 @@
 		</v3-row>
 
 		<v3-row>
-			<v3-col>
+			<v3-col :span="12">
 				<h3>合并多选的值（节省空间）：</h3>
 			</v3-col>
-		</v3-row>
-		<v3-row>
 			<v3-col :span="2">
 				<v3-select
 					v-model="state.selectValue9"
