@@ -186,6 +186,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
+		redirect: '/button',
 		component: Home,
 		children: [...dynamcRoutes],
 	},
