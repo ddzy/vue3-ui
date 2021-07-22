@@ -14,7 +14,7 @@
 			[`is-size--${props.size}`]: props.size,
 		}"
 	>
-		<a href="javascript: void 0;" v-if="props.type === 'text'">
+		<a v-if="props.type === 'text'" @click.prevent>
 			<i
 				v-if="state.defaultProps.icon"
 				:class="{
