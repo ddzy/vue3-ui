@@ -229,4 +229,39 @@ describe('V3Message 组件测试：', () => {
 			document.querySelector('.v3-message').classList.contains('is-center')
 		).toBeTruthy();
 	});
+
+	test('V3Message 可以接收【onClose】配置项，用来阻止消息框的关闭', async () => {
+		generateWrapper();
+
+		const wrapper = mount({
+			attachTo: document.getElementById('app'),
+			template: `
+        <div></div>
+      `,
+		});
+
+		wrapper.$message({
+			type: 'success',
+			message: `测试内容1`,
+			onClose(done) {},
+		});
+		wrapper.$message({
+			type: 'success',
+			message: `测试内容2`,
+			onClose(done) {
+				done();
+			},
+		});
+
+		setTimeout(async () => {
+			await nextTick();
+
+			expect(document.querySelectorAll('.v3-message').length).toBe(1);
+			expect(
+				document.querySelector('.v3-message .v3-message__content').textContent
+			).toBe('测试内容1');
+		}, 4000);
+
+		jest.advanceTimersByTime(4000);
+	});
 });
