@@ -1,39 +1,43 @@
+$message-type-map: (
+	success: (
+		background-color: rgba(236, 247, 234, 1),
+		color: $success-color-little,
+		icon-color: $success-color,
+	),
+	danger: (
+		background-color: rgba(249, 232, 232, 1),
+		color: $danger-color-little,
+		icon-color: $danger-color,
+	),
+	warning: (
+		background-color: rgba(253, 245, 237, 1),
+		color: $warning-color-little,
+		icon-color: $warning-color,
+	),
+	info: (
+		background-color: rgba(239, 237, 237, 1),
+		color: $info-color,
+		icon-color: $info-color,
+	),
+);
+
 .v3-message {
 	position: fixed;
 	left: 50%;
-	margin-left: -188px;
 	overflow: hidden;
 	box-sizing: border-box;
 	width: 376px;
+	margin-left: -188px;
 	border-radius: $border-radius-width-default;
 	word-wrap: break-word;
 
-	&.v3-message--info {
-		background-color: $info-color-plain;
-		color: $info-color-little;
-		.v3-message__icon {
-			color: $info-color;
-		}
-	}
-	&.v3-message--success {
-		background-color: $success-color-plain;
-		color: $success-color-little;
-		.v3-message__icon {
-			color: $success-color;
-		}
-	}
-	&.v3-message--danger {
-		background-color: $danger-color-plain;
-		color: $danger-color-little;
-		.v3-message__icon {
-			color: $danger-color;
-		}
-	}
-	&.v3-message--warning {
-		background-color: $warning-color-plain;
-		color: $warning-color-little;
-		.v3-message__icon {
-			color: $warning-color;
+	@each $key, $value in $message-type-map {
+		&.v3-message--#{$key} {
+			background-color: map-get($map: $value, $key: background-color);
+			color: map-get($map: $value, $key: color);
+			.v3-message__icon {
+				color: map-get($map: $value, $key: icon-color);
+			}
 		}
 	}
 

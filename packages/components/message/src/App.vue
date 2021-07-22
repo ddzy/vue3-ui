@@ -82,6 +82,7 @@ export default defineComponent({
 			this.$message({
 				type,
 				message: type,
+				duration: 0,
 			});
 		},
 		handleClick2() {
