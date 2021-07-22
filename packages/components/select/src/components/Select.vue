@@ -20,6 +20,7 @@
 			theme="light-border"
 			animation="v3-popper-slide-fade"
 			placement="bottom"
+			:maxWidth="'100%'"
 			:zIndex="state.nextZIndex"
 			:arrow="false"
 			:interactive="true"
@@ -44,6 +45,7 @@
 								: state.initialInputHeight
 						}px`,
 					}"
+					:size="props.size"
 					@input="handleInput"
 					@focus="handleFocus"
 					@blur="handleBlur"
@@ -83,9 +85,13 @@
 							v-for="v in state.selectedOptionList"
 							:key="v"
 						>
-							<v3-tag closeable type="info" @close="handleTagClose(v)">{{
-								v.label
-							}}</v3-tag>
+							<v3-tag
+								closeable
+								type="info"
+								:size="props.size"
+								@close="handleTagClose(v)"
+								>{{ v.label }}</v3-tag
+							>
 						</li>
 					</template>
 					<!-- 合并标签（只显示第一个标签和数量） -->
@@ -98,6 +104,7 @@
 								type="info"
 								v-for="v in state.selectedOptionList.slice(0, 1)"
 								:key="v"
+								:size="props.size"
 								@close="handleTagClose(v)"
 								>{{ v.label }}</v3-tag
 							>
@@ -106,7 +113,7 @@
 							class="v3-select__tag-item"
 							v-if="state.selectedOptionList.length > 1"
 						>
-							<v3-tag type="info">{{
+							<v3-tag type="info" :size="props.size">{{
 								`+ ${state.selectedOptionList.length - 1}`
 							}}</v3-tag>
 						</li>
@@ -270,6 +277,14 @@ export default defineComponent({
 			type: Function as PropType<TYPES.ISelectRemoteMethod>,
 			default: null,
 		},
+		/** 下拉框的尺寸 */
+		size: {
+			type: String as PropType<TYPES.ISelectSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
+		},
 	},
 	components: {
 		Tippy,
@@ -303,9 +318,9 @@ export default defineComponent({
 			/** 多选状态下已选中的条目列表 */
 			selectedOptionList: [],
 			/** 下拉框的初始高度 */
-			initialInputHeight: 35,
+			initialInputHeight: 0,
 			/** 下拉框的最新高度 */
-			pendingInputHeight: 35,
+			pendingInputHeight: 0,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 		const tagWrapperRef = ref(null);
@@ -338,6 +353,30 @@ export default defineComponent({
 		watch(toRef(state, 'showDropdown'), () => {
 			context.emit('visible', state.showDropdown);
 		});
+
+		watch(
+			toRef(props, 'size'),
+			() => {
+				switch (props.size) {
+					case 'small': {
+						state.initialInputHeight = state.pendingInputHeight = 29;
+						break;
+					}
+					case 'medium': {
+						state.initialInputHeight = state.pendingInputHeight = 35;
+						break;
+					}
+					case 'large': {
+						state.initialInputHeight = state.pendingInputHeight = 41;
+						break;
+					}
+					default: {
+						break;
+					}
+				}
+			},
+			{ immediate: true }
+		);
 
 		function handleShow() {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示

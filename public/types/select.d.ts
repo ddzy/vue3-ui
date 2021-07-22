@@ -3,6 +3,7 @@ export type ISelectValue = IBaseSelectValue | IBaseSelectValue[];
 export type ISelectOptionValue = IBaseSelectValue;
 export type ISelectFilterMethod = (keyword: string) => void | null;
 export type ISelectRemoteMethod = (keyword: string) => void | null;
+export type ISelectSize = 'small' | 'medium' | 'large';
 export interface ISelectProps {
 	modelValue: ISelectValue;
 	multiple: boolean;
@@ -21,6 +22,7 @@ export interface ISelectProps {
 	loadingText: string;
 	noMatchText: string;
 	noDataText: string;
+	size: ISelectSize;
 }
 
 export interface ISelectOptionProps {

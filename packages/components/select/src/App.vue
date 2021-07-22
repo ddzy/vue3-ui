@@ -176,6 +176,42 @@
 				</v3-select>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同尺寸的下拉框：</h3>
+			</v3-col>
+			<v3-col style="margin-right: 12px" :span="3">
+				<v3-select size="small" v-model="state.selectValue10" :multiple="true">
+					<v3-select-option
+						v-for="v in state.selectOptions10"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+			<v3-col style="margin-right: 12px" :span="3">
+				<v3-select size="medium" v-model="state.selectValue10" :multiple="true">
+					<v3-select-option
+						v-for="v in state.selectOptions10"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+			<v3-col :span="3">
+				<v3-select size="large" v-model="state.selectValue10" :multiple="true">
+					<v3-select-option
+						v-for="v in state.selectOptions10"
+						:key="v.value"
+						:value="v.value"
+						:label="v.label"
+					></v3-select-option>
+				</v3-select>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -469,6 +505,30 @@ export default defineComponent({
 					disabled: false,
 				},
 			],
+
+			selectValue10: ['Beijing', 'Shanghai'],
+			selectOptions10: [
+				{
+					label: '北京',
+					value: 'Beijing',
+					disabled: false,
+				},
+				{
+					label: '上海',
+					value: 'Shanghai',
+					disabled: false,
+				},
+				{
+					label: '广州',
+					value: 'Guangzhou',
+					disabled: false,
+				},
+				{
+					label: '深圳',
+					value: 'Shenzhen',
+					disabled: false,
+				},
+			],
 		});
 
 		/**
@@ -539,4 +599,8 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.demo-container {
+	padding: 20px;
+}
+</style>
