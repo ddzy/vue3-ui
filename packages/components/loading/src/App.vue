@@ -37,7 +37,7 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { createVNode, defineComponent, h, reactive } from 'vue';
 
 export default defineComponent({
 	setup() {
@@ -49,9 +49,14 @@ export default defineComponent({
 	},
 	methods: {
 		handleClick1() {
-			const instance = this.$loading({});
-
-			console.log('instance :>> ', instance);
+			const instance = this.$loading({
+				fullscreen: true,
+				content: h('span', '内容可以 VNode~'),
+				fixed: false,
+				backgroundColor: 'rgba(0, 0, 0, .5)',
+				color: '#fff',
+				customClass: 'custom-loading-1',
+			});
 		},
 	},
 });
