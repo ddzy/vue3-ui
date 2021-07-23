@@ -23,7 +23,13 @@
 				<h3>在容器中使用：</h3>
 			</v3-col>
 			<v3-col :span="12">
-				<v3-demo-block :descriptionTip="'概述'">
+				<v3-demo-block
+					v-loading="{
+						loading: state.loading3,
+						content: '加载中...',
+					}"
+					:descriptionTip="'概述'"
+				>
 					<template #default>
 						<h3 style="text-align: center; margin: 0;">标题</h3>
 					</template>
@@ -58,7 +64,9 @@ import V3Button from '@components/button/main';
 
 export default defineComponent({
 	setup() {
-		const state = reactive({});
+		const state = reactive({
+			loading3: false,
+		});
 
 		return {
 			state,

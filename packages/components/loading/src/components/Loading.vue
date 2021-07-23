@@ -150,6 +150,9 @@ export default defineComponent({
 .v3-body--fixed {
 	overflow: hidden;
 }
+.v3-loading-parent--relative {
+	position: relative !important;
+}
 </style>
 
 <style lang="scss" scoped>

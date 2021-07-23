@@ -1,12 +1,14 @@
 // @ts-nocheck
 
 import * as TYPES from '@/public/types/loading';
+import { isStrictObject } from '@common/utils';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
 	createVNode,
 	reactive,
 	render,
+	FunctionDirective,
 } from 'vue';
 import Loading from './Loading.vue';
 
@@ -21,6 +23,11 @@ const state: IState = reactive({
 	instanceWrapper: document.createElement('div'),
 });
 
+/**
+ * 使用方式：实例调用
+ * @param options 配置项
+ * @returns
+ */
 const LoadingConstructor: TYPES.ILoadingConstructor = (
 	options: TYPES.ILoadingProps
 ) => {
@@ -53,13 +60,28 @@ const LoadingConstructor: TYPES.ILoadingConstructor = (
 
 	return instance;
 };
+/**
+ * 使用方式：自定义指令
+ */
+const LoadingDirective: {
+	name: string;
+	directive: FunctionDirective;
+} = {
+	name: 'loading',
+	directive: (el, binding, vnode) => {
+		// v-loading=true/false
+		if (typeof binding.value === 'boolean') {
+		} else if (isStrictObject(binding.value)) {
+			// v-loading={ loading: xxx, content: xxx }
+		}
+	},
+};
 
-export default LoadingConstructor;
 /**
  * loading 销毁处理器
  * @param instance loading 组件实例
  */
-export function close(instance: ComponentPublicInstance) {
+function close(instance: ComponentPublicInstance) {
 	state.loadingList.forEach((loading, index) => {
 		if (instance === loading) {
 			// 关闭 loading 并从 loading 队列中移除
@@ -70,3 +92,6 @@ export function close(instance: ComponentPublicInstance) {
 		}
 	});
 }
+
+export default LoadingConstructor;
+export { LoadingDirective, close };

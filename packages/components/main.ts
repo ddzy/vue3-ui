@@ -31,6 +31,8 @@ import V3Space from './space/main';
 import V3Badge from './badge/main';
 import V3Loading from './loading/main';
 
+import { LoadingDirective as V3LoadingDirective } from './loading/src/components/LoadingConstructor';
+
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
 		$message: TYPES_MESSAGE.IMessageConstructor;
@@ -51,6 +53,7 @@ router.beforeEach(to => {
 const app = createApp(Demo);
 app.use(install);
 app.use(router);
+app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
 app.mount('#app');
 
 export {
