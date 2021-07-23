@@ -3,7 +3,7 @@
 		<div
 			v-if="state.isShow"
 			:style="{
-				top: `${props.offset}px`,
+				top: `${state.defaultProps.offset}px`,
 				zIndex: VARIABLE.getNextZIndex(),
 			}"
 			:class="[
@@ -22,7 +22,7 @@
 					<i
 						:class="{
 							'v3-icon': true,
-							[state.defaultProps.icon]: true,
+							[computedIcon]: true,
 						}"
 					></i>
 				</div>
@@ -67,6 +67,8 @@ import {
 	h,
 	isVNode,
 	VNode,
+	computed,
+	toRef,
 } from 'vue';
 import { close } from './MessageConstructor';
 
@@ -153,7 +155,7 @@ export default defineComponent({
 	setup(props: TYPES.IMessageProps) {
 		const state = reactive({
 			defaultProps: {
-				icon: '',
+				offset: 0,
 			},
 			/** 控制当前的消息框是否显示 */
 			isShow: true,
@@ -161,10 +163,14 @@ export default defineComponent({
 		}) as any;
 		const app = getCurrentInstance();
 
+		const computedIcon = computed(() => {
+			return props.icon || `v3-icon-${props.type}-fill`;
+		});
+
 		watch(
-			props,
+			toRef(props, 'offset'),
 			() => {
-				state.defaultProps.icon = props.icon || `v3-icon-${props.type}-fill`;
+				state.defaultProps.offset = props.offset;
 			},
 			{ immediate: true }
 		);
@@ -175,6 +181,7 @@ export default defineComponent({
 			props,
 			VARIABLE,
 			isVNode,
+			computedIcon,
 		};
 	},
 	methods: {

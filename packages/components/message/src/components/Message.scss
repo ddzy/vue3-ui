@@ -30,6 +30,7 @@ $message-type-map: (
 	margin-left: -188px;
 	border-radius: $border-radius-width-default;
 	word-wrap: break-word;
+	transition: all 0.3s ease;
 
 	@each $key, $value in $message-type-map {
 		&.v3-message--#{$key} {

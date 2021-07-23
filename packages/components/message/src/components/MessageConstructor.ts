@@ -88,11 +88,26 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 
 export default MessageConstructor;
 export function close(instance: ComponentPublicInstance) {
+	// 记录当前关闭的消息框的下标
+	let interruptIndex = 0;
+	// 记录上一个消息框的位置，便于回溯
+	let prevOffset = instance.state.defaultProps.offset;
+
 	state.messageList.forEach((message, index) => {
 		if (instance === message) {
 			// 关闭消息框并从消息队列中移除
 			message.state.isShow = false;
 			state.messageList.splice(index, 1);
+			interruptIndex = index;
 		}
 	});
+
+	// 更新后续所有消息框的位置（当前位置 = 上一个消息框的位置 = prevOffset）
+	for (let index = interruptIndex; index < state.messageList.length; index++) {
+		const value = state.messageList[index];
+		let currentOffset = value.state.defaultProps.offset;
+
+		value.state.defaultProps.offset = prevOffset;
+		prevOffset = currentOffset;
+	}
 }
