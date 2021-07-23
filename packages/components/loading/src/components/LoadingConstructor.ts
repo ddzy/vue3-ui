@@ -65,6 +65,8 @@ export function close(instance: ComponentPublicInstance) {
 			// 关闭 loading 并从 loading 队列中移除
 			loading.state.isShow = false;
 			state.loadingList.splice(index, 1);
+			// 移除滚动穿透类
+			document.body.classList.remove('v3-body--fixed');
 		}
 	});
 }
