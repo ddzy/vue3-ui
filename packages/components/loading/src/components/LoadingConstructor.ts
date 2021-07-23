@@ -55,3 +55,16 @@ const LoadingConstructor: TYPES.ILoadingConstructor = (
 };
 
 export default LoadingConstructor;
+/**
+ * loading 销毁处理器
+ * @param instance loading 组件实例
+ */
+export function close(instance: ComponentPublicInstance) {
+	state.loadingList.forEach((loading, index) => {
+		if (instance === loading) {
+			// 关闭 loading 并从 loading 队列中移除
+			loading.state.isShow = false;
+			state.loadingList.splice(index, 1);
+		}
+	});
+}

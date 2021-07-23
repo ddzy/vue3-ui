@@ -1,6 +1,10 @@
 import { App, ComponentPublicInstance, VNode } from 'vue';
 
-export type ILoadingConstructorReturn = ComponentPublicInstance<ILoadingProps>;
+export type ILoadingConstructorReturn = ComponentPublicInstance<
+	ILoadingProps & {
+		close: () => void;
+	}
+>;
 export type ILoadingContent = string | VNode;
 export interface ILoadingProps {
 	fullscreen?: boolean;

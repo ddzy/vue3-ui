@@ -2,6 +2,24 @@
 	<div class="demo-container">
 		<v3-row>
 			<v3-col :span="12">
+				<h3>全屏的 loading：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-button type="primary" @click="handleClick1">点我</v3-button>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>可传入 VNode：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-button type="primary" @click="handleClick2">点我</v3-button>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
 				<h3>在容器中使用：</h3>
 			</v3-col>
 			<v3-col :span="12">
@@ -10,9 +28,7 @@
 						<h3 style="text-align: center; margin: 0;">标题</h3>
 					</template>
 					<template #description>
-						<v3-button type="primary" @click="handleClick1"
-							>点击 loading</v3-button
-						>
+						<v3-button type="primary" @click="handleClick3">点我</v3-button>
 					</template>
 					<template #detail>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
@@ -50,6 +66,34 @@ export default defineComponent({
 	},
 	methods: {
 		handleClick1() {
+			const instance = this.$loading({
+				fullscreen: true,
+				content: `加载中。。。`,
+			});
+
+			setTimeout(() => {
+				instance.close();
+			}, 2000);
+		},
+		handleClick2() {
+			const instance = this.$loading({
+				fullscreen: true,
+				content: h(
+					V3Button,
+					{
+						onClick: () => {
+							instance.close();
+							this.$message({
+								type: 'success',
+								message: '手动关闭 loading~',
+							});
+						},
+					},
+					() => '取消'
+				),
+			});
+		},
+		handleClick3() {
 			const instance = this.$loading({
 				fullscreen: true,
 				content: h(V3Button, () => '取消'),

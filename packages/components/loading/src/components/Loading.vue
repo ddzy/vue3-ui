@@ -2,6 +2,7 @@
 	<!-- 反之，如果是容器内的 loading -->
 	<transition name="v3-backdrop-fade" appear>
 		<div
+			v-if="state.isShow"
 			:class="[
 				'v3-loading',
 				props.fullscreen ? 'is-fullscreen' : '',
@@ -45,9 +46,10 @@ import {
 } from 'vue';
 import * as TYPES from '@/public/types/loading';
 import V3Backdrop from '@components/backdrop/main';
+import { close } from './LoadingConstructor';
 
 interface IState {
-	loading: boolean;
+	isShow: boolean;
 }
 
 export default defineComponent({
@@ -100,7 +102,8 @@ export default defineComponent({
 	},
 	setup(props: Required<TYPES.ILoadingProps>, context) {
 		const state: IState = reactive({
-			loading: true,
+			/** 当前 loading 的显隐状态 */
+			isShow: true,
 		});
 		const app = ref(getCurrentInstance()).value;
 
@@ -132,6 +135,11 @@ export default defineComponent({
 			app,
 			isVNode,
 		};
+	},
+	methods: {
+		close() {
+			close(this);
+		},
 	},
 });
 </script>
