@@ -13,6 +13,7 @@
 			:style="{
 				backgroundColor: props.backgroundColor,
 				color: props.color,
+				zIndex: VARIABLE.getNextZIndex(),
 			}"
 		>
 			<div class="v3-loading__spinning">
@@ -47,6 +48,7 @@ import {
 import * as TYPES from '@/public/types/loading';
 import V3Backdrop from '@components/backdrop/main';
 import { close } from './LoadingConstructor';
+import VARIABLE from '@common/constants/internal-variable';
 
 interface IState {
 	isShow: boolean;
@@ -134,6 +136,7 @@ export default defineComponent({
 			context,
 			app,
 			isVNode,
+			VARIABLE,
 		};
 	},
 	methods: {
