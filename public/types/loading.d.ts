@@ -1,7 +1,14 @@
-import { App, ComponentPublicInstance } from 'vue';
+import { App, ComponentPublicInstance, VNode } from 'vue';
 
 export type ILoadingConstructorReturn = ComponentPublicInstance<ILoadingProps>;
-export interface ILoadingProps {}
+export type ILoadingContent = string | VNode;
+export interface ILoadingProps {
+	fullscreen: boolean;
+	fixed: boolean;
+	content: ILoadingContent;
+	backgroundColor: string;
+	customClass: string;
+}
 export interface ILoadingConstructor {
 	(options: ILoadingProps): ILoadingConstructorReturn;
 
