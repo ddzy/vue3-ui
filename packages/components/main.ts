@@ -1,6 +1,7 @@
 import { App, createApp } from 'vue';
 
-import * as TYEPS_MESSAGE from '@/public/types/message';
+import * as TYPES_MESSAGE from '@/public/types/message';
+import * as TYPES_LOADING from '@/public/types/loading';
 import './icon/assets/fonts/iconfont.css';
 import V3Button from './button/main';
 import V3ButtonGroup from './button-group/main';
@@ -32,7 +33,8 @@ import V3Loading from './loading/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
-		$message: TYEPS_MESSAGE.IMessageConstructor;
+		$message: TYPES_MESSAGE.IMessageConstructor;
+		$loading: TYPES_LOADING.ILoadingConstructor;
 	}
 }
 

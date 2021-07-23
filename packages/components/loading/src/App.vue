@@ -49,7 +49,7 @@ export default defineComponent({
 	},
 	methods: {
 		handleClick1() {
-			const instance = this.$loading();
+			const instance = this.$loading({});
 
 			console.log('instance :>> ', instance);
 		},
