@@ -28,6 +28,7 @@ import V3Popover from './popover/main';
 import V3Divider from './divider/main';
 import V3Space from './space/main';
 import V3Badge from './badge/main';
+import V3Loading from './loading/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -77,6 +78,7 @@ export {
 	V3Divider,
 	V3Space,
 	V3Badge,
+	V3Loading,
 };
 
 export default function install(app: App) {
@@ -106,4 +108,5 @@ export default function install(app: App) {
 	app.component(V3Space.name, V3Space);
 	app.component(V3Badge.name, V3Badge);
 	app.config.globalProperties.$message = V3Message;
+	app.config.globalProperties.$loading = V3Loading;
 }

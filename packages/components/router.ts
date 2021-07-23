@@ -20,6 +20,7 @@ import V3PopoverDemo from './popover/src/App.vue';
 import V3DividerDemo from './divider/src/App.vue';
 import V3SpaceDemo from './space/src/App.vue';
 import V3BadgeDemo from './badge/src/App.vue';
+import V3LoadingDemo from './loading/src/App.vue';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -180,6 +181,14 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3BadgeDemo,
 		meta: {
 			title: '徽标',
+		},
+	},
+	{
+		path: '/loading',
+		name: 'V3Loading',
+		component: V3LoadingDemo,
+		meta: {
+			title: '加载中',
 		},
 	},
 ];
