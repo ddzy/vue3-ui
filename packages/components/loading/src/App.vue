@@ -37,7 +37,8 @@
 	</div>
 </template>
 <script lang="ts">
-import { createVNode, defineComponent, h, reactive } from 'vue';
+import { defineComponent, h, reactive } from 'vue';
+import V3Button from '@components/button/main';
 
 export default defineComponent({
 	setup() {
@@ -51,10 +52,8 @@ export default defineComponent({
 		handleClick1() {
 			const instance = this.$loading({
 				fullscreen: true,
-				content: h('span', '内容可以 VNode~'),
+				content: h(V3Button, () => '取消'),
 				fixed: false,
-				backgroundColor: 'rgba(0, 0, 0, .5)',
-				color: '#fff',
 				customClass: 'custom-loading-1',
 			});
 		},
