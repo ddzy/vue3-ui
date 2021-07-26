@@ -16,11 +16,16 @@
 	}
 
 	.v3-loading__spinning {
+		line-height: initial;
 		i.v3-icon {
-			display: block;
+			display: inline-block;
 			font-size: $font-size-large-2 * 1.5;
 			animation: loadingRotate 1s linear infinite;
 		}
+	}
+
+	.v3-loading__content {
+		margin-top: $margin-small;
 	}
 }
 
