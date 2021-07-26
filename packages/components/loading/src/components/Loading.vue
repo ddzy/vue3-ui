@@ -141,7 +141,7 @@ export default defineComponent({
 	},
 	methods: {
 		close() {
-			close(this);
+			close();
 		},
 	},
 });
