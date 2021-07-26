@@ -31,3 +31,4 @@ vue3 组件库
 |    Popover     |       弹出窗口       | :white_check_mark: | :white_check_mark: |
 |     Space      |       间隔组件       | :white_check_mark: | :white_check_mark: |
 |     Badge      |         徽标         | :white_check_mark: | :white_check_mark: |
+|    Loading     |        加载中        | :white_check_mark: | :white_check_mark: |
