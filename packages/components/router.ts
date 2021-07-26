@@ -21,6 +21,7 @@ import V3DividerDemo from './divider/src/App.vue';
 import V3SpaceDemo from './space/src/App.vue';
 import V3BadgeDemo from './badge/src/App.vue';
 import V3LoadingDemo from './loading/src/App.vue';
+import V3CardDemo from './card/src/App.vue';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -189,6 +190,14 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3LoadingDemo,
 		meta: {
 			title: '加载中',
+		},
+	},
+	{
+		path: '/card',
+		name: 'V3Card',
+		component: V3CardDemo,
+		meta: {
+			title: '卡片',
 		},
 	},
 ];
