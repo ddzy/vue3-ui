@@ -31,7 +31,10 @@ import V3Space from './space/main';
 import V3Badge from './badge/main';
 import V3Loading from './loading/main';
 
-import { LoadingDirective as V3LoadingDirective } from './loading/src/components/LoadingConstructor';
+import {
+	LoadingDirective as V3LoadingDirective,
+	useLoading,
+} from './loading/src/components/LoadingConstructor';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -84,6 +87,7 @@ export {
 	V3Space,
 	V3Badge,
 	V3Loading,
+	useLoading,
 };
 
 export default function install(app: App) {

@@ -93,6 +93,18 @@ const LoadingDirective: {
 		}
 	},
 };
+/**
+ * 使用方式：Composition API
+ * @param options loading 可配置项
+ * @returns loading 实例
+ */
+const useLoading = (options: TYPES.ILoadingProps) => {
+	const instance = LoadingConstructor(options);
+
+	return {
+		instance,
+	};
+};
 
 /**
  * loading 销毁处理器
@@ -145,4 +157,4 @@ function directiveHandler(
 }
 
 export default LoadingConstructor;
-export { LoadingDirective, close };
+export { LoadingDirective, close, useLoading };

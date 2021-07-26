@@ -95,11 +95,21 @@
 				</v3-demo-block>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>通过 Composition API 的形式调用：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-button type="primary" @click="handleClick5">点我</v3-button>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, h, reactive } from 'vue';
 import V3Button from '@components/button/main';
+import { useLoading } from '@components/loading/src/components/LoadingConstructor';
 
 export default defineComponent({
 	setup() {
@@ -146,6 +156,20 @@ export default defineComponent({
 		},
 		handleClick4() {
 			this.state.loading4 = !this.state.loading4;
+		},
+		handleClick5() {
+			const { instance } = useLoading({
+				fullscreen: true,
+				content: h(
+					V3Button,
+					{
+						onClick: () => {
+							instance.close();
+						},
+					},
+					() => '取消'
+				),
+			});
 		},
 	},
 });
