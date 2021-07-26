@@ -1,6 +1,13 @@
 <template>
 	<div class="demo-container">
-		<v3-card></v3-card>
+		<v3-row>
+			<v3-col :span="12">
+				<h3>基本用法：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-card></v3-card>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
