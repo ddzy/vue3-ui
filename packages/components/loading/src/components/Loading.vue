@@ -20,7 +20,7 @@
 				<i class="v3-icon v3-icon-loading"></i>
 			</div>
 
-			<div class="v3-loading__content">
+			<div class="v3-loading__content" v-if="props.content">
 				<!-- 如果自定义内容为字符串 -->
 				<span v-if="!isVNode(props.content)">
 					{{ props.content }}
@@ -84,7 +84,7 @@ export default defineComponent({
 		/** 自定义 loading 内容 */
 		content: {
 			type: [String, Object] as PropType<TYPES.ILoadingContent>,
-			default: 'Loading...',
+			default: '',
 		},
 		/** 自定义 loading 遮罩层的背景色 */
 		backgroundColor: {

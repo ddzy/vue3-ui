@@ -6,20 +6,24 @@ import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
 	createVNode,
+	FunctionDirective,
+	h,
 	reactive,
 	render,
-	FunctionDirective,
 } from 'vue';
 import Loading from './Loading.vue';
 
 interface IState {
 	loadingList: ComponentPublicInstance<any, any>[];
+	loadingMap: Map<HTMLElement, ComponentPublicInstance<any, any>>;
 	instanceWrapper: HTMLElement;
 }
 
 const state: IState = reactive({
 	/** loading 实例列表 */
 	loadingList: [],
+	/** loading 挂载元素 -> loading 实例映射表 */
+	loadingMap: new Map(),
 	instanceWrapper: document.createElement('div'),
 });
 
@@ -65,14 +69,31 @@ const LoadingConstructor: TYPES.ILoadingConstructor = (
  */
 const LoadingDirective: {
 	name: string;
-	directive: FunctionDirective;
+	directive: FunctionDirective<HTMLElement>;
 } = {
 	name: 'loading',
-	directive: (el, binding, vnode) => {
+	directive: (el, binding) => {
 		// v-loading=true/false
 		if (typeof binding.value === 'boolean') {
+			directiveHandler(binding.value, el, {});
 		} else if (isStrictObject(binding.value)) {
 			// v-loading={ loading: xxx, content: xxx }
+			if (!binding.value.hasOwnProperty('loading')) {
+				return;
+			}
+
+			const options: TYPES.ILoadingProps = {};
+			for (const key in binding.value) {
+				if (Object.prototype.hasOwnProperty.call(binding.value, key)) {
+					const value = binding.value[key];
+
+					if (key !== 'loading' && value) {
+						options[key] = value;
+					}
+				}
+			}
+
+			directiveHandler(binding.value.loading, el, options);
 		}
 	},
 };
@@ -91,6 +112,46 @@ function close(instance: ComponentPublicInstance) {
 			document.body.classList.remove('v3-body--fixed');
 		}
 	});
+}
+
+/**
+ * loading 自定义指令处理器
+ * @param isLoading 是否加载中
+ * @param el loading 挂载的父元素
+ * @param options loading 可配置项（props）
+ */
+function directiveHandler(
+	isLoading: boolean,
+	el: HTMLElement,
+	options: TYPES.ILoadingProps
+) {
+	if (isLoading) {
+		el.classList.add('v3-loading-parent--relative');
+
+		if (state.loadingMap.has(el)) {
+			state.loadingMap.get(el).state.isShow = true;
+		} else {
+			const loadingVNode = h(Loading, {
+				...options,
+				style: { position: 'absolute', inset: 0 },
+				fullscreen: false,
+				fixed: false,
+			});
+			render(loadingVNode, el);
+
+			// 将当前实例追加到映射表
+			if (loadingVNode.component && loadingVNode.component.proxy) {
+				state.loadingMap.set(el, loadingVNode.component.proxy);
+			}
+		}
+	} else {
+		for (const [key, value] of state.loadingMap.entries()) {
+			if (key === el) {
+				// 关闭 loading
+				value.state.isShow = false;
+			}
+		}
+	}
 }
 
 export default LoadingConstructor;

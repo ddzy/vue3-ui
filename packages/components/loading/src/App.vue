@@ -23,10 +23,49 @@
 				<h3>在容器中使用：</h3>
 			</v3-col>
 			<v3-col :span="12">
+				<v3-button type="primary" @click="handleClick3">点我</v3-button>
+
+				<v3-demo-block v-loading="state.loading3" :descriptionTip="'概述'">
+					<template #default>
+						<h3 style="text-align: center; margin: 0;">标题</h3>
+					</template>
+					<template #description>
+						测试描述测试描述
+					</template>
+					<template #detail>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+						veritatis quidem cum unde dolorum quia enim illum, aspernatur odio
+						accusantium deserunt autem ex doloribus maxime voluptatem,
+						cupiditate animi explicabo? Sed! Lorem ipsum dolor sit amet
+						consectetur adipisicing elit. Placeat veritatis molestiae quaerat
+						eaque aliquam neque voluptatem accusantium corporis voluptas quidem
+						at totam voluptate qui illo pariatur facilis, rerum doloremque ea.
+						Necessitatibus iure pariatur eligendi dolorem vitae adipisci quo hic
+						aut iusto corrupti quaerat repudiandae, voluptas corporis,
+						voluptate, aliquid dolorum commodi exercitationem ex enim nisi
+						assumenda minus ab aperiam. Dolore, voluptatibus. Ut consectetur
+						incidunt minus facere eligendi fugiat id, distinctio magni autem
+						dolor eveniet dolores nisi saepe quidem numquam facilis dolore quam.
+						Iste officia laborum, adipisci sed perferendis labore cumque
+						aperiam?
+					</template>
+				</v3-demo-block>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>通过自定义指令传值：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-button type="primary" @click="handleClick4">点我</v3-button>
+
 				<v3-demo-block
 					v-loading="{
-						loading: state.loading3,
+						loading: state.loading4,
 						content: '加载中...',
+						backgroundColor: 'rgba(0, 0, 0, .4)',
+						color: '#fff',
 					}"
 					:descriptionTip="'概述'"
 				>
@@ -34,7 +73,7 @@
 						<h3 style="text-align: center; margin: 0;">标题</h3>
 					</template>
 					<template #description>
-						<v3-button type="primary" @click="handleClick3">点我</v3-button>
+						测试描述测试描述
 					</template>
 					<template #detail>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
@@ -66,6 +105,7 @@ export default defineComponent({
 	setup() {
 		const state = reactive({
 			loading3: false,
+			loading4: false,
 		});
 
 		return {
@@ -102,12 +142,10 @@ export default defineComponent({
 			});
 		},
 		handleClick3() {
-			const instance = this.$loading({
-				fullscreen: true,
-				content: h(V3Button, () => '取消'),
-				fixed: false,
-				customClass: 'custom-loading-1',
-			});
+			this.state.loading3 = !this.state.loading3;
+		},
+		handleClick4() {
+			this.state.loading4 = !this.state.loading4;
 		},
 	},
 });

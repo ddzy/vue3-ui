@@ -5,6 +5,7 @@
 	flex-direction: column;
 	font-size: $font-size-small;
 	color: $primary-color;
+	background-color: rgba(255, 255, 255, 0.8);
 
 	&.is-fullscreen {
 		position: fixed;
@@ -12,7 +13,6 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: rgba(255, 255, 255, 0.8);
 	}
 
 	.v3-loading__spinning {
@@ -21,10 +21,6 @@
 			font-size: $font-size-large-2 * 1.5;
 			animation: loadingRotate 1s linear infinite;
 		}
-	}
-
-	.v3-loading__content {
-		margin-top: $margin-medium;
 	}
 }
 
