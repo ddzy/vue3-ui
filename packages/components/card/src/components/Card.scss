@@ -1,1 +1,35 @@
-.v3-card {}
+$card-shadow-size-map: (
+	small: (
+		box-shadow: $box-shadow-small,
+	),
+	medium: (
+		box-shadow: $box-shadow-medium,
+	),
+	large: (
+		box-shadow: $box-shadow-large,
+	),
+);
+
+.v3-card {
+	background-color: #fff;
+	border: 1px solid $border-color-grey-small;
+
+	@each $key, $value in $card-shadow-size-map {
+		&.is-shadow--#{$key} {
+			box-shadow: map-get($map: $value, $key: box-shadow);
+		}
+	}
+
+	.v3-card__header,
+	.v3-card__body,
+	.v3-card__footer {
+		padding: $padding-large-1;
+	}
+
+	.v3-card__header {
+		border-bottom: 1px solid $border-color-grey-small;
+		h4 {
+			margin: 0;
+		}
+	}
+}

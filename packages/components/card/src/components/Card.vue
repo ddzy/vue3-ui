@@ -1,18 +1,29 @@
 <template>
-	<div class="v3-card">
-		<div class="v3-card__header">
-			<slot name="header"></slot>
+	<div
+		:class="{
+			'v3-card': true,
+			'has-header': computedHasHeader,
+			'has-footer': computedHasFooter,
+			[`is-shadow--${props.shadowSize}`]: true,
+		}"
+	>
+		<div class="v3-card__header" v-if="computedHasHeader">
+			<!-- slot="header" 优先级比 title 高 -->
+			<slot name="header" v-if="context.slots.header"></slot>
+			<h4 v-else-if="props.title && !context.slots.header">
+				{{ props.title }}
+			</h4>
 		</div>
 		<div class="v3-card__body" :style="props.bodyStyle">
 			<slot></slot>
 		</div>
-		<div class="v3-card__footer">
+		<div class="v3-card__footer" v-if="computedHasFooter">
 			<slot name="footer"></slot>
 		</div>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue';
+import { computed, defineComponent, PropType, reactive } from 'vue';
 import * as TYPES from '@/public/types/card';
 
 interface IState {}
@@ -38,14 +49,31 @@ export default defineComponent({
 				return ['hover', 'alway', 'never'].includes(v);
 			},
 		},
+		/** 卡片阴影的大小 */
+		shadowSize: {
+			type: String as PropType<TYPES.ICardShadowSize>,
+			default: 'small',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
+		},
 	},
 	setup(props: TYPES.ICardProps, context) {
 		const state: IState = reactive({});
+
+		const computedHasHeader = computed(() => {
+			return !!props.title || !!context.slots.header;
+		});
+		const computedHasFooter = computed(() => {
+			return !!context.slots.footer;
+		});
 
 		return {
 			state,
 			props,
 			context,
+			computedHasHeader,
+			computedHasFooter,
 		};
 	},
 	methods: {
