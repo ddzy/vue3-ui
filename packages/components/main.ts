@@ -29,12 +29,10 @@ import V3Popover from './popover/main';
 import V3Divider from './divider/main';
 import V3Space from './space/main';
 import V3Badge from './badge/main';
-import V3Loading from './loading/main';
-
-import {
+import V3Loading, {
 	LoadingDirective as V3LoadingDirective,
 	useLoading,
-} from './loading/src/components/LoadingConstructor';
+} from './loading/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -56,7 +54,6 @@ router.beforeEach(to => {
 const app = createApp(Demo);
 app.use(install);
 app.use(router);
-app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
 app.mount('#app');
 
 export {
@@ -118,4 +115,5 @@ export default function install(app: App) {
 	app.component(V3Badge.name, V3Badge);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
+	app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
 }
