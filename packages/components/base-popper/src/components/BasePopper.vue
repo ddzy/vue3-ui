@@ -1,7 +1,6 @@
 <template>
 	<Popper
 		class="v3-base-popper"
-		style="border: none; margin: 0"
 		:class="{
 			[`is-theme-${props.theme}`]: true,
 		}"
