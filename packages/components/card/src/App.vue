@@ -62,6 +62,32 @@
 				</v3-card>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义内容区的样式，显示多种风格的卡片：</h3>
+			</v3-col>
+			<v3-col :span="4">
+				<v3-card
+					:bodyStyle="{
+						padding: 0,
+					}"
+				>
+					<div class="img"></div>
+
+					<template #footer>
+						<div class="action">
+							<div class="action__tip">
+								美丽的风景~
+							</div>
+							<div class="action__btn">
+								<v3-button type="text">查看详情</v3-button>
+							</div>
+						</div>
+					</template>
+				</v3-card>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -80,4 +106,16 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.img {
+	height: 200px;
+	background: url('https://oos.yyge.top/test%2Fimages%2F1.jpg') no-repeat center
+		center / cover;
+	background-image: url('https://oos.yyge.top/test%2Fimages%2F1.jpg');
+}
+.action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+</style>

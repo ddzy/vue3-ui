@@ -13,6 +13,7 @@ $card-shadow-size-map: (
 .v3-card {
 	background-color: #fff;
 	border: 1px solid $border-color-grey-small;
+  border-radius: $border-radius-width-small;
 	transition: box-shadow 0.15s ease;
 
 	@each $key, $value in $card-shadow-size-map {
@@ -31,16 +32,23 @@ $card-shadow-size-map: (
 		}
 	}
 
-	.v3-card__body,
+	.v3-card__header,
 	.v3-card__footer {
-		padding: $padding-large-1;
+		padding: $padding-medium $padding-large-1;
 	}
 
 	.v3-card__header {
-		padding: $padding-medium $padding-large-1;
 		border-bottom: 1px solid $border-color-grey-small;
 		h4 {
 			margin: 0;
 		}
+	}
+
+	.v3-card__body {
+		padding: $padding-large-1;
+	}
+
+	.v3-card__footer {
+		border-top: 1px solid $border-color-grey-small;
 	}
 }
