@@ -22,34 +22,19 @@
 			<v3-col :span="12">
 				<h3>在容器中使用：</h3>
 			</v3-col>
-			<v3-col :span="12">
+			<v3-col :span="4">
 				<v3-button type="primary" @click="handleClick3">点我</v3-button>
 
-				<v3-demo-block v-loading="state.loading3" :descriptionTip="'概述'">
-					<template #default>
-						<h3 style="text-align: center; margin: 0;">标题</h3>
-					</template>
-					<template #description>
-						测试描述测试描述
-					</template>
-					<template #detail>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-						veritatis quidem cum unde dolorum quia enim illum, aspernatur odio
-						accusantium deserunt autem ex doloribus maxime voluptatem,
-						cupiditate animi explicabo? Sed! Lorem ipsum dolor sit amet
-						consectetur adipisicing elit. Placeat veritatis molestiae quaerat
-						eaque aliquam neque voluptatem accusantium corporis voluptas quidem
-						at totam voluptate qui illo pariatur facilis, rerum doloremque ea.
-						Necessitatibus iure pariatur eligendi dolorem vitae adipisci quo hic
-						aut iusto corrupti quaerat repudiandae, voluptas corporis,
-						voluptate, aliquid dolorum commodi exercitationem ex enim nisi
-						assumenda minus ab aperiam. Dolore, voluptatibus. Ut consectetur
-						incidunt minus facere eligendi fugiat id, distinctio magni autem
-						dolor eveniet dolores nisi saepe quidem numquam facilis dolore quam.
-						Iste officia laborum, adipisci sed perferendis labore cumque
-						aperiam?
-					</template>
-				</v3-demo-block>
+				<v3-card
+					style="margin-top: 6px;"
+					title="标题"
+					v-loading="state.loading3"
+				>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, fugiat
+					consectetur blanditiis aspernatur, magnam cumque dignissimos iusto
+					quisquam velit quidem deserunt! Quaerat ad incidunt ducimus,
+					distinctio omnis rerum vitae obcaecati.
+				</v3-card>
 			</v3-col>
 		</v3-row>
 
@@ -57,42 +42,34 @@
 			<v3-col :span="12">
 				<h3>通过自定义指令传值：</h3>
 			</v3-col>
-			<v3-col :span="12">
+			<v3-col :span="4">
 				<v3-button type="primary" @click="handleClick4">点我</v3-button>
 
-				<v3-demo-block
+				<v3-card
+					style="margin-top: 6px;"
 					v-loading="{
 						loading: state.loading4,
 						content: '加载中...',
 						backgroundColor: 'rgba(0, 0, 0, .4)',
 						color: '#fff',
 					}"
-					:descriptionTip="'概述'"
+					:bodyStyle="{
+						padding: 0,
+					}"
 				>
-					<template #default>
-						<h3 style="text-align: center; margin: 0;">标题</h3>
+					<div class="img"></div>
+
+					<template #footer>
+						<div class="action">
+							<div class="action__tip">
+								美丽的风景~
+							</div>
+							<div class="action__btn">
+								<v3-button type="text">查看详情</v3-button>
+							</div>
+						</div>
 					</template>
-					<template #description>
-						测试描述测试描述
-					</template>
-					<template #detail>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-						veritatis quidem cum unde dolorum quia enim illum, aspernatur odio
-						accusantium deserunt autem ex doloribus maxime voluptatem,
-						cupiditate animi explicabo? Sed! Lorem ipsum dolor sit amet
-						consectetur adipisicing elit. Placeat veritatis molestiae quaerat
-						eaque aliquam neque voluptatem accusantium corporis voluptas quidem
-						at totam voluptate qui illo pariatur facilis, rerum doloremque ea.
-						Necessitatibus iure pariatur eligendi dolorem vitae adipisci quo hic
-						aut iusto corrupti quaerat repudiandae, voluptas corporis,
-						voluptate, aliquid dolorum commodi exercitationem ex enim nisi
-						assumenda minus ab aperiam. Dolore, voluptatibus. Ut consectetur
-						incidunt minus facere eligendi fugiat id, distinctio magni autem
-						dolor eveniet dolores nisi saepe quidem numquam facilis dolore quam.
-						Iste officia laborum, adipisci sed perferendis labore cumque
-						aperiam?
-					</template>
-				</v3-demo-block>
+				</v3-card>
 			</v3-col>
 		</v3-row>
 
@@ -174,4 +151,16 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.img {
+	height: 200px;
+	background: url('https://oos.yyge.top/test%2Fimages%2F1.jpg') no-repeat center
+		center / cover;
+	background-image: url('https://oos.yyge.top/test%2Fimages%2F1.jpg');
+}
+.action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+</style>
