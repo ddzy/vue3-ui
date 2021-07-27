@@ -25,7 +25,12 @@
 		</template>
 
 		<template #content>
-			<div class="v3-base-popper__dropdown">
+			<div
+				class="v3-base-popper__dropdown"
+				:style="{
+					maxWidth: `${props.maxWidth}px`,
+				}"
+			>
 				<slot name="content"></slot>
 			</div>
 		</template>
@@ -122,6 +127,11 @@ export default defineComponent({
 		offset: {
 			type: Number,
 			default: 12,
+		},
+		/** 浮窗的最大宽度 */
+		maxWidth: {
+			type: Number,
+			default: 350,
 		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {

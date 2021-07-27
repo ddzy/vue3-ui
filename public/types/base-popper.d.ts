@@ -28,4 +28,5 @@ export interface IBasePopperProps {
 	content: string;
 	theme: IBasePopperTheme;
 	offset: number;
+	maxWidth: number;
 }
