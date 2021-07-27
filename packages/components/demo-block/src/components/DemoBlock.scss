@@ -5,7 +5,7 @@
 	color: $font-color-default;
 	transition: all 0.15s ease;
 	&:hover {
-		box-shadow: 0 0 4px 4px $box-shadow-color-default;
+		box-shadow: $box-shadow-small;
 	}
 
 	.v3-demo-block__common {
