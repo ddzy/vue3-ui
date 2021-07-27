@@ -1,1 +1,27 @@
-.v3-base-popper {}
+.v3-base-popper {
+	display: inline-block;
+
+	&.is-theme-light {
+		--popper-theme-background-color: #fff;
+		--popper-theme-background-color-hover: #fff;
+		--popper-theme-text-color: #333;
+		--popper-theme-border-width: 1px;
+		--popper-theme-border-style: solid;
+		--popper-theme-border-color: rgba(238, 238, 238, 1);
+		--popper-theme-border-radius: 4px;
+		--popper-theme-padding: 6px 12px;
+		--popper-theme-box-shadow: 2px 0 10px 0 rgba(238, 238, 238, 0.5),
+			0 7px 11px 0 rgba(238, 238, 238, 0.5),
+			-2px 0 10px 0 rgba(238, 238, 238, 0.5);
+	}
+
+	&.is-theme-dark {
+		--popper-theme-background-color: #333;
+		--popper-theme-background-color-hover: #333;
+		--popper-theme-text-color: #fff;
+		--popper-theme-border-width: 0px;
+		--popper-theme-border-radius: 4px;
+		--popper-theme-padding: 6px 12px;
+		--popper-theme-box-shadow: none;
+	}
+}
