@@ -22,6 +22,7 @@ import V3SpaceDemo from './space/src/App.vue';
 import V3BadgeDemo from './badge/src/App.vue';
 import V3LoadingDemo from './loading/src/App.vue';
 import V3CardDemo from './card/src/App.vue';
+import V3BasePopperDemo from './base-popper/src/App.vue';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -198,6 +199,14 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3CardDemo,
 		meta: {
 			title: '卡片',
+		},
+	},
+	{
+		path: '/base-popper',
+		name: 'V3BasePopper',
+		component: V3BasePopperDemo,
+		meta: {
+			title: '基础的浮窗',
 		},
 	},
 ];

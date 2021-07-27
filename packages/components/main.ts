@@ -34,6 +34,7 @@ import V3Loading, {
 	useLoading,
 } from './loading/main';
 import V3Card from './card/main';
+import V3BasePopper from './base-popper/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -87,6 +88,7 @@ export {
 	V3Loading,
 	useLoading,
 	V3Card,
+	V3BasePopper,
 };
 
 export default function install(app: App) {
@@ -116,6 +118,7 @@ export default function install(app: App) {
 	app.component(V3Space.name, V3Space);
 	app.component(V3Badge.name, V3Badge);
 	app.component(V3Card.name, V3Card);
+	app.component(V3BasePopper.name, V3BasePopper);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
