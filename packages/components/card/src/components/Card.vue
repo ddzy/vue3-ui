@@ -5,6 +5,7 @@
 			'has-header': computedHasHeader,
 			'has-footer': computedHasFooter,
 			[`is-shadow--${props.shadowSize}`]: true,
+			[`is-shadow-trigger--${props.shadowTrigger}`]: true,
 		}"
 	>
 		<div class="v3-card__header" v-if="computedHasHeader">

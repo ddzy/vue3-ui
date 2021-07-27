@@ -41,6 +41,27 @@
 				</v3-card>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>何时显示卡片阴影：</h3>
+			</v3-col>
+			<v3-col style="margin-bottom: 12px" :span="12">
+				<v3-radio-group v-model="state.radioValue1">
+					<v3-radio label="hover">hover</v3-radio>
+					<v3-radio label="alway">alway</v3-radio>
+					<v3-radio label="never">never</v3-radio>
+				</v3-radio-group>
+			</v3-col>
+			<v3-col :span="4">
+				<v3-card title="标题" :shadowTrigger="state.radioValue1">
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit
+					facilis blanditiis excepturi, repellat similique animi, architecto
+					placeat obcaecati tempore esse et perferendis error at vel voluptate
+					recusandae quae doloremque sint.
+				</v3-card>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -50,6 +71,7 @@ export default defineComponent({
 	setup() {
 		const state = reactive({
 			radioValue: 'small',
+			radioValue1: 'alway',
 		});
 
 		return {

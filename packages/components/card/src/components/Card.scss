@@ -13,20 +13,31 @@ $card-shadow-size-map: (
 .v3-card {
 	background-color: #fff;
 	border: 1px solid $border-color-grey-small;
+	transition: box-shadow 0.15s ease;
 
 	@each $key, $value in $card-shadow-size-map {
 		&.is-shadow--#{$key} {
-			box-shadow: map-get($map: $value, $key: box-shadow);
+			&.is-shadow-trigger--alway {
+				box-shadow: map-get($map: $value, $key: box-shadow);
+			}
+			&.is-shadow-trigger--hover {
+				&:hover {
+					box-shadow: map-get($map: $value, $key: box-shadow);
+				}
+			}
+			&.is-shadow-trigger--never {
+				box-shadow: none;
+			}
 		}
 	}
 
-	.v3-card__header,
 	.v3-card__body,
 	.v3-card__footer {
 		padding: $padding-large-1;
 	}
 
 	.v3-card__header {
+		padding: $padding-medium $padding-large-1;
 		border-bottom: 1px solid $border-color-grey-small;
 		h4 {
 			margin: 0;
