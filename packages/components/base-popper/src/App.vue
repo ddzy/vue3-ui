@@ -114,6 +114,53 @@
 				</v3-base-popper>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>设置偏移距离：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-base-popper
+					trigger="manual"
+					placement="bottom"
+					v-model="state.popperValue2"
+					:offset="[20, 20]"
+				>
+					<v3-button
+						type="primary"
+						@click="state.popperValue2 = !state.popperValue2"
+						>触发</v3-button
+					>
+					<template #content>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+						eveniet nesciunt amet, rem consectetur quod perferendis harum fugit
+						excepturi repudiandae culpa veritatis praesentium porro libero
+						inventore? Quasi debitis provident consequatur?
+					</template>
+				</v3-base-popper>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>延迟显示/隐藏</h3>
+			</v3-col>
+			<v3-col>
+				<v3-base-popper
+					trigger="click"
+					placement="bottom"
+					:delay="[1000, 2000]"
+				>
+					<v3-button type="primary">触发</v3-button>
+					<template #content>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+						eveniet nesciunt amet, rem consectetur quod perferendis harum fugit
+						excepturi repudiandae culpa veritatis praesentium porro libero
+						inventore? Quasi debitis provident consequatur?
+					</template>
+				</v3-base-popper>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -123,6 +170,7 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			popperValue1: false,
+			popperValue2: false,
 		});
 
 		return {
@@ -132,17 +180,4 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss" scoped>
-.content {
-	.action {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		:deep(.v3-button) {
-			&:not(:first-child) {
-				margin-left: 12px;
-			}
-		}
-	}
-}
-</style>
+<style lang="scss" scoped></style>
