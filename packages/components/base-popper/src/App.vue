@@ -94,6 +94,23 @@
 				</v3-base-popper>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>禁用：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-base-popper disabled>
+					<v3-button type="primary">触发</v3-button>
+					<template #content>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+						eveniet nesciunt amet, rem consectetur quod perferendis harum fugit
+						excepturi repudiandae culpa veritatis praesentium porro libero
+						inventore? Quasi debitis provident consequatur?
+					</template>
+				</v3-base-popper>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -106,6 +123,7 @@ export default defineComponent({
 			popperValue1: false,
 			radioValue2: 'dark',
 			popperValue2: false,
+			popperValue3: false,
 		});
 
 		return {
