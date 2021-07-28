@@ -1,49 +1,56 @@
 <template>
-	<Popper
-		class="v3-base-popper"
+	<div
 		:class="{
-			[`is-theme-${props.theme}`]: true,
-			[`is-visible`]: state.showDropdown,
-			[`is-disabled`]: props.disabled,
+			'v3-base-popper': true,
+			'is-visible': state.showDropdown,
+			'is-disabled': props.disabled,
 		}"
-		:arrow="props.arrow"
-		:show="props.modelValue"
-		:placement="props.placement"
-		:content="props.content"
-		:offsetDistance="`${props.offset}`"
-		:disabled="props.disabled"
-		:openDelay="props.delay[0]"
-		:closeDelay="props.delay[1]"
-		:interactive="true"
-		:hover="props.trigger === 'hover'"
-		:disableClickAway="false"
-		@open:popper="handleOpen"
-		@close:popper="handleClose"
 	>
-		<template #default>
+		<tippy
+			ref="tippyRef"
+			:hideOnClick="props.trigger !== 'manual'"
+			:trigger="props.trigger"
+			:theme="props.theme === 'dark' ? 'material' : 'light'"
+			:animation="props.animation"
+			:placement="props.placement"
+			:zIndex="props.zIndex"
+			:arrow="props.arrow"
+			:interactive="true"
+			:allowHTML="true"
+			:maxWidth="props.maxWidth"
+			:showOnCreate="state.showDropdown"
+			:delay="props.delay"
+			:offset="props.offset"
+			:onShow="handleShow"
+			:onHide="handleHide"
+			:onClickOutside="handleClickOutside"
+		>
 			<div class="v3-base-popper__trigger">
-				<slot name="default"></slot>
+				<slot></slot>
 			</div>
-		</template>
-
-		<template #content>
-			<div
-				class="v3-base-popper__dropdown"
-				:style="{
-					maxWidth: `${props.maxWidth}px`,
-				}"
-			>
-				<slot name="content" v-if="context.slots.content"></slot>
-				<span v-else-if="!context.slots.content && props.content">{{
-					props.content
-				}}</span>
-			</div>
-		</template>
-	</Popper>
+			<template #content>
+				<div class="v3-base-popper__dropdown">
+					<div class="v3-popper-dropdown__title" v-if="props.title">
+						<h3>{{ props.title }}</h3>
+					</div>
+					<div class="v3-popper-dropdown__content">
+						<slot v-if="context.slots.content" name="content"></slot>
+						<template v-else>
+							{{ props.content }}
+						</template>
+					</div>
+				</div>
+			</template>
+		</tippy>
+	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/base-popper';
+import VARIABLE from '@common/constants/internal-variable';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/themes/material.css';
 import {
+	computed,
 	defineComponent,
 	getCurrentInstance,
 	PropType,
@@ -52,30 +59,50 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import Popper from 'vue3-popper';
+import { Tippy, TippyInstance } from 'vue-tippy';
 
 interface IState {
 	showDropdown: boolean;
 }
+type ILocalTippyInstance = TippyInstance & {
+	hide: () => void;
+	show: () => void;
+	unmount: () => void;
+	mount: () => void;
+};
 
 export default defineComponent({
 	name: 'V3BasePopper',
 	components: {
-		Popper,
+		Tippy,
 	},
 	props: {
-		/** 自行控制 Popper 显隐 */
 		modelValue: {
-			type: Boolean,
+			type: Boolean as PropType<TYPES.IBasePopperModelValue>,
 			default: null,
 		},
-		/** 触发的方式 */
-		trigger: {
-			type: String as PropType<TYPES.IBasePopperTrigger>,
-			default: 'hover',
+		/** 最大宽度 */
+		maxWidth: {
+			type: Number,
+			default: 300,
+		},
+		/** 主题色（黑/白） */
+		theme: {
+			type: String as PropType<TYPES.IBasePopperTheme>,
+			default: 'dark',
 			validator(v: string) {
-				return ['click', 'hover'].includes(v);
+				return ['dark', 'light'].includes(v);
 			},
+		},
+		/** popper 内容，也可以通过 slot="content" 传入 */
+		content: {
+			type: String,
+			default: '',
+		},
+		/** popper 标题 */
+		title: {
+			type: String,
+			default: '',
 		},
 		/** 弹出位置 */
 		placement: {
@@ -101,75 +128,110 @@ export default defineComponent({
 				].includes(v);
 			},
 		},
-		/** 是否禁用 popper */
+		/** 是否禁用 */
 		disabled: {
 			type: Boolean,
 			default: false,
 		},
-		/** 箭头的显隐状态 */
-		arrow: {
-			type: Boolean,
-			default: true,
+		/** 距离触发器的距离 */
+		offset: {
+			type: Object as PropType<TYPES.IBasePopperOffset>,
+			default: [0, 5],
+		},
+		/** 自定义弹出的动画 */
+		animation: {
+			type: String,
+			default: 'v3-popper-slide-fade',
 		},
 		/** 显示/隐藏的延迟 */
 		delay: {
-			type: Array as PropType<TYPES.IBasePopperDelay>,
+			type: Object as PropType<TYPES.IBasePopperDelay>,
 			default: [0, 0],
-			validator(v: number[]) {
-				return v.length === 2;
-			},
 		},
-		/** popper 内容，也可以通过 slot="content" 传入 */
-		content: {
-			type: String,
-			default: '',
-		},
-		/** 主题色（黑/白） */
-		theme: {
-			type: String as PropType<TYPES.IBasePopperTheme>,
-			default: 'dark',
+		/** 触发的方式 */
+		trigger: {
+			type: String as PropType<TYPES.IBasePopperTrigger>,
+			default: 'mouseenter',
 			validator(v: string) {
-				return ['dark', 'light'].includes(v);
+				return [
+					'mouseenter focus',
+					'mouseenter click',
+					'click',
+					'mouseenter',
+					'focusin',
+					'manual',
+				].includes(v);
 			},
 		},
-		/** 距离触发器的距离 */
-		offset: {
-			type: Number,
-			default: 12,
+		/** 是否显示箭头 */
+		arrow: {
+			type: Boolean,
+			default: false,
 		},
-		/** 浮窗的最大宽度 */
-		maxWidth: {
+		/** 同 CSS 属性 z-index */
+		zIndex: {
 			type: Number,
-			default: 350,
+			default() {
+				return VARIABLE.getNextZIndex();
+			},
 		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {
 		const state: IState = reactive({
+			/** popper 的显隐状态 */
 			showDropdown: false,
 		});
 		const app = ref(getCurrentInstance()).value;
+		const tippyRef = ref(null);
+
+		/**
+		 * 计算是否手动触发模式
+		 */
+		const computedIsManually = computed(() => {
+			return (
+				props.trigger === 'manual' && typeof props.modelValue === 'boolean'
+			);
+		});
 
 		watch(
-			toRef(props, 'modelValue'),
+			() => props.modelValue,
 			() => {
-				if (typeof props.modelValue === 'boolean') {
-					if (props.disabled) {
-						state.showDropdown = false;
-					} else {
-						state.showDropdown = props.modelValue;
+				if (computedIsManually.value) {
+					state.showDropdown = props.modelValue as boolean;
+
+					if (tippyRef.value) {
+						const tippyObj = (tippyRef.value as unknown) as {
+							tippy: ILocalTippyInstance;
+						};
+						if (props.modelValue) {
+							tippyObj.tippy.show();
+						} else {
+							tippyObj.tippy.hide();
+						}
 					}
 				}
 			},
 			{ immediate: true }
 		);
 
-		function handleOpen() {
-			state.showDropdown = true;
-			context.emit('open');
+		function handleShow() {
+			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
+			const showDropdown = !props.disabled;
+			state.showDropdown = showDropdown;
+
+			if (!showDropdown) {
+				return showDropdown;
+			}
 		}
-		function handleClose() {
+
+		function handleHide() {
 			state.showDropdown = false;
-			context.emit('close');
+		}
+
+		function handleClickOutside() {
+			if (computedIsManually.value) {
+				context.emit('update:modelValue', false);
+			}
 		}
 
 		return {
@@ -177,8 +239,10 @@ export default defineComponent({
 			app,
 			props,
 			context,
-			handleOpen,
-			handleClose,
+			tippyRef,
+			handleShow,
+			handleHide,
+			handleClickOutside,
 		};
 	},
 });

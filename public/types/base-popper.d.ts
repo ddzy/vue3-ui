@@ -1,4 +1,3 @@
-export type IBasePopperTrigger = 'click' | 'hover';
 export type IBasePopperPlacement =
 	| 'top'
 	| 'top-start'
@@ -16,10 +15,20 @@ export type IBasePopperPlacement =
 	| 'auto-start'
 	| 'auto-end';
 export type IBasePopperTheme = 'light' | 'dark';
-export type IBasePopperDelay = number[];
+export type IBasePopperOffset = [number, number];
+export type IBasePopperDelay = [number, number];
+export type IBasePopperMaxWidth = 'none' | number;
+export type IBasePopperModelValue = boolean | null;
+export type IBasePopperTrigger =
+	| 'mouseenter focus'
+	| 'mouseenter click'
+	| 'click'
+	| 'mouseenter'
+	| 'focusin'
+	| 'manual';
 
 export interface IBasePopperProps {
-  modelValue: boolean | null;
+	modelValue: IBasePopperModelValue;
 	trigger: IBasePopperTrigger;
 	placement: IBasePopperPlacement;
 	disabled: boolean;
@@ -27,6 +36,8 @@ export interface IBasePopperProps {
 	delay: IBasePopperDelay;
 	content: string;
 	theme: IBasePopperTheme;
-	offset: number;
-	maxWidth: number;
+	offset: IBasePopperOffset;
+	maxWidth: IBasePopperMaxWidth;
+	zIndex: number;
+	title: string;
 }

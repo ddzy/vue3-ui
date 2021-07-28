@@ -1383,7 +1383,7 @@
   dependencies:
     "@octokit/openapi-types" "^7.0.0"
 
-"@popperjs/core@^2.8.3", "@popperjs/core@^2.9.2":
+"@popperjs/core@^2.8.3":
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
   integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
@@ -3733,11 +3733,6 @@ dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
-
-debounce@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.1.tgz#38881d8f4166a5c5848020c11827b834bcb3e0a5"
-  integrity sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
@@ -10645,14 +10640,6 @@ vue-tsc@^0.0.15:
   integrity sha512-l7My4ubz11yoOwnxmgfqDV1DH0VgdkDm+AxrTAIAljsG7JrKkJ++AbhmxjzF2viMJvGbKN0rH+0+ErIkatK3oA==
   dependencies:
     unzipper "0.10.11"
-
-vue3-popper@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/vue3-popper/-/vue3-popper-1.1.0.tgz#a0d636f4e61844a92b17a8dd212fe319d098a013"
-  integrity sha512-1GMTuYsolEdyEQ0nmy+3VAXxq9aW388a4rYXNMabODob+Q1fMt/OAZlL1J2RsVB9AubdPwHB1pzt2V5FWMu7UQ==
-  dependencies:
-    "@popperjs/core" "^2.9.2"
-    debounce "^1.2.1"
 
 vue@^3.0.11, vue@^3.0.5:
   version "3.0.11"
