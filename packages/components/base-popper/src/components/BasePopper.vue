@@ -3,6 +3,8 @@
 		class="v3-base-popper"
 		:class="{
 			[`is-theme-${props.theme}`]: true,
+			[`is-visible`]: state.showDropdown,
+			[`is-disabled`]: props.disabled,
 		}"
 		:arrow="props.arrow"
 		:show="props.modelValue"
@@ -47,7 +49,9 @@ import {
 } from 'vue';
 import Popper from 'vue3-popper';
 
-interface IState {}
+interface IState {
+	showDropdown: boolean;
+}
 
 export default defineComponent({
 	name: 'V3BasePopper',
@@ -135,13 +139,17 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {
-		const state: IState = reactive({});
+		const state: IState = reactive({
+			showDropdown: false,
+		});
 		const app = ref(getCurrentInstance()).value;
 
 		function handleOpen() {
+			state.showDropdown = true;
 			context.emit('open');
 		}
 		function handleClose() {
+			state.showDropdown = false;
 			context.emit('close');
 		}
 
