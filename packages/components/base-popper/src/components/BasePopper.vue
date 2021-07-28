@@ -33,7 +33,10 @@
 					maxWidth: `${props.maxWidth}px`,
 				}"
 			>
-				<slot name="content"></slot>
+				<slot name="content" v-if="context.slots.content"></slot>
+				<span v-else-if="!context.slots.content && props.content">{{
+					props.content
+				}}</span>
 			</div>
 		</template>
 	</Popper>
@@ -46,6 +49,8 @@ import {
 	PropType,
 	reactive,
 	ref,
+	toRef,
+	watch,
 } from 'vue';
 import Popper from 'vue3-popper';
 
@@ -143,6 +148,20 @@ export default defineComponent({
 			showDropdown: false,
 		});
 		const app = ref(getCurrentInstance()).value;
+
+		watch(
+			toRef(props, 'modelValue'),
+			() => {
+				if (typeof props.modelValue === 'boolean') {
+					if (props.disabled) {
+						state.showDropdown = false;
+					} else {
+						state.showDropdown = props.modelValue;
+					}
+				}
+			},
+			{ immediate: true }
+		);
 
 		function handleOpen() {
 			state.showDropdown = true;
