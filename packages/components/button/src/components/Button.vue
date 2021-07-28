@@ -158,6 +158,8 @@ export default defineComponent({
 			const path = e.composedPath();
 
 			if (path.includes(button)) {
+				button.classList.remove('is-active');
+				button.offsetTop;
 				button.classList.add('is-active');
 			}
 		}
