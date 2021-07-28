@@ -18,6 +18,7 @@ export type IPopoverPlacement =
 export type IPopoverOffset = [number, number];
 export type IPopoverDelay = [number, number];
 export type IPopoverMaxWidth = 'none' | number;
+export type IPopoverModelValue = boolean | null;
 
 export interface IPopoverProps {
 	maxWidth: IPopoverMaxWidth;
@@ -30,4 +31,5 @@ export interface IPopoverProps {
 	animation: string;
 	delay: IPopoverDelay;
 	trigger: string;
+	modelValue: IPopoverModelValue;
 }

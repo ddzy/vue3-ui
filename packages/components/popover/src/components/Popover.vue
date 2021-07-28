@@ -7,7 +7,8 @@
 		}"
 	>
 		<tippy
-			:hideOnClick="props.trigger !== 'mouseenter'"
+			ref="tippyRef"
+			:hideOnClick="props.trigger !== 'manual'"
 			:trigger="props.trigger"
 			:theme="props.theme === 'dark' ? 'material' : 'light'"
 			:animation="props.animation"
@@ -17,10 +18,12 @@
 			:interactive="true"
 			:allowHTML="true"
 			:maxWidth="props.maxWidth"
+			:showOnCreate="state.showDropdown"
 			:delay="props.delay"
 			:offset="props.offset"
 			:onShow="handleShow"
 			:onHide="handleHide"
+			:onClickOutside="handleClickOutside"
 		>
 			<div class="v3-popover__trigger">
 				<slot></slot>
@@ -47,18 +50,26 @@ import VARIABLE from '@common/constants/internal-variable';
 import 'tippy.js/themes/light.css';
 import 'tippy.js/themes/material.css';
 import {
+	computed,
 	defineComponent,
 	getCurrentInstance,
 	PropType,
 	reactive,
 	ref,
+	watch,
 } from 'vue';
-import { Tippy } from 'vue-tippy';
+import { Tippy, TippyInstance } from 'vue-tippy';
 
 interface IState {
 	nextZIndex: number;
 	showDropdown: boolean;
 }
+type ILocalTippyInstance = TippyInstance & {
+	hide: () => void;
+	show: () => void;
+	unmount: () => void;
+	mount: () => void;
+};
 
 export default defineComponent({
 	name: 'V3Popover',
@@ -66,6 +77,10 @@ export default defineComponent({
 		Tippy,
 	},
 	props: {
+		modelValue: {
+			type: Boolean as PropType<TYPES.IPopoverModelValue>,
+			default: null,
+		},
 		/** 最大宽度 */
 		maxWidth: {
 			type: [Number, String] as PropType<TYPES.IPopoverMaxWidth>,
@@ -146,6 +161,37 @@ export default defineComponent({
 			showDropdown: false,
 		});
 		const app = ref(getCurrentInstance()).value;
+		const tippyRef = ref(null);
+
+		/**
+		 * 计算是否手动触发模式
+		 */
+		const computedIsManually = computed(() => {
+			return (
+				props.trigger === 'manual' && typeof props.modelValue === 'boolean'
+			);
+		});
+
+		watch(
+			() => props.modelValue,
+			() => {
+				if (computedIsManually.value) {
+					state.showDropdown = props.modelValue as boolean;
+
+					if (tippyRef.value) {
+						const tippyObj = (tippyRef.value as unknown) as {
+							tippy: ILocalTippyInstance;
+						};
+						if (props.modelValue) {
+							tippyObj.tippy.show();
+						} else {
+							tippyObj.tippy.hide();
+						}
+					}
+				}
+			},
+			{ immediate: true }
+		);
 
 		function handleShow() {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
@@ -161,13 +207,21 @@ export default defineComponent({
 			state.showDropdown = false;
 		}
 
+		function handleClickOutside() {
+			if (computedIsManually.value) {
+				context.emit('update:modelValue', false);
+			}
+		}
+
 		return {
 			state,
 			app,
 			props,
 			context,
+			tippyRef,
 			handleShow,
 			handleHide,
+			handleClickOutside,
 		};
 	},
 });

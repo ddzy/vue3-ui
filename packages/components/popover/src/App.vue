@@ -65,16 +65,30 @@
 				<h3>嵌套操作：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-popover title="提示" trigger="click" theme="light">
-					<v3-button type="primary">保存</v3-button>
+				<v3-popover
+					title="提示"
+					trigger="manual"
+					theme="light"
+					v-model="state.popoverValue1"
+				>
+					<v3-button type="primary" @click="state.popoverValue1 = true"
+						>保存</v3-button
+					>
 					<template #content>
 						<div class="content">
 							<p>
 								确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？确定要保存吗？
 							</p>
 							<div class="action">
-								<v3-button type="text">取消</v3-button>
-								<v3-button type="primary">确定</v3-button>
+								<v3-button type="text" @click="state.popoverValue1 = false"
+									>取消</v3-button
+								>
+								<v3-button
+									type="primary"
+									:loading="state.btnLoading1"
+									@click="handleConfirm"
+									>确定</v3-button
+								>
 							</div>
 						</div>
 					</template>
@@ -88,13 +102,25 @@ import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
 	setup(props, context) {
-		const state = reactive({});
+		const state = reactive({
+			popoverValue1: false,
+			btnLoading1: false,
+		});
 
 		return {
 			state,
 		};
 	},
-	methods: {},
+	methods: {
+		handleConfirm() {
+			this.state.btnLoading1 = true;
+
+			setTimeout(() => {
+				this.state.btnLoading1 = false;
+				this.state.popoverValue1 = false;
+			}, 2000);
+		},
+	},
 });
 </script>
 <style lang="scss" scoped>
