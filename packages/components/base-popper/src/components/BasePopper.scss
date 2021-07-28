@@ -1,16 +1,19 @@
 .v3-base-popper {
 	:deep(.tippy-box) {
-		border-radius: $border-radius-width-small;
+		border-radius: $border-radius-width-default;
 		&[data-theme~='light'] {
 			color: $font-color-default;
+			box-shadow: $box-shadow-large;
+			border: 1px solid $border-color-grey-small;
 		}
 		&[data-theme~='material'] {
 			color: #fff;
+			font-weight: normal;
 		}
 	}
 	:deep(.tippy-content) {
 		.v3-base-popper__dropdown {
-			padding: $padding-small + 4 $padding-medium;
+			padding: $padding-medium $padding-large-1;
 			font-size: $font-size-small;
 			.v3-popper-dropdown__title {
 				margin-bottom: $margin-medium;

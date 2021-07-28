@@ -51,7 +51,11 @@
 				<h3>纯手动控制：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-base-popper trigger="manual" v-model="state.popperValue1">
+				<v3-base-popper
+					trigger="manual"
+					theme="light"
+					v-model="state.popperValue1"
+				>
 					<v3-button type="primary" @click="state.popperValue1 = true"
 						>触发</v3-button
 					>
