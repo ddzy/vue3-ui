@@ -1,227 +1,35 @@
 <template>
-	<div
-		:class="{
-			'v3-popover': true,
-			'is-visible': state.showDropdown,
-			'is-disabled': props.disabled,
-		}"
+	<v3-base-popper
+		customClass="v3-popover"
+		v-bind="$attrs"
+		:offset="props.offset"
 	>
-		<tippy
-			ref="tippyRef"
-			:hideOnClick="props.trigger !== 'manual'"
-			:trigger="props.trigger"
-			:theme="props.theme === 'dark' ? 'material' : 'light'"
-			:animation="props.animation"
-			:placement="props.placement"
-			:zIndex="state.nextZIndex"
-			:arrow="false"
-			:interactive="true"
-			:allowHTML="true"
-			:maxWidth="props.maxWidth"
-			:showOnCreate="state.showDropdown"
-			:delay="props.delay"
-			:offset="props.offset"
-			:onShow="handleShow"
-			:onHide="handleHide"
-			:onClickOutside="handleClickOutside"
-		>
-			<div class="v3-popover__trigger">
-				<slot></slot>
-			</div>
-			<template #content>
-				<div class="v3-popover__dropdown">
-					<div class="v3-popover-dropdown__title" v-if="props.title">
-						<h3>{{ props.title }}</h3>
-					</div>
-					<div class="v3-popover-dropdown__content">
-						<slot v-if="context.slots.content" name="content"></slot>
-						<template v-else>
-							{{ props.content }}
-						</template>
-					</div>
-				</div>
-			</template>
-		</tippy>
-	</div>
+		<template v-for="(_, v) of context.slots" v-slot:[v]="scope">
+			<slot v-bind="scope" :name="v"></slot>
+		</template>
+	</v3-base-popper>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/popover';
-import VARIABLE from '@common/constants/internal-variable';
-import 'tippy.js/themes/light.css';
-import 'tippy.js/themes/material.css';
-import {
-	computed,
-	defineComponent,
-	getCurrentInstance,
-	PropType,
-	reactive,
-	ref,
-	watch,
-} from 'vue';
-import { Tippy, TippyInstance } from 'vue-tippy';
+import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
+import V3BasePopper from '@components/base-popper/main';
 
-interface IState {
-	nextZIndex: number;
-	showDropdown: boolean;
-}
-type ILocalTippyInstance = TippyInstance & {
-	hide: () => void;
-	show: () => void;
-	unmount: () => void;
-	mount: () => void;
-};
+interface IState {}
 
 export default defineComponent({
 	name: 'V3Popover',
 	components: {
-		Tippy,
-	},
-	props: {
-		modelValue: {
-			type: Boolean as PropType<TYPES.IPopoverModelValue>,
-			default: null,
-		},
-		/** 最大宽度 */
-		maxWidth: {
-			type: [Number, String] as PropType<TYPES.IPopoverMaxWidth>,
-			default: 300,
-		},
-		/** 主题色（黑/白） */
-		theme: {
-			type: String as PropType<TYPES.IPopoverTheme>,
-			default: 'dark',
-			validator(v: string) {
-				return ['dark', 'light'].includes(v);
-			},
-		},
-		/** popover 内容，也可以通过 slot="content" 传入 */
-		content: {
-			type: String,
-			default: '',
-		},
-		title: {
-			type: String,
-			default: '',
-		},
-		/** 弹出位置 */
-		placement: {
-			type: String as PropType<TYPES.IPopoverPlacement>,
-			default: 'auto',
-			validator(v: string) {
-				return [
-					'top',
-					'top-start',
-					'top-end',
-					'right',
-					'right-start',
-					'right-end',
-					'bottom',
-					'bottom-start',
-					'bottom-end',
-					'left',
-					'left-start',
-					'left-end',
-					'auto',
-					'auto-start',
-					'auto-end',
-				].includes(v);
-			},
-		},
-		/** 是否禁用 */
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		/** 距离触发器的距离 */
-		offset: {
-			type: Object as PropType<TYPES.IPopoverOffset>,
-			default: [0, 5],
-		},
-		/** 自定义弹出的动画 */
-		animation: {
-			type: String,
-			default: 'v3-popper-slide-fade',
-		},
-		/** 显示/隐藏的延迟 */
-		delay: {
-			type: Object as PropType<TYPES.IPopoverDelay>,
-			default: [0, 0],
-		},
-		/** 触发的方式 */
-		trigger: {
-			type: String,
-			default: 'mouseenter',
-		},
+		V3BasePopper,
 	},
 	setup(props: TYPES.IPopoverProps, context) {
-		const state: IState = reactive({
-			/** popover 的 z-index（统一管理） */
-			nextZIndex: VARIABLE.getNextZIndex(),
-			/** popover 的显隐状态 */
-			showDropdown: false,
-		});
+		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
-		const tippyRef = ref(null);
-
-		/**
-		 * 计算是否手动触发模式
-		 */
-		const computedIsManually = computed(() => {
-			return (
-				props.trigger === 'manual' && typeof props.modelValue === 'boolean'
-			);
-		});
-
-		watch(
-			() => props.modelValue,
-			() => {
-				if (computedIsManually.value) {
-					state.showDropdown = props.modelValue as boolean;
-
-					if (tippyRef.value) {
-						const tippyObj = (tippyRef.value as unknown) as {
-							tippy: ILocalTippyInstance;
-						};
-						if (props.modelValue) {
-							tippyObj.tippy.show();
-						} else {
-							tippyObj.tippy.hide();
-						}
-					}
-				}
-			},
-			{ immediate: true }
-		);
-
-		function handleShow() {
-			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
-			const showDropdown = !props.disabled;
-			state.showDropdown = showDropdown;
-
-			if (!showDropdown) {
-				return showDropdown;
-			}
-		}
-
-		function handleHide() {
-			state.showDropdown = false;
-		}
-
-		function handleClickOutside() {
-			if (computedIsManually.value) {
-				context.emit('update:modelValue', false);
-			}
-		}
 
 		return {
 			state,
 			app,
 			props,
 			context,
-			tippyRef,
-			handleShow,
-			handleHide,
-			handleClickOutside,
 		};
 	},
 });

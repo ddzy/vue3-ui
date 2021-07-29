@@ -1,35 +1,3 @@
-export type IPopoverTheme = 'dark' | 'light';
-export type IPopoverPlacement =
-	| 'top'
-	| 'top-start'
-	| 'top-end'
-	| 'right'
-	| 'right-start'
-	| 'right-end'
-	| 'bottom'
-	| 'bottom-start'
-	| 'bottom-end'
-	| 'left'
-	| 'left-start'
-	| 'left-end'
-	| 'auto'
-	| 'auto-start'
-	| 'auto-end';
-export type IPopoverOffset = [number, number];
-export type IPopoverDelay = [number, number];
-export type IPopoverMaxWidth = 'none' | number;
-export type IPopoverModelValue = boolean | null;
+import * as BASE_POPPER_TYPES from './base-popper';
 
-export interface IPopoverProps {
-	maxWidth: IPopoverMaxWidth;
-	theme: IPopoverTheme;
-	content: string;
-	title: string;
-	placement: IPopoverPlacement;
-	disabled: boolean;
-	offset: IPopoverOffset;
-	animation: string;
-	delay: IPopoverDelay;
-	trigger: string;
-	modelValue: IPopoverModelValue;
-}
+export interface IPopoverProps extends BASE_POPPER_TYPES.IBasePopperProps {}
