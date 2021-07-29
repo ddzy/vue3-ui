@@ -34,6 +34,64 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
+
+		/** 确定按钮的文字 */
+		confirmBtnText: {
+			type: String,
+			default: '确定',
+		},
+		/** 确定按钮的类型 */
+		confirmBtnType: {
+			type: String as PropType<TYPES.IButtonType>,
+			default: 'primary',
+			validator: (v: string) => {
+				return [
+					'primary',
+					'success',
+					'danger',
+					'default',
+					'warning',
+					'info',
+					'text',
+				].includes(v);
+			},
+		},
+		/** 取消按钮的文字 */
+		cancelBtnText: {
+			type: String,
+			default: '取消',
+		},
+		/** 取消按钮的类型 */
+		cancelBtnType: {
+			type: String as PropType<TYPES.IButtonType>,
+			default: 'text',
+			validator: (v: string) => {
+				return [
+					'primary',
+					'success',
+					'danger',
+					'default',
+					'warning',
+					'info',
+					'text',
+				].includes(v);
+			},
+		},
+		/** 图标类名 */
+		icon: {
+			type: String,
+			default: 'v3-icon-warning-fill',
+		},
+		/** 图标颜色 */
+		iconColor: {
+			type: String,
+			default: 'rgba(237, 170, 83, 1)',
+		},
+		/** 是否显示图标 */
+		showIcon: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	setup(props: TYPES.IPopconfirmProps, context) {
 		const state: IState = reactive({});
