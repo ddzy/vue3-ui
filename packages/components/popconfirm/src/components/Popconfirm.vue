@@ -1,7 +1,46 @@
 <template>
 	<v3-base-popper customClass="v3-popconfirm" v-bind="$attrs" theme="light">
-		<template v-for="(_, v) of context.slots" v-slot:[v]="scope">
-			<slot v-bind="scope" :name="v"></slot>
+		<template #default>
+			<slot></slot>
+		</template>
+
+		<template #content>
+			<div class="v3-popconfirm-content__text">
+				<i
+					v-if="props.showIcon"
+					:class="{
+						'v3-icon': true,
+						'v3-popconfirm-text__icon': true,
+						[`${props.icon}`]: true,
+					}"
+					:style="{
+						color: props.iconColor,
+					}"
+				></i>
+
+				<!-- slot="content" 优先级比 content props 高 -->
+				<slot name="content" v-if="context.slots.content"></slot>
+				<span v-else-if="!context.slots.content && props.content">{{
+					props.content
+				}}</span>
+			</div>
+
+			<div class="v3-popconfirm-content__action">
+				<v3-button
+					:type="props.cancelBtnType"
+					:size="props.cancelBtnSize"
+					:loading="props.cancelBtnLoading"
+					@click="handleAction('cancel')"
+					>{{ props.cancelBtnText }}</v3-button
+				>
+				<v3-button
+					:type="props.confirmBtnType"
+					:size="props.confirmBtnSize"
+					:loading="props.confirmBtnLoading"
+					@click="handleAction('confirm')"
+					>{{ props.confirmBtnText }}</v3-button
+				>
+			</div>
 		</template>
 	</v3-base-popper>
 </template>
@@ -35,6 +74,11 @@ export default defineComponent({
 			default: '',
 		},
 
+		/** 气泡确认框的内容 */
+		content: {
+			type: String,
+			default: '',
+		},
 		/** 确定按钮的文字 */
 		confirmBtnText: {
 			type: String,
@@ -54,6 +98,27 @@ export default defineComponent({
 					'info',
 					'text',
 				].includes(v);
+			},
+		},
+		/** 确定按钮的大小 */
+		confirmBtnSize: {
+			type: String as PropType<TYPES.IButtonSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
+			},
+		},
+		/** 确定按钮的 loading 状态 */
+		confirmBtnLoading: {
+			type: Boolean,
+			default: false,
+		},
+		/** 取消按钮的大小 */
+		cancelBtnSize: {
+			type: String as PropType<TYPES.IButtonSize>,
+			default: 'medium',
+			validator(v: string) {
+				return ['small', 'medium', 'large'].includes(v);
 			},
 		},
 		/** 取消按钮的文字 */
@@ -77,6 +142,11 @@ export default defineComponent({
 				].includes(v);
 			},
 		},
+		/** 取消按钮的 loading 状态 */
+		cancelBtnLoading: {
+			type: Boolean,
+			default: false,
+		},
 		/** 图标类名 */
 		icon: {
 			type: String,
@@ -97,11 +167,16 @@ export default defineComponent({
 		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
 
+		function handleAction(type: string) {
+			context.emit(type);
+		}
+
 		return {
 			state,
 			app,
 			props,
 			context,
+			handleAction,
 		};
 	},
 });
