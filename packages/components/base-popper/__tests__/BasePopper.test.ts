@@ -224,4 +224,29 @@ describe('V3BasePopper 组件测试：', () => {
 
 		jest.advanceTimersByTime(500);
 	});
+
+	test('V3BasePopper 可以接收【customClass】配置项，用来自定义类名', async () => {
+		const wrapper = mount({
+			components: {
+				V3BasePopper,
+				V3Button,
+			},
+			template: `
+				<v3-base-popper
+					customClass="custom-class"
+				>
+					<v3-button type="primary">触发</v3-button>
+					<template #content>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+						eveniet nesciunt amet, rem consectetur quod perferendis harum fugit
+						excepturi repudiandae culpa veritatis praesentium porro libero
+						inventore? Quasi debitis provident consequatur?
+					</template>
+				</v3-base-popper>
+			`,
+		});
+
+		expect(wrapper.find('.v3-base-popper').classes()).toContain('custom-class');
+		expect(wrapper.find('.v3-base-popper.custom-class').exists()).toBeTruthy();
+	});
 });
