@@ -4,14 +4,48 @@
 			<v3-col :span="12">
 				<h3>基本用法：</h3>
 			</v3-col>
-			<v3-col>
+			<v3-col style="display: flex; align-items: center">
+				<v3-popover
+					content="我们都是青春曾经领养的孩子，你哭他笑，我玩着一个童年的布娃娃，一不小心跌倒，感染人生第一场抑郁，又开始学会做爱情的美梦，最后醒来时，你就突然跟身边的人发出疑问：我们什么时候长这么大的？而就在这个时候或者更早，青春不动声色地拿走了我们所有的伤疤。"
+					title="标题"
+					trigger="mouseenter"
+					theme="light"
+				>
+					<v3-button>mouseenter</v3-button>
+				</v3-popover>
+
+				<v3-divider></v3-divider>
+
+				<v3-popover
+					content="我们都是青春曾经领养的孩子，你哭他笑，我玩着一个童年的布娃娃，一不小心跌倒，感染人生第一场抑郁，又开始学会做爱情的美梦，最后醒来时，你就突然跟身边的人发出疑问：我们什么时候长这么大的？而就在这个时候或者更早，青春不动声色地拿走了我们所有的伤疤。"
+					title="标题"
+					trigger="focusin"
+					theme="light"
+				>
+					<v3-button>focusin</v3-button>
+				</v3-popover>
+
+				<v3-divider></v3-divider>
+
 				<v3-popover
 					content="我们都是青春曾经领养的孩子，你哭他笑，我玩着一个童年的布娃娃，一不小心跌倒，感染人生第一场抑郁，又开始学会做爱情的美梦，最后醒来时，你就突然跟身边的人发出疑问：我们什么时候长这么大的？而就在这个时候或者更早，青春不动声色地拿走了我们所有的伤疤。"
 					title="标题"
 					trigger="click"
 					theme="light"
 				>
-					<v3-button>点我</v3-button>
+					<v3-button>click</v3-button>
+				</v3-popover>
+
+				<v3-divider></v3-divider>
+
+				<v3-popover
+					content="我们都是青春曾经领养的孩子，你哭他笑，我玩着一个童年的布娃娃，一不小心跌倒，感染人生第一场抑郁，又开始学会做爱情的美梦，最后醒来时，你就突然跟身边的人发出疑问：我们什么时候长这么大的？而就在这个时候或者更早，青春不动声色地拿走了我们所有的伤疤。"
+					title="标题"
+					trigger="manual"
+					theme="light"
+					v-model="state.popoverValue2"
+				>
+					<v3-button @click="state.popoverValue2 = true">manual</v3-button>
 				</v3-popover>
 			</v3-col>
 		</v3-row>
@@ -105,6 +139,7 @@ export default defineComponent({
 		const state = reactive({
 			popoverValue1: false,
 			btnLoading1: false,
+			popoverValue2: false,
 		});
 
 		return {
