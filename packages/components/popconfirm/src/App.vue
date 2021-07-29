@@ -55,6 +55,7 @@
 						placement="bottom"
 						confirmBtnType="success"
 						cancelBtnType="default"
+						cancelBtnSize="small"
 					>
 						<v3-button type="primary">类型</v3-button>
 					</v3-popconfirm>
