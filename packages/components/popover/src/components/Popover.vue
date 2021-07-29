@@ -1,9 +1,5 @@
 <template>
-	<v3-base-popper
-		customClass="v3-popover"
-		v-bind="$attrs"
-		:offset="props.offset"
-	>
+	<v3-base-popper customClass="v3-popover" v-bind="$attrs">
 		<template v-for="(_, v) of context.slots" v-slot:[v]="scope">
 			<slot v-bind="scope" :name="v"></slot>
 		</template>
