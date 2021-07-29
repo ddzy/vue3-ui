@@ -40,4 +40,5 @@ export interface IBasePopperProps {
 	maxWidth: IBasePopperMaxWidth;
 	zIndex: number;
 	title: string;
+	customClass: string;
 }

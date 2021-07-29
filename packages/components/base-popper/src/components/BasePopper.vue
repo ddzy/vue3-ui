@@ -5,6 +5,7 @@
 			'is-visible': state.showDropdown,
 			'is-disabled': props.disabled,
 			[`is-theme-${props.theme}`]: true,
+			[`${props.customClass}`]: true,
 		}"
 	>
 		<tippy
@@ -175,6 +176,11 @@ export default defineComponent({
 			default() {
 				return VARIABLE.getNextZIndex();
 			},
+		},
+		/** 自定义类名 */
+		customClass: {
+			type: String,
+			default: '',
 		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {
