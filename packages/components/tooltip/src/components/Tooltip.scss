@@ -1,17 +1,6 @@
 .v3-tooltip {
-	:deep(.tippy-box) {
-		border-radius: $border-radius-width-small;
-		&[data-theme~='light'] {
-			color: $font-color-default;
-		}
-		&[data-theme~='material'] {
-			color: #fff;
-		}
-	}
-	:deep(.tippy-content) {
-		.v3-tooltip__dropdown {
-			padding: $padding-small $padding-medium;
-			font-size: $font-size-mini;
-		}
-	}
+  :deep(.tippy-box .tippy-content .v3-base-popper__dropdown) {
+    padding: $padding-small $padding-medium;
+    font-size: $font-size-mini;
+  }
 }

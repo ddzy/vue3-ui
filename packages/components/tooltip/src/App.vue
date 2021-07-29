@@ -186,7 +186,7 @@
 				<v3-tooltip trigger="mouseenter" :delay="[1000, 1000]">
 					<v3-button plain>一秒后显示/隐藏</v3-button>
 					<template #content>
-						<p style="margin: 0; width: 400px; word-break: break-all">
+						<p style="margin: 0">
 							听过这样一句话，并不是每一条鱼，都生活在同一片海里。每个人都有自己的幸福阈值，如鱼饮水，冷暖自知。若用自己的经验随意去评价他人的生活，只会给彼此带来麻烦和困扰
 						</p>
 					</template>
@@ -222,4 +222,8 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.v3-tooltip) {
+	display: inline-block;
+}
+</style>
