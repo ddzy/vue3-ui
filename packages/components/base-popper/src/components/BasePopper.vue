@@ -4,6 +4,7 @@
 			'v3-base-popper': true,
 			'is-visible': state.showDropdown,
 			'is-disabled': props.disabled,
+			[`is-theme-${props.theme}`]: true,
 		}"
 	>
 		<tippy
