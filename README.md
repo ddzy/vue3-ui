@@ -32,3 +32,5 @@ vue3 组件库
 |     Space      |       间隔组件       | :white_check_mark: | :white_check_mark: |
 |     Badge      |         徽标         | :white_check_mark: | :white_check_mark: |
 |    Loading     |        加载中        | :white_check_mark: | :white_check_mark: |
+|      Card      |         卡片         | :white_check_mark: | :white_check_mark: |
+|   BasePopper   |     基础的悬浮窗     | :white_check_mark: | :white_check_mark: |
