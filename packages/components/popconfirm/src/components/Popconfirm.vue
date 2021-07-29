@@ -103,7 +103,7 @@ export default defineComponent({
 		/** 确定按钮的大小 */
 		confirmBtnSize: {
 			type: String as PropType<TYPES.IButtonSize>,
-			default: 'medium',
+			default: 'small',
 			validator(v: string) {
 				return ['small', 'medium', 'large'].includes(v);
 			},
