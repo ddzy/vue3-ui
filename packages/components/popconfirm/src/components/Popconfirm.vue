@@ -54,6 +54,7 @@ import {
 	ref,
 } from 'vue';
 import V3BasePopper from '@components/base-popper/main';
+import V3Button from '@components/button/main';
 
 interface IState {}
 
@@ -61,6 +62,7 @@ export default defineComponent({
 	name: 'V3Popconfirm',
 	components: {
 		V3BasePopper,
+		V3Button,
 	},
 	props: {
 		/** 不可配置主题 */
