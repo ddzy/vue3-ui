@@ -20,15 +20,15 @@
 		padding: $padding-small 0;
 		cursor: pointer;
 		.v3-slider-track__inner {
-			height: 2px;
-			background-color: $primary-color;
+			height: 4px;
+			background-color: $border-color-grey-default;
 		}
 		.v3-slider-track__thumb {
 			position: absolute;
 			left: 0;
 			top: 50%;
-			width: 12px;
-			height: 12px;
+			width: 14px;
+			height: 14px;
 			border-radius: 50%;
 			background-color: $primary-color;
 			transform: translate(0, -50%);
