@@ -5,7 +5,7 @@
 				<h3>基本用法：</h3>
 			</v3-col>
 			<v3-col :span="12">
-				<v3-slider></v3-slider>
+				<v3-slider v-model="state.sliderValue1"></v3-slider>
 			</v3-col>
 		</v3-row>
 	</div>
@@ -15,7 +15,9 @@ import { defineComponent, h, reactive } from 'vue';
 
 export default defineComponent({
 	setup(props, context) {
-		const state = reactive({});
+		const state = reactive({
+			sliderValue1: 20,
+		});
 
 		return {
 			state,
