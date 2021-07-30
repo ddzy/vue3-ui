@@ -24,6 +24,7 @@ import V3LoadingDemo from './loading/src/App.vue';
 import V3CardDemo from './card/src/App.vue';
 import V3BasePopperDemo from './base-popper/src/App.vue';
 import V3PopconfirmDemo from './popconfirm/src/App.vue';
+import V3SliderDemo from './slider/src/App.vue';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -216,6 +217,14 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3PopconfirmDemo,
 		meta: {
 			title: '气泡确认框',
+		},
+	},
+	{
+		path: '/slider',
+		name: 'V3Slider',
+		component: V3SliderDemo,
+		meta: {
+			title: '滑块',
 		},
 	},
 ];

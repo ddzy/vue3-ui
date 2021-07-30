@@ -36,6 +36,7 @@ import V3Loading, {
 import V3Card from './card/main';
 import V3BasePopper from './base-popper/main';
 import V3Popconfirm from './popconfirm/main';
+import V3Slider from './slider/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -91,6 +92,7 @@ export {
 	V3Card,
 	V3BasePopper,
 	V3Popconfirm,
+	V3Slider,
 };
 
 export default function install(app: App) {
@@ -122,6 +124,7 @@ export default function install(app: App) {
 	app.component(V3Card.name, V3Card);
 	app.component(V3BasePopper.name, V3BasePopper);
 	app.component(V3Popconfirm.name, V3Popconfirm);
+	app.component(V3Slider.name, V3Slider);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
