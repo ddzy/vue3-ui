@@ -1,6 +1,40 @@
 <template>
 	<div class="v3-slider">
-		slider
+		<div class="v3-slider__prepend">
+			<!-- 优先级：slot="prepend" > prependIcon > label -->
+			<slot name="prepend" v-if="context.slots.prepend"></slot>
+			<i
+				:class="{
+					'v3-icon': true,
+					[`${props.prependIcon}`]: true,
+				}"
+				v-else-if="!context.slots.prepend && props.prependIcon"
+			></i>
+			<label
+				v-else-if="!context.slots.prepend && !props.prependIcon && props.label"
+			>
+				{{ props.label }}
+			</label>
+		</div>
+		<div class="v3-slider__track">
+			<div class="v3-slider-track__inner">
+				<div class="v3-slider-track__done"></div>
+				<div class="v3-slider-track__thumb"></div>
+				<div class="v3-slider-track__mark"></div>
+				<div class="v3-slider-track__label"></div>
+			</div>
+		</div>
+		<div class="v3-slider__append">
+			<!-- 优先级：slot="append" > appendIcon > label -->
+			<slot name="append" v-if="context.slots.append"></slot>
+			<i
+				:class="{
+					'v3-icon': true,
+					[`${props.appendIcon}`]: true,
+				}"
+				v-else-if="!context.slots.append && props.appendIcon"
+			></i>
+		</div>
 	</div>
 </template>
 <script lang="ts">

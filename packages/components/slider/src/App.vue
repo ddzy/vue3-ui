@@ -5,7 +5,12 @@
 				<h3>基本用法：</h3>
 			</v3-col>
 			<v3-col :span="12">
-				<v3-slider v-model="state.sliderValue1"></v3-slider>
+				<v3-slider
+					v-model="state.sliderValue1"
+					prependIcon="v3-icon-sound-Mute"
+					appendIcon="v3-icon-notice"
+					label="音量"
+				></v3-slider>
 			</v3-col>
 		</v3-row>
 	</div>
