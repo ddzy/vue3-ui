@@ -109,7 +109,7 @@ export default defineComponent({
 		/** 弹出位置 */
 		placement: {
 			type: String as PropType<TYPES.IBasePopperPlacement>,
-			default: 'auto',
+			default: 'top',
 			validator(v: string) {
 				return [
 					'top',
