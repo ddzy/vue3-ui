@@ -15,13 +15,21 @@
 	}
 	.v3-slider__track {
 		flex: 1;
-		position: relative;
 		margin: 0 $margin-medium;
 		padding: $padding-small 0;
 		cursor: pointer;
 		.v3-slider-track__inner {
+			position: relative;
 			height: 4px;
 			background-color: $border-color-grey-default;
+		}
+		.v3-slider-track__done {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 100%;
+			width: 0;
+			background-color: $primary-color;
 		}
 		.v3-slider-track__thumb {
 			position: absolute;
