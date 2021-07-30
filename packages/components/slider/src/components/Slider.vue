@@ -16,10 +16,23 @@
 				{{ props.label }}
 			</label>
 		</div>
-		<div class="v3-slider__track">
+		<div class="v3-slider__track" ref="trackRef">
 			<div class="v3-slider-track__inner">
-				<div class="v3-slider-track__done"></div>
-				<div class="v3-slider-track__thumb"></div>
+				<div
+					class="v3-slider-track__done"
+					:style="{
+						width: `${state.donePercent}%`,
+					}"
+				></div>
+				<div
+					ref="thumbRef"
+					class="v3-slider-track__thumb"
+					:style="{
+						left: `${state.donePercent}%`,
+						transform: `translate(${computedThumbTransformX}%, -50%)`,
+					}"
+					@mousedown="handleThumbMouseDown"
+				></div>
 				<div class="v3-slider-track__mark"></div>
 				<div class="v3-slider-track__label"></div>
 			</div>
@@ -38,10 +51,23 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue';
+import {
+	computed,
+	defineComponent,
+	onMounted,
+	onUnmounted,
+	PropType,
+	reactive,
+	ref,
+} from 'vue';
 import * as TYPES from '@/public/types/slider';
+import { usePosition } from '@common/hooks/index';
 
-interface IState {}
+interface IState {
+	isMoving: boolean;
+	startX: number;
+	donePercent: number;
+}
 
 export default defineComponent({
 	name: 'V3Slider',
@@ -133,12 +159,79 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.ISliderProps, context) {
-		const state: IState = reactive({});
+		const state: IState = reactive({
+			/** 是否处于拖动状态 */
+			isMoving: false,
+			/** 触发器的起始位置 */
+			startX: 0,
+			/** 已完成的宽度所占百分比 */
+			donePercent: 0,
+		});
+		const trackRef = ref(document.createElement('div'));
+		const thumbRef = ref(document.createElement('div'));
+
+		const { clientX } = usePosition({
+			throttleTime: 0,
+			callback() {
+				if (state.isMoving) {
+					const thumbRect = thumbRef.value.getBoundingClientRect();
+					const trackRect = trackRef.value.getBoundingClientRect();
+					// 滑块左端的偏移量
+					const trackX = trackRect.x;
+					// 滑块宽度
+					const trackWidth = trackRect.width;
+					// 触发器宽度
+					const thumbWidth = thumbRect.width;
+
+					// 边界处理
+					if (clientX.value >= trackX + trackWidth - thumbWidth) {
+						// 超出最大宽度
+						state.donePercent = 100;
+						return;
+					} else if (clientX.value <= trackX) {
+						// 低于最小宽度
+						state.donePercent = 0;
+						return;
+					} else {
+						// 滑块的已完成宽度
+						const doneWidth = clientX.value - trackX;
+						// 计算已完成的宽度所占滑块总宽度的百分比
+						state.donePercent = (doneWidth / trackWidth) * 100;
+					}
+				}
+			},
+		});
+
+		// 当触发器到达最大值时，需要向右移动其自身的宽度的距离
+		const computedThumbTransformX = computed(() => {
+			return state.donePercent === 100 ? -100 : 0;
+		});
+
+		onMounted(() => {
+			document.addEventListener('mouseup', handleDocumentMouseUp, false);
+		});
+		onUnmounted(() => {
+			document.removeEventListener('mouseup', handleDocumentMouseUp);
+		});
+
+		function handleDocumentMouseUp() {
+			// 直接在 document 上监听鼠标弹起事件，因为当过快拖动时，滑块触发器上并不能触发此事件
+			state.isMoving = false;
+		}
+
+		function handleThumbMouseDown(e: MouseEvent) {
+			state.isMoving = true;
+			state.startX = e.pageX;
+		}
 
 		return {
 			state,
 			props,
 			context,
+			trackRef,
+			thumbRef,
+			computedThumbTransformX,
+			handleThumbMouseDown,
 		};
 	},
 });

@@ -42,6 +42,7 @@
 			transform: translate(0, -50%);
 			cursor: grab;
 			transition: box-shadow 0.15s ease;
+      user-select: none;
 			&:hover {
 				box-shadow: 0 0 0 12px rgba(0, 170, 250, 0.3);
 			}
