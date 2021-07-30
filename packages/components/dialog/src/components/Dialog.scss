@@ -24,6 +24,8 @@
 				}
 			}
 			.v3-dialog-header__action {
+				display: flex;
+				align-items: center;
 				:deep(.v3-button) {
 					&:not(:first-child) {
 						margin-left: $margin-medium;
