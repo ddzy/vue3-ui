@@ -77,6 +77,16 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
+		/** 前置图标 */
+		prependIcon: {
+			type: String,
+			default: '',
+		},
+		/** 后置图标 */
+		appendIcon: {
+			type: String,
+			default: '',
+		},
 		/** 自定义 tooltip 的类名 */
 		customTooltipClass: {
 			type: String,
