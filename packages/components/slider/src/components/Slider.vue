@@ -1,5 +1,10 @@
 <template>
-	<div class="v3-slider">
+	<div
+		:class="{
+			'v3-slider': true,
+			'is-moving': state.isMoving,
+		}"
+	>
 		<div class="v3-slider__prepend">
 			<!-- 优先级：slot="prepend" > prependIcon > label -->
 			<slot name="prepend" v-if="context.slots.prepend"></slot>

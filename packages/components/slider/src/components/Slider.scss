@@ -1,7 +1,19 @@
+@mixin thumbMoving {
+	box-shadow: 0 0 0 12px rgba(0, 170, 250, 0.3);
+}
+
 .v3-slider {
 	width: 100%;
 	display: flex;
 	align-items: center;
+
+	&.is-moving {
+		.v3-slider__track {
+			.v3-slider-track__thumb {
+				@include thumbMoving();
+			}
+		}
+	}
 
 	.v3-slider__prepend,
 	.v3-slider__append {
@@ -42,9 +54,9 @@
 			transform: translate(0, -50%);
 			cursor: grab;
 			transition: box-shadow 0.15s ease;
-      user-select: none;
+			user-select: none;
 			&:hover {
-				box-shadow: 0 0 0 12px rgba(0, 170, 250, 0.3);
+				@include thumbMoving();
 			}
 
 			&::after {
