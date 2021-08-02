@@ -38,8 +38,43 @@
 					}"
 					@mousedown="handleThumbMouseDown"
 				></div>
-				<div class="v3-slider-track__mark"></div>
-				<div class="v3-slider-track__label"></div>
+				<div class="v3-slider-track__mark">
+					<ul class="v3-slider-mark__list">
+						<!-- <li
+							class="v3-slider-mark__item"
+							v-for="v in state.marks"
+							:key="v.value"
+							:style="{
+								left: `${v.left}%`,
+							}"
+						></li> -->
+
+						<template v-for="v in state.marks">
+							<li
+								class="v3-slider-mark__item"
+								v-if="!v.isLimit"
+								:key="v.value"
+								:style="{
+									left: `${v.left}%`,
+								}"
+							></li>
+						</template>
+					</ul>
+				</div>
+				<div class="v3-slider-track__label">
+					<ul class="v3-slider-label__list">
+						<li
+							class="v3-slider-label__item"
+							v-for="v in state.marks"
+							:key="v.value"
+							:style="{
+								left: `${v.left}%`,
+							}"
+						>
+							{{ v.label }}
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="v3-slider__append">
@@ -64,14 +99,25 @@ import {
 	PropType,
 	reactive,
 	ref,
+	watch,
 } from 'vue';
 import * as TYPES from '@/public/types/slider';
 import { usePosition } from '@common/hooks/index';
 
+interface ILocalMarkItem {
+	value: number;
+	label: string;
+	style: {
+		[key: string]: string;
+	};
+	left: number;
+	isLimit: boolean;
+}
 interface IState {
 	isMoving: boolean;
 	startX: number;
 	donePercent: number;
+	marks: ILocalMarkItem[];
 }
 
 export default defineComponent({
@@ -159,7 +205,7 @@ export default defineComponent({
 		},
 		/** 间断点列表 */
 		marks: {
-			type: Array as PropType<TYPES.ISliderMarkItem[]>,
+			type: Object as PropType<TYPES.ISliderMarkItem>,
 			default: null,
 		},
 	},
@@ -171,6 +217,8 @@ export default defineComponent({
 			startX: 0,
 			/** 已完成的宽度所占百分比 */
 			donePercent: 0,
+			/** 处理后的断点列表 */
+			marks: [],
 		});
 		const trackRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
@@ -211,6 +259,39 @@ export default defineComponent({
 		const computedThumbTransformX = computed(() => {
 			return state.donePercent === 100 ? -100 : 0;
 		});
+
+		watch(
+			() => props.marks,
+			() => {
+				// 组装断点列表
+				const newMarks: typeof state.marks = [];
+
+				for (const key in props.marks) {
+					if (Object.prototype.hasOwnProperty.call(props.marks, key)) {
+						const keyToNumber = Number.parseInt(key);
+						const value = props.marks[keyToNumber];
+						const isLimit =
+							keyToNumber === props.min || keyToNumber === props.max;
+
+						// 过滤掉小于最小值或者大于最大值的项
+						if (keyToNumber < props.min || keyToNumber > props.max) {
+							continue;
+						}
+
+						newMarks.push({
+							value: keyToNumber,
+							label: value.label,
+							style: value.style,
+							left: (keyToNumber / props.max) * 100,
+							isLimit,
+						});
+					}
+				}
+
+				state.marks = newMarks;
+			},
+			{ immediate: true, deep: true }
+		);
 
 		onMounted(() => {
 			document.addEventListener('mouseup', handleDocumentMouseUp, false);

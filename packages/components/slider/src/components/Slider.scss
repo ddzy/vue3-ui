@@ -69,6 +69,34 @@
 				transform: translate(-50%, -50%);
 			}
 		}
+		.v3-slider-track__mark {
+			position: relative;
+			height: 100%;
+			.v3-slider-mark__list {
+				height: 100%;
+			}
+			.v3-slider-mark__item {
+				position: absolute;
+				top: 50%;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background-color: #fff;
+				transform: translate(-50%, -50%);
+			}
+		}
+		.v3-slider-track__label {
+			position: relative;
+			margin-top: $margin-medium;
+			color: $font-color-medium;
+			.v3-slider-label__list {
+				height: 100%;
+			}
+			.v3-slider-label__item {
+				position: absolute;
+				transform: translate(-50%, 0);
+			}
+		}
 	}
 	.v3-slider__append {
 	}
