@@ -39,6 +39,7 @@
 			position: absolute;
 			left: 0;
 			top: 0;
+			z-index: 1;
 			height: 100%;
 			width: 0;
 			background-color: $primary-color;
@@ -47,6 +48,7 @@
 			position: absolute;
 			left: 0;
 			top: 50%;
+			z-index: 3;
 			width: 14px;
 			height: 14px;
 			border-radius: 50%;
@@ -78,6 +80,7 @@
 			.v3-slider-mark__item {
 				position: absolute;
 				top: 50%;
+				z-index: 2;
 				width: 4px;
 				height: 4px;
 				border-radius: 50%;

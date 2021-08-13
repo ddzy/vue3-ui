@@ -40,15 +40,6 @@
 				></div>
 				<div class="v3-slider-track__mark">
 					<ul class="v3-slider-mark__list">
-						<!-- <li
-							class="v3-slider-mark__item"
-							v-for="v in state.marks"
-							:key="v.value"
-							:style="{
-								left: `${v.left}%`,
-							}"
-						></li> -->
-
 						<template v-for="v in state.marks">
 							<li
 								class="v3-slider-mark__item"
