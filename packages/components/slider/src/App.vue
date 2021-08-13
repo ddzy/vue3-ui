@@ -5,12 +5,34 @@
 				<h3>基本用法：</h3>
 			</v3-col>
 			<v3-col :span="12">
+				<v3-slider label="音量" v-model="state.sliderValue1"></v3-slider>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>可显示间断点：</h3>
+			</v3-col>
+			<v3-col :span="12">
 				<v3-slider
+					v-model="state.sliderValue2"
+					label="音量"
+					:marks="state.marks2"
+					:showMark="true"
+				></v3-slider>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义前置和后置图标：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue3"
 					prependIcon="v3-icon-sound-Mute"
 					appendIcon="v3-icon-notice"
 					label="音量"
-					v-model="state.sliderValue1"
-					:marks="state.marks1"
 				></v3-slider>
 			</v3-col>
 		</v3-row>
@@ -23,7 +45,9 @@ export default defineComponent({
 	setup(props, context) {
 		const state = reactive({
 			sliderValue1: 20,
-			marks1: {
+			sliderValue2: 0,
+			sliderValue3: 0,
+			marks2: {
 				25: {
 					label: '25%',
 					style: {},

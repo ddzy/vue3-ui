@@ -38,34 +38,36 @@
 					}"
 					@mousedown="handleThumbMouseDown"
 				></div>
-				<div class="v3-slider-track__mark">
-					<ul class="v3-slider-mark__list">
-						<template v-for="v in state.marks">
+				<template v-if="props.showMark">
+					<div class="v3-slider-track__mark">
+						<ul class="v3-slider-mark__list">
+							<template v-for="v in state.marks">
+								<li
+									class="v3-slider-mark__item"
+									v-if="!v.isLimit"
+									:key="v.value"
+									:style="{
+										left: `${v.left}%`,
+									}"
+								></li>
+							</template>
+						</ul>
+					</div>
+					<div class="v3-slider-track__label">
+						<ul class="v3-slider-label__list">
 							<li
-								class="v3-slider-mark__item"
-								v-if="!v.isLimit"
+								class="v3-slider-label__item"
+								v-for="v in state.marks"
 								:key="v.value"
 								:style="{
 									left: `${v.left}%`,
 								}"
-							></li>
-						</template>
-					</ul>
-				</div>
-				<div class="v3-slider-track__label">
-					<ul class="v3-slider-label__list">
-						<li
-							class="v3-slider-label__item"
-							v-for="v in state.marks"
-							:key="v.value"
-							:style="{
-								left: `${v.left}%`,
-							}"
-						>
-							{{ v.label }}
-						</li>
-					</ul>
-				</div>
+							>
+								{{ v.label }}
+							</li>
+						</ul>
+					</div>
+				</template>
 			</div>
 		</div>
 		<div class="v3-slider__append">
