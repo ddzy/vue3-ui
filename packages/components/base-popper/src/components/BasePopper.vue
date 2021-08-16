@@ -25,6 +25,7 @@
 			:offset="props.offset"
 			:onShow="handleShow"
 			:onHide="handleHide"
+			:onMount="handleMount"
 			:onClickOutside="handleClickOutside"
 		>
 			<div class="v3-base-popper__trigger">
@@ -221,7 +222,7 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		function handleShow() {
+		function handleShow(instance: ILocalTippyInstance) {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
 			const showDropdown = !props.disabled;
 			state.showDropdown = showDropdown;
@@ -229,10 +230,14 @@ export default defineComponent({
 			if (!showDropdown) {
 				return showDropdown;
 			}
+
+			context.emit('show', instance);
 		}
 
-		function handleHide() {
+		function handleHide(instance: ILocalTippyInstance) {
 			state.showDropdown = false;
+
+			context.emit('hide', instance);
 		}
 
 		function handleClickOutside() {
@@ -241,12 +246,17 @@ export default defineComponent({
 			}
 		}
 
+		function handleMount(instance: ILocalTippyInstance) {
+			context.emit('mount', instance);
+		}
+
 		return {
 			state,
 			app,
 			props,
 			context,
 			tippyRef,
+			handleMount,
 			handleShow,
 			handleHide,
 			handleClickOutside,
