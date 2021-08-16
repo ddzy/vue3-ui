@@ -29,15 +29,28 @@
 						width: `${state.donePercent}%`,
 					}"
 				></div>
-				<div
-					ref="thumbRef"
-					class="v3-slider-track__thumb"
-					:style="{
-						left: `${state.donePercent}%`,
-						transform: `translate(${computedThumbTransformX}%, -50%)`,
-					}"
-					@mousedown="handleThumbMouseDown"
-				></div>
+				<v3-tooltip
+					v-model="state.showTooltip"
+					trigger="manual"
+					placement="top"
+					:offset="[0, 20]"
+					@mount="handleTooltipMount"
+				>
+					<div
+						ref="thumbRef"
+						class="v3-slider-track__thumb"
+						:style="{
+							left: `${state.donePercent}%`,
+							transform: `translate(${computedThumbTransformX}%, -50%)`,
+						}"
+						@mousedown="handleThumbMouseDown"
+						@mouseenter="handleThumbMouseEnter"
+					></div>
+
+					<template #content>
+						{{ props.modelValue }}
+					</template>
+				</v3-tooltip>
 				<template v-if="props.showMark">
 					<div class="v3-slider-track__mark">
 						<ul class="v3-slider-mark__list">
@@ -94,6 +107,7 @@ import {
 } from 'vue';
 import * as TYPES from '@/public/types/slider';
 import { usePosition } from '@common/hooks/index';
+import V3Tooltip from '@components/tooltip/main';
 
 interface ILocalMarkItem {
 	value: number;
@@ -104,15 +118,23 @@ interface ILocalMarkItem {
 	isMax: boolean;
 	isMin: boolean;
 }
+interface ITooltipInstance {
+	setProps: (props: { [key: string]: any }) => void;
+}
 interface IState {
 	isMoving: boolean;
 	startX: number;
 	donePercent: number;
 	marks: ILocalMarkItem[];
+	showTooltip: boolean;
+	tooltipInstance: ITooltipInstance | null;
 }
 
 export default defineComponent({
 	name: 'V3Slider',
+	components: {
+		V3Tooltip,
+	},
 	props: {
 		/** 滑块的值 */
 		modelValue: {
@@ -210,6 +232,10 @@ export default defineComponent({
 			donePercent: 0,
 			/** 处理后的断点列表 */
 			marks: [],
+			/** tooltip 气泡的显隐状态 */
+			showTooltip: false,
+			/** tooltip 气泡的实例 */
+			tooltipInstance: null,
 		});
 		const trackRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
@@ -241,6 +267,17 @@ export default defineComponent({
 						const doneWidth = clientX.value - trackX;
 						// 计算已完成的宽度所占滑块总宽度的百分比
 						state.donePercent = (doneWidth / trackWidth) * 100;
+						// 更新 tooltip 的位置
+						if (state.tooltipInstance) {
+							state.tooltipInstance.setProps({
+								getReferenceClientRect: () => thumbRect,
+							});
+						}
+						// 更新 modelValue 绑定值
+						context.emit(
+							'update:modelValue',
+							(props.max * Math.floor((doneWidth / trackWidth) * 100)) / 100
+						);
 					}
 				}
 			},
@@ -300,11 +337,32 @@ export default defineComponent({
 		function handleDocumentMouseUp() {
 			// 直接在 document 上监听鼠标弹起事件，因为当过快拖动时，滑块触发器上并不能触发此事件
 			state.isMoving = false;
+
+			// 鼠标结束拖动滑块时，隐藏 tooltip
+			if (props.showTooltip && !props.showTooltipAlways) {
+				state.showTooltip = false;
+			}
 		}
 
 		function handleThumbMouseDown(e: MouseEvent) {
 			state.isMoving = true;
 			state.startX = e.pageX;
+
+			// 鼠标点击滑块时，显示 tooltip
+			if (props.showTooltip) {
+				state.showTooltip = true;
+			}
+		}
+
+		function handleThumbMouseEnter(e: MouseEvent) {
+			// 鼠标移入滑块时，显示 tooltip
+			if (props.showTooltip) {
+				state.showTooltip = true;
+			}
+		}
+
+		function handleTooltipMount(instance: any) {
+			state.tooltipInstance = instance;
 		}
 
 		return {
@@ -315,6 +373,8 @@ export default defineComponent({
 			thumbRef,
 			computedThumbTransformX,
 			handleThumbMouseDown,
+			handleThumbMouseEnter,
+			handleTooltipMount,
 		};
 	},
 });

@@ -36,10 +36,25 @@
 				></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>实时显示值：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue4"
+					prependIcon="v3-icon-sound-Mute"
+					appendIcon="v3-icon-notice"
+					label="音量"
+					:max="200"
+				></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, h, reactive } from 'vue';
+import { defineComponent, h, reactive, watch } from 'vue';
 
 export default defineComponent({
 	setup(props, context) {
@@ -47,6 +62,7 @@ export default defineComponent({
 			sliderValue1: 20,
 			sliderValue2: 0,
 			sliderValue3: 0,
+			sliderValue4: 20,
 			marks2: {
 				0: {
 					label: '0%',
@@ -76,6 +92,13 @@ export default defineComponent({
 				},
 			},
 		});
+
+		watch(
+			() => state.sliderValue4,
+			() => {
+				console.log('state.sliderValue4 :>> ', state.sliderValue4);
+			}
+		);
 
 		return {
 			state,
