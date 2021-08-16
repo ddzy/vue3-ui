@@ -44,10 +44,10 @@
 							<template v-for="v in state.marks">
 								<li
 									class="v3-slider-mark__item"
-									v-if="!v.isLimit"
+									v-if="!v.isMax && !v.isMin"
 									:key="v.value"
 									:style="{
-										left: `${v.left}%`,
+										left: v.style.left,
 									}"
 								></li>
 							</template>
@@ -59,9 +59,7 @@
 								class="v3-slider-label__item"
 								v-for="v in state.marks"
 								:key="v.value"
-								:style="{
-									left: `${v.left}%`,
-								}"
+								:style="v.style"
 							>
 								{{ v.label }}
 							</li>
@@ -103,8 +101,8 @@ interface ILocalMarkItem {
 	style: {
 		[key: string]: string;
 	};
-	left: number;
-	isLimit: boolean;
+	isMax: boolean;
+	isMin: boolean;
 }
 interface IState {
 	isMoving: boolean;
@@ -263,8 +261,10 @@ export default defineComponent({
 					if (Object.prototype.hasOwnProperty.call(props.marks, key)) {
 						const keyToNumber = Number.parseInt(key);
 						const value = props.marks[keyToNumber];
-						const isLimit =
-							keyToNumber === props.min || keyToNumber === props.max;
+						// 是否为最小值
+						const isMin = keyToNumber === props.min;
+						// 是否为最大值
+						const isMax = keyToNumber === props.max;
 
 						// 过滤掉小于最小值或者大于最大值的项
 						if (keyToNumber < props.min || keyToNumber > props.max) {
@@ -274,9 +274,13 @@ export default defineComponent({
 						newMarks.push({
 							value: keyToNumber,
 							label: value.label,
-							style: value.style,
-							left: (keyToNumber / props.max) * 100,
-							isLimit,
+							style: {
+								...value.style,
+								left: `${(keyToNumber / props.max) * 100}%`,
+								transform: `translate(${isMin ? 0 : isMax ? -100 : -50}%, 0)`,
+							},
+							isMin,
+							isMax,
 						});
 					}
 				}

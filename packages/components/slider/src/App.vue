@@ -48,13 +48,19 @@ export default defineComponent({
 			sliderValue2: 0,
 			sliderValue3: 0,
 			marks2: {
+				0: {
+					label: '0%',
+					style: {},
+				},
 				25: {
 					label: '25%',
 					style: {},
 				},
 				50: {
 					label: '50%',
-					style: {},
+					style: {
+						color: 'red',
+					},
 				},
 				75: {
 					label: '75%',
