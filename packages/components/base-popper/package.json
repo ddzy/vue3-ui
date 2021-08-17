@@ -22,6 +22,6 @@
 		"url": "git+https://github.com/ddzy/vue3-ui.git"
 	},
 	"dependencies": {
-		"vue-tippy": "^6.0.0-alpha.30"
+		"vue-tippy": "^6.0.0-alpha.32"
 	}
 }
