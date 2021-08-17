@@ -46,6 +46,7 @@
 						}"
 						@mousedown="handleThumbMouseDown"
 						@mouseenter="handleThumbMouseEnter"
+						@mouseleave="handleThumbMouseLeave"
 					></div>
 
 					<template #content>
@@ -391,6 +392,13 @@ export default defineComponent({
 			}
 		}
 
+		function handleThumbMouseLeave() {
+			// 鼠标移出触发器时，如果不处于拖动状态，那么直接关闭 tooltip
+			if (!state.isMoving) {
+				state.showTooltip = false;
+			}
+		}
+
 		function handleTooltipMount(instance: any) {
 			state.tooltipInstance = instance;
 		}
@@ -404,6 +412,7 @@ export default defineComponent({
 			computedThumbTransformX,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
+			handleThumbMouseLeave,
 			handleTooltipMount,
 		};
 	},
