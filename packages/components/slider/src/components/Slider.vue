@@ -244,13 +244,6 @@ export default defineComponent({
 			throttleTime: 0,
 			callback() {
 				if (state.isMoving) {
-					// 更新 tooltip 的位置
-					if (state.tooltipInstance) {
-						state.tooltipInstance.setProps({
-							getReferenceClientRect: () => thumbRect,
-						});
-					}
-
 					const thumbRect = thumbRef.value.getBoundingClientRect();
 					const trackRect = trackRef.value.getBoundingClientRect();
 					// 滑块左端的偏移量
@@ -263,6 +256,13 @@ export default defineComponent({
 					const doneWidth = clientX.value - trackX;
 					// 最新的 modelValue 绑定值
 					let newModelValue = 0;
+
+					// 更新 tooltip 的位置
+					if (state.tooltipInstance) {
+						state.tooltipInstance.setProps({
+							getReferenceClientRect: () => thumbRect,
+						});
+					}
 
 					// 边界处理
 					if (clientX.value >= trackX + trackWidth - thumbWidth) {
