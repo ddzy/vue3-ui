@@ -51,6 +51,22 @@
 				></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义步数：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue5"
+					prependIcon="v3-icon-sound-Mute"
+					appendIcon="v3-icon-notice"
+					label="音量"
+					:max="200"
+					:step="5"
+				></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -63,6 +79,7 @@ export default defineComponent({
 			sliderValue2: 0,
 			sliderValue3: 0,
 			sliderValue4: 20,
+			sliderValue5: 0,
 			marks2: {
 				0: {
 					label: '0%',
@@ -94,9 +111,9 @@ export default defineComponent({
 		});
 
 		watch(
-			() => state.sliderValue4,
+			() => state.sliderValue5,
 			() => {
-				console.log('state.sliderValue4 :>> ', state.sliderValue4);
+				console.log('state.sliderValue5 :>> ', state.sliderValue5);
 			}
 		);
 

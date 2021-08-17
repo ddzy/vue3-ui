@@ -281,8 +281,10 @@ export default defineComponent({
 						newModelValue = Math.floor((donePercentToFloat / 100) * props.max);
 					}
 
-					// 更新 modelValue 绑定值
-					context.emit('update:modelValue', newModelValue);
+					// 根据步数，更新 modelValue 绑定值
+					if (newModelValue % props.step === 0) {
+						context.emit('update:modelValue', newModelValue);
+					}
 				}
 			},
 		});
