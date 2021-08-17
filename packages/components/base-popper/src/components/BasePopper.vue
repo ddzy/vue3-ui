@@ -240,10 +240,12 @@ export default defineComponent({
 			context.emit('hide', instance);
 		}
 
-		function handleClickOutside() {
+		function handleClickOutside(instance: ILocalTippyInstance) {
 			if (computedIsManually.value) {
 				context.emit('update:modelValue', false);
 			}
+
+			context.emit('clickOutside', instance);
 		}
 
 		function handleMount(instance: ILocalTippyInstance) {
