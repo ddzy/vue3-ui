@@ -34,6 +34,7 @@
 					trigger="manual"
 					placement="top"
 					:offset="[0, 20]"
+					:getReferenceClientRect="() => thumbRef.value.getBoundingClientRect()"
 					@mount="handleTooltipMount"
 				>
 					<div
@@ -98,6 +99,7 @@
 import {
 	computed,
 	defineComponent,
+	nextTick,
 	onMounted,
 	onUnmounted,
 	PropType,
@@ -258,11 +260,7 @@ export default defineComponent({
 					let newModelValue = 0;
 
 					// 更新 tooltip 的位置
-					if (state.tooltipInstance) {
-						state.tooltipInstance.setProps({
-							getReferenceClientRect: () => thumbRect,
-						});
-					}
+					updateTooltipPosition();
 
 					// 边界处理
 					if (clientX.value >= trackX + trackWidth - thumbWidth) {
@@ -331,17 +329,33 @@ export default defineComponent({
 		);
 
 		onMounted(() => {
+			if (!Array.isArray(props.modelValue)) {
+				// 组件挂载后，更新滑块触发器的位置
+				state.donePercent = (props.modelValue / props.max) * 100;
+			}
+
 			document.addEventListener('mouseup', handleDocumentMouseUp, false);
 		});
 		onUnmounted(() => {
 			document.removeEventListener('mouseup', handleDocumentMouseUp);
 		});
 
+		/**
+		 * 更新 tooltip 的位置
+		 */
+		function updateTooltipPosition() {
+			if (state.tooltipInstance) {
+				state.tooltipInstance.setProps({
+					getReferenceClientRect: () => thumbRef.value.getBoundingClientRect(),
+				});
+			}
+		}
+
 		function handleDocumentMouseUp() {
 			// 直接在 document 上监听鼠标弹起事件，因为当过快拖动时，滑块触发器上并不能触发此事件
 			state.isMoving = false;
 
-			// 鼠标结束拖动滑块时，隐藏 tooltip
+			// 鼠标结束拖动滑块触发器时，隐藏 tooltip
 			if (props.showTooltip && !props.showTooltipAlways) {
 				state.showTooltip = false;
 			}
@@ -351,16 +365,24 @@ export default defineComponent({
 			state.isMoving = true;
 			state.startX = e.pageX;
 
-			// 鼠标点击滑块时，显示 tooltip
+			// 鼠标点击滑块触发器时，显示 tooltip 并更新其位置
 			if (props.showTooltip) {
 				state.showTooltip = true;
+
+				setTimeout(() => {
+					updateTooltipPosition();
+				}, 0);
 			}
 		}
 
-		function handleThumbMouseEnter(e: MouseEvent) {
-			// 鼠标移入滑块时，显示 tooltip
+		function handleThumbMouseEnter() {
+			// 鼠标移入滑块触发器时，显示 tooltip 并更新其位置
 			if (props.showTooltip) {
 				state.showTooltip = true;
+
+				setTimeout(() => {
+					updateTooltipPosition();
+				}, 0);
 			}
 		}
 
