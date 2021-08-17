@@ -36,6 +36,7 @@
 					:offset="[0, 20]"
 					:getReferenceClientRect="() => thumbRef.value.getBoundingClientRect()"
 					@mount="handleTooltipMount"
+					@clickOutside="handleTooltipClickOutside"
 				>
 					<div
 						ref="thumbRef"
@@ -340,6 +341,14 @@ export default defineComponent({
 				state.donePercent = (props.modelValue / props.max) * 100;
 			}
 
+			if (props.showTooltip && props.showTooltipAlways) {
+				state.showTooltip = true;
+
+				setTimeout(() => {
+					updateTooltipPosition();
+				}, 0);
+			}
+
 			document.addEventListener('mouseup', handleDocumentMouseUp, false);
 		});
 		onUnmounted(() => {
@@ -394,13 +403,17 @@ export default defineComponent({
 
 		function handleThumbMouseLeave() {
 			// 鼠标移出触发器时，如果不处于拖动状态，那么直接关闭 tooltip
-			if (!state.isMoving) {
+			if (!state.isMoving && props.showTooltip && !props.showTooltipAlways) {
 				state.showTooltip = false;
 			}
 		}
 
 		function handleTooltipMount(instance: any) {
 			state.tooltipInstance = instance;
+		}
+
+		function handleTooltipClickOutside() {
+			state.showTooltip = true;
 		}
 
 		return {
@@ -414,6 +427,7 @@ export default defineComponent({
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,
 			handleTooltipMount,
+			handleTooltipClickOutside,
 		};
 	},
 });

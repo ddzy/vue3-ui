@@ -62,6 +62,7 @@
 					prependIcon="v3-icon-sound-Mute"
 					appendIcon="v3-icon-notice"
 					label="音量"
+					showTooltipAlways
 					:max="200"
 					:step="5"
 				></v3-slider>
