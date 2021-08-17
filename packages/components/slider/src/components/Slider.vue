@@ -274,8 +274,11 @@ export default defineComponent({
 					} else {
 						// 计算已完成的宽度所占滑块总宽度的百分比
 						state.donePercent = (doneWidth / trackWidth) * 100;
-						newModelValue =
-							(props.max * Math.floor((doneWidth / trackWidth) * 100)) / 100;
+						const donePercentToFloat = Number.parseFloat(
+							state.donePercent.toFixed(1)
+						);
+
+						newModelValue = Math.floor((donePercentToFloat / 100) * props.max);
 					}
 
 					// 更新 modelValue 绑定值
