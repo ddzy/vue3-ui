@@ -20,6 +20,7 @@
 	>
 		<v3-input
 			v-model="state.inputValue"
+			ref="inputWrapperRef"
 			:readonly="!props.filterable"
 			:placeholder="state.selectedOptionList.length ? '' : state.placeholder"
 			:style="{
@@ -62,6 +63,7 @@
 			ref="tagWrapperRef"
 			class="v3-select__tag"
 			v-if="props.multiple && state.selectedOptionList.length"
+			@click="state.showDropdown = true"
 		>
 			<!-- 不合并标签 -->
 			<template v-if="!props.collapseTags">
@@ -126,16 +128,19 @@
 import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
-import { useDebounce } from '@common/hooks/index';
+import { useDebounce, useThrottle } from '@common/hooks/index';
 import V3Input from '@components/input/main';
 import V3Tag from '@components/tag/main';
 import V3BasePopper from '@components/base-popper/main';
 import {
 	ComponentInternalInstance,
+	ComponentPublicInstance,
 	computed,
 	defineComponent,
 	getCurrentInstance,
 	nextTick,
+	onBeforeUnmount,
+	onMounted,
 	PropType,
 	provide,
 	reactive,
@@ -149,6 +154,7 @@ type ILocalDropdownInstance = {
 	show: () => void;
 	unmount: () => void;
 	mount: () => void;
+	setProps: (...args: any[]) => void;
 } | null;
 
 interface IState {
@@ -166,6 +172,7 @@ interface IState {
 	selectedOptionList: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>[];
 	initialInputHeight: number;
 	pendingInputHeight: number;
+	windowResizeHandler: null | (() => void);
 }
 
 export default defineComponent({
@@ -300,9 +307,11 @@ export default defineComponent({
 			initialInputHeight: 0,
 			/** 下拉框的最新高度 */
 			pendingInputHeight: 0,
+			windowResizeHandler: null,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 		const tagWrapperRef = ref(null);
+		const inputWrapperRef = ref(null);
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
 
@@ -357,6 +366,27 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
+		onMounted(() => {
+			if (props.multiple) {
+				state.windowResizeHandler = useThrottle(handleWindowResize, 200);
+				window.addEventListener('resize', state.windowResizeHandler);
+			}
+		});
+		onBeforeUnmount(() => {
+			if (props.multiple && typeof state.windowResizeHandler === 'function') {
+				window.removeEventListener('resize', state.windowResizeHandler);
+				state.windowResizeHandler = () => {};
+			}
+		});
+
+		function handleWindowResize() {
+			// 窗口大小发生变化时，需要更新下拉框的高度和下拉菜单的位置
+			updateInputHeight();
+			setTimeout(() => {
+				updateDropdownPosition();
+			}, 0);
+		}
+
 		/**
 		 * 关闭标签
 		 */
@@ -371,7 +401,7 @@ export default defineComponent({
 			});
 
 			// 重新计算下拉框的高度
-			computeInputHeight();
+			updateInputHeight();
 
 			const selectedValueList = state.selectedOptionList.map(v => v.value);
 
@@ -422,7 +452,11 @@ export default defineComponent({
 				}
 
 				// 动态计算下拉框的高度
-				computeInputHeight();
+				updateInputHeight();
+				// 更新下拉菜单的位置
+				setTimeout(() => {
+					updateDropdownPosition();
+				}, 0);
 
 				const selectedValueList = state.selectedOptionList.map(v => v.value);
 
@@ -482,7 +516,7 @@ export default defineComponent({
 				});
 
 				// 重新计算高度
-				computeInputHeight();
+				updateInputHeight();
 			} else {
 				// 反之，则直接设置
 				state.selectedLabel = label;
@@ -571,7 +605,7 @@ export default defineComponent({
 		/**
 		 * 计算下拉框的高度
 		 */
-		function computeInputHeight() {
+		function updateInputHeight() {
 			nextTick(() => {
 				if (tagWrapperRef.value) {
 					const tagEl = (tagWrapperRef.value as unknown) as HTMLDivElement;
@@ -581,6 +615,17 @@ export default defineComponent({
 				}
 			});
 		}
+		/**
+		 * 更新下拉菜单的位置
+		 */
+		function updateDropdownPosition() {
+			if (state.dropdownInstance && inputWrapperRef.value) {
+				state.dropdownInstance.setProps({
+					getReferenceClientRect: () =>
+						(inputWrapperRef.value as ComponentPublicInstance).$el.getBoundingClientRect(),
+				});
+			}
+		}
 
 		return {
 			app,
@@ -588,6 +633,7 @@ export default defineComponent({
 			props,
 			computedChildrenLength,
 			tagWrapperRef,
+			inputWrapperRef,
 			appendSelectOptionList,
 			subtractSelectOptionList,
 			handleChange,
