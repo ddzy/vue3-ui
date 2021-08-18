@@ -8,8 +8,8 @@
 
 	// 下拉框的按钮动画
 	&.is-visible:not(.is-clearable) {
-		.v3-select__trigger {
-			:deep(.v3-input__suffix i) {
+		:deep(.v3-base-popper__trigger) {
+			.v3-input__suffix i {
 				transform: rotateZ(180deg);
 			}
 		}
@@ -51,7 +51,7 @@
 		}
 	}
 
-	.v3-select__trigger {
+	:deep(.v3-base-popper__trigger) {
 		cursor: text;
 		.v3-select__tag {
 			position: absolute;
@@ -85,7 +85,8 @@
 	:deep(.tippy-content) {
 		padding-left: 0;
 		padding-right: 0;
-		.v3-select__dropdown {
+		.v3-base-popper__dropdown {
+			padding: $padding-small 0;
 			.v3-select-dropdown__list {
 				width: 100%;
 			}

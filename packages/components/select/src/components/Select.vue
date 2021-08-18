@@ -18,113 +18,107 @@
 		}"
 		@mount="handleDropdownMount"
 	>
-		<div
-			class="v3-select__trigger"
+		<v3-input
+			v-model="state.inputValue"
+			:readonly="!props.filterable"
+			:placeholder="state.selectedOptionList.length ? '' : state.placeholder"
+			:style="{
+				height: `${
+					state.selectedOptionList.length
+						? state.pendingInputHeight
+						: state.initialInputHeight
+				}px`,
+			}"
+			:size="props.size"
+			@input="handleInput"
+			@focus="handleFocus"
+			@blur="handleBlur"
+			@compositionstart="handleCompositionStart"
+			@compositionend="handleCompositionEnd"
 			@mouseenter="handleMouseEnter"
 			@mouseleave="handleMouseLeave"
 		>
-			<v3-input
-				v-model="state.inputValue"
-				:readonly="!props.filterable"
-				:placeholder="state.selectedOptionList.length ? '' : state.placeholder"
-				:style="{
-					height: `${
-						state.selectedOptionList.length
-							? state.pendingInputHeight
-							: state.initialInputHeight
-					}px`,
-				}"
-				:size="props.size"
-				@input="handleInput"
-				@focus="handleFocus"
-				@blur="handleBlur"
-				@compositionstart="handleCompositionStart"
-				@compositionend="handleCompositionEnd"
-			>
-				<template #suffix>
-					<i
-						style="margin-right: 6px;"
-						v-if="!state.showClear"
-						:class="{
-							'v3-icon': true,
-							'v3-icon-arrow-down': true,
-						}"
-					></i>
-					<i
-						style="margin-right: 6px; cursor: pointer"
-						v-else
-						:class="{
-							'v3-icon': true,
-							'v3-icon-reeor': true,
-						}"
-						@click.stop="handleClear"
-					></i>
-				</template>
-			</v3-input>
-
-			<ul
-				ref="tagWrapperRef"
-				class="v3-select__tag"
-				v-if="props.multiple && state.selectedOptionList.length"
-			>
-				<!-- 不合并标签 -->
-				<template v-if="!props.collapseTags">
-					<li
-						class="v3-select__tag-item"
-						v-for="v in state.selectedOptionList"
-						:key="v"
-					>
-						<v3-tag
-							closeable
-							type="info"
-							:size="props.size"
-							@close="handleTagClose(v)"
-							>{{ v.label }}</v3-tag
-						>
-					</li>
-				</template>
-				<!-- 合并标签（只显示第一个标签和数量） -->
-				<template
-					v-else-if="props.collapseTags && state.selectedOptionList.length"
+			<template #suffix>
+				<i
+					style="margin-right: 6px;"
+					v-if="!state.showClear"
+					:class="{
+						'v3-icon': true,
+						'v3-icon-arrow-down': true,
+					}"
+				></i>
+				<i
+					style="margin-right: 6px; cursor: pointer"
+					v-else
+					:class="{
+						'v3-icon': true,
+						'v3-icon-reeor': true,
+					}"
+					@click.stop="handleClear"
+				></i>
+			</template>
+		</v3-input>
+		<ul
+			ref="tagWrapperRef"
+			class="v3-select__tag"
+			v-if="props.multiple && state.selectedOptionList.length"
+		>
+			<!-- 不合并标签 -->
+			<template v-if="!props.collapseTags">
+				<li
+					class="v3-select__tag-item"
+					v-for="v in state.selectedOptionList"
+					:key="v"
 				>
-					<li class="v3-select__tag-item">
-						<v3-tag
-							closeable
-							type="info"
-							v-for="v in state.selectedOptionList.slice(0, 1)"
-							:key="v"
-							:size="props.size"
-							@close="handleTagClose(v)"
-							>{{ v.label }}</v3-tag
-						>
-					</li>
-					<li
-						class="v3-select__tag-item"
-						v-if="state.selectedOptionList.length > 1"
+					<v3-tag
+						closeable
+						type="info"
+						:size="props.size"
+						@close="handleTagClose(v)"
+						>{{ v.label }}</v3-tag
 					>
-						<v3-tag type="info" :size="props.size">{{
-							`+ ${state.selectedOptionList.length - 1}`
-						}}</v3-tag>
-					</li>
+				</li>
+			</template>
+			<!-- 合并标签（只显示第一个标签和数量） -->
+			<template
+				v-else-if="props.collapseTags && state.selectedOptionList.length"
+			>
+				<li class="v3-select__tag-item">
+					<v3-tag
+						closeable
+						type="info"
+						v-for="v in state.selectedOptionList.slice(0, 1)"
+						:key="v"
+						:size="props.size"
+						@close="handleTagClose(v)"
+						>{{ v.label }}</v3-tag
+					>
+				</li>
+				<li
+					class="v3-select__tag-item"
+					v-if="state.selectedOptionList.length > 1"
+				>
+					<v3-tag type="info" :size="props.size">{{
+						`+ ${state.selectedOptionList.length - 1}`
+					}}</v3-tag>
+				</li>
+			</template>
+		</ul>
+
+		<template #content>
+			<ul
+				:class="{
+					[`v3-select-dropdown__list`]: true,
+				}"
+			>
+				<slot v-if="computedChildrenLength"></slot>
+				<template v-else>
+					<!-- 未匹配到数据（优先级比【无数据】高） -->
+					<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
+					<!-- 无数据 -->
+					<p v-else>{{ props.noDataText }}</p>
 				</template>
 			</ul>
-		</div>
-		<template #content>
-			<div class="v3-select__dropdown">
-				<ul
-					:class="{
-						[`v3-select-dropdown__list`]: true,
-					}"
-				>
-					<slot v-if="computedChildrenLength"></slot>
-					<template v-else>
-						<!-- 未匹配到数据（优先级比【无数据】高） -->
-						<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
-						<!-- 无数据 -->
-						<p v-else>{{ props.noDataText }}</p>
-					</template>
-				</ul>
-			</div>
 		</template>
 	</v3-base-popper>
 </template>
