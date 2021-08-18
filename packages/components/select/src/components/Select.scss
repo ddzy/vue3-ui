@@ -57,7 +57,10 @@
 			position: absolute;
 			top: 0;
 			left: 0;
+			box-sizing: border-box;
+			width: 100%;
 			padding: $padding-small / 2;
+			padding-right: 30px;
 			.v3-select__tag-item {
 				display: inline-block;
 				margin: $margin-small / 2;

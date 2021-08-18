@@ -393,8 +393,6 @@ export default defineComponent({
 		function handleTagClose(
 			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>
 		) {
-			state.showDropdown = false;
-
 			// 关闭标签时，从已选中的列表中移除该项
 			state.selectedOptionList = state.selectedOptionList.filter(v => {
 				return v.label !== data.label && v.value !== data.value;
