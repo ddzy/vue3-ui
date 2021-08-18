@@ -1,5 +1,9 @@
 <template>
-	<div
+	<v3-base-popper
+		v-model="state.showDropdown"
+		theme="light"
+		placement="bottom"
+		trigger="manual"
 		:class="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
@@ -12,133 +16,117 @@
 		:style="{
 			height: `${state.initialInputHeight}px`,
 		}"
-		@mouseenter="handleMouseEnter"
-		@mouseleave="handleMouseLeave"
+		@mount="handleDropdownMount"
 	>
-		<tippy
-			trigger="click"
-			theme="light-border"
-			animation="v3-popper-slide-fade"
-			placement="bottom"
-			:maxWidth="'100%'"
-			:zIndex="state.nextZIndex"
-			:arrow="false"
-			:interactive="true"
-			:allowHTML="true"
-			:delay="0"
-			:offset="[0, 5]"
-			:onShow="handleShow"
-			:onHide="handleHide"
-			:onMount="handleMount"
+		<div
+			class="v3-select__trigger"
+			@mouseenter="handleMouseEnter"
+			@mouseleave="handleMouseLeave"
 		>
-			<div class="v3-select__trigger">
-				<v3-input
-					v-model="state.inputValue"
-					:readonly="!props.filterable"
-					:placeholder="
-						state.selectedOptionList.length ? '' : state.placeholder
-					"
-					:style="{
-						height: `${
-							state.selectedOptionList.length
-								? state.pendingInputHeight
-								: state.initialInputHeight
-						}px`,
-					}"
-					:size="props.size"
-					@input="handleInput"
-					@focus="handleFocus"
-					@blur="handleBlur"
-					@compositionstart="handleCompositionStart"
-					@compositionend="handleCompositionEnd"
-				>
-					<template #suffix>
-						<i
-							style="margin-right: 6px;"
-							v-if="!state.showClear"
-							:class="{
-								'v3-icon': true,
-								'v3-icon-arrow-down': true,
-							}"
-						></i>
-						<i
-							style="margin-right: 6px; cursor: pointer"
-							v-else
-							:class="{
-								'v3-icon': true,
-								'v3-icon-reeor': true,
-							}"
-							@click.stop="handleClear"
-						></i>
-					</template>
-				</v3-input>
+			<v3-input
+				v-model="state.inputValue"
+				:readonly="!props.filterable"
+				:placeholder="state.selectedOptionList.length ? '' : state.placeholder"
+				:style="{
+					height: `${
+						state.selectedOptionList.length
+							? state.pendingInputHeight
+							: state.initialInputHeight
+					}px`,
+				}"
+				:size="props.size"
+				@input="handleInput"
+				@focus="handleFocus"
+				@blur="handleBlur"
+				@compositionstart="handleCompositionStart"
+				@compositionend="handleCompositionEnd"
+			>
+				<template #suffix>
+					<i
+						style="margin-right: 6px;"
+						v-if="!state.showClear"
+						:class="{
+							'v3-icon': true,
+							'v3-icon-arrow-down': true,
+						}"
+					></i>
+					<i
+						style="margin-right: 6px; cursor: pointer"
+						v-else
+						:class="{
+							'v3-icon': true,
+							'v3-icon-reeor': true,
+						}"
+						@click.stop="handleClear"
+					></i>
+				</template>
+			</v3-input>
 
-				<ul
-					ref="tagWrapperRef"
-					class="v3-select__tag"
-					v-if="props.multiple && state.selectedOptionList.length"
-				>
-					<!-- 不合并标签 -->
-					<template v-if="!props.collapseTags">
-						<li
-							class="v3-select__tag-item"
-							v-for="v in state.selectedOptionList"
-							:key="v"
-						>
-							<v3-tag
-								closeable
-								type="info"
-								:size="props.size"
-								@close="handleTagClose(v)"
-								>{{ v.label }}</v3-tag
-							>
-						</li>
-					</template>
-					<!-- 合并标签（只显示第一个标签和数量） -->
-					<template
-						v-else-if="props.collapseTags && state.selectedOptionList.length"
+			<ul
+				ref="tagWrapperRef"
+				class="v3-select__tag"
+				v-if="props.multiple && state.selectedOptionList.length"
+			>
+				<!-- 不合并标签 -->
+				<template v-if="!props.collapseTags">
+					<li
+						class="v3-select__tag-item"
+						v-for="v in state.selectedOptionList"
+						:key="v"
 					>
-						<li class="v3-select__tag-item">
-							<v3-tag
-								closeable
-								type="info"
-								v-for="v in state.selectedOptionList.slice(0, 1)"
-								:key="v"
-								:size="props.size"
-								@close="handleTagClose(v)"
-								>{{ v.label }}</v3-tag
-							>
-						</li>
-						<li
-							class="v3-select__tag-item"
-							v-if="state.selectedOptionList.length > 1"
+						<v3-tag
+							closeable
+							type="info"
+							:size="props.size"
+							@close="handleTagClose(v)"
+							>{{ v.label }}</v3-tag
 						>
-							<v3-tag type="info" :size="props.size">{{
-								`+ ${state.selectedOptionList.length - 1}`
-							}}</v3-tag>
-						</li>
+					</li>
+				</template>
+				<!-- 合并标签（只显示第一个标签和数量） -->
+				<template
+					v-else-if="props.collapseTags && state.selectedOptionList.length"
+				>
+					<li class="v3-select__tag-item">
+						<v3-tag
+							closeable
+							type="info"
+							v-for="v in state.selectedOptionList.slice(0, 1)"
+							:key="v"
+							:size="props.size"
+							@close="handleTagClose(v)"
+							>{{ v.label }}</v3-tag
+						>
+					</li>
+					<li
+						class="v3-select__tag-item"
+						v-if="state.selectedOptionList.length > 1"
+					>
+						<v3-tag type="info" :size="props.size">{{
+							`+ ${state.selectedOptionList.length - 1}`
+						}}</v3-tag>
+					</li>
+				</template>
+			</ul>
+		</div>
+		<template #content>
+			<div class="v3-select__dropdown">
+				<ul
+					:class="{
+						[`v3-select-dropdown__list`]: true,
+					}"
+				>
+					<slot v-if="computedChildrenLength"></slot>
+					<template v-else>
+						<!-- 未匹配到数据（优先级比【无数据】高） -->
+						<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
+						<!-- 无数据 -->
+						<p v-else>{{ props.noDataText }}</p>
 					</template>
 				</ul>
 			</div>
-			<template #content>
-				<div class="v3-select__dropdown">
-					<ul
-						:class="{
-							[`v3-select-dropdown__list`]: true,
-						}"
-					>
-						<slot v-if="computedChildrenLength"></slot>
-						<template v-else>
-							<!-- 未匹配到数据（优先级比【无数据】高） -->
-							<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
-							<!-- 无数据 -->
-							<p v-else>{{ props.noDataText }}</p>
-						</template>
-					</ul>
-				</div>
-			</template>
-		</tippy>
-	</div>
+		</template>
+	</v3-base-popper>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/select';
@@ -147,7 +135,7 @@ import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce } from '@common/hooks/index';
 import V3Input from '@components/input/main';
 import V3Tag from '@components/tag/main';
-import 'tippy.js/themes/light-border.css';
+import V3BasePopper from '@components/base-popper/main';
 import {
 	ComponentInternalInstance,
 	computed,
@@ -161,20 +149,17 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import { Tippy, TippyInstance } from 'vue-tippy';
 
-type ILocalTippyInstance =
-	| (TippyInstance & {
-			hide: () => void;
-			show: () => void;
-			unmount: () => void;
-			mount: () => void;
-	  })
-	| null;
+type ILocalDropdownInstance = {
+	hide: () => void;
+	show: () => void;
+	unmount: () => void;
+	mount: () => void;
+} | null;
 
 interface IState {
 	showDropdown: boolean;
-	tippy: ILocalTippyInstance;
+	dropdownInstance: ILocalDropdownInstance;
 	inputValue: string;
 	selectedLabel: string;
 	showClear: boolean;
@@ -287,16 +272,16 @@ export default defineComponent({
 		},
 	},
 	components: {
-		Tippy,
 		V3Input,
 		V3Tag,
+		V3BasePopper,
 	},
 	setup(props: TYPES.ISelectProps, context) {
 		const state: IState = reactive({
 			/** 当前的下拉框是否显示 */
 			showDropdown: false,
-			/** tippy 实例 */
-			tippy: null,
+			/** dropdown 实例 */
+			dropdownInstance: null,
 			/** 当前下拉输入框的值 */
 			inputValue: '',
 			/** 当前选中的下拉选项的 label 值 */
@@ -378,29 +363,13 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		function handleShow() {
-			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
-			const showDropdown = !props.disabled;
-			state.showDropdown = showDropdown;
-
-			if (!showDropdown) {
-				return showDropdown;
-			}
-		}
-
-		function handleHide() {
-			state.showDropdown = false;
-		}
-
 		/**
 		 * 关闭标签
 		 */
 		function handleTagClose(
 			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>
 		) {
-			if (state.tippy) {
-				state.tippy.hide();
-			}
+			state.showDropdown = false;
 
 			// 关闭标签时，从已选中的列表中移除该项
 			state.selectedOptionList = state.selectedOptionList.filter(v => {
@@ -416,8 +385,8 @@ export default defineComponent({
 			context.emit('change', selectedValueList);
 		}
 
-		function handleMount(instance: ILocalTippyInstance) {
-			state.tippy = instance;
+		function handleDropdownMount(instance: any) {
+			state.dropdownInstance = instance;
 		}
 
 		/**
@@ -474,9 +443,7 @@ export default defineComponent({
 				state.placeholder = label;
 
 				// 关闭下拉框
-				if (state.tippy) {
-					state.tippy.hide();
-				}
+				state.showDropdown = false;
 
 				context.emit('update:modelValue', value);
 				context.emit('change', value);
@@ -497,9 +464,7 @@ export default defineComponent({
 
 		function handleClear() {
 			// 清空的时候，关闭下拉框
-			if (state.tippy) {
-				state.tippy.hide();
-			}
+			state.showDropdown = false;
 
 			state.inputValue = '';
 			state.selectedLabel = '';
@@ -575,6 +540,8 @@ export default defineComponent({
 		}
 
 		function handleFocus() {
+			state.showDropdown = true;
+
 			// 输入框聚焦时，如果当前处于 filterable 状态，那么就把已选中的值作为 placeholder
 			if (props.filterable) {
 				state.inputValue = '';
@@ -637,9 +604,7 @@ export default defineComponent({
 			handleInput: useDebounce(handleInput, 200),
 			handleFocus,
 			handleBlur,
-			handleShow,
-			handleHide,
-			handleMount,
+			handleDropdownMount,
 			handleCompositionStart,
 			handleCompositionEnd,
 			handleTagClose,
