@@ -490,9 +490,6 @@ export default defineComponent({
 		}
 
 		function handleClear() {
-			// 清空的时候，关闭下拉框
-			state.showDropdown = false;
-
 			state.inputValue = '';
 			state.selectedLabel = '';
 			state.showClear = false;
