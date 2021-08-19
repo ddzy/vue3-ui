@@ -86,7 +86,7 @@ export default defineComponent({
 		},
 		/** 最大宽度 */
 		maxWidth: {
-			type: Number,
+			type: [Number, String] as PropType<TYPES.IBasePopperMaxWidth>,
 			default: 300,
 		},
 		/** 主题色（黑/白） */
