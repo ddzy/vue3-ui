@@ -4,6 +4,7 @@
 		theme="light"
 		placement="bottom"
 		trigger="manual"
+		maxWidth="none"
 		:class="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
