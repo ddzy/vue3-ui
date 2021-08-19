@@ -38,7 +38,7 @@ describe('V3Loading 组件测试：', () => {
 		).toContain('is-fixed');
 		expect(
 			document.body.querySelector('.v3-loading .v3-loading__content span')
-				?.innerHTML
+				.innerHTML
 		).toContain('加载中。。。');
 
 		setTimeout(async () => {

@@ -47,11 +47,11 @@ describe('V3Message 组件测试：', () => {
 
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(2);
 		expect(
-			document.body.querySelector('.v3-message--success')?.textContent
+			document.body.querySelector('.v3-message--success').textContent
 		).toBe('成功消息！');
-		expect(
-			document.body.querySelector('.v3-message--danger')?.textContent
-		).toBe('失败消息！');
+		expect(document.body.querySelector('.v3-message--danger').textContent).toBe(
+			'失败消息！'
+		);
 	});
 
 	test('V3Message 组件可接收【dangerouslyUseHTMLString】配置项，用来控制是否将【message】显示为 HTML', async () => {
@@ -76,7 +76,7 @@ describe('V3Message 组件测试：', () => {
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(1);
 		expect(document.body.querySelector('.test-text')).toBeTruthy();
 		expect(
-			document.body.querySelector('.v3-message--success')?.textContent
+			document.body.querySelector('.v3-message--success').textContent
 		).toBe('测试文本');
 	});
 
@@ -104,7 +104,7 @@ describe('V3Message 组件测试：', () => {
 		expect(
 			document.body
 				.querySelector('.v3-message--success')
-				?.classList.contains('test-message-wrapper')
+				.classList.contains('test-message-wrapper')
 		).toBeTruthy();
 	});
 

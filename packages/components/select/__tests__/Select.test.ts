@@ -51,7 +51,7 @@ describe('V3Select 组件测试：', () => {
 		});
 
 		await wrapper.find('.v3-input').trigger('click');
-		expect(wrapper.find('.v3-select__dropdown').exists()).toBeTruthy();
+		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		expect(wrapper.findAll('.v3-select-dropdown__item').length).toBe(4);
 		expect(
 			wrapper.findAll('.v3-select-dropdown__item.is-selected').length
@@ -224,7 +224,7 @@ describe('V3Select 组件测试：', () => {
 
 		// 默认不选中任何项
 		await wrapper.find('.v3-input').trigger('click');
-		expect(wrapper.find('.v3-select__dropdown').exists()).toBeFalsy();
+		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
 		expect(wrapper.findAll('.v3-select-dropdown__item').length).toBe(0);
 	});
 

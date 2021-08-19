@@ -10682,13 +10682,6 @@ vue-tippy@^6.0.0-alpha.30:
   dependencies:
     tippy.js "^6.3.1"
 
-vue-tippy@^6.0.0-alpha.32:
-  version "6.0.0-alpha.32"
-  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-6.0.0-alpha.32.tgz#592c40df0527aeee18ee94e8b7733f753f2888bf"
-  integrity sha512-nU8d39ElTuFVp6W0oWfqb6JdQdNEYTSBIBSHX9FZRH/fJTSF2AcqVlwwHyNY1QCLQAbhNRZgf/k11xt8GdMaZg==
-  dependencies:
-    tippy.js "^6.3.1"
-
 vue-tsc@^0.0.15:
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-0.0.15.tgz#2951f0479bf0b966c828748927e8ea5b82a15070"
