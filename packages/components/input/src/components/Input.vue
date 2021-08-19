@@ -20,6 +20,7 @@
 		}"
 		@mouseenter="handleMouseEnter"
 		@mouseleave="handleMouseLeave"
+		@click="handleClick"
 	>
 		<!-- 前置区域 -->
 		<!-- slot 优先级比传入的前缀、后缀、前置、后置图标高 -->
@@ -63,6 +64,7 @@
 
 				<!-- 输入框区域 -->
 				<input
+					ref="inputRef"
 					:value="props.modelValue"
 					:type="state.defaultProps.type"
 					:readonly="props.readonly"
@@ -161,6 +163,7 @@ import {
 	getCurrentInstance,
 	PropType,
 	reactive,
+	ref,
 	toRef,
 	watch,
 } from 'vue';
@@ -266,6 +269,7 @@ export default defineComponent({
 			isValidSuccess: true,
 		});
 		const app = getCurrentInstance();
+		const inputRef = ref<HTMLInputElement>(document.createElement('input'));
 
 		watch(
 			toRef(props, 'maxlength'),
@@ -360,6 +364,13 @@ export default defineComponent({
 			state.isShowClearable = false;
 		}
 
+		function handleClick() {
+			// 点击输入框容器时，其内部的输入框自动聚焦
+			if (inputRef.value) {
+				inputRef.value.focus();
+			}
+		}
+
 		function togglePasswordClearly() {
 			state.isPasswordClearly = !state.isPasswordClearly;
 		}
@@ -368,6 +379,7 @@ export default defineComponent({
 			state,
 			props,
 			app,
+			inputRef,
 			handleChange,
 			handleInput,
 			handleFocus,
@@ -375,6 +387,7 @@ export default defineComponent({
 			handleClear,
 			handleMouseEnter,
 			handleMouseLeave,
+			handleClick,
 			togglePasswordClearly,
 		};
 	},
