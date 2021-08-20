@@ -93,11 +93,6 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss">
-body {
-	height: 1200px;
-}
-</style>
 <style lang="scss" scoped>
 .backdrop-1,
 .backdrop-2,
