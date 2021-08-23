@@ -3,8 +3,8 @@
 }
 
 .v3-slider {
-	width: 100%;
 	display: flex;
+	width: 100%;
 	align-items: center;
 
 	&.is-moving {
@@ -37,8 +37,8 @@
 			left: 0;
 			top: 0;
 			z-index: 1;
-			height: 100%;
 			width: 0;
+			height: 100%;
 			background-color: $primary-color;
 		}
 		.v3-slider-track__thumb {
@@ -61,10 +61,10 @@
 			&::after {
 				content: '';
 				position: absolute;
-				width: 40px;
-				height: 40px;
 				top: 50%;
 				left: 50%;
+				width: 40px;
+				height: 40px;
 				transform: translate(-50%, -50%);
 			}
 		}
@@ -93,8 +93,8 @@
 			}
 			.v3-slider-label__item {
 				position: absolute;
-				transform: translate(-50%, 0);
 				margin-top: $margin-small;
+				transform: translate(-50%, 0);
 			}
 		}
 	}
