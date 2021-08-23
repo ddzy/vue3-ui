@@ -25,13 +25,18 @@
 
 	.v3-slider__track {
 		flex: 1;
-		margin: $margin-large-2 $margin-medium;
+		margin: $margin-large-2 19px;
 		cursor: pointer;
 		.v3-slider-track__inner {
 			position: relative;
 			height: 4px;
 			background-color: $border-color-grey-default;
 		}
+		.v3-slider-track__mark, .v3-slider-track__label {
+			margin-left: -7px;
+			margin-right: -7px;
+		}
+
 		.v3-slider-track__done {
 			position: absolute;
 			left: 0;
@@ -50,7 +55,7 @@
 			height: 14px;
 			border-radius: 50%;
 			background-color: $primary-color;
-			transform: translate(0, -50%);
+			transform: translate(-50%, -50%);
 			cursor: grab;
 			transition: box-shadow 0.15s ease;
 			user-select: none;

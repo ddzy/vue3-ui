@@ -34,7 +34,6 @@
 					trigger="manual"
 					placement="top"
 					:offset="[0, 20]"
-					:getReferenceClientRect="() => thumbRef.value.getBoundingClientRect()"
 					@mount="handleTooltipMount"
 					@clickOutside="handleTooltipClickOutside"
 				>
@@ -43,7 +42,6 @@
 						class="v3-slider-track__thumb"
 						:style="{
 							left: `${state.donePercent}%`,
-							transform: `translate(${computedThumbTransformX}%, -50%)`,
 						}"
 						@mousedown="handleThumbMouseDown"
 						@mouseenter="handleThumbMouseEnter"
@@ -265,12 +263,12 @@ export default defineComponent({
 					updateTooltipPosition();
 
 					// 边界处理
-					if (clientX.value >= trackX + trackWidth - thumbWidth) {
+					if (clientX.value >= trackX + trackWidth) {
 						// 超出最大宽度
 						state.donePercent = 100;
 						newModelValue = props.max;
 					} else if (clientX.value <= trackX) {
-						// 低于最小宽度
+						// 小于最小宽度
 						state.donePercent = 0;
 						newModelValue = props.min;
 					} else {
