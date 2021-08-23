@@ -254,37 +254,31 @@ export default defineComponent({
 					const trackWidth = trackRect.width;
 					// 触发器宽度
 					const thumbWidth = thumbRect.width;
+					// 触发器左端的偏移量
+					const thumbX = thumbRect.x;
 					// 滑块的已完成宽度
 					const doneWidth = clientX.value - trackX;
 					// 最新的 modelValue 绑定值
 					let newModelValue = 0;
+					// 最新的已完成百分比
+					let newDonePercent = 0;
+
+					if (clientX.value <= trackX) {
+						newDonePercent = 0;
+						newModelValue = props.min;
+					} else if (clientX.value >= trackX + trackWidth) {
+						newDonePercent = 1;
+						newModelValue = props.max;
+					} else {
+						newDonePercent = doneWidth / trackWidth;
+						newModelValue = Math.ceil(props.max * newDonePercent);
+					}
+
+					state.donePercent = newDonePercent * 100;
+					context.emit('update:modelValue', newModelValue);
 
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
-
-					// 边界处理
-					if (clientX.value >= trackX + trackWidth) {
-						// 超出最大宽度
-						state.donePercent = 100;
-						newModelValue = props.max;
-					} else if (clientX.value <= trackX) {
-						// 小于最小宽度
-						state.donePercent = 0;
-						newModelValue = props.min;
-					} else {
-						// 计算已完成的宽度所占滑块总宽度的百分比
-						state.donePercent = (doneWidth / trackWidth) * 100;
-						const donePercentToFloat = Number.parseFloat(
-							state.donePercent.toFixed(1)
-						);
-
-						newModelValue = Math.floor((donePercentToFloat / 100) * props.max);
-					}
-
-					// 根据步数，更新 modelValue 绑定值
-					if (newModelValue % props.step === 0) {
-						context.emit('update:modelValue', newModelValue);
-					}
 				}
 			},
 		});

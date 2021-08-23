@@ -19,6 +19,7 @@
 					label="音量"
 					:marks="state.marks2"
 					:showMark="true"
+					:step="25"
 				></v3-slider>
 			</v3-col>
 		</v3-row>
