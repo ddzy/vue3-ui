@@ -246,36 +246,39 @@ export default defineComponent({
 			throttleTime: 0,
 			callback() {
 				if (state.isMoving) {
-					const thumbRect = thumbRef.value.getBoundingClientRect();
 					const trackRect = trackRef.value.getBoundingClientRect();
 					// 滑块左端的偏移量
 					const trackX = trackRect.x;
 					// 滑块宽度
 					const trackWidth = trackRect.width;
-					// 触发器宽度
-					const thumbWidth = thumbRect.width;
-					// 触发器左端的偏移量
-					const thumbX = thumbRect.x;
 					// 滑块的已完成宽度
 					const doneWidth = clientX.value - trackX;
-					// 最新的 modelValue 绑定值
-					let newModelValue = 0;
+					// 步长所占的百分比
+					let stepPercent = props.step / props.max;
 					// 最新的已完成百分比
 					let newDonePercent = 0;
 
+					// 临界处理
 					if (clientX.value <= trackX) {
+						// 小于最小值
 						newDonePercent = 0;
-						newModelValue = props.min;
 					} else if (clientX.value >= trackX + trackWidth) {
+						// 大于最大值
 						newDonePercent = 1;
-						newModelValue = props.max;
 					} else {
 						newDonePercent = doneWidth / trackWidth;
-						newModelValue = Math.ceil(props.max * newDonePercent);
 					}
 
-					state.donePercent = newDonePercent * 100;
-					context.emit('update:modelValue', newModelValue);
+					// 当前已完成的进度等同于几份步数
+					let doneStepCount = Math.floor(
+						Math.round(newDonePercent * 100) / 100 / stepPercent
+					);
+
+					state.donePercent = stepPercent * 100 * doneStepCount;
+					context.emit(
+						'update:modelValue',
+						Math.ceil(props.step * doneStepCount)
+					);
 
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
