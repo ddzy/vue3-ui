@@ -298,7 +298,7 @@ export default defineComponent({
 							}
 						} else if (clientX.value - state.prevClientX < 0) {
 							// 反之，如果是向 X 轴负方向拖动
-							if (remainder <= halfOfStepPercent) {
+							if (remainder && remainder <= halfOfStepPercent) {
 								state.donePercent = stepPercent * 100 * doneStepCount;
 								context.emit(
 									'update:modelValue',
