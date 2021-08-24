@@ -130,6 +130,7 @@ interface IState {
 	marks: ILocalMarkItem[];
 	showTooltip: boolean;
 	tooltipInstance: ITooltipInstance | null;
+	prevClientX: number;
 }
 
 export default defineComponent({
@@ -238,6 +239,7 @@ export default defineComponent({
 			showTooltip: false,
 			/** tooltip 气泡的实例 */
 			tooltipInstance: null,
+			prevClientX: 0,
 		});
 		const trackRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
@@ -271,14 +273,48 @@ export default defineComponent({
 
 					// 当前已完成的进度等同于几份步数
 					let doneStepCount = Math.floor(
-						Math.round(newDonePercent * 100) / 100 / stepPercent
+						Math.ceil(newDonePercent * 1000) / 1000 / stepPercent
 					);
 
-					state.donePercent = stepPercent * 100 * doneStepCount;
-					context.emit(
-						'update:modelValue',
-						Math.ceil(props.step * doneStepCount)
-					);
+					if (props.step >= 5) {
+						// 当前已完成的进度 % 步数
+						let remainder =
+							(Math.round(newDonePercent * 100) / 100) % stepPercent;
+						// 半步
+						let halfOfStepPercent = stepPercent / 2;
+
+						// 如果是向 X 轴正方向拖动
+						if (clientX.value - state.prevClientX > 0) {
+							// 那么当已完成的进度超过步数的一半，就可以移动进度条了
+							if (remainder >= halfOfStepPercent) {
+								let newDoneStepCount =
+									newDonePercent === 1 ? doneStepCount : doneStepCount + 1;
+
+								state.donePercent = stepPercent * 100 * newDoneStepCount;
+								context.emit(
+									'update:modelValue',
+									Math.ceil(props.step * newDoneStepCount)
+								);
+							}
+						} else if (clientX.value - state.prevClientX < 0) {
+							// 反之，如果是向 X 轴负方向拖动
+							if (remainder <= halfOfStepPercent) {
+								state.donePercent = stepPercent * 100 * doneStepCount;
+								context.emit(
+									'update:modelValue',
+									Math.ceil(props.step * doneStepCount)
+								);
+							}
+						}
+						// 记录本次移动的位置
+						state.prevClientX = clientX.value;
+					} else {
+						state.donePercent = stepPercent * 100 * doneStepCount;
+						context.emit(
+							'update:modelValue',
+							Math.ceil(props.step * doneStepCount)
+						);
+					}
 
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
