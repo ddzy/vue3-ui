@@ -21,7 +21,7 @@
 				{{ props.label }}
 			</label>
 		</div>
-		<div class="v3-slider__track" ref="trackRef">
+		<div class="v3-slider__track" ref="trackRef" @click="handleTrackClick">
 			<div class="v3-slider-track__inner">
 				<div
 					class="v3-slider-track__done"
@@ -248,74 +248,8 @@ export default defineComponent({
 			throttleTime: 0,
 			callback() {
 				if (state.isMoving) {
-					const trackRect = trackRef.value.getBoundingClientRect();
-					// 滑块左端的偏移量
-					const trackX = trackRect.x;
-					// 滑块宽度
-					const trackWidth = trackRect.width;
-					// 滑块的已完成宽度
-					const doneWidth = clientX.value - trackX;
-					// 步长所占的百分比
-					let stepPercent = props.step / props.max;
-					// 最新的已完成百分比
-					let newDonePercent = 0;
-
-					// 临界处理
-					if (clientX.value <= trackX) {
-						// 小于最小值
-						newDonePercent = 0;
-					} else if (clientX.value >= trackX + trackWidth) {
-						// 大于最大值
-						newDonePercent = 1;
-					} else {
-						newDonePercent = doneWidth / trackWidth;
-					}
-
-					// 当前已完成的进度等同于几份步数
-					let doneStepCount = Math.floor(
-						Math.ceil(newDonePercent * 1000) / 1000 / stepPercent
-					);
-
-					if (props.step >= 5) {
-						// 当前已完成的进度 % 步数
-						let remainder =
-							(Math.round(newDonePercent * 100) / 100) % stepPercent;
-						// 半步
-						let halfOfStepPercent = stepPercent / 2;
-
-						// 如果是向 X 轴正方向拖动
-						if (clientX.value - state.prevClientX > 0) {
-							// 那么当已完成的进度超过步数的一半，就可以移动进度条了
-							if (remainder >= halfOfStepPercent) {
-								let newDoneStepCount =
-									newDonePercent === 1 ? doneStepCount : doneStepCount + 1;
-
-								state.donePercent = stepPercent * 100 * newDoneStepCount;
-								context.emit(
-									'update:modelValue',
-									Math.ceil(props.step * newDoneStepCount)
-								);
-							}
-						} else if (clientX.value - state.prevClientX < 0) {
-							// 反之，如果是向 X 轴负方向拖动
-							if (remainder && remainder <= halfOfStepPercent) {
-								state.donePercent = stepPercent * 100 * doneStepCount;
-								context.emit(
-									'update:modelValue',
-									Math.ceil(props.step * doneStepCount)
-								);
-							}
-						}
-						// 记录本次移动的位置
-						state.prevClientX = clientX.value;
-					} else {
-						state.donePercent = stepPercent * 100 * doneStepCount;
-						context.emit(
-							'update:modelValue',
-							Math.ceil(props.step * doneStepCount)
-						);
-					}
-
+					// 更新已完成的进度
+					updateDonePercent(clientX.value);
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
 				}
@@ -386,6 +320,75 @@ export default defineComponent({
 			document.removeEventListener('mouseup', handleDocumentMouseUp);
 		});
 
+		function updateDonePercent(clientX: number) {
+			const trackRect = trackRef.value.getBoundingClientRect();
+			// 滑块左端的偏移量
+			const trackX = trackRect.x;
+			// 滑块宽度
+			const trackWidth = trackRect.width;
+			// 滑块的已完成宽度
+			const doneWidth = clientX - trackX;
+			// 步长所占的百分比
+			let stepPercent = props.step / props.max;
+			// 最新的已完成百分比
+			let newDonePercent = 0;
+
+			// 临界处理
+			if (clientX <= trackX) {
+				// 小于最小值
+				newDonePercent = 0;
+			} else if (clientX >= trackX + trackWidth) {
+				// 大于最大值
+				newDonePercent = 1;
+			} else {
+				newDonePercent = doneWidth / trackWidth;
+			}
+
+			// 当前已完成的进度等同于几份步数
+			let doneStepCount = Math.floor(
+				Math.ceil(newDonePercent * 1000) / 1000 / stepPercent
+			);
+
+			if (props.step >= 5) {
+				// 当前已完成的进度 % 步数
+				let remainder = (Math.round(newDonePercent * 100) / 100) % stepPercent;
+				// 半步
+				let halfOfStepPercent = stepPercent / 2;
+
+				// 如果是向 X 轴正方向拖动
+				if (clientX - state.prevClientX > 0) {
+					// 那么当已完成的进度超过步数的一半，就可以移动进度条了
+					if (remainder >= halfOfStepPercent) {
+						let newDoneStepCount =
+							newDonePercent === 1 ? doneStepCount : doneStepCount + 1;
+
+						state.donePercent = stepPercent * 100 * newDoneStepCount;
+						context.emit(
+							'update:modelValue',
+							Math.ceil(props.step * newDoneStepCount)
+						);
+					}
+				} else if (clientX - state.prevClientX < 0) {
+					// 反之，如果是向 X 轴负方向拖动
+					if (remainder && remainder <= halfOfStepPercent) {
+						state.donePercent = stepPercent * 100 * doneStepCount;
+						context.emit(
+							'update:modelValue',
+							Math.ceil(props.step * doneStepCount)
+						);
+					}
+				}
+				// 记录本次移动的位置
+				state.prevClientX = clientX;
+			} else {
+				state.donePercent = stepPercent * 100 * doneStepCount;
+				context.emit(
+					'update:modelValue',
+					Math.ceil(props.step * doneStepCount)
+				);
+			}
+		}
+
 		/**
 		 * 更新 tooltip 的位置
 		 */
@@ -447,6 +450,11 @@ export default defineComponent({
 			state.showTooltip = true;
 		}
 
+		function handleTrackClick(e: MouseEvent) {
+			updateDonePercent(e.clientX);
+			updateTooltipPosition();
+		}
+
 		return {
 			state,
 			props,
@@ -459,6 +467,7 @@ export default defineComponent({
 			handleThumbMouseLeave,
 			handleTooltipMount,
 			handleTooltipClickOutside,
+			handleTrackClick,
 		};
 	},
 });
