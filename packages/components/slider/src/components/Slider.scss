@@ -25,7 +25,7 @@
 
 	.v3-slider__track {
 		flex: 1;
-		margin: $margin-large-2 19px;
+		margin: $margin-large-2 + 2 19px;
 		cursor: pointer;
 		.v3-slider-track__inner {
 			position: relative;
@@ -98,7 +98,7 @@
 			}
 			.v3-slider-label__item {
 				position: absolute;
-				margin-top: $margin-small;
+				margin-top: $margin-medium;
 				transform: translate(-50%, 0);
 			}
 		}

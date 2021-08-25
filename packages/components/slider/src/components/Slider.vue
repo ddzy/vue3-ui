@@ -52,34 +52,30 @@
 						{{ props.modelValue }}
 					</template>
 				</v3-tooltip>
-				<template v-if="props.showMark">
-					<div class="v3-slider-track__mark">
-						<ul class="v3-slider-mark__list">
-							<template v-for="v in state.marks">
-								<li
-									class="v3-slider-mark__item"
-									v-if="!v.isMax && !v.isMin"
-									:key="v.value"
-									:style="{
-										left: v.style.left,
-									}"
-								></li>
-							</template>
-						</ul>
-					</div>
-					<div class="v3-slider-track__label">
-						<ul class="v3-slider-label__list">
+				<div v-if="props.showStop" class="v3-slider-track__mark">
+					<ul class="v3-slider-mark__list">
+						<template v-for="v in state.stops" :key="v.value">
 							<li
-								class="v3-slider-label__item"
-								v-for="v in state.marks"
-								:key="v.value"
-								:style="v.style"
-							>
-								{{ v.label }}
-							</li>
-						</ul>
-					</div>
-				</template>
+								class="v3-slider-mark__item"
+								:style="{
+									left: v.style.left,
+								}"
+							></li>
+						</template>
+					</ul>
+				</div>
+				<div v-if="state.marks.length" class="v3-slider-track__label">
+					<ul class="v3-slider-label__list">
+						<li
+							class="v3-slider-label__item"
+							v-for="v in state.marks"
+							:key="v.value"
+							:style="v.style"
+						>
+							{{ v.label }}
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="v3-slider__append">
@@ -117,8 +113,12 @@ interface ILocalMarkItem {
 	style: {
 		[key: string]: string;
 	};
-	isMax: boolean;
-	isMin: boolean;
+}
+interface ILocalStopItem {
+	value: number;
+	style: {
+		[key: string]: string;
+	};
 }
 interface ITooltipInstance {
 	setProps: (props: { [key: string]: any }) => void;
@@ -131,6 +131,7 @@ interface IState {
 	showTooltip: boolean;
 	tooltipInstance: ITooltipInstance | null;
 	prevClientX: number;
+	stops: ILocalStopItem[];
 }
 
 export default defineComponent({
@@ -165,7 +166,7 @@ export default defineComponent({
 			default: 1,
 		},
 		/** 是否显示间断点 */
-		showMark: {
+		showStop: {
 			type: Boolean,
 			default: false,
 		},
@@ -233,8 +234,10 @@ export default defineComponent({
 			startX: 0,
 			/** 已完成的宽度所占百分比 */
 			donePercent: 0,
-			/** 处理后的断点列表 */
+			/** 处理后的断点 label 列表 */
 			marks: [],
+			/** 处理后的断点列表 */
+			stops: [],
 			/** tooltip 气泡的显隐状态 */
 			showTooltip: false,
 			/** tooltip 气泡的实例 */
@@ -264,7 +267,7 @@ export default defineComponent({
 		watch(
 			() => props.marks,
 			() => {
-				// 组装断点列表
+				// 组装断点 label 列表
 				const newMarks: typeof state.marks = [];
 
 				for (const key in props.marks) {
@@ -289,8 +292,6 @@ export default defineComponent({
 								left: `${(keyToNumber / props.max) * 100}%`,
 								transform: `translate(${isMin ? 0 : isMax ? -100 : -50}%, 0)`,
 							},
-							isMin,
-							isMax,
 						});
 					}
 				}
@@ -298,6 +299,36 @@ export default defineComponent({
 				state.marks = newMarks;
 			},
 			{ immediate: true, deep: true }
+		);
+
+		watch(
+			() => props.showStop,
+			() => {
+				if (props.showStop) {
+					// 组装断点列表
+					const newStops: typeof state.stops = [];
+					// 均分之后剩余的步数
+					const stepRemainder = props.max % props.step;
+					// 均分之后的步数个数
+					const stepCount = Math.floor(props.max / props.step);
+					// 均分之后每一步所占的百分比
+					const stepPercent =
+						props.step /
+						(stepRemainder === 0 ? props.max : props.max - stepRemainder);
+
+					for (let index = 1; index < stepCount; index++) {
+						newStops.push({
+							value: props.step * index,
+							style: {
+								left: `${stepPercent * index * 100}%`,
+							},
+						});
+					}
+
+					state.stops = newStops;
+				}
+			},
+			{ immediate: true }
 		);
 
 		onMounted(() => {

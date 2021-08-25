@@ -17,7 +17,7 @@ export interface ISliderProps {
 	max: number;
 	disabled: boolean;
 	step: number;
-	showMark: boolean;
+	showStop: boolean;
 	showTooltip: boolean;
 	showTooltipAlways: boolean;
 	formatTooltip: ISliderFormatTooltip;

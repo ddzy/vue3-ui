@@ -64,7 +64,8 @@
 					appendIcon="v3-icon-notice"
 					label="音量"
 					showTooltipAlways
-					:max="200"
+					showStop
+					:max="204"
 					:step="5"
 				></v3-slider>
 			</v3-col>
