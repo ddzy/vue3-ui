@@ -18,7 +18,7 @@
 					v-model="state.sliderValue2"
 					label="音量"
 					:marks="state.marks2"
-					:showMark="true"
+					:showStop="true"
 					:step="25"
 				></v3-slider>
 			</v3-col>

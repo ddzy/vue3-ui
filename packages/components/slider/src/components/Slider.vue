@@ -92,10 +92,12 @@
 	</div>
 </template>
 <script lang="ts">
+import * as TYPES from '@/public/types/slider';
+import { usePosition } from '@common/hooks/index';
+import V3Tooltip from '@components/tooltip/main';
 import {
 	computed,
 	defineComponent,
-	nextTick,
 	onMounted,
 	onUnmounted,
 	PropType,
@@ -103,9 +105,6 @@ import {
 	ref,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/types/slider';
-import { usePosition } from '@common/hooks/index';
-import V3Tooltip from '@components/tooltip/main';
 
 interface ILocalMarkItem {
 	value: number;
