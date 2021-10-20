@@ -50,6 +50,7 @@
 <script lang="ts">
 import * as TYPES from '@/public/types/base-popper';
 import VARIABLE from '@common/constants/internal-variable';
+import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import 'tippy.js/themes/material.css';
 import {
@@ -59,7 +60,6 @@ import {
 	PropType,
 	reactive,
 	ref,
-	toRef,
 	watch,
 } from 'vue';
 import { Tippy, TippyInstance } from 'vue-tippy';
@@ -139,7 +139,7 @@ export default defineComponent({
 		/** 距离触发器的距离 */
 		offset: {
 			type: Object as PropType<TYPES.IBasePopperOffset>,
-			default: [0, 5],
+			default: [0, 10],
 		},
 		/** 自定义弹出的动画 */
 		animation: {
@@ -169,7 +169,7 @@ export default defineComponent({
 		/** 是否显示箭头 */
 		arrow: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		/** 同 CSS 属性 z-index */
 		zIndex: {
