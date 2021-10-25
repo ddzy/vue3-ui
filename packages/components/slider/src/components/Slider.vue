@@ -52,7 +52,11 @@
 						{{ props.modelValue }}
 					</template>
 				</v3-tooltip>
-				<div v-if="props.showStop" class="v3-slider-track__mark">
+				<div
+					v-if="props.showStop"
+					ref="markWrapperRef"
+					class="v3-slider-track__mark"
+				>
 					<ul class="v3-slider-mark__list">
 						<template v-for="(v, i) in state.stops" :key="v.value">
 							<li
@@ -120,6 +124,7 @@ interface ILocalStopItem {
 	style: {
 		[key: string]: string | number;
 	};
+	x: number;
 }
 interface ITooltipInstance {
 	setProps: (props: { [key: string]: any }) => void;
@@ -247,6 +252,7 @@ export default defineComponent({
 		});
 		const trackRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
+		const markWrapperRef = ref(document.createElement('div'));
 
 		const { clientX } = usePosition({
 			throttleTime: 0,
@@ -319,26 +325,44 @@ export default defineComponent({
 					.mul(100)
 					.toFixed(2);
 
-				for (let i = 0; i <= stepCount; i++) {
-					newStops.push({
-						value: props.step * i,
-						style: {
-							left: new Decimal(stepPercent).mul(i).toNumber(),
-						},
-					});
-				}
+				setTimeout(() => {
+					const markWrapperEl = markWrapperRef.value as HTMLElement;
+					const markWrapperRect = markWrapperEl.getBoundingClientRect();
 
-				// 如果有余数，就需要追加末尾项
-				if (!decimalMax.div(decimalStep).isInteger()) {
-					newStops.push({
-						value: decimalMax.toNumber(),
-						style: {
-							left: 100,
-						},
-					});
-				}
+					for (let i = 0; i <= stepCount; i++) {
+						newStops.push({
+							value: props.step * i,
+							style: {
+								left: new Decimal(stepPercent).mul(i).toNumber(),
+							},
+							x: new Decimal(markWrapperRect.left)
+								.plus(
+									new Decimal(markWrapperRect.width).mul(
+										new Decimal(stepPercent)
+											.mul(i)
+											.div(100)
+											.toNumber()
+									)
+								)
+								.toNumber(),
+						});
+					}
 
-				state.stops = newStops;
+					// 如果有余数，就需要追加末尾项
+					if (!decimalMax.div(decimalStep).isInteger()) {
+						newStops.push({
+							value: decimalMax.toNumber(),
+							style: {
+								left: 100,
+							},
+							x: new Decimal(markWrapperRect.left)
+								.plus(markWrapperRect.width)
+								.toNumber(),
+						});
+					}
+
+					state.stops = newStops;
+				}, 0);
 			},
 			{ immediate: true }
 		);
@@ -439,6 +463,7 @@ export default defineComponent({
 			context,
 			trackRef,
 			thumbRef,
+			markWrapperRef,
 			computedThumbTransformX,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
