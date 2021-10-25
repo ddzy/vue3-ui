@@ -54,11 +54,12 @@
 				</v3-tooltip>
 				<div v-if="props.showStop" class="v3-slider-track__mark">
 					<ul class="v3-slider-mark__list">
-						<template v-for="v in state.stops" :key="v.value">
+						<template v-for="(v, i) in state.stops" :key="v.value">
 							<li
+								v-if="![0, state.stops.length - 1].includes(i)"
 								class="v3-slider-mark__item"
 								:style="{
-									left: v.style.left,
+									left: `${v.style.left}%`,
 								}"
 							></li>
 						</template>
@@ -117,7 +118,7 @@ interface ILocalMarkItem {
 interface ILocalStopItem {
 	value: number;
 	style: {
-		[key: string]: string;
+		[key: string]: string | number;
 	};
 }
 interface ITooltipInstance {
@@ -304,29 +305,40 @@ export default defineComponent({
 		watch(
 			() => props.showStop,
 			() => {
-				if (props.showStop) {
-					// 组装断点列表
-					const newStops: typeof state.stops = [];
-					// 均分之后剩余的步数
-					const stepRemainder = props.max % props.step;
-					// 均分之后的步数个数
-					const stepCount = Math.floor(props.max / props.step);
-					// 均分之后每一步所占的百分比
-					const stepPercent =
-						props.step /
-						(stepRemainder === 0 ? props.max : props.max - stepRemainder);
+				const newStops: typeof state.stops = [];
+				const decimalStep = new Decimal(props.step);
+				const decimalMax = new Decimal(props.max);
+				// 步数的总数
+				const stepCount = decimalMax
+					.div(decimalStep)
+					.toDecimalPlaces(0, Decimal.ROUND_DOWN)
+					.toNumber();
+				// 每步所占的百分比
+				const stepPercent = decimalStep
+					.div(decimalMax)
+					.mul(100)
+					.toFixed(2);
 
-					for (let index = 1; index < stepCount; index++) {
-						newStops.push({
-							value: props.step * index,
-							style: {
-								left: `${stepPercent * index * 100}%`,
-							},
-						});
-					}
-
-					state.stops = newStops;
+				for (let i = 0; i <= stepCount; i++) {
+					newStops.push({
+						value: props.step * i,
+						style: {
+							left: new Decimal(stepPercent).mul(i).toNumber(),
+						},
+					});
 				}
+
+				// 如果有余数，就需要追加末尾项
+				if (!decimalMax.div(decimalStep).isInteger()) {
+					newStops.push({
+						value: decimalMax.toNumber(),
+						style: {
+							left: 100,
+						},
+					});
+				}
+
+				state.stops = newStops;
 			},
 			{ immediate: true }
 		);
@@ -352,10 +364,7 @@ export default defineComponent({
 		});
 
 		function updateDonePercent(clientX: number) {
-			let a = new Decimal(1.335);
-			let b = a.toFixed(2);
-
-			console.log('b :>> ', b);
+			console.log('state.stops :>> ', state.stops);
 		}
 
 		/**
