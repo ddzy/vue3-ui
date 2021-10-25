@@ -344,6 +344,7 @@ export default defineComponent({
 											.toNumber()
 									)
 								)
+								.round()
 								.toNumber(),
 						});
 					}
@@ -357,6 +358,7 @@ export default defineComponent({
 							},
 							x: new Decimal(markWrapperRect.left)
 								.plus(markWrapperRect.width)
+								.round()
 								.toNumber(),
 						});
 					}
@@ -388,7 +390,17 @@ export default defineComponent({
 		});
 
 		function updateDonePercent(clientX: number) {
-			console.log('state.stops :>> ', state.stops);
+			// 鼠标移动的距离
+			const decimalClientX = new Decimal(clientX);
+			// 鼠标移动时经过的断点
+			const foundMark = state.stops.find(
+				v => v.x === decimalClientX.toNumber()
+			);
+
+			if (foundMark) {
+				state.donePercent = foundMark.style.left as number;
+				context.emit('update:modelValue', Math.ceil(foundMark.value));
+			}
 		}
 
 		/**
