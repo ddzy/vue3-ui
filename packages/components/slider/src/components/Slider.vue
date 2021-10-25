@@ -105,6 +105,7 @@ import {
 	ref,
 	watch,
 } from 'vue';
+import Decimal from 'decimal.js-light';
 
 interface ILocalMarkItem {
 	value: number;
@@ -351,72 +352,10 @@ export default defineComponent({
 		});
 
 		function updateDonePercent(clientX: number) {
-			const trackRect = trackRef.value.getBoundingClientRect();
-			// 滑块左端的偏移量
-			const trackX = trackRect.x;
-			// 滑块宽度
-			const trackWidth = trackRect.width;
-			// 滑块的已完成宽度
-			const doneWidth = clientX - trackX;
-			// 步长所占的百分比
-			let stepPercent = props.step / props.max;
-			// 最新的已完成百分比
-			let newDonePercent = 0;
+			let a = new Decimal(1.335);
+			let b = a.toFixed(2);
 
-			// 临界处理
-			if (clientX <= trackX) {
-				// 小于最小值
-				newDonePercent = 0;
-			} else if (clientX >= trackX + trackWidth) {
-				// 大于最大值
-				newDonePercent = 1;
-			} else {
-				newDonePercent = doneWidth / trackWidth;
-			}
-
-			// 当前已完成的进度等同于几份步数
-			let doneStepCount = Math.floor(
-				Math.ceil(newDonePercent * 1000) / 1000 / stepPercent
-			);
-
-			if (props.step >= 5) {
-				// 当前已完成的进度 % 步数
-				let remainder = (Math.round(newDonePercent * 100) / 100) % stepPercent;
-				// 半步
-				let halfOfStepPercent = stepPercent / 2;
-
-				// 如果是向 X 轴正方向拖动
-				if (clientX - state.prevClientX > 0) {
-					// 那么当已完成的进度超过步数的一半，就可以移动进度条了
-					if (remainder >= halfOfStepPercent) {
-						let newDoneStepCount =
-							newDonePercent === 1 ? doneStepCount : doneStepCount + 1;
-
-						state.donePercent = stepPercent * 100 * newDoneStepCount;
-						context.emit(
-							'update:modelValue',
-							Math.ceil(props.step * newDoneStepCount)
-						);
-					}
-				} else if (clientX - state.prevClientX < 0) {
-					// 反之，如果是向 X 轴负方向拖动
-					if (remainder && remainder <= halfOfStepPercent) {
-						state.donePercent = stepPercent * 100 * doneStepCount;
-						context.emit(
-							'update:modelValue',
-							Math.ceil(props.step * doneStepCount)
-						);
-					}
-				}
-				// 记录本次移动的位置
-				state.prevClientX = clientX;
-			} else {
-				state.donePercent = stepPercent * 100 * doneStepCount;
-				context.emit(
-					'update:modelValue',
-					Math.ceil(props.step * doneStepCount)
-				);
-			}
+			console.log('b :>> ', b);
 		}
 
 		/**
