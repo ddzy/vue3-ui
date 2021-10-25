@@ -106,7 +106,7 @@ import {
 	ref,
 	watch,
 } from 'vue';
-import Decimal from 'decimal.js-light';
+import Decimal from 'decimal.js';
 
 interface ILocalMarkItem {
 	value: number;
@@ -308,10 +308,10 @@ export default defineComponent({
 				const newStops: typeof state.stops = [];
 				const decimalStep = new Decimal(props.step);
 				const decimalMax = new Decimal(props.max);
-				// 步数的总数
+				// 总步数
 				const stepCount = decimalMax
 					.div(decimalStep)
-					.toDecimalPlaces(0, Decimal.ROUND_DOWN)
+					.floor()
 					.toNumber();
 				// 每步所占的百分比
 				const stepPercent = decimalStep
