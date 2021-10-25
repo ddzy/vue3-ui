@@ -266,11 +266,6 @@ export default defineComponent({
 			},
 		});
 
-		// 当触发器到达最大值时，需要向右移动其自身的宽度的距离
-		const computedThumbTransformX = computed(() => {
-			return state.donePercent === 100 ? -100 : 0;
-		});
-
 		watch(
 			() => props.marks,
 			() => {
@@ -476,7 +471,6 @@ export default defineComponent({
 			trackRef,
 			thumbRef,
 			markWrapperRef,
-			computedThumbTransformX,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,
