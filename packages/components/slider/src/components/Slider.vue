@@ -120,6 +120,7 @@ interface ILocalStopItem {
 	style: {
 		[key: string]: string | number;
 	};
+	// 断点的 X 轴距离
 	x: number;
 }
 interface ITooltipInstance {
@@ -132,8 +133,8 @@ interface IState {
 	marks: ILocalMarkItem[];
 	showTooltip: boolean;
 	tooltipInstance: ITooltipInstance | null;
-	prevClientX: number;
 	stops: ILocalStopItem[];
+	halfOfStepX: number;
 }
 
 export default defineComponent({
@@ -244,7 +245,8 @@ export default defineComponent({
 			showTooltip: false,
 			/** tooltip 气泡的实例 */
 			tooltipInstance: null,
-			prevClientX: 0,
+			/** 半个步长所对应的宽度 */
+			halfOfStepX: 0,
 		});
 		const trackInnerRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
@@ -329,7 +331,7 @@ export default defineComponent({
 				.div(decimalStep)
 				.floor()
 				.toNumber();
-			// 每步所占的百分比
+			// 每步所占整个滑动条的百分比
 			const stepPercent = decimalStep
 				.div(decimalMax)
 				.mul(100)
@@ -337,6 +339,17 @@ export default defineComponent({
 
 			const trackInnerEl = trackInnerRef.value as HTMLElement;
 			const trackInnerRect = trackInnerEl.getBoundingClientRect();
+
+			state.halfOfStepX = new Decimal(trackInnerRect.width)
+				.mul(
+					new Decimal(stepPercent)
+						.mul(1)
+						.div(100)
+						.div(2)
+						.toNumber()
+				)
+				.round()
+				.toNumber();
 
 			for (let i = 0; i <= stepCount; i++) {
 				newStops.push({
@@ -358,7 +371,7 @@ export default defineComponent({
 				});
 			}
 
-			// 如果有余数，就需要追加末尾项
+			// 如果有余数，则表明有剩余的步数，那么就需要追加末尾项
 			if (!decimalMax.div(decimalStep).isInteger()) {
 				newStops.push({
 					value: decimalMax.toNumber(),
@@ -378,15 +391,16 @@ export default defineComponent({
 		function updateDonePercent(clientX: number) {
 			// 鼠标移动的距离
 			const decimalClientX = new Decimal(clientX);
-			// 步长
-			const decimalStep = new Decimal(props.step);
-			// 鼠标移动时经过的断点
+			// 半个步长所对应的距离
+			const decimalHalfOfStepX = new Decimal(state.halfOfStepX);
+			// 寻找鼠标移动时经过的断点
 			const foundMark = state.stops.find(v => {
 				const decimalVX = new Decimal(v.x);
 
+				// 只要在 +=半个步长距离 的范围内，就可以移动滑块了
 				return (
-					decimalClientX.gte(decimalVX.minus(decimalStep)) &&
-					decimalClientX.lte(decimalVX.plus(decimalStep))
+					decimalClientX.gte(decimalVX.minus(decimalHalfOfStepX)) &&
+					decimalClientX.lte(decimalVX.plus(decimalHalfOfStepX))
 				);
 			});
 
