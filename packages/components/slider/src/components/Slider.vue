@@ -303,7 +303,12 @@ export default defineComponent({
 		onMounted(() => {
 			if (!Array.isArray(props.modelValue)) {
 				// 组件挂载后，更新滑块触发器的位置
-				state.donePercent = (props.modelValue / props.max) * 100;
+				state.donePercent = new Decimal(
+					new Decimal(props.modelValue)
+						.div(props.max)
+						.mul(100)
+						.toFixed(2)
+				).toNumber();
 			}
 
 			if (props.showTooltip && props.showTooltipAlways) {

@@ -82,7 +82,7 @@ export default defineComponent({
 			sliderValue2: 0,
 			sliderValue3: 0,
 			sliderValue4: 20,
-			sliderValue5: 0,
+			sliderValue5: 1,
 			marks2: {
 				0: {
 					label: '0%',
