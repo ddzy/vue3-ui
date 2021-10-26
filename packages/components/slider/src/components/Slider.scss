@@ -25,7 +25,8 @@
 
 	.v3-slider__track {
 		flex: 1;
-		margin: $margin-large-2 + 2 19px;
+		margin: 10px 19px;
+		padding: $padding-medium 0;
 		cursor: pointer;
 		.v3-slider-track__inner {
 			position: relative;
