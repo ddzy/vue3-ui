@@ -21,8 +21,8 @@
 				{{ props.label }}
 			</label>
 		</div>
-		<div class="v3-slider__track" ref="trackRef" @click="handleTrackClick">
-			<div class="v3-slider-track__inner">
+		<div class="v3-slider__track" @click="handleTrackClick">
+			<div ref="trackInnerRef" class="v3-slider-track__inner">
 				<div
 					class="v3-slider-track__done"
 					:style="{
@@ -52,11 +52,7 @@
 						{{ props.modelValue }}
 					</template>
 				</v3-tooltip>
-				<div
-					v-if="props.showStop"
-					ref="markWrapperRef"
-					class="v3-slider-track__mark"
-				>
+				<div v-if="props.showStop" class="v3-slider-track__mark">
 					<ul class="v3-slider-mark__list">
 						<template v-for="(v, i) in state.stops" :key="v.value">
 							<li
@@ -250,9 +246,8 @@ export default defineComponent({
 			tooltipInstance: null,
 			prevClientX: 0,
 		});
-		const trackRef = ref(document.createElement('div'));
+		const trackInnerRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
-		const markWrapperRef = ref(document.createElement('div'));
 
 		const { clientX } = usePosition({
 			throttleTime: 0,
@@ -303,67 +298,6 @@ export default defineComponent({
 			{ immediate: true, deep: true }
 		);
 
-		watch(
-			() => props.showStop,
-			() => {
-				const newStops: typeof state.stops = [];
-				const decimalStep = new Decimal(props.step);
-				const decimalMax = new Decimal(props.max);
-				// 总步数
-				const stepCount = decimalMax
-					.div(decimalStep)
-					.floor()
-					.toNumber();
-				// 每步所占的百分比
-				const stepPercent = decimalStep
-					.div(decimalMax)
-					.mul(100)
-					.toFixed(2);
-
-				setTimeout(() => {
-					const markWrapperEl = markWrapperRef.value as HTMLElement;
-					const markWrapperRect = markWrapperEl.getBoundingClientRect();
-
-					for (let i = 0; i <= stepCount; i++) {
-						newStops.push({
-							value: props.step * i,
-							style: {
-								left: new Decimal(stepPercent).mul(i).toNumber(),
-							},
-							x: new Decimal(markWrapperRect.left)
-								.plus(
-									new Decimal(markWrapperRect.width).mul(
-										new Decimal(stepPercent)
-											.mul(i)
-											.div(100)
-											.toNumber()
-									)
-								)
-								.round()
-								.toNumber(),
-						});
-					}
-
-					// 如果有余数，就需要追加末尾项
-					if (!decimalMax.div(decimalStep).isInteger()) {
-						newStops.push({
-							value: decimalMax.toNumber(),
-							style: {
-								left: 100,
-							},
-							x: new Decimal(markWrapperRect.left)
-								.plus(markWrapperRect.width)
-								.round()
-								.toNumber(),
-						});
-					}
-
-					state.stops = newStops;
-				}, 0);
-			},
-			{ immediate: true }
-		);
-
 		onMounted(() => {
 			if (!Array.isArray(props.modelValue)) {
 				// 组件挂载后，更新滑块触发器的位置
@@ -378,11 +312,68 @@ export default defineComponent({
 				}, 0);
 			}
 
+			updateStops();
+
 			document.addEventListener('mouseup', handleDocumentMouseUp, false);
 		});
 		onUnmounted(() => {
 			document.removeEventListener('mouseup', handleDocumentMouseUp);
 		});
+
+		function updateStops() {
+			const newStops: typeof state.stops = [];
+			const decimalStep = new Decimal(props.step);
+			const decimalMax = new Decimal(props.max);
+			// 总步数
+			const stepCount = decimalMax
+				.div(decimalStep)
+				.floor()
+				.toNumber();
+			// 每步所占的百分比
+			const stepPercent = decimalStep
+				.div(decimalMax)
+				.mul(100)
+				.toFixed(2);
+
+			const trackInnerEl = trackInnerRef.value as HTMLElement;
+			const trackInnerRect = trackInnerEl.getBoundingClientRect();
+
+			for (let i = 0; i <= stepCount; i++) {
+				newStops.push({
+					value: props.step * i,
+					style: {
+						left: new Decimal(stepPercent).mul(i).toNumber(),
+					},
+					x: new Decimal(trackInnerRect.left)
+						.plus(
+							new Decimal(trackInnerRect.width).mul(
+								new Decimal(stepPercent)
+									.mul(i)
+									.div(100)
+									.toNumber()
+							)
+						)
+						.round()
+						.toNumber(),
+				});
+			}
+
+			// 如果有余数，就需要追加末尾项
+			if (!decimalMax.div(decimalStep).isInteger()) {
+				newStops.push({
+					value: decimalMax.toNumber(),
+					style: {
+						left: 100,
+					},
+					x: new Decimal(trackInnerRect.left)
+						.plus(trackInnerRect.width)
+						.round()
+						.toNumber(),
+				});
+			}
+
+			state.stops = newStops;
+		}
 
 		function updateDonePercent(clientX: number) {
 			// 鼠标移动的距离
@@ -468,9 +459,8 @@ export default defineComponent({
 			state,
 			props,
 			context,
-			trackRef,
+			trackInnerRef,
 			thumbRef,
-			markWrapperRef,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,
