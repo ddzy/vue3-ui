@@ -218,7 +218,7 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
-		/** 间断点列表 */
+		/** 断点label列表 */
 		marks: {
 			type: Object as PropType<TYPES.ISliderMarkItem>,
 			default: null,
@@ -265,43 +265,6 @@ export default defineComponent({
 			return props.modelValue;
 		});
 
-		watch(
-			() => props.marks,
-			() => {
-				// 组装断点 label 列表
-				const newMarks: typeof state.marks = [];
-
-				for (const key in props.marks) {
-					if (Object.prototype.hasOwnProperty.call(props.marks, key)) {
-						const keyToNumber = Number.parseInt(key);
-						const value = props.marks[keyToNumber];
-						// 是否为最小值
-						const isMin = keyToNumber === props.min;
-						// 是否为最大值
-						const isMax = keyToNumber === props.max;
-
-						// 过滤掉小于最小值或者大于最大值的项
-						if (keyToNumber < props.min || keyToNumber > props.max) {
-							continue;
-						}
-
-						newMarks.push({
-							value: keyToNumber,
-							label: value.label,
-							style: {
-								...value.style,
-								left: `${(keyToNumber / props.max) * 100}%`,
-								transform: `translate(${isMin ? 0 : isMax ? -100 : -50}%, 0)`,
-							},
-						});
-					}
-				}
-
-				state.marks = newMarks;
-			},
-			{ immediate: true, deep: true }
-		);
-
 		onMounted(() => {
 			if (!Array.isArray(props.modelValue)) {
 				// 组件挂载后，更新滑块触发器的位置
@@ -322,12 +285,54 @@ export default defineComponent({
 			}
 
 			updateStops();
+			updateMarks();
 
 			document.addEventListener('mouseup', handleDocumentMouseUp, false);
 		});
 		onUnmounted(() => {
 			document.removeEventListener('mouseup', handleDocumentMouseUp);
 		});
+
+		function updateMarks() {
+			// 组装断点 label 列表
+			const newMarks: typeof state.marks = [];
+
+			for (const key in props.marks) {
+				if (Object.prototype.hasOwnProperty.call(props.marks, key)) {
+					const decimalKey = new Decimal(key);
+					const decimalValue = props.marks[decimalKey.toNumber()];
+					// 找到与标记值相对应的断点（得到偏移量）
+					const foundStop = state.stops.find(
+						v => v.value === decimalKey.toNumber()
+					);
+					// 是否为最小值
+					const isMin = decimalKey.eq(props.min);
+					// 是否为最大值
+					const isMax = decimalKey.eq(props.max);
+
+					// 过滤掉小于最小值 && 大于最大值的项
+					if (decimalKey.lt(props.min) || decimalKey.gt(props.max)) {
+						continue;
+					}
+
+					console.log('foundStop :>> ', foundStop);
+
+					if (foundStop) {
+						newMarks.push({
+							value: decimalKey.toNumber(),
+							label: decimalValue.label,
+							style: {
+								...decimalValue.style,
+								left: `${foundStop.style.left}%`,
+								transform: `translate(${isMin ? 0 : isMax ? -100 : -50}%, 0)`,
+							},
+						});
+					}
+				}
+			}
+
+			state.marks = newMarks;
+		}
 
 		function updateStops() {
 			const newStops: typeof state.stops = [];
