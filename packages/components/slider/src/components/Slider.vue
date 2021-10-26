@@ -49,7 +49,7 @@
 					></div>
 
 					<template #content>
-						{{ props.modelValue }}
+						{{ computedModelValue }}
 					</template>
 				</v3-tooltip>
 				<div v-if="props.showStop" class="v3-slider-track__mark">
@@ -261,6 +261,13 @@ export default defineComponent({
 					updateTooltipPosition();
 				}
 			},
+		});
+
+		const computedModelValue = computed(() => {
+			if (typeof props.formatTooltip === 'function') {
+				return props.formatTooltip(props.modelValue);
+			}
+			return props.modelValue;
 		});
 
 		watch(
@@ -487,6 +494,7 @@ export default defineComponent({
 			context,
 			trackInnerRef,
 			thumbRef,
+			computedModelValue,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,

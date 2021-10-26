@@ -1,5 +1,5 @@
 export type ISliderModelValue = [number, number] | number;
-export type ISliderFormatTooltip = (modelValue: number) => any;
+export type ISliderFormatTooltip = (modelValue: ISliderModelValue) => any;
 
 export interface ISliderMarkItemValue {
 	label: string;

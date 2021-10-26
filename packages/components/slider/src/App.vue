@@ -70,6 +70,25 @@
 				></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义 tooltip 中显示的值：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue6"
+					prependIcon="v3-icon-bad"
+					appendIcon="v3-icon-good"
+					label="评分"
+					showTooltipAlways
+					showStop
+					:max="100"
+					:step="20"
+					:formatTooltip="formatTooltip6"
+				></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -83,6 +102,7 @@ export default defineComponent({
 			sliderValue3: 0,
 			sliderValue4: 20,
 			sliderValue5: 1,
+			sliderValue6: 0,
 			marks2: {
 				0: {
 					label: '0%',
@@ -120,8 +140,25 @@ export default defineComponent({
 			}
 		);
 
+		function formatTooltip6(modelValue: number) {
+			if (modelValue <= 0) {
+				return '💀';
+			} else if (modelValue <= 20) {
+				return '😵';
+			} else if (modelValue <= 40) {
+				return '😭';
+			} else if (modelValue <= 60) {
+				return '🙂';
+			} else if (modelValue <= 80) {
+				return '😀';
+			} else if (modelValue <= 100) {
+				return '😆';
+			}
+		}
+
 		return {
 			state,
+			formatTooltip6,
 		};
 	},
 	methods: {},
