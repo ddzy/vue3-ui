@@ -27,6 +27,5 @@ export interface ISliderProps {
 	label: string;
 	prependIcon: string;
 	appendIcon: string;
-	customTooltipClass: string;
 	marks: ISliderMarkItem;
 }

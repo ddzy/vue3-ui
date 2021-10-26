@@ -218,11 +218,6 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
-		/** 自定义 tooltip 的类名 */
-		customTooltipClass: {
-			type: String,
-			default: '',
-		},
 		/** 间断点列表 */
 		marks: {
 			type: Object as PropType<TYPES.ISliderMarkItem>,
