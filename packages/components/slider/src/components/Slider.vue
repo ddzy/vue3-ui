@@ -378,10 +378,17 @@ export default defineComponent({
 		function updateDonePercent(clientX: number) {
 			// 鼠标移动的距离
 			const decimalClientX = new Decimal(clientX);
+			// 步长
+			const decimalStep = new Decimal(props.step);
 			// 鼠标移动时经过的断点
-			const foundMark = state.stops.find(
-				v => v.x === decimalClientX.toNumber()
-			);
+			const foundMark = state.stops.find(v => {
+				const decimalVX = new Decimal(v.x);
+
+				return (
+					decimalClientX.gte(decimalVX.minus(decimalStep)) &&
+					decimalClientX.lte(decimalVX.plus(decimalStep))
+				);
+			});
 
 			if (foundMark) {
 				state.donePercent = foundMark.style.left as number;
