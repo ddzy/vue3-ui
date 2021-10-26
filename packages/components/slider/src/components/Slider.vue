@@ -315,8 +315,6 @@ export default defineComponent({
 						continue;
 					}
 
-					console.log('foundStop :>> ', foundStop);
-
 					if (foundStop) {
 						newMarks.push({
 							value: decimalKey.toNumber(),
