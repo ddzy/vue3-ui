@@ -144,7 +144,7 @@ interface IState {
 	showTooltip: boolean;
 	tooltipInstance: ITooltipInstance | null;
 	stops: ILocalStopItem[];
-	halfOfStepX: number;
+	halfOfStepPos: number;
 }
 
 export default defineComponent({
@@ -270,18 +270,18 @@ export default defineComponent({
 			showTooltip: false,
 			/** tooltip 气泡的实例 */
 			tooltipInstance: null,
-			/** 半个步长所对应的宽度 */
-			halfOfStepX: 0,
+			/** 半个步长所对应的宽度（高度） */
+			halfOfStepPos: 0,
 		});
 		const trackInnerRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
 
-		const { clientX } = usePosition({
+		const { clientX, clientY } = usePosition({
 			throttleTime: 0,
 			callback() {
 				if (state.isMoving) {
 					// 更新已完成的进度
-					updateDonePercent(clientX.value);
+					updateDonePercent(props.vertical ? clientY.value : clientX.value);
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
 				}
@@ -386,8 +386,15 @@ export default defineComponent({
 
 			const trackInnerEl = trackInnerRef.value as HTMLElement;
 			const trackInnerRect = trackInnerEl.getBoundingClientRect();
+			// 要判断水平还是垂直方向
+			const trackInnerRectSize = props.vertical
+				? trackInnerRect.height
+				: trackInnerRect.width;
+			const trackInnerRectPos = props.vertical
+				? trackInnerRect.top
+				: trackInnerRect.left;
 
-			state.halfOfStepX = new Decimal(trackInnerRect.width)
+			state.halfOfStepPos = new Decimal(trackInnerRectSize)
 				.mul(
 					new Decimal(stepPercent)
 						.mul(1)
@@ -404,9 +411,9 @@ export default defineComponent({
 					style: {
 						left: new Decimal(stepPercent).mul(i).toNumber(),
 					},
-					x: new Decimal(trackInnerRect.left)
+					x: new Decimal(trackInnerRectPos)
 						.plus(
-							new Decimal(trackInnerRect.width).mul(
+							new Decimal(trackInnerRectSize).mul(
 								new Decimal(stepPercent)
 									.mul(i)
 									.div(100)
@@ -425,8 +432,8 @@ export default defineComponent({
 					style: {
 						left: 100,
 					},
-					x: new Decimal(trackInnerRect.left)
-						.plus(trackInnerRect.width)
+					x: new Decimal(trackInnerRectPos)
+						.plus(trackInnerRectSize)
 						.round()
 						.toNumber(),
 				});
@@ -435,19 +442,19 @@ export default defineComponent({
 			state.stops = newStops;
 		}
 
-		function updateDonePercent(clientX: number) {
+		function updateDonePercent(mousePosition: number) {
 			// 鼠标移动的距离
-			const decimalClientX = new Decimal(clientX);
+			const decimalMousePosition = new Decimal(mousePosition);
 			// 半个步长所对应的距离
-			const decimalHalfOfStepX = new Decimal(state.halfOfStepX);
+			const decimalHalfOfStepPos = new Decimal(state.halfOfStepPos);
 			// 寻找鼠标移动时经过的断点
 			const foundMark = state.stops.find(v => {
-				const decimalVX = new Decimal(v.x);
+				const decimalVPos = new Decimal(v.x);
 
 				// 只要在 +=半个步长距离 的范围内，就可以移动滑块了
 				return (
-					decimalClientX.gte(decimalVX.minus(decimalHalfOfStepX)) &&
-					decimalClientX.lte(decimalVX.plus(decimalHalfOfStepX))
+					decimalMousePosition.gte(decimalVPos.minus(decimalHalfOfStepPos)) &&
+					decimalMousePosition.lte(decimalVPos.plus(decimalHalfOfStepPos))
 				);
 			});
 
@@ -519,7 +526,7 @@ export default defineComponent({
 		}
 
 		function handleTrackClick(e: MouseEvent) {
-			updateDonePercent(e.clientX);
+			updateDonePercent(props.vertical ? e.clientY : e.clientX);
 			updateTooltipPosition();
 		}
 
