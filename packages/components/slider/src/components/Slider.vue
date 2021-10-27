@@ -117,6 +117,7 @@ import {
 	ref,
 } from 'vue';
 import Decimal from 'decimal.js';
+import * as UTILS from '@common/utils/index';
 
 interface ILocalMarkItem {
 	value: number;
@@ -276,12 +277,12 @@ export default defineComponent({
 		const trackInnerRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
 
-		const { clientX, clientY } = usePosition({
+		const { pageX, pageY } = usePosition({
 			throttleTime: 0,
 			callback() {
 				if (state.isMoving) {
 					// 更新已完成的进度
-					updateDonePercent(props.vertical ? clientY.value : clientX.value);
+					updateDonePercent(props.vertical ? pageY.value : pageX.value);
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
 				}
@@ -391,8 +392,8 @@ export default defineComponent({
 				? trackInnerRect.height
 				: trackInnerRect.width;
 			const trackInnerRectPos = props.vertical
-				? trackInnerRect.top
-				: trackInnerRect.left;
+				? UTILS.getDomOffsetToDocument(trackInnerEl).top
+				: UTILS.getDomOffsetToDocument(trackInnerEl).left;
 
 			state.halfOfStepPos = new Decimal(trackInnerRectSize)
 				.mul(
@@ -526,7 +527,7 @@ export default defineComponent({
 		}
 
 		function handleTrackClick(e: MouseEvent) {
-			updateDonePercent(props.vertical ? e.clientY : e.clientX);
+			updateDonePercent(props.vertical ? e.pageY : e.pageX);
 			updateTooltipPosition();
 		}
 

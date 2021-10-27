@@ -56,3 +56,25 @@ export function hexToRgba(hex: string, opacity: number) {
 		'0x' + hex.slice(3, 5)
 	)}, ${parseInt('0x' + hex.slice(5, 7))}, ${opacity})`;
 }
+
+/**
+ * 计算元素距离文档顶部的距离
+ * @param el 任意 DOM 元素
+ * @returns
+ */
+export function getDomOffsetToDocument(el: HTMLElement) {
+	let pos = {
+		left: 0,
+		top: 0,
+	};
+	let parentEl: any = el;
+
+	while (parentEl) {
+		pos.left += parentEl.offsetLeft;
+		pos.top += parentEl.offsetTop;
+
+		parentEl = parentEl.offsetParent;
+	}
+
+	return pos;
+}
