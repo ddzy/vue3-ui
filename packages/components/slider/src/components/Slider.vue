@@ -3,6 +3,7 @@
 		:class="{
 			'v3-slider': true,
 			'is-moving': state.isMoving,
+			'is-vertical': props.vertical,
 		}"
 	>
 		<div class="v3-slider__prepend">
@@ -27,12 +28,13 @@
 				class="v3-slider-track__inner"
 				:style="{
 					backgroundColor: props.trackColor,
+					'--slider-track-height': props.height,
 				}"
 			>
 				<div
 					class="v3-slider-track__done"
 					:style="{
-						width: `${state.donePercent}%`,
+						[`${props.vertical ? 'height' : 'width'}`]: `${state.donePercent}%`,
 						backgroundColor: props.doneTrackColor,
 					}"
 				></div>
@@ -48,7 +50,7 @@
 						ref="thumbRef"
 						class="v3-slider-track__thumb"
 						:style="{
-							left: `${state.donePercent}%`,
+							[`${props.vertical ? 'top' : 'left'}`]: `${state.donePercent}%`,
 							backgroundColor: props.thumbColor,
 							'--thumb-shadow-color': props.thumbShadowColor,
 						}"
@@ -68,7 +70,7 @@
 								v-if="![0, state.stops.length - 1].includes(i)"
 								class="v3-slider-mark__item"
 								:style="{
-									left: `${v.style.left}%`,
+									[`${props.vertical ? 'top' : 'left'}`]: `${v.style.left}%`,
 								}"
 							></li>
 						</template>
@@ -209,7 +211,7 @@ export default defineComponent({
 		/** 滑块为垂直方向时的高度 */
 		height: {
 			type: String,
-			default: '0px',
+			default: 'auto',
 		},
 		/** 滑块的 label */
 		label: {

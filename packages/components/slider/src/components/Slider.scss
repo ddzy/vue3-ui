@@ -7,6 +7,34 @@
 	width: 100%;
 	align-items: center;
 
+	// 垂直方向
+	&.is-vertical {
+		display: inline-block;
+		width: auto;
+		.v3-slider__prepend,
+		.v3-slider__append {
+			flex-shrink: 0;
+		}
+		.v3-slider__track {
+			display: flex;
+			justify-content: center;
+			margin: 0;
+			padding: 0;
+			.v3-slider-track__inner {
+				width: 4px;
+				height: var(--slider-track-height);
+				margin: 0;
+			}
+			.v3-slider-track__done {
+				width: 100%;
+			}
+			.v3-slider-track__thumb {
+				top: 0;
+				left: 50%;
+			}
+		}
+	}
+
 	&.is-moving {
 		.v3-slider__track {
 			.v3-slider-track__thumb {

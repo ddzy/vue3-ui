@@ -108,6 +108,21 @@
 				></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>垂直方向：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue8"
+					prependIcon="v3-icon-sound-Mute"
+					appendIcon="v3-icon-notice"
+					height="200px"
+					vertical
+				></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -123,6 +138,7 @@ export default defineComponent({
 			sliderValue5: 1,
 			sliderValue6: 0,
 			sliderValue7: 40,
+			sliderValue8: 20,
 			marks2: {
 				0: {
 					label: '0%',
