@@ -28,4 +28,8 @@ export interface ISliderProps {
 	prependIcon: string;
 	appendIcon: string;
 	marks: ISliderMarkItem;
+	thumbColor: string;
+	thumbShadowColor: string;
+	trackColor: string;
+	doneTrackColor: string;
 }

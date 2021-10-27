@@ -89,6 +89,25 @@
 				></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义滑块颜色：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue7"
+					label="评分"
+					thumbColor="rgba(99, 185, 49, 1)"
+					thumbShadowColor="rgba(111, 191, 87, .3)"
+					doneTrackColor="rgba(99, 185, 49, 1)"
+					showStop
+					:max="100"
+					:step="20"
+					:formatTooltip="formatTooltip6"
+				></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -103,6 +122,7 @@ export default defineComponent({
 			sliderValue4: 20,
 			sliderValue5: 1,
 			sliderValue6: 0,
+			sliderValue7: 40,
 			marks2: {
 				0: {
 					label: '0%',

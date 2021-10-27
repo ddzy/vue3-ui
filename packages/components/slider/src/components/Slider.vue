@@ -22,11 +22,18 @@
 			</label>
 		</div>
 		<div class="v3-slider__track" @click="handleTrackClick">
-			<div ref="trackInnerRef" class="v3-slider-track__inner">
+			<div
+				ref="trackInnerRef"
+				class="v3-slider-track__inner"
+				:style="{
+					backgroundColor: props.trackColor,
+				}"
+			>
 				<div
 					class="v3-slider-track__done"
 					:style="{
 						width: `${state.donePercent}%`,
+						backgroundColor: props.doneTrackColor,
 					}"
 				></div>
 				<v3-tooltip
@@ -42,6 +49,8 @@
 						class="v3-slider-track__thumb"
 						:style="{
 							left: `${state.donePercent}%`,
+							backgroundColor: props.thumbColor,
+							'--thumb-shadow-color': props.thumbShadowColor,
 						}"
 						@mousedown="handleThumbMouseDown"
 						@mouseenter="handleThumbMouseEnter"
@@ -222,6 +231,26 @@ export default defineComponent({
 		marks: {
 			type: Object as PropType<TYPES.ISliderMarkItem>,
 			default: null,
+		},
+		/** 滑块的颜色 */
+		thumbColor: {
+			type: String,
+			default: 'rgba(0, 160, 255, 1)',
+		},
+		/** 滑块阴影的颜色 */
+		thumbShadowColor: {
+			type: String,
+			default: 'rgba(0, 170, 250, 0.3)',
+		},
+		/** 滑动条的颜色 */
+		trackColor: {
+			type: String,
+			default: 'rgba(221, 221, 221, 1)',
+		},
+		/** 已完成的进度条的颜色 */
+		doneTrackColor: {
+			type: String,
+			default: 'rgba(0, 160, 255, 1)',
 		},
 	},
 	setup(props: TYPES.ISliderProps, context) {

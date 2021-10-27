@@ -1,5 +1,5 @@
 @mixin thumbMoving {
-	box-shadow: 0 0 0 12px rgba(0, 170, 250, 0.3);
+	box-shadow: 0 0 0 12px var(--thumb-shadow-color);
 }
 
 .v3-slider {
@@ -33,7 +33,6 @@
 			height: 4px;
 			margin-left: -7px;
 			margin-right: -7px;
-			background-color: $border-color-grey-default;
 		}
 		.v3-slider-track__done {
 			position: absolute;
@@ -42,7 +41,6 @@
 			z-index: 1;
 			width: 0;
 			height: 100%;
-			background-color: $primary-color;
 		}
 		.v3-slider-track__thumb {
 			position: absolute;
@@ -52,7 +50,6 @@
 			width: 14px;
 			height: 14px;
 			border-radius: 50%;
-			background-color: $primary-color;
 			transform: translate(-50%, -50%);
 			cursor: grab;
 			transition: box-shadow 0.15s ease;
