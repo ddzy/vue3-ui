@@ -103,7 +103,7 @@
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/slider';
-import { usePosition } from '@common/hooks/index';
+import { usePosition, useResize } from '@common/hooks/index';
 import V3Tooltip from '@components/tooltip/main';
 import {
 	computed,
@@ -113,7 +113,6 @@ import {
 	PropType,
 	reactive,
 	ref,
-	watch,
 } from 'vue';
 import Decimal from 'decimal.js';
 
@@ -284,6 +283,13 @@ export default defineComponent({
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
 				}
+			},
+		});
+		const {} = useResize({
+			throttleTime: 20,
+			callback() {
+				// 窗口大小发生变化时，也要更新断点的位置
+				updateStops();
 			},
 		});
 
