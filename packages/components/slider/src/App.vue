@@ -120,6 +120,8 @@
 					appendIcon="v3-icon-notice"
 					height="200px"
 					vertical
+					:step="25"
+					:marks="state.marks2"
 				></v3-slider>
 			</v3-col>
 		</v3-row>

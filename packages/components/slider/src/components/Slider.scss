@@ -18,7 +18,7 @@
 		.v3-slider__track {
 			display: flex;
 			justify-content: center;
-			margin: 0;
+			margin: $margin-small 0;
 			padding: 0;
 			.v3-slider-track__inner {
 				width: 4px;
@@ -31,6 +31,21 @@
 			.v3-slider-track__thumb {
 				top: 0;
 				left: 50%;
+			}
+			.v3-slider-track__label {
+				width: 100%;
+				height: 100%;
+				.v3-slider-label__item {
+					right: -12px;
+					margin: 0;
+					transform: translate(100%, -50%);
+					&:first-child {
+						transform: translate(100%, -50%);
+					}
+					&:last-child {
+						transform: translate(100%, -50%);
+					}
+				}
 			}
 		}
 	}
@@ -125,6 +140,12 @@
 				position: absolute;
 				margin-top: $margin-medium;
 				transform: translate(-50%, 0);
+				&:first-child {
+					transform: translate(0, 0);
+				}
+				&:last-child {
+					transform: translate(-100%, 0);
+				}
 			}
 		}
 	}

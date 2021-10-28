@@ -82,7 +82,9 @@
 							class="v3-slider-label__item"
 							v-for="v in state.marks"
 							:key="v.value"
-							:style="v.style"
+							:style="{
+								[`${props.vertical ? 'top' : 'left'}`]: v.style.left,
+							}"
 						>
 							{{ v.label }}
 						</li>
@@ -343,10 +345,6 @@ export default defineComponent({
 					const foundStop = state.stops.find(
 						v => v.value === decimalKey.toNumber()
 					);
-					// 是否为最小值
-					const isMin = decimalKey.eq(props.min);
-					// 是否为最大值
-					const isMax = decimalKey.eq(props.max);
 
 					// 过滤掉小于最小值 && 大于最大值的项
 					if (decimalKey.lt(props.min) || decimalKey.gt(props.max)) {
@@ -360,7 +358,6 @@ export default defineComponent({
 							style: {
 								...decimalValue.style,
 								left: `${foundStop.style.left}%`,
-								transform: `translate(${isMin ? 0 : isMax ? -100 : -50}%, 0)`,
 							},
 						});
 					}
