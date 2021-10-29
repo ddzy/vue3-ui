@@ -3,7 +3,7 @@
 		:class="{
 			'v3-slider': true,
 			'is-moving': state.isMoving,
-			'is-moving-2': state.isMoving1,
+			'is-moving-1': state.isMoving1,
 			'is-vertical': props.vertical,
 			'is-range': props.range,
 		}"
@@ -78,7 +78,7 @@
 					>
 						<div
 							ref="thumbRef1"
-							class="v3-slider-track__thumb v3-slider-track-thumb-2"
+							class="v3-slider-track__thumb v3-slider-track-thumb-1"
 							:style="{
 								[`${
 									props.vertical ? 'top' : 'left'
@@ -653,11 +653,17 @@ export default defineComponent({
 				if (props.range) {
 					switch (type) {
 						case 0: {
-							state.showTooltip = true;
+							// 防止在拖动当前滑块的过程中，鼠标经过另一个滑块，导致 tooltip 显示
+							if (!state.isMoving1) {
+								state.showTooltip = true;
+							}
 							break;
 						}
 						case 1: {
-							state.showTooltip1 = true;
+							// 防止在拖动当前滑块的过程中，鼠标经过另一个滑块，导致 tooltip 显示
+							if (!state.isMoving) {
+								state.showTooltip1 = true;
+							}
 							break;
 						}
 						default: {
