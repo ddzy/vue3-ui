@@ -125,6 +125,20 @@
 				></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>范围选择：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider
+					v-model="state.sliderValue9"
+					prependIcon="v3-icon-sound-Mute"
+					appendIcon="v3-icon-notice"
+					range
+				></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -141,6 +155,7 @@ export default defineComponent({
 			sliderValue6: 0,
 			sliderValue7: 40,
 			sliderValue8: 20,
+			sliderValue9: [10, 45],
 			marks2: {
 				0: {
 					label: '0%',
@@ -175,6 +190,13 @@ export default defineComponent({
 			() => state.sliderValue5,
 			() => {
 				console.log('state.sliderValue5 :>> ', state.sliderValue5);
+			}
+		);
+
+		watch(
+			() => state.sliderValue9,
+			() => {
+				console.log('state.sliderValue9 :>> ', state.sliderValue9);
 			}
 		);
 

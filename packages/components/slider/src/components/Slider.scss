@@ -53,6 +53,15 @@
 	&.is-moving {
 		.v3-slider__track {
 			.v3-slider-track__thumb {
+				&:not(.v3-slider-track-thumb-2) {
+					@include thumbMoving();
+				}
+			}
+		}
+	}
+	&.is-moving-2 {
+		.v3-slider__track {
+			.v3-slider-track__thumb.v3-slider-track-thumb-2 {
 				@include thumbMoving();
 			}
 		}
