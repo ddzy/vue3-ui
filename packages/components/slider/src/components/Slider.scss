@@ -50,6 +50,34 @@
 		}
 	}
 
+	// 范围选择器
+	&.is-range {
+		&.is-moving {
+			.v3-slider__track {
+				.v3-slider-track__thumb {
+					&.v3-slider-track-thumb-1 {
+						z-index: 3;
+					}
+					&:not(.v3-slider-track-thumb-1) {
+						z-index: 4;
+					}
+				}
+			}
+		}
+		&.is-moving-1 {
+			.v3-slider__track {
+				.v3-slider-track__thumb {
+					&:not(.v3-slider-track-thumb-1) {
+						z-index: 3;
+					}
+					&.v3-slider-track-thumb-1 {
+						z-index: 4;
+					}
+				}
+			}
+		}
+	}
+
 	&.is-moving {
 		.v3-slider__track {
 			.v3-slider-track__thumb {
@@ -108,6 +136,7 @@
 			position: absolute;
 			left: 0;
 			top: 50%;
+			z-index: 3;
 			width: 14px;
 			height: 14px;
 			border-radius: 50%;
