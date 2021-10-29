@@ -363,11 +363,12 @@ export default defineComponent({
 				).toNumber();
 			} else {
 				// 范围选择器
+				const oldModelValue = props.modelValue as number[];
 				const newModelValue =
 					(props.modelValue as number[]).length === 2
 						? [
-								Math.min(props.modelValue[0], props.modelValue[1]),
-								Math.max(props.modelValue[0], props.modelValue[1]),
+								Math.min(oldModelValue[0], oldModelValue[1]),
+								Math.max(oldModelValue[0], oldModelValue[1]),
 						  ]
 						: [props.min, props.max];
 
@@ -540,9 +541,11 @@ export default defineComponent({
 			});
 
 			if (foundMark) {
+				const decimalMarkValue = new Decimal(foundMark.value).ceil();
+
 				if (!props.range) {
 					state.donePercent = foundMark.style.left as number;
-					context.emit('update:modelValue', Math.ceil(foundMark.value));
+					context.emit('update:modelValue', decimalMarkValue.toNumber());
 				} else {
 					switch (type) {
 						case 0: {
