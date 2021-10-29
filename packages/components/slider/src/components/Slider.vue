@@ -3,7 +3,7 @@
 		:class="{
 			'v3-slider': true,
 			'is-moving': state.isMoving,
-			'is-moving-2': state.isMoving2,
+			'is-moving-2': state.isMoving1,
 			'is-vertical': props.vertical,
 			'is-range': props.range,
 		}"
@@ -45,8 +45,8 @@
 					trigger="manual"
 					placement="top"
 					:offset="[0, 20]"
-					@mount="instance => handleTooltipMount(instance, 1)"
-					@clickOutside="handleTooltipClickOutside(1)"
+					@mount="instance => handleTooltipMount(instance, 0)"
+					@clickOutside="handleTooltipClickOutside(0)"
 				>
 					<div
 						ref="thumbRef"
@@ -56,43 +56,43 @@
 							backgroundColor: props.thumbColor,
 							'--thumb-shadow-color': props.thumbShadowColor,
 						}"
-						@mousedown="handleThumbMouseDown($event, 1)"
-						@mouseenter="handleThumbMouseEnter(1)"
-						@mouseleave="handleThumbMouseLeave(1)"
+						@mousedown="handleThumbMouseDown($event, 0)"
+						@mouseenter="handleThumbMouseEnter(0)"
+						@mouseleave="handleThumbMouseLeave(0)"
 					></div>
 
 					<template #content>
-						{{ computedModelValue1 }}
+						{{ computedModelValue }}
 					</template>
 				</v3-tooltip>
 
 				<!-- 范围选择器才会出现 -->
 				<template v-if="props.range">
 					<v3-tooltip
-						v-model="state.showTooltip2"
+						v-model="state.showTooltip1"
 						trigger="manual"
 						placement="top"
 						:offset="[0, 20]"
-						@mount="instance => handleTooltipMount(instance, 2)"
-						@clickOutside="handleTooltipClickOutside(2)"
+						@mount="instance => handleTooltipMount(instance, 1)"
+						@clickOutside="handleTooltipClickOutside(1)"
 					>
 						<div
-							ref="thumbRef2"
+							ref="thumbRef1"
 							class="v3-slider-track__thumb v3-slider-track-thumb-2"
 							:style="{
 								[`${
 									props.vertical ? 'top' : 'left'
-								}`]: `${state.donePercent2}%`,
+								}`]: `${state.donePercent1}%`,
 								backgroundColor: props.thumbColor,
 								'--thumb-shadow-color': props.thumbShadowColor,
 							}"
-							@mousedown="handleThumbMouseDown($event, 2)"
-							@mouseenter="handleThumbMouseEnter(2)"
-							@mouseleave="handleThumbMouseLeave(2)"
+							@mousedown="handleThumbMouseDown($event, 1)"
+							@mouseenter="handleThumbMouseEnter(1)"
+							@mouseleave="handleThumbMouseLeave(1)"
 						></div>
 
 						<template #content>
-							{{ computedModelValue2 }}
+							{{ computedModelValue1 }}
 						</template>
 					</v3-tooltip>
 				</template>
@@ -175,14 +175,14 @@ interface ITooltipInstance {
 }
 interface IState {
 	isMoving: boolean;
-	isMoving2: boolean;
+	isMoving1: boolean;
 	donePercent: number;
-	donePercent2: number;
+	donePercent1: number;
 	marks: ILocalMarkItem[];
 	showTooltip: boolean;
-	showTooltip2: boolean;
+	showTooltip1: boolean;
 	tooltipInstance: ITooltipInstance | null;
-	tooltipInstance2: ITooltipInstance | null;
+	tooltipInstance1: ITooltipInstance | null;
 	stops: ILocalStopItem[];
 	halfOfStepPos: number;
 }
@@ -299,11 +299,11 @@ export default defineComponent({
 			/** 是否处于拖动状态 */
 			isMoving: false,
 			/** 滑块二是否处于拖动状态 */
-			isMoving2: false,
+			isMoving1: false,
 			/** 已完成的宽度所占百分比 */
 			donePercent: 0,
 			/**  */
-			donePercent2: 0,
+			donePercent1: 0,
 			/** 处理后的断点 label 列表 */
 			marks: [],
 			/** 处理后的断点列表 */
@@ -311,26 +311,26 @@ export default defineComponent({
 			/** tooltip 气泡的显隐状态 */
 			showTooltip: false,
 			/** tooltip2 气泡的显隐状态 */
-			showTooltip2: false,
+			showTooltip1: false,
 			/** tooltip 气泡的实例 */
 			tooltipInstance: null,
 			/** tooltip2 气泡的实例 */
-			tooltipInstance2: null,
+			tooltipInstance1: null,
 			/** 半个步长所对应的宽度（高度） */
 			halfOfStepPos: 0,
 		});
 		const trackInnerRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
-		const thumbRef2 = ref(document.createElement('div'));
+		const thumbRef1 = ref(document.createElement('div'));
 
 		const { pageX, pageY } = usePosition({
 			throttleTime: 0,
 			callback() {
-				if (state.isMoving || state.isMoving2) {
+				if (state.isMoving || state.isMoving1) {
 					// 更新已完成的进度
 					updateDonePercent(
 						props.vertical ? pageY.value : pageX.value,
-						state.isMoving ? 1 : state.isMoving2 ? 2 : 0
+						state.isMoving ? 0 : state.isMoving1 ? 1 : -1
 					);
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
@@ -345,10 +345,10 @@ export default defineComponent({
 			},
 		});
 
-		const computedModelValue1 = computed(() => {
+		const computedModelValue = computed(() => {
 			return computeModelValueHelper(0);
 		});
-		const computedModelValue2 = computed(() => {
+		const computedModelValue1 = computed(() => {
 			return computeModelValueHelper(1);
 		});
 
@@ -356,7 +356,7 @@ export default defineComponent({
 			if (!props.range) {
 				// 组件挂载后，更新滑块触发器的位置
 				state.donePercent = new Decimal(
-					new Decimal(props.modelValue)
+					new Decimal(props.modelValue as number)
 						.div(props.max)
 						.mul(100)
 						.toFixed(2)
@@ -364,7 +364,7 @@ export default defineComponent({
 			} else {
 				// 范围选择器
 				const newModelValue =
-					props.modelValue.length === 2
+					(props.modelValue as number[]).length === 2
 						? [
 								Math.min(props.modelValue[0], props.modelValue[1]),
 								Math.max(props.modelValue[0], props.modelValue[1]),
@@ -377,7 +377,7 @@ export default defineComponent({
 						.mul(100)
 						.toFixed(2)
 				).toNumber();
-				state.donePercent2 = new Decimal(
+				state.donePercent1 = new Decimal(
 					new Decimal(newModelValue[1])
 						.div(props.max)
 						.mul(100)
@@ -387,7 +387,7 @@ export default defineComponent({
 
 			if (props.showTooltip && props.showTooltipAlways) {
 				state.showTooltip = true;
-				state.showTooltip2 = true;
+				state.showTooltip1 = true;
 
 				setTimeout(() => {
 					updateTooltipPosition();
@@ -545,7 +545,7 @@ export default defineComponent({
 					context.emit('update:modelValue', Math.ceil(foundMark.value));
 				} else {
 					switch (type) {
-						case 1: {
+						case 0: {
 							state.donePercent = foundMark.style.left as number;
 							context.emit('update:modelValue', [
 								Math.ceil(foundMark.value),
@@ -554,8 +554,8 @@ export default defineComponent({
 
 							break;
 						}
-						case 2: {
-							state.donePercent2 = foundMark.style.left as number;
+						case 1: {
+							state.donePercent1 = foundMark.style.left as number;
 							context.emit('update:modelValue', [
 								(props.modelValue as number[])[0],
 								Math.ceil(foundMark.value),
@@ -580,9 +580,9 @@ export default defineComponent({
 					getReferenceClientRect: () => thumbRef.value.getBoundingClientRect(),
 				});
 			}
-			if (state.tooltipInstance2) {
-				state.tooltipInstance2.setProps({
-					getReferenceClientRect: () => thumbRef2.value.getBoundingClientRect(),
+			if (state.tooltipInstance1) {
+				state.tooltipInstance1.setProps({
+					getReferenceClientRect: () => thumbRef1.value.getBoundingClientRect(),
 				});
 			}
 		}
@@ -590,12 +590,12 @@ export default defineComponent({
 		function handleDocumentMouseUp() {
 			// 直接在 document 上监听鼠标弹起事件，因为当过快拖动时，滑块触发器上并不能触发此事件
 			state.isMoving = false;
-			state.isMoving2 = false;
+			state.isMoving1 = false;
 
 			// 鼠标结束拖动滑块触发器时，隐藏 tooltip
 			if (props.showTooltip && !props.showTooltipAlways) {
 				state.showTooltip = false;
-				state.showTooltip2 = false;
+				state.showTooltip1 = false;
 			}
 		}
 
@@ -604,12 +604,12 @@ export default defineComponent({
 				state.isMoving = true;
 			} else {
 				switch (type) {
-					case 1: {
+					case 0: {
 						state.isMoving = true;
 						break;
 					}
-					case 2: {
-						state.isMoving2 = true;
+					case 1: {
+						state.isMoving1 = true;
 						break;
 					}
 					default: {
@@ -624,12 +624,12 @@ export default defineComponent({
 					state.showTooltip = true;
 				} else {
 					switch (type) {
-						case 1: {
+						case 0: {
 							state.showTooltip = true;
 							break;
 						}
-						case 2: {
-							state.showTooltip2 = true;
+						case 1: {
+							state.showTooltip1 = true;
 							break;
 						}
 						default: {
@@ -649,12 +649,12 @@ export default defineComponent({
 			if (props.showTooltip) {
 				if (props.range) {
 					switch (type) {
-						case 1: {
+						case 0: {
 							state.showTooltip = true;
 							break;
 						}
-						case 2: {
-							state.showTooltip2 = true;
+						case 1: {
+							state.showTooltip1 = true;
 							break;
 						}
 						default: {
@@ -679,17 +679,17 @@ export default defineComponent({
 				}
 			} else {
 				if (
-					(!state.isMoving || !state.isMoving2) &&
+					(!state.isMoving || !state.isMoving1) &&
 					props.showTooltip &&
 					!props.showTooltipAlways
 				) {
 					switch (type) {
-						case 1: {
+						case 0: {
 							state.showTooltip = false;
 							break;
 						}
-						case 2: {
-							state.showTooltip2 = false;
+						case 1: {
+							state.showTooltip1 = false;
 							break;
 						}
 						default: {
@@ -705,12 +705,12 @@ export default defineComponent({
 				state.tooltipInstance = instance;
 			} else {
 				switch (type) {
-					case 1: {
+					case 0: {
 						state.tooltipInstance = instance;
 						break;
 					}
-					case 2: {
-						state.tooltipInstance2 = instance;
+					case 1: {
+						state.tooltipInstance1 = instance;
 						break;
 					}
 					default: {
@@ -725,12 +725,12 @@ export default defineComponent({
 				state.showTooltip = true;
 			} else {
 				switch (type) {
-					case 1: {
+					case 0: {
 						state.showTooltip = true;
 						break;
 					}
-					case 2: {
-						state.showTooltip2 = true;
+					case 1: {
+						state.showTooltip1 = true;
 						break;
 					}
 					default: {
@@ -743,7 +743,7 @@ export default defineComponent({
 		function handleTrackClick(e: MouseEvent) {
 			updateDonePercent(
 				props.vertical ? e.pageY : e.pageX,
-				state.isMoving ? 1 : state.isMoving2 ? 2 : 0
+				state.isMoving ? 0 : state.isMoving1 ? 1 : -1
 			);
 			updateTooltipPosition();
 		}
@@ -754,9 +754,9 @@ export default defineComponent({
 			context,
 			trackInnerRef,
 			thumbRef,
-			thumbRef2,
+			thumbRef1,
+			computedModelValue,
 			computedModelValue1,
-			computedModelValue2,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,
