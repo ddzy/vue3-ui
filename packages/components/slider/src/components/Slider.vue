@@ -682,7 +682,8 @@ export default defineComponent({
 				}
 			} else {
 				if (
-					(!state.isMoving || !state.isMoving1) &&
+					!state.isMoving &&
+					!state.isMoving1 &&
 					props.showTooltip &&
 					!props.showTooltipAlways
 				) {
