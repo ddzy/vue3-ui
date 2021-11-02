@@ -185,6 +185,7 @@ interface IState {
 	tooltipInstance1: ITooltipInstance | null;
 	stops: ILocalStopItem[];
 	halfOfStepPos: number;
+	localModelValue: number[];
 }
 
 export default defineComponent({
@@ -318,6 +319,8 @@ export default defineComponent({
 			tooltipInstance1: null,
 			/** 半个步长所对应的宽度（高度） */
 			halfOfStepPos: 0,
+			/** 本地维护的 modelValue（便于存储范围选择器的值） */
+			localModelValue: [0, 0],
 		});
 		const trackInnerRef = ref(document.createElement('div'));
 		const thumbRef = ref(document.createElement('div'));
@@ -384,6 +387,7 @@ export default defineComponent({
 						.mul(100)
 						.toFixed(2)
 				).toNumber();
+				state.localModelValue = newModelValue.slice();
 			}
 
 			if (props.showTooltip && props.showTooltipAlways) {
@@ -410,7 +414,7 @@ export default defineComponent({
 			} else {
 				// 范围选择器
 				if (props.range) {
-					return (props.modelValue as number[])[type];
+					return state.localModelValue[type];
 				} else {
 					return props.modelValue;
 				}
@@ -549,19 +553,29 @@ export default defineComponent({
 				} else {
 					switch (type) {
 						case 0: {
-							state.donePercent = foundMark.style.left as number;
-							context.emit('update:modelValue', [
+							state.localModelValue = [
 								Math.ceil(foundMark.value),
-								(props.modelValue as number[])[1],
+								state.localModelValue[1],
+							];
+							state.donePercent = foundMark.style.left as number;
+
+							context.emit('update:modelValue', [
+								Math.min(...state.localModelValue),
+								Math.max(...state.localModelValue),
 							]);
 
 							break;
 						}
 						case 1: {
-							state.donePercent1 = foundMark.style.left as number;
-							context.emit('update:modelValue', [
-								(props.modelValue as number[])[0],
+							state.localModelValue = [
+								state.localModelValue[0],
 								Math.ceil(foundMark.value),
+							];
+							state.donePercent1 = foundMark.style.left as number;
+
+							context.emit('update:modelValue', [
+								Math.min(...state.localModelValue),
+								Math.max(...state.localModelValue),
 							]);
 
 							break;
