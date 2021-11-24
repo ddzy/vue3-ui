@@ -36,7 +36,10 @@
 				<div
 					class="v3-slider-track__done"
 					:style="{
-						[`${props.vertical ? 'height' : 'width'}`]: `${state.donePercent}%`,
+						[`${props.vertical ? 'height' : 'width'}`]: `${computedDoneWidth}%`,
+						[`${
+							props.range ? (props.vertical ? 'top' : 'left') : ''
+						}`]: `${computedDoneLeft}%`,
 						backgroundColor: props.doneTrackColor,
 					}"
 				></div>
@@ -353,6 +356,18 @@ export default defineComponent({
 		});
 		const computedModelValue1 = computed(() => {
 			return computeModelValueHelper(1);
+		});
+		const computedDoneWidth = computed(() => {
+			// 如果是范围滑块，那么最终进度条的宽度 = 两个滑块的进度差
+			return props.range
+				? Math.max(state.donePercent, state.donePercent1) -
+						Math.min(state.donePercent, state.donePercent1)
+				: state.donePercent;
+		});
+		const computedDoneLeft = computed(() => {
+			return props.range
+				? Math.min(state.donePercent, state.donePercent1)
+				: state.donePercent;
 		});
 
 		onMounted(() => {
@@ -781,6 +796,8 @@ export default defineComponent({
 			thumbRef1,
 			computedModelValue,
 			computedModelValue1,
+			computedDoneWidth,
+			computedDoneLeft,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,
