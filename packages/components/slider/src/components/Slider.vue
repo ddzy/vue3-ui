@@ -554,7 +554,7 @@ export default defineComponent({
 					switch (type) {
 						case 0: {
 							state.localModelValue = [
-								Math.ceil(foundMark.value),
+								decimalMarkValue.toNumber(),
 								state.localModelValue[1],
 							];
 							state.donePercent = foundMark.style.left as number;
@@ -569,7 +569,7 @@ export default defineComponent({
 						case 1: {
 							state.localModelValue = [
 								state.localModelValue[0],
-								Math.ceil(foundMark.value),
+								decimalMarkValue.toNumber(),
 							];
 							state.donePercent1 = foundMark.style.left as number;
 
