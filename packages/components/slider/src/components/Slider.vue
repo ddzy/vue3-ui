@@ -46,7 +46,7 @@
 				<v3-tooltip
 					v-model="state.showTooltip"
 					trigger="manual"
-					placement="top"
+					:placement="`${computedTooltipPlacement}`"
 					:offset="[0, 20]"
 					@mount="instance => handleTooltipMount(instance, 0)"
 					@clickOutside="handleTooltipClickOutside(0)"
@@ -74,7 +74,7 @@
 					<v3-tooltip
 						v-model="state.showTooltip1"
 						trigger="manual"
-						placement="top"
+						:placement="`${computedTooltip1Placement}`"
 						:offset="[0, 20]"
 						@mount="instance => handleTooltipMount(instance, 1)"
 						@clickOutside="handleTooltipClickOutside(1)"
@@ -368,6 +368,12 @@ export default defineComponent({
 			return props.range
 				? Math.min(state.donePercent, state.donePercent1)
 				: state.donePercent;
+		});
+		const computedTooltipPlacement = computed(() => {
+			return props.range ? (props.vertical ? 'left' : 'top') : 'top';
+		});
+		const computedTooltip1Placement = computed(() => {
+			return props.vertical ? 'right' : 'top';
 		});
 
 		onMounted(() => {
@@ -798,6 +804,8 @@ export default defineComponent({
 			computedModelValue1,
 			computedDoneWidth,
 			computedDoneLeft,
+			computedTooltipPlacement,
+			computedTooltip1Placement,
 			handleThumbMouseDown,
 			handleThumbMouseEnter,
 			handleThumbMouseLeave,
