@@ -25,6 +25,7 @@ import V3CardDemo from './card/src/App.vue';
 import V3BasePopperDemo from './base-popper/src/App.vue';
 import V3PopconfirmDemo from './popconfirm/src/App.vue';
 import V3SliderDemo from './slider/src/App.vue';
+import V3ProgressDemo from './progress/src/App.vue';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -225,6 +226,14 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3SliderDemo,
 		meta: {
 			title: '滑块',
+		},
+	},
+	{
+		path: '/progress',
+		name: 'V3Progress',
+		component: V3ProgressDemo,
+		meta: {
+			title: '进度条',
 		},
 	},
 ];
