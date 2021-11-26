@@ -6,6 +6,7 @@
 			'is-moving-1': state.isMoving1,
 			'is-vertical': props.vertical,
 			'is-range': props.range,
+			'is-disabled': props.disabled,
 		}"
 	>
 		<div class="v3-slider__prepend">
@@ -332,7 +333,7 @@ export default defineComponent({
 		const { pageX, pageY } = usePosition({
 			throttleTime: 0,
 			callback() {
-				if (state.isMoving || state.isMoving1) {
+				if (!props.disabled && (state.isMoving || state.isMoving1)) {
 					// 更新已完成的进度
 					updateDonePercent(
 						props.vertical ? pageY.value : pageX.value,
@@ -626,6 +627,10 @@ export default defineComponent({
 		}
 
 		function handleDocumentMouseUp() {
+			if (props.disabled) {
+				return;
+			}
+
 			// 直接在 document 上监听鼠标弹起事件，因为当过快拖动时，滑块触发器上并不能触发此事件
 			state.isMoving = false;
 			state.isMoving1 = false;
@@ -638,6 +643,10 @@ export default defineComponent({
 		}
 
 		function handleThumbMouseDown(e: MouseEvent, type: number) {
+			if (props.disabled) {
+				return;
+			}
+
 			if (!props.range) {
 				state.isMoving = true;
 			} else {
@@ -683,6 +692,10 @@ export default defineComponent({
 		}
 
 		function handleThumbMouseEnter(type: number) {
+			if (props.disabled) {
+				return;
+			}
+
 			// 鼠标移入滑块触发器时，显示 tooltip 并更新其位置
 			if (props.showTooltip) {
 				if (props.range) {
@@ -716,6 +729,10 @@ export default defineComponent({
 		}
 
 		function handleThumbMouseLeave(type: number) {
+			if (props.disabled) {
+				return;
+			}
+
 			// 鼠标移出触发器时，如果不处于拖动状态，那么直接关闭 tooltip
 			if (!props.range) {
 				if (!state.isMoving && props.showTooltip && !props.showTooltipAlways) {
@@ -786,6 +803,10 @@ export default defineComponent({
 		}
 
 		function handleTrackClick(e: MouseEvent) {
+			if (props.disabled) {
+				return;
+			}
+
 			updateDonePercent(
 				props.vertical ? e.pageY : e.pageX,
 				state.isMoving ? 0 : state.isMoving1 ? 1 : -1

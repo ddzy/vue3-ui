@@ -1,6 +1,9 @@
 @mixin thumbMoving {
 	box-shadow: 0 0 0 12px var(--thumb-shadow-color);
 }
+@mixin thumbMovingWhileDisabled {
+	box-shadow: none;
+}
 
 .v3-slider {
 	display: flex;
@@ -78,6 +81,7 @@
 		}
 	}
 
+	// 开始拖动
 	&.is-moving {
 		.v3-slider__track {
 			.v3-slider-track__thumb {
@@ -100,6 +104,19 @@
 				&.v3-slider-track-thumb-1 {
 					z-index: 4;
 					@include thumbMoving();
+				}
+			}
+		}
+	}
+
+	// 禁用状态
+	&.is-disabled {
+		.v3-slider__track {
+			cursor: not-allowed;
+			.v3-slider-track__thumb {
+				cursor: not-allowed;
+				&:hover {
+					@include thumbMovingWhileDisabled();
 				}
 			}
 		}
