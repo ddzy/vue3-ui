@@ -48,9 +48,9 @@ $badge-type-map: (
 		top: 0;
 		right: 10px;
 		padding: 0 $padding-small;
-		border: 1px solid #fff;
 		border-radius: $border-radius-width-large;
 		font-size: $font-size-mini;
+		box-shadow: 0 0 0 1px #fff;
 		transform: translate(100%, -50%);
 	}
 }
