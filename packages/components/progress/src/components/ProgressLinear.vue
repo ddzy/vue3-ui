@@ -1,5 +1,28 @@
 <template>
-	<div class="v3-progress-linear">线性进度条</div>
+	<div
+		class="v3-progress-linear"
+		:style="{
+			'--progress-width': props.width,
+			'--progress-track-width': props.trackWidth,
+			'--progress-track-color': props.trackColor,
+			'--progress-done-track-color': props.doneTrackColor,
+		}"
+	>
+		<div class="v3-progress__track">
+			<div class="v3-progress-track__inner">
+				<div
+					class="v3-progress-track__done"
+					:style="{
+						width: `${props.percent}%`,
+					}"
+				></div>
+				<div class="v3-progress-track__stop"></div>
+			</div>
+		</div>
+		<div class="v3-progress__append">
+			<span>{{ computedLabel }}</span>
+		</div>
+	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/progress';
@@ -72,10 +95,17 @@ export default defineComponent({
 	setup(props: TYPES.IProgressLinearProps, context) {
 		const state: IState = reactive({});
 
+		const computedLabel = computed(() => {
+			return props.formatLabel && typeof props.formatLabel === 'function'
+				? props.formatLabel(props.percent)
+				: `${props.percent}%`;
+		});
+
 		return {
 			state,
 			props,
 			context,
+			computedLabel,
 		};
 	},
 });

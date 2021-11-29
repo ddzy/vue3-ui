@@ -1,3 +1,35 @@
 .v3-progress-linear {
-
+	display: flex;
+	align-items: center;
+	.v3-progress__track {
+		flex: 1;
+		.v3-progress-track__inner {
+			box-sizing: border-box;
+			position: relative;
+			width: var(--progress-width);
+			height: var(--progress-track-width);
+			background-color: var(--progress-track-color);
+		}
+		.v3-progress-track__done {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 1;
+			width: 0;
+			height: 100%;
+			background-color: var(--progress-done-track-color);
+			transition: width 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
+		}
+		.v3-progress-track__stop {
+			position: relative;
+			height: 100%;
+		}
+	}
+	.v3-progress__append {
+		margin-left: $margin-medium;
+		color: $font-color-medium;
+		i.v3-icon {
+			font-size: 24px;
+		}
+	}
 }
