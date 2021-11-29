@@ -1,11 +1,15 @@
 <template>
 	<div
 		class="v3-progress-linear"
+		:class="{
+			'has-round': props.round,
+		}"
 		:style="{
 			'--progress-width': props.width,
 			'--progress-track-width': props.trackWidth,
 			'--progress-track-color': props.trackColor,
 			'--progress-done-track-color': props.doneTrackColor,
+			'--progress-track-round': props.roundLength,
 		}"
 	>
 		<div class="v3-progress__track">
@@ -59,7 +63,7 @@ export default defineComponent({
 		/** 进度条线条的宽度 */
 		trackWidth: {
 			type: String,
-			default: '4px',
+			default: '6px',
 		},
 		/** 轨道的背景色 */
 		trackColor: {
@@ -90,6 +94,16 @@ export default defineComponent({
 		animation: {
 			type: Boolean,
 			default: true,
+		},
+		/** 是否开启圆角 */
+		round: {
+			type: Boolean,
+			default: true,
+		},
+		/** 圆角大小 */
+		roundLength: {
+			type: String,
+			default: '30px',
 		},
 	},
 	setup(props: TYPES.IProgressLinearProps, context) {

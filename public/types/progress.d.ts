@@ -13,6 +13,8 @@ export interface IProgressProps {
 export interface IProgressLinearProps extends IProgressProps {
 	width: string;
 	animation: boolean;
+	round: boolean;
+	roundLength: string;
 }
 export interface IProgressCircularProps extends IProgressProps {
 	radius: string;

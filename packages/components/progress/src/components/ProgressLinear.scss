@@ -1,6 +1,16 @@
 .v3-progress-linear {
 	display: flex;
 	align-items: center;
+
+  // 有圆角
+  &.has-round {
+    .v3-progress__track {
+      .v3-progress-track__inner, .v3-progress-track__done {
+        border-radius: var(--progress-track-round);
+      }
+    }
+  }
+
 	.v3-progress__track {
 		flex: 1;
 		.v3-progress-track__inner {
