@@ -23,7 +23,7 @@
 				<div class="v3-progress-track__stop"></div>
 			</div>
 		</div>
-		<div class="v3-progress__append">
+		<div v-if="props.showLabel" class="v3-progress__append">
 			<span>{{ computedLabel }}</span>
 		</div>
 	</div>
