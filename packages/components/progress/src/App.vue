@@ -20,6 +20,20 @@
 				></v3-progress-linear>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>多个选项用来配置进度条的外观：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-progress-linear
+					:percent="state.percent3"
+					trackColor="red"
+					doneTrackColor="yellow"
+					width="100px"
+				></v3-progress-linear>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -30,6 +44,7 @@ export default defineComponent({
 		const state = reactive({
 			percent1: 10,
 			percent2: 10,
+			percent3: 30,
 		});
 
 		return {
