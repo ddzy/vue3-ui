@@ -103,7 +103,7 @@ export default defineComponent({
 		/** 圆角大小 */
 		roundLength: {
 			type: String,
-			default: '30px',
+			default: '100px',
 		},
 	},
 	setup(props: TYPES.IProgressLinearProps, context) {

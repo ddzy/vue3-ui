@@ -5,7 +5,7 @@
   // 有圆角
   &.has-round {
     .v3-progress__track {
-      .v3-progress-track__inner, .v3-progress-track__done {
+      .v3-progress-track__inner {
         border-radius: var(--progress-track-round);
       }
     }
@@ -16,15 +16,12 @@
 		.v3-progress-track__inner {
 			box-sizing: border-box;
 			position: relative;
+      overflow: hidden;
 			width: var(--progress-width);
 			height: var(--progress-track-width);
 			background-color: var(--progress-track-color);
 		}
 		.v3-progress-track__done {
-			position: absolute;
-			left: 0;
-			top: 0;
-			z-index: 1;
 			width: 0;
 			height: 100%;
 			background-color: var(--progress-done-track-color);

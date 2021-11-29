@@ -28,9 +28,10 @@
 			<v3-col>
 				<v3-progress-linear
 					:percent="state.percent3"
-					trackColor="red"
-					doneTrackColor="yellow"
+					trackColor="green"
+					doneTrackColor="blue"
 					width="100px"
+					trackWidth="12px"
 				></v3-progress-linear>
 			</v3-col>
 		</v3-row>
