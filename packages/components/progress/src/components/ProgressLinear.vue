@@ -3,6 +3,7 @@
 		class="v3-progress-linear"
 		:class="{
 			'has-round': props.round,
+			[`is-theme-${props.theme}`]: props.theme,
 		}"
 		:style="{
 			'--progress-width': props.width,
@@ -30,16 +31,7 @@
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/progress';
-import {
-	computed,
-	defineComponent,
-	onMounted,
-	onUnmounted,
-	PropType,
-	reactive,
-	ref,
-} from 'vue';
-import * as UTILS from '@common/utils/index';
+import { computed, defineComponent, PropType, reactive } from 'vue';
 
 interface IState {}
 
@@ -55,9 +47,11 @@ export default defineComponent({
 		/** 进度条的主题（内置四种主题） */
 		theme: {
 			type: String as PropType<TYPES.IProgressTheme>,
-			default: 'primary',
+			default: 'custom',
 			validator(v: string) {
-				return ['primary', 'success', 'danger', 'warning'].includes(v);
+				return ['custom', 'primary', 'success', 'danger', 'warning'].includes(
+					v
+				);
 			},
 		},
 		/** 进度条线条的宽度 */

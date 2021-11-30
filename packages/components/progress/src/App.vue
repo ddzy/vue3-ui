@@ -47,6 +47,40 @@
 				></v3-progress-linear>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>内置多种主题：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-linear
+					theme="primary"
+					:percent="state.percent5"
+					:formatLabel="() => 'primary'"
+				></v3-progress-linear>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-linear
+					theme="success"
+					:percent="state.percent5"
+					:formatLabel="() => 'success'"
+				></v3-progress-linear>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-linear
+					theme="danger"
+					:percent="state.percent5"
+					:formatLabel="() => 'danger'"
+				></v3-progress-linear>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-linear
+					theme="warning"
+					:percent="state.percent5"
+					:formatLabel="() => 'warning'"
+				></v3-progress-linear>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -59,6 +93,7 @@ export default defineComponent({
 			percent2: 10,
 			percent3: 30,
 			percent4: 0,
+			percent5: 50,
 		});
 
 		onMounted(() => {

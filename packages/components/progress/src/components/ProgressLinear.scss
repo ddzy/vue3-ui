@@ -1,30 +1,65 @@
+$progress-theme-list: (
+	'custom': (
+		track-color: var(--progress-track-color),
+		done-track-color: var(--progress-done-track-color),
+	),
+	'primary': (
+		track-color: var(--progress-track-color),
+		done-track-color: $primary-color,
+	),
+	'success': (
+		track-color: var(--progress-track-color),
+		done-track-color: $success-color,
+	),
+	'danger': (
+		track-color: var(--progress-track-color),
+		done-track-color: $danger-color,
+	),
+	'warning': (
+		track-color: var(--progress-track-color),
+		done-track-color: $warning-color,
+	),
+);
+
 .v3-progress-linear {
 	display: flex;
 	align-items: center;
 
-  // 有圆角
-  &.has-round {
-    .v3-progress__track {
-      .v3-progress-track__inner {
-        border-radius: var(--progress-track-round);
-      }
-    }
-  }
+	// 有圆角
+	&.has-round {
+		.v3-progress__track {
+			.v3-progress-track__inner {
+				border-radius: var(--progress-track-round);
+			}
+		}
+	}
+
+	// 不同主题
+	@each $key, $value in $progress-theme-list {
+		&.is-theme-#{$key} {
+			.v3-progress__track {
+				.v3-progress-track__inner {
+					background-color: map-get($map: $value, $key: track-color);
+				}
+				.v3-progress-track__done {
+					background-color: map-get($map: $value, $key: done-track-color);
+				}
+			}
+		}
+	}
 
 	.v3-progress__track {
 		flex: 1;
 		.v3-progress-track__inner {
 			box-sizing: border-box;
 			position: relative;
-      overflow: hidden;
+			overflow: hidden;
 			width: var(--progress-width);
 			height: var(--progress-track-width);
-			background-color: var(--progress-track-color);
 		}
 		.v3-progress-track__done {
 			width: 0;
 			height: 100%;
-			background-color: var(--progress-done-track-color);
 			transition: width 0.8s cubic-bezier(0.17, 0.84, 0.44, 1);
 		}
 		.v3-progress-track__stop {
