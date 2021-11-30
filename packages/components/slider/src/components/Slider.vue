@@ -9,7 +9,14 @@
 			'is-disabled': props.disabled,
 		}"
 	>
-		<div class="v3-slider__prepend">
+		<div
+			v-if="
+				context.slots.prepend ||
+					(!context.slots.prepend && props.prependIcon) ||
+					(!context.slots.prepend && !props.prependIcon && props.label)
+			"
+			class="v3-slider__prepend"
+		>
 			<!-- 优先级：slot="prepend" > prependIcon > label -->
 			<slot name="prepend" v-if="context.slots.prepend"></slot>
 			<i
@@ -130,7 +137,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="v3-slider__append">
+		<div
+			v-if="context.slots.append || (!context.slots.append && props.appendIcon)"
+			class="v3-slider__append"
+		>
 			<!-- 优先级：slot="append" > appendIcon > label -->
 			<slot name="append" v-if="context.slots.append"></slot>
 			<i

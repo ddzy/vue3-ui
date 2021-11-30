@@ -18,10 +18,19 @@
 		.v3-slider__append {
 			flex-shrink: 0;
 		}
+		.v3-slider__prepend {
+			margin: 0;
+			margin-bottom: $margin-small;
+		}
+
+		.v3-slider__append {
+			margin: 0;
+			margin-top: $margin-small;
+		}
 		.v3-slider__track {
 			display: flex;
 			justify-content: center;
-			margin: $margin-small 0;
+			margin: 0;
 			padding: 0;
 			.v3-slider-track__inner {
 				width: 6px;
@@ -130,16 +139,22 @@
 		}
 	}
 
+	.v3-slider__prepend {
+		margin-right: 19px;
+	}
+
+	.v3-slider__append {
+		margin-left: 19px;
+	}
+
 	.v3-slider__track {
 		flex: 1;
-		margin: 10px 19px;
+		margin: 10px 0;
 		padding: $padding-medium 0;
 		cursor: pointer;
 		.v3-slider-track__inner {
 			position: relative;
 			height: 6px;
-			margin-left: -7px;
-			margin-right: -7px;
 		}
 		.v3-slider-track__done {
 			position: absolute;
@@ -170,8 +185,8 @@
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				width: 42px;
-				height: 42px;
+				width: 40px;
+				height: 40px;
 				transform: translate(-50%, -50%);
 			}
 		}
