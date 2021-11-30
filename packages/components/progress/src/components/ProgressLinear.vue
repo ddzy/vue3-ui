@@ -82,7 +82,7 @@ export default defineComponent({
 		/** 进度条的宽度 */
 		width: {
 			type: String,
-			default: '200px',
+			default: '100%',
 		},
 		/** 是否开启进度条的阴影动画 */
 		animation: {

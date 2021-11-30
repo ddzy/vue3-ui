@@ -5,7 +5,10 @@
 				<h3>基本的线性进度条：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-progress-linear :percent="state.percent1"></v3-progress-linear>
+				<v3-progress-linear
+					width="200px"
+					:percent="state.percent1"
+				></v3-progress-linear>
 			</v3-col>
 		</v3-row>
 
@@ -15,6 +18,7 @@
 			</v3-col>
 			<v3-col>
 				<v3-progress-linear
+					width="200px"
 					:percent="state.percent2"
 					:round="false"
 				></v3-progress-linear>
@@ -42,6 +46,7 @@
 			</v3-col>
 			<v3-col>
 				<v3-progress-linear
+					width="200px"
 					:percent="state.percent4"
 					:formatLabel="formatLabel4"
 				></v3-progress-linear>
