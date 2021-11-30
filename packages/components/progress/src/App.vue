@@ -86,6 +86,18 @@
 				></v3-progress-linear>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>开启进度条阴影动画效果：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-progress-linear
+					width="500px"
+					:percent="state.percent6"
+				></v3-progress-linear>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -99,6 +111,7 @@ export default defineComponent({
 			percent3: 30,
 			percent4: 0,
 			percent5: 50,
+			percent6: 50,
 		});
 
 		onMounted(() => {

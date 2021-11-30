@@ -3,6 +3,7 @@
 		class="v3-progress-linear"
 		:class="{
 			'has-round': props.round,
+			'has-animation': props.animation,
 			[`is-theme-${props.theme}`]: props.theme,
 		}"
 		:style="{
