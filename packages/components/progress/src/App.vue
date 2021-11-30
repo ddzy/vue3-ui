@@ -98,6 +98,18 @@
 				></v3-progress-linear>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>和 Slider 结合使用示例：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-linear :percent="state.percent7"></v3-progress-linear>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider v-model="state.percent7"></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -112,6 +124,7 @@ export default defineComponent({
 			percent4: 0,
 			percent5: 50,
 			percent6: 50,
+			percent7: 20,
 		});
 
 		onMounted(() => {
