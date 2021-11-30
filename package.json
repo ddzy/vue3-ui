@@ -35,7 +35,7 @@
 		"docs:build": "vuepress build docs",
 		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write",
 		"prepare": "husky install",
-		"tree": "tree -L 2 -I 'node_modules' -o ./tree.txt --dirsfirst",
+		"tree": "tree -L 3 -I 'node_modules|coverage|dist' -o ./tree.txt --dirsfirst",
 		"clear:dstore": "find . -name '.DS_Store' | xargs rm -rf"
 	},
 	"config": {
