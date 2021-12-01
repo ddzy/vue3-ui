@@ -11,13 +11,11 @@
 		<div class="v3-progress__label">
 			<span>{{ computedLabel }}</span>
 		</div>
-		<div class="v3-progress__half1 v3-progress__left">
-			<div class="v3-progress__quarter4 v3-progress-left__top"></div>
-			<div class="v3-progress__quarter4 v3-progress-left__bottom"></div>
+		<div class="v3-progress__section v3-progress__left">
+			<div class="v3-progress-section__inner v3-progress-left__inner"></div>
 		</div>
-		<div class="v3-progress__half1 v3-progress__right">
-			<div class="v3-progress__quarter4 v3-progress-right__top"></div>
-			<div class="v3-progress__quarter4 v3-progress-right__bottom"></div>
+		<div class="v3-progress__section v3-progress__right">
+			<div class="v3-progress-section__inner v3-progress-right__inner"></div>
 		</div>
 	</div>
 </template>
