@@ -1,2 +1,61 @@
 .v3-progress-circular {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(var(--progress-radius) * 2);
+	height: calc(var(--progress-radius) * 2);
+
+	.v3-progress__label {
+    position: relative;
+    z-index: 2;
+		color: $font-color-medium;
+		i.v3-icon {
+			font-size: 24px;
+		}
+	}
+
+	.v3-progress__half1 {
+    overflow: hidden;
+		position: absolute;
+		top: 0;
+    z-index: 1;
+		width: var(--progress-radius);
+		height: 100%;
+	}
+	.v3-progress__left {
+		left: 0;
+	}
+	.v3-progress__right {
+		right: 0;
+	}
+
+	.v3-progress__quarter4 {
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 50%;
+		border-width: var(--progress-track-width);
+    border-style: solid;
+    border-color: transparent;
+	}
+	.v3-progress-left__top {
+		border-left-color: var(--progress-track-color);
+    border-top-color: var(--progress-track-color);
+    border-radius: var(--progress-radius) 0 0 0;
+	}
+	.v3-progress-left__bottom {
+    border-left-color: var(--progress-track-color);
+		border-bottom-color: var(--progress-track-color);
+    border-radius: 0 0 0 var(--progress-radius);
+	}
+	.v3-progress-right__top {
+		border-right-color: var(--progress-track-color);
+    border-top-color: var(--progress-track-color);
+    border-radius: 0 var(--progress-radius) 0 0;
+	}
+	.v3-progress-right__bottom {
+		border-bottom-color: var(--progress-track-color);
+    border-right-color: var(--progress-track-color);
+    border-radius: 0 0 var(--progress-radius) 0;
+	}
 }

@@ -110,6 +110,15 @@
 				<v3-slider v-model="state.percent7"></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>基本的进度环：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-circular :percent="state.percent8"></v3-progress-circular>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -125,6 +134,7 @@ export default defineComponent({
 			percent5: 50,
 			percent6: 50,
 			percent7: 20,
+			percent8: 20,
 		});
 
 		onMounted(() => {

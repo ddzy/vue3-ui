@@ -1,5 +1,25 @@
 <template>
-	<div class="v3-progress-circular">圆形进度条</div>
+	<div
+		class="v3-progress-circular"
+		:style="{
+			'--progress-radius': props.radius,
+			'--progress-track-width': props.trackWidth,
+			'--progress-track-color': props.trackColor,
+			'--progress-done-track-color': props.doneTrackColor,
+		}"
+	>
+		<div class="v3-progress__label">
+			<span>{{ computedLabel }}</span>
+		</div>
+		<div class="v3-progress__half1 v3-progress__left">
+			<div class="v3-progress__quarter4 v3-progress-left__top"></div>
+			<div class="v3-progress__quarter4 v3-progress-left__bottom"></div>
+		</div>
+		<div class="v3-progress__half1 v3-progress__right">
+			<div class="v3-progress__quarter4 v3-progress-right__top"></div>
+			<div class="v3-progress__quarter4 v3-progress-right__bottom"></div>
+		</div>
+	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/progress';
@@ -60,10 +80,17 @@ export default defineComponent({
 	setup(props: TYPES.IProgressCircularProps, context) {
 		const state: IState = reactive({});
 
+		const computedLabel = computed(() => {
+			return props.formatLabel && typeof props.formatLabel === 'function'
+				? props.formatLabel(props.percent)
+				: `${props.percent}%`;
+		});
+
 		return {
 			state,
 			props,
 			context,
+			computedLabel,
 		};
 	},
 });
