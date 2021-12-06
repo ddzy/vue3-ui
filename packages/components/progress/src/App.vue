@@ -118,6 +118,9 @@
 			<v3-col :span="12">
 				<v3-progress-circular :percent="state.percent8"></v3-progress-circular>
 			</v3-col>
+			<v3-col :span="12">
+				<v3-slider v-model="state.percent8"></v3-slider>
+			</v3-col>
 		</v3-row>
 	</div>
 </template>

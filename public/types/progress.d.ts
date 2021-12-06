@@ -4,7 +4,7 @@ export type IProgressFormatLabel = (percent: number) => any;
 export interface IProgressProps {
 	percent: number;
 	theme: IProgressTheme;
-	trackWidth: string;
+	trackWidth: number;
 	trackColor: string;
 	doneTrackColor: string;
 	showLabel: boolean;
@@ -17,5 +17,5 @@ export interface IProgressLinearProps extends IProgressProps {
 	roundLength: string;
 }
 export interface IProgressCircularProps extends IProgressProps {
-	radius: string;
+	radius: number;
 }

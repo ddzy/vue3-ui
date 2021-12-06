@@ -2,28 +2,42 @@
 	<div
 		class="v3-progress-circular"
 		:style="{
-			'--progress-radius': props.radius,
-			'--progress-track-width': props.trackWidth,
-			'--progress-track-color': props.trackColor,
-			'--progress-done-track-color': props.doneTrackColor,
+			'--progress-width': `${(props.trackWidth + props.radius) * 2}px`,
 		}"
 	>
-		<div class="v3-progress__label">
-			<span>{{ computedLabel }}</span>
-		</div>
-		<div class="v3-progress__section v3-progress__left">
-			<div class="v3-progress-section__inner v3-progress-left__inner"></div>
-		</div>
-		<div class="v3-progress__section v3-progress__right">
-			<div class="v3-progress-section__inner v3-progress-right__inner"></div>
-		</div>
+		<svg class="v3-progress__paper">
+			<g :stroke-width="`${props.trackWidth}px`">
+				<!-- 背景圆 -->
+				<circle
+					class="v3-progress__circle v3-progress-circle__bg"
+					fill="none"
+					:cx="props.radius + props.trackWidth"
+					:cy="props.radius + props.trackWidth"
+					:r="props.radius"
+					:stroke="props.trackColor"
+				></circle>
+				<!-- 圆环 -->
+				<circle
+					class="v3-progress__circle v3-progress-circle__cover"
+					fill="none"
+					:cx="props.radius + props.trackWidth"
+					:cy="props.radius + props.trackWidth"
+					:r="props.radius"
+					:stroke="props.doneTrackColor"
+					:stroke-dasharray="state.strokeDashArray"
+				></circle>
+			</g>
+		</svg>
 	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/progress';
-import { computed, defineComponent, PropType, reactive } from 'vue';
+import { defineComponent, PropType, reactive, watch } from 'vue';
+import Decimal from 'decimal.js';
 
-interface IState {}
+interface IState {
+	strokeDashArray: string;
+}
 
 export default defineComponent({
 	name: 'V3ProgressCircular',
@@ -46,8 +60,8 @@ export default defineComponent({
 		},
 		/** 进度环线条的宽度 */
 		trackWidth: {
-			type: String,
-			default: '6px',
+			type: Number,
+			default: 6,
 		},
 		/** 轨道的背景色 */
 		trackColor: {
@@ -71,24 +85,33 @@ export default defineComponent({
 		},
 		/** 进度环半径 */
 		radius: {
-			type: String,
-			default: '50px',
+			type: Number,
+			default: 50,
 		},
 	},
 	setup(props: TYPES.IProgressCircularProps, context) {
-		const state: IState = reactive({});
-
-		const computedLabel = computed(() => {
-			return props.formatLabel && typeof props.formatLabel === 'function'
-				? props.formatLabel(props.percent)
-				: `${props.percent}%`;
+		const state: IState = reactive({
+			strokeDashArray: '',
 		});
+
+		watch(
+			() => props.percent,
+			() => {
+				// 圆的周长（线段总长度）
+				const perimeter = new Decimal(props.radius).mul(Math.PI).mul(2);
+				const percentToFloat = new Decimal(props.percent).div(100);
+
+				state.strokeDashArray = `${perimeter
+					.mul(percentToFloat)
+					.toNumber()}, ${perimeter.toNumber()}`;
+			},
+			{ immediate: true }
+		);
 
 		return {
 			state,
 			props,
 			context,
-			computedLabel,
 		};
 	},
 });
