@@ -18,4 +18,5 @@ export interface IProgressLinearProps extends IProgressProps {
 }
 export interface IProgressCircularProps extends IProgressProps {
 	radius: number;
+	rotate: number;
 }

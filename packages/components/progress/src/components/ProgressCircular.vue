@@ -25,6 +25,10 @@
 					:r="props.radius"
 					:stroke="props.doneTrackColor"
 					:stroke-dasharray="state.strokeDashArray"
+					:transform="
+						`rotate(${props.rotate}, ${props.radius +
+							props.trackWidth}, ${props.radius + props.trackWidth})`
+					"
 				></circle>
 			</g>
 		</svg>
@@ -87,6 +91,11 @@ export default defineComponent({
 		radius: {
 			type: Number,
 			default: 50,
+		},
+		/** 进度环摆放的角度 */
+		rotate: {
+			type: Number,
+			default: 0,
 		},
 	},
 	setup(props: TYPES.IProgressCircularProps, context) {

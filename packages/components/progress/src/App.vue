@@ -122,6 +122,37 @@
 				<v3-slider v-model="state.percent8"></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>可以更改摆放角度：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-row>
+					<v3-col>
+						<v3-progress-circular
+							:percent="state.percent9"
+							:rotate="-90"
+						></v3-progress-circular>
+					</v3-col>
+					<v3-col>
+						<v3-progress-circular
+							:percent="state.percent9"
+							:rotate="-180"
+						></v3-progress-circular>
+					</v3-col>
+					<v3-col>
+						<v3-progress-circular
+							:percent="state.percent9"
+							:rotate="-270"
+						></v3-progress-circular>
+					</v3-col>
+				</v3-row>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider v-model="state.percent9"></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -138,6 +169,7 @@ export default defineComponent({
 			percent6: 50,
 			percent7: 20,
 			percent8: 20,
+			percent9: 0,
 		});
 
 		onMounted(() => {
