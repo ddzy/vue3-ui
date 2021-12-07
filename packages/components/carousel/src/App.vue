@@ -6,7 +6,18 @@
 			</v3-col>
 			<v3-col>
 				<v3-carousel>
-					<v3-carousel-item></v3-carousel-item>
+					<v3-carousel-item
+						v-for="v in state.carouselList1"
+						:key="v.id"
+						:style="{
+							width: '300px',
+							height: '150px',
+							backgroundImage: `url(${v.coverImg})`,
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover',
+							backgroundPosition: 'center center',
+						}"
+					></v3-carousel-item>
 				</v3-carousel>
 			</v3-col>
 		</v3-row>
@@ -17,7 +28,30 @@ import { defineComponent, h, onMounted, reactive, watch } from 'vue';
 
 export default defineComponent({
 	setup(props, context) {
-		const state = reactive({});
+		const state = reactive({
+			carouselList1: [
+				{
+					id: 1,
+					title: '图片一',
+					coverImg: 'https://oos.yyge.top/test/images/1.jpg',
+				},
+				{
+					id: 2,
+					title: '图片二',
+					coverImg: 'https://oos.yyge.top/test/images/2.png',
+				},
+				{
+					id: 3,
+					title: '图片三',
+					coverImg: 'https://oos.yyge.top/test/images/3.png',
+				},
+				{
+					id: 4,
+					title: '图片四',
+					coverImg: 'https://oos.yyge.top/test/images/4.png',
+				},
+			],
+		});
 
 		return {
 			state,

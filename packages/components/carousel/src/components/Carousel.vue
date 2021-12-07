@@ -1,5 +1,17 @@
 <template>
-	<div class="v3-carousel">
+	<div
+		class="v3-carousel"
+		:class="{
+			'is-empty': !computedChildrenLength,
+			'is-autoplay': props.autoplay,
+			'is-disabled': props.disabled,
+			'is-show-indicator': props.showIndicator,
+			[`is-effect-${props.effect}`]: true,
+			[`is-${props.direction}`]: true,
+			[`is-show-arrow-${props.showArrow}`]: true,
+			[`is-indicator-${props.indicatorType}`]: true,
+		}"
+	>
 		<slot></slot>
 	</div>
 </template>
@@ -83,10 +95,34 @@ export default defineComponent({
 	setup(props: TYPES.ICarouselProps, context) {
 		const state: IState = reactive({});
 
+		/**
+		 * 计算 slot 的长度（即判断内容是否为空）
+		 */
+		const computedChildrenLength = computed<number>(() => {
+			const defaultSlot: Function | undefined = context.slots.default;
+			if (typeof defaultSlot !== 'function') {
+				return 0;
+			}
+
+			const defaultChildren = defaultSlot();
+			// 通过 v-for 遍历的组件，如果没有匹配到，那么 slot 也会存在
+			if (
+				defaultChildren.length === 1 &&
+				defaultChildren[0] &&
+				Array.isArray(defaultChildren[0].children) &&
+				!defaultChildren[0].children.length
+			) {
+				return 0;
+			}
+
+			return defaultChildren.length;
+		});
+
 		return {
 			state,
 			props,
 			context,
+			computedChildrenLength,
 		};
 	},
 });

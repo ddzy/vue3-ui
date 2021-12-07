@@ -1,5 +1,7 @@
 <template>
-	<div class="v3-carousel-item">轮播图项</div>
+	<div class="v3-carousel-item">
+		<slot></slot>
+	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/carousel';
@@ -11,7 +13,7 @@ export default defineComponent({
 	name: 'V3CarouselItem',
 	components: {},
 	props: {},
-	setup(props: TYPES.ICarouselProps, context) {
+	setup(props, context) {
 		const state: IState = reactive({});
 
 		return {
