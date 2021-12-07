@@ -1,7 +1,5 @@
 <template>
-	<div class="v3-carousel">
-		<slot></slot>
-	</div>
+	<div class="v3-carousel-item">轮播图项</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/carousel';
@@ -10,7 +8,7 @@ import { computed, defineComponent, PropType, reactive, watch } from 'vue';
 interface IState {}
 
 export default defineComponent({
-	name: 'V3Carousel',
+	name: 'V3CarouselItem',
 	components: {},
 	props: {},
 	setup(props: TYPES.ICarouselProps, context) {
@@ -25,5 +23,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-@import './Carousel.scss';
+@import './CarouselItem.scss';
 </style>

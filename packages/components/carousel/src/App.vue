@@ -5,7 +5,9 @@
 				<h3>基本的轮播图：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-carousel></v3-carousel>
+				<v3-carousel>
+					<v3-carousel-item></v3-carousel-item>
+				</v3-carousel>
 			</v3-col>
 		</v3-row>
 	</div>
