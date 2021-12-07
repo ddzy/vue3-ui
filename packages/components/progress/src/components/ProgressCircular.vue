@@ -109,7 +109,7 @@ export default defineComponent({
 		/** 进度环摆放的角度 */
 		rotate: {
 			type: Number,
-			default: 0,
+			default: -90,
 		},
 	},
 	setup(props: TYPES.IProgressCircularProps, context) {

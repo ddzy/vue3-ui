@@ -132,7 +132,6 @@
 					<v3-col>
 						<v3-progress-circular
 							:percent="state.percent9"
-							:rotate="-90"
 						></v3-progress-circular>
 					</v3-col>
 					<v3-col>
@@ -161,7 +160,6 @@
 			<v3-col :span="12">
 				<v3-progress-circular
 					:percent="state.percent10"
-					:rotate="-90"
 					:formatLabel="formatLabel10"
 				></v3-progress-circular>
 			</v3-col>
@@ -180,28 +178,24 @@
 						<v3-progress-circular
 							theme="primary"
 							:percent="state.percent11"
-							:rotate="-90"
 						></v3-progress-circular>
 					</v3-col>
 					<v3-col>
 						<v3-progress-circular
 							theme="success"
 							:percent="state.percent11"
-							:rotate="-90"
 						></v3-progress-circular>
 					</v3-col>
 					<v3-col>
 						<v3-progress-circular
 							theme="danger"
 							:percent="state.percent11"
-							:rotate="-90"
 						></v3-progress-circular>
 					</v3-col>
 					<v3-col>
 						<v3-progress-circular
 							theme="warning"
 							:percent="state.percent11"
-							:rotate="-90"
 						></v3-progress-circular>
 					</v3-col>
 				</v3-row>
