@@ -153,6 +153,22 @@
 				<v3-slider v-model="state.percent9"></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>可以自定义 label：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-progress-circular
+					:percent="state.percent10"
+					:rotate="-90"
+					:formatLabel="formatLabel10"
+				></v3-progress-circular>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider v-model="state.percent10"></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -170,6 +186,7 @@ export default defineComponent({
 			percent7: 20,
 			percent8: 20,
 			percent9: 0,
+			percent10: 0,
 		});
 
 		onMounted(() => {
@@ -202,9 +219,26 @@ export default defineComponent({
 			}
 		}
 
+		function formatLabel10(percent: number) {
+			if (percent <= 0) {
+				return '💀';
+			} else if (percent <= 20) {
+				return '😵';
+			} else if (percent <= 40) {
+				return '😭';
+			} else if (percent <= 60) {
+				return '🙂';
+			} else if (percent <= 80) {
+				return '😀';
+			} else if (percent <= 100) {
+				return '😆';
+			}
+		}
+
 		return {
 			state,
 			formatLabel4,
+			formatLabel10,
 		};
 	},
 	methods: {},

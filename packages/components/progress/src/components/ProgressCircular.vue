@@ -31,12 +31,23 @@
 					"
 				></circle>
 			</g>
+			<text
+				v-if="props.showLabel"
+				fill="#666"
+				font-size="16"
+				text-anchor="middle"
+				dominant-baseline="middle"
+				:x="props.radius + props.trackWidth"
+				:y="props.radius + props.trackWidth"
+			>
+				<tspan>{{ computedLabel }}</tspan>
+			</text>
 		</svg>
 	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/progress';
-import { defineComponent, PropType, reactive, watch } from 'vue';
+import { computed, defineComponent, PropType, reactive, watch } from 'vue';
 import Decimal from 'decimal.js';
 
 interface IState {
@@ -103,6 +114,12 @@ export default defineComponent({
 			strokeDashArray: '',
 		});
 
+		const computedLabel = computed(() => {
+			return props.formatLabel && typeof props.formatLabel === 'function'
+				? props.formatLabel(props.percent)
+				: `${props.percent}%`;
+		});
+
 		watch(
 			() => props.percent,
 			() => {
@@ -121,6 +138,7 @@ export default defineComponent({
 			state,
 			props,
 			context,
+			computedLabel,
 		};
 	},
 });
