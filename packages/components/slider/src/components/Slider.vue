@@ -301,7 +301,7 @@ export default defineComponent({
 		/** 滑动条的颜色 */
 		trackColor: {
 			type: String,
-			default: 'rgba(221, 221, 221, 1)',
+			default: '#e5e6eb',
 		},
 		/** 已完成的进度条的颜色 */
 		doneTrackColor: {

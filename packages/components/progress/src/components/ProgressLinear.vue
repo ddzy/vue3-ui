@@ -63,7 +63,7 @@ export default defineComponent({
 		/** 轨道的背景色 */
 		trackColor: {
 			type: String,
-			default: 'rgba(221, 221, 221, 1)',
+			default: '#e5e6eb',
 		},
 		/** 已完成进度的背景色 */
 		doneTrackColor: {
