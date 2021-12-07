@@ -36,6 +36,7 @@
 			</g>
 			<text
 				v-if="props.showLabel"
+				class="v3-progress__label"
 				fill="#888"
 				font-size="16"
 				text-anchor="middle"
