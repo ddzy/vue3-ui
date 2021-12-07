@@ -169,6 +169,47 @@
 				<v3-slider v-model="state.percent10"></v3-slider>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同主题的进度环：</h3>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-row>
+					<v3-col>
+						<v3-progress-circular
+							theme="primary"
+							:percent="state.percent11"
+							:rotate="-90"
+						></v3-progress-circular>
+					</v3-col>
+					<v3-col>
+						<v3-progress-circular
+							theme="success"
+							:percent="state.percent11"
+							:rotate="-90"
+						></v3-progress-circular>
+					</v3-col>
+					<v3-col>
+						<v3-progress-circular
+							theme="danger"
+							:percent="state.percent11"
+							:rotate="-90"
+						></v3-progress-circular>
+					</v3-col>
+					<v3-col>
+						<v3-progress-circular
+							theme="warning"
+							:percent="state.percent11"
+							:rotate="-90"
+						></v3-progress-circular>
+					</v3-col>
+				</v3-row>
+			</v3-col>
+			<v3-col :span="12">
+				<v3-slider v-model="state.percent11"></v3-slider>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -187,6 +228,7 @@ export default defineComponent({
 			percent8: 20,
 			percent9: 0,
 			percent10: 0,
+			percent11: 40,
 		});
 
 		onMounted(() => {

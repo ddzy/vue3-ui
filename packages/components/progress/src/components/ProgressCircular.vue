@@ -1,29 +1,32 @@
 <template>
 	<div
 		class="v3-progress-circular"
+		:class="{
+			[`is-theme-${props.theme}`]: true,
+		}"
 		:style="{
 			'--progress-width': `${(props.trackWidth + props.radius) * 2}px`,
+			'--progress-track-color': props.trackColor,
+			'--progress-done-track-color': props.doneTrackColor,
 		}"
 	>
 		<svg class="v3-progress__paper">
 			<g :stroke-width="`${props.trackWidth}px`">
 				<!-- 背景圆 -->
 				<circle
-					class="v3-progress__circle v3-progress-circle__bg"
+					class="v3-progress__circle v3-progress-circle__track"
 					fill="none"
 					:cx="props.radius + props.trackWidth"
 					:cy="props.radius + props.trackWidth"
 					:r="props.radius"
-					:stroke="props.trackColor"
 				></circle>
 				<!-- 圆环 -->
 				<circle
-					class="v3-progress__circle v3-progress-circle__cover"
+					class="v3-progress__circle v3-progress-circle__done"
 					fill="none"
 					:cx="props.radius + props.trackWidth"
 					:cy="props.radius + props.trackWidth"
 					:r="props.radius"
-					:stroke="props.doneTrackColor"
 					:stroke-dasharray="state.strokeDashArray"
 					:transform="
 						`rotate(${props.rotate}, ${props.radius +
