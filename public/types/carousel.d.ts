@@ -5,6 +5,8 @@ export type ICarouselIndicatorType = 'dot' | 'line';
 
 export interface ICarouselProps {
 	modelValue: number;
+	width: number;
+	height: number;
 	effect: ICarouselEffect;
   autoplay: boolean;
   pauseOnHover: boolean;

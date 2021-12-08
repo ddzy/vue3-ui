@@ -5,13 +5,33 @@
 				<h3>基本的轮播图：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-carousel>
+				<div style="width: 500px; height: 300px">
+					<v3-carousel>
+						<v3-carousel-item
+							v-for="v in state.carouselList1"
+							:key="v.id"
+							:style="{
+								backgroundImage: `url(${v.coverImg})`,
+								backgroundRepeat: 'no-repeat',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center center',
+							}"
+						></v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>渐变形式：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-carousel effect="fade" :width="500" :height="300">
 					<v3-carousel-item
 						v-for="v in state.carouselList1"
 						:key="v.id"
 						:style="{
-							width: '300px',
-							height: '150px',
 							backgroundImage: `url(${v.coverImg})`,
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover',

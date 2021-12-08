@@ -11,13 +11,26 @@
 			[`is-show-arrow-${props.showArrow}`]: true,
 			[`is-indicator-${props.indicatorType}`]: true,
 		}"
+		:style="{
+			width: props.width ? `${props.width}px` : '100%',
+			height: props.height ? `${props.height}px` : '100%',
+		}"
 	>
-		<slot></slot>
+		<!-- 轮播列表 -->
+		<div class="v3-carousel__list">
+			<slot></slot>
+		</div>
+		<!-- 左切换箭头 -->
+		<div class="v3-carousel__arrow is-left"></div>
+		<!-- 右切换箭头 -->
+		<div class="v3-carousel__arrow is-right"></div>
+		<!-- 导航按钮 -->
+		<div class="v3-carousel__indicator"></div>
 	</div>
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/carousel';
-import { computed, defineComponent, PropType, reactive, watch } from 'vue';
+import { computed, defineComponent, PropType, reactive } from 'vue';
 
 interface IState {}
 
@@ -26,6 +39,16 @@ export default defineComponent({
 	components: {},
 	props: {
 		modelValue: {
+			type: Number,
+			default: 0,
+		},
+		/** 轮播图容器宽度 */
+		width: {
+			type: Number,
+			default: 0,
+		},
+		/** 轮播图容器高度 */
+		height: {
 			type: Number,
 			default: 0,
 		},

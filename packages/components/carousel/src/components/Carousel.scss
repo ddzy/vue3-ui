@@ -1,1 +1,20 @@
-.v3-carousel {}
+.v3-carousel {
+	overflow: hidden;
+	position: relative;
+
+	&.is-effect-fade {
+		.v3-carousel__list {
+			position: relative;
+			& :deep(.v3-carousel__item) {
+				position: absolute;
+			}
+		}
+	}
+	.v3-carousel__list {
+		display: flex;
+		height: 100%;
+		& :deep(.v3-carousel__item) {
+			flex-shrink: 0;
+		}
+	}
+}
