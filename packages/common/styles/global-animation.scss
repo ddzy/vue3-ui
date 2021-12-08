@@ -70,3 +70,18 @@
 .v3-dialog-translate-leave-to {
 	transform: translateY(-30px);
 }
+
+.v3-carousel-item-slide-enter-from {
+	transform: translateX(100%);
+}
+.v3-carousel-item-slide-enter-active,
+.v3-carousel-item-slide-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-slide-enter-to,
+.v3-carousel-item-slide-leave-from {
+	transform: translateX(0);
+}
+.v3-carousel-item-slide-leave-to {
+	transform: translateX(-100%);
+}

@@ -17,9 +17,13 @@
 		}"
 	>
 		<!-- 轮播列表 -->
-		<div class="v3-carousel__list">
+		<transition-group
+			name="v3-carousel-item-slide"
+			tag="div"
+			class="v3-carousel__list"
+		>
 			<slot></slot>
-		</div>
+		</transition-group>
 		<!-- 左切换箭头 -->
 		<div class="v3-carousel__arrow is-left"></div>
 		<!-- 右切换箭头 -->
@@ -30,9 +34,23 @@
 </template>
 <script lang="ts">
 import * as TYPES from '@/public/types/carousel';
-import { computed, defineComponent, PropType, reactive } from 'vue';
+import {
+	ComponentInternalInstance,
+	computed,
+	defineComponent,
+	getCurrentInstance,
+	PropType,
+	provide,
+	reactive,
+	ref,
+	watch,
+	nextTick,
+} from 'vue';
+import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
-interface IState {}
+interface IState {
+	carouselItemInstanceList: any[];
+}
 
 export default defineComponent({
 	name: 'V3Carousel',
@@ -116,7 +134,13 @@ export default defineComponent({
 		},
 	},
 	setup(props: TYPES.ICarouselProps, context) {
-		const state: IState = reactive({});
+		const state: IState = reactive({
+			/** 轮播项实例列表 */
+			carouselItemInstanceList: [],
+		});
+		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
+
+		provide(CAROUSEL_INSTANCE_PROVIDE, app);
 
 		/**
 		 * 计算 slot 的长度（即判断内容是否为空）
@@ -141,11 +165,33 @@ export default defineComponent({
 			return defaultChildren.length;
 		});
 
+		watch(
+			() => props.modelValue,
+			() => {
+				nextTick(() => {
+					state.carouselItemInstanceList.forEach((v, i) => {
+						v.state.isShow = i === props.modelValue;
+					});
+				});
+			},
+			{ immediate: true }
+		);
+
+		/**
+		 * 收集 V3CarouselItem 组件实例，统一管理
+		 */
+		function appendCarouselItemInstanceToList(instance: any) {
+			state.carouselItemInstanceList = state.carouselItemInstanceList.concat(
+				instance
+			);
+		}
+
 		return {
 			state,
 			props,
 			context,
 			computedChildrenLength,
+			appendCarouselItemInstanceToList,
 		};
 	},
 });

@@ -2,19 +2,11 @@
 	overflow: hidden;
 	position: relative;
 
-	&.is-effect-fade {
-		.v3-carousel__list {
-			position: relative;
-			& :deep(.v3-carousel__item) {
-				position: absolute;
-			}
-		}
-	}
 	.v3-carousel__list {
-		display: flex;
+		position: relative;
 		height: 100%;
 		& :deep(.v3-carousel__item) {
-			flex-shrink: 0;
+			position: absolute;
 		}
 	}
 }

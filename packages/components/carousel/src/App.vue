@@ -6,7 +6,7 @@
 			</v3-col>
 			<v3-col>
 				<div style="width: 500px; height: 300px">
-					<v3-carousel>
+					<v3-carousel v-model="state.carouselIndex1">
 						<v3-carousel-item
 							v-for="v in state.carouselList1"
 							:key="v.id"
@@ -71,6 +71,17 @@ export default defineComponent({
 					coverImg: 'https://oos.yyge.top/test/images/4.png',
 				},
 			],
+			carouselIndex1: 0,
+		});
+
+		onMounted(() => {
+			window.setInterval(() => {
+				if (state.carouselIndex1 >= state.carouselList1.length - 1) {
+					state.carouselIndex1 = 0;
+				} else {
+					state.carouselIndex1 += 1;
+				}
+			}, 2000);
 		});
 
 		return {
