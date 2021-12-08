@@ -86,6 +86,28 @@
 				</v3-carousel>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>切换箭头的显示时机：</h3>
+			</v3-col>
+			<v3-col>
+				<div style="width: 500px; height: 300px">
+					<v3-carousel v-model="state.carouselIndex1" showArrow="hover">
+						<v3-carousel-item
+							v-for="v in state.carouselList1"
+							:key="v.id"
+							:style="{
+								backgroundImage: `url(${v.coverImg})`,
+								backgroundRepeat: 'no-repeat',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center center',
+							}"
+						></v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">

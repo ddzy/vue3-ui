@@ -15,6 +15,8 @@
 			width: props.width ? `${props.width}px` : '100%',
 			height: props.height ? `${props.height}px` : '100%',
 		}"
+		@mouseenter="handleCarouselMouseEnter"
+		@mouseleave="handleCarouselMouseLeave"
 	>
 		<!-- 轮播列表 -->
 		<transition-group
@@ -24,22 +26,23 @@
 		>
 			<slot name="default"></slot>
 		</transition-group>
-		<template v-if="props.showArrow !== 'never'">
-			<!-- 左切换箭头 -->
-			<div class="v3-carousel__arrow is-left">
-				<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
-				<div v-else class="v3-carousel-arrow__inner">
-					<i class="v3-icon v3-icon-arrow-left"></i>
-				</div>
+
+		<!-- 左切换箭头 -->
+		<div v-show="state.showArrow" class="v3-carousel__arrow is-left">
+			<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
+			<div v-else class="v3-carousel-arrow__inner">
+				<i class="v3-icon v3-icon-arrow-left"></i>
 			</div>
-			<!-- 右切换箭头 -->
-			<div class="v3-carousel__arrow is-right">
-				<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
-				<div v-else class="v3-carousel-arrow__inner">
-					<i class="v3-icon v3-icon-arrow-right"></i>
-				</div>
+		</div>
+
+		<!-- 右切换箭头 -->
+		<div v-show="state.showArrow" class="v3-carousel__arrow is-right">
+			<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
+			<div v-else class="v3-carousel-arrow__inner">
+				<i class="v3-icon v3-icon-arrow-right"></i>
 			</div>
-		</template>
+		</div>
+
 		<!-- 导航按钮 -->
 		<div class="v3-carousel__indicator"></div>
 	</div>
@@ -62,6 +65,7 @@ import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
 interface IState {
 	carouselItemInstanceList: any[];
+	showArrow: boolean;
 }
 
 export default defineComponent({
@@ -149,6 +153,8 @@ export default defineComponent({
 		const state: IState = reactive({
 			/** 轮播项实例列表 */
 			carouselItemInstanceList: [],
+			/** 箭头是否显示 */
+			showArrow: false,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
@@ -189,6 +195,18 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
+		watch(
+			() => props.showArrow,
+			() => {
+				if (props.showArrow === 'always') {
+					state.showArrow = true;
+				} else {
+					state.showArrow = false;
+				}
+			},
+			{ immediate: true }
+		);
+
 		/**
 		 * 收集 V3CarouselItem 组件实例，统一管理
 		 */
@@ -198,12 +216,26 @@ export default defineComponent({
 			);
 		}
 
+		function handleCarouselMouseEnter() {
+			if (props.showArrow === 'hover') {
+				state.showArrow = true;
+			}
+		}
+
+		function handleCarouselMouseLeave() {
+			if (props.showArrow === 'hover') {
+				state.showArrow = false;
+			}
+		}
+
 		return {
 			state,
 			props,
 			context,
 			computedChildrenLength,
 			appendCarouselItemInstanceToList,
+			handleCarouselMouseEnter,
+			handleCarouselMouseLeave,
 		};
 	},
 });
