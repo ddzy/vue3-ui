@@ -85,3 +85,18 @@
 .v3-carousel-item-slide-leave-to {
 	transform: translateX(-100%);
 }
+
+.v3-carousel-item-fade-enter-from {
+	opacity: 0;
+}
+.v3-carousel-item-fade-enter-active,
+.v3-carousel-item-fade-leave-active {
+	transition-property: opacity;
+}
+.v3-carousel-item-fade-enter-to,
+.v3-carousel-item-fade-leave-from {
+	opacity: 1;
+}
+.v3-carousel-item-fade-leave-to {
+	opacity: 0;
+}

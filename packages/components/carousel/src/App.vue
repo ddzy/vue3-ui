@@ -27,7 +27,12 @@
 				<h3>渐变形式：</h3>
 			</v3-col>
 			<v3-col>
-				<v3-carousel effect="fade" :width="500" :height="300">
+				<v3-carousel
+					v-model="state.carouselIndex1"
+					effect="fade"
+					:width="500"
+					:height="300"
+				>
 					<v3-carousel-item
 						v-for="v in state.carouselList1"
 						:key="v.id"

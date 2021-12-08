@@ -18,9 +18,9 @@
 	>
 		<!-- 轮播列表 -->
 		<transition-group
-			name="v3-carousel-item-slide"
 			tag="div"
 			class="v3-carousel__list"
+			:name="`v3-carousel-item-${props.effect}`"
 		>
 			<slot></slot>
 		</transition-group>
