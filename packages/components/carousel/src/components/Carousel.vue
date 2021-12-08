@@ -22,12 +22,24 @@
 			class="v3-carousel__list"
 			:name="`v3-carousel-item-${props.effect}`"
 		>
-			<slot></slot>
+			<slot name="default"></slot>
 		</transition-group>
-		<!-- 左切换箭头 -->
-		<div class="v3-carousel__arrow is-left"></div>
-		<!-- 右切换箭头 -->
-		<div class="v3-carousel__arrow is-right"></div>
+		<template v-if="props.showArrow !== 'never'">
+			<!-- 左切换箭头 -->
+			<div class="v3-carousel__arrow is-left">
+				<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
+				<div v-else class="v3-carousel-arrow__inner">
+					<i class="v3-icon v3-icon-arrow-left"></i>
+				</div>
+			</div>
+			<!-- 右切换箭头 -->
+			<div class="v3-carousel__arrow is-right">
+				<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
+				<div v-else class="v3-carousel-arrow__inner">
+					<i class="v3-icon v3-icon-arrow-right"></i>
+				</div>
+			</div>
+		</template>
 		<!-- 导航按钮 -->
 		<div class="v3-carousel__indicator"></div>
 	</div>

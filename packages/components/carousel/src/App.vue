@@ -46,6 +46,46 @@
 				</v3-carousel>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义箭头</h3>
+			</v3-col>
+			<v3-col>
+				<v3-carousel
+					v-model="state.carouselIndex1"
+					effect="slide"
+					:width="500"
+					:height="300"
+				>
+					<v3-carousel-item
+						v-for="v in state.carouselList1"
+						:key="v.id"
+						:style="{
+							backgroundImage: `url(${v.coverImg})`,
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover',
+							backgroundPosition: 'center center',
+						}"
+					></v3-carousel-item>
+
+					<template #arrowLeft>
+						<div
+							style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; background-color: #fff; border-radius: 50%; color: #000; cursor: pointer"
+						>
+							左
+						</div>
+					</template>
+					<template #arrowRight>
+						<div
+							style="display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; background-color: #fff; border-radius: 50%; color: #000; cursor: pointer"
+						>
+							右
+						</div>
+					</template>
+				</v3-carousel>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">

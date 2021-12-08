@@ -9,4 +9,31 @@
 			position: absolute;
 		}
 	}
+
+	.v3-carousel__arrow {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		&.is-left {
+			left: 20px;
+		}
+		&.is-right {
+			right: 20px;
+		}
+		.v3-carousel-arrow__inner {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: translate3d(0, 0, 0);
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: rgba(0, 0, 0, 0.6);
+		}
+		i {
+			font-size: 24px;
+			color: #fff;
+			cursor: pointer;
+		}
+	}
 }
