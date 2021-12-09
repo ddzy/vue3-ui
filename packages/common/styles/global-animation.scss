@@ -71,19 +71,34 @@
 	transform: translateY(-30px);
 }
 
-.v3-carousel-item-slide-enter-from {
+.v3-carousel-item-slide-next-enter-from {
 	transform: translateX(100%);
 }
-.v3-carousel-item-slide-enter-active,
-.v3-carousel-item-slide-leave-active {
+.v3-carousel-item-slide-next-enter-active,
+.v3-carousel-item-slide-next-leave-active {
 	transition-property: transform;
 }
-.v3-carousel-item-slide-enter-to,
-.v3-carousel-item-slide-leave-from {
+.v3-carousel-item-slide-next-enter-to,
+.v3-carousel-item-slide-next-leave-from {
 	transform: translateX(0);
 }
-.v3-carousel-item-slide-leave-to {
+.v3-carousel-item-slide-next-leave-to {
 	transform: translateX(-100%);
+}
+
+.v3-carousel-item-slide-prev-enter-from {
+	transform: translateX(-100%);
+}
+.v3-carousel-item-slide-prev-enter-active,
+.v3-carousel-item-slide-prev-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-slide-prev-enter-to,
+.v3-carousel-item-slide-prev-leave-from {
+	transform: translateX(0);
+}
+.v3-carousel-item-slide-prev-leave-to {
+	transform: translateX(100%);
 }
 
 .v3-carousel-item-fade-enter-from {

@@ -22,7 +22,11 @@
 		<transition-group
 			tag="div"
 			class="v3-carousel__list"
-			:name="`v3-carousel-item-${props.effect}`"
+			:name="
+				props.effect === 'slide'
+					? `v3-carousel-item-${props.effect}-${state.slideDirection}`
+					: `v3-carousel-item-${props.effect}`
+			"
 			@after-leave="handleTransitionAfterLeave"
 		>
 			<slot name="default"></slot>
@@ -80,6 +84,7 @@ interface IState {
 	carouselItemInstanceList: any[];
 	showArrow: boolean;
 	isCarouselTransitionEnd: boolean;
+	slideDirection: 'prev' | 'next';
 }
 
 export default defineComponent({
@@ -171,6 +176,8 @@ export default defineComponent({
 			showArrow: false,
 			/** 当前页的轮播图是否切换结束 */
 			isCarouselTransitionEnd: true,
+			/** 切换方向 */
+			slideDirection: 'next',
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
@@ -238,6 +245,8 @@ export default defineComponent({
 				return;
 			}
 
+			state.slideDirection = 'prev';
+
 			const newModelValue =
 				props.modelValue - 1 < 0
 					? state.carouselItemInstanceList.length - 1
@@ -252,6 +261,8 @@ export default defineComponent({
 			if (!state.isCarouselTransitionEnd) {
 				return;
 			}
+
+			state.slideDirection = 'next';
 
 			const newModelValue =
 				props.modelValue + 1 > state.carouselItemInstanceList.length - 1
