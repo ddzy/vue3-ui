@@ -5,6 +5,7 @@ export type ICarouselIndicatorType = 'dot' | 'line';
 
 export interface ICarouselProps {
 	modelValue: number;
+	defaultIndex: number;
 	width: number;
 	height: number;
 	effect: ICarouselEffect;

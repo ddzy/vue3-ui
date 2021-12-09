@@ -89,6 +89,7 @@ interface IState {
 	isCarouselTransitionEnd: boolean;
 	slideDirection: 'prev' | 'next';
 	isSlideFirstly: boolean;
+	activeIndex: number;
 }
 
 export default defineComponent({
@@ -96,6 +97,11 @@ export default defineComponent({
 	components: {},
 	props: {
 		modelValue: {
+			type: Number,
+			default: -1,
+		},
+		/** 默认要展示的轮播图下标 */
+		defaultIndex: {
 			type: Number,
 			default: 0,
 		},
@@ -184,6 +190,8 @@ export default defineComponent({
 			slideDirection: 'next',
 			/** 是否首次进行轮播（首次不需要动画效果） */
 			isSlideFirstly: false,
+			/** 当前的轮播图下标 */
+			activeIndex: props.defaultIndex,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
@@ -192,19 +200,10 @@ export default defineComponent({
 		watch(
 			() => props.modelValue,
 			() => {
-				nextTick(() => {
-					state.carouselItemInstanceList.forEach((v, i) => {
-						v.state.isShow = i === props.modelValue;
-					});
-				});
-			},
-			{ immediate: true }
-		);
-
-		watch(
-			() => props.modelValue,
-			() => {
 				state.isSlideFirstly = false;
+				nextTick(() => {
+					slideTo(props.modelValue);
+				});
 			},
 			{ immediate: false }
 		);
@@ -223,6 +222,9 @@ export default defineComponent({
 
 		onMounted(() => {
 			state.isSlideFirstly = true;
+			nextTick(() => {
+				slideTo(state.activeIndex);
+			});
 		});
 
 		/**
@@ -241,12 +243,20 @@ export default defineComponent({
 			}
 
 			state.slideDirection = 'prev';
+			state.isSlideFirstly = false;
 
-			const newModelValue =
-				props.modelValue - 1 < 0
+			const newActiveIndex =
+				state.activeIndex - 1 < 0
 					? state.carouselItemInstanceList.length - 1
-					: props.modelValue - 1;
-			context.emit('update:modelValue', newModelValue);
+					: state.activeIndex - 1;
+
+			if (props.modelValue >= 0) {
+				context.emit('update:modelValue', newActiveIndex);
+			} else {
+				nextTick(() => {
+					slideTo(newActiveIndex);
+				});
+			}
 
 			state.isCarouselTransitionEnd = false;
 		}
@@ -258,14 +268,29 @@ export default defineComponent({
 			}
 
 			state.slideDirection = 'next';
+			state.isSlideFirstly = false;
 
-			const newModelValue =
-				props.modelValue + 1 > state.carouselItemInstanceList.length - 1
+			const newActiveIndex =
+				state.activeIndex + 1 > state.carouselItemInstanceList.length - 1
 					? 0
-					: props.modelValue + 1;
-			context.emit('update:modelValue', newModelValue);
+					: state.activeIndex + 1;
+
+			if (props.modelValue >= 0) {
+				context.emit('update:modelValue', newActiveIndex);
+			} else {
+				nextTick(() => {
+					slideTo(newActiveIndex);
+				});
+			}
 
 			state.isCarouselTransitionEnd = false;
+		}
+
+		function slideTo(index: number) {
+			state.carouselItemInstanceList.forEach((v, i) => {
+				v.state.isShow = i === index;
+			});
+			state.activeIndex = index;
 		}
 
 		function handleCarouselMouseEnter() {

@@ -93,7 +93,7 @@
 			</v3-col>
 			<v3-col>
 				<div style="width: 500px; height: 300px">
-					<v3-carousel v-model="state.carouselIndex1" showArrow="hover">
+					<v3-carousel showArrow="hover">
 						<v3-carousel-item
 							v-for="v in state.carouselList1"
 							:key="v.id"
