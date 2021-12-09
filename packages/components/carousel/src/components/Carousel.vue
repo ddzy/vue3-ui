@@ -347,7 +347,7 @@ export default defineComponent({
 				state.showArrow = true;
 			}
 
-			if (state.autoplay.pauseOnHover) {
+			if (props.autoplay && state.autoplay.pauseOnHover) {
 				window.clearInterval(state.autoplayTimer);
 			}
 		}
@@ -357,7 +357,7 @@ export default defineComponent({
 				state.showArrow = false;
 			}
 
-			if (state.autoplay.pauseOnHover) {
+			if (props.autoplay && state.autoplay.pauseOnHover) {
 				handleDocumentVisibilityChange();
 			}
 		}
