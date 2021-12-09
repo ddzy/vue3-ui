@@ -14,11 +14,22 @@
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
+		transition-property: left, right;
+		transition-duration: .3s;
+		transition-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
 		&.is-left {
-			left: 20px;
+			left: -60px;
 		}
 		&.is-right {
-			right: 20px;
+			right: -60px;
+		}
+		&.is-show {
+			&.is-left {
+				left: 20px;
+			}
+			&.is-right {
+				right: 20px;
+			}
 		}
 		.v3-carousel-arrow__inner {
 			display: flex;

@@ -28,7 +28,12 @@
 		</transition-group>
 
 		<!-- 左切换箭头 -->
-		<div v-show="state.showArrow" class="v3-carousel__arrow is-left">
+		<div
+			class="v3-carousel__arrow is-left"
+			:class="{
+				'is-show': state.showArrow,
+			}"
+		>
 			<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
 				<i class="v3-icon v3-icon-arrow-left"></i>
@@ -36,7 +41,12 @@
 		</div>
 
 		<!-- 右切换箭头 -->
-		<div v-show="state.showArrow" class="v3-carousel__arrow is-right">
+		<div
+			class="v3-carousel__arrow is-right"
+			:class="{
+				'is-show': state.showArrow,
+			}"
+		>
 			<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
 				<i class="v3-icon v3-icon-arrow-right"></i>
