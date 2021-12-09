@@ -141,6 +141,32 @@
 				</v3-carousel>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>开启自动轮播：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-carousel
+					class="common-carousel"
+					:width="500"
+					:height="300"
+					:autoplay="true"
+				>
+					<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+						<div
+							class="common-carousel-item__content"
+							:style="{
+								backgroundColor: v.bgColor,
+								color: '#fff',
+							}"
+						>
+							<p>Slide {{ i }}</p>
+						</div>
+					</v3-carousel-item>
+				</v3-carousel>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">

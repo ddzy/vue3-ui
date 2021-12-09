@@ -80,8 +80,10 @@ import {
 	watch,
 	nextTick,
 	onMounted,
+	onBeforeUnmount,
 } from 'vue';
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
+import * as UTILS from '@common/utils/index';
 
 interface IState {
 	carouselItemInstanceList: any[];
@@ -90,6 +92,11 @@ interface IState {
 	slideDirection: 'prev' | 'next';
 	isSlideFirstly: boolean;
 	activeIndex: number;
+	autoplayTimer: any;
+	autoplay: {
+		interval: number;
+		pauseOnHover: boolean;
+	};
 }
 
 export default defineComponent({
@@ -125,13 +132,8 @@ export default defineComponent({
 		},
 		/** 是否自动播放 */
 		autoplay: {
-			type: Boolean,
-			default: true,
-		},
-		/** 鼠标悬浮于轮播图区域上方时，是否停止自动切换 */
-		pauseOnHover: {
-			type: Boolean,
-			default: true,
+			type: [Boolean, Object] as PropType<TYPES.ICarouselAutoplay>,
+			default: false,
 		},
 		/** 同 CSS 属性 transition-duration */
 		duration: {
@@ -186,12 +188,19 @@ export default defineComponent({
 			showArrow: false,
 			/** 当前页的轮播图是否切换结束 */
 			isCarouselTransitionEnd: true,
-			/** 切换方向 */
+			/** 切换方向（不同的切换方向会应用不同的动画） */
 			slideDirection: 'next',
 			/** 是否首次进行轮播（首次不需要动画效果） */
 			isSlideFirstly: false,
 			/** 当前的轮播图下标 */
 			activeIndex: props.defaultIndex,
+			autoplayTimer: 0,
+			/** 自动轮播的配置 */
+			autoplay: {
+				interval: 2000,
+				/** 鼠标悬停于轮播图容器内，是否停止播放 */
+				pauseOnHover: true,
+			},
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
@@ -220,11 +229,40 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
+		watch(
+			() => props.autoplay,
+			() => {
+				if (UTILS.isStrictObject(props.autoplay)) {
+					state.autoplay = {
+						...state.autoplay,
+						...(props.autoplay as object),
+					};
+				}
+			},
+			{ deep: true, immediate: true }
+		);
+
 		onMounted(() => {
 			state.isSlideFirstly = true;
 			nextTick(() => {
 				slideTo(state.activeIndex);
 			});
+
+			if (props.autoplay) {
+				handleDocumentVisibilityChange();
+				document.addEventListener(
+					'visibilitychange',
+					handleDocumentVisibilityChange
+				);
+			}
+		});
+
+		onBeforeUnmount(() => {
+			props.autoplay &&
+				document.removeEventListener(
+					'visibilitychange',
+					handleDocumentVisibilityChange
+				);
 		});
 
 		/**
@@ -293,15 +331,34 @@ export default defineComponent({
 			state.activeIndex = index;
 		}
 
+		function handleDocumentVisibilityChange() {
+			// 只当页面为可见状态时才启动自动轮播
+			if (!document.hidden) {
+				state.autoplayTimer = window.setInterval(() => {
+					slideNext();
+				}, state.autoplay.interval);
+			} else {
+				window.clearInterval(state.autoplayTimer);
+			}
+		}
+
 		function handleCarouselMouseEnter() {
 			if (props.showArrow === 'hover') {
 				state.showArrow = true;
+			}
+
+			if (state.autoplay.pauseOnHover) {
+				window.clearInterval(state.autoplayTimer);
 			}
 		}
 
 		function handleCarouselMouseLeave() {
 			if (props.showArrow === 'hover') {
 				state.showArrow = false;
+			}
+
+			if (state.autoplay.pauseOnHover) {
+				handleDocumentVisibilityChange();
 			}
 		}
 
