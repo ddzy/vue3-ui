@@ -142,13 +142,13 @@ export default defineComponent({
 		});
 
 		onMounted(() => {
-			window.setInterval(() => {
-				if (state.carouselIndex1 >= state.carouselList1.length - 1) {
-					state.carouselIndex1 = 0;
-				} else {
-					state.carouselIndex1 += 1;
-				}
-			}, 2000);
+			// window.setInterval(() => {
+			// 	if (state.carouselIndex1 >= state.carouselList1.length - 1) {
+			// 		state.carouselIndex1 = 0;
+			// 	} else {
+			// 		state.carouselIndex1 += 1;
+			// 	}
+			// }, 2000);
 		});
 
 		return {

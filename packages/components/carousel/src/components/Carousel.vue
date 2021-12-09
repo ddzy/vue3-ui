@@ -2,7 +2,7 @@
 	<div
 		class="v3-carousel"
 		:class="{
-			'is-empty': !computedChildrenLength,
+			'is-empty': !state.carouselItemInstanceList.length,
 			'is-autoplay': props.autoplay,
 			'is-disabled': props.disabled,
 			'is-show-indicator': props.showIndicator,
@@ -23,6 +23,7 @@
 			tag="div"
 			class="v3-carousel__list"
 			:name="`v3-carousel-item-${props.effect}`"
+			@after-leave="handleTransitionAfterLeave"
 		>
 			<slot name="default"></slot>
 		</transition-group>
@@ -33,6 +34,7 @@
 			:class="{
 				'is-show': state.showArrow,
 			}"
+			@click="slidePrev"
 		>
 			<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
@@ -46,6 +48,7 @@
 			:class="{
 				'is-show': state.showArrow,
 			}"
+			@click="slideNext"
 		>
 			<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
@@ -76,6 +79,7 @@ import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 interface IState {
 	carouselItemInstanceList: any[];
 	showArrow: boolean;
+	isCarouselTransitionEnd: boolean;
 }
 
 export default defineComponent({
@@ -165,6 +169,8 @@ export default defineComponent({
 			carouselItemInstanceList: [],
 			/** 箭头是否显示 */
 			showArrow: false,
+			/** 当前页的轮播图是否切换结束 */
+			isCarouselTransitionEnd: true,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
@@ -226,6 +232,36 @@ export default defineComponent({
 			);
 		}
 
+		function slidePrev() {
+			// 必须等到上一次切换完成之后才能继续点击
+			if (!state.isCarouselTransitionEnd) {
+				return;
+			}
+
+			const newModelValue =
+				props.modelValue - 1 < 0
+					? state.carouselItemInstanceList.length - 1
+					: props.modelValue - 1;
+			context.emit('update:modelValue', newModelValue);
+
+			state.isCarouselTransitionEnd = false;
+		}
+
+		function slideNext() {
+			// 必须等到上一次切换完成之后才能继续点击
+			if (!state.isCarouselTransitionEnd) {
+				return;
+			}
+
+			const newModelValue =
+				props.modelValue + 1 > state.carouselItemInstanceList.length - 1
+					? 0
+					: props.modelValue + 1;
+			context.emit('update:modelValue', newModelValue);
+
+			state.isCarouselTransitionEnd = false;
+		}
+
 		function handleCarouselMouseEnter() {
 			if (props.showArrow === 'hover') {
 				state.showArrow = true;
@@ -238,14 +274,21 @@ export default defineComponent({
 			}
 		}
 
+		function handleTransitionAfterLeave() {
+			state.isCarouselTransitionEnd = true;
+		}
+
 		return {
 			state,
 			props,
 			context,
 			computedChildrenLength,
 			appendCarouselItemInstanceToList,
+			slidePrev,
+			slideNext,
 			handleCarouselMouseEnter,
 			handleCarouselMouseLeave,
+			handleTransitionAfterLeave,
 		};
 	},
 });
