@@ -124,6 +124,8 @@
 					class="common-carousel"
 					:duration="300"
 					:timingFunction="'ease'"
+					:width="500"
+					:height="300"
 				>
 					<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
 						<div
