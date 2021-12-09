@@ -167,10 +167,58 @@
 				</v3-carousel>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>自定义导航按钮：</h3>
+			</v3-col>
+			<v3-col>
+				<v3-carousel
+					v-model="state.carouselIndex4"
+					class="common-carousel"
+					:width="500"
+					:height="300"
+				>
+					<v3-carousel-item
+						v-for="v in state.carouselList1"
+						:key="v.id"
+						:style="{
+							backgroundImage: `url(${v.coverImg})`,
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover',
+							backgroundPosition: 'center center',
+						}"
+					>
+					</v3-carousel-item>
+
+					<template #indicator>
+						<ul class="custom-indicator__list">
+							<li
+								v-for="(v, i) in state.carouselList1"
+								class="custom-indicator__item"
+								:key="i"
+								:class="{
+									'is-active': state.carouselIndex4 === i,
+								}"
+								@click="handleIndicatorClick4(i)"
+							></li>
+						</ul>
+					</template>
+				</v3-carousel>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, h, onMounted, reactive, watch } from 'vue';
+import {
+	defineComponent,
+	h,
+	nextTick,
+	onMounted,
+	reactive,
+	ref,
+	watch,
+} from 'vue';
 
 export default defineComponent({
 	setup(props, context) {
@@ -204,10 +252,16 @@ export default defineComponent({
 			carouselIndex1: 0,
 			carouselIndex2: 0,
 			carouselIndex3: 0,
+			carouselIndex4: 0,
 		});
+
+		function handleIndicatorClick4(rowIndex: number) {
+			state.carouselIndex4 = rowIndex;
+		}
 
 		return {
 			state,
+			handleIndicatorClick4,
 		};
 	},
 	methods: {},
@@ -222,6 +276,25 @@ export default defineComponent({
 		height: 100%;
 		font-size: 30px;
 		font-weight: bold;
+	}
+
+	:deep(.custom-indicator__list) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform: translate3d(0, 0, 0);
+		.custom-indicator__item {
+			width: 16px;
+			height: 16px;
+			margin-left: $margin-small;
+			border-radius: 50%;
+			background-color: rgba(255, 255, 255, 0.3);
+			cursor: pointer;
+			&.is-active,
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.8);
+			}
+		}
 	}
 }
 </style>

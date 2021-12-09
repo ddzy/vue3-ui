@@ -63,7 +63,20 @@
 		</div>
 
 		<!-- 导航按钮 -->
-		<div class="v3-carousel__indicator"></div>
+		<div v-if="props.showIndicator" class="v3-carousel__indicator">
+			<slot v-if="context.slots.indicator" name="indicator"></slot>
+			<ul v-else class="v3-carousel-indicator__list">
+				<li
+					v-for="(v, i) in state.carouselItemInstanceList"
+					class="v3-carousel-indicator__item"
+					:key="i"
+					:class="{
+						'is-active': state.activeIndex === i,
+					}"
+					@click="handleIndicatorItemClick(i)"
+				></li>
+			</ul>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -210,6 +223,7 @@ export default defineComponent({
 			() => props.modelValue,
 			() => {
 				state.isSlideFirstly = false;
+
 				nextTick(() => {
 					slideTo(props.modelValue);
 				});
@@ -362,6 +376,20 @@ export default defineComponent({
 			}
 		}
 
+		function handleIndicatorItemClick(rowIndex: number) {
+			// 必须等到上一次切换完成之后才能继续点击
+			if (!state.isCarouselTransitionEnd) {
+				return;
+			}
+
+			state.isSlideFirstly = false;
+			nextTick(() => {
+				slideTo(rowIndex);
+			});
+
+			state.isCarouselTransitionEnd = false;
+		}
+
 		function handleTransitionAfterLeave() {
 			state.isCarouselTransitionEnd = true;
 		}
@@ -373,8 +401,10 @@ export default defineComponent({
 			appendCarouselItemInstanceToList,
 			slidePrev,
 			slideNext,
+			slideTo,
 			handleCarouselMouseEnter,
 			handleCarouselMouseLeave,
+			handleIndicatorItemClick,
 			handleTransitionAfterLeave,
 		};
 	},

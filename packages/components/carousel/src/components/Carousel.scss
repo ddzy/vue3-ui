@@ -15,7 +15,7 @@
 		top: 50%;
 		transform: translateY(-50%);
 		transition-property: left, right;
-		transition-duration: .3s;
+		transition-duration: 0.3s;
 		transition-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
 		cursor: pointer;
 		user-select: none;
@@ -46,6 +46,31 @@
 		i {
 			font-size: 24px;
 			color: #fff;
+		}
+	}
+
+	.v3-carousel__indicator {
+		position: absolute;
+		left: 50%;
+		bottom: 20px;
+		transform: translateX(-50%);
+		.v3-carousel-indicator__list {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: translate3d(0, 0, 0);
+		}
+		.v3-carousel-indicator__item {
+			width: 8px;
+			height: 8px;
+			margin-left: $margin-small;
+			border-radius: 50%;
+			background-color: rgba(0, 0, 0, 0.6);
+			cursor: pointer;
+			&.is-active,
+			&:hover {
+				background-color: #fff;
+			}
 		}
 	}
 }
