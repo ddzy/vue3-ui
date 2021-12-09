@@ -17,6 +17,8 @@
 		transition-property: left, right;
 		transition-duration: .3s;
 		transition-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
+		cursor: pointer;
+		user-select: none;
 		&.is-left {
 			left: -60px;
 		}
@@ -44,7 +46,6 @@
 		i {
 			font-size: 24px;
 			color: #fff;
-			cursor: pointer;
 		}
 	}
 }

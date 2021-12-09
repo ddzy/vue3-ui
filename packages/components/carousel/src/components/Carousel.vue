@@ -23,7 +23,9 @@
 			tag="div"
 			class="v3-carousel__list"
 			:name="
-				props.effect === 'slide'
+				state.isSlideFirstly
+					? ''
+					: props.effect === 'slide'
 					? `v3-carousel-item-${props.effect}-${state.slideDirection}`
 					: `v3-carousel-item-${props.effect}`
 			"
@@ -77,6 +79,7 @@ import {
 	ref,
 	watch,
 	nextTick,
+	onMounted,
 } from 'vue';
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
@@ -85,6 +88,7 @@ interface IState {
 	showArrow: boolean;
 	isCarouselTransitionEnd: boolean;
 	slideDirection: 'prev' | 'next';
+	isSlideFirstly: boolean;
 }
 
 export default defineComponent({
@@ -178,33 +182,12 @@ export default defineComponent({
 			isCarouselTransitionEnd: true,
 			/** 切换方向 */
 			slideDirection: 'next',
+			/** 是否首次进行轮播（首次不需要动画效果） */
+			isSlideFirstly: false,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
 		provide(CAROUSEL_INSTANCE_PROVIDE, app);
-
-		/**
-		 * 计算 slot 的长度（即判断内容是否为空）
-		 */
-		const computedChildrenLength = computed<number>(() => {
-			const defaultSlot: Function | undefined = context.slots.default;
-			if (typeof defaultSlot !== 'function') {
-				return 0;
-			}
-
-			const defaultChildren = defaultSlot();
-			// 通过 v-for 遍历的组件，如果没有匹配到，那么 slot 也会存在
-			if (
-				defaultChildren.length === 1 &&
-				defaultChildren[0] &&
-				Array.isArray(defaultChildren[0].children) &&
-				!defaultChildren[0].children.length
-			) {
-				return 0;
-			}
-
-			return defaultChildren.length;
-		});
 
 		watch(
 			() => props.modelValue,
@@ -219,6 +202,14 @@ export default defineComponent({
 		);
 
 		watch(
+			() => props.modelValue,
+			() => {
+				state.isSlideFirstly = false;
+			},
+			{ immediate: false }
+		);
+
+		watch(
 			() => props.showArrow,
 			() => {
 				if (props.showArrow === 'always') {
@@ -229,6 +220,10 @@ export default defineComponent({
 			},
 			{ immediate: true }
 		);
+
+		onMounted(() => {
+			state.isSlideFirstly = true;
+		});
 
 		/**
 		 * 收集 V3CarouselItem 组件实例，统一管理
@@ -293,7 +288,6 @@ export default defineComponent({
 			state,
 			props,
 			context,
-			computedChildrenLength,
 			appendCarouselItemInstanceToList,
 			slidePrev,
 			slideNext,
