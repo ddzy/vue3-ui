@@ -23,13 +23,10 @@
 			tag="div"
 			class="v3-carousel__list"
 			:name="
-				state.isSlideFirstly
-					? ''
-					: props.effect === 'slide'
+				props.effect === 'slide'
 					? `v3-carousel-item-${props.effect}-${state.slideDirection}`
 					: `v3-carousel-item-${props.effect}`
 			"
-			@after-leave="handleTransitionAfterLeave"
 		>
 			<slot name="default"></slot>
 		</transition-group>
@@ -63,7 +60,11 @@
 		</div>
 
 		<!-- 导航按钮 -->
-		<div v-if="props.showIndicator" class="v3-carousel__indicator">
+		<div
+			v-if="props.showIndicator"
+			class="v3-carousel__indicator"
+			@click="state.isSlideByOrder = false"
+		>
 			<slot v-if="context.slots.indicator" name="indicator"></slot>
 			<ul v-else class="v3-carousel-indicator__list">
 				<li
@@ -101,7 +102,6 @@ import * as UTILS from '@common/utils/index';
 interface IState {
 	carouselItemInstanceList: any[];
 	showArrow: boolean;
-	isCarouselTransitionEnd: boolean;
 	slideDirection: 'prev' | 'next';
 	isSlideFirstly: boolean;
 	activeIndex: number;
@@ -110,6 +110,7 @@ interface IState {
 		interval: number;
 		pauseOnHover: boolean;
 	};
+	isSlideByOrder: boolean;
 }
 
 export default defineComponent({
@@ -151,7 +152,7 @@ export default defineComponent({
 		/** 同 CSS 属性 transition-duration */
 		duration: {
 			type: Number,
-			default: 600,
+			default: 300,
 		},
 		/** 同 CSS 属性 transition-timing-function */
 		timingFunction: {
@@ -199,8 +200,6 @@ export default defineComponent({
 			carouselItemInstanceList: [],
 			/** 箭头是否显示 */
 			showArrow: false,
-			/** 当前页的轮播图是否切换结束 */
-			isCarouselTransitionEnd: true,
 			/** 切换方向（不同的切换方向会应用不同的动画） */
 			slideDirection: 'next',
 			/** 是否首次进行轮播（首次不需要动画效果） */
@@ -214,6 +213,8 @@ export default defineComponent({
 				/** 鼠标悬停于轮播图容器内，是否停止播放 */
 				pauseOnHover: true,
 			},
+			/** 是否按照顺序切换轮播（便于计算滑动的方向） */
+			isSlideByOrder: false,
 		});
 		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
 
@@ -222,11 +223,7 @@ export default defineComponent({
 		watch(
 			() => props.modelValue,
 			() => {
-				state.isSlideFirstly = false;
-
-				nextTick(() => {
-					slideTo(props.modelValue);
-				});
+				state.activeIndex = props.modelValue;
 			},
 			{ immediate: false }
 		);
@@ -256,8 +253,36 @@ export default defineComponent({
 			{ deep: true, immediate: true }
 		);
 
+		watch(
+			() => state.activeIndex,
+			(newActiveIndex, oldActiveIndex) => {
+				if (
+					newActiveIndex === 0 &&
+					oldActiveIndex === state.carouselItemInstanceList.length - 1
+				) {
+					state.slideDirection = state.isSlideByOrder ? 'next' : 'prev';
+				} else if (
+					newActiveIndex === state.carouselItemInstanceList.length - 1 &&
+					oldActiveIndex === 0
+				) {
+					state.slideDirection = state.isSlideByOrder ? 'prev' : 'next';
+				} else {
+					state.slideDirection =
+						newActiveIndex > oldActiveIndex ? 'next' : 'prev';
+				}
+
+				state.isSlideFirstly = false;
+
+				nextTick(() => {
+					slideTo(newActiveIndex);
+				});
+			},
+			{ immediate: false }
+		);
+
 		onMounted(() => {
 			state.isSlideFirstly = true;
+
 			nextTick(() => {
 				slideTo(state.activeIndex);
 			});
@@ -289,60 +314,37 @@ export default defineComponent({
 		}
 
 		function slidePrev() {
-			// 必须等到上一次切换完成之后才能继续点击
-			if (!state.isCarouselTransitionEnd) {
-				return;
-			}
-
-			state.slideDirection = 'prev';
-			state.isSlideFirstly = false;
+			state.isSlideByOrder = true;
 
 			const newActiveIndex =
 				state.activeIndex - 1 < 0
 					? state.carouselItemInstanceList.length - 1
 					: state.activeIndex - 1;
-
 			if (props.modelValue >= 0) {
 				context.emit('update:modelValue', newActiveIndex);
 			} else {
-				nextTick(() => {
-					slideTo(newActiveIndex);
-				});
+				state.activeIndex = newActiveIndex;
 			}
-
-			state.isCarouselTransitionEnd = false;
 		}
 
 		function slideNext() {
-			// 必须等到上一次切换完成之后才能继续点击
-			if (!state.isCarouselTransitionEnd) {
-				return;
-			}
-
-			state.slideDirection = 'next';
-			state.isSlideFirstly = false;
+			state.isSlideByOrder = true;
 
 			const newActiveIndex =
 				state.activeIndex + 1 > state.carouselItemInstanceList.length - 1
 					? 0
 					: state.activeIndex + 1;
-
 			if (props.modelValue >= 0) {
 				context.emit('update:modelValue', newActiveIndex);
 			} else {
-				nextTick(() => {
-					slideTo(newActiveIndex);
-				});
+				state.activeIndex = newActiveIndex;
 			}
-
-			state.isCarouselTransitionEnd = false;
 		}
 
 		function slideTo(index: number) {
 			state.carouselItemInstanceList.forEach((v, i) => {
 				v.state.isShow = i === index;
 			});
-			state.activeIndex = index;
 		}
 
 		function handleDocumentVisibilityChange() {
@@ -377,21 +379,11 @@ export default defineComponent({
 		}
 
 		function handleIndicatorItemClick(rowIndex: number) {
-			// 必须等到上一次切换完成之后才能继续点击
-			if (!state.isCarouselTransitionEnd) {
-				return;
+			if (props.modelValue >= 0) {
+				context.emit('update:modelValue', rowIndex);
+			} else {
+				state.activeIndex = rowIndex;
 			}
-
-			state.isSlideFirstly = false;
-			nextTick(() => {
-				slideTo(rowIndex);
-			});
-
-			state.isCarouselTransitionEnd = false;
-		}
-
-		function handleTransitionAfterLeave() {
-			state.isCarouselTransitionEnd = true;
 		}
 
 		return {
@@ -405,7 +397,6 @@ export default defineComponent({
 			handleCarouselMouseEnter,
 			handleCarouselMouseLeave,
 			handleIndicatorItemClick,
-			handleTransitionAfterLeave,
 		};
 	},
 });

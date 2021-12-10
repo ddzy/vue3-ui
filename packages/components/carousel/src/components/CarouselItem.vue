@@ -4,7 +4,11 @@
 		class="v3-carousel__item"
 		:style="{
 			width: `${state.width}px`,
-			transitionDuration: `${state.injectedCarouselInstance.duration}ms`,
+			transitionDuration: `${
+				state.injectedCarouselInstance.state.isSlideFirstly
+					? 0
+					: state.injectedCarouselInstance.duration
+			}ms`,
 			transitionTimingFunction: `${state.injectedCarouselInstance.timingFunction}`,
 		}"
 	>

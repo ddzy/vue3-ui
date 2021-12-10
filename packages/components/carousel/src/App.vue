@@ -122,7 +122,7 @@
 			<v3-col>
 				<v3-carousel
 					class="common-carousel"
-					:duration="300"
+					:duration="500"
 					:timingFunction="'ease'"
 					:width="500"
 					:height="300"
