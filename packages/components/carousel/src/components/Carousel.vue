@@ -65,6 +65,7 @@
 						'is-active': state.activeIndex === i,
 					}"
 					@click="handleIndicatorItemClick(i)"
+					@mouseenter="handleIndicatorItemMouseEnter(i)"
 				></li>
 			</ul>
 		</div>
@@ -377,6 +378,14 @@ export default defineComponent({
 			}
 		}
 
+		function handleIndicatorItemMouseEnter(rowIndex: number) {
+			if (props.modelValue >= 0) {
+				context.emit('update:modelValue', rowIndex);
+			} else {
+				state.activeIndex = rowIndex;
+			}
+		}
+
 		return {
 			state,
 			props,
@@ -388,6 +397,7 @@ export default defineComponent({
 			handleCarouselMouseEnter,
 			handleCarouselMouseLeave,
 			handleIndicatorItemClick,
+			handleIndicatorItemMouseEnter,
 		};
 	},
 });
