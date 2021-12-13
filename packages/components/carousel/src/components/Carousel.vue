@@ -247,11 +247,6 @@ export default defineComponent({
 		watch(
 			() => state.activeIndex,
 			(newActiveIndex, oldActiveIndex) => {
-				console.log(
-					'newActiveIndex, oldActiveIndex :>> ',
-					newActiveIndex,
-					oldActiveIndex
-				);
 				if (
 					newActiveIndex === 0 &&
 					oldActiveIndex === state.carouselItemInstanceList.length - 1
