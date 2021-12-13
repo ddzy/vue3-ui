@@ -1,19 +1,27 @@
 <template>
-	<div
-		v-show="state.isShow"
-		class="v3-carousel__item"
-		:style="{
-			width: `${state.width}px`,
-			transitionDuration: `${
-				state.injectedCarouselInstance.state.isSlideFirstly
-					? 0
-					: state.injectedCarouselInstance.duration
-			}ms`,
-			transitionTimingFunction: `${state.injectedCarouselInstance.timingFunction}`,
-		}"
+	<transition
+		:name="
+			state.injectedCarouselInstance.effect === 'slide'
+				? `v3-carousel-item-${state.injectedCarouselInstance.effect}-${state.injectedCarouselInstance.state.slideDirection}`
+				: `v3-carousel-item-${state.injectedCarouselInstance.effect}`
+		"
 	>
-		<slot></slot>
-	</div>
+		<div
+			v-show="state.isShow"
+			class="v3-carousel__item"
+			:style="{
+				width: `${state.width}px`,
+				transitionDuration: `${
+					state.injectedCarouselInstance.state.isSlideFirstly
+						? 0
+						: state.injectedCarouselInstance.duration
+				}ms`,
+				transitionTimingFunction: `${state.injectedCarouselInstance.timingFunction}`,
+			}"
+		>
+			<slot></slot>
+		</div>
+	</transition>
 </template>
 <script lang="ts">
 import {

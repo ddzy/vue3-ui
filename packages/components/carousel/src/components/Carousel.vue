@@ -19,17 +19,7 @@
 		@mouseleave="handleCarouselMouseLeave"
 	>
 		<!-- 轮播列表 -->
-		<transition-group
-			tag="div"
-			class="v3-carousel__list"
-			:name="
-				props.effect === 'slide'
-					? `v3-carousel-item-${props.effect}-${state.slideDirection}`
-					: `v3-carousel-item-${props.effect}`
-			"
-		>
-			<slot name="default"></slot>
-		</transition-group>
+		<slot name="default"></slot>
 
 		<!-- 左切换箭头 -->
 		<div

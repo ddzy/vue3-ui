@@ -5,9 +5,6 @@
 	.v3-carousel__list {
 		position: relative;
 		height: 100%;
-		& :deep(.v3-carousel__item) {
-			position: absolute;
-		}
 	}
 
 	.v3-carousel__arrow {
