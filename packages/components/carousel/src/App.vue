@@ -207,6 +207,54 @@
 				</v3-carousel>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>内置不同样式的导航按钮：</h3>
+			</v3-col>
+			<v3-col :span="6">
+				<div style="width: 300px; height: 300px">
+					<v3-carousel
+						v-model="state.carouselIndex5"
+						class="common-carousel"
+						indicatorType="dot"
+					>
+						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+							<div
+								class="common-carousel-item__content"
+								:style="{
+									backgroundColor: v.bgColor,
+									color: '#fff',
+								}"
+							>
+								<p>Slide {{ i }}</p>
+							</div>
+						</v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+			<v3-col :span="6">
+				<div style="width: 300px; height: 300px">
+					<v3-carousel
+						v-model="state.carouselIndex5"
+						class="common-carousel"
+						indicatorType="line"
+					>
+						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+							<div
+								class="common-carousel-item__content"
+								:style="{
+									backgroundColor: v.bgColor,
+									color: '#fff',
+								}"
+							>
+								<p>Slide {{ i }}</p>
+							</div>
+						</v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -253,6 +301,7 @@ export default defineComponent({
 			carouselIndex2: 0,
 			carouselIndex3: 0,
 			carouselIndex4: 0,
+			carouselIndex5: 0,
 		});
 
 		function handleIndicatorClick4(rowIndex: number) {

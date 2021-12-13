@@ -2,6 +2,24 @@
 	overflow: hidden;
 	position: relative;
 
+	&.is-indicator-dot {
+		.v3-carousel__indicator {
+			.v3-carousel-indicator__item {
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+			}
+		}
+	}
+	&.is-indicator-line {
+		.v3-carousel__indicator {
+			.v3-carousel-indicator__item {
+				width: 16px;
+				height: 6px;
+			}
+		}
+	}
+
 	.v3-carousel__list {
 		position: relative;
 		height: 100%;
@@ -58,15 +76,14 @@
 			transform: translate3d(0, 0, 0);
 		}
 		.v3-carousel-indicator__item {
-			width: 8px;
-			height: 8px;
 			margin-left: $margin-small;
-			border-radius: 50%;
 			background-color: rgba(0, 0, 0, 0.6);
 			cursor: pointer;
-			&.is-active,
-			&:hover {
-				background-color: #fff;
+			&.is-active {
+				background-color: rgba(255, 255, 255, 1);
+			}
+			&:hover:not(.is-active) {
+				background-color: rgba(255, 255, 255, 0.6);
 			}
 		}
 	}
