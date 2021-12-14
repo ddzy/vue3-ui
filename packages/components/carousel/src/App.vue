@@ -282,6 +282,100 @@
 				</div>
 			</v3-col>
 		</v3-row>
+
+		<v3-row>
+			<v3-col :span="12">
+				<h3>不同方向上的导航按钮：</h3>
+			</v3-col>
+			<v3-col :span="6">
+				<div style="width: 300px; height: 300px">
+					<v3-carousel
+						v-model="state.carouselIndex7"
+						class="common-carousel"
+						indicatorPosition="left"
+						showArrow="never"
+					>
+						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+							<div
+								class="common-carousel-item__content"
+								:style="{
+									backgroundColor: v.bgColor,
+									color: '#fff',
+								}"
+							>
+								<p>Slide {{ i }}</p>
+							</div>
+						</v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+			<v3-col :span="6">
+				<div style="width: 300px; height: 300px">
+					<v3-carousel
+						v-model="state.carouselIndex7"
+						class="common-carousel"
+						indicatorPosition="top"
+						showArrow="never"
+					>
+						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+							<div
+								class="common-carousel-item__content"
+								:style="{
+									backgroundColor: v.bgColor,
+									color: '#fff',
+								}"
+							>
+								<p>Slide {{ i }}</p>
+							</div>
+						</v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+			<v3-col :span="6">
+				<div style="width: 300px; height: 300px; margin-top: 20px;">
+					<v3-carousel
+						v-model="state.carouselIndex7"
+						class="common-carousel"
+						indicatorPosition="right"
+						showArrow="never"
+					>
+						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+							<div
+								class="common-carousel-item__content"
+								:style="{
+									backgroundColor: v.bgColor,
+									color: '#fff',
+								}"
+							>
+								<p>Slide {{ i }}</p>
+							</div>
+						</v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+			<v3-col :span="6">
+				<div style="width: 300px; height: 300px; margin-top: 20px;">
+					<v3-carousel
+						v-model="state.carouselIndex7"
+						class="common-carousel"
+						indicatorPosition="bottom"
+						showArrow="never"
+					>
+						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
+							<div
+								class="common-carousel-item__content"
+								:style="{
+									backgroundColor: v.bgColor,
+									color: '#fff',
+								}"
+							>
+								<p>Slide {{ i }}</p>
+							</div>
+						</v3-carousel-item>
+					</v3-carousel>
+				</div>
+			</v3-col>
+		</v3-row>
 	</div>
 </template>
 <script lang="ts">
@@ -330,6 +424,7 @@ export default defineComponent({
 			carouselIndex4: 0,
 			carouselIndex5: 0,
 			carouselIndex6: 0,
+			carouselIndex7: 0,
 		});
 
 		function handleIndicatorClick4(rowIndex: number) {
