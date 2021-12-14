@@ -1,3 +1,16 @@
+$indicator-type-list: (
+	dot: (
+		indicator-item-width: 12px,
+		indicator-item-height: 12px,
+		indicator-item-border-radius: 50%,
+	),
+	line: (
+		indicator-item-width: 16px,
+		indicator-item-height: 6px,
+		indicator-item-border-radius: 0,
+	),
+);
+
 .v3-carousel {
 	overflow: hidden;
 	position: relative;
@@ -9,20 +22,17 @@
 		}
 	}
 
-	&.is-indicator-dot {
-		.v3-carousel__indicator {
-			.v3-carousel-indicator__item {
-				width: 12px;
-				height: 12px;
-				border-radius: 50%;
-			}
-		}
-	}
-	&.is-indicator-line {
-		.v3-carousel__indicator {
-			.v3-carousel-indicator__item {
-				width: 16px;
-				height: 6px;
+	@each $key, $value in $indicator-type-list {
+		&.is-indicator-type-#{$key} {
+			.v3-carousel__indicator {
+				.v3-carousel-indicator__item {
+					width: map-get($map: $value, $key: indicator-item-width);
+					height: map-get($map: $value, $key: indicator-item-height);
+					border-radius: map-get(
+						$map: $value,
+						$key: indicator-item-border-radius
+					);
+				}
 			}
 		}
 	}

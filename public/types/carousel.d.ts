@@ -2,6 +2,7 @@ export type ICarouselEffect = 'fade' | 'slide';
 export type ICarouselDirection = 'horizontal' | 'vertical';
 export type ICarouselShowArrow = 'always' | 'hover' | 'never';
 export type ICarouselIndicatorType = 'dot' | 'line';
+export type ICarouselIndicatorPosition = 'left' | 'top' | 'right' | 'bottom';
 export type ICarouselAutoplay = boolean | {
 	interval: number;
 	pauseOnHover: boolean;
@@ -21,4 +22,5 @@ export interface ICarouselProps {
 	showArrow: ICarouselShowArrow;
 	showIndicator: boolean;
 	indicatorType: ICarouselIndicatorType;
+	indicatorPosition: ICarouselIndicatorPosition;
 }

@@ -9,7 +9,8 @@
 			[`is-effect-${props.effect}`]: true,
 			[`is-${props.direction}`]: true,
 			[`is-show-arrow-${props.showArrow}`]: true,
-			[`is-indicator-${props.indicatorType}`]: true,
+			[`is-indicator-type-${props.indicatorType}`]: true,
+			[`is-indicator-position-${props.indicatorPosition}`]: true,
 		}"
 		:style="{
 			width: props.width ? `${props.width}px` : '100%',
@@ -183,6 +184,14 @@ export default defineComponent({
 			default: 'dot',
 			validator(v: string) {
 				return ['dot', 'line'].includes(v);
+			},
+		},
+		/** 导航按钮的位置 */
+		indicatorPosition: {
+			type: String as PropType<TYPES.ICarouselIndicatorPosition>,
+			default: 'bottom',
+			validator(v: string) {
+				return ['left', 'top', 'right', 'bottom'].includes(v);
 			},
 		},
 	},
