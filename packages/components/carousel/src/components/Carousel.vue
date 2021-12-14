@@ -63,6 +63,7 @@
 					:key="i"
 					:class="{
 						'is-active': state.activeIndex === i,
+						'is-disabled': props.disabled,
 					}"
 					@click="handleIndicatorItemClick(i)"
 					@mouseenter="handleIndicatorItemMouseEnter(i)"
@@ -214,6 +215,10 @@ export default defineComponent({
 		watch(
 			() => props.modelValue,
 			() => {
+				if (props.disabled) {
+					return;
+				}
+
 				state.isSlideByOrder = true;
 				state.activeIndex = props.modelValue;
 			},
@@ -248,6 +253,12 @@ export default defineComponent({
 		watch(
 			() => state.activeIndex,
 			(newActiveIndex, oldActiveIndex) => {
+				state.isSlideFirstly = false;
+
+				if (props.disabled) {
+					return;
+				}
+
 				if (
 					newActiveIndex === 0 &&
 					oldActiveIndex === state.carouselItemInstanceList.length - 1
@@ -263,8 +274,6 @@ export default defineComponent({
 						newActiveIndex > oldActiveIndex ? 'next' : 'prev';
 				}
 
-				state.isSlideFirstly = false;
-
 				nextTick(() => {
 					slideTo(newActiveIndex);
 				});
@@ -274,12 +283,11 @@ export default defineComponent({
 
 		onMounted(() => {
 			state.isSlideFirstly = true;
-
 			nextTick(() => {
 				slideTo(state.activeIndex);
 			});
 
-			if (props.autoplay) {
+			if (!props.disabled && props.autoplay) {
 				handleDocumentVisibilityChange();
 				document.addEventListener(
 					'visibilitychange',
@@ -289,11 +297,12 @@ export default defineComponent({
 		});
 
 		onBeforeUnmount(() => {
-			props.autoplay &&
+			if (!props.disabled && props.autoplay) {
 				document.removeEventListener(
 					'visibilitychange',
 					handleDocumentVisibilityChange
 				);
+			}
 		});
 
 		/**
@@ -306,6 +315,10 @@ export default defineComponent({
 		}
 
 		function slidePrev() {
+			if (props.disabled) {
+				return;
+			}
+
 			state.isSlideByOrder = true;
 
 			const newActiveIndex =
@@ -320,6 +333,10 @@ export default defineComponent({
 		}
 
 		function slideNext() {
+			if (props.disabled) {
+				return;
+			}
+
 			state.isSlideByOrder = true;
 
 			const newActiveIndex =
@@ -351,6 +368,10 @@ export default defineComponent({
 		}
 
 		function handleCarouselMouseEnter() {
+			if (props.disabled) {
+				return;
+			}
+
 			if (props.showArrow === 'hover') {
 				state.showArrow = true;
 			}
@@ -361,6 +382,10 @@ export default defineComponent({
 		}
 
 		function handleCarouselMouseLeave() {
+			if (props.disabled) {
+				return;
+			}
+
 			if (props.showArrow === 'hover') {
 				state.showArrow = false;
 			}
@@ -371,6 +396,10 @@ export default defineComponent({
 		}
 
 		function handleIndicatorItemClick(rowIndex: number) {
+			if (props.disabled) {
+				return;
+			}
+
 			if (props.modelValue >= 0) {
 				context.emit('update:modelValue', rowIndex);
 			} else {
@@ -379,6 +408,10 @@ export default defineComponent({
 		}
 
 		function handleIndicatorItemMouseEnter(rowIndex: number) {
+			if (props.disabled) {
+				return;
+			}
+
 			if (props.modelValue >= 0) {
 				context.emit('update:modelValue', rowIndex);
 			} else {
