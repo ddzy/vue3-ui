@@ -71,34 +71,67 @@
 	transform: translateY(-30px);
 }
 
-.v3-carousel-item-slide-next-enter-from {
+/*
+	V3Carousel
+*/
+.v3-carousel-item-horizontal-slide-next-enter-from {
 	transform: translateX(100%);
 }
-.v3-carousel-item-slide-next-enter-active,
-.v3-carousel-item-slide-next-leave-active {
+.v3-carousel-item-horizontal-slide-next-enter-active,
+.v3-carousel-item-horizontal-slide-next-leave-active {
 	transition-property: transform;
 }
-.v3-carousel-item-slide-next-enter-to,
-.v3-carousel-item-slide-next-leave-from {
+.v3-carousel-item-horizontal-slide-next-enter-to,
+.v3-carousel-item-horizontal-slide-next-leave-from {
 	transform: translateX(0);
 }
-.v3-carousel-item-slide-next-leave-to {
+.v3-carousel-item-horizontal-slide-next-leave-to {
 	transform: translateX(-100%);
 }
 
-.v3-carousel-item-slide-prev-enter-from {
+.v3-carousel-item-horizontal-slide-prev-enter-from {
 	transform: translateX(-100%);
 }
-.v3-carousel-item-slide-prev-enter-active,
-.v3-carousel-item-slide-prev-leave-active {
+.v3-carousel-item-horizontal-slide-prev-enter-active,
+.v3-carousel-item-horizontal-slide-prev-leave-active {
 	transition-property: transform;
 }
-.v3-carousel-item-slide-prev-enter-to,
-.v3-carousel-item-slide-prev-leave-from {
+.v3-carousel-item-horizontal-slide-prev-enter-to,
+.v3-carousel-item-horizontal-slide-prev-leave-from {
 	transform: translateX(0);
 }
-.v3-carousel-item-slide-prev-leave-to {
+.v3-carousel-item-horizontal-slide-prev-leave-to {
 	transform: translateX(100%);
+}
+
+.v3-carousel-item-vertical-slide-next-enter-from {
+	transform: translateY(100%);
+}
+.v3-carousel-item-vertical-slide-next-enter-active,
+.v3-carousel-item-vertical-slide-next-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-vertical-slide-next-enter-to,
+.v3-carousel-item-vertical-slide-next-leave-from {
+	transform: translateY(0);
+}
+.v3-carousel-item-vertical-slide-next-leave-to {
+	transform: translateY(-100%);
+}
+
+.v3-carousel-item-vertical-slide-prev-enter-from {
+	transform: translateY(-100%);
+}
+.v3-carousel-item-vertical-slide-prev-enter-active,
+.v3-carousel-item-vertical-slide-prev-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-vertical-slide-prev-enter-to,
+.v3-carousel-item-vertical-slide-prev-leave-from {
+	transform: translateY(0);
+}
+.v3-carousel-item-vertical-slide-prev-leave-to {
+	transform: translateY(100%);
 }
 
 .v3-carousel-item-fade-enter-from {

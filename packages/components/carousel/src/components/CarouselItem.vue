@@ -2,7 +2,7 @@
 	<transition
 		:name="
 			state.injectedCarouselInstance.effect === 'slide'
-				? `v3-carousel-item-${state.injectedCarouselInstance.effect}-${state.injectedCarouselInstance.state.slideDirection}`
+				? `v3-carousel-item-${state.injectedCarouselInstance.direction}-${state.injectedCarouselInstance.effect}-${state.injectedCarouselInstance.state.slideDirection}`
 				: `v3-carousel-item-${state.injectedCarouselInstance.effect}`
 		"
 	>
