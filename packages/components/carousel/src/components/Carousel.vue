@@ -290,6 +290,17 @@ export default defineComponent({
 			{ immediate: false }
 		);
 
+		watch(
+			() => props.indicatorPosition,
+			() => {
+				// 如果导航按钮在左右两边，那么就不显示箭头，避免遮挡
+				if (['left', 'right'].includes(props.indicatorPosition)) {
+					state.showArrow = false;
+				}
+			},
+			{ immediate: true }
+		);
+
 		onMounted(() => {
 			state.isSlideFirstly = true;
 			nextTick(() => {

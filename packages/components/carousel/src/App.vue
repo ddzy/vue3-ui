@@ -293,7 +293,6 @@
 						v-model="state.carouselIndex7"
 						class="common-carousel"
 						indicatorPosition="left"
-						showArrow="never"
 					>
 						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
 							<div
@@ -315,7 +314,6 @@
 						v-model="state.carouselIndex7"
 						class="common-carousel"
 						indicatorPosition="top"
-						showArrow="never"
 					>
 						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
 							<div
@@ -337,7 +335,6 @@
 						v-model="state.carouselIndex7"
 						class="common-carousel"
 						indicatorPosition="right"
-						showArrow="never"
 					>
 						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
 							<div
@@ -359,7 +356,6 @@
 						v-model="state.carouselIndex7"
 						class="common-carousel"
 						indicatorPosition="bottom"
-						showArrow="never"
 					>
 						<v3-carousel-item v-for="(v, i) in state.carouselList1" :key="v.id">
 							<div
