@@ -371,7 +371,37 @@ export default defineComponent({
 		}
 
 		function slideTo(index: number) {
-			state.carouselItemInstanceList.forEach((v, i) => {
+			const length = state.carouselItemInstanceList.length;
+			let currentIndex = index;
+			let nextIndex = -1;
+			let prevIndex = -1;
+
+			if (!length) {
+				return;
+			} else if (length === 1) {
+				nextIndex = prevIndex = currentIndex;
+			} else if (length === 2) {
+				nextIndex = prevIndex = currentIndex === 0 ? length - 1 : 0;
+			} else {
+				nextIndex = currentIndex === length - 1 ? 0 : currentIndex + 1;
+				prevIndex = currentIndex === 0 ? length - 1 : currentIndex - 1;
+			}
+
+			state.carouselItemInstanceList.forEach((v, i, s) => {
+				if (i === currentIndex && i === nextIndex && i === prevIndex) {
+					v.state.typeList = ['current', 'next', 'prev'];
+				} else if (i === currentIndex) {
+					v.state.typeList = ['current'];
+				} else if (i === nextIndex && i === prevIndex) {
+					v.state.typeList = ['prev', 'next'];
+				} else if (i === nextIndex) {
+					v.state.typeList = ['next'];
+				} else if (i === prevIndex) {
+					v.state.typeList = ['prev'];
+				} else {
+					v.state.typeList = [];
+				}
+
 				v.state.isShow = i === index;
 			});
 		}

@@ -18,6 +18,7 @@
 				}ms`,
 				transitionTimingFunction: `${state.injectedCarouselInstance.timingFunction}`,
 			}"
+			:class="computedClass"
 		>
 			<slot></slot>
 		</div>
@@ -26,6 +27,7 @@
 <script lang="ts">
 import {
 	ComponentInternalInstance,
+	computed,
 	defineComponent,
 	getCurrentInstance,
 	inject,
@@ -35,10 +37,12 @@ import {
 } from 'vue';
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
+type ICarouselItemType = 'current' | 'next' | 'prev';
 interface IState {
 	width: number;
 	injectedCarouselInstance: any;
 	isShow: boolean;
+	typeList: ICarouselItemType[];
 }
 
 export default defineComponent({
@@ -52,9 +56,19 @@ export default defineComponent({
 			injectedCarouselInstance: {},
 			/** 当前轮播项的显隐（由 V3Carousel 组件控制） */
 			isShow: false,
+			/**  */
+			typeList: [],
 		});
 		const app = ref(getCurrentInstance()).value;
 		const isCarouselExist = checkIsCarouselExist();
+
+		const computedClass = computed(() => {
+			return state.typeList
+				.map(v => {
+					return `v3-carousel-item--${v}`;
+				})
+				.join(' ');
+		});
 
 		if (isCarouselExist) {
 			const internalCarouselInstance = inject(
@@ -103,6 +117,7 @@ export default defineComponent({
 			state,
 			props,
 			context,
+			computedClass,
 		};
 	},
 });
