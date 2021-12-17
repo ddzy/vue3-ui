@@ -13,11 +13,22 @@
 			</ul>
 		</div>
 		<div class="home__main">
-			<div ref="contentRef" class="home-main__content">
+			<div
+				ref="contentRef"
+				class="home-main__content"
+				:style="{
+					marginRight: state.isNavUnfold ? '200px' : '0px',
+				}"
+			>
 				<router-view></router-view>
 			</div>
-			<div class="home-main__nav">
-				<div class="home-main-nav__trigger">
+			<div
+				class="home-main__nav"
+				:style="{
+					right: state.isNavUnfold ? '0' : '-200px',
+				}"
+			>
+				<div class="home-main-nav__trigger" @click="handleNavTriggerClick">
 					<i class="v3-icon v3-icon-arrow-right"></i>
 				</div>
 				<ul class="home-main-nav__list">
@@ -35,6 +46,15 @@
 				</ul>
 			</div>
 		</div>
+		<transition name="unfolder-fade">
+			<div
+				v-show="!state.isNavUnfold"
+				class="home__unfolder"
+				@click="handleNavTriggerClick"
+			>
+				<i class="v3-icon v3-icon-arrow-left"></i>
+			</div>
+		</transition>
 	</div>
 </template>
 <script lang="ts">
@@ -57,6 +77,7 @@ interface INavItem {
 }
 interface IState {
 	navList: INavItem[];
+	isNavUnfold: boolean;
 }
 
 export default defineComponent({
@@ -64,6 +85,7 @@ export default defineComponent({
 	setup() {
 		const state: IState = reactive({
 			navList: [],
+			isNavUnfold: true,
 		});
 		const $route = useRoute();
 		const contentRef = ref(document.createElement('div'));
@@ -107,6 +129,10 @@ export default defineComponent({
 			});
 		}
 
+		function handleNavTriggerClick() {
+			state.isNavUnfold = !state.isNavUnfold;
+		}
+
 		function handleNavItemClick(row: INavItem) {
 			location.hash = row.link;
 			handleHashChange();
@@ -116,6 +142,7 @@ export default defineComponent({
 			state,
 			dynamcRoutes,
 			contentRef,
+			handleNavTriggerClick,
 			handleNavItemClick,
 		};
 	},
@@ -127,6 +154,25 @@ export default defineComponent({
 }
 </style>
 <style lang="scss" scoped>
+$nav-transition-time: 0.3s;
+
+.unfolder-fade-enter .unfolder-fade-enter-from {
+	opacity: 0;
+}
+.unfolder-fade-enter-active {
+	transition-delay: $nav-transition-time;
+}
+.unfolder-fade-leave-active {
+	transition-delay: 0s;
+}
+.unfolder-fade-enter-to,
+.unfolder-fade-leave-from {
+	opacity: 1;
+}
+.unfolder-fade-leave-to {
+	opacity: 0;
+}
+
 .home-container {
 	display: flex;
 	.home__sidebar {
@@ -181,6 +227,8 @@ export default defineComponent({
 			box-sizing: border-box;
 			overflow-x: hidden;
 			margin-right: 200px;
+			transition: margin-right $nav-transition-time
+				cubic-bezier(0.17, 0.84, 0.44, 1);
 		}
 		.home-main__nav {
 			position: fixed;
@@ -192,7 +240,9 @@ export default defineComponent({
 			align-items: center;
 			width: 200px;
 			padding-top: 40px;
+			transition: right $nav-transition-time cubic-bezier(0.17, 0.84, 0.44, 1);
 		}
+
 		.home-main-nav__trigger {
 			display: flex;
 			justify-content: center;
@@ -223,6 +273,24 @@ export default defineComponent({
 				background-color: #f2f2f2;
 				color: #00a0ff;
 			}
+		}
+	}
+	.home__unfolder {
+		position: fixed;
+		top: 40px;
+		right: -10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 18px 0 0 18px;
+		background-color: #f2f2f2;
+		font-size: 25px;
+		color: #666;
+		cursor: pointer;
+		&:hover {
+			background-color: #e5e6e7;
 		}
 	}
 }
