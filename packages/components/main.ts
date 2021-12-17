@@ -1,4 +1,5 @@
 import { App, createApp } from 'vue';
+import 'vite-plugin-vuedoc/style.css';
 
 import * as TYPES_MESSAGE from '@/public/types/message';
 import * as TYPES_LOADING from '@/public/types/loading';

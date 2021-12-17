@@ -1,10 +1,18 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
+import vitePluginVuedoc, { vueDocFiles } from 'vite-plugin-vuedoc';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [vue()],
+	plugins: [
+		vitePluginVuedoc({
+			wrapperClass: 'custom-markdown-container',
+		}),
+		vue({
+			include: [...vueDocFiles],
+		}),
+	],
 	resolve: {
 		alias: [
 			{
@@ -24,7 +32,7 @@ export default defineConfig({
 		preprocessorOptions: {
 			/** 配置 scss 全局变量的引入方式 */
 			scss: {
-				additionalData: `@import "./packages/common/styles/global-reset"; \n @import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-style"; \n @import "./packages/common/styles/global-animation";`,
+				additionalData: `@import "./packages/common/styles/global-reset"; \n @import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-style"; \n @import "./packages/common/styles/global-animation"; \n @import "./packages/common/styles/custom-markdown";`,
 			},
 		},
 	},
