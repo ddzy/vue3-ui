@@ -13,19 +13,110 @@
 			</ul>
 		</div>
 		<div class="home__main">
-			<router-view></router-view>
+			<div ref="contentRef" class="home-main__content">
+				<router-view></router-view>
+			</div>
+			<div class="home-main__nav">
+				<div class="home-main-nav__trigger">
+					<i class="v3-icon v3-icon-arrow-right"></i>
+				</div>
+				<ul class="home-main-nav__list">
+					<li
+						v-for="v in state.navList"
+						class="home-main-nav__item"
+						:key="v.link"
+						:class="{
+							'is-active': v.isActive,
+						}"
+						@click="handleNavItemClick(v)"
+					>
+						<span>{{ v.title }}</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {
+	defineComponent,
+	nextTick,
+	onBeforeUnmount,
+	onMounted,
+	reactive,
+	ref,
+	watch,
+} from 'vue';
+import { useRoute } from 'vue-router';
 import { dynamcRoutes } from './router';
+
+interface INavItem {
+	link: string;
+	title: string;
+	isActive: boolean;
+}
+interface IState {
+	navList: INavItem[];
+}
 
 export default defineComponent({
 	name: 'Home',
 	setup() {
+		const state: IState = reactive({
+			navList: [],
+		});
+		const $route = useRoute();
+		const contentRef = ref(document.createElement('div'));
+
+		watch(
+			() => $route.path,
+			() => {
+				nextTick(() => {
+					// 每次切换路由时，都要更新导航列表
+					const hash = decodeURIComponent(location.hash.replace('#', ''));
+					const h3ElementList = contentRef.value.querySelectorAll('h3');
+
+					state.navList = Array.from(h3ElementList).map(v => {
+						return {
+							link: v.id,
+							title: v.id,
+							isActive: hash === v.id,
+						};
+					});
+				});
+			},
+			{ immediate: true }
+		);
+
+		onMounted(() => {
+			window.addEventListener('hashchange', handleHashChange);
+		});
+
+		onBeforeUnmount(() => {
+			window.removeEventListener('hashchange', handleHashChange);
+		});
+
+		function handleHashChange() {
+			// 监听到 hash 变化时，自动更新导航项的高亮状态
+			const hash = decodeURIComponent(location.hash.replace('#', ''));
+			state.navList = state.navList.map(v => {
+				return {
+					...v,
+					isActive: v.link === hash,
+				};
+			});
+		}
+
+		function handleNavItemClick(row: INavItem) {
+			location.hash = row.link;
+			handleHashChange();
+		}
+
 		return {
+			state,
 			dynamcRoutes,
+			contentRef,
+			handleNavItemClick,
 		};
 	},
 });
@@ -82,8 +173,57 @@ export default defineComponent({
 		flex: 1;
 		box-sizing: border-box;
 		overflow-x: hidden;
+		display: flex;
 		margin-left: 250px;
 		padding: 20px;
+		.home-main__content {
+			flex: 1;
+			box-sizing: border-box;
+			overflow-x: hidden;
+			margin-right: 200px;
+		}
+		.home-main__nav {
+			position: fixed;
+			top: 0;
+			right: 0;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 200px;
+			padding-top: 40px;
+		}
+		.home-main-nav__trigger {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: #f2f2f2;
+			font-size: 25px;
+			color: #666;
+			cursor: pointer;
+			&:hover {
+				background-color: #e5e6e7;
+			}
+		}
+		.home-main-nav__list {
+			width: 150px;
+			margin-top: 40px;
+		}
+		.home-main-nav__item {
+			padding: 6px 12px;
+			cursor: pointer;
+			&:hover:not(.is-active) {
+				background-color: #f7f7f7;
+				color: #666;
+			}
+			&.is-active {
+				background-color: #f2f2f2;
+				color: #00a0ff;
+			}
+		}
 	}
 }
 </style>
