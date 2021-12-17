@@ -1,6 +1,7 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router';
 import Home from './home.vue';
-import V3ButtonDemo from './button/src/App.vue';
+// import V3ButtonDemo from './button/src/App.vue';
+import V3ButtonDemo from './button/button.md';
 import V3CheckboxDemo from './checkbox/src/App.vue';
 import V3InputDemo from './input/src/App.vue';
 import V3InputNumberDemo from './input/src/App.vue';
