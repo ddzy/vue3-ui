@@ -8,6 +8,9 @@ export default defineConfig({
 	plugins: [
 		vitePluginVuedoc({
 			wrapperClass: 'custom-markdown-container',
+			highlight: {
+				theme: 'one-light'
+			}
 		}),
 		vue({
 			include: [...vueDocFiles],
