@@ -80,6 +80,8 @@ export default defineComponent({
 	}
 	.home__main {
 		flex: 1;
+		box-sizing: border-box;
+		overflow-x: hidden;
 		margin-left: 250px;
 		padding: 20px;
 	}
