@@ -2,7 +2,7 @@
 
 ### 基本的复选框
 
-可以自定义是否禁用复选框、自定义图标以及添加边框
+可以自定义是否禁用复选框、自定义图标、添加边框
 
 ```vue demo
 <template>
@@ -25,6 +25,9 @@
 	<v3-checkbox v-model="state.checkboxValue4" :border="true"
 		>多选4</v3-checkbox
 	>
+  <v3-checkbox-button v-model="state.checkboxValue5"
+		>多选5</v3-checkbox-button
+	>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
@@ -36,6 +39,7 @@ export default defineComponent({
 			checkboxValue2: true,
 			checkboxValue3: false,
 			checkboxValue4: false,
+      checkboxValue5: false,
 		});
 
 		return {
@@ -88,6 +92,69 @@ export default defineComponent({
 			checkboxValue1: [2],
 			checkboxValue2: [],
 			checkboxValue3: [],
+		});
+
+		return {
+			state,
+		};
+	},
+});
+</script>
+```
+
+### 按钮形式的复选框
+
+```vue demo
+<template>
+  <v3-checkbox-group v-model="state.checkboxValue">
+		<v3-checkbox-button
+			v-for="v in state.checkboxOriginValue"
+			:key="v._id"
+			:label="v._id"
+			:disabled="v.disabled"
+			>{{ v.name }}</v3-checkbox-button
+		>
+	</v3-checkbox-group>
+</template>
+<script lang="ts">
+import { defineComponent, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+		const state = reactive({
+			checkboxValue: ['banana', 'orange'],
+      checkboxOriginValue: [
+				{
+					_id: 'banana',
+					name: 'banana',
+					disabled: false,
+				},
+				{
+					_id: 'apple',
+					name: 'apple',
+					disabled: false,
+				},
+				{
+					_id: 'orange',
+					name: 'orange',
+					disabled: true,
+				},
+				{
+					_id: 'grape',
+					name: 'grape',
+					disabled: false,
+				},
+				{
+					_id: 'watermelon',
+					name: 'watermelon',
+					disabled: false,
+				},
+				{
+					_id: 'peach',
+					name: 'peach',
+					disabled: false,
+				},
+			],
 		});
 
 		return {
@@ -182,6 +249,108 @@ export default defineComponent({
 			state,
       handleCheckboxChange1,
       handleCheckboxChange2,
+		};
+	},
+});
+</script>
+```
+
+### 限制最大/最小选择数量
+
+```vue demo
+<template>
+	<v3-checkbox-group v-model="state.checkboxValue" :max="4" :min="2">
+		<v3-checkbox
+			v-for="v in state.checkboxOriginValue"
+			:key="v._id"
+			:label="v._id"
+			:disabled="v.disabled"
+			>{{ v.name }}</v3-checkbox
+		>
+	</v3-checkbox-group>
+</template>
+<script lang="ts">
+import { defineComponent, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+		const state = reactive({
+			checkboxValue: ['banana', 'orange'],
+      checkboxOriginValue: [
+				{
+					_id: 'banana',
+					name: 'banana',
+					disabled: false,
+				},
+				{
+					_id: 'apple',
+					name: 'apple',
+					disabled: false,
+				},
+				{
+					_id: 'orange',
+					name: 'orange',
+					disabled: true,
+				},
+				{
+					_id: 'grape',
+					name: 'grape',
+					disabled: false,
+				},
+				{
+					_id: 'watermelon',
+					name: 'watermelon',
+					disabled: false,
+				},
+				{
+					_id: 'peach',
+					name: 'peach',
+					disabled: false,
+				},
+			],
+		});
+
+		return {
+			state,
+		};
+	},
+});
+</script>
+```
+
+### 不同尺寸的复选框
+
+```vue demo
+<template>
+	<v3-checkbox
+		size="small"
+		v-model="state.checkboxValue1"
+		>小尺寸</v3-checkbox
+	>
+	<v3-checkbox
+		size="medium"
+		v-model="state.checkboxValue2"
+		>中等尺寸</v3-checkbox
+	>
+	<v3-checkbox
+		size="large"
+		v-model="state.checkboxValue3"
+		>大尺寸</v3-checkbox
+	>
+</template>
+<script lang="ts">
+import { defineComponent, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+		const state = reactive({
+			checkboxValue1: true,
+      checkboxValue2: false,
+      checkboxValue3: true,
+		});
+
+		return {
+			state,
 		};
 	},
 });
