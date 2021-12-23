@@ -260,4 +260,10 @@ const routes: RouteRecordRaw[] = [
 export default createRouter({
 	routes,
 	history: createWebHistory(),
+	scrollBehavior() {
+		return {
+			top: 0,
+			left: 0,
+		};
+	},
 });
