@@ -76,6 +76,9 @@ import {
 	PropType,
 	reactive,
 	ref,
+	inject,
+	watch,
+	nextTick,
 } from 'vue';
 
 import * as TYPES from '@/public/types/demo-block';
@@ -129,6 +132,19 @@ export default defineComponent({
 		const wrapperRef = ref(document.createElement('div'));
 		const functionalWrapperRef = ref(document.createElement('div'));
 		const codeWrapperRef = ref(document.createElement('div'));
+
+		const homeState: any = inject('HOME_STATE');
+
+		watch(
+			() => homeState.isNavUnfold,
+			() => {
+				// 当切换文档右侧导航栏时，也要重新计算功能区域的样式
+				setTimeout(() => {
+					computeFunctionalAreaStyle();
+				}, Number.parseInt(homeState.navTransitionTime));
+			},
+			{ immediate: false }
+		);
 
 		onMounted(() => {
 			handleWindowResize();

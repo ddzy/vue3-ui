@@ -66,6 +66,7 @@ import {
 	reactive,
 	ref,
 	watch,
+	provide,
 } from 'vue';
 import { useRoute } from 'vue-router';
 import { dynamcRoutes } from './router';
@@ -78,6 +79,7 @@ interface INavItem {
 interface IState {
 	navList: INavItem[];
 	isNavUnfold: boolean;
+	navTransitionTime: string;
 }
 
 export default defineComponent({
@@ -86,9 +88,12 @@ export default defineComponent({
 		const state: IState = reactive({
 			navList: [],
 			isNavUnfold: true,
+			navTransitionTime: '300ms',
 		});
 		const $route = useRoute();
 		const contentRef = ref(document.createElement('div'));
+
+		provide('HOME_STATE', state);
 
 		watch(
 			() => $route.path,
@@ -154,7 +159,7 @@ export default defineComponent({
 }
 </style>
 <style lang="scss" scoped>
-$nav-transition-time: 0.3s;
+$nav-transition-time: v-bind('state.navTransitionTime');
 
 .unfolder-fade-enter .unfolder-fade-enter-from {
 	opacity: 0;
