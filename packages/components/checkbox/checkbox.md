@@ -357,3 +357,70 @@ export default defineComponent({
 </script>
 ```
 
+### API
+
+#### Checkbox 参数
+
+| 参数名             | 说明                     | 类型                      | 可选值                 | 默认值                          |
+| ------------------ | ------------------------ | ------------------------- | ---------------------- | ------------------------------- |
+| border             | 是否带有边框             | boolean                   |                        | false                           |
+| disabled           | 禁用状态                 | boolean                   |                        | button                          | false |
+| label              | 复选框的值               | string / boolean / number |                        | ''                              |
+| indeterminate      | 是否为不确定状态         | boolean                   |                        | false                           |
+| selectedIcon       | 选中时的图标             | string                    |                        | v3-icon-checkbox-selected       |
+| indeterminatedIcon | 不确定时的图标           | string                    |                        | v3-icon-checkbox-indeterminated |
+| defaultIcon        | 未选中状态下的图标       | string                    |                        | v3-icon-checkbox-default        |
+| size               | 复选框的尺寸             | string                    | small / medium / large | medium                          |
+| modelValue         | 单独使用时绑定的 v-model | boolean                   | false                  |
+
+#### Checkbox 事件
+
+| 事件名 | 说明             | 回调参数             |
+| ------ | ---------------- | -------------------- |
+| change | 值发生变化时触发 | (newValue, e: Event) |
+
+#### Checkbox 插槽
+
+| 插槽名  | 说明     | 子标签 |
+| ------- | -------- | ------ |
+| default | 默认插槽 |        |
+
+#### CheckboxGroup 参数
+
+| 参数名     | 说明               | 类型                             | 可选值 | 默认值    |
+| ---------- | ------------------ | -------------------------------- | ------ | --------- |
+| modelValue | v-model            | Array<string / boolean / number> |        | []        |
+| min        | 限制的最小选择个数 | number / undefined               |        | undefined |
+| max        | 限制的最大选择个数 | number / undefined               |        | undefined |
+
+#### CheckboxGroup 事件
+
+| 事件名 | 说明             | 回调参数             |
+| ------ | ---------------- | -------------------- |
+| change | 值发生变化时触发 | (newValue, e: Event) |
+
+#### CheckboxGroup 插槽
+
+| 插槽名  | 说明     | 子标签                    |
+| ------- | -------- | ------------------------- |
+| default | 默认插槽 | Checkbox / CheckboxButton |
+
+#### CheckboxButton 参数
+
+| 参数名   | 说明           | 类型                      | 可选值                 | 默认值 |
+| -------- | -------------- | ------------------------- | ---------------------- | ------ |
+| disabled | 是否禁用       | boolean                   |                        | false  |
+| label    | 绑定的值       | number / string / boolean |                        | ''     |
+| size     | 复选按钮的尺寸 | string                    | small / medium / large | medium |
+
+#### CheckboxButton 事件
+
+| 事件名 | 说明             | 回调参数             |
+| ------ | ---------------- | -------------------- |
+| change | 值发生变化时触发 | (newValue, e: Event) |
+
+#### CheckboxButton 插槽
+
+| 插槽名  | 说明     | 子标签 |
+| ------- | -------- | ------ |
+| default | 默认插槽 |        |
