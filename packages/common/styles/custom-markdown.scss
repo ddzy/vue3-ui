@@ -116,6 +116,8 @@
 		width: max-content;
 		max-width: 100%;
 		overflow: auto;
+		text-align: center;
+		vertical-align: middle;
 		th {
 			font-weight: 600;
 		}
@@ -757,7 +759,7 @@
 }
 .custom-markdown-container table th,
 .custom-markdown-container table td {
-	padding: 6px 13px;
+	padding: 16px;
 	border: 1px solid #d0d7de;
 }
 .custom-markdown-container code,
