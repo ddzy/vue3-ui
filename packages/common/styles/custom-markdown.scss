@@ -1,11 +1,5 @@
 .custom-markdown-container {
-	margin: 0;
-	color: #24292f;
-	background-color: #ffffff;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-	line-height: 1.5;
-	word-wrap: break-word;
+	color: #333;
 	.octicon {
 		display: inline-block;
 		fill: currentColor;
@@ -815,4 +809,9 @@
 	line-height: 1;
 	text-align: left;
 	white-space: nowrap;
+}
+
+// 隐藏锚点
+.custom-markdown-container .markdownIt-Anchor {
+	display: none;
 }

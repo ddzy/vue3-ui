@@ -226,7 +226,8 @@ $nav-transition-time: 0.3s;
 			flex: 1;
 			box-sizing: border-box;
 			overflow-x: hidden;
-			margin-right: 200px;
+			margin-right: 190px;
+			padding: 0 5px;
 			transition: margin-right $nav-transition-time
 				cubic-bezier(0.17, 0.84, 0.44, 1);
 		}
