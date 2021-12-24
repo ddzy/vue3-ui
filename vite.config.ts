@@ -10,7 +10,8 @@ export default defineConfig({
 			wrapperClass: 'custom-markdown-container',
 			highlight: {
 				theme: 'one-light'
-			}
+			},
+			previewComponent: 'V3DemoBlock',
 		}),
 		vue({
 			include: [...vueDocFiles],

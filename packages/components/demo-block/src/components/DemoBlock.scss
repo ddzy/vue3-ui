@@ -27,16 +27,21 @@
 			line-height: 1.5;
 		}
 	}
-	.v3-demo-block__detail {
-		overflow: hidden;
-		padding: 0 $padding-medium;
-		transition: height 0.5s ease;
+	.v3-demo-block__code {
+		transition: height 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
 	}
 	.v3-demo-block__functional {
+		box-sizing: border-box;
 		display: flex;
-		padding: $padding-small $padding-medium;
+		padding: 8px $padding-medium;
 		background-color: $box-shadow-color-default;
 		user-select: none;
+		cursor: pointer;
+		&.is-fixed {
+			position: fixed;
+			bottom: 0;
+		}
+
 		.functional__expand,
 		.functional__extra {
 			flex: 1;
@@ -44,16 +49,12 @@
 		.functional__expand {
 			text-align: right;
 			color: $primary-color;
-			span {
-				cursor: pointer;
-			}
 		}
 		.functional__extra {
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
 			.functional-extra__item {
-				cursor: pointer;
 				&:not(:first-child) {
 					margin-left: $margin-medium;
 				}

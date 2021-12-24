@@ -1,5 +1,5 @@
 <template>
-	<div class="v3-demo-block">
+	<div ref="wrapperRef" class="v3-demo-block">
 		<div
 			class="v3-demo-block__view v3-demo-block__common"
 			v-if="app.slots.default"
@@ -18,23 +18,33 @@
 			</div>
 		</div>
 		<transition
-			v-if="app.slots.detail"
-			@enter="transitionEnter"
-			@leave="transitionLeave"
+			v-if="app.slots.code"
+			@enter="handleCodeTransitionEnter"
+			@leave="handleCodeTransitionLeave"
+			@after-enter="handleCodeTransitionAfterEnter"
+			@after-leave="handleCodeTransitionAfterLeave"
+			@before-leave="handleCodeTransitionBeforeLeave"
 		>
 			<div
-				class="v3-demo-block__detail v3-demo-block__common"
-				v-show="state.isDetailAreaExpand"
+				v-show="state.isCodeAreaExpand"
+				ref="codeWrapperRef"
+				class="v3-demo-block__code v3-demo-block__common"
 			>
-				<slot name="detail"></slot>
+				<slot name="code"></slot>
 			</div>
 		</transition>
-		<div class="v3-demo-block__functional v3-demo-block__common">
+		<div
+			ref="functionalWrapperRef"
+			class="v3-demo-block__functional v3-demo-block__common"
+			:class="{
+				'is-fixed': state.isFunctionalAreaFixed,
+			}"
+			:style="state.functionalAreaStyle"
+			@click="toggleCodeArea"
+		>
 			<div class="functional__expand">
-				<span @click="expandDetailArea">{{
-					state.isDetailAreaExpand
-						? props.expandedBtnText
-						: props.defaultBtnText
+				<span>{{
+					state.isCodeAreaExpand ? props.expandedBtnText : props.defaultBtnText
 				}}</span>
 			</div>
 			<div class="functional__extra">
@@ -42,7 +52,7 @@
 					class="functional-extra__item"
 					v-for="v in props.extraList"
 					:key="v.icon"
-					@click="handleExtraItemClick(v)"
+					@click.stop="handleExtraItemClick(v)"
 				>
 					<i
 						:class="{
@@ -58,15 +68,26 @@
 </template>
 <script lang="ts">
 import {
+	CSSProperties,
 	defineComponent,
 	getCurrentInstance,
+	onBeforeUnmount,
+	onMounted,
 	PropType,
 	reactive,
-	watch,
+	ref,
 } from 'vue';
 
 import * as TYPES from '@/public/types/demo-block';
 import * as UTILS from '@common/utils/index';
+
+interface IState {
+	isCodeAreaExpand: boolean;
+	windowScrollHelper: any;
+	windowResizeHelper: any;
+	isFunctionalAreaFixed: boolean;
+	functionalAreaStyle: Partial<CSSProperties>;
+}
 
 export default defineComponent({
 	name: 'V3DemoBlock',
@@ -93,35 +114,127 @@ export default defineComponent({
 		},
 	},
 	emits: ['extraClick'],
-	setup(props: TYPES.IDemoBlockProps) {
-		const state = reactive({
+	setup(props: TYPES.IDemoBlockProps, context) {
+		const state: IState = reactive({
 			/** 详情区域是否展开 */
-			isDetailAreaExpand: false,
+			isCodeAreaExpand: false,
+			windowScrollHelper: null,
+			windowResizeHelper: null,
+			/** 功能区域是否固定 */
+			isFunctionalAreaFixed: false,
+			/** 功能区域的样式 */
+			functionalAreaStyle: {},
 		});
 		const app = getCurrentInstance();
+		const wrapperRef = ref(document.createElement('div'));
+		const functionalWrapperRef = ref(document.createElement('div'));
+		const codeWrapperRef = ref(document.createElement('div'));
+
+		onMounted(() => {
+			handleWindowResize();
+
+			state.windowScrollHelper = UTILS.throttle(handleWindowScroll, {
+				timestamp: 20,
+			});
+			window.addEventListener('scroll', state.windowScrollHelper);
+
+			state.windowResizeHelper = UTILS.throttle(handleWindowResize, {
+				timestamp: 20,
+			});
+			window.addEventListener('resize', state.windowResizeHelper);
+		});
+
+		onBeforeUnmount(() => {
+			window.removeEventListener('scroll', state.windowScrollHelper);
+			window.removeEventListener('resize', state.windowResizeHelper);
+		});
+
+		function computeFunctionalAreaStyle() {
+			const { width, left } = wrapperRef.value.getBoundingClientRect();
+
+			state.functionalAreaStyle = {
+				width: `${width}px`,
+				left: `${left}px`,
+			};
+		}
+
+		/**
+		 * 展开 or 收缩内容区域
+		 */
+		function toggleCodeArea() {
+			state.isCodeAreaExpand = !state.isCodeAreaExpand;
+		}
+
+		/**
+		 * 判断功能区域是否需要固定在底部
+		 */
+		function checkIsFunctionalAreaFixed() {
+			const docEl = document.documentElement;
+			const docHeight = docEl.clientHeight;
+			const codeWrapperEl = codeWrapperRef.value;
+			const codeWrapperRect = codeWrapperEl.getBoundingClientRect();
+			const functionalWrapperEl = functionalWrapperRef.value;
+			const functionalWrapperRect = functionalWrapperEl.getBoundingClientRect();
+
+			// 限制上边界
+			const limitTop = codeWrapperRect.bottom - docHeight;
+			// 限制下边界
+			const limitBottom = docHeight - codeWrapperRect.top;
+			// 根据代码详情区域与页面可视区域的垂直方向上的距离，来判断是否需要固定
+			if (limitTop >= 0 && limitBottom >= functionalWrapperRect.height) {
+				state.isFunctionalAreaFixed = true;
+			} else {
+				state.isFunctionalAreaFixed = false;
+			}
+		}
+
+		function handleWindowScroll() {
+			checkIsFunctionalAreaFixed();
+		}
+
+		function handleWindowResize() {
+			computeFunctionalAreaStyle();
+		}
+
+		function handleExtraItemClick(v: TYPES.IDemoBlockExtraItem) {
+			context.emit('extraClick', v);
+		}
+
+		function handleCodeTransitionEnter(el: HTMLElement) {
+			UTILS.handleTransitionEnter(el);
+		}
+
+		function handleCodeTransitionLeave(el: HTMLElement) {
+			UTILS.handleTransitionLeave(el);
+		}
+
+		function handleCodeTransitionAfterEnter() {
+			checkIsFunctionalAreaFixed();
+		}
+
+		function handleCodeTransitionAfterLeave() {
+			checkIsFunctionalAreaFixed();
+		}
+
+		function handleCodeTransitionBeforeLeave() {
+			state.isFunctionalAreaFixed = false;
+		}
 
 		return {
 			app,
 			state,
 			props,
+			wrapperRef,
+			functionalWrapperRef,
+			codeWrapperRef,
+			toggleCodeArea,
+			handleExtraItemClick,
+			handleCodeTransitionEnter,
+			handleCodeTransitionLeave,
+			handleCodeTransitionAfterEnter,
+			handleCodeTransitionAfterLeave,
+			handleCodeTransitionBeforeLeave,
 		};
-	},
-	methods: {
-		handleExtraItemClick(v: TYPES.IDemoBlockExtraItem) {
-			this.$emit('extraClick', v);
-		},
-		/**
-		 * 展开 or 收缩内容区域
-		 */
-		expandDetailArea() {
-			this.state.isDetailAreaExpand = !this.state.isDetailAreaExpand;
-		},
-		transitionEnter(el: HTMLElement) {
-			UTILS.handleTransitionEnter(el);
-		},
-		transitionLeave(el: HTMLElement) {
-			UTILS.handleTransitionLeave(el);
-		},
 	},
 });
 </script>

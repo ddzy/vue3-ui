@@ -78,3 +78,26 @@ export function getDomOffsetToDocument(el: HTMLElement) {
 
 	return pos;
 }
+
+export function throttle(
+	callback: Function,
+	options: {
+		timestamp?: number;
+	}
+) {
+	const defaultOptions: Required<typeof options> = {
+		timestamp: 100,
+		...options,
+	};
+	let prevTime = 0;
+
+	return function(...args: any[]) {
+		const now = Date.now();
+
+		if (now - prevTime >= defaultOptions.timestamp) {
+			// @ts-ignore
+			callback.apply(this, args);
+			prevTime = now;
+		}
+	};
+}

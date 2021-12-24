@@ -776,12 +776,12 @@
 }
 .custom-markdown-container .highlight pre,
 .custom-markdown-container pre {
-  padding: 16px;
+  box-sizing: border-box;
   overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
+  height: 100%;
+  margin: 0;
+  padding: 16px;
   background-color: #f6f8fa;
-  border-radius: 6px;
 }
 .custom-markdown-container pre code,
 .custom-markdown-container pre tt {
