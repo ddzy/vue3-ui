@@ -193,18 +193,37 @@ export default defineComponent({
 
 #### Input 参数
 
-| 参数名             | 说明                     | 类型                      | 可选值                 | 默认值                          |
-| ------------------ | ------------------------ | ------------------------- | ---------------------- | ------------------------------- |
-| border             | 是否带有边框             | boolean                   |                        | false                           |
-| disabled           | 禁用状态                 | boolean                   |                        | button                          | false |
-| label              | 复选框的值               | string / boolean / number |                        | ''                              |
-| indeterminate      | 是否为不确定状态         | boolean                   |                        | false                           |
-| selectedIcon       | 选中时的图标             | string                    |                        | v3-icon-checkbox-selected       |
-| indeterminatedIcon | 不确定时的图标           | string                    |                        | v3-icon-checkbox-indeterminated |
-| defaultIcon        | 未选中状态下的图标       | string                    |                        | v3-icon-checkbox-default        |
-| size               | 复选框的尺寸             | string                    | small / medium / large | medium                          |
-| modelValue         | 单独使用时绑定的 v-model | boolean                   | false                  |
+| 参数名        | 说明                                 | 类型    | 可选值                 | 默认值     |
+| ------------- | ------------------------------------ | ------- | ---------------------- | ---------- |
+| type          | 输入框的类型                         | string  | text / password        | text       |
+| suffixIcon    | 后缀图标                             | string  |                        |            |  |
+| prefixIcon    | 前缀图标                             | string  |                        |            |
+| prependIcon   | 前置图标                             | string  |                        |            |
+| appendIcon    | 后置图标                             | string  |                        |            |
+| clearable     | 是否显示清除按钮                     | boolean |                        | false      |
+| readonly      | 是否只读                             | boolean |                        | false      |
+| disabled      | 是否禁用                             | boolean |                        | false      |
+| showWordLimit | 是否显示字数统计                     | boolean |                        | false      |
+| minlength     | 限制输入的最小数目                   | number  |                        | -1         |
+| maxlength     | 限制输入的最大数目                   | number  |                        | -1         |
+| placeholder   | 同原生 input 标签的 placeholder 属性 | string  |                        | 请输入内容 |
+| showPassword  | 是否显示切换密码按钮                 | boolean |                        | false      |
+| size          | 输入框的尺寸                         | string  | small / medium / large | medium     |
+| modelValue    | v-model 绑定的值                     | string  |                        |            |
 
 #### Input 事件
 
+| 事件名 | 说明                 | 回调参数   |
+| ------ | -------------------- | ---------- |
+| focus  | 输入框获得焦点时触发 | (e: Event) |
+| blur   | 输入框失去焦点时触发 | (e: Event) |
+| clear  | 点击清空按钮时触发   |            |
+
 #### Input 插槽
+
+| 插槽名  | 说明           | 子标签 |
+| ------- | -------------- | ------ |
+| prepend | 前置区域的内容 |        |
+| append  | 后置区域的内容 |        |
+| prefix  | 前缀区域的内容 |        |
+| suffix  | 后缀区域的内容 |        |
