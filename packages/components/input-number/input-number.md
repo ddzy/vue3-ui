@@ -99,3 +99,29 @@ export default defineComponent({
 });
 </script>
 ```
+
+### API
+
+#### Input 参数
+
+| 参数名           | 说明                                 | 类型               | 可选值                 | 默认值     |
+| ---------------- | ------------------------------------ | ------------------ | ---------------------- | ---------- |
+| min              | 限制输入的最小值                     | number / undefined |                        |            |
+| max              | 限制输入的最大值                     | number / undefined |                        |            |
+| step             | 步数                                 | number             |                        | 1          |
+| stepStrictly     | 输入值是否只能为 step 的倍数         | boolean            |                        | false      |
+| precision        | 保留的小数位数                       | number             |                        | 0          |
+| disabled         | 是否禁用                             | boolean            |                        | false      |
+| readonly         | 是否只读                             | boolean            |                        | false      |
+| controlsPosition | 控制栏的位置                         | string             | both / right / left    | both       |
+| showWordLimit    | 是否显示字数统计                     | boolean            |                        | false      |
+| placeholder      | 同原生 input 标签的 placeholder 属性 | string             |                        | 请输入内容 |
+| size             | 输入框的尺寸                         | string             | small / medium / large | medium     |
+| modelValue       | v-model 绑定的值                     | string             |                        |            |
+
+#### Input 事件
+
+| 事件名 | 说明                 | 回调参数   |
+| ------ | -------------------- | ---------- |
+| focus  | 输入框获得焦点时触发 | (e: Event) |
+| blur   | 输入框失去焦点时触发 | (e: Event) |
