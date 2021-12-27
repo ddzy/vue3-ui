@@ -1,12 +1,12 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router';
+
 import Home from './home.vue';
-// import V3ButtonDemo from './button/src/App.vue';
 import V3ButtonDemo from './button/button.md';
-// import V3CheckboxDemo from './checkbox/src/App.vue';
 import V3CheckboxDemo from './checkbox/checkbox.md';
-import V3InputDemo from './input/src/App.vue';
-import V3InputNumberDemo from './input/src/App.vue';
-import V3InputTextareaDemo from './input/src/App.vue';
+import V3InputDemo from './input/input.md';
+import V3InputTextareaDemo from './input-textarea/input-textarea.md';
+import V3InputNumberDemo from './input-number/input-number.md';
+
 import V3RadioDemo from './radio/src/App.vue';
 import V3DemoBlockDemo from './demo-block/src/App.vue';
 import V3RowDemo from './row/src/App.vue';
