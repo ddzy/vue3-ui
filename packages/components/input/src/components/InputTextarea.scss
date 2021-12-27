@@ -1,6 +1,7 @@
 $textarea-resize-list: none, horizontal, vertical, both;
 
 .v3-input-textarea {
+	display: inline-block;
 	position: relative;
 	padding: $padding-small $padding-medium;
 	border: 1px solid $border-color-grey-default;
