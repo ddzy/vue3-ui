@@ -28,7 +28,7 @@
 			v-if="app.slots.prepend || props.prependIcon"
 			:class="{
 				'v3-input__prepend-wrapper': true,
-				'is-slot': app.slots.append,
+				'is-slot': app.slots.prepend,
 			}"
 		>
 			<div class="v3-input__prepend">
