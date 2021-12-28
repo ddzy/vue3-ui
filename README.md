@@ -9,9 +9,9 @@ vue3 组件库
 |       Icon       |         图标         | :white_check_mark: | :white_check_mark: |   :construction:   |
 |      Button      |         按钮         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |   ButtonGroup    |        按钮组        | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-|      Input       |        输入框        | :white_check_mark: | :white_check_mark: |   :construction:   |
-|   InputNumber    |      数字输入框      | :white_check_mark: | :white_check_mark: |   :construction:   |
-|  InputTextarea   |    多行文本输入框    | :white_check_mark: | :white_check_mark: |   :construction:   |
+|      Input       |        输入框        | :white_check_mark: | :white_check_mark: |   :white_check_mark:   |
+|   InputNumber    |      数字输入框      | :white_check_mark: | :white_check_mark: |   :white_check_mark:   |
+|  InputTextarea   |    多行文本输入框    | :white_check_mark: | :white_check_mark: |   :white_check_mark:   |
 |      Radio       |        单选框        | :white_check_mark: | :white_check_mark: |   :construction:   |
 |   RadioButton    |   按钮形式的单选框   | :white_check_mark: | :white_check_mark: |   :construction:   |
 |    RadioGroup    |       单选框组       | :white_check_mark: | :white_check_mark: |   :construction:   |
