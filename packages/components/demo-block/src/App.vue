@@ -2,11 +2,7 @@
 	<div class="demo-container">
 		<div class="demo__item">
 			<v3-demo-block
-				:hasCopy="true"
-				:hasCodeSandbox="true"
-				:code="state.code"
 				:descriptionTip="'概述'"
-				:detailTip="'详情'"
 				:extraList="state.extraList"
 				@extraClick="handleExtraItemClick"
 			>
@@ -51,6 +47,10 @@ export default defineComponent({
 				{
 					title: '转发',
 					icon: 'v3-icon-resonserate',
+				},
+				{
+					title: '喜欢',
+					icon: 'v3-icon-like',
 				},
 			],
 		};
