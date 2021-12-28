@@ -29,6 +29,7 @@
 		}
 	}
 	.v3-demo-block__code {
+		overflow: hidden;
 		transition: height 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
 	}
 	.v3-demo-block__functional {
