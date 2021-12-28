@@ -102,7 +102,7 @@ export default defineComponent({
 
 ### API
 
-#### Input 参数
+#### InputNumber 参数
 
 | 参数名           | 说明                                 | 类型               | 可选值                 | 默认值     |
 | ---------------- | ------------------------------------ | ------------------ | ---------------------- | ---------- |
@@ -114,12 +114,11 @@ export default defineComponent({
 | disabled         | 是否禁用                             | boolean            |                        | false      |
 | readonly         | 是否只读                             | boolean            |                        | false      |
 | controlsPosition | 控制栏的位置                         | string             | both / right / left    | both       |
-| showWordLimit    | 是否显示字数统计                     | boolean            |                        | false      |
 | placeholder      | 同原生 input 标签的 placeholder 属性 | string             |                        | 请输入内容 |
 | size             | 输入框的尺寸                         | string             | small / medium / large | medium     |
 | modelValue       | v-model 绑定的值                     | string             |                        |            |
 
-#### Input 事件
+#### InputNumber 事件
 
 | 事件名 | 说明                 | 回调参数   |
 | ------ | -------------------- | ---------- |
