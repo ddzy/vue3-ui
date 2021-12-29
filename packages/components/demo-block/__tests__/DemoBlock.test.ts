@@ -3,7 +3,7 @@ import { nextTick, reactive } from 'vue';
 import V3DemoBlock from '../src/components/DemoBlock.vue';
 
 describe('DemoBlock 组件测试：', () => {
-	test('DemoBlock 组件可以接收【default、description、detail】这几个 slot，不传则不显示', async () => {
+	test('DemoBlock 组件可以接收【default、description、code】这几个 slot，不传则不显示', async () => {
 		const wrapper1 = mount({
 			template: `
         <div>
@@ -12,8 +12,8 @@ describe('DemoBlock 组件测试：', () => {
 						<template #description>
 							<div class="description">内容简介</div>
 						</template>
-						<template #detail>
-							<div class="detail">内容详情</div>
+						<template #code>
+							<div class="code">内容详情</div>
 						</template>
 					</v3-demo-block>
         </div>
@@ -35,7 +35,7 @@ describe('DemoBlock 组件测试：', () => {
 
 		// 有【简介】和【详情】slot
 		expect(wrapper1.find('.v3-demo-block__description').exists()).toBeTruthy();
-		expect(wrapper1.find('.v3-demo-block__detail').exists()).toBeTruthy();
+		expect(wrapper1.find('.v3-demo-block__code').exists()).toBeTruthy();
 	});
 
 	test('DemoBlock 组件可以接收【descriptionTip】配置项，来自定义简介区的标题（传了【slot=description】时才有效', async () => {
@@ -83,8 +83,8 @@ describe('DemoBlock 组件测试：', () => {
 						:expandedBtnText="'收缩'"
 						:defaultBtnText="'展开'"
 					>
-						<template #detail>
-							<div class="detail">内容详情</div>
+						<template #code>
+							<div class="code">内容详情</div>
 						</template>
 					</v3-demo-block>
         </div>
@@ -102,8 +102,8 @@ describe('DemoBlock 组件测试：', () => {
 		});
 
 		// 有【详情】slot
-		expect(wrapper1.find('.v3-demo-block__detail').exists()).toBeTruthy();
-		expect(wrapper1.find('.v3-demo-block__detail').text()).toBe('内容详情');
+		expect(wrapper1.find('.v3-demo-block__code').exists()).toBeTruthy();
+		expect(wrapper1.find('.v3-demo-block__code').text()).toBe('内容详情');
 
 		// 按钮默认为收缩状态
 		expect(wrapper1.find('.functional__expand').text()).toBe('展开');
@@ -121,8 +121,8 @@ describe('DemoBlock 组件测试：', () => {
 						:extraList="state.extraList"
 						@extraClick="handleExtraItemClick"
 					>
-						<template #detail>
-							<div class="detail">内容详情</div>
+						<template #code>
+							<div class="code">内容详情</div>
 						</template>
 					</v3-demo-block>
         </div>

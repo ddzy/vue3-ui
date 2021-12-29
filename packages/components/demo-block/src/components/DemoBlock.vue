@@ -133,7 +133,7 @@ export default defineComponent({
 		const functionalWrapperRef = ref(document.createElement('div'));
 		const codeWrapperRef = ref(document.createElement('div'));
 
-		const homeState: any = inject('HOME_STATE');
+		const homeState: any = inject('HOME_STATE') || {};
 
 		watch(
 			() => homeState.isNavUnfold,
