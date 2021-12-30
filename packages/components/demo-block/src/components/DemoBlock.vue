@@ -225,11 +225,17 @@ export default defineComponent({
 		}
 
 		function handleCodeTransitionAfterEnter() {
-			checkIsFunctionalAreaFixed();
+			computeFunctionalAreaStyle();
+			nextTick(() => {
+				checkIsFunctionalAreaFixed();
+			});
 		}
 
 		function handleCodeTransitionAfterLeave() {
-			checkIsFunctionalAreaFixed();
+			computeFunctionalAreaStyle();
+			nextTick(() => {
+				checkIsFunctionalAreaFixed();
+			});
 		}
 
 		function handleCodeTransitionBeforeLeave() {
