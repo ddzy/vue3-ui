@@ -12,14 +12,13 @@
 				</li>
 			</ul>
 		</div>
-		<div class="home__main">
-			<div
-				ref="contentRef"
-				class="home-main__content"
-				:style="{
-					marginRight: state.isNavUnfold ? '200px' : '0px',
-				}"
-			>
+		<div
+			class="home__main"
+			:style="{
+				paddingRight: state.isNavUnfold ? '200px' : '0px',
+			}"
+		>
+			<div ref="contentRef" class="home-main__content">
 				<router-view></router-view>
 			</div>
 			<div
@@ -225,16 +224,16 @@ $nav-transition-time: v-bind('state.navTransitionTime');
 		box-sizing: border-box;
 		overflow-x: hidden;
 		display: flex;
-		margin-left: 250px;
-		padding: 20px;
+		max-width: 1300px;
+		margin: 0 auto;
+		padding: 20px 200px 20px 270px;
+		transition: padding-right $nav-transition-time
+			cubic-bezier(0.17, 0.84, 0.44, 1);
 		.home-main__content {
 			flex: 1;
 			box-sizing: border-box;
 			overflow-x: hidden;
-			margin-right: 190px;
 			padding: 0 5px;
-			transition: margin-right $nav-transition-time
-				cubic-bezier(0.17, 0.84, 0.44, 1);
 		}
 		.home-main__nav {
 			position: fixed;
