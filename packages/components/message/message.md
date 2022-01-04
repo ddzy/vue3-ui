@@ -235,3 +235,21 @@ export default defineComponent({
 });
 </script>
 ```
+
+### API
+
+#### Message 参数
+
+| 参数名                   | 说明                                                                    | 类型     | 可选值                            | 默认值 |
+| ------------------------ | ----------------------------------------------------------------------- | -------- | --------------------------------- | ------ |
+| duration                 | 持续时间（ms）                                                          | number   |                                   | 3000   |
+| type                     | 消息框的类型                                                            | string   | success / warning / info / danger | info   |
+| message                  | 消息内容                                                                | string   |                                   |        |
+| icon                     | 自定义图标                                                              | string   |                                   |        |
+| dangerouslyUseHTMLString | 是否把 message 作为 HTML 渲染                                           | boolean  |                                   | false  |
+| customClass              | 自定义消息框的类名                                                      | string   |                                   |        |
+| showClose                | 是否显示关闭按钮                                                        | boolean  |                                   | true   |
+| center                   | 弹窗框内的文本是否居中                                                  | boolean  |                                   | false  |
+| offset                   | 弹窗框距离窗口顶部的距离                                                | number   |                                   | 20     |
+| closeOnHover             | 鼠标移到消息框上时，是否依然要关闭                                      | boolean  |                                   | false  |
+| onClose                  | 关闭时触发的事件，返回 `Promise<true>` 或者 `true` 时消息框永远不会关闭 | function |                                   |        |
