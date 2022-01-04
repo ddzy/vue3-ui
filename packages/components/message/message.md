@@ -43,7 +43,7 @@ export default defineComponent({
 </script>
 ```
 
-### 内容可以是 VNode
+### 内容可以是VNode
 
 ```vue demo
 <template>
@@ -155,7 +155,7 @@ export default defineComponent({
 </script>
 ```
 
-### 可以传入 HTML 片段
+### 可以传入HTML片段
 
 ```vue demo
 <template>
@@ -193,7 +193,7 @@ export default defineComponent({
 </script>
 ```
 
-### 可通过 onClose 事件来阻止关闭
+### 可通过onClose事件来阻止关闭
 
 ```vue demo
 <template>
