@@ -67,7 +67,7 @@ import {
 	watch,
 	provide,
 } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { dynamcRoutes } from './router';
 
 interface INavItem {
@@ -90,6 +90,7 @@ export default defineComponent({
 			navTransitionTime: '300ms',
 		});
 		const $route = useRoute();
+		const $router = useRouter();
 		const contentRef = ref(document.createElement('div'));
 
 		provide('HOME_STATE', state);
@@ -114,31 +115,20 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		onMounted(() => {
-			window.addEventListener('hashchange', handleHashChange);
-		});
-
-		onBeforeUnmount(() => {
-			window.removeEventListener('hashchange', handleHashChange);
-		});
-
-		function handleHashChange() {
-			// 监听到 hash 变化时，自动更新导航项的高亮状态
-			const hash = decodeURIComponent(location.hash);
-			state.navList = state.navList.map(v => {
-				return {
-					...v,
-					isActive: v.link === hash,
-				};
-			});
-		}
-
 		function handleNavTriggerClick() {
 			state.isNavUnfold = !state.isNavUnfold;
 		}
 
 		function handleNavItemClick(row: INavItem) {
-			location.hash = row.link;
+			$router.push({
+				hash: row.link,
+			});
+			state.navList = state.navList.map(v => {
+				return {
+					...v,
+					isActive: v.link === row.link,
+				};
+			});
 		}
 
 		return {
