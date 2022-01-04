@@ -21,7 +21,7 @@ vue3 组件库
 |    DemoBlock     |    案例展示框    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Row        |   栅格系统-行    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Col        |   栅格系统-列    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-|     Message      |      消息框      | :white_check_mark: | :white_check_mark: |   :construction:   |
+|     Message      |      消息框      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Tag        |       标签       | :white_check_mark: | :white_check_mark: |   :construction:   |
 |      Select      |     下拉选项     | :white_check_mark: | :white_check_mark: |   :construction:   |
 |     Backdrop     |      遮罩层      | :white_check_mark: | :white_check_mark: |   :construction:   |
