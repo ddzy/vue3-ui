@@ -5,7 +5,17 @@ $MAX_COL: 12;
 	box-sizing: border-box;
 }
 [class*='v3-col-push-'],
-[class*='v3-col-pull-'] {
+[class*='v3-col-pull-'],
+[class*='v3-col-xs-push-'],
+[class*='v3-col-xs-pull-'],
+[class*='v3-col-sm-push-'],
+[class*='v3-col-sm-pull-'],
+[class*='v3-col-md-push-'],
+[class*='v3-col-md-pull-'],
+[class*='v3-col-lg-push-'],
+[class*='v3-col-lg-pull-'],
+[class*='v3-col-xl-push-'],
+[class*='v3-col-xl-pull-'] {
 	position: relative;
 }
 

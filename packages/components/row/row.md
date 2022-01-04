@@ -132,7 +132,7 @@ export default defineComponent({
 		<v3-col :span="4" :md="8">
 			<div :style="state.style">123</div>
 		</v3-col>
-		<v3-col :span="4" :md="12" :lg="6" :xl="2">
+		<v3-col :span="4" :md="{ span: 12, push: 3, pull: 1, offset: 2 }" :lg="6" :xl="2">
 			<div :style="state.style">456</div>
 		</v3-col>
     <v3-col :span="4" :md="8">

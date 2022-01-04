@@ -20,7 +20,7 @@ export interface IColBaseOption {
 	span: IColSpan;
 	offset: IColOffset;
 	push: IColPush;
-	IColPull: IColPull;
+	pull: IColPull;
 }
 export type IColSpan = number;
 export type IColOffset = number;
