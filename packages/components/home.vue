@@ -99,14 +99,14 @@ export default defineComponent({
 			() => {
 				nextTick(() => {
 					// 每次切换路由时，都要更新导航列表
-					const hash = decodeURIComponent(location.hash.replace('#', ''));
+					const hash = decodeURIComponent(location.hash);
 					const h3ElementList = contentRef.value.querySelectorAll('h3');
 
 					state.navList = Array.from(h3ElementList).map(v => {
 						return {
-							link: v.id,
+							link: `#${v.id}`,
 							title: v.id,
-							isActive: hash === v.id,
+							isActive: hash === `#${v.id}`,
 						};
 					});
 				});
@@ -124,7 +124,7 @@ export default defineComponent({
 
 		function handleHashChange() {
 			// 监听到 hash 变化时，自动更新导航项的高亮状态
-			const hash = decodeURIComponent(location.hash.replace('#', ''));
+			const hash = decodeURIComponent(location.hash);
 			state.navList = state.navList.map(v => {
 				return {
 					...v,
@@ -139,7 +139,6 @@ export default defineComponent({
 
 		function handleNavItemClick(row: INavItem) {
 			location.hash = row.link;
-			handleHashChange();
 		}
 
 		return {

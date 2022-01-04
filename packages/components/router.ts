@@ -251,10 +251,21 @@ const routes: RouteRecordRaw[] = [
 export default createRouter({
 	routes,
 	history: createWebHistory(),
-	scrollBehavior() {
-		return {
-			top: 0,
-			left: 0,
-		};
+	scrollBehavior(to) {
+		let position: any = {};
+
+		if (to.hash) {
+			position = {
+				el: to.hash,
+				behavior: 'smooth',
+			};
+		} else {
+			position = {
+				top: 0,
+				left: 0,
+			};
+		}
+
+		return position;
 	},
 });
