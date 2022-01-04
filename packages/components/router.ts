@@ -10,8 +10,8 @@ import V3RadioDemo from './radio/radio.md';
 import V3DemoBlockDemo from './demo-block/demo-block.md';
 import V3RowDemo from './row/row.md';
 import V3MessageDemo from './message/message.md';
+import V3SelectDemo from './select/select.md';
 
-import V3SelectDemo from './select/src/App.vue';
 import V3TagDemo from './tag/src/App.vue';
 import V3BackdropDemo from './backdrop/src/App.vue';
 import V3DialogDemo from './dialog/src/App.vue';
@@ -107,7 +107,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		name: 'V3Select',
 		component: V3SelectDemo,
 		meta: {
-			title: '下拉框',
+			title: '下拉选项',
 		},
 	},
 	{
