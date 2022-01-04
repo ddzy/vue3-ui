@@ -9,8 +9,8 @@ import V3InputNumberDemo from './input-number/input-number.md';
 import V3RadioDemo from './radio/radio.md';
 import V3DemoBlockDemo from './demo-block/demo-block.md';
 import V3RowDemo from './row/row.md';
+import V3MessageDemo from './message/message.md';
 
-import V3MessageDemo from './message/src/App.vue';
 import V3SelectDemo from './select/src/App.vue';
 import V3TagDemo from './tag/src/App.vue';
 import V3BackdropDemo from './backdrop/src/App.vue';
