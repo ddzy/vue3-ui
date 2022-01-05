@@ -533,7 +533,7 @@ export default defineComponent({
 </script>
 ```
 
-### 合并多选的值以便于节省空间
+### 不同尺寸的下拉选项
 
 ```vue demo
 <template>
@@ -620,3 +620,49 @@ export default defineComponent({
 });
 </script>
 ```
+
+### API
+
+#### Select参数
+
+| 参数名            | 说明                                                             | 类型                                       | 可选值                 | 默认值       |
+| ----------------- | ---------------------------------------------------------------- | ------------------------------------------ | ---------------------- | ------------ |
+| modelValue        | 下拉框的值（通过 `v-model` 绑定）                                | string / boolean / number / object / array |                        | 必填         |
+| multiple          | 是否开启多选                                                     | boolean                                    |                        | false        |
+| disabled          | 是否禁用下拉框                                                   | boolean                                    |                        | false        |
+| valueKey          | 当 `modelValue` 的值为对象类型，该值为 `modelValue` 的唯一 `key` | string                                     |                        |              |
+| clearable         | 是否可清空所选值                                                 | boolean                                    |                        | false        |
+| collapseTags      | 在多选状态下，选中多个值，合并为一个展示，可节省空间             | boolean                                    |                        | false        |
+| multipleLimit     | 多选状态下，限制选择的数量                                       | number                                     |                        | -1           |
+| placeholder       |                                                                  | string                                     |                        | 请选择内容   |
+| remotePlaceholder |                                                                  | string                                     |                        | 请输入关键字 |
+| filterable        | 是否启用本地模糊搜索                                             | boolean                                    |                        | false        |
+| remote            | 是否启用远程搜索                                                 | boolean                                    |                        | false        |
+| loading           | 下拉框的加载状态                                                 | boolean                                    |                        | false        |
+| loadingText       | 加载时显示的文本                                                 | string                                     |                        | 获取数据中   |
+| noMatchText       | 在 `filterable` 状态下，没有匹配的数据时显示的文本               | string                                     |                        | 无匹配数据   |
+| noDataText        | 在 `remote` 或选项为空的状态下显示的文本                         | string                                     |                        | 无数据       |
+| filterMethod      | 自定义本地过滤的方法                                             | function                                   |                        | null         |
+| remoteMethod      | 自定义远程搜索的方法                                             | function                                   |                        | null         |
+| size              | 下拉框的尺寸                                                     | string                                     | small / medium / large | medium       |
+
+#### Select事件
+
+| 事件名  | 说明                       | 回调参数             |
+| ------- | -------------------------- | -------------------- |
+| visible | 下拉框显示 / 隐藏时触发    | (isVisible: boolean) |
+| change  | 下拉选项的值发生变化时触发 | (value: string       | boolean | number | object | array) |
+
+#### Select插槽
+
+| 插槽名  | 说明     | 子标签       |
+| ------- | -------- | ------------ |
+| default | 默认插槽 | SelectOption |
+
+#### SelectOption参数
+
+| 事件名   | 说明             | 类型                               | 可选值 | 默认值 |
+| -------- | ---------------- | ---------------------------------- | ------ | ------ |
+| label    | 显示的文本       | string                             |        |        |
+| value    | 绑定的值         | string / boolean / number / object |        | 必填   |
+| disabled | 是否禁用当前选项 | boolean                            |        | false  |
