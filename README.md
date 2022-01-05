@@ -23,7 +23,7 @@ vue3 组件库
 |       Col        |   栅格系统-列    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     Message      |      消息框      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Tag        |       标签       | :white_check_mark: | :white_check_mark: |   :construction:   |
-|      Select      |     下拉选项     | :white_check_mark: | :white_check_mark: |   :construction:   |
+|      Select      |     下拉选项     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     Backdrop     |      遮罩层      | :white_check_mark: | :white_check_mark: |   :construction:   |
 |      Dialog      |       弹窗       | :white_check_mark: | :white_check_mark: |   :construction:   |
 |      Switch      |       开关       | :white_check_mark: | :white_check_mark: |   :construction:   |
