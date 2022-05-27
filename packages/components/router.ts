@@ -28,6 +28,7 @@ import V3PopconfirmDemo from './popconfirm/src/App.vue';
 import V3SliderDemo from './slider/src/App.vue';
 import V3ProgressDemo from './progress/src/App.vue';
 import V3CarouselDemo from './carousel/src/App.vue';
+import V3DrawerDemo from './drawer/src/App.vue';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -236,6 +237,14 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 		component: V3CarouselDemo,
 		meta: {
 			title: '轮播图',
+		},
+	},
+	{
+		path: '/drawer',
+		name: 'V3Drawer',
+		component: V3DrawerDemo,
+		meta: {
+			title: '抽屉',
 		},
 	},
 ];

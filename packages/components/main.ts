@@ -42,6 +42,7 @@ import V3ProgressLinear from './progress-linear/main';
 import V3ProgressCircular from './progress-circular/main';
 import V3Carousel from './carousel/main';
 import V3CarouselItem from './carousel-item/main';
+import V3Drawer from './drawer/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -102,6 +103,7 @@ export {
 	V3ProgressCircular,
 	V3Carousel,
 	V3CarouselItem,
+	V3Drawer,
 };
 
 export default function install(app: App) {
@@ -138,6 +140,7 @@ export default function install(app: App) {
 	app.component(V3ProgressCircular.name, V3ProgressCircular);
 	app.component(V3Carousel.name, V3Carousel);
 	app.component(V3CarouselItem.name, V3CarouselItem);
+	app.component(V3Drawer.name, V3Drawer);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
