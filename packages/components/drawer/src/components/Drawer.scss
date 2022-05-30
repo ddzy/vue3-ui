@@ -1,3 +1,47 @@
-.v3-drawer {
+$drawer-placement: (
+	left: (
+		wrapperLeft: 0,
+		wrapperRight: auto,
+		wrapperTop: 0,
+		wrapperBottom: auto,
+	),
+	right: (
+		wrapperLeft: auto,
+		wrapperRight: 0,
+		wrapperTop: 0,
+		wrapperBottom: auto,
+	),
+	top: (
+		wrapperLeft: 0,
+		wrapperRight: auto,
+		wrapperTop: 0,
+		wrapperBottom: auto,
+	),
+	bottom: (
+		wrapperLeft: 0,
+		wrapperRight: auto,
+		wrapperTop: auto,
+		wrapperBottom: 0,
+	),
+);
 
+.v3-drawer {
+	position: relative;
+	height: 100%;
+
+	@each $key, $value in $drawer-placement {
+		&.is-#{$key} {
+			.v3-drawer__inner {
+				left: map-get($map: $value, $key: wrapperLeft);
+				right: map-get($map: $value, $key: wrapperRight);
+				top: map-get($map: $value, $key: wrapperTop);
+				bottom: map-get($map: $value, $key: wrapperBottom);
+			}
+		}
+	}
+
+	.v3-drawer__inner {
+		position: absolute;
+		background-color: #fff;
+	}
 }

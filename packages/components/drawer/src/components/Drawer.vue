@@ -1,12 +1,31 @@
 <template>
-	<v3-backdrop v-model="state.syncedModelValue">
+	<v3-backdrop v-model="state.syncedModelValue" :center="false" :fixed="true">
 		<transition name="v3-drawer-translate">
-			<div class="v3-drawer" v-if="state.syncedModelValue">drawer</div>
+			<div
+				v-if="state.syncedModelValue"
+				class="v3-drawer"
+				:class="{
+					[`is-${props.placement}`]: true,
+				}"
+			>
+				<div
+					class="v3-drawer__inner"
+					:style="{
+						width: computedWidth,
+						height: computedHeight,
+					}"
+				>
+					<div class="v3-drawer__header"></div>
+					<div class="v3-drawer__content"></div>
+					<div class="v3-drawer__footer"></div>
+				</div>
+			</div>
 		</transition>
 	</v3-backdrop>
 </template>
 <script lang="ts">
 import {
+	computed,
 	defineComponent,
 	getCurrentInstance,
 	PropType,
@@ -16,6 +35,7 @@ import {
 	watch,
 } from 'vue';
 import * as TYPES from '@/public/types/drawer';
+import * as UTILS from '@common/utils/index';
 import V3Backdrop from '@components/backdrop/src/components/Backdrop.vue';
 import V3Button from '@components/button/src/components/Button.vue';
 
@@ -110,15 +130,40 @@ export default defineComponent({
 	},
 	setup(props: TYPES.IDrawerProps, context) {
 		const state: IState = reactive({
-			syncedModelValue: false,
+			syncedModelValue: props.modelValue,
 		});
 		const app = ref(getCurrentInstance()).value;
+
+		watch(toRef(props, 'modelValue'), () => {
+			state.syncedModelValue = props.modelValue;
+		});
+
+		const computedWidth = computed(() => {
+			return ['left', 'right'].includes(props.placement)
+				? UTILS.isStrictNumber(props.width)
+					? `${props.width}px`
+					: UTILS.isString(props.width)
+					? props.width
+					: `0px`
+				: `100%`;
+		});
+		const computedHeight = computed(() => {
+			return ['top', 'bottom'].includes(props.placement)
+				? UTILS.isStrictNumber(props.height)
+					? `${props.height}px`
+					: UTILS.isString(props.height)
+					? props.height
+					: `0px`
+				: `100%`;
+		});
 
 		return {
 			props,
 			context,
 			state,
 			app,
+			computedWidth,
+			computedHeight,
 		};
 	},
 });

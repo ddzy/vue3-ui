@@ -44,6 +44,9 @@ export function isStrictNumber(v: any) {
 export function isStrictArray(v: any) {
 	return Array.isArray(v);
 }
+export function isString(v: any) {
+	return typeof v === 'string';
+}
 
 /**
  * 将 16 进制颜色值转换为 rgba 格式
