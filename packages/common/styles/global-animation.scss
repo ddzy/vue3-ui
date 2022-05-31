@@ -148,3 +148,98 @@
 .v3-carousel-item-fade-leave-to {
 	opacity: 0;
 }
+
+$drawer-placement-translation: (
+	top: (
+		enter-from: (
+			transform: translateY(-100%),
+		),
+		enter-active: (
+			transition: transform 0.15s linear,
+		),
+		enter-to: (
+			transform: translateY(0),
+		),
+		leave-from: (
+			transform: translateY(0),
+		),
+		leave-active: (
+			transition: transform 0.15s linear,
+		),
+		leave-to: (
+			transform: translateY(-100%),
+		),
+	),
+	bottom: (
+		enter-from: (
+			transform: translateY(100%),
+		),
+		enter-active: (
+			transition: transform 0.15s linear,
+		),
+		enter-to: (
+			transform: translateY(0),
+		),
+		leave-from: (
+			transform: translateY(0),
+		),
+		leave-active: (
+			transition: transform 0.15s linear,
+		),
+		leave-to: (
+			transform: translateY(100%),
+		),
+	),
+	left: (
+		enter-from: (
+			transform: translateX(-100%),
+		),
+		enter-active: (
+			transition: transform 0.15s linear,
+		),
+		enter-to: (
+			transform: translateX(0),
+		),
+		leave-from: (
+			transform: translateX(0),
+		),
+		leave-active: (
+			transition: transform 0.15s linear,
+		),
+		leave-to: (
+			transform: translateX(-100%),
+		),
+	),
+	right: (
+		enter-from: (
+			transform: translateX(100%),
+		),
+		enter-active: (
+			transition: transform 0.15s linear,
+		),
+		enter-to: (
+			transform: translateX(0),
+		),
+		leave-from: (
+			transform: translateX(0),
+		),
+		leave-active: (
+			transition: transform 0.15s linear,
+		),
+		leave-to: (
+			transform: translateX(100%),
+		),
+	),
+);
+@each $key1, $value1 in $drawer-placement-translation {
+	@each $key2, $value2 in $value1 {
+		.v3-drawer-translate-#{$key1}-#{$key2} {
+			@if map-has-key($map: $value2, $key: transition) {
+				transition: map-get($map: $value2, $key: transition);
+			}
+			@if map-has-key($map: $value2, $key: transform) {
+				transform: map-get($map: $value2, $key: transform);
+			}
+		}
+	}
+}

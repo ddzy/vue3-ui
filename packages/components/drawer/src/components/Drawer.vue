@@ -1,6 +1,6 @@
 <template>
 	<v3-backdrop v-model="state.syncedModelValue" :center="false" :fixed="true">
-		<transition name="v3-drawer-translate">
+		<transition :name="`v3-drawer-translate-${props.placement}`">
 			<div
 				v-if="state.syncedModelValue"
 				class="v3-drawer"
