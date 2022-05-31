@@ -28,7 +28,7 @@ import V3PopconfirmDemo from './popconfirm/src/App.vue';
 import V3SliderDemo from './slider/src/App.vue';
 import V3ProgressDemo from './progress/src/App.vue';
 import V3CarouselDemo from './carousel/src/App.vue';
-import V3DrawerDemo from './drawer/src/App.vue';
+import V3DrawerDemo from './drawer/drawer.md';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
