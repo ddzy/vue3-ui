@@ -6,6 +6,8 @@
 				class="v3-drawer"
 				:class="{
 					[`is-${props.placement}`]: true,
+					'has-header': computedHasHeader,
+					'has-footer': computedHasFooter,
 				}"
 			>
 				<div
@@ -15,9 +17,50 @@
 						height: computedHeight,
 					}"
 				>
-					<div class="v3-drawer__header"></div>
-					<div class="v3-drawer__content"></div>
-					<div class="v3-drawer__footer"></div>
+					<div class="v3-drawer__header">
+						<div class="v3-drawer-header__title">
+							<template v-if="context.slots.header">
+								<slot name="header"></slot>
+							</template>
+							<template v-else-if="!context.slots.header && props.title">
+								<h3>{{ props.title }}</h3>
+							</template>
+						</div>
+						<i
+							class="v3-icon v3-icon-close v3-drawer-header__close"
+							@click="handleClose"
+						></i>
+					</div>
+					<div class="v3-drawer__content">
+						<slot name="default"></slot>
+					</div>
+					<div class="v3-drawer__footer">
+						<template v-if="context.slots.footer">
+							<slot name="footer"></slot>
+						</template>
+						<div
+							v-else
+							class="v3-drawer-footer__btns"
+							:class="{
+								'has-confirm': props.showConfirm,
+								'has-cancel': props.showCancel,
+							}"
+						>
+							<v3-button
+								v-if="props.showConfirm"
+								:type="'primary'"
+								:loading="props.confirmLoading"
+								@click="handleConfirm"
+								>{{ props.confirmText }}</v3-button
+							>
+							<v3-button
+								v-if="props.showCancel"
+								:type="'default'"
+								@click="handleClose"
+								>{{ props.cancelText }}</v3-button
+							>
+						</div>
+					</div>
 				</div>
 			</div>
 		</transition>
@@ -115,7 +158,7 @@ export default defineComponent({
 		/** 抽屉的高度（当 placement 为 'top'/'bottom' 时有效 */
 		height: {
 			type: [String, Number],
-			default: 250,
+			default: 'auto',
 		},
 		/** 点击确认按钮时的回调 */
 		onConfirm: {
@@ -125,7 +168,7 @@ export default defineComponent({
 		/** 点击取消按钮时的回调（需手动调用 done 来关闭弹窗 */
 		onCancel: {
 			type: Function as PropType<TYPES.IDrawerOnCancel>,
-			default: null,
+			default: (done: Function) => done(),
 		},
 	},
 	setup(props: TYPES.IDrawerProps, context) {
@@ -156,6 +199,24 @@ export default defineComponent({
 					: `0px`
 				: `100%`;
 		});
+		const computedHasHeader = computed(() => {
+			return !!(context.slots.header || props.title || props.showClose);
+		});
+		const computedHasFooter = computed(() => {
+			return !!(context.slots.footer || props.showConfirm || props.showCancel);
+		});
+
+		function _closeHelper() {
+			context.emit('update:modelValue', false);
+		}
+
+		function handleClose() {
+			props.onCancel(_closeHelper);
+		}
+
+		function handleConfirm() {
+			UTILS.isFunction(props.onConfirm) && props.onConfirm(_closeHelper);
+		}
 
 		return {
 			props,
@@ -164,6 +225,10 @@ export default defineComponent({
 			app,
 			computedWidth,
 			computedHeight,
+			computedHasHeader,
+			computedHasFooter,
+			handleClose,
+			handleConfirm,
 		};
 	},
 });

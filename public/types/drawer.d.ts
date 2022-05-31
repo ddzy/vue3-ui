@@ -16,5 +16,5 @@ export interface IDrawerProps {
 	onCancel: IDrawerOnCancel;
 }
 export type IDrawerPlacement = 'top' | 'left' | 'bottom' | 'right';
-export type IDrawerOnConfirm = () => void;
+export type IDrawerOnConfirm = (done: Function) => void;
 export type IDrawerOnCancel = (done: Function) => void;

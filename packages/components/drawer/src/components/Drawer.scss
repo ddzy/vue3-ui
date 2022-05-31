@@ -38,10 +38,58 @@ $drawer-placement: (
 				bottom: map-get($map: $value, $key: wrapperBottom);
 			}
 		}
+		&.has-header {
+			.v3-drawer__inner {
+				.v3-drawer__content {
+					border-top: 1px solid $border-color-grey-default;
+				}
+			}
+		}
+		&.has-footer {
+			.v3-drawer__inner {
+				.v3-drawer__content {
+					border-bottom: 1px solid $border-color-grey-default;
+				}
+			}
+		}
 	}
 
+  .v3-drawer__content, .v3-drawer__footer {
+    padding: $padding-large-2;
+  }
+
 	.v3-drawer__inner {
+    box-sizing: border-box;
 		position: absolute;
 		background-color: #fff;
+		.v3-drawer__header {
+			display: flex;
+			justify-content: space-between;
+      padding: $padding-medium $padding-large-2;
+      .v3-drawer-header__title {
+        h3 {
+          margin: 0;
+        }
+      }
+      .v3-drawer-header__close {
+        font-size: 18px;
+        cursor: pointer;
+      }
+		}
+    .v3-drawer__content {
+      padding: $padding-large-2;
+    }
+    .v3-drawer__footer {
+      padding: $padding-large-2;
+      .v3-drawer-footer__btns {
+        display: flex;
+        justify-content: flex-end;
+        &.has-confirm.has-cancel {
+          .v3-button:first-child {
+            margin-right: $padding-medium;
+          }
+        }
+      }
+    }
 	}
 }
