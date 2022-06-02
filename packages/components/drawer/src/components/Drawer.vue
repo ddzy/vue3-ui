@@ -1,16 +1,16 @@
 <template>
 	<v3-backdrop v-model="state.syncedModelValue" :center="false" :fixed="true">
-		<transition :name="`v3-drawer-translate-${props.placement}`">
-			<div
-				v-if="state.syncedModelValue"
-				class="v3-drawer"
-				:class="{
-					[`is-${props.placement}`]: true,
-					'has-header': computedHasHeader,
-					'has-footer': computedHasFooter,
-				}"
-			>
+		<div
+			class="v3-drawer"
+			:class="{
+				[`is-${props.placement}`]: true,
+				'has-header': computedHasHeader,
+				'has-footer': computedHasFooter,
+			}"
+		>
+			<transition :name="`v3-drawer-translate-${props.placement}`">
 				<div
+					v-if="state.syncedModelValue"
 					class="v3-drawer__inner"
 					:style="{
 						width: computedWidth,
@@ -62,8 +62,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</transition>
+			</transition>
+		</div>
 	</v3-backdrop>
 </template>
 <script lang="ts">

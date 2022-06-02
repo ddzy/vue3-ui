@@ -155,7 +155,7 @@ $drawer-placement-translation: (
 			transform: translateY(-100%),
 		),
 		enter-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.2s linear,
 		),
 		enter-to: (
 			transform: translateY(0),
@@ -164,7 +164,7 @@ $drawer-placement-translation: (
 			transform: translateY(0),
 		),
 		leave-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.5s linear,
 		),
 		leave-to: (
 			transform: translateY(-100%),
@@ -175,7 +175,7 @@ $drawer-placement-translation: (
 			transform: translateY(100%),
 		),
 		enter-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.2s linear,
 		),
 		enter-to: (
 			transform: translateY(0),
@@ -184,7 +184,7 @@ $drawer-placement-translation: (
 			transform: translateY(0),
 		),
 		leave-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.5s linear,
 		),
 		leave-to: (
 			transform: translateY(100%),
@@ -192,42 +192,42 @@ $drawer-placement-translation: (
 	),
 	left: (
 		enter-from: (
-			transform: translateX(-100%),
+			transform: translate3d(-100%, 0, 0),
 		),
 		enter-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.2s linear,
 		),
 		enter-to: (
-			transform: translateX(0),
+			transform: translate3d(0, 0, 0),
 		),
 		leave-from: (
-			transform: translateX(0),
+			transform: translate3d(0, 0, 0),
 		),
 		leave-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.5s linear,
 		),
 		leave-to: (
-			transform: translateX(-100%),
+			transform: translate3d(-100%, 0, 0),
 		),
 	),
 	right: (
 		enter-from: (
-			transform: translateX(100%),
+			transform: translate3d(100%, 0, 0),
 		),
 		enter-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.2s linear,
 		),
 		enter-to: (
-			transform: translateX(0),
+			transform: translate3d(0, 0, 0),
 		),
 		leave-from: (
-			transform: translateX(0),
+			transform: translate3d(0, 0, 0),
 		),
 		leave-active: (
-			transition: transform 0.15s linear,
+			transition: transform 0.5s linear,
 		),
 		leave-to: (
-			transform: translateX(100%),
+			transform: translate3d(100%, 0, 0),
 		),
 	),
 );
