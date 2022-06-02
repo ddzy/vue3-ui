@@ -54,11 +54,17 @@ $drawer-placement: (
 		}
 	}
 
+  .v3-drawer__header, .v3-drawer__content, .v3-drawer__footer {
+    overflow: auto;
+  }
+
   .v3-drawer__content, .v3-drawer__footer {
     padding: $padding-large-2;
   }
 
 	.v3-drawer__inner {
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
 		position: absolute;
 		background-color: #fff;
@@ -77,6 +83,7 @@ $drawer-placement: (
       }
 		}
     .v3-drawer__content {
+      flex: 1;
       padding: $padding-large-2;
     }
     .v3-drawer__footer {
