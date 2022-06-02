@@ -1,5 +1,10 @@
 <template>
-	<v3-backdrop v-model="state.syncedModelValue" :center="false" :fixed="true">
+	<v3-backdrop
+		v-model="state.syncedModelValue"
+		:center="false"
+		:fixed="true"
+		@click.stop="handleBackdropClick($event)"
+	>
 		<div
 			class="v3-drawer"
 			:class="{
@@ -219,6 +224,22 @@ export default defineComponent({
 			UTILS.isFunction(props.onConfirm) && props.onConfirm(_closeHelper);
 		}
 
+		function handleBackdropClick(e: MouseEvent) {
+			// 点击遮罩层时，要根据 closeOnClickBackdrop 来判断是否可以关闭抽屉
+			if (props.closeOnClickBackdrop) {
+				const target = e.target as HTMLElement;
+
+				// 只有点击遮罩层本身才会关闭抽屉，点击其内部子元素则不会关闭
+				if (
+					target.nodeName === 'DIV' &&
+					(target.classList.contains('v3-backdrop') ||
+						target.classList.contains('v3-drawer'))
+				) {
+					handleClose();
+				}
+			}
+		}
+
 		return {
 			props,
 			context,
@@ -230,6 +251,7 @@ export default defineComponent({
 			computedHasFooter,
 			handleClose,
 			handleConfirm,
+			handleBackdropClick,
 		};
 	},
 });

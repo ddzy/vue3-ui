@@ -80,9 +80,6 @@ export default defineComponent({
 		v-model="state.showDrawer"
 		title="标题"
 		:placement="state.placement"
-		:showClose="false"
-		:showConfirm="false"
-		:showCancel="false"
 	>
 		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
 		iusto sequi pariatur quaerat numquam, nulla minus recusandae
