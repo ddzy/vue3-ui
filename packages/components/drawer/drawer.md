@@ -80,31 +80,16 @@ export default defineComponent({
 		v-model="state.showDrawer"
 		title="标题"
 		:placement="state.placement"
+		:showClose="false"
+		:showConfirm="false"
+		:showCancel="false"
 	>
 		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
 		iusto sequi pariatur quaerat numquam, nulla minus recusandae
 		voluptatibus, reprehenderit voluptate quos quisquam at ratione illum
 		ipsa id a ducimus quam? Placeat minus, soluta quas, asperiores
 		consequatur reprehenderit repellendus veritatis aperiam sit debitis
-		error reiciendis quos accusamus et, dicta assumenda nesciunt
-		exercitationem alias praesentium voluptatum? Beatae accusamus sit
-		voluptatum facere assumenda!
-		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
-		iusto sequi pariatur quaerat numquam, nulla minus recusandae
-		voluptatibus, reprehenderit voluptate quos quisquam at ratione illum
-		ipsa id a ducimus quam? Placeat minus, soluta quas, asperiores
-		consequatur reprehenderit repellendus veritatis aperiam sit debitis
-		error reiciendis quos accusamus et, dicta assumenda nesciunt
-		exercitationem alias praesentium voluptatum? Beatae accusamus sit
-		voluptatum facere assumenda!
-		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
-		iusto sequi pariatur quaerat numquam, nulla minus recusandae
-		voluptatibus, reprehenderit voluptate quos quisquam at ratione illum
-		ipsa id a ducimus quam? Placeat minus, soluta quas, asperiores
-		consequatur reprehenderit repellendus veritatis aperiam sit debitis
-		error reiciendis quos accusamus et, dicta assumenda nesciunt
-		exercitationem alias praesentium voluptatum? Beatae accusamus sit
-		voluptatum facere assumenda!
+
 	</v3-drawer>
 </template>
 <script lang="ts">

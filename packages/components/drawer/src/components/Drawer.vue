@@ -27,6 +27,7 @@
 							</template>
 						</div>
 						<i
+							v-if="props.showClose"
 							class="v3-icon v3-icon-close v3-drawer-header__close"
 							@click="handleClose"
 						></i>
