@@ -105,3 +105,32 @@ export default defineComponent({
 });
 </script>
 ```
+
+### API
+
+#### Drawer参数
+
+| 参数名               | 说明                                               | 类型          | 可选值                | 默认值                     |
+| -------------------- | -------------------------------------------------- | ------------- | --------------------- | -------------------------- |
+| placement            | 抽屉弹出的位置                                     | string        | top/left/bottom/right | right                      |
+| title                | 抽屉标题，也可通过 slot=header 指定                | string        |                       |                            |
+| showBackdrop         | 是否显示遮罩层                                     | boolean       |                       | true                       |
+| showClose            | 是否显示关闭按钮                                   | boolean       |                       | true                       |
+| closeOnClickBackdrop | 点击遮罩层是否关闭抽屉                             | boolean       |                       | true                       |
+| confirmText          | 确定按钮的文案                                     | string        |                       | 确定                       |
+| cancelText           | 取消按钮的文案                                     | string        |                       | 取消                       |
+| showConfirm          | 是否显示确定按钮                                   | boolean       |                       | true                       |
+| showCancel           | 是否显示取消按钮                                   | boolean       |                       | true                       |
+| confirmLoading       | 确定按钮的 loading 状态                            | boolean       |                       | false                      |
+| width                | 抽屉的宽度（当 placement 为 left/right 时有效      | string/number |                       | 250                        |
+| height               | 抽屉的高度（当 placement 为 top/bottom 时有效      | string/number |                       | auto                       |
+| onConfirm            | 点击确认按钮时的回调                               | function      |                       | null                       |
+| onCancel             | 点击取消按钮时的回调（需手动调用 done 来关闭弹窗） | function      |                       | (done: Function) => done() |
+
+#### Drawer插槽
+
+| 插槽名  | 说明           | 子标签   |
+| ------- | -------------- | -------- |
+| default | 默认插槽       | 主要内容 |
+| header  | 自定义头部内容 |          |
+| footer  | 自定义尾部内容 |          |
