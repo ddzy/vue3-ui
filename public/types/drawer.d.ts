@@ -2,7 +2,6 @@ export interface IDrawerProps {
 	modelValue: boolean;
 	placement: IDrawerPlacement;
 	title: string;
-	showBackdrop: boolean;
 	showClose: boolean;
 	closeOnClickBackdrop: boolean;
 	confirmText: string;

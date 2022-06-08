@@ -116,11 +116,6 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
-		/** 是否显示遮罩层 */
-		showBackdrop: {
-			type: Boolean,
-			default: true,
-		},
 		/** 是否显示关闭按钮 */
 		showClose: {
 			type: Boolean,
