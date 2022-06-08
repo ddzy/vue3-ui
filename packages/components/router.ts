@@ -12,7 +12,7 @@ import V3RowDemo from './row/row.md';
 import V3MessageDemo from './message/message.md';
 import V3SelectDemo from './select/select.md';
 
-import V3TagDemo from './tag/src/App.vue';
+import V3TagDemo from './tag/tag.md';
 import V3BackdropDemo from './backdrop/src/App.vue';
 import V3DialogDemo from './dialog/src/App.vue';
 import V3SwitchDemo from './switch/src/App.vue';

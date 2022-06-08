@@ -88,7 +88,7 @@ $tag-size-list: (
 );
 
 .v3-tag {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	cursor: default;
 	border-radius: $border-radius-width-small;
