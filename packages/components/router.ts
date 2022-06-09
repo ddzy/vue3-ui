@@ -14,7 +14,7 @@ import V3SelectDemo from './select/select.md';
 
 import V3TagDemo from './tag/tag.md';
 import V3BackdropDemo from './backdrop/backdrop.md';
-import V3DialogDemo from './dialog/src/App.vue';
+import V3DialogDemo from './dialog/dialog.md';
 import V3SwitchDemo from './switch/src/App.vue';
 import V3TooltipDemo from './tooltip/src/App.vue';
 import V3PopoverDemo from './popover/src/App.vue';
