@@ -25,7 +25,7 @@ vue3 组件库
 |       Tag        |       标签       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Select      |     下拉选项     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     Backdrop     |      遮罩层      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-|      Dialog      |       弹窗       | :white_check_mark: | :white_check_mark: |   :construction:   |
+|      Dialog      |       弹窗       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Switch      |       开关       | :white_check_mark: | :white_check_mark: |   :construction:   |
 |     Tooltip      |     工具提示     | :white_check_mark: | :white_check_mark: |   :construction:   |
 |     Popover      |     弹出窗口     | :white_check_mark: | :white_check_mark: |   :construction:   |
