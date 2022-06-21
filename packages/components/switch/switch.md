@@ -152,14 +152,26 @@ export default defineComponent({
 
 #### Switch 参数
 
-| 参数名 | 说明 | 类型 | 可选值 | 默认值 |
-| ------ | ---- | ---- | ------ | ------ |
-|        |      |      |        |        |
+| 参数名        | 说明                                     | 类型                  | 可选值 | 默认值  | 必填 |
+| ------------- | ---------------------------------------- | --------------------- | ------ | ------- | ---- |
+| modelValue    | v-model                                  | boolean/string/number |        | true    | true |
+| disabled      | 是否禁用                                 | boolean               |        | false   |      |
+| loading       | 是否加载中                               | boolean               |        | false   |      |
+| width         | 开关的宽度（px）                         | number                |        | 35      |      |
+| activeIcon    | 开启状态下的图标（会覆盖 activeLabel）   | string                |        |         |      |
+| inactiveIcon  | 关闭状态下的图标（会覆盖 inactiveLabel） | string                |        |         |      |
+| activeValue   | 开启状态下的值                           | boolean/string/number |        | true    |      |
+| inactiveValue | 关闭状态下的值                           | boolean/string/number |        | false   |      |
+| activeLabel   | 开启状态下的文本                         | string                |        |         |      |
+| inactiveLabel | 关闭状态下的文本                         | string                |        |         |      |
+| activeColor   | 开启状态下的颜色（必须为16进制格式）     | string                |        | #63B931 |      |
+| inactiveColor | 关闭状态下的颜色（必须为16进制格式）     | string                |        | #C91B26 |      |
 
 #### Switch 事件
 
-| 事件名 | 说明 | 回调参数 |
-| ------ | ---- | -------- |
+| 事件名 | 说明             | 回调参数        |
+| ------ | ---------------- | --------------- |
+| change | 值发生变化时触发 | (v: activeValue | inactiveValue) => void |
 
 #### Switch 插槽
 
