@@ -20,7 +20,7 @@ import V3TooltipDemo from './tooltip/tooltip.md';
 import V3PopoverDemo from './popover/popover.md';
 import V3DividerDemo from './divider/divider.md';
 import V3SpaceDemo from './space/space.md';
-import V3BadgeDemo from './badge/src/App.vue';
+import V3BadgeDemo from './badge/badge.md';
 import V3LoadingDemo from './loading/src/App.vue';
 import V3CardDemo from './card/src/App.vue';
 import V3BasePopperDemo from './base-popper/src/App.vue';
