@@ -248,7 +248,7 @@ export default defineComponent({
 
 ### API
 
-#### Switch 参数
+#### Tooltip参数
 
 > 其它参数同 `BasePopper`
 
@@ -257,7 +257,7 @@ export default defineComponent({
 | title  | 标题 | string |        |        |      |
 | ...    | ...  | ...    | ...    | ...    | ...  |
 
-#### Switch 事件
+#### Tooltip事件
 
 > 同 `BasePopper`
 
@@ -265,7 +265,7 @@ export default defineComponent({
 | ------ | ---- | -------- |
 | ...    | ...  | ...      |
 
-#### Switch 插槽
+#### Tooltip插槽
 
 > 同 `BasePopper`
 

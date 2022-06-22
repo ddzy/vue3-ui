@@ -17,7 +17,7 @@ import V3BackdropDemo from './backdrop/backdrop.md';
 import V3DialogDemo from './dialog/dialog.md';
 import V3SwitchDemo from './switch/switch.md';
 import V3TooltipDemo from './tooltip/tooltip.md';
-import V3PopoverDemo from './popover/src/App.vue';
+import V3PopoverDemo from './popover/popover.md';
 import V3DividerDemo from './divider/src/App.vue';
 import V3SpaceDemo from './space/src/App.vue';
 import V3BadgeDemo from './badge/src/App.vue';
