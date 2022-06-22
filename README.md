@@ -28,7 +28,8 @@ vue3 组件库
 |      Dialog      |       弹窗       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Switch      |       开关       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     Tooltip      |     工具提示     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-|     Popover      |     弹出窗口     | :white_check_mark: | :white_check_mark: |   :construction:   |
+|     Popover      |     弹出窗口     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|     Divider      |      分割线      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Space       |     间隔组件     | :white_check_mark: | :white_check_mark: |   :construction:   |
 |      Badge       |       徽标       | :white_check_mark: | :white_check_mark: |   :construction:   |
 |     Loading      |      加载中      | :white_check_mark: | :white_check_mark: |   :construction:   |
