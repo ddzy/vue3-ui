@@ -23,7 +23,7 @@ import V3SpaceDemo from './space/space.md';
 import V3BadgeDemo from './badge/badge.md';
 import V3LoadingDemo from './loading/loading.md';
 import V3CardDemo from './card/card.md';
-import V3BasePopperDemo from './base-popper/src/App.vue';
+import V3BasePopperDemo from './base-popper/base-popper.md';
 import V3PopconfirmDemo from './popconfirm/src/App.vue';
 import V3SliderDemo from './slider/src/App.vue';
 import V3ProgressDemo from './progress/src/App.vue';
