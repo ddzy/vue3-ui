@@ -4,7 +4,69 @@
 
 ```vue demo
 <template>
+	<div style="display: inline-block">
+		<v3-base-popper>
+			<v3-button type="primary">触发</v3-button>
+			<template #content>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+				eveniet nesciunt amet, rem consectetur quod perferendis harum fugit
+				excepturi repudiandae culpa veritatis praesentium porro libero
+				inventore? Quasi debitis provident consequatur?
+			</template>
+		</v3-base-popper>
+	</div>
+</template>
+```
 
+### 不同的触发方式
+
+```vue demo
+<template>
+	<div style="display: inline-block">
+		<v3-base-popper trigger="mouseenter">
+			<v3-button type="primary">mouseenter 触发</v3-button>
+			<template #content>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+				eveniet nesciunt amet, rem consectetur quod perferendis harum
+				fugit excepturi repudiandae culpa veritatis praesentium porro
+				libero inventore? Quasi debitis provident consequatur?
+			</template>
+		</v3-base-popper>
+		<v3-divider direction="horizontal"></v3-divider>
+		<v3-base-popper trigger="click">
+			<v3-button type="primary">click 触发</v3-button>
+			<template #content>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+				eveniet nesciunt amet, rem consectetur quod perferendis harum
+				fugit excepturi repudiandae culpa veritatis praesentium porro
+				libero inventore? Quasi debitis provident consequatur?
+			</template>
+		</v3-base-popper>
+	</div>
+</template>
+```
+
+### 纯手动控制
+
+```vue demo
+<template>
+	<div style="display: inline-block">
+		<v3-base-popper
+			trigger="manual"
+			theme="light"
+			v-model="state.popperValue"
+		>
+			<v3-button type="primary" @click="state.popperValue = true"
+				>触发</v3-button
+			>
+			<template #content>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+				eveniet nesciunt amet, rem consectetur quod perferendis harum fugit
+				excepturi repudiandae culpa veritatis praesentium porro libero
+				inventore? Quasi debitis provident consequatur?
+			</template>
+		</v3-base-popper>
+	</div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive, getCurrentInstance } from 'vue';
@@ -12,7 +74,7 @@ import { defineComponent, reactive, getCurrentInstance } from 'vue';
 export default defineComponent({
 	setup() {
 		const state = reactive({
-
+			popperValue: false,
     });
 
 		return {
@@ -21,6 +83,36 @@ export default defineComponent({
 	},
 });
 </script>
+```
+
+### 两种内置主题
+
+```vue demo
+<template>
+	<div style="display: inline-block">
+		<v3-space :size="12">
+			<v3-base-popper placement="bottom" theme="dark">
+				<v3-button type="primary">黑色主题</v3-button>
+				<template #content>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+					eveniet nesciunt amet, rem consectetur quod perferendis harum
+					fugit excepturi repudiandae culpa veritatis praesentium porro
+					libero inventore? Quasi debitis provident consequatur?
+				</template>
+			</v3-base-popper>
+
+			<v3-base-popper placement="bottom" theme="light">
+				<v3-button type="primary">白色主题</v3-button>
+				<template #content>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga,
+					eveniet nesciunt amet, rem consectetur quod perferendis harum
+					fugit excepturi repudiandae culpa veritatis praesentium porro
+					libero inventore? Quasi debitis provident consequatur?
+				</template>
+			</v3-base-popper>
+		</v3-space>
+	</div>
+</template>
 ```
 
 ### API
