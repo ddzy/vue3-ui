@@ -35,7 +35,7 @@ vue3 组件库
 |     Loading      |      加载中      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Card       |       卡片       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |    BasePopper    |   基础的悬浮窗   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-|    PopConfirm    |    气泡确认框    | :white_check_mark: | :white_check_mark: |   :construction:   |
+|    PopConfirm    |    气泡确认框    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Slider      |       滑块       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |  ProgressLinear  |      进度条      | :white_check_mark: | :white_check_mark: |   :construction:   |
 | ProgressCircular |      进度环      | :white_check_mark: | :white_check_mark: |   :construction:   |
