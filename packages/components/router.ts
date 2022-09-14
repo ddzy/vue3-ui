@@ -11,7 +11,6 @@ import V3DemoBlockDemo from './demo-block/demo-block.md';
 import V3RowDemo from './row/row.md';
 import V3MessageDemo from './message/message.md';
 import V3SelectDemo from './select/select.md';
-
 import V3TagDemo from './tag/tag.md';
 import V3BackdropDemo from './backdrop/backdrop.md';
 import V3DialogDemo from './dialog/dialog.md';
@@ -27,7 +26,7 @@ import V3BasePopperDemo from './base-popper/base-popper.md';
 import V3PopconfirmDemo from './popconfirm/popconfirm.md';
 import V3SliderDemo from './slider/slider.md';
 import V3ProgressDemo from './progress/progress.md';
-import V3CarouselDemo from './carousel/src/App.vue';
+import V3CarouselDemo from './carousel/carousel.md';
 import V3DrawerDemo from './drawer/drawer.md';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
