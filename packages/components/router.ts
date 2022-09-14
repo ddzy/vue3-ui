@@ -28,6 +28,7 @@ import V3SliderDemo from './slider/slider.md';
 import V3ProgressDemo from './progress/progress.md';
 import V3CarouselDemo from './carousel/carousel.md';
 import V3DrawerDemo from './drawer/drawer.md';
+import V3BackDemo from './back/back.md';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
@@ -246,11 +247,19 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 			title: '抽屉',
 		},
 	},
+	{
+		path: '/back',
+		name: 'V3Back',
+		component: V3BackDemo,
+		meta: {
+			title: '返回',
+		},
+	},
 ];
 const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
-		redirect: '/button',
+		redirect: dynamcRoutes[0].path,
 		component: Home,
 		children: [...dynamcRoutes],
 	},

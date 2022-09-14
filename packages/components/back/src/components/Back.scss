@@ -1,0 +1,102 @@
+$drawer-placement: (
+	left: (
+		wrapperLeft: 0,
+		wrapperRight: auto,
+		wrapperTop: 0,
+		wrapperBottom: auto,
+	),
+	right: (
+		wrapperLeft: auto,
+		wrapperRight: 0,
+		wrapperTop: 0,
+		wrapperBottom: auto,
+	),
+	top: (
+		wrapperLeft: 0,
+		wrapperRight: auto,
+		wrapperTop: 0,
+		wrapperBottom: auto,
+	),
+	bottom: (
+		wrapperLeft: 0,
+		wrapperRight: auto,
+		wrapperTop: auto,
+		wrapperBottom: 0,
+	),
+);
+
+.v3-drawer {
+	position: relative;
+	height: 100%;
+
+	@each $key, $value in $drawer-placement {
+		&.is-#{$key} {
+			.v3-drawer__inner {
+				left: map-get($map: $value, $key: wrapperLeft);
+				right: map-get($map: $value, $key: wrapperRight);
+				top: map-get($map: $value, $key: wrapperTop);
+				bottom: map-get($map: $value, $key: wrapperBottom);
+			}
+		}
+		&.has-header {
+			.v3-drawer__inner {
+				.v3-drawer__content {
+					border-top: 1px solid $border-color-grey-default;
+				}
+			}
+		}
+		&.has-footer {
+			.v3-drawer__inner {
+				.v3-drawer__content {
+					border-bottom: 1px solid $border-color-grey-default;
+				}
+			}
+		}
+	}
+
+  .v3-drawer__header, .v3-drawer__content, .v3-drawer__footer {
+    overflow: auto;
+  }
+
+  .v3-drawer__content, .v3-drawer__footer {
+    padding: $padding-large-2;
+  }
+
+	.v3-drawer__inner {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+		position: absolute;
+		background-color: #fff;
+		.v3-drawer__header {
+			display: flex;
+			justify-content: space-between;
+      padding: $padding-medium $padding-large-2;
+      .v3-drawer-header__title {
+        h3 {
+          margin: 0;
+        }
+      }
+      .v3-drawer-header__close {
+        font-size: 18px;
+        cursor: pointer;
+      }
+		}
+    .v3-drawer__content {
+      flex: 1;
+      padding: $padding-large-2;
+    }
+    .v3-drawer__footer {
+      padding: $padding-large-2;
+      .v3-drawer-footer__btns {
+        display: flex;
+        justify-content: flex-end;
+        &.has-confirm.has-cancel {
+          .v3-button:first-child {
+            margin-right: $padding-medium;
+          }
+        }
+      }
+    }
+	}
+}
