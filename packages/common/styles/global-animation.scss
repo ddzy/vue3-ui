@@ -243,3 +243,18 @@ $drawer-placement-translation: (
 		}
 	}
 }
+
+.v3-back-fade-enter-from {
+	opacity: 0;
+}
+.v3-back-fade-enter-active,
+.v3-back-fade-leave-active {
+	transition: opacity .15s ease;
+}
+.v3-back-fade-enter-to,
+.v3-back-fade-leave-from {
+	opacity: 1;
+}
+.v3-back-fade-leave-to {
+	opacity: 0;
+}

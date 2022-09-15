@@ -1,7 +1,7 @@
 export interface IBackProps {
   distance: number;
-  showTop: boolean;
-  showBottom: boolean;
+  disableToTop: boolean;
+  disableToBottom: boolean;
   target: IBackTarget;
 }
 export type IBackTarget = HTMLElement | Window
