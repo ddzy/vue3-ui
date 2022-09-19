@@ -124,6 +124,7 @@ export function ease(
 ) {
 	let nextM = currentM + (targetM - currentM) / v;
 	// 判断滚动方向，解决 scrollTop 的值为小数导致滚动无法触顶的问题
+	// 由于浏览器会对 (targetM - currentM) / v 的值做向下取整，所以当剩余距离小于v的时候，此时 (targetM - currentM) / v 的值 < 1，从而导致计算出来的 scrollTop 的值无法变化
 	let direction = nextM - currentM;
 
 	if (direction > 0) {
