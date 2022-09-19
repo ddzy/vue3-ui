@@ -130,16 +130,19 @@ export default defineComponent({
 		function toTopHelper() {
 			const target = getTarget();
 			const { scrollTop: currentScrollTop } = getValue();
-			let nextScrollTop = currentScrollTop + (0 - currentScrollTop) / 8;
 
-			if (nextScrollTop <= 0) {
-				target.scrollTop = 0;
+			// 已到达顶部
+			if (currentScrollTop <= 0) {
 				window.cancelAnimationFrame(state.toTopTimer);
+				target.scrollTop = 0;
 				state.toTopTimer = 0;
-			} else {
+				return;
+			}
+
+			UTILS.ease(currentScrollTop, 0, 8, nextScrollTop => {
 				target.scrollTop = nextScrollTop;
 				window.requestAnimationFrame(toTopHelper);
-			}
+			});
 		}
 		function toBottomHelper() {
 			const target = getTarget();
@@ -148,24 +151,27 @@ export default defineComponent({
 				offsetHeight,
 				scrollHeight,
 			} = getValue();
-			let nextScrollTop =
-				currentScrollTop + (scrollHeight - currentScrollTop) / 8;
+			const targetM = scrollHeight - offsetHeight;
 
-			if (nextScrollTop + offsetHeight >= scrollHeight) {
-				target.scrollTop = scrollHeight - offsetHeight;
+			// 已到达底部
+			if (currentScrollTop >= targetM) {
 				window.cancelAnimationFrame(state.toBottomTimer);
+				target.scrollTop = targetM;
 				state.toBottomTimer = 0;
-			} else {
-				target.scrollTop = nextScrollTop;
-				window.requestAnimationFrame(toBottomHelper);
+				return;
 			}
+
+			UTILS.ease(currentScrollTop, targetM, 8, nextScrollTop => {
+				target.scrollTop = nextScrollTop;
+				state.toBottomTimer = window.requestAnimationFrame(toBottomHelper);
+			});
 		}
 
 		function handleScroll() {
-			const { scrollTop, scrollHeight, clientHeight } = getValue();
+			const { scrollTop, scrollHeight, offsetHeight } = getValue();
 
 			state.showTop = scrollTop > props.distance;
-			state.showBottom = scrollHeight - scrollTop !== clientHeight;
+			state.showBottom = scrollHeight - scrollTop !== offsetHeight;
 		}
 		function toTop() {
 			if (state.toBottomTimer) {

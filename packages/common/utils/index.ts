@@ -108,6 +108,7 @@ export function throttle(
 	};
 }
 
+let prevM = 0;
 /**
  * 时间固定的缓动动画
  * @param currentM 当前的位置
@@ -119,12 +120,17 @@ export function ease(
 	currentM: number,
 	targetM: number,
 	v: number = 8,
-	doing = (isEnd: boolean, nextM: number) => {}
+	doing = (nextM: number) => {}
 ) {
 	let nextM = currentM + (targetM - currentM) / v;
-	if (nextM >= targetM || nextM <= 0) {
-		doing(true, nextM);
-	} else {
-		doing(false, nextM);
+	// 判断滚动方向，解决 scrollTop 的值为小数导致滚动无法触顶的问题
+	let direction = nextM - currentM;
+
+	if (direction > 0) {
+		nextM = currentM + Math.ceil((targetM - currentM) / v);
+	} else if (direction < 0) {
+		nextM = currentM + Math.floor((targetM - currentM) / v);
 	}
+	prevM = nextM;
+	doing(nextM);
 }
