@@ -107,3 +107,24 @@ export function throttle(
 		}
 	};
 }
+
+/**
+ * 时间固定的缓动动画
+ * @param currentM 当前的位置
+ * @param targetM 最终位置
+ * @param v 缓动速率
+ * @param doing 回调
+ */
+export function ease(
+	currentM: number,
+	targetM: number,
+	v: number = 8,
+	doing = (isEnd: boolean, nextM: number) => {}
+) {
+	let nextM = currentM + (targetM - currentM) / v;
+	if (nextM >= targetM || nextM <= 0) {
+		doing(true, nextM);
+	} else {
+		doing(false, nextM);
+	}
+}

@@ -85,6 +85,9 @@ export default defineComponent({
 		const state = reactive({
 			showTop: false,
 			showBottom: false,
+			toTopTimer: 0,
+			toBottomTimer: 0,
+			step: 20,
 		});
 		const app = ref(getCurrentInstance()).value;
 
@@ -105,28 +108,85 @@ export default defineComponent({
 			props.target.removeEventListener('scroll', _scrollHelper);
 		});
 
-		function handleScroll() {
-			let scrollTop = 0;
-			let scrollHeight = 0;
-			let offsetHeight = 0;
-			if (computedIsGlobal.value) {
-				scrollTop =
-					document.body.scrollTop || document.documentElement.scrollTop;
-				scrollHeight =
-					document.body.scrollHeight || document.documentElement.scrollHeight;
-				offsetHeight =
-					document.body.offsetHeight || document.documentElement.offsetHeight;
+		function getValue() {
+			const target = getTarget();
+			let scrollTop = target.scrollTop;
+			let scrollHeight = target.scrollHeight;
+			let offsetHeight = target.offsetHeight;
+			let clientHeight = target.clientHeight;
+
+			return {
+				scrollTop,
+				scrollHeight,
+				offsetHeight,
+				clientHeight,
+			};
+		}
+		function getTarget(): HTMLElement {
+			return computedIsGlobal.value
+				? document.body || document.documentElement
+				: (props.target as HTMLElement);
+		}
+		function toTopHelper() {
+			const target = getTarget();
+			const { scrollTop: currentScrollTop } = getValue();
+			let nextScrollTop = currentScrollTop + (0 - currentScrollTop) / 8;
+
+			if (nextScrollTop <= 0) {
+				target.scrollTop = 0;
+				window.cancelAnimationFrame(state.toTopTimer);
+				state.toTopTimer = 0;
 			} else {
-				scrollTop = (props.target as HTMLElement).scrollTop;
-				scrollHeight = (props.target as HTMLElement).scrollHeight;
-				offsetHeight = (props.target as HTMLElement).offsetHeight;
+				target.scrollTop = nextScrollTop;
+				window.requestAnimationFrame(toTopHelper);
 			}
+		}
+		function toBottomHelper() {
+			const target = getTarget();
+			const {
+				scrollTop: currentScrollTop,
+				offsetHeight,
+				scrollHeight,
+			} = getValue();
+			let nextScrollTop =
+				currentScrollTop + (scrollHeight - currentScrollTop) / 8;
+
+			if (nextScrollTop + offsetHeight >= scrollHeight) {
+				target.scrollTop = scrollHeight - offsetHeight;
+				window.cancelAnimationFrame(state.toBottomTimer);
+				state.toBottomTimer = 0;
+			} else {
+				target.scrollTop = nextScrollTop;
+				window.requestAnimationFrame(toBottomHelper);
+			}
+		}
+
+		function handleScroll() {
+			const { scrollTop, scrollHeight, clientHeight } = getValue();
 
 			state.showTop = scrollTop > props.distance;
-			state.showBottom = scrollHeight - scrollTop !== offsetHeight;
+			state.showBottom = scrollHeight - scrollTop !== clientHeight;
 		}
-		function toTop() {}
-		function toBottom() {}
+		function toTop() {
+			if (state.toBottomTimer) {
+				window.cancelAnimationFrame(state.toBottomTimer);
+				state.toBottomTimer = 0;
+			}
+			if (state.toTopTimer) {
+				return;
+			}
+			state.toTopTimer = window.requestAnimationFrame(toTopHelper);
+		}
+		function toBottom() {
+			if (state.toTopTimer) {
+				window.cancelAnimationFrame(state.toTopTimer);
+				state.toTopTimer = 0;
+			}
+			if (state.toBottomTimer) {
+				return;
+			}
+			state.toBottomTimer = window.requestAnimationFrame(toBottomHelper);
+		}
 
 		return {
 			props,
