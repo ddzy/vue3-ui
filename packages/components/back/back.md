@@ -101,6 +101,55 @@ export default defineComponent({
 </script>
 ```
 
+### 自定义去顶部/去底部按钮
+
+```vue demo
+<template>
+	<div
+		style="position: relative; width: 500px; "
+	>
+		<div
+			ref="targetRef"
+ 			style="overflow: auto; height: 300px;"
+		>
+			<ul>
+				<li v-for="v in 200">{{ v }}</li>
+			</ul>
+		</div>
+		<v3-back
+			:target="targetRef"
+		>
+			<template #top>
+				<div
+					style="text-align: center; width: 30px; height: 30px; background-color: #daa520; color: #fff; border-radius: 50%; line-height: 30px; cursor: pointer;"
+				>↑</div>
+			</template>
+			<template #bottom>
+				<div
+					style="text-align: center; width: 30px; height: 30px; background-color: #daa520; color: #fff; border-radius: 50%; line-height: 30px; cursor: pointer;"
+				>↓</div>
+			</template>
+		</v3-back>
+	</div>
+</template>
+<script lang="ts">
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+	setup() {
+		const state = reactive({
+		});
+		const targetRef = ref(null);
+
+		return {
+			state,
+			targetRef,
+		};
+	},
+});
+</script>
+```
+
 ### API
 
 #### Back参数
