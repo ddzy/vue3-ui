@@ -39,5 +39,6 @@ vue3 组件库
 |      Slider      |       滑块       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |  ProgressLinear  |      进度条      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | ProgressCircular |      进度环      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-|     Carousel     |      轮播图      | :white_check_mark: | :white_check_mark: |   :construction:   |
+|     Carousel     |      轮播图      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Drawer      |       抽屉       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|       Back       |       返回       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
