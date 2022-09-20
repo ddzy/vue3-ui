@@ -38,12 +38,79 @@ export default defineComponent({
 </script>
 ```
 
+### 控制是否显示去顶部/去底部按钮
+
+```vue demo
+<template>
+	<v3-row>
+		<v3-col :span="6">
+			<div
+				style="position: relative;"
+			>
+				<div
+					ref="targetRef1"
+					style="overflow: auto; height: 300px;"
+				>
+					<ul>
+						<li v-for="v in 200">{{ v }}</li>
+					</ul>
+				</div>
+				<v3-back
+					disableToTop
+					:target="targetRef1"
+				></v3-back>
+			</div>
+		</v3-col>
+		<v3-col :span="6">
+			<div
+				style="position: relative;"
+			>
+				<div
+					ref="targetRef2"
+					style="overflow: auto; height: 300px;"
+				>
+					<ul>
+						<li v-for="v in 200">{{ v }}</li>
+					</ul>
+				</div>
+				<v3-back
+					disableToBottom
+					:target="targetRef2"
+				></v3-back>
+			</div>
+		</v3-col>
+	</v3-row>
+</template>
+<script lang="ts">
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+	setup() {
+		const state = reactive({
+		});
+		const targetRef1 = ref(null);
+		const targetRef2 = ref(null);
+
+		return {
+			state,
+			targetRef1,
+			targetRef2,
+		};
+	},
+});
+</script>
+```
+
 ### API
 
 #### Back参数
 
-| 参数名 | 说明 | 类型 | 可选值 | 默认值 | 是否必填 |
-| ------ | ---- | ---- | ------ | ------ | -------- |
+| 参数名          | 说明                                 | 类型    | 可选值             | 默认值 | 是否必填 |
+| --------------- | ------------------------------------ | ------- | ------------------ | ------ | -------- |
+| distance        | 页面滚动距离超过该值时显示去顶部按钮 | number  |                    | 400    | false    |
+| disableToTop    | 是否禁用（即不显示）“去顶部”按钮     | boolean |                    | false  | false    |
+| disableToBottom | 是否禁用（即不显示）“去底部”按钮     | boolean |                    | false  | false    |
+| target          | 滚动容器                             | object  | HTMLElement/Window | window | false    |
 
 #### Back事件
 

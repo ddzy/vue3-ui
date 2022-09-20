@@ -62,12 +62,12 @@ export default defineComponent({
 			type: Number,
 			default: 400,
 		},
-		/** 是否显示“去顶部”按钮 */
+		/** 是否禁用（即不显示）“去顶部”按钮 */
 		disableToTop: {
 			type: Boolean,
 			default: false,
 		},
-		/** 是否显示去底部按钮 */
+		/** 是否禁用（即不显示）“去底部”按钮 */
 		disableToBottom: {
 			type: Boolean,
 			default: false,
