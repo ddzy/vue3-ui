@@ -85,8 +85,7 @@ export default defineComponent({
 		const state = reactive({
 			showTop: false,
 			showBottom: false,
-			toTopTimer: 0,
-			toBottomTimer: 0,
+			timer: 0,
 			step: 20,
 		});
 		const app = ref(getCurrentInstance()).value;
@@ -133,15 +132,15 @@ export default defineComponent({
 
 			// 已到达顶部
 			if (currentScrollTop <= 0) {
-				window.cancelAnimationFrame(state.toTopTimer);
+				window.cancelAnimationFrame(state.timer);
 				target.scrollTop = 0;
-				state.toTopTimer = 0;
+				state.timer = 0;
 				return;
 			}
 
 			UTILS.ease(currentScrollTop, 0, 8, nextScrollTop => {
 				target.scrollTop = nextScrollTop;
-				window.requestAnimationFrame(toTopHelper);
+				state.timer = window.requestAnimationFrame(toTopHelper);
 			});
 		}
 		function toBottomHelper() {
@@ -155,15 +154,15 @@ export default defineComponent({
 
 			// 已到达底部
 			if (currentScrollTop >= targetM) {
-				window.cancelAnimationFrame(state.toBottomTimer);
+				window.cancelAnimationFrame(state.timer);
 				target.scrollTop = targetM;
-				state.toBottomTimer = 0;
+				state.timer = 0;
 				return;
 			}
 
 			UTILS.ease(currentScrollTop, targetM, 8, nextScrollTop => {
 				target.scrollTop = nextScrollTop;
-				state.toBottomTimer = window.requestAnimationFrame(toBottomHelper);
+				state.timer = window.requestAnimationFrame(toBottomHelper);
 			});
 		}
 
@@ -174,24 +173,16 @@ export default defineComponent({
 			state.showBottom = scrollHeight - scrollTop !== offsetHeight;
 		}
 		function toTop() {
-			if (state.toBottomTimer) {
-				window.cancelAnimationFrame(state.toBottomTimer);
-				state.toBottomTimer = 0;
-			}
-			if (state.toTopTimer) {
+			if (state.timer) {
 				return;
 			}
-			state.toTopTimer = window.requestAnimationFrame(toTopHelper);
+			state.timer = window.requestAnimationFrame(toTopHelper);
 		}
 		function toBottom() {
-			if (state.toTopTimer) {
-				window.cancelAnimationFrame(state.toTopTimer);
-				state.toTopTimer = 0;
-			}
-			if (state.toBottomTimer) {
+			if (state.timer) {
 				return;
 			}
-			state.toBottomTimer = window.requestAnimationFrame(toBottomHelper);
+			state.timer = window.requestAnimationFrame(toBottomHelper);
 		}
 
 		return {
