@@ -31,6 +31,7 @@ export default defineConfig({
 	},
 	server: {
 		open: true,
+		port: 8886,
 	},
 	css: {
 		preprocessorOptions: {
