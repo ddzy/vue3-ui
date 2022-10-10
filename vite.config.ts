@@ -44,7 +44,7 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: path.resolve(__dirname, 'packages/components/main.ts'),
-			name: 'v3-ui',
+			name: 'vue3-ui',
 		},
 		rollupOptions: {
 			external: ['vue'],

@@ -1,5 +1,5 @@
 {
-	"name": "v3-ui",
+	"name": "@ddzy/vue3-ui",
 	"private": true,
 	"description": "vue3 ui组件库",
 	"keywords": [
@@ -16,12 +16,12 @@
 	"files": [
 		"dist"
 	],
-	"main": "./dist/v3-ui.umd.js",
-	"module": "./dist/v3-ui.es.js",
+	"main": "./dist/vue3-ui.umd.js",
+	"module": "./dist/vue3-ui.es.js",
 	"exports": {
 		".": {
-			"import": "./dist/v3-ui.es.js",
-			"require": "./dist/v3-ui.umd.js"
+			"import": "./dist/vue3-ui.es.js",
+			"require": "./dist/vue3-ui.umd.js"
 		}
 	},
 	"scripts": {

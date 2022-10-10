@@ -58,7 +58,7 @@ import router from './router';
 
 router.beforeEach(to => {
 	if (to.meta && to.meta.title) {
-		document.title = `v3-ui--${to.meta.title}`;
+		document.title = `vue3-ui--${to.meta.title}`;
 	}
 });
 
