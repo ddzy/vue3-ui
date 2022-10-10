@@ -156,7 +156,7 @@
 <script lang="ts">
 import * as TYPES from '@/public/types/slider';
 import { usePosition, useResize } from '@common/hooks/index';
-import V3Tooltip from '@components/tooltip/main';
+import V3Tooltip from 'tooltip';
 import {
 	computed,
 	defineComponent,

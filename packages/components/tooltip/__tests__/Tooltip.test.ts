@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import V3Tooltip from '../lib/components/Tooltip.vue';
+import V3Tooltip from '../main';
 import V3Button from '@components/button/main';
 import { nextTick } from 'vue';
 

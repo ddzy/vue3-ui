@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Drawer from '@components/drawer/lib/components/Drawer.vue';
+import V3Drawer from '../main';
 import V3Button from '@components/button/lib/components/Button.vue';
 import V3Backdrop from '@components/backdrop/lib/components/Backdrop.vue';
 import V3Radio from '@components/radio/lib/components/Radio.vue';

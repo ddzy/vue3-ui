@@ -8,7 +8,7 @@
 <script lang="ts">
 import * as TYPES from '@/public/types/popover';
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
-import V3BasePopper from '@components/base-popper/main';
+import V3BasePopper from 'base-popper';
 
 interface IState {}
 

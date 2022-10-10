@@ -53,8 +53,8 @@ import {
 	reactive,
 	ref,
 } from 'vue';
-import V3BasePopper from '@components/base-popper/main';
-import V3Button from '@components/button/main';
+import V3BasePopper from 'base-popper';
+import V3Button from 'button';
 
 interface IState {}
 

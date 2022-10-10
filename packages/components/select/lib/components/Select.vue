@@ -130,9 +130,9 @@ import * as TYPES from '@/public/types/select';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce, useThrottle } from '@common/hooks/index';
-import V3Input from '@components/input/main';
-import V3Tag from '@components/tag/main';
-import V3BasePopper from '@components/base-popper/main';
+import V3Input from 'input';
+import V3Tag from 'tag';
+import V3BasePopper from 'base-popper';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,

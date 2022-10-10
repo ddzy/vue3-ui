@@ -21,5 +21,7 @@
 		"type": "git",
 		"url": "git+https://github.com/ddzy/vue3-ui.git"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"base-popper": "0.0.0"
+	}
 }

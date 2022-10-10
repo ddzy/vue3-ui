@@ -63,8 +63,8 @@ import {
 	watch,
 } from 'vue';
 import * as TYPES from '@/public/types/dialog';
-import V3Backdrop from '@components/backdrop/lib/components/Backdrop.vue';
-import V3Button from '@components/button/lib/components/Button.vue';
+import V3Backdrop from 'backdrop';
+import V3Button from 'button';
 
 export default defineComponent({
 	name: 'V3Dialog',

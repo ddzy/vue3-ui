@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import V3Button from '../lib/components/Button.vue';
+import V3Button from '../main';
 
 describe('V3Button 组件测试：', () => {
 	test('V3Button 组件应该正常接收 props', () => {

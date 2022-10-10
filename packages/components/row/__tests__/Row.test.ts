@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
-import V3Row from '../lib/components/Row.vue';
+import V3Row from '../main';
 import V3Col from '../lib/components/Col.vue';
 
 describe('V3Row 组件测试：', () => {
