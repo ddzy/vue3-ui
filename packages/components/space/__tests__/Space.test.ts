@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import V3Space from '../main';
-import V3Button from '@components/button/main';
+import V3Button from 'button';
 
 describe('V3Space 组件测试：', () => {
 	test('V3Space 组件基本用法：', async () => {

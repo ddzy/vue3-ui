@@ -2,7 +2,7 @@
 
 ### 基本的计数器
 
-```vue demo
+```vue
 <template>
   <v3-input-number
 		v-model="state.inputValue"
@@ -31,7 +31,7 @@ export default defineComponent({
 
 ### 限制步长和最大值
 
-```vue demo
+```vue
 <template>
   <v3-input-number
     v-model="state.inputValue"
@@ -63,7 +63,7 @@ export default defineComponent({
 
 ### 可调整控制按钮组的位置
 
-```vue demo
+```vue
 <template>
   <v3-input-number
     v-model="state.inputValue1"

@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Popconfirm from './lib/components/Popconfirm.vue';
+import Popconfirm from './lib/Popconfirm.vue';
 
 const install = function(app: App) {
 	app.component(Popconfirm.name, Popconfirm);

@@ -23,6 +23,8 @@
 	},
 	"dependencies": {
 		"backdrop": "0.0.0",
-		"button": "0.0.0"
+		"button": "0.0.0",
+		"radio": "0.0.0",
+		"radio-group": "0.0.0"
 	}
 }

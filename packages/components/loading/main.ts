@@ -2,7 +2,7 @@ import { App } from 'vue';
 import Loading, {
 	LoadingDirective,
 	useLoading,
-} from './lib/components/LoadingConstructor';
+} from './lib/LoadingConstructor';
 
 Loading.install = function(app: App) {
 	app.config.globalProperties.$loading = Loading;

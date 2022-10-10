@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import V3Message from '@components/message/lib/components/MessageConstructor';
+import V3Message from '@components/message/lib/MessageConstructor';
 
 export default defineComponent({
 	setup() {

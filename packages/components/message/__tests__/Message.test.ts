@@ -2,7 +2,7 @@
 
 import { nextTick, h } from '@vue/runtime-core';
 import { mount, config } from '@vue/test-utils';
-import V3Message from '../lib/components/MessageConstructor';
+import V3Message from '../lib/MessageConstructor';
 
 jest.useFakeTimers();
 

@@ -24,6 +24,7 @@
 	"dependencies": {
 		"base-popper": "0.0.0",
 		"input": "0.0.0",
+		"select-option": "0.0.0",
 		"tag": "0.0.0"
 	}
 }

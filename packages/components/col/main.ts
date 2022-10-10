@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Col from '../row/lib/components/Col.vue';
+import Col from './lib/Col.vue';
 
 const install = function(app: App) {
 	app.component(Col.name, Col);

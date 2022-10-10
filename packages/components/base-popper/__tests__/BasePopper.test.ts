@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import V3BasePopper from '../main';
-import V3Button from '@components/button/main';
+import V3Button from 'button';
 import 'regenerator-runtime/runtime';
 import { nextTick } from 'vue';
 

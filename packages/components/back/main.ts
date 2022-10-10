@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Back from './lib/components/Back.vue';
+import Back from './lib/Back.vue';
 
 const install = function(app: App) {
 	app.component(Back.name, Back);

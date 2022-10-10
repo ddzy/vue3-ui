@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import V3Drawer from '../main';
-import V3Button from '@components/button/lib/components/Button.vue';
-import V3Backdrop from '@components/backdrop/lib/components/Backdrop.vue';
-import V3Radio from '@components/radio/lib/components/Radio.vue';
-import V3RadioGroup from '@components/radio/lib/components/RadioGroup.vue';
+import V3Button from 'button';
+import V3Backdrop from 'backdrop';
+import V3Radio from 'radio';
+import V3RadioGroup from 'radio-group';
 
 describe('V3Drawer 组件测试：', () => {
 	test('Drawer 组件应该正常渲染', async () => {

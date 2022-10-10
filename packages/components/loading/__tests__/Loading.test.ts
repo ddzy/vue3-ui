@@ -2,7 +2,7 @@
 
 import { mount, config } from '@vue/test-utils';
 import V3Loading, { LoadingDirective, useLoading } from '../main';
-import V3Button from '@components/button/main';
+import V3Button from 'button';
 import { nextTick, h } from 'vue';
 
 jest.useFakeTimers();

@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import RadioGroup from '../radio/lib/components/RadioGroup.vue';
+import RadioGroup from './lib/RadioGroup.vue';
 
 const install = function(app: App) {
 	app.component(RadioGroup.name, RadioGroup);
