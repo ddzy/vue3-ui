@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "col",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Col 组件",
 	"keywords": [
 		"col"

@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "select-option",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "SelectOption 组件",
 	"keywords": [
 		"select-option"

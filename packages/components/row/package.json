@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "row",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Row 组件",
 	"keywords": [
 		"row"

@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "carousel-item",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "CarouselItem 轮播图组件",
 	"keywords": [
 		"carousel",

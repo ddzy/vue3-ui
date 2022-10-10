@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "back",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Back组件",
 	"keywords": [
 		"back",

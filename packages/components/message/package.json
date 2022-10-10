@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "message",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Message 组件",
 	"keywords": [
 		"message"

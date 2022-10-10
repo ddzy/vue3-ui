@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "button-group",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "ButtonGroup 组件",
 	"keywords": [
 		"button-group"

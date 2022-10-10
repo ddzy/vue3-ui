@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "popconfirm",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Popconfirm 组件",
 	"keywords": [
 		"popconfirm"

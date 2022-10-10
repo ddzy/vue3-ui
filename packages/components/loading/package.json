@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "loading",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Loading 组件",
 	"keywords": [
 		"loading"

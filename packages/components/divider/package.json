@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "divider",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Divider 组件",
 	"keywords": [
 		"divider"

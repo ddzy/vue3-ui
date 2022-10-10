@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "switch",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Switch 组件",
 	"keywords": [
 		"switch"

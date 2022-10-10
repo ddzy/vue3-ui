@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "space",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Space 组件",
 	"keywords": [
 		"space"

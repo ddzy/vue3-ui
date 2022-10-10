@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "radio-group",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "RadioGroup 组件",
 	"keywords": [
 		"radio-group"

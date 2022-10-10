@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "checkbox-group",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "CheckboxGroup 组件",
 	"keywords": [
 		"checkbox-group"

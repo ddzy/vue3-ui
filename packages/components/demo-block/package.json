@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "demo-block",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "DemoBlock 组件",
 	"keywords": [
 		"demo-block"

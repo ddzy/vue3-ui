@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "tooltip",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Tooltip 组件",
 	"keywords": [
 		"tooltip"

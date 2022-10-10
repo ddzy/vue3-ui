@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "radio",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Radio 组件",
 	"keywords": [
 		"radio"

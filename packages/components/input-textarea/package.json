@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "input-textarea",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "InputTextarea 组件",
 	"keywords": [
 		"input-textarea"

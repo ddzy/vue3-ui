@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "input",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Input 组件",
 	"keywords": [
 		"input"

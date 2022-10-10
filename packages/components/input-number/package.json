@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "input-number",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "InputNumber 组件",
 	"keywords": [
 		"input-number"

@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "dialog",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Dialog 组件",
 	"keywords": [
 		"dialog"

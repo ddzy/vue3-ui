@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "tag",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "Tag 组件",
 	"keywords": [
 		"tag"

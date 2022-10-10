@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "progress-linear",
-	"version": "0.0.3",
+	"version": "0.0.0",
 	"description": "ProgressLinear 线性进度条组件",
 	"keywords": [
 		"progress",
