@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Checkbox from './src/components/Checkbox.vue';
+import Checkbox from './lib/components/Checkbox.vue';
 
 const install = function(app: App) {
 	app.component(Checkbox.name, Checkbox);

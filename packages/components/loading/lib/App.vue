@@ -86,7 +86,7 @@
 <script lang="ts">
 import { defineComponent, h, reactive } from 'vue';
 import V3Button from '@components/button/main';
-import { useLoading } from '@components/loading/src/components/LoadingConstructor';
+import { useLoading } from '@components/loading/lib/components/LoadingConstructor';
 
 export default defineComponent({
 	setup() {

@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Carousel from './src/components/Carousel.vue';
+import Carousel from './lib/components/Carousel.vue';
 
 const install = function(app: App) {
 	app.component(Carousel.name, Carousel);

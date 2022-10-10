@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
-import V3Input from '../src/components/Input.vue';
+import V3Input from '../lib/components/Input.vue';
 
 describe('V3Input 组件测试：', () => {
 	test('V3Input 组件应该正常接收 type，即输入框的类型必须为【text】或【password】', () => {

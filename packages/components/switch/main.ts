@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Switch from './src/components/Switch.vue';
+import Switch from './lib/components/Switch.vue';
 
 const install = function(app: App) {
 	app.component(Switch.name, Switch);

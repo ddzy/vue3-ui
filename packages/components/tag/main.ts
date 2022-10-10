@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Tag from './src/components/Tag.vue';
+import Tag from './lib/components/Tag.vue';
 
 const install = function(app: App) {
 	app.component(Tag.name, Tag);

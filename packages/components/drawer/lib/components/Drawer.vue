@@ -85,8 +85,8 @@ import {
 } from 'vue';
 import * as TYPES from '@/public/types/drawer';
 import * as UTILS from '@common/utils/index';
-import V3Backdrop from '@components/backdrop/src/components/Backdrop.vue';
-import V3Button from '@components/button/src/components/Button.vue';
+import V3Backdrop from '@components/backdrop/lib/components/Backdrop.vue';
+import V3Button from '@components/button/lib/components/Button.vue';
 
 interface IState {
 	syncedModelValue: boolean;

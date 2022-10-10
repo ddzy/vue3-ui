@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import Tooltip from './src/components/Tooltip.vue';
+import Tooltip from './lib/components/Tooltip.vue';
 
 const install = function(app: App) {
 	app.component(Tooltip.name, Tooltip);

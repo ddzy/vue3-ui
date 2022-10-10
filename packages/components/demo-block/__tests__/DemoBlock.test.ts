@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
-import V3DemoBlock from '../src/components/DemoBlock.vue';
+import V3DemoBlock from '../lib/components/DemoBlock.vue';
 
 describe('DemoBlock 组件测试：', () => {
 	test('DemoBlock 组件可以接收【default、description、code】这几个 slot，不传则不显示', async () => {

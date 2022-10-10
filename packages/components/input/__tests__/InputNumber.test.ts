@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
-import V3InputNumber from '../src/components/InputNumber.vue';
+import V3InputNumber from '../lib/components/InputNumber.vue';
 
 describe('V3InputNumber 组件测试：', () => {
 	test('V3InputNumber 应该正常接收【step】，并按照指定的步长来递增或递减', async () => {
