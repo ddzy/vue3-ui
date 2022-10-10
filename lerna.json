@@ -1,8 +1,14 @@
 {
-  "packages": [
-    "packages/components/*"
-  ],
-  "version": "0.0.3",
-  "npmClient": "yarn",
-  "useWorkspaces": true
+	"packages": ["packages/components/*"],
+	"version": "0.0.0",
+	"npmClient": "yarn",
+	"useWorkspaces": true,
+	"command": {
+		"bootstrap": {
+			"hoist": true
+		},
+		"version": {
+			"conventionalCommits": true
+		}
+	}
 }
