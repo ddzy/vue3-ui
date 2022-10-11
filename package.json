@@ -1,5 +1,8 @@
 {
-	"name": "@ddzy/vue3-ui",
+	"name": "@felibrary/vue3-ui",
+	"publishConfig": {
+		"access": "public"
+	},
 	"private": true,
 	"description": "vue3 ui组件库",
 	"keywords": [
