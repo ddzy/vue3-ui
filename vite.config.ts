@@ -1,15 +1,24 @@
-import { defineConfig } from 'vite';
+import { defineConfig, mergeConfig, UserConfigExport } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
 import vitePluginVuedoc, { vueDocFiles } from 'vite-plugin-vuedoc';
+import libBuildConfig from './build/lib.build';
+import docsBuildConfig from './build/docs.build';
 
-// https://vitejs.dev/config/
-export default defineConfig({
+const buildTarget = process.env.BUILD_TARGET as string;
+const buildConfig =
+	buildTarget === 'lib'
+		? libBuildConfig
+		: buildTarget === 'docs'
+		? docsBuildConfig
+		: {};
+
+const defaultConfig: UserConfigExport = {
 	plugins: [
 		vitePluginVuedoc({
 			wrapperClass: 'custom-markdown-container',
 			highlight: {
-				theme: 'one-light'
+				theme: 'one-light',
 			},
 			previewComponent: 'V3DemoBlock',
 		}),
@@ -41,19 +50,7 @@ export default defineConfig({
 			},
 		},
 	},
-	build: {
-		lib: {
-			entry: path.resolve(__dirname, 'packages/components/main.ts'),
-			name: 'vue3-ui',
-		},
-		rollupOptions: {
-			external: ['vue'],
-			output: {
-				// 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-				globals: {
-					vue: 'Vue',
-				},
-			},
-		},
-	},
-});
+};
+
+// https://vitejs.dev/config/
+export default defineConfig(mergeConfig(defaultConfig, buildConfig));

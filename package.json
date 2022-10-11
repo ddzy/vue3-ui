@@ -26,7 +26,8 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build:lib": "cross-env BUILD_TARGET=lib vite build",
+		"build:docs": "cross-env BUILD_TARGET=docs vite build",
 		"build:check": "vue-tsc --noEmit && vite build",
 		"serve": "yarn dev",
 		"test": "jest --coverage",
@@ -62,6 +63,7 @@
 		"@vue/component-compiler-utils": "^3.2.0",
 		"@vue/test-utils": "^2.0.0-rc.4",
 		"commitizen": "^4.2.3",
+		"cross-env": "^7.0.3",
 		"cz-lerna-changelog": "^2.0.3",
 		"husky": "^6.0.0",
 		"identity-obj-proxy": "^3.0.0",
