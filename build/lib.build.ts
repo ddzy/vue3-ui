@@ -1,10 +1,14 @@
 import * as path from 'path';
+import { UserConfigExport } from 'vite';
+
+const LIB_NAME = 'vue3-ui';
 
 export default {
 	build: {
+		outDir: 'dist/lib',
 		lib: {
 			entry: path.resolve(__dirname, '../packages/components/main.ts'),
-			name: 'vue3-ui',
+			name: LIB_NAME,
 		},
 		rollupOptions: {
 			external: ['vue'],
@@ -13,7 +17,13 @@ export default {
 				globals: {
 					vue: 'Vue',
 				},
+				assetFileNames(chunkInfo) {
+					if (chunkInfo.name === 'style.css') {
+						return `${LIB_NAME}.css`;
+					}
+					return chunkInfo.name;
+				},
 			},
 		},
 	},
-};
+} as UserConfigExport;

@@ -54,18 +54,22 @@ declare module '@vue/runtime-core' {
 
 // test
 import Demo from './main.vue';
-import router from './router';
+import { RouteRecordRaw } from 'vue-router';
 
-router.beforeEach(to => {
-	if (to.meta && to.meta.title) {
-		document.title = `vue3-ui--${to.meta.title}`;
-	}
-});
+if (process.env.BUILD_TARGET === 'docs') {
+	import('./router').then((router: any) => {
+		router.beforeEach((to: RouteRecordRaw) => {
+			if (to.meta && to.meta.title) {
+				document.title = `vue3-ui--${to.meta.title}`;
+			}
+		});
 
-const app = createApp(Demo);
-app.use(install);
-app.use(router);
-app.mount('#app');
+		const app = createApp(Demo);
+		app.use(install);
+		app.use(router);
+		app.mount('#app');
+	});
+}
 
 export {
 	V3Button,

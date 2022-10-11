@@ -14,7 +14,7 @@
 		"packages/components/*"
 	],
 	"files": [
-		"dist"
+		"dist/lib/*"
 	],
 	"main": "./dist/vue3-ui.umd.js",
 	"module": "./dist/vue3-ui.es.js",

@@ -1,3 +1,7 @@
+import { UserConfigExport } from 'vite';
+
 export default {
-  build: {},
-}
+	build: {
+		outDir: 'dist/docs',
+	},
+} as UserConfigExport;
