@@ -27,5 +27,10 @@
 		"types/**/*",
 		"shims-vue.d.ts",
 		"/**/*.ts"
-	]
+	],
+	"ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
 }

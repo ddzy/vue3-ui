@@ -13,7 +13,7 @@ const buildConfig =
 		? docsBuildConfig
 		: {};
 
-const defaultConfig: UserConfigExport = {
+export const commonConfig: UserConfigExport = {
 	plugins: [
 		vitePluginVuedoc({
 			wrapperClass: 'custom-markdown-container',
@@ -53,4 +53,4 @@ const defaultConfig: UserConfigExport = {
 };
 
 // https://vitejs.dev/config/
-export default defineConfig(mergeConfig(defaultConfig, buildConfig));
+export default defineConfig(mergeConfig(commonConfig, buildConfig));
