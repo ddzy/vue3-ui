@@ -46,7 +46,7 @@ packageList.forEach(async v => {
 				},
 			},
 		},
-	}) as BuildOptions;
+	});
 
 	await build(buildOptions);
 });
