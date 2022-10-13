@@ -3,6 +3,10 @@ import * as fs from 'fs';
 import { BuildOptions, build, mergeConfig } from 'vite';
 import { commonConfig } from '../vite.config';
 
+/**
+ * https://github.com/vitejs/vite/discussions/1736
+ */
+
 const packagePath = path.resolve(__dirname, '../packages/components');
 const packageList = fs
 	.readdirSync(packagePath, {
@@ -12,9 +16,11 @@ const packageList = fs
 	.map(fileInfo => {
 		return {
 			lib: {
-				entry: path.resolve(packagePath, fileInfo.name),
+				entry: path.resolve(packagePath, fileInfo.name, 'main.ts'),
 				fileName: 'index',
-				name: fileInfo.name,
+				name: fileInfo.name.replace(/^.{1}/, $1 => {
+					return $1.toUpperCase();
+				}),
 			},
 			outDir: `dist/components/${fileInfo.name}`,
 		};
