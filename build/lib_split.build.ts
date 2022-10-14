@@ -27,9 +27,12 @@ const packageList = fs
 	});
 packageList.forEach(async v => {
 	const buildOptions = mergeConfig(commonConfig, {
+		// 禁止自动寻找 vite.config.ts 配置文件，避免打包失败
+		configFile: false,
+		publicDir: false,
 		build: {
 			...v,
-			assetsDir: `../`,
+			// 禁止 vite 自动寻找 vite.config.ts 配置文件，防止打包失败
 			rollupOptions: {
 				external: ['vue'],
 				output: {

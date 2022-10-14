@@ -29,9 +29,9 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build:lib": "cross-env BUILD_TARGET=lib vite build",
-		"build:lib:split": "ts-node ./build/lib_split.build.ts",
-		"build:docs": "cross-env BUILD_TARGET=docs vite build",
+		"build:lib": "cross-env BUILD_TARGET=lib && vite build",
+		"build:lib_split": "cross-env BUILD_TARGET=lib_split && ts-node ./build/lib_split.build.ts",
+		"build:docs": "cross-env BUILD_TARGET=docs && vite build",
 		"build:check": "vue-tsc --noEmit && vite build",
 		"serve": "yarn dev",
 		"test": "jest --coverage",

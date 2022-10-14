@@ -15,15 +15,17 @@ const buildConfig =
 
 export const commonConfig: UserConfigExport = {
 	plugins: [
-		vitePluginVuedoc({
-			wrapperClass: 'custom-markdown-container',
-			highlight: {
-				theme: 'one-light',
-			},
-			previewComponent: 'V3DemoBlock',
-		}),
+		buildTarget === 'docs'
+			? vitePluginVuedoc({
+					wrapperClass: 'custom-markdown-container',
+					highlight: {
+						theme: 'one-light',
+					},
+					previewComponent: 'V3DemoBlock',
+			  })
+			: false,
 		vue({
-			include: [...vueDocFiles],
+			[buildTarget === 'docs' ? 'include' : '']: [...vueDocFiles],
 		}),
 	],
 	resolve: {
@@ -46,7 +48,11 @@ export const commonConfig: UserConfigExport = {
 		preprocessorOptions: {
 			/** 配置 scss 全局变量的引入方式 */
 			scss: {
-				additionalData: `@import "./packages/common/styles/global-reset"; \n @import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-style"; \n @import "./packages/common/styles/global-animation"; \n @import "./packages/common/styles/custom-markdown";`,
+				additionalData: `@import "./packages/common/styles/global-reset"; \n @import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-style"; \n @import "./packages/common/styles/global-animation"; ${
+					buildTarget === 'docs'
+						? '\n @import "./packages/common/styles/custom-markdown";'
+						: ''
+				}`,
 			},
 		},
 	},

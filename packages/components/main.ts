@@ -1,6 +1,4 @@
 import { App, createApp } from 'vue';
-import 'vite-plugin-vuedoc/style.css';
-
 import * as TYPES_MESSAGE from '@/public/types/message';
 import * as TYPES_LOADING from '@/public/types/loading';
 import './icon/assets/fonts/iconfont.css';
@@ -54,21 +52,25 @@ declare module '@vue/runtime-core' {
 
 // test
 import Demo from './main.vue';
-import { RouteRecordRaw } from 'vue-router';
+import { Router } from 'vue-router/dist/vue-router';
 
-if (process.env.BUILD_TARGET === 'docs') {
-	import('./router').then((router: any) => {
-		router.beforeEach((to: RouteRecordRaw) => {
-			if (to.meta && to.meta.title) {
-				document.title = `vue3-ui--${to.meta.title}`;
-			}
-		});
-
-		const app = createApp(Demo);
-		app.use(install);
-		app.use(router);
-		app.mount('#app');
+// 引入文档相关的依赖
+async function importMdDeps() {
+	await import('vite-plugin-vuedoc/style.css');
+	const router = ((await import('./router')) as unknown) as Router;
+	router.beforeEach(to => {
+		if (to.meta && to.meta.title) {
+			document.title = `vue3-ui--${to.meta.title}`;
+		}
 	});
+
+	const app = createApp(Demo);
+	app.use(install);
+	app.use(router);
+	app.mount('#app');
+}
+if (process.env.BUILD_TARGET === 'docs') {
+	importMdDeps();
 }
 
 export {
