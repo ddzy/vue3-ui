@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { build, mergeConfig } from 'vite';
-import { commonConfig } from '../vite.config';
+import commonConfig from '../config/common';
 import vue from '@vitejs/plugin-vue';
 
 const libName = 'vue3-ui';

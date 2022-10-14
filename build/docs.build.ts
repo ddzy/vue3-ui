@@ -1,8 +1,8 @@
-import { UserConfigExport } from 'vite';
 import vitePluginVuedoc, { vueDocFiles } from 'vite-plugin-vuedoc';
 import vue from '@vitejs/plugin-vue';
 
-export default {
+const buildConfig = {
+	publicDir: 'public/docs',
 	plugins: [
 		vitePluginVuedoc({
 			wrapperClass: 'custom-markdown-container',
@@ -26,4 +26,6 @@ export default {
 			},
 		},
 	},
-} as UserConfigExport;
+};
+
+export default buildConfig;
