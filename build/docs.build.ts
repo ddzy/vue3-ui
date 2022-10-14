@@ -1,7 +1,29 @@
 import { UserConfigExport } from 'vite';
+import vitePluginVuedoc, { vueDocFiles } from 'vite-plugin-vuedoc';
+import vue from '@vitejs/plugin-vue';
 
 export default {
+	plugins: [
+		vitePluginVuedoc({
+			wrapperClass: 'custom-markdown-container',
+			highlight: {
+				theme: 'one-light',
+			},
+			previewComponent: 'V3DemoBlock',
+		}),
+		vue({
+			include: [...vueDocFiles],
+		}),
+	],
 	build: {
 		outDir: 'dist/docs',
+	},
+	css: {
+		preprocessorOptions: {
+			/** 配置 scss 全局变量的引入方式 */
+			scss: {
+				additionalData: `@import "../packages/common/styles/global-variable"; \n @import "../packages/common/styles/custom-markdown";`,
+			},
+		},
 	},
 } as UserConfigExport;

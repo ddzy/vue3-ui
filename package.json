@@ -17,7 +17,7 @@
 		"packages/components/*"
 	],
 	"files": [
-		"dist/lib/*"
+		"dist/*"
 	],
 	"main": "./dist/vue3-ui.umd.js",
 	"module": "./dist/vue3-ui.es.js",
@@ -28,10 +28,10 @@
 		}
 	},
 	"scripts": {
-		"dev": "vite",
-		"build:lib": "cross-env BUILD_TARGET=lib && vite build",
-		"build:lib_split": "cross-env BUILD_TARGET=lib_split && ts-node ./build/lib_split.build.ts",
-		"build:docs": "cross-env BUILD_TARGET=docs && vite build",
+		"dev": "cross-env BUILD_TARGET=docs vite",
+		"build:lib": "cross-env BUILD_TARGET=lib ts-node ./build/lib.build.ts",
+		"build:lib_split": "cross-env BUILD_TARGET=lib_split ts-node ./build/lib_split.build.ts",
+		"build:docs": "cross-env BUILD_TARGET=docs vite build",
 		"build:check": "vue-tsc --noEmit && vite build",
 		"serve": "yarn dev",
 		"test": "jest --coverage",

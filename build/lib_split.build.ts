@@ -1,7 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { BuildOptions, build, mergeConfig } from 'vite';
+import { build, mergeConfig } from 'vite';
 import { commonConfig } from '../vite.config';
+import vue from '@vitejs/plugin-vue';
 
 /**
  * https://github.com/vitejs/vite/discussions/1736
@@ -22,17 +23,16 @@ const packageList = fs
 					return $1.toUpperCase();
 				}),
 			},
-			outDir: `dist/components/${fileInfo.name}`,
+			outDir: `dist/packages/${fileInfo.name}`,
 		};
 	});
 packageList.forEach(async v => {
 	const buildOptions = mergeConfig(commonConfig, {
-		// 禁止自动寻找 vite.config.ts 配置文件，避免打包失败
+		// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
 		configFile: false,
-		publicDir: false,
+		publicDir: 'public/lib_split',
 		build: {
 			...v,
-			// 禁止 vite 自动寻找 vite.config.ts 配置文件，防止打包失败
 			rollupOptions: {
 				external: ['vue'],
 				output: {
@@ -49,6 +49,7 @@ packageList.forEach(async v => {
 				},
 			},
 		},
+		plugins: [vue()],
 	});
 
 	await build(buildOptions);

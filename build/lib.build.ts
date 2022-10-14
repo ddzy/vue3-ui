@@ -1,15 +1,22 @@
 import * as path from 'path';
-import { UserConfigExport } from 'vite';
+import { build, mergeConfig } from 'vite';
+import { commonConfig } from '../vite.config';
+import vue from '@vitejs/plugin-vue';
 
-const LIB_NAME = 'vue3-ui';
-
-export default {
+const libName = 'vue3-ui';
+const buildOptions = mergeConfig(commonConfig, {
+	// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
+	configFile: false,
+	publicDir: 'public/lib',
 	build: {
-		outDir: 'dist/lib',
+		// 无需清空 dist 文件夹
+		emptyOutDir: false,
 		lib: {
-			entry: path.resolve(__dirname, '../packages/components/main.ts'),
-			name: LIB_NAME,
+			entry: path.resolve(__dirname, '../packages/components/main.lib.ts'),
+			fileName: libName,
+			name: libName,
 		},
+		outDir: `dist`,
 		rollupOptions: {
 			external: ['vue'],
 			output: {
@@ -17,13 +24,18 @@ export default {
 				globals: {
 					vue: 'Vue',
 				},
-				assetFileNames(chunkInfo) {
+				assetFileNames(chunkInfo: any) {
 					if (chunkInfo.name === 'style.css') {
-						return `${LIB_NAME}.css`;
+						return `${libName}.css`;
 					}
 					return chunkInfo.name;
 				},
 			},
 		},
 	},
-} as UserConfigExport;
+	plugins: [
+		vue(),
+	],
+});
+
+build(buildOptions);
