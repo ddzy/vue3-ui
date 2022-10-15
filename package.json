@@ -31,6 +31,7 @@
 		"dev": "vite",
 		"build:lib": "ts-node ./build/lib.build.ts",
 		"build:lib_split": "ts-node ./build/lib_split.build.ts",
+		"build": "yarn build:lib && yarn build:lib_split",
 		"build:docs": "vite build",
 		"build:check": "vue-tsc --noEmit && vite build",
 		"serve": "yarn dev",
