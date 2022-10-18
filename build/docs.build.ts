@@ -16,7 +16,7 @@ const buildConfig = {
 		}),
 	],
 	build: {
-		outDir: 'dist/docs',
+		outDir: 'docs',
 	},
 	css: {
 		preprocessorOptions: {
