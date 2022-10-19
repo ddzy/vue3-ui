@@ -2,7 +2,7 @@ import vitePluginVuedoc, { vueDocFiles } from 'vite-plugin-vuedoc';
 import vue from '@vitejs/plugin-vue';
 
 const buildConfig = {
-	base: '/code/vue3-ui/',
+	base: '/code/vue3-ui/docs/',
 	publicDir: 'public/docs',
 	plugins: [
 		vitePluginVuedoc({
