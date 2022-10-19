@@ -267,7 +267,7 @@ const routes: RouteRecordRaw[] = [
 
 export default createRouter({
 	routes,
-	history: createWebHistory('/code/vue3-ui/docs/'),
+	history: createWebHistory('/vue3-ui/'),
 	scrollBehavior(to) {
 		let position: any = {};
 
