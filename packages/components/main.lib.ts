@@ -2,6 +2,8 @@ import { App } from 'vue';
 import * as TYPES_MESSAGE from '@/public/types/message';
 import * as TYPES_LOADING from '@/public/types/loading';
 import './icon/assets/fonts/iconfont.css';
+import './main.lib.scss';
+
 import V3Button from 'button';
 import V3ButtonGroup from './button-group/main';
 import V3Checkbox from 'checkbox';
