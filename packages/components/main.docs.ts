@@ -2,6 +2,7 @@ import { createApp, h } from 'vue';
 import 'vite-plugin-vuedoc/style.css';
 import Vue3UI from '../../dist/vue3-ui.es';
 import '../../dist/vue3-ui.css';
+import './main.docs.scss';
 import Main from './main.vue';
 import router from './router';
 
