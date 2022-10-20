@@ -9,8 +9,8 @@ const buildOptions = mergeConfig(commonConfig, {
 	configFile: false,
 	publicDir: 'public/lib',
 	build: {
-		// 无需清空 dist 文件夹
-		emptyOutDir: false,
+		// 是否清空 dist 文件夹
+		emptyOutDir: true,
 		lib: {
 			entry: path.resolve(__dirname, '../packages/components/main.lib.ts'),
 			fileName: libName,
