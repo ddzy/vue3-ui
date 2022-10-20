@@ -1,6 +1,6 @@
 <template>
 	<!-- 反之，如果是容器内的 loading -->
-	<transition name="v3-backdrop-fade" appear>
+	<transition name="v3-loading-fade" appear>
 		<div
 			v-if="state.isShow"
 			:class="[

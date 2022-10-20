@@ -1,3 +1,18 @@
+.v3-tag-shrink-enter-from,
+.v3-tag-shrink-leave-to {
+	transform: scale(0);
+}
+.v3-tag-shrink-enter-active {
+	transition: all 0.3s ease;
+}
+.v3-tag-shrink-enter-to,
+.v3-tag-shrink-leave-from {
+	transform: scale(1);
+}
+.v3-tag-shrink-leave-active {
+	transition: all 0.3s ease;
+}
+
 $tag-type-list: (
 	primary: (
 		border-color: $primary-color,

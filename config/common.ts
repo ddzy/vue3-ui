@@ -22,7 +22,7 @@ export default {
 		preprocessorOptions: {
 			/** 配置 scss 全局变量的引入方式 */
 			scss: {
-				additionalData: `@import "./packages/common/styles/global-reset"; \n @import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-style"; \n @import "./packages/common/styles/global-animation";`,
+				additionalData: `@import "./packages/common/styles/global-reset"; \n @import "./packages/common/styles/global-variable"; \n @import "./packages/common/styles/global-style";`,
 			},
 		},
 	},

@@ -1,3 +1,18 @@
+.v3-dialog-translate-enter-from {
+	transform: translateY(-30px);
+}
+.v3-dialog-translate-enter-active,
+.v3-dialog-translate-leave-active {
+	transition: transform 0.3s ease-out;
+}
+.v3-dialog-translate-enter-to,
+.v3-dialog-translate-leave-from {
+	transform: translateY(0);
+}
+.v3-dialog-translate-leave-to {
+	transform: translateY(-30px);
+}
+
 .v3-backdrop {
 	.v3-dialog {
 		box-sizing: border-box;

@@ -21,6 +21,18 @@ $message-type-map: (
 	),
 );
 
+.v3-message-slide-fade-enter-active {
+	transition: all 0.3s ease-out;
+}
+.v3-message-slide-fade-leave-active {
+	transition: all 0.15s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.v3-message-slide-fade-enter-from,
+.v3-message-slide-fade-leave-to {
+	transform: translateX(50%);
+	opacity: 0;
+}
+
 .v3-message {
 	position: fixed;
 	left: 50%;
