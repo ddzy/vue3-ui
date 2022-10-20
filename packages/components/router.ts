@@ -1,40 +1,11 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router';
-
 import Home from './home.vue';
-import V3ButtonDemo from './button/button.md';
-import V3CheckboxDemo from './checkbox/checkbox.md';
-import V3InputDemo from './input/input.md';
-import V3InputTextareaDemo from './input-textarea/input-textarea.md';
-import V3InputNumberDemo from './input-number/input-number.md';
-import V3RadioDemo from './radio/radio.md';
-import V3DemoBlockDemo from './demo-block/demo-block.md';
-import V3RowDemo from './row/row.md';
-import V3MessageDemo from './message/message.md';
-import V3SelectDemo from './select/select.md';
-import V3TagDemo from './tag/tag.md';
-import V3BackdropDemo from './backdrop/backdrop.md';
-import V3DialogDemo from './dialog/dialog.md';
-import V3SwitchDemo from './switch/switch.md';
-import V3TooltipDemo from './tooltip/tooltip.md';
-import V3PopoverDemo from './popover/popover.md';
-import V3DividerDemo from './divider/divider.md';
-import V3SpaceDemo from './space/space.md';
-import V3BadgeDemo from './badge/badge.md';
-import V3LoadingDemo from './loading/loading.md';
-import V3CardDemo from './card/card.md';
-import V3BasePopperDemo from './base-popper/base-popper.md';
-import V3PopconfirmDemo from './popconfirm/popconfirm.md';
-import V3SliderDemo from './slider/slider.md';
-import V3ProgressDemo from './progress/progress.md';
-import V3CarouselDemo from './carousel/carousel.md';
-import V3DrawerDemo from './drawer/drawer.md';
-import V3BackDemo from './back/back.md';
 
 export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/button',
 		name: 'V3Button',
-		component: V3ButtonDemo,
+		component: () => import('./button/button.md'),
 		meta: {
 			title: '按钮',
 		},
@@ -42,7 +13,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/checkbox',
 		name: 'V3Checkbox',
-		component: V3CheckboxDemo,
+		component: () => import('./checkbox/checkbox.md'),
 		meta: {
 			title: '复选框',
 		},
@@ -50,7 +21,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/input',
 		name: 'V3Input',
-		component: V3InputDemo,
+		component: () => import('./input/input.md'),
 		meta: {
 			title: '输入框',
 		},
@@ -58,7 +29,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/input-number',
 		name: 'V3InputNumber',
-		component: V3InputNumberDemo,
+		component: () => import('./input-number/input-number.md'),
 		meta: {
 			title: '数字输入框',
 		},
@@ -66,7 +37,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/input-textarea',
 		name: 'V3InputTextarea',
-		component: V3InputTextareaDemo,
+		component: () => import('./input-textarea/input-textarea.md'),
 		meta: {
 			title: '多行文本输入框',
 		},
@@ -74,7 +45,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/radio',
 		name: 'V3Radio',
-		component: V3RadioDemo,
+		component: () => import('./radio/radio.md'),
 		meta: {
 			title: '单选框',
 		},
@@ -82,7 +53,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/demo-block',
 		name: 'V3DemoBlock',
-		component: V3DemoBlockDemo,
+		component: () => import('./demo-block/demo-block.md'),
 		meta: {
 			title: '案例展示框',
 		},
@@ -90,7 +61,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/row',
 		name: 'V3Row',
-		component: V3RowDemo,
+		component: () => import('./row/row.md'),
 		meta: {
 			title: '栅格系统',
 		},
@@ -98,7 +69,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/message',
 		name: 'V3Message',
-		component: V3MessageDemo,
+		component: () => import('./message/message.md'),
 		meta: {
 			title: '消息提示',
 		},
@@ -106,7 +77,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/select',
 		name: 'V3Select',
-		component: V3SelectDemo,
+		component: () => import('./select/select.md'),
 		meta: {
 			title: '下拉选项',
 		},
@@ -114,7 +85,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/tag',
 		name: 'V3Tag',
-		component: V3TagDemo,
+		component: () => import('./tag/tag.md'),
 		meta: {
 			title: '标签',
 		},
@@ -122,7 +93,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/backdrop',
 		name: 'V3Backdrop',
-		component: V3BackdropDemo,
+		component: () => import('./backdrop/backdrop.md'),
 		meta: {
 			title: '遮罩层',
 		},
@@ -130,7 +101,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/dialog',
 		name: 'V3Dialog',
-		component: V3DialogDemo,
+		component: () => import('./dialog/dialog.md'),
 		meta: {
 			title: '弹窗',
 		},
@@ -138,7 +109,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/switch',
 		name: 'V3Switch',
-		component: V3SwitchDemo,
+		component: () => import('./switch/switch.md'),
 		meta: {
 			title: '开关',
 		},
@@ -146,7 +117,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/tooltip',
 		name: 'V3Tooltip',
-		component: V3TooltipDemo,
+		component: () => import('./tooltip/tooltip.md'),
 		meta: {
 			title: '工具提示',
 		},
@@ -154,7 +125,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/popover',
 		name: 'V3Popover',
-		component: V3PopoverDemo,
+		component: () => import('./popover/popover.md'),
 		meta: {
 			title: '弹出消息',
 		},
@@ -162,7 +133,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/divider',
 		name: 'V3Divider',
-		component: V3DividerDemo,
+		component: () => import('./divider/divider.md'),
 		meta: {
 			title: '分割线',
 		},
@@ -170,7 +141,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/space',
 		name: 'V3Space',
-		component: V3SpaceDemo,
+		component: () => import('./space/space.md'),
 		meta: {
 			title: '间距',
 		},
@@ -178,7 +149,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/badge',
 		name: 'V3Badge',
-		component: V3BadgeDemo,
+		component: () => import('./badge/badge.md'),
 		meta: {
 			title: '徽标',
 		},
@@ -186,7 +157,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/loading',
 		name: 'V3Loading',
-		component: V3LoadingDemo,
+		component: () => import('./loading/loading.md'),
 		meta: {
 			title: '加载中',
 		},
@@ -194,7 +165,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/card',
 		name: 'V3Card',
-		component: V3CardDemo,
+		component: () => import('./card/card.md'),
 		meta: {
 			title: '卡片',
 		},
@@ -202,7 +173,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/base-popper',
 		name: 'V3BasePopper',
-		component: V3BasePopperDemo,
+		component: () => import('./base-popper/base-popper.md'),
 		meta: {
 			title: '基础的浮窗',
 		},
@@ -210,7 +181,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/popconfirm',
 		name: 'V3Popconfirm',
-		component: V3PopconfirmDemo,
+		component: () => import('./popconfirm/popconfirm.md'),
 		meta: {
 			title: '气泡确认框',
 		},
@@ -218,7 +189,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/slider',
 		name: 'V3Slider',
-		component: V3SliderDemo,
+		component: () => import('./slider/slider.md'),
 		meta: {
 			title: '滑块',
 		},
@@ -226,7 +197,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/progress',
 		name: 'V3Progress',
-		component: V3ProgressDemo,
+		component: () => import('./progress/progress.md'),
 		meta: {
 			title: '进度条',
 		},
@@ -234,7 +205,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/carousel',
 		name: 'V3Carousel',
-		component: V3CarouselDemo,
+		component: () => import('./carousel/carousel.md'),
 		meta: {
 			title: '轮播图',
 		},
@@ -242,7 +213,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/drawer',
 		name: 'V3Drawer',
-		component: V3DrawerDemo,
+		component: () => import('./drawer/drawer.md'),
 		meta: {
 			title: '抽屉',
 		},
@@ -250,7 +221,7 @@ export const dynamcRoutes: RouteRecordRaw[] = [
 	{
 		path: '/back',
 		name: 'V3Back',
-		component: V3BackDemo,
+		component: () => import('./back/back.md'),
 		meta: {
 			title: '返回',
 		},
