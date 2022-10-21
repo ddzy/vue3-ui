@@ -1,14 +1,18 @@
 {
 	"name": "@felibrary/vue3-ui",
+	"version": "0.0.0",
 	"publishConfig": {
 		"access": "public"
 	},
-	"private": true,
 	"description": "vue3 ui组件库",
 	"keywords": [
 		"ui",
 		"vue3",
-		"vue"
+		"vue",
+		"ui-components",
+		"components",
+		"lib",
+		"library"
 	],
 	"author": "ddzy <1766083035@qq.com>",
 	"homepage": "https://github.com/ddzy/vue3-ui#readme",
