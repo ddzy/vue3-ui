@@ -1,4 +1,4 @@
-import * as ButtonTypes from '@/public/types/button';
+import * as ButtonTypes from './button';
 
 export interface IDialogProps {
 	modelValue: boolean;

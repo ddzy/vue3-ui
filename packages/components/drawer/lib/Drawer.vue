@@ -83,7 +83,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/types/drawer';
+import * as TYPES from '@/public/lib/types/drawer';
 import * as UTILS from '@common/utils/index';
 import V3Backdrop from 'backdrop';
 import V3Button from 'button';

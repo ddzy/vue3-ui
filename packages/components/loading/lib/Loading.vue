@@ -45,7 +45,7 @@ import {
 	watch,
 	toRef,
 } from 'vue';
-import * as TYPES from '@/public/types/loading';
+import * as TYPES from '@/public/lib/types/loading';
 import V3Backdrop from '@components/backdrop/main';
 import { close } from './LoadingConstructor';
 import VARIABLE from '@common/constants/internal-variable';

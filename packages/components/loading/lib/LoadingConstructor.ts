@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import * as TYPES from '@/public/types/loading';
+import * as TYPES from '@/public/lib/types/loading';
 import { isStrictObject } from '@common/utils';
 import {
 	ComponentInternalInstance,

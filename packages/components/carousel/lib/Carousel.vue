@@ -74,7 +74,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/carousel';
+import * as TYPES from '@/public/lib/types/carousel';
 import {
 	ComponentInternalInstance,
 	computed,

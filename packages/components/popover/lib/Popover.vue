@@ -6,7 +6,7 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/popover';
+import * as TYPES from '@/public/lib/types/popover';
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
 import V3BasePopper from 'base-popper';
 

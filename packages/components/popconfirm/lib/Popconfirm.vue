@@ -45,7 +45,7 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/popconfirm';
+import * as TYPES from '@/public/lib/types/popconfirm';
 import {
 	defineComponent,
 	getCurrentInstance,

@@ -154,7 +154,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/slider';
+import * as TYPES from '@/public/lib/types/slider';
 import { usePosition, useResize } from '@common/hooks/index';
 import V3Tooltip from 'tooltip';
 import {

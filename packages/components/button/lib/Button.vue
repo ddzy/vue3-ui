@@ -41,7 +41,7 @@
 	</button>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/button';
+import * as TYPES from '@/public/lib/types/button';
 import {
 	defineComponent,
 	onMounted,

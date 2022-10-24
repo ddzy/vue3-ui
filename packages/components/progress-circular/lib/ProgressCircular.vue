@@ -50,7 +50,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/progress';
+import * as TYPES from '@/public/lib/types/progress';
 import { computed, defineComponent, PropType, reactive, watch } from 'vue';
 import Decimal from 'decimal.js';
 

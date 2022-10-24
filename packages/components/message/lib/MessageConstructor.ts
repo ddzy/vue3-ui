@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import * as TYPES from '@/public/types/message';
+import * as TYPES from '@/public/lib/types/message';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,

@@ -15,7 +15,7 @@ import {
 	reactive,
 	provide,
 } from 'vue';
-import * as TYPES from '@/public/types/radio';
+import * as TYPES from '@/public/lib/types/radio';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 	RADIO_GROUP_INSTANCE_PROVIDE,

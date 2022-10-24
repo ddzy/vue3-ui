@@ -81,7 +81,7 @@ import {
 	nextTick,
 } from 'vue';
 
-import * as TYPES from '@/public/types/demo-block';
+import * as TYPES from '@/public/lib/types/demo-block';
 import * as UTILS from '@common/utils/index';
 
 interface IState {

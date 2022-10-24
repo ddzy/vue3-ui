@@ -1,6 +1,6 @@
 import { App } from 'vue';
-import * as TYPES_MESSAGE from '@/public/types/message';
-import * as TYPES_LOADING from '@/public/types/loading';
+import * as TYPES_MESSAGE from '@/public/lib/types/message';
+import * as TYPES_LOADING from '@/public/lib/types/loading';
 import './icon/assets/fonts/iconfont.css';
 import './main.lib.scss';
 

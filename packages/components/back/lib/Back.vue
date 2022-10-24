@@ -50,7 +50,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/types/back';
+import * as TYPES from '@/public/lib/types/back';
 import VARIABLE from '@common/constants/internal-variable';
 import * as UTILS from '@common/utils/index';
 

@@ -12,7 +12,7 @@
 	</li>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/types/select';
+import * as TYPES from '@/public/lib/types/select';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import * as UTILS from '@common/utils/index';
 import {
