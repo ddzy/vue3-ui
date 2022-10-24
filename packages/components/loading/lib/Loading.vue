@@ -155,6 +155,6 @@ export default defineComponent({
 }
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './Loading.scss';
 </style>

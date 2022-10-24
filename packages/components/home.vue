@@ -146,7 +146,7 @@ export default defineComponent({
 	color: $primary-color;
 }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
 $nav-transition-time: v-bind('state.navTransitionTime');
 
 .unfolder-fade-enter .unfolder-fade-enter-from {

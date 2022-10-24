@@ -150,6 +150,6 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './RadioButton.scss';
 </style>

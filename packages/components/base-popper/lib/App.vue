@@ -180,4 +180,4 @@ export default defineComponent({
 	methods: {},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss"></style>

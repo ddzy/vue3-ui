@@ -648,6 +648,6 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './Select.scss';
 </style>

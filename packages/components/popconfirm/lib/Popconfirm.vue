@@ -183,6 +183,6 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './Popconfirm.scss';
 </style>

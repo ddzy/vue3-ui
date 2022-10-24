@@ -183,7 +183,7 @@ export default defineComponent({
 	},
 });
 </script>
-<!-- <style lang="scss" scoped>
+<!-- <style lang="scss">
 .dialog-content {
 		display: flex;
 		align-items: center;

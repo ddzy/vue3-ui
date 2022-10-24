@@ -88,6 +88,6 @@ export default defineComponent({
 	overflow: hidden;
 }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './Backdrop.scss';
 </style>

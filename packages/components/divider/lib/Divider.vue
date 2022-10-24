@@ -54,6 +54,6 @@ export default defineComponent({
 	},
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './Divider.scss';
 </style>
