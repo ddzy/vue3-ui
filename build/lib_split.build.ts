@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import { build, mergeConfig } from 'vite';
 import commonConfig from '../config/common';
 import vue from '@vitejs/plugin-vue';
@@ -9,13 +9,14 @@ import vue from '@vitejs/plugin-vue';
  */
 
 const packagePath = path.resolve(__dirname, '../packages/components');
-const packageList = fs
+const packageList = fse
 	.readdirSync(packagePath, {
 		withFileTypes: true,
 	})
 	.filter(fileInfo => fileInfo.isDirectory())
 	.map(fileInfo => {
 		return {
+			packageName: fileInfo.name,
 			lib: {
 				entry: path.resolve(packagePath, fileInfo.name, 'main.ts'),
 				fileName: 'index',
@@ -32,7 +33,8 @@ packageList.forEach(async v => {
 		configFile: false,
 		publicDir: 'public/lib_split',
 		build: {
-			...v,
+			lib: v.lib,
+			outDir: v.outDir,
 			rollupOptions: {
 				external: ['vue'],
 				output: {
@@ -61,4 +63,12 @@ packageList.forEach(async v => {
 	});
 
 	await build(buildOptions);
+	// 打包之后将各个包的源码复制到输出目录中
+	try {
+		fse.copySync(
+			path.resolve(packagePath, v.packageName, 'lib'),
+			path.resolve(__dirname, `../dist/packages/${v.packageName}/lib`),
+			{ overwrite: true }
+		);
+	} catch (error) {}
 });
