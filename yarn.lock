@@ -10688,6 +10688,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+vite-plugin-css-injected-by-js@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-css-injected-by-js/-/vite-plugin-css-injected-by-js-2.1.0.tgz#3c75c8f2eb41128f6fe22ca9e3eae6bde63231f0"
+  integrity sha512-p5Tn63xfYd1j4Hhnn9YuVMF3t7eLpiHejKNcIeGOWNU60bsw8WXmLQSVGtraw3C6qNz5LnF3S8R1SQLe4/LBYw==
+
 vite-plugin-vuedoc@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/vite-plugin-vuedoc/-/vite-plugin-vuedoc-3.1.3.tgz#37d7eb1ee7e8bc92890b5a54c60af38780d4c14c"

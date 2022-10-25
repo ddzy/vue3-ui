@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import { build, mergeConfig } from 'vite';
 import commonConfig from '../config/common';
 import vue from '@vitejs/plugin-vue';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 /**
  * https://github.com/vitejs/vite/discussions/1736
@@ -50,8 +51,9 @@ packageList.forEach(async v => {
 					},
 				},
 			},
+			cssCodeSplit: false,
 		},
-		plugins: [vue()],
+		plugins: [vue(), cssInjectedByJsPlugin()],
 		css: {
 			preprocessorOptions: {
 				/** 配置 scss 全局变量的引入方式 */
