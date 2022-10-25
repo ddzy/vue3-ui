@@ -1,0 +1,186 @@
+$indicator-type-list: (
+	dot: (
+		indicator-item-width: 12px,
+		indicator-item-height: 12px,
+		indicator-item-border-radius: 50%,
+	),
+	line: (
+		indicator-item-width: 16px,
+		indicator-item-height: 6px,
+		indicator-item-border-radius: 0,
+	),
+);
+$indicator-position-list: (
+	bottom: (
+		indicator-wrapper-left: 0,
+		indicator-wrapper-right: auto,
+		indicator-wrapper-bottom: 0,
+		indicator-wrapper-top: auto,
+		indicator-wrapper-width: 100%,
+		indicator-wrapper-height: auto,
+		indicator-wrapper-padding: 20px 0,
+		indicator-wrapper-background-image:
+			linear-gradient(to top, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+		indicator-list-flex-direction: row,
+		indicator-item-margin: 0 0 0 $margin-small,
+	),
+	left: (
+		indicator-wrapper-left: 0,
+		indicator-wrapper-right: auto,
+		indicator-wrapper-bottom: auto,
+		indicator-wrapper-top: 0,
+		indicator-wrapper-width: auto,
+		indicator-wrapper-height: 100%,
+		indicator-wrapper-padding: 0 20px,
+		indicator-wrapper-background-image:
+			linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+		indicator-list-flex-direction: column,
+		indicator-item-margin: $margin-small 0 0,
+	),
+	right: (
+		indicator-wrapper-left: auto,
+		indicator-wrapper-right: 0,
+		indicator-wrapper-bottom: auto,
+		indicator-wrapper-top: 0,
+		indicator-wrapper-width: auto,
+		indicator-wrapper-height: 100%,
+		indicator-wrapper-padding: 0 20px,
+		indicator-wrapper-background-image:
+			linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+		indicator-list-flex-direction: column,
+		indicator-item-margin: $margin-small 0 0,
+	),
+	top: (
+		indicator-wrapper-left: 0,
+		indicator-wrapper-right: auto,
+		indicator-wrapper-bottom: auto,
+		indicator-wrapper-top: 0,
+		indicator-wrapper-width: 100%,
+		indicator-wrapper-height: auto,
+		indicator-wrapper-padding: 20px 0,
+		indicator-wrapper-background-image:
+			linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+		indicator-list-flex-direction: row,
+		indicator-item-margin: 0 0 0 $margin-small,
+	),
+);
+
+.v3-carousel {
+	overflow: hidden;
+	position: relative;
+
+	&.is-disabled {
+		.v3-carousel__arrow,
+		.v3-carousel__indicator .v3-carousel-indicator__item {
+			cursor: not-allowed;
+		}
+	}
+
+	@each $key, $value in $indicator-type-list {
+		&.is-indicator-type-#{$key} {
+			.v3-carousel__indicator {
+				.v3-carousel-indicator__item {
+					width: map-get($map: $value, $key: indicator-item-width);
+					height: map-get($map: $value, $key: indicator-item-height);
+					border-radius: map-get(
+						$map: $value,
+						$key: indicator-item-border-radius
+					);
+				}
+			}
+		}
+	}
+
+	@each $key, $value in $indicator-position-list {
+		&.is-indicator-position-#{$key} {
+			.v3-carousel__indicator {
+				left: map-get($map: $value, $key: indicator-wrapper-left);
+				right: map-get($map: $value, $key: indicator-wrapper-right);
+				bottom: map-get($map: $value, $key: indicator-wrapper-bottom);
+				top: map-get($map: $value, $key: indicator-wrapper-top);
+				width: map-get($map: $value, $key: indicator-wrapper-width);
+				height: map-get($map: $value, $key: indicator-wrapper-height);
+				padding: map-get($map: $value, $key: indicator-wrapper-padding);
+				background-image: map-get(
+					$map: $value,
+					$key: indicator-wrapper-background-image
+				);
+				.v3-carousel-indicator__list {
+					flex-direction: map-get(
+						$map: $value,
+						$key: indicator-list-flex-direction
+					);
+				}
+				.v3-carousel-indicator__item {
+					margin: map-get($map: $value, $key: indicator-item-margin);
+				}
+			}
+		}
+	}
+
+	.v3-carousel__list {
+		position: relative;
+		height: 100%;
+	}
+
+	.v3-carousel__arrow {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		transition-property: left, right;
+		transition-duration: 0.3s;
+		transition-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
+		cursor: pointer;
+		user-select: none;
+		&.is-left {
+			left: -60px;
+		}
+		&.is-right {
+			right: -60px;
+		}
+		&.is-show {
+			&.is-left {
+				left: 20px;
+			}
+			&.is-right {
+				right: 20px;
+			}
+		}
+		.v3-carousel-arrow__inner {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: translate3d(0, 0, 0);
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background-color: rgba(0, 0, 0, 0.6);
+		}
+		i {
+			font-size: 24px;
+			color: #fff;
+		}
+	}
+
+	.v3-carousel__indicator {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform: translate3d(0, 0, 0);
+
+		.v3-carousel-indicator__list {
+			display: flex;
+		}
+		.v3-carousel-indicator__item {
+			background-color: rgba(0, 0, 0, 0.6);
+			cursor: pointer;
+			&.is-active {
+				background-color: rgba(255, 255, 255, 1);
+			}
+			&:hover:not(.is-active):not(.is-disabled) {
+				background-color: rgba(255, 255, 255, 0.6);
+			}
+		}
+	}
+}

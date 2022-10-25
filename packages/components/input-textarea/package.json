@@ -1,0 +1,24 @@
+{
+	"private": true,
+	"name": "input-textarea",
+	"version": "0.0.0",
+	"description": "InputTextarea 组件",
+	"keywords": [
+		"input-textarea"
+	],
+	"author": "ddzy <1766083035@qq.com>",
+	"homepage": "https://github.com/ddzy/vue3-ui#readme",
+	"license": "MIT",
+	"main": "main.ts",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ddzy/vue3-ui.git"
+	}
+}

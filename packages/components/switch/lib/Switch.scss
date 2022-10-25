@@ -1,0 +1,112 @@
+.v3-switch {
+	display: flex;
+	align-items: center;
+	font-size: $font-size-small;
+	// 选中状态
+	&.is-active {
+		// 首次挂载时不需要动画
+		&.has-animation {
+			.v3-switch__select {
+				&::before {
+					animation: switchActive 0.3s ease-out 0s 1;
+				}
+			}
+		}
+		.v3-switch__inactive {
+			color: $font-color-default;
+		}
+		.v3-switch__active {
+			color: var(--active-color);
+		}
+		.v3-switch__select {
+			background-color: var(--active-color-track);
+			&::before {
+				left: calc(100% - 16px);
+				background-color: var(--active-color);
+			}
+		}
+	}
+	// 非选中状态
+	&:not(.is-active) {
+		// 首次挂载时不需要动画
+		&.has-animation {
+			.v3-switch__select {
+				&::before {
+					animation: switchInactive 0.3s ease-out 0s 1;
+				}
+			}
+		}
+		.v3-switch__inactive {
+			color: $danger-color;
+		}
+		.v3-switch__active {
+			color: $font-color-default;
+		}
+		.v3-switch__select {
+			background-color: var(--inactive-color-track);
+			&::before {
+				left: -2px;
+				background-color: var(--inactive-color);
+			}
+		}
+	}
+	// 禁用状态
+	&.is-disabled {
+		opacity: 0.4;
+		.v3-switch__label,
+		.v3-switch__select {
+			cursor: not-allowed;
+		}
+	}
+
+	.v3-switch__label {
+		color: $font-color-default;
+		user-select: none;
+		cursor: pointer;
+		i.v3-icon {
+			font-size: $font-size-large-2;
+		}
+	}
+
+	.v3-switch__active {
+		padding-left: $padding-medium;
+	}
+	.v3-switch__inactive {
+		padding-right: $padding-medium;
+	}
+	.v3-switch__input {
+		display: none;
+	}
+	.v3-switch__select {
+		position: relative;
+		height: 12px;
+		border-radius: 30px;
+		cursor: pointer;
+		&::before {
+			position: absolute;
+			top: -3px;
+			content: '';
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			transition: all var(--move-duration) ease-out;
+		}
+	}
+}
+
+@keyframes switchActive {
+	0% {
+		box-shadow: 0 0 0 0 var(--active-color-shadow);
+	}
+	100% {
+		box-shadow: 0 0 0 4px var(--active-color-transparent);
+	}
+}
+@keyframes switchInactive {
+	0% {
+		box-shadow: 0 0 0 0 var(--inactive-color-shadow);
+	}
+	100% {
+		box-shadow: 0 0 0 4px var(--inactive-color-transparent);
+	}
+}

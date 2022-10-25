@@ -1,0 +1,30 @@
+{
+	"private": true,
+	"name": "select",
+	"version": "0.0.0",
+	"description": "Select 组件",
+	"keywords": [
+		"select"
+	],
+	"author": "ddzy <1766083035@qq.com>",
+	"homepage": "https://github.com/ddzy/vue3-ui#readme",
+	"license": "MIT",
+	"main": "main.ts",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ddzy/vue3-ui.git"
+	},
+	"dependencies": {
+		"base-popper": "0.0.0",
+		"input": "0.0.0",
+		"select-option": "0.0.0",
+		"tag": "0.0.0"
+	}
+}

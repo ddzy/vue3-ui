@@ -1,0 +1,43 @@
+.v3-divider {
+	position: relative;
+	//  垂直方向
+	&.is-vertical {
+		display: inline-block;
+		width: 1px;
+		height: 1em;
+		margin: 0 $margin-small + 2;
+		background-color: $info-color-middle;
+		vertical-align: middle;
+	}
+	// 水平方向
+	&.is-horizontal {
+		width: 100%;
+		height: 1px;
+		background-color: $info-color-middle;
+		margin: $margin-large-2 0;
+	}
+	// 内容的位置
+	&.is-content--start {
+		.v3-divider__content {
+			left: 20px;
+		}
+	}
+	&.is-content--center {
+		.v3-divider__content {
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+	&.is-content--end {
+		.v3-divider__content {
+			right: 20px;
+		}
+	}
+	.v3-divider__content {
+		position: absolute;
+		top: 0;
+		padding: 0 $padding-medium;
+		background-color: #fff;
+		transform: translateY(-50%);
+	}
+}

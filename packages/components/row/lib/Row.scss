@@ -1,0 +1,22 @@
+$justify-list: start, end, center, space-around, space-between, flex-start,
+	flex-end;
+$align-list: start, end, center, flex-start, flex-end;
+
+.v3-row {
+	&.v3-row--flex {
+		display: flex;
+		flex-wrap: wrap;
+
+		@each $justify in $justify-list {
+			&.is-justify-#{$justify} {
+				justify-content: $justify;
+			}
+		}
+
+		@each $align in $align-list {
+			&.is-align-#{$align} {
+				align-items: $align;
+			}
+		}
+	}
+}

@@ -1,0 +1,62 @@
+$textarea-resize-list: none, horizontal, vertical, both;
+
+.v3-input-textarea {
+	display: inline-block;
+	position: relative;
+	padding: $padding-small $padding-medium;
+	border: 1px solid $border-color-grey-default;
+	border-radius: $border-radius-width-default;
+	transition: all 0.15s ease;
+
+	&.is-disabled::after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		content: '';
+		background-color: #f1f1f1;
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&:focus-within {
+		border-color: $primary-color;
+		animation: inputTextareaActive 0.3s ease-out 0s 1;
+	}
+
+	textarea {
+		padding: 0;
+		border: 0;
+		appearance: none;
+		outline: 0;
+		word-break: keep-all;
+		font-size: $font-size-small;
+		color: $font-color-medium;
+
+		&::placeholder {
+			color: $border-color-grey-default;
+		}
+		&:hover {
+			border-color: $info-color;
+		}
+		&:disabled {
+			background-color: #fff;
+		}
+
+		@each $key in $textarea-resize-list {
+			&.is-resize-#{$key} {
+				resize: $key;
+			}
+		}
+	}
+}
+
+@keyframes inputTextareaActive {
+	0% {
+		box-shadow: 0 0 0 0 rgba(0, 160, 255, 0.4);
+	}
+	100% {
+		box-shadow: 0 0 0 4px rgba(0, 160, 255, 0);
+	}
+}

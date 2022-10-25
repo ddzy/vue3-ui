@@ -1,0 +1,23 @@
+.v3-back {
+	position: absolute;
+	right: 40px;
+	bottom: 40px;
+	&.is-global {
+		position: fixed;
+	}
+
+	.v3-back-top__inner,
+	.v3-back-bottom__inner {
+		padding: 4px 8px;
+		background-color: $primary-color;
+		border-radius: $border-radius-width-default;
+		font-size: $font-size-large-2;
+		color: #fff;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.v3-back__bottom {
+		margin-top: $margin-small;
+	}
+}

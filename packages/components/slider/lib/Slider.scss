@@ -1,0 +1,231 @@
+@mixin thumbMoving {
+	box-shadow: 0 0 0 12px var(--thumb-shadow-color);
+}
+@mixin thumbMovingWhileDisabled {
+	box-shadow: none;
+}
+
+.v3-slider {
+	display: flex;
+	width: 100%;
+	align-items: center;
+
+	// 垂直方向
+	&.is-vertical {
+		display: inline-block;
+		width: auto;
+		.v3-slider__prepend,
+		.v3-slider__append {
+			flex-shrink: 0;
+		}
+		.v3-slider__prepend {
+			margin: 0;
+			margin-bottom: $margin-small;
+		}
+
+		.v3-slider__append {
+			margin: 0;
+			margin-top: $margin-small;
+		}
+		.v3-slider__track {
+			display: flex;
+			justify-content: center;
+			margin: 0;
+			padding: 0;
+			.v3-slider-track__inner {
+				width: 6px;
+				height: var(--slider-track-height);
+				margin: 0;
+			}
+			.v3-slider-track__done {
+				width: 100%;
+			}
+			.v3-slider-track__thumb {
+				top: 0;
+				left: 50%;
+			}
+			.v3-slider-track__label {
+				width: 100%;
+				height: 100%;
+				.v3-slider-label__item {
+					right: -12px;
+					margin: 0;
+					transform: translate(100%, -50%);
+					&:first-child {
+						transform: translate(100%, -50%);
+					}
+					&:last-child {
+						transform: translate(100%, -50%);
+					}
+				}
+			}
+		}
+	}
+
+	// 范围选择器
+	&.is-range {
+		&.is-moving {
+			.v3-slider__track {
+				.v3-slider-track__thumb {
+					&.v3-slider-track-thumb-1 {
+						z-index: 3;
+					}
+					&:not(.v3-slider-track-thumb-1) {
+						z-index: 4;
+					}
+				}
+			}
+		}
+		&.is-moving-1 {
+			.v3-slider__track {
+				.v3-slider-track__thumb {
+					&:not(.v3-slider-track-thumb-1) {
+						z-index: 3;
+					}
+					&.v3-slider-track-thumb-1 {
+						z-index: 4;
+					}
+				}
+			}
+		}
+	}
+
+	// 开始拖动
+	&.is-moving {
+		.v3-slider__track {
+			.v3-slider-track__thumb {
+				&.v3-slider-track-thumb-1 {
+					z-index: 3;
+				}
+				&:not(.v3-slider-track-thumb-1) {
+					z-index: 4;
+					@include thumbMoving();
+				}
+			}
+		}
+	}
+	&.is-moving-1 {
+		.v3-slider__track {
+			.v3-slider-track__thumb {
+				&:not(.v3-slider-track-thumb-1) {
+					z-index: 3;
+				}
+				&.v3-slider-track-thumb-1 {
+					z-index: 4;
+					@include thumbMoving();
+				}
+			}
+		}
+	}
+
+	// 禁用状态
+	&.is-disabled {
+		.v3-slider__track {
+			cursor: not-allowed;
+			.v3-slider-track__thumb {
+				cursor: not-allowed;
+				&:hover {
+					@include thumbMovingWhileDisabled();
+				}
+			}
+		}
+	}
+
+	.v3-slider__prepend,
+	.v3-slider__append {
+		color: $font-color-medium;
+		i.v3-icon {
+			font-size: 24px;
+		}
+	}
+
+	.v3-slider__prepend {
+		margin-right: 19px;
+	}
+
+	.v3-slider__append {
+		margin-left: 19px;
+	}
+
+	.v3-slider__track {
+		flex: 1;
+		margin: 10px 0;
+		padding: $padding-medium 0;
+		cursor: pointer;
+		.v3-slider-track__inner {
+			position: relative;
+			height: 6px;
+		}
+		.v3-slider-track__done {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 1;
+			width: 0;
+			height: 100%;
+		}
+		.v3-slider-track__thumb {
+			position: absolute;
+			left: 0;
+			top: 50%;
+			z-index: 3;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			transform: translate(-50%, -50%);
+			cursor: grab;
+			transition: box-shadow 0.15s ease;
+			user-select: none;
+			&:hover {
+				@include thumbMoving();
+			}
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 40px;
+				height: 40px;
+				transform: translate(-50%, -50%);
+			}
+		}
+		.v3-slider-track__mark {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			.v3-slider-mark__list {
+				width: 100%;
+				height: 100%;
+			}
+			.v3-slider-mark__item {
+				position: absolute;
+				top: 50%;
+				z-index: 2;
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background-color: #fff;
+				transform: translate(-50%, -50%);
+			}
+		}
+		.v3-slider-track__label {
+			position: relative;
+			color: $font-color-medium;
+			.v3-slider-label__list {
+				height: 100%;
+			}
+			.v3-slider-label__item {
+				position: absolute;
+				margin-top: $margin-medium;
+				transform: translate(-50%, 0);
+				&:first-child {
+					transform: translate(0, 0);
+				}
+				&:last-child {
+					transform: translate(-100%, 0);
+				}
+			}
+		}
+	}
+}

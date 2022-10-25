@@ -1,0 +1,72 @@
+$badge-type-map: (
+	primary: (
+		background-color: $primary-color,
+		color: #fff,
+	),
+	success: (
+		background-color: $success-color,
+		color: #fff,
+	),
+	danger: (
+		background-color: $danger-color,
+		color: #fff,
+	),
+	warning: (
+		background-color: $warning-color,
+		color: #fff,
+	),
+	info: (
+		background-color: $info-color,
+		color: #fff,
+	),
+);
+
+.v3-badge {
+	position: relative;
+
+	@each $key, $value in $badge-type-map {
+		&.v3-badge--#{$key} {
+			&.is-dot {
+				.v3-badge__content {
+					background-color: map-get($map: $value, $key: background-color);
+					color: map-get($map: $value, $key: color);
+				}
+			}
+			&:not(.is-dot) {
+				span {
+					background-color: map-get($map: $value, $key: background-color);
+					color: map-get($map: $value, $key: color);
+				}
+			}
+		}
+	}
+
+	&.is-dot {
+		.v3-badge__content {
+			right: 0;
+			padding: 4px;
+			border-radius: 50%;
+			box-shadow: 0 0 0 1px #fff;
+			transform: translate(50%, -50%);
+		}
+	}
+
+	&:not(.is-dot) {
+		.v3-badge__content {
+			right: 10px;
+			transform: translate(100%, -50%);
+		}
+		span {
+			padding: 0 $padding-small;
+			border-radius: $border-radius-width-large;
+			box-shadow: 0 0 0 1px #fff;
+			font-size: $font-size-mini;
+		}
+	}
+
+	.v3-badge__content {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+	}
+}

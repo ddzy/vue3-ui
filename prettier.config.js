@@ -7,5 +7,6 @@ module.exports = {
 	arrowParens: "avoid", // 箭头函数只有一个参数时，是否书写括号
 	singleQuote: true, // 是否采用单引号
 	jsxBracketSameLine: true,
-	htmlWhitespaceSensitivity: "ignore", // HTML 元素的换行处理
+	htmlWhitespaceSensitivity: "css", // HTML 元素的换行处理
+	trailingComma: true,
 };

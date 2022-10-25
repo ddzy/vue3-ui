@@ -1,0 +1,266 @@
+$button-size-map: (
+	small: (
+		padding: $padding-small $padding-medium,
+		circle-padding: $padding-small,
+		icon-font-size: $font-size-large,
+		font-size: $font-size-mini,
+	),
+	medium: (
+		padding: $padding-small $padding-medium,
+		circle-padding: $padding-medium - 2,
+		icon-font-size: $font-size-large,
+		font-size: $font-size-small,
+	),
+	large: (
+		padding: $padding-small + 2 $padding-medium,
+		circle-padding: $padding-medium + 2,
+		icon-font-size: $font-size-large-2,
+		font-size: $font-size-small,
+	),
+);
+
+button {
+	appearance: none;
+	border: none;
+	outline: none;
+}
+
+.v3-button {
+	padding: $padding-small $padding-medium;
+	border-radius: $border-radius-width-small;
+	cursor: pointer;
+	user-select: none;
+	transition: all 0.15s ease;
+
+	@each $key, $value in $button-size-map {
+		&.is-size--#{$key} {
+			padding: map-get($map: $value, $key: padding);
+			font-size: map-get($map: $value, $key: font-size);
+			&.is-circle {
+				padding: map-get($map: $value, $key: circle-padding);
+			}
+			& [class*='v3-icon-'] {
+				height: 1em;
+				font-size: map-get($map: $value, $key: icon-font-size);
+			}
+		}
+	}
+
+	&:hover {
+		opacity: 0.8;
+	}
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+		& > a {
+			cursor: not-allowed;
+			&:active {
+				color: $primary-color;
+			}
+		}
+	}
+	&.is-loading:disabled {
+		cursor: default;
+		opacity: 0.6;
+	}
+	&.is-circle {
+		padding: 10px;
+		border-radius: 50%;
+		& [class*='v3-icon-'] {
+			width: 20px;
+			height: 20px;
+		}
+	}
+	&,
+	& > a {
+		display: flex;
+		align-items: center;
+		& > * {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+	& [class*='v3-icon-'] + span:not(:empty) {
+		margin-left: 4px;
+	}
+}
+
+$button-type-map: (
+	text: (
+		padding: 0,
+		border-radius: 0,
+		border-width: 0,
+		background-color: #fff,
+		color: $primary-color,
+		text-decoration: none,
+		link-color: $primary-color,
+		active-color: #1a83de,
+	),
+	default: (
+		border-color: $default-color,
+		color: $font-color-medium,
+		background-color: #fff,
+		hover-background-color: $primary-color-plain,
+		hover-color: $primary-color,
+		hover-border-color: $primary-color,
+		active-animation: primaryButtonActive 0.3s ease-out 0s 1,
+		plain-hover-background-color: #fff,
+	),
+	primary: (
+		border-color: $primary-color,
+		color: #fff,
+		background-color: $primary-color,
+		active-animation: primaryButtonActive 0.3s ease-out 0s 1,
+		plain-background-color: $primary-color-plain,
+		plain-color: $primary-color,
+		plain-hover-background-color: $primary-color,
+		plain-hover-color: #fff,
+		plain-hover-border-color: $primary-color,
+	),
+	success: (
+		border-color: $success-color,
+		color: #fff,
+		background-color: $success-color,
+		active-animation: successButtonActive 0.3s ease-out 0s 1,
+		plain-background-color: $success-color-plain,
+		plain-color: $success-color,
+		plain-hover-background-color: $success-color,
+		plain-hover-color: #fff,
+		plain-hover-border-color: $success-color,
+	),
+	danger: (
+		border-color: $danger-color,
+		color: #fff,
+		background-color: $danger-color,
+		active-animation: dangerButtonActive 0.3s ease-out 0s 1,
+		plain-background-color: $danger-color-plain,
+		plain-color: $danger-color,
+		plain-hover-background-color: $danger-color,
+		plain-hover-color: #fff,
+		plain-hover-border-color: $danger-color,
+	),
+	warning: (
+		border-color: $warning-color,
+		color: #fff,
+		background-color: $warning-color,
+		active-animation: warningButtonActive 0.3s ease-out 0s 1,
+		plain-background-color: $warning-color-plain,
+		plain-color: $warning-color,
+		plain-hover-background-color: $warning-color,
+		plain-hover-color: #fff,
+		plain-hover-border-color: $warning-color,
+	),
+	info: (
+		border-color: $info-color,
+		color: #fff,
+		background-color: $info-color,
+		active-animation: infoButtonActive 0.3s ease-out 0s 1,
+		plain-background-color: $info-color-plain,
+		plain-color: $info-color,
+		plain-hover-background-color: $info-color,
+		plain-hover-color: #fff,
+		plain-hover-border-color: $info-color,
+	),
+);
+@each $key, $value in $button-type-map {
+	.v3-button--#{$key} {
+		@if $key == default {
+			border: 1px solid map-get($map: $value, $key: border-color);
+			color: map-get($map: $value, $key: color);
+			background-color: map-get($map: $value, $key: background-color);
+			&:hover:not(:disabled) {
+				background-color: map-get($map: $value, $key: hover-background-color);
+				color: map-get($map: $value, $key: hover-color);
+				border-color: map-get($map: $value, $key: hover-border-color);
+			}
+			&.is-active {
+				animation: map-get($map: $value, $key: active-animation);
+			}
+			&.is-plain {
+				&:hover:not(:disabled) {
+					background-color: map-get(
+						$map: $value,
+						$key: plain-hover-background-color
+					);
+				}
+			}
+		} @else if $key == text {
+			padding: map-get($map: $value, $key: padding);
+			border-radius: map-get($map: $value, $key: border-radius);
+			border-width: map-get($map: $value, $key: border-width);
+			background-color: map-get($map: $value, $key: background-color);
+			color: map-get($map: $value, $key: color);
+			& > a {
+				text-decoration: map-get($map: $value, $key: text-decoration);
+				&:link,
+				&:visited {
+					color: map-get($map: $value, $key: link-color);
+				}
+				&:active {
+					color: map-get($map: $value, $key: active-color);
+				}
+			}
+		} @else {
+			background-color: map-get($map: $value, $key: background-color);
+			color: map-get($map: $value, $key: color);
+			border: 1px solid map-get($map: $value, $key: border-color);
+			&.is-active {
+				animation: map-get($map: $value, $key: active-animation);
+			}
+			&.is-plain {
+				background-color: map-get($map: $value, $key: plain-background-color);
+				color: map-get($map: $value, $key: plain-color);
+				&:hover:not(:disabled) {
+					background-color: map-get(
+						$map: $value,
+						$key: plain-hover-background-color
+					);
+					color: map-get($map: $value, $key: plain-hover-color);
+					border-color: map-get($map: $value, $key: plain-hover-border-color);
+				}
+			}
+		}
+	}
+}
+
+// 按钮边框类型
+$button-border-type: dashed, dotted, double, groove, outset;
+@each $v in $button-border-type {
+	.#{'has-border--' + $v} {
+		border-style: $v;
+	}
+}
+
+// 按钮点击时的动画
+$button-box-shadow-map: (
+	primary: (
+		startColor: rgba(0, 160, 255, 0.6),
+		endColor: rgba(0, 160, 255, 0),
+	),
+	success: (
+		startColor: rgba(99, 185, 49, 0.6),
+		endColor: rgba(99, 185, 49, 0),
+	),
+	danger: (
+		startColor: rgba(201, 27, 38, 0.6),
+		endColor: rgba(201, 27, 38, 0),
+	),
+	warning: (
+		startColor: rgba(237, 170, 83, 0.6),
+		endColor: rgba(237, 170, 83, 0),
+	),
+	info: (
+		startColor: rgba(184, 176, 176, 0.6),
+		endColor: rgba(184, 176, 176, 0),
+	),
+);
+@each $key, $value in $button-box-shadow-map {
+	@keyframes #{$key}ButtonActive {
+		0% {
+			box-shadow: 0 0 0 0 map-get($map: $value, $key: startColor);
+		}
+		100% {
+			box-shadow: 0 0 0 4px map-get($map: $value, $key: endColor);
+		}
+	}
+}

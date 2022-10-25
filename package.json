@@ -1,17 +1,95 @@
 {
-	"name": "root",
-	"private": true,
-	"devDependencies": {
-		"commitizen": "^4.2.3",
-		"cz-lerna-changelog": "^2.0.3",
-		"lerna": "^4.0.0"
+	"name": "@felibrary/vue3-ui",
+	"version": "0.0.1",
+	"publishConfig": {
+		"access": "public"
+	},
+	"description": "vue3 ui组件库",
+	"keywords": [
+		"ui",
+		"vue3",
+		"vue",
+		"ui-components",
+		"components",
+		"lib",
+		"library"
+	],
+	"author": "ddzy <1766083035@qq.com>",
+	"homepage": "https://github.com/ddzy/vue3-ui#readme",
+	"license": "MIT",
+	"workspaces": [
+		"packages/components/*"
+	],
+	"files": [
+		"dist/*"
+	],
+	"main": "./dist/vue3-ui.umd.js",
+	"module": "./dist/vue3-ui.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/vue3-ui.es.js",
+			"require": "./dist/vue3-ui.umd.js"
+		}
 	},
 	"scripts": {
-		"commit": "git-cz"
+		"dev": "vite",
+		"build:lib": "ts-node ./build/lib.build.ts",
+		"build:lib_split": "ts-node ./build/lib_split.build.ts",
+		"build": "yarn build:lib && yarn build:lib_split",
+		"build:docs": "vite build",
+		"build:check": "vue-tsc --noEmit && vite build",
+		"serve": "yarn dev",
+		"test": "jest --coverage",
+		"commit": "git-cz",
+		"docs": "vuepress dev docs",
+		"docs:build": "vuepress build docs",
+		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write",
+		"prepare": "husky install",
+		"tree": "tree -L 3 -I 'node_modules|coverage|dist' -o ./tree.txt --dirsfirst",
+		"clear:dstore": "find . -name '.DS_Store' | xargs rm -rf"
 	},
 	"config": {
 		"commitizen": {
 			"path": "node_modules/cz-lerna-changelog"
 		}
+	},
+	"lint-staged": {
+		"packages/**/*.{ts,tsx,js,jsx,vue}": [
+			"yarn format"
+		]
+	},
+	"peerDependencies": {
+		"vue": "3.1.5"
+	},
+	"dependencies": {
+		"decimal.js": "^10.3.1"
+	},
+	"devDependencies": {
+		"@types/jest": "^26.0.22",
+		"@types/node": "^14.14.37",
+		"@vitejs/plugin-vue": "^1.2.1",
+		"@vue/compiler-sfc": "^3.0.5",
+		"@vue/component-compiler-utils": "^3.2.0",
+		"@vue/test-utils": "^2.0.0-rc.4",
+		"commitizen": "^4.2.3",
+		"cross-env": "^7.0.3",
+		"cz-lerna-changelog": "^2.0.3",
+		"husky": "^6.0.0",
+		"identity-obj-proxy": "^3.0.0",
+		"jest": "^26.6.3",
+		"lerna": "^4.0.0",
+		"lint-staged": "^10.5.4",
+		"prettier-eslint-cli": "^5.0.1",
+		"regenerator-runtime": "^0.13.9",
+		"sass": "^1.32.8",
+		"ts-jest": "^26.5.4",
+		"typescript": "^4.1.3",
+		"vite": "^2.1.5",
+		"vite-plugin-css-injected-by-js": "^2.1.0",
+		"vite-plugin-vuedoc": "^3.1.3",
+		"vue-jest": "^5.0.0-alpha.7",
+		"vue-router": "4",
+		"vue-tsc": "^0.0.15",
+		"vuepress": "^2.0.0-beta.8"
 	}
 }

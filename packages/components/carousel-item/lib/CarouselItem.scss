@@ -1,0 +1,81 @@
+.v3-carousel-item-horizontal-slide-next-enter-from {
+	transform: translateX(100%);
+}
+.v3-carousel-item-horizontal-slide-next-enter-active,
+.v3-carousel-item-horizontal-slide-next-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-horizontal-slide-next-enter-to,
+.v3-carousel-item-horizontal-slide-next-leave-from {
+	transform: translateX(0);
+}
+.v3-carousel-item-horizontal-slide-next-leave-to {
+	transform: translateX(-100%);
+}
+
+.v3-carousel-item-horizontal-slide-prev-enter-from {
+	transform: translateX(-100%);
+}
+.v3-carousel-item-horizontal-slide-prev-enter-active,
+.v3-carousel-item-horizontal-slide-prev-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-horizontal-slide-prev-enter-to,
+.v3-carousel-item-horizontal-slide-prev-leave-from {
+	transform: translateX(0);
+}
+.v3-carousel-item-horizontal-slide-prev-leave-to {
+	transform: translateX(100%);
+}
+
+.v3-carousel-item-vertical-slide-next-enter-from {
+	transform: translateY(100%);
+}
+.v3-carousel-item-vertical-slide-next-enter-active,
+.v3-carousel-item-vertical-slide-next-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-vertical-slide-next-enter-to,
+.v3-carousel-item-vertical-slide-next-leave-from {
+	transform: translateY(0);
+}
+.v3-carousel-item-vertical-slide-next-leave-to {
+	transform: translateY(-100%);
+}
+
+.v3-carousel-item-vertical-slide-prev-enter-from {
+	transform: translateY(-100%);
+}
+.v3-carousel-item-vertical-slide-prev-enter-active,
+.v3-carousel-item-vertical-slide-prev-leave-active {
+	transition-property: transform;
+}
+.v3-carousel-item-vertical-slide-prev-enter-to,
+.v3-carousel-item-vertical-slide-prev-leave-from {
+	transform: translateY(0);
+}
+.v3-carousel-item-vertical-slide-prev-leave-to {
+	transform: translateY(100%);
+}
+
+.v3-carousel-item-fade-enter-from {
+	opacity: 0;
+}
+.v3-carousel-item-fade-enter-active,
+.v3-carousel-item-fade-leave-active {
+	transition-property: opacity;
+}
+.v3-carousel-item-fade-enter-to,
+.v3-carousel-item-fade-leave-from {
+	opacity: 1;
+}
+.v3-carousel-item-fade-leave-to {
+	opacity: 0;
+}
+
+.v3-carousel__item {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+}

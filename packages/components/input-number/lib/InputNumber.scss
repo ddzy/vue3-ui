@@ -1,0 +1,72 @@
+$input-number-size-map: (
+	small: (
+		icon-font-size: $font-size-small,
+	),
+	medium: (
+		icon-font-size: $font-size-normal,
+	),
+	large: (
+		icon-font-size: $font-size-large,
+	),
+);
+
+.v3-input-number {
+	@each $key, $value in $input-number-size-map {
+		& :deep(.v3-input.is-size--#{$key}) {
+			i.v3-icon {
+				font-size: map-get($map: $value, $key: icon-font-size);
+			}
+		}
+	}
+
+	// 控制组位于两边
+	.v3-number__minus-wrapper,
+	.v3-number__plus-wrapper {
+		cursor: pointer;
+		&:hover {
+			color: $primary-color;
+		}
+
+		&.is-position-both {
+			padding: 0 $padding-medium;
+		}
+		// 控制按钮禁用状态
+		&.is-disabled {
+			cursor: not-allowed;
+			color: $border-color-grey-default;
+			&:hover {
+				color: $border-color-grey-default;
+			}
+		}
+	}
+
+	// 控制组位于【左/右】边
+	.v3-number__control-wrapper {
+		line-height: 1;
+		.v3-number__control-plus,
+		.v3-number__control-minus {
+			padding: 0 $padding-medium;
+			cursor: pointer;
+			&:hover {
+				color: $primary-color;
+			}
+
+			// 控制按钮禁用状态
+			&.is-disabled {
+				cursor: not-allowed;
+				color: $border-color-grey-default;
+				&:hover {
+					color: $border-color-grey-default;
+				}
+			}
+		}
+
+		.v3-number__control-plus {
+			border-bottom: 1px solid $border-color-grey-default;
+		}
+	}
+
+	& :deep(input) {
+		text-align: center;
+	}
+}

@@ -1,0 +1,109 @@
+$MIN_COL: 1;
+$MAX_COL: 12;
+
+[class*='v3-col'] {
+	box-sizing: border-box;
+}
+[class*='v3-col-push-'],
+[class*='v3-col-pull-'],
+[class*='v3-col-xs-push-'],
+[class*='v3-col-xs-pull-'],
+[class*='v3-col-sm-push-'],
+[class*='v3-col-sm-pull-'],
+[class*='v3-col-md-push-'],
+[class*='v3-col-md-pull-'],
+[class*='v3-col-lg-push-'],
+[class*='v3-col-lg-pull-'],
+[class*='v3-col-xl-push-'],
+[class*='v3-col-xl-pull-'] {
+	position: relative;
+}
+
+@mixin generateResponsiveClasses($id, $responseType) {
+	@for $v from $MIN_COL to ($MAX_COL + 1) {
+		.v3-col {
+			@if $id == '' {
+				&.v3-col-#{$responseType}-#{$v} {
+					width: $v * 100 / $MAX_COL * 1%;
+				}
+			} @else if $id == 'offset' {
+				&.v3-col-#{$responseType}-#{$id}-#{$v} {
+					margin-left: $v * 100 / $MAX_COL * 1%;
+				}
+			} @else if $id == 'push' {
+				&.v3-col-#{$responseType}-#{$id}-#{$v} {
+					left: $v * 100 / $MAX_COL * 1%;
+				}
+			} @else if $id == 'pull' {
+				&.v3-col-#{$responseType}-#{$id}-#{$v} {
+					right: $v * 100 / $MAX_COL * 1%;
+				}
+			}
+		}
+	}
+}
+@mixin generateClasses($id) {
+	@for $v from $MIN_COL to ($MAX_COL + 1) {
+		@if $id == '' {
+			&.v3-col-#{$v} {
+				width: $v * 100 / $MAX_COL * 1%;
+			}
+		} @else if $id == 'offset' {
+			&.v3-col-#{$id}-#{$v} {
+				margin-left: $v * 100 / $MAX_COL * 1%;
+			}
+		} @else if $id == 'push' {
+			&.v3-col-#{$id}-#{$v} {
+				left: $v * 100 / $MAX_COL * 1%;
+			}
+		} @else if $id == 'pull' {
+			&.v3-col-#{$id}-#{$v} {
+				right: $v * 100 / $MAX_COL * 1%;
+			}
+		}
+	}
+}
+
+
+.v3-col {
+	@include generateClasses('');
+	@include generateClasses('offset');
+	@include generateClasses('push');
+	@include generateClasses('pull');
+}
+
+// xs
+@media screen and (max-width: 576px) {
+	@include generateResponsiveClasses('', 'xs');
+	@include generateResponsiveClasses('offset', 'xs');
+	@include generateResponsiveClasses('push', 'xs');
+	@include generateResponsiveClasses('pull', 'xs');
+}
+// sm
+@media screen and (min-width: 577px) and (max-width: 768px) {
+	@include generateResponsiveClasses('', 'sm');
+	@include generateResponsiveClasses('offset', 'sm');
+	@include generateResponsiveClasses('push', 'sm');
+	@include generateResponsiveClasses('pull', 'sm');
+}
+// md
+@media screen and (min-width: 769px) and (max-width: 992px) {
+	@include generateResponsiveClasses('', 'md');
+	@include generateResponsiveClasses('offset', 'md');
+	@include generateResponsiveClasses('push', 'md');
+	@include generateResponsiveClasses('pull', 'md');
+}
+// lg
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+	@include generateResponsiveClasses('', 'lg');
+	@include generateResponsiveClasses('offset', 'lg');
+	@include generateResponsiveClasses('push', 'lg');
+	@include generateResponsiveClasses('pull', 'lg');
+}
+// xl
+@media screen and (min-width: 1201px) {
+	@include generateResponsiveClasses('', 'xl');
+	@include generateResponsiveClasses('offset', 'xl');
+	@include generateResponsiveClasses('push', 'xl');
+	@include generateResponsiveClasses('pull', 'xl');
+}

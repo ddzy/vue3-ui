@@ -1,0 +1,36 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"strict": true,
+		"jsx": "preserve",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"lib": ["esnext", "dom"],
+		"types": ["vite/client", "jest", "node"],
+		"paths": {
+			"@common/*": ["./packages/common/*"],
+			"@components/*": ["./packages/components/*"],
+			"@/*": ["./*"]
+		},
+		"baseUrl": "."
+	},
+	"include": [
+		"packages/common/**/*.ts",
+		"packages/components/**/*.ts",
+		"packages/components/**/*.d.ts",
+		"packages/components/**/*.tsx",
+		"packages/components/**/*.vue",
+		"packages/components/__tests__/**/*",
+		"types/**/*",
+		"shims-vue.d.ts",
+		"/**/*.ts"
+	],
+	"ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+}
