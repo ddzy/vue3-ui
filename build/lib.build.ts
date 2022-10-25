@@ -3,7 +3,7 @@ import { build, mergeConfig } from 'vite';
 import commonConfig from '../config/common';
 import vue from '@vitejs/plugin-vue';
 
-const libName = 'vue3-ui';
+const libName = 'index';
 const buildOptions = mergeConfig(commonConfig, {
 	// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
 	configFile: false,
