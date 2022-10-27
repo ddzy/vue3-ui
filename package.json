@@ -23,8 +23,8 @@
 	"files": [
 		"dist/*"
 	],
-	"main": "./dist/vue3-ui.umd.js",
-	"module": "./dist/vue3-ui.es.js",
+	"main": "./dist/index.umd.js",
+	"module": "./dist/index.es.js",
 	"exports": {
 		".": {
 			"import": "./dist/index.es.js",
