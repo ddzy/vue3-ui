@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import * as TYPES from '@/public/lib/types/loading';
+import * as TYPES from '@/public/lib/types/index';
 import { isStrictObject } from '@common/utils';
 import {
 	ComponentInternalInstance,
@@ -98,7 +98,7 @@ const LoadingDirective: {
  * @param options loading 可配置项
  * @returns loading 实例
  */
-const useLoading = (options: TYPES.ILoadingProps) => {
+const useLoading: TYPES.V3LoadingHook = options => {
 	const instance = LoadingConstructor(options);
 
 	return {

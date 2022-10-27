@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export interface ICardBodyStyle {
 	[key: string]: string | number;
 }
@@ -10,3 +12,4 @@ export interface ICardProps {
 	shadowTrigger: ICardShadowTrigger;
 	shadowSize: ICardShadowSize;
 }
+export declare const V3Card: SFCWithInstall<ICardProps>

@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export interface IDrawerProps {
 	modelValue: boolean;
 	placement: IDrawerPlacement;
@@ -17,3 +19,5 @@ export interface IDrawerProps {
 export type IDrawerPlacement = 'top' | 'left' | 'bottom' | 'right';
 export type IDrawerOnConfirm = (done: Function) => void;
 export type IDrawerOnCancel = (done: Function) => void;
+
+export declare const V3Drawer: SFCWithInstall<IDrawerProps>

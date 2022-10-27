@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type IButtonType =
 	| 'primary'
 	| 'success'
@@ -26,3 +28,4 @@ export interface IButtonProps {
 	loading: boolean;
 	size: IButtonSize;
 }
+export declare const V3Button: SFCWithInstall<IButtonProps>

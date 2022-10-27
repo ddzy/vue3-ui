@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type ITagType = 'primary' | 'success' | 'danger' | 'warning' | 'info';
 export type ITagSize = 'small' | 'medium' | 'large';
 export interface ITagProps {
@@ -10,3 +12,5 @@ export interface ITagProps {
 	borderColor: string;
 	animation: boolean;
 }
+
+export declare const V3Tag: SFCWithInstall<ITagProps>

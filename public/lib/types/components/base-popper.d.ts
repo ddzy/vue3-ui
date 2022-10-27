@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type IBasePopperPlacement =
 	| 'top'
 	| 'top-start'
@@ -42,3 +44,4 @@ export interface IBasePopperProps {
 	title: string;
 	customClass: string;
 }
+export declare const V3BasePopper: SFCWithInstall<IBasePopperProps>

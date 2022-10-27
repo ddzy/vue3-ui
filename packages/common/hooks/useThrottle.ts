@@ -1,16 +1,19 @@
+import * as TYPES from '@/public/lib/types/index';
+
 /**
  * 节流 hook
  * @param callback 回调
  * @param timestamp 每隔多少秒执行一次回调
  * @returns
  */
-export default function useThrottle(
-	callback: (...args: any[]) => void,
-	timestamp: number = 200
+
+const useThrottle: TYPES.IUseThrottle = function useThrottle(
+	callback,
+	timestamp = 200
 ) {
 	let prevTime = Date.now();
 
-	return function(this: ThisType<any>, ...args: any[]) {
+	return function(...args) {
 		const currentTime = Date.now();
 
 		if (currentTime - prevTime >= timestamp) {
@@ -18,4 +21,6 @@ export default function useThrottle(
 			prevTime = currentTime;
 		}
 	};
-}
+};
+
+export default useThrottle;

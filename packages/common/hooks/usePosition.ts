@@ -1,12 +1,8 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import useThrottle from './useThrottle';
+import * as TYPES from '@/public/lib/types/index';
 
-interface IOptions {
-	throttleTime?: number;
-	callback?: Function;
-}
-
-export default function usePosition(options?: IOptions) {
+const usePosition: TYPES.IUsePosition = function usePosition(options) {
 	options = options || {};
 
 	const defaultOptions = reactive({
@@ -43,4 +39,6 @@ export default function usePosition(options?: IOptions) {
 		pageX,
 		pageY,
 	};
-}
+};
+
+export default usePosition;

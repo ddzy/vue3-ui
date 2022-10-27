@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type ISwitchModelValue = boolean | string | number;
 export interface ISwitchProps {
 	modelValue: ISwitchModelValue;
@@ -13,3 +15,5 @@ export interface ISwitchProps {
 	activeColor: string;
 	inactiveColor: string;
 }
+
+export declare const V3Switch: SFCWithInstall<ISwitchProps>

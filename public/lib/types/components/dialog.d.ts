@@ -1,4 +1,5 @@
-import * as ButtonTypes from './button';
+import { IButtonProps } from './button';
+import { SFCWithInstall } from '../utils/util';
 
 export interface IDialogProps {
 	modelValue: boolean;
@@ -17,6 +18,8 @@ export interface IDialogProps {
 export type IDialogBeforeClose = (done: () => void) => void;
 export interface IDialogHeaderActionItem {
 	text: string;
-	buttonProps: ButtonTypes.IButtonProps;
+	buttonProps: IButtonProps;
 	handler: (...args: any[]) => void;
 }
+
+export declare const V3Dialog: SFCWithInstall<IDialogProps>

@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type IRowGutter = number;
 export type IRowType = 'flex';
 export type IRowJustify =
@@ -42,3 +44,6 @@ export interface IColProps {
   lg: IColLG;
   xl: IColXL;
 }
+
+export declare const V3Row: SFCWithInstall<IRowProps>
+export declare const V3Col: SFCWithInstall<IColProps>

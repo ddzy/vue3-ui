@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type ICheckboxLabel = string | boolean | number;
 export type ICheckboxSize = 'small' | 'medium' | 'large';
 export type ICheckboxGroupMin = number | undefined;
@@ -25,3 +27,6 @@ export interface ICheckboxGroupProps {
   max: ICheckboxGroupMax;
   modelValue: ICheckboxLabel[];
 }
+
+export declare const V3Checkbox: SFCWithInstall<ICheckboxProps>
+export declare const V3CheckboxGroup: SFCWithInstall<ICheckboxGroupProps>

@@ -1,4 +1,5 @@
 import { App, ComponentPublicInstance, VNode } from 'vue';
+import { FactoryWithInstall } from '../utils/util';
 
 export interface IMessageProps {
 	duration?: number;
@@ -31,3 +32,8 @@ export interface IMessageConstructor {
 
 	install: (app: App) => void;
 }
+export type V3MessageService = Omit<IMessageConstructor, 'install'>;
+export type V3MessageHook = (
+	options: IMessageProps
+) => IMessageConstructorReturn;
+export declare const V3Message: FactoryWithInstall<IMessageConstructor>;

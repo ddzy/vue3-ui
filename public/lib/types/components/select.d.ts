@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type IBaseSelectValue = string | boolean | number | object;
 export type ISelectValue = IBaseSelectValue | IBaseSelectValue[];
 export type ISelectOptionValue = IBaseSelectValue;
@@ -30,3 +32,6 @@ export interface ISelectOptionProps {
 	value: ISelectValue;
 	disabled: boolean;
 }
+
+export declare const V3Select: SFCWithInstall<ISelectProps>
+export declare const V3SelectOption: SFCWithInstall<ISelectOptionProps>

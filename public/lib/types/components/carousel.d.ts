@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type ICarouselEffect = 'fade' | 'slide';
 export type ICarouselDirection = 'horizontal' | 'vertical';
 export type ICarouselShowArrow = 'always' | 'hover' | 'never';
@@ -24,3 +26,4 @@ export interface ICarouselProps {
 	indicatorType: ICarouselIndicatorType;
 	indicatorPosition: ICarouselIndicatorPosition;
 }
+export declare const V3Carousel: SFCWithInstall<ICarouselProps>

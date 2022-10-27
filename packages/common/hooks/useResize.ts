@@ -1,12 +1,8 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import useThrottle from './useThrottle';
+import * as TYPES from '@/public/lib/types/index';
 
-interface IOptions {
-	throttleTime?: number;
-	callback?: Function;
-}
-
-export default function useResize(options?: IOptions) {
+const useResize: TYPES.IUseResize = function useResize(options) {
 	options = options || {};
 
 	const defaultOptions = reactive({
@@ -29,4 +25,6 @@ export default function useResize(options?: IOptions) {
 	});
 
 	return {};
-}
+};
+
+export default useResize;

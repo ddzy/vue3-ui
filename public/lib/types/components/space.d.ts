@@ -1,4 +1,5 @@
 import { VNode } from 'vue';
+import { SFCWithInstall } from '../utils/util';
 
 export type ISpaceAlign =
 	| 'start'
@@ -17,3 +18,5 @@ export interface ISpaceProps {
   separator: ISpaceSeparator;
   size: number;
 }
+
+export declare const V3Space: SFCWithInstall<ISpaceProps>

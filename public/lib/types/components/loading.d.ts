@@ -1,4 +1,5 @@
 import { App, ComponentPublicInstance, VNode } from 'vue';
+import { FactoryWithInstall } from '../utils/util';
 
 export type ILoadingConstructorReturn = ComponentPublicInstance<
 	ILoadingProps & {
@@ -19,3 +20,12 @@ export interface ILoadingConstructor {
 
 	install: (app: App) => void;
 }
+export type V3LoadingService = Omit<ILoadingConstructor, 'install'>;
+export type V3LoadingHook = (
+	options: ILoadingProps
+) => ILoadingConstructorReturn;
+
+export declare function useLoading(
+	options: ILoadingProps
+): ILoadingConstructorReturn;
+export declare const V3Loading: FactoryWithInstall<ILoadingConstructor>;

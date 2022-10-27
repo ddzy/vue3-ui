@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export interface IDemoBlockExtraItem {
 	icon: string;
 	title: string;
@@ -9,3 +11,5 @@ export interface IDemoBlockProps {
 	defaultBtnText: string;
 	extraList: IDemoBlockExtraItem[];
 }
+
+export declare const V3DemoBlock: SFCWithInstall<IDemoBlockProps>

@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type IInputType = 'text' | 'password';
 export type IInputSize = 'small' | 'medium' | 'large';
 
@@ -47,3 +49,7 @@ export interface IInputNumberProps {
   size: IInputSize;
   modelValue: number;
 }
+
+export declare const V3Input: SFCWithInstall<IInputProps>
+export declare const V3InputNumber: SFCWithInstall<IInputNumberProps>
+export declare const V3InputTextarea: SFCWithInstall<ITextareaProps>

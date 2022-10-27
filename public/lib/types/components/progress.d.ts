@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type IProgressTheme = 'primary' | 'success' | 'danger' | 'warning';
 export type IProgressFormatLabel = (percent: number) => any;
 
@@ -20,3 +22,6 @@ export interface IProgressCircularProps extends IProgressProps {
 	radius: number;
 	rotate: number;
 }
+
+export declare const V3ProgressLinear: SFCWithInstall<IProgressLinearProps>
+export declare const V3ProgressCircular: SFCWithInstall<IProgressCircularProps>

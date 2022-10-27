@@ -27,10 +27,12 @@
 	"module": "./dist/vue3-ui.es.js",
 	"exports": {
 		".": {
-			"import": "./dist/vue3-ui.es.js",
-			"require": "./dist/vue3-ui.umd.js"
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.umd.js",
+			"types": "./dist/types/index.d.ts"
 		}
 	},
+	"types": "./dist/types/index.d.ts",
 	"scripts": {
 		"dev": "vite",
 		"build:lib": "ts-node ./build/lib.build.ts",

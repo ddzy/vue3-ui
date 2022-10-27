@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import * as TYPES from '@/public/lib/types/index';
 
 /**
  * 防抖 hook
@@ -6,13 +7,13 @@ import { ref } from 'vue';
  * @param timestamp 时间戳
  * @returns
  */
-export default function useDebounce(
-	callback: (...args: any[]) => void,
-	timestamp: number = 200
+const useDebounce: TYPES.IUseDebounce = function useDebounce(
+	callback,
+	timestamp = 200
 ) {
 	let timer: any = ref(null);
 
-	return function(...args: any[]) {
+	return function(...args) {
 		if (timer.value) {
 			clearTimeout(timer.value);
 		}
@@ -21,4 +22,5 @@ export default function useDebounce(
 			callback.apply(this, args);
 		}, timestamp);
 	};
-}
+};
+export default useDebounce;

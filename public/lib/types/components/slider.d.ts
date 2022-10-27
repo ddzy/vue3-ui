@@ -1,3 +1,5 @@
+import { SFCWithInstall } from '../utils/util';
+
 export type ISliderModelValue = [number, number] | number;
 export type ISliderFormatTooltip = (modelValue: ISliderModelValue) => any;
 
@@ -33,3 +35,5 @@ export interface ISliderProps {
 	trackColor: string;
 	doneTrackColor: string;
 }
+
+export declare const V3Slider: SFCWithInstall<ISliderProps>
