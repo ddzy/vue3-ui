@@ -57,7 +57,6 @@
 	},
 	"lint-staged": {
 		"packages/**/*.{ts,tsx,js,jsx,vue}": [
-			"yarn clear:dstore",
 			"yarn format"
 		]
 	},

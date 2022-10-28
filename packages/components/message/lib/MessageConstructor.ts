@@ -86,8 +86,15 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 	}
 );
 
-export default MessageConstructor;
-export function close(instance: ComponentPublicInstance) {
+const useMessage: TYPES.V3MessageHook = options => {
+	const instance = MessageConstructor(options);
+
+	return {
+		instance,
+	};
+};
+
+function close(instance: ComponentPublicInstance) {
 	// 记录当前关闭的消息框的下标
 	let interruptIndex = 0;
 	// 记录上一个消息框的位置，便于回溯
@@ -111,3 +118,6 @@ export function close(instance: ComponentPublicInstance) {
 		prevOffset = currentOffset;
 	}
 }
+
+export default MessageConstructor;
+export { close, useMessage };

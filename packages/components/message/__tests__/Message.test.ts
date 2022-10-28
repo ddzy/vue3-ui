@@ -2,7 +2,7 @@
 
 import { nextTick, h } from '@vue/runtime-core';
 import { mount, config } from '@vue/test-utils';
-import V3Message from '../lib/MessageConstructor';
+import V3Message, { useMessage } from '../main';
 
 jest.useFakeTimers();
 
@@ -18,6 +18,7 @@ function generateWrapper() {
 config.plugins.VueWrapper.install(() => {
 	return {
 		$message: V3Message,
+		useMessage,
 	};
 });
 
@@ -263,5 +264,37 @@ describe('V3Message 组件测试：', () => {
 		}, 4000);
 
 		jest.advanceTimersByTime(4000);
+	});
+
+	test('V3Message 组件可以通过 Composition 的形式使用', async () => {
+		generateWrapper();
+
+		const wrapper = mount({
+			attachTo: document.getElementById('app'),
+			template: `
+        <div></div>
+      `,
+		});
+
+		wrapper.useMessage({
+			type: 'success',
+			message: '成功消息！',
+			duration: 0,
+		});
+		wrapper.useMessage({
+			type: 'danger',
+			message: '失败消息！',
+			duration: 0,
+		});
+
+		await nextTick();
+
+		expect(document.body.querySelectorAll('.v3-message').length).toBe(2);
+		expect(
+			document.body.querySelector('.v3-message--success').textContent
+		).toBe('成功消息！');
+		expect(document.body.querySelector('.v3-message--danger').textContent).toBe(
+			'失败消息！'
+		);
 	});
 });

@@ -3,28 +3,28 @@ import * as TYPES from '@felibrary/vue3-ui';
 import './icon/assets/fonts/iconfont.css';
 import './main.lib.scss';
 
-import V3Button from 'button';
+import V3Button from './button/main';
 import V3ButtonGroup from './button-group/main';
-import V3Checkbox from 'checkbox';
+import V3Checkbox from './checkbox/main';
 import V3CheckboxButton from './checkbox-button/main';
 import V3CheckboxGroup from 'checkbox-group';
-import V3Input from 'input';
+import V3Input from './input/main';
 import V3InputNumber from './input-number/main';
 import V3InputTextarea from './input-textarea/main';
-import V3Radio from 'radio';
+import V3Radio from './radio/main';
 import V3RadioButton from './radio-button/main';
-import V3RadioGroup from 'radio-group';
+import V3RadioGroup from './radio-group/main';
 import V3DemoBlock from './demo-block/main';
-import V3Row from 'row';
-import V3Col from 'col';
-import V3Message from './message/main';
+import V3Row from './row/main';
+import V3Col from './col/main';
+import V3Message, { useMessage } from './message/main';
 import V3Select from './select/main';
 import V3SelectOption from 'select-option';
-import V3Tag from 'tag';
+import V3Tag from './tag/main';
 import V3Backdrop from 'backdrop';
 import V3Dialog from './dialog/main';
 import V3Switch from './switch/main';
-import V3Tooltip from 'tooltip';
+import V3Tooltip from './tooltip/main';
 import V3Popover from './popover/main';
 import V3Divider from './divider/main';
 import V3Space from './space/main';
@@ -67,6 +67,7 @@ export {
 	V3Row,
 	V3Col,
 	V3Message,
+	useMessage,
 	V3Select,
 	V3SelectOption,
 	V3Tag,
