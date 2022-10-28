@@ -20,7 +20,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType, reactive, toRef, watch } from 'vue';
-import * as TYPES from '@/public/lib/types/badge';
+import * as TYPES from '@felibrary/vue3-ui';
 
 interface IState {
 	value: TYPES.IBadgeValue;

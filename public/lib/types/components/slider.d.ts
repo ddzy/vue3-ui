@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type ISliderModelValue = [number, number] | number;
 export type ISliderFormatTooltip = (modelValue: ISliderModelValue) => any;

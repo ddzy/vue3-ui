@@ -87,7 +87,7 @@ import {
 	watch,
 } from 'vue';
 import { hexToRgba } from '@common/utils/index';
-import * as TYPES from '@/public/lib/types/switch';
+import * as TYPES from '@felibrary/vue3-ui';
 
 export default defineComponent({
 	name: 'V3Switch',

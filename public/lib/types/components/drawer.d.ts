@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export interface IDrawerProps {
 	modelValue: boolean;

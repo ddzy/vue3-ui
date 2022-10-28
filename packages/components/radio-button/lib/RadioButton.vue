@@ -40,7 +40,7 @@ import {
 	inject,
 	ComponentOptionsWithObjectProps,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/radio';
+import * as TYPES from '@felibrary/vue3-ui';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 	RADIO_GROUP_INSTANCE_PROVIDE,

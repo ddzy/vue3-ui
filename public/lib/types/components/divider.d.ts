@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type IDividerDirection = 'vertical' | 'horizontal';
 export type IDividerContentPosition = 'start' | 'end' | 'center';

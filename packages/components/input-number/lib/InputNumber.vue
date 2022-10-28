@@ -109,7 +109,7 @@ import {
 	watch,
 } from 'vue';
 import V3Input from 'input';
-import * as TYPES from '@/public/lib/types/input';
+import * as TYPES from '@felibrary/vue3-ui';
 
 export default defineComponent({
 	name: 'V3InputNumber',

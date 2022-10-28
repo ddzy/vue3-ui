@@ -45,7 +45,7 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/popconfirm';
+import * as TYPES from '@felibrary/vue3-ui';
 import {
 	defineComponent,
 	getCurrentInstance,
@@ -67,7 +67,7 @@ export default defineComponent({
 	props: {
 		/** 不可配置主题 */
 		theme: {
-			type: String as PropType<TYPES.IPopconfirmTheme>,
+			type: String as PropType<TYPES.IBasePopperTheme>,
 			default: 'light',
 		},
 		/** 不可配置标题 */

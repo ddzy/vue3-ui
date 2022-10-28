@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import useThrottle from './useThrottle';
-import * as TYPES from '@/public/lib/types/index';
+import * as TYPES from '@felibrary/vue3-ui';
 
 const useResize: TYPES.IUseResize = function useResize(options) {
 	options = options || {};

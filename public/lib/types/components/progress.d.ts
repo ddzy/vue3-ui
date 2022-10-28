@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type IProgressTheme = 'primary' | 'success' | 'danger' | 'warning';
 export type IProgressFormatLabel = (percent: number) => any;

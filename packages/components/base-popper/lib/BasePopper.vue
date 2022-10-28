@@ -48,7 +48,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/base-popper';
+import * as TYPES from '@felibrary/vue3-ui';
 import VARIABLE from '@common/constants/internal-variable';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';

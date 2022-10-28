@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import * as TYPES from '@/public/lib/types/message';
+import * as TYPES from '@felibrary/vue3-ui';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,

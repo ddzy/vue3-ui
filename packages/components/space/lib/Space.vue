@@ -8,7 +8,7 @@ import {
 	VNode,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/space';
+import * as TYPES from '@felibrary/vue3-ui';
 
 interface IState {
 	children: VNode[];

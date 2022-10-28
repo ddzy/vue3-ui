@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type IRadioLabel = boolean | string | number;
 export type IRadioGroupCallback = () => void | undefined;

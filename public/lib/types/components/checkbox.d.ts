@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type ICheckboxLabel = string | boolean | number;
 export type ICheckboxSize = 'small' | 'medium' | 'large';

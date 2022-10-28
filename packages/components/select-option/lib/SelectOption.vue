@@ -12,7 +12,7 @@
 	</li>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/select';
+import * as TYPES from '@felibrary/vue3-ui';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import * as UTILS from '@common/utils/index';
 import {
@@ -57,7 +57,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	setup(props) {
+	setup(props: TYPES.ISelectOptionProps) {
 		const state: IState = reactive({
 			/** 当前下拉选项是否选中 */
 			isSelected: false,

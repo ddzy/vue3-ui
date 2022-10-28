@@ -27,7 +27,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType, reactive } from 'vue';
-import * as TYPES from '@/public/lib/types/tag';
+import * as TYPES from '@felibrary/vue3-ui';
 
 interface IState {
 	isShow: boolean;

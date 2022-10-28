@@ -126,7 +126,7 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/select';
+import * as TYPES from '@felibrary/vue3-ui';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce, useThrottle } from '@common/hooks/index';

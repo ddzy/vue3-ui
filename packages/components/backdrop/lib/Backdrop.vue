@@ -22,7 +22,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/backdrop';
+import * as TYPES from '@felibrary/vue3-ui';
 import VARIABLE from '@common/constants/internal-variable';
 
 export default defineComponent({

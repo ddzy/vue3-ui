@@ -62,7 +62,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/dialog';
+import * as TYPES from '@felibrary/vue3-ui';
 import V3Backdrop from 'backdrop';
 import V3Button from 'button';
 

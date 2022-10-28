@@ -1,5 +1,5 @@
 import { IButtonProps } from './button';
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export interface IDialogProps {
 	modelValue: boolean;

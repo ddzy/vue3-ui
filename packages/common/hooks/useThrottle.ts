@@ -1,4 +1,4 @@
-import * as TYPES from '@/public/lib/types/index';
+import * as TYPES from '@felibrary/vue3-ui';
 
 /**
  * 节流 hook

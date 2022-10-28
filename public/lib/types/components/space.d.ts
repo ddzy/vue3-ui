@@ -1,5 +1,5 @@
 import { VNode } from 'vue';
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type ISpaceAlign =
 	| 'start'

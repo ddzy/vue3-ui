@@ -1,6 +1,6 @@
 import { IBasePopperTheme } from './base-popper';
 import { IButtonType, IButtonSize } from './button';
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export interface IPopconfirmProps {
 	theme: IBasePopperTheme;

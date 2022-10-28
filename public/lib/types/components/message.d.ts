@@ -1,5 +1,5 @@
 import { App, ComponentPublicInstance, VNode } from 'vue';
-import { FactoryWithInstall } from '../utils/util';
+import { FactoryWithInstall } from '@felibrary/vue3-ui';
 
 export interface IMessageProps {
 	duration?: number;

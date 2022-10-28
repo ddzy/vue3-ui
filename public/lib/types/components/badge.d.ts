@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type IBadgeValue = number | string;
 export type IBadgeType = 'primary' | 'success' | 'danger' | 'warning' | 'info';

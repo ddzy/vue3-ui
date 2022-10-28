@@ -1,6 +1,5 @@
 import { App } from 'vue';
-import * as TYPES_MESSAGE from '@/public/lib/types/message';
-import * as TYPES_LOADING from '@/public/lib/types/loading';
+import * as TYPES from '@felibrary/vue3-ui';
 import './icon/assets/fonts/iconfont.css';
 import './main.lib.scss';
 
@@ -47,8 +46,8 @@ import V3Back from './back/main';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
-		$message: TYPES_MESSAGE.IMessageConstructor;
-		$loading: TYPES_LOADING.ILoadingConstructor;
+		$message: TYPES.V3MessageService;
+		$loading: TYPES.V3LoadingService;
 	}
 }
 

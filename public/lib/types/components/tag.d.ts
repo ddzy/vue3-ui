@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '../utils/util';
+import { SFCWithInstall } from '@felibrary/vue3-ui';
 
 export type ITagType = 'primary' | 'success' | 'danger' | 'warning' | 'info';
 export type ITagSize = 'small' | 'medium' | 'large';

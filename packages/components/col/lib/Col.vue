@@ -53,7 +53,7 @@ import {
 	watch,
 } from 'vue';
 
-import * as TYPES from '@/public/lib/types/row';
+import * as TYPES from '@felibrary/vue3-ui';
 import * as UTILS from '@common/utils/index';
 import { ROW_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
