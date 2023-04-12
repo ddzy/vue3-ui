@@ -1,9 +1,6 @@
 {
 	"name": "@felibrary/vue3-ui",
-	"version": "0.0.1",
-	"publishConfig": {
-		"access": "public"
-	},
+	"version": "0.0.2",
 	"description": "vue3 ui组件库",
 	"keywords": [
 		"ui",
