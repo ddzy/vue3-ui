@@ -45,7 +45,7 @@ import {
 	watch,
 	toRef,
 } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import V3Backdrop from '@components/backdrop/main';
 import { close } from './LoadingConstructor';
 import VARIABLE from '@common/constants/internal-variable';

@@ -22,7 +22,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 
 export default defineComponent({

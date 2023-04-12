@@ -62,9 +62,9 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
-import V3Backdrop from 'backdrop';
-import V3Button from 'button';
+import * as TYPES from '@typings/index';
+import V3Backdrop from '@components/backdrop/main';
+import V3Button from '@components/button/main';
 
 export default defineComponent({
 	name: 'V3Dialog',

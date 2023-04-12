@@ -48,11 +48,11 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/themes/light.css';
-import 'tippy.js/themes/material.css';
+// import 'vue-tippy/tippy.js/dist/tippy.css';
+// import 'vue-tippy/tippy.js/themes/light.css';
+// import 'vue-tippy/tippy.js/themes/material.css';
 import {
 	computed,
 	defineComponent,

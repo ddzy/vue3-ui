@@ -17,9 +17,6 @@
 	"author": "ddzy <1766083035@qq.com>",
 	"homepage": "https://github.com/ddzy/vue3-ui#readme",
 	"license": "MIT",
-	"workspaces": [
-		"packages/components/*"
-	],
 	"files": [
 		"dist/*"
 	],
@@ -29,11 +26,12 @@
 		".": {
 			"import": "./dist/index.es.js",
 			"require": "./dist/index.umd.js",
-			"types": "./dist/types/index.d.ts"
+			"types": "./dist/typings/index.d.ts"
 		}
 	},
-	"types": "./dist/types/index.d.ts",
+	"types": "./dist/typings/index.d.ts",
 	"scripts": {
+		"preinstall": "npx only-allow yarn",
 		"dev": "vite",
 		"build:lib": "ts-node ./build/lib.build.ts",
 		"build:lib_split": "ts-node ./build/lib_split.build.ts",
@@ -47,7 +45,7 @@
 		"docs:build": "vuepress build docs",
 		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write",
 		"prepare": "husky install",
-		"tree": "tree -L 3 -I 'node_modules|coverage|dist' -o ./tree.txt --dirsfirst",
+		"tree": "tree -L 3 -I 'node_modules|coverage|dist|docs' -o ./tree.txt --dirsfirst",
 		"clear:dstore": "find . -name '.DS_Store' | xargs rm -rf"
 	},
 	"config": {
@@ -64,9 +62,11 @@
 		"vue": "3.1.5"
 	},
 	"dependencies": {
-		"decimal.js": "^10.3.1"
+		"decimal.js": "^10.3.1",
+		"vue-tippy": "^6.0.0-alpha.30"
 	},
 	"devDependencies": {
+		"@types/fs-extra": "^11.0.1",
 		"@types/jest": "^26.0.22",
 		"@types/node": "^14.14.37",
 		"@vitejs/plugin-vue": "^1.2.1",
@@ -76,6 +76,7 @@
 		"commitizen": "^4.2.3",
 		"cross-env": "^7.0.3",
 		"cz-lerna-changelog": "^2.0.3",
+		"fs-extra": "^11.1.1",
 		"husky": "^6.0.0",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^26.6.3",

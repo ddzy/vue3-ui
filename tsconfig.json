@@ -13,7 +13,8 @@
 		"paths": {
 			"@common/*": ["./packages/common/*"],
 			"@components/*": ["./packages/components/*"],
-			"@/*": ["./*"]
+			"@/*": ["./*"],
+			"@typings/*": ["./public/lib/typings/*"]
 		},
 		"baseUrl": "."
 	},

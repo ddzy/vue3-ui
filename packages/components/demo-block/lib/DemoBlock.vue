@@ -81,7 +81,7 @@ import {
 	nextTick,
 } from 'vue';
 
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
 
 interface IState {

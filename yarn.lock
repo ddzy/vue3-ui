@@ -1414,13 +1414,6 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@soerenmartius/vue3-clipboard@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@soerenmartius/vue3-clipboard/-/vue3-clipboard-0.1.2.tgz#83927f65b48da71bde044a276cdf858c1c021c38"
-  integrity sha512-a5er6cFGcFIQ/3qg6kWvU0yFqIz9iWoQGEVs9azjevyRyMAKvj1w3JuLH9y6+u0WhMNby3kn7nuR8nktSnDesg==
-  dependencies:
-    clipboard "^2.0.0"
-
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -1524,6 +1517,14 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
+"@types/fs-extra@^11.0.1":
+  version "11.0.1"
+  resolved "https://registry.npmmirror.com/@types/fs-extra/-/fs-extra-11.0.1.tgz#f542ec47810532a8a252127e6e105f487e0a6ea5"
+  integrity sha512-MxObHvNl4A69ofaTRU8DFqvgzzv8s9yRtaPPm5gud9HDNvpB3GPQFvNuTWAI59B9huVGV5jXYJwbCsmBsOGYWA==
+  dependencies:
+    "@types/jsonfile" "*"
+    "@types/node" "*"
+
 "@types/fs-extra@^9.0.11":
   version "9.0.11"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-9.0.11.tgz#8cc99e103499eab9f347dbc6ca4e99fb8d2c2b87"
@@ -1591,6 +1592,13 @@
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.7.tgz#98a993516c859eb0d5c4c8f098317a9ea68db9ad"
   integrity sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==
+
+"@types/jsonfile@*":
+  version "6.1.1"
+  resolved "https://registry.npmmirror.com/@types/jsonfile/-/jsonfile-6.1.1.tgz#ac84e9aefa74a2425a0fb3012bdea44f58970f1b"
+  integrity sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==
+  dependencies:
+    "@types/node" "*"
 
 "@types/linkify-it@*":
   version "3.0.1"
@@ -4875,6 +4883,15 @@ fs-extra@8.1.0, fs-extra@^8.1.0:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs-extra@^11.1.1:
+  version "11.1.1"
+  resolved "https://registry.npmmirror.com/fs-extra/-/fs-extra-11.1.1.tgz#da69f7c39f3b002378b0954bb6ae7efdc0876e2d"
+  integrity sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
@@ -5326,11 +5343,6 @@ highlight.js@^10.6.0:
   version "10.7.3"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.3.tgz#697272e3991356e40c3cac566a74eef681756531"
   integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
-
-highlight.js@^10.7.2:
-  version "10.7.2"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.2.tgz#89319b861edc66c48854ed1e6da21ea89f847360"
-  integrity sha512-oFLl873u4usRM9K63j4ME9u3etNF0PLiJhSQ8rdfuL51Wn3zkD6drf9ZW0dOzjnZI22YYG24z30JcmfCZjMgYg==
 
 homedir-polyfill@^1.0.1:
   version "1.0.3"
@@ -10227,7 +10239,7 @@ tiny-emitter@^2.0.0:
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
-tippy.js@^6.2.6, tippy.js@^6.3.1:
+tippy.js@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.1.tgz#3788a007be7015eee0fd589a66b98fb3f8f10181"
   integrity sha512-JnFncCq+rF1dTURupoJ4yPie5Cof978inW6/4S6kmWV7LL9YOSEVMifED3KdrVPEG+Z/TFH2CDNJcQEfaeuQww==
@@ -10781,13 +10793,6 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
-
-vue-tippy@^6.0.0-alpha.20:
-  version "6.0.0-alpha.20"
-  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-6.0.0-alpha.20.tgz#457a984d502bda18375faf90ee5415a06687ade6"
-  integrity sha512-XGWir2QL5lM41bMT5SxfXjxIycvK1uk3N581AQzl1K9+sj2g5qHSnMjuDRFf7poCNhjIvdjldTZWWxtTE80JYA==
-  dependencies:
-    tippy.js "^6.2.6"
 
 vue-tippy@^6.0.0-alpha.30:
   version "6.0.0-alpha.30"

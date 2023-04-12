@@ -1,4 +1,4 @@
-import V3Button from 'button';
+import V3Button from '@components/button/main';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import V3Backdrop from '../main';

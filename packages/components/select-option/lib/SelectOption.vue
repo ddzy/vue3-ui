@@ -12,7 +12,7 @@
 	</li>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import * as UTILS from '@common/utils/index';
 import {

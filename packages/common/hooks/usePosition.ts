@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import useThrottle from './useThrottle';
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 
 const usePosition: TYPES.IUsePosition = function usePosition(options) {
 	options = options || {};

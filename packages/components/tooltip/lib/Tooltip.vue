@@ -7,8 +7,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
-import V3BasePopper from 'base-popper';
+import * as TYPES from '@typings/index';
+import V3BasePopper from '@components/base-popper/main';
 
 interface IState {}
 

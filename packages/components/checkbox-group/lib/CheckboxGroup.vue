@@ -8,7 +8,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import {
 	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,

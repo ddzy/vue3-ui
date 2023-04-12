@@ -83,10 +83,10 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
-import V3Backdrop from 'backdrop';
-import V3Button from 'button';
+import V3Backdrop from '@components/backdrop/main';
+import V3Button from '@components/button/main';
 
 interface IState {
 	syncedModelValue: boolean;

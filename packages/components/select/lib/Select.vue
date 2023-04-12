@@ -126,13 +126,13 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce, useThrottle } from '@common/hooks/index';
-import V3Input from 'input';
-import V3Tag from 'tag';
-import V3BasePopper from 'base-popper';
+import V3Input from '@components/input/main';
+import V3Tag from '@components/tag/main';
+import V3BasePopper from '@components/base-popper/main';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,

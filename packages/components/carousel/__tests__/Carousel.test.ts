@@ -2,7 +2,7 @@
 
 import { mount } from '@vue/test-utils';
 import V3Carousel from '../main';
-import V3CarouselItem from 'carousel-item';
+import V3CarouselItem from '@components/carousel-item/main';
 
 const commonCarouselList = [
 	{

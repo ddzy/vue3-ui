@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import ButtonGroup from '../main';
-import Button from 'button';
+import Button from '@components/button/main';
 
 describe('ButtonGroup 组件测试：', () => {
 	test('ButtonGroup 组件应该正常接收【Button】组件作为 slot 并渲染', () => {

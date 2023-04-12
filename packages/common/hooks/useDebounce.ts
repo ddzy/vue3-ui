@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 
 /**
  * 防抖 hook

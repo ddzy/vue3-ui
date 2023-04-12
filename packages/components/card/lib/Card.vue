@@ -25,7 +25,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, reactive } from 'vue';
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 
 interface IState {}
 

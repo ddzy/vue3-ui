@@ -154,9 +154,9 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import { usePosition, useResize } from '@common/hooks/index';
-import V3Tooltip from 'tooltip';
+import V3Tooltip from '@components/tooltip/main';
 import {
 	computed,
 	defineComponent,

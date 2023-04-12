@@ -6,9 +6,9 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
-import V3BasePopper from 'base-popper';
+import V3BasePopper from '@components/base-popper/main';
 
 interface IState {}
 

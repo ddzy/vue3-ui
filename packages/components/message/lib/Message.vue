@@ -56,7 +56,7 @@
 	</transition>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 import {
 	defineComponent,

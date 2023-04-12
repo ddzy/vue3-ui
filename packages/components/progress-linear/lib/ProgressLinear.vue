@@ -31,7 +31,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@felibrary/vue3-ui';
+import * as TYPES from '@typings/index';
 import { computed, defineComponent, PropType, reactive } from 'vue';
 
 interface IState {}

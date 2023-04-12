@@ -1,13 +1,10 @@
 .
-├── docs
-│   ├── components
-│   │   ├── README.md
-│   │   ├── button.md
-│   │   └── icon.md
-│   ├── guide
-│   │   ├── quick-start
-│   │   └── README.md
-│   └── README.md
+├── build
+│   ├── docs.build.ts
+│   ├── lib.build.ts
+│   └── lib_split.build.ts
+├── config
+│   └── common.ts
 ├── packages
 │   ├── common
 │   │   ├── constants
@@ -15,12 +12,15 @@
 │   │   ├── styles
 │   │   └── utils
 │   └── components
+│       ├── back
 │       ├── backdrop
 │       ├── badge
 │       ├── base-popper
 │       ├── button
 │       ├── button-group
 │       ├── card
+│       ├── carousel
+│       ├── carousel-item
 │       ├── checkbox
 │       ├── checkbox-button
 │       ├── checkbox-group
@@ -28,6 +28,7 @@
 │       ├── demo-block
 │       ├── dialog
 │       ├── divider
+│       ├── drawer
 │       ├── icon
 │       ├── input
 │       ├── input-number
@@ -51,49 +52,26 @@
 │       ├── tag
 │       ├── tooltip
 │       ├── home.vue
-│       ├── main.ts
+│       ├── main.docs.scss
+│       ├── main.docs.ts
+│       ├── main.lib.scss
+│       ├── main.lib.ts
 │       ├── main.vue
 │       └── router.ts
 ├── public
-│   ├── types
-│   │   ├── backdrop.d.ts
-│   │   ├── badge.d.ts
-│   │   ├── base-popper.d.ts
-│   │   ├── button.d.ts
-│   │   ├── card.d.ts
-│   │   ├── checkbox.d.ts
-│   │   ├── demo-block.d.ts
-│   │   ├── dialog.d.ts
-│   │   ├── divider.d.ts
-│   │   ├── input.d.ts
-│   │   ├── loading.d.ts
-│   │   ├── message.d.ts
-│   │   ├── popconfirm.d.ts
-│   │   ├── popover.d.ts
-│   │   ├── progress.d.ts
-│   │   ├── radio.d.ts
-│   │   ├── row.d.ts
-│   │   ├── select.d.ts
-│   │   ├── slider.d.ts
-│   │   ├── space.d.ts
-│   │   ├── switch.d.ts
-│   │   ├── tag.d.ts
-│   │   └── tooltip.d.ts
-│   └── favicon.ico
-├── types
-│   └── shims-vue.d.ts
+│   ├── lib
+│   │   └── typings
+│   └── lib_split
 ├── LICENSE
 ├── README.md
 ├── index.html
 ├── jest.config.js
-├── lerna-debug.log
-├── lerna.json
 ├── package.json
 ├── prettier.config.js
+├── shims-vue.d.ts
 ├── tree.txt
 ├── tsconfig.json
 ├── vite.config.ts
-├── yarn-error.log
 └── yarn.lock
 
-49 directories, 47 files
+52 directories, 22 files

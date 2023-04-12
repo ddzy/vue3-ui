@@ -1,8 +1,8 @@
 import * as path from 'path';
-import { UserConfigExport } from "vite";
+import { UserConfigExport } from 'vite';
 
 export default {
-  resolve: {
+	resolve: {
 		alias: [
 			{
 				find: '@common',
@@ -11,6 +11,10 @@ export default {
 			{
 				find: '@components',
 				replacement: path.resolve(__dirname, '/packages/components'),
+			},
+			{
+				find: '@typings',
+				replacement: path.resolve(__dirname, '/public/lib/typings'),
 			},
 		],
 	},
@@ -26,4 +30,4 @@ export default {
 			},
 		},
 	},
-} as UserConfigExport
+} as UserConfigExport;

@@ -1,7 +1,7 @@
 import { mount, shallowMount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
 import V3CheckboxGroup from '../main';
-import V3Checkbox from 'checkbox';
+import V3Checkbox from '@components/checkbox/main';
 
 describe('CheckboxGroup 组件测试：', () => {
 	test('CheckboxGroup 应该正常双向绑定一组数字类型的值', async () => {
