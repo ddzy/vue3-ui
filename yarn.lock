@@ -340,6 +340,14 @@
   dependencies:
     chalk "^4.0.0"
 
+"@felibrary/vue3-ui@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/@felibrary/vue3-ui/-/vue3-ui-0.0.2.tgz#b4a8624f14556320b3aa651ad592a152035233de"
+  integrity sha512-taoHxydYc/62OFUXP/Iy88B36erkDQjk/gXMUFl87BF7tF5tWhZJPpwtKNWPyx5VIIlM6/CnRQPZtURmFn6W7Q==
+  dependencies:
+    decimal.js "^10.3.1"
+    vue-tippy "^6.0.0-alpha.30"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
