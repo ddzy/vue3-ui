@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type ISwitchModelValue = boolean | string | number;
 export interface ISwitchProps {

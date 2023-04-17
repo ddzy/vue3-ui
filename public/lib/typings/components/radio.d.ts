@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type IRadioLabel = boolean | string | number;
 export type IRadioGroupCallback = () => void | undefined;

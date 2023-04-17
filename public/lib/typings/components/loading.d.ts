@@ -1,5 +1,5 @@
 import { App, ComponentPublicInstance, VNode } from 'vue';
-import { FactoryWithInstall } from '@typings/index';
+import { FactoryWithInstall } from '../index';
 
 export type ILoadingConstructorReturn = ComponentPublicInstance<
 	ILoadingProps & {

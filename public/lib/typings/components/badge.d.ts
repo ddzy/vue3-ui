@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type IBadgeValue = number | string;
 export type IBadgeType = 'primary' | 'success' | 'danger' | 'warning' | 'info';

@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type IProgressTheme = 'primary' | 'success' | 'danger' | 'warning';
 export type IProgressFormatLabel = (percent: number) => any;

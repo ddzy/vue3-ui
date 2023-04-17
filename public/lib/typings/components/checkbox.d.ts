@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type ICheckboxLabel = string | boolean | number;
 export type ICheckboxSize = 'small' | 'medium' | 'large';

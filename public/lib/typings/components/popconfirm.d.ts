@@ -1,6 +1,6 @@
 import { IBasePopperTheme } from './base-popper';
 import { IButtonType, IButtonSize } from './button';
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export interface IPopconfirmProps {
 	theme: IBasePopperTheme;

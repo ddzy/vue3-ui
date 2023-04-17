@@ -1,5 +1,5 @@
 import { IButtonProps } from './button';
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export interface IDialogProps {
 	modelValue: boolean;

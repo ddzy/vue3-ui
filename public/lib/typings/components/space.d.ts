@@ -1,5 +1,5 @@
 import { VNode } from 'vue';
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type ISpaceAlign =
 	| 'start'

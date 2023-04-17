@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type ISliderModelValue = [number, number] | number;
 export type ISliderFormatTooltip = (modelValue: ISliderModelValue) => any;

@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type IDividerDirection = 'vertical' | 'horizontal';
 export type IDividerContentPosition = 'start' | 'end' | 'center';

@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type ITagType = 'primary' | 'success' | 'danger' | 'warning' | 'info';
 export type ITagSize = 'small' | 'medium' | 'large';

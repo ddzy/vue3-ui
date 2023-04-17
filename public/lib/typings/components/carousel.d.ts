@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type ICarouselEffect = 'fade' | 'slide';
 export type ICarouselDirection = 'horizontal' | 'vertical';

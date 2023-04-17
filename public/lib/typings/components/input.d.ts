@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type IInputType = 'text' | 'password';
 export type IInputSize = 'small' | 'medium' | 'large';

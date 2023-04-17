@@ -1,4 +1,4 @@
-import { SFCWithInstall } from '@typings/index';
+import { SFCWithInstall } from '../index';
 
 export type IBaseSelectValue = string | boolean | number | object;
 export type ISelectValue = IBaseSelectValue | IBaseSelectValue[];
