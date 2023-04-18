@@ -59,11 +59,11 @@
 			left: 0;
 			box-sizing: border-box;
 			width: 100%;
-			padding: $padding-small / 2;
+			padding: calc($padding-small / 2);
 			padding-right: 30px;
 			.v3-select__tag-item {
 				display: inline-block;
-				margin: $margin-small / 2;
+				margin: calc($margin-small / 2);
 			}
 			input {
 				box-sizing: border-box;
@@ -72,7 +72,7 @@
 				padding: 0;
 				width: 100%;
 				height: 25px;
-				padding: $padding-small / 2;
+				padding: calc($padding-small / 2);
 				line-height: 25px;
 				color: $font-color-medium;
 			}

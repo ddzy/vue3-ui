@@ -1,6 +1,6 @@
 $radio-size-map: (
 	small: (
-		padding: $padding-small / 2 $padding-medium,
+		padding: calc($padding-small / 2) $padding-medium,
 		radio-width: 12px,
 		radio-height: 12px,
 		label-font-size: $font-size-mini,

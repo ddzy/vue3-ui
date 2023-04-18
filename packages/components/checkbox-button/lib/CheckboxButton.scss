@@ -1,6 +1,6 @@
 $checkbox-button-size-map: (
 	small: (
-		padding: $padding-small / 2 $padding-medium,
+		padding: calc($padding-small / 2)  $padding-medium,
 		font-size: $font-size-mini,
 	),
 	medium: (
