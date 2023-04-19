@@ -17,12 +17,12 @@
 	"files": [
 		"dist/*"
 	],
-	"main": "./dist/index.umd.js",
-	"module": "./dist/index.es.js",
+	"main": "./dist/index.full.umd.js",
+	"module": "./dist/index.full.mjs",
 	"exports": {
 		".": {
-			"import": "./dist/index.es.js",
-			"require": "./dist/index.umd.js",
+			"import": "./dist/index.full.mjs",
+			"require": "./dist/index.full.umd.js",
 			"types": "./dist/typings/index.d.ts"
 		}
 	},

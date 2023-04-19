@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { UserConfigExport } from 'vite';
+import { InlineConfig } from 'vite';
 
 export default {
 	resolve: {
@@ -30,4 +30,7 @@ export default {
 			},
 		},
 	},
-} as UserConfigExport;
+	build: {
+		sourcemap: true,
+	},
+} as InlineConfig;

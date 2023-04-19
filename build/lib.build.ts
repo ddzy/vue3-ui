@@ -1,20 +1,16 @@
 import * as path from 'path';
-import { build, mergeConfig } from 'vite';
+import { InlineConfig, build, mergeConfig } from 'vite';
 import commonConfig from '../config/common';
 import vue from '@vitejs/plugin-vue';
 
-const libName = 'index';
-const buildOptions = mergeConfig(commonConfig, {
+const baseBuildOptions: InlineConfig = {
 	// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
 	configFile: false,
 	publicDir: 'public/lib',
 	build: {
-		// 是否清空 dist 文件夹
-		emptyOutDir: true,
 		lib: {
 			entry: path.resolve(__dirname, '../packages/components/main.lib.ts'),
-			fileName: libName,
-			name: libName,
+			name: 'Vue3UI',
 		},
 		outDir: `dist`,
 		rollupOptions: {
@@ -26,7 +22,7 @@ const buildOptions = mergeConfig(commonConfig, {
 				},
 				assetFileNames(chunkInfo: any) {
 					if (chunkInfo.name === 'style.css') {
-						return `${libName}.css`;
+						return `index.css`;
 					}
 					return chunkInfo.name;
 				},
@@ -36,6 +32,35 @@ const buildOptions = mergeConfig(commonConfig, {
 	plugins: [
 		vue(),
 	],
-});
+};
+  
+// index.full.js
+const buildOptionsOfFull = mergeConfig(commonConfig, mergeConfig(baseBuildOptions, {
+	build: {
+		// 是否清空 dist 文件夹
+		emptyOutDir: true,
+		lib: {
+			fileName: 'index.full',
+		},
+		minify: false,
+	},
+} as InlineConfig));
 
-build(buildOptions);
+// index.min.js
+const buildOptionsOfMin = mergeConfig(commonConfig, mergeConfig(baseBuildOptions, {
+	build: {
+		// 是否清空 dist 文件夹
+		emptyOutDir: false,
+		lib: {
+			fileName: 'index.min',
+		},
+		minify: 'esbuild',
+	},
+} as InlineConfig));
+
+async function buildHelper() {
+	await build(buildOptionsOfFull);
+	await build(buildOptionsOfMin);
+}
+
+buildHelper();
