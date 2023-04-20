@@ -17,17 +17,11 @@ describe('V3Divider 组件测试：', () => {
 		expect(wrapper.find('.v3-divider').exists()).toBeTruthy();
 		// 默认为垂直方向
 		expect(
-			wrapper
-				.find('.v3-divider')
-				.classes()
-				.includes('is-vertical')
+			wrapper.find('.v3-divider').classes().includes('is-vertical')
 		).toBeTruthy();
 		// 内容的位置默认为 start
 		expect(
-			wrapper
-				.find('.v3-divider')
-				.classes()
-				.includes('is-content--start')
+			wrapper.find('.v3-divider').classes().includes('is-content--start')
 		).toBeTruthy();
 	});
 
@@ -44,10 +38,7 @@ describe('V3Divider 组件测试：', () => {
 		});
 
 		expect(
-			wrapper
-				.find('.v3-divider')
-				.classes()
-				.includes('is-horizontal')
+			wrapper.find('.v3-divider').classes().includes('is-horizontal')
 		).toBeTruthy();
 	});
 
@@ -72,10 +63,7 @@ describe('V3Divider 组件测试：', () => {
 		expect(wrapper.findAll('.v3-divider').length).toBe(2);
 		expect(wrapper.findAll('.v3-divider')[0].text()).toBe('分割线');
 		expect(
-			wrapper
-				.findAll('.v3-divider')[1]
-				.find('.v3-icon-browse')
-				.exists()
+			wrapper.findAll('.v3-divider')[1].find('.v3-icon-browse').exists()
 		).toBeTruthy();
 	});
 
@@ -107,22 +95,13 @@ describe('V3Divider 组件测试：', () => {
 
 		expect(wrapper.findAll('.v3-divider').length).toBe(3);
 		expect(
-			wrapper
-				.findAll('.v3-divider')[0]
-				.classes()
-				.includes('is-content--start')
+			wrapper.findAll('.v3-divider')[0].classes().includes('is-content--start')
 		).toBeTruthy();
 		expect(
-			wrapper
-				.findAll('.v3-divider')[1]
-				.classes()
-				.includes('is-content--center')
+			wrapper.findAll('.v3-divider')[1].classes().includes('is-content--center')
 		).toBeTruthy();
 		expect(
-			wrapper
-				.findAll('.v3-divider')[2]
-				.classes()
-				.includes('is-content--end')
+			wrapper.findAll('.v3-divider')[2].classes().includes('is-content--end')
 		).toBeTruthy();
 	});
 });

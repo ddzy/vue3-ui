@@ -13,11 +13,11 @@ const useDebounce: TYPES.IUseDebounce = function useDebounce(
 ) {
 	let timer: any = ref(null);
 
-	return function(...args) {
+	return function (...args) {
 		if (timer.value) {
 			clearTimeout(timer.value);
 		}
-		timer.value = setTimeout(function() {
+		timer.value = setTimeout(function () {
 			// @ts-ignore
 			callback.apply(this, args);
 		}, timestamp);

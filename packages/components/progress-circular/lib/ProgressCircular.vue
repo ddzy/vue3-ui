@@ -28,10 +28,9 @@
 					:cy="props.radius + props.trackWidth"
 					:r="props.radius"
 					:stroke-dasharray="state.strokeDashArray"
-					:transform="
-						`rotate(${props.rotate}, ${props.radius +
-							props.trackWidth}, ${props.radius + props.trackWidth})`
-					"
+					:transform="`rotate(${props.rotate}, ${
+						props.radius + props.trackWidth
+					}, ${props.radius + props.trackWidth})`"
 				></circle>
 			</g>
 			<text

@@ -329,9 +329,8 @@ export default defineComponent({
 		 * 收集 V3CarouselItem 组件实例，统一管理
 		 */
 		function appendCarouselItemInstanceToList(instance: any) {
-			state.carouselItemInstanceList = state.carouselItemInstanceList.concat(
-				instance
-			);
+			state.carouselItemInstanceList =
+				state.carouselItemInstanceList.concat(instance);
 		}
 
 		function slidePrev() {

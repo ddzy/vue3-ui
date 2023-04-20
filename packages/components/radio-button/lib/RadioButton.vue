@@ -87,10 +87,10 @@ export default defineComponent({
 		const isRadioGroup = checkIsRadioGroup();
 
 		if (isRadioGroup) {
-			((state.injectedOnRadioGroupChange as unknown) as Function) = inject(
+			(state.injectedOnRadioGroupChange as unknown as Function) = inject(
 				RADIO_GROUP_CHANGE_FUNC_PROVIDE
 			)!;
-			((state.injectedRadioGroupInstance as unknown) as Function) = inject(
+			(state.injectedRadioGroupInstance as unknown as Function) = inject(
 				RADIO_GROUP_INSTANCE_PROVIDE
 			)!;
 		}
@@ -98,8 +98,9 @@ export default defineComponent({
 		watch(
 			toRef(
 				isRadioGroup
-					? (state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps)
-							.props
+					? (
+							state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps
+					  ).props
 					: props,
 				'modelValue'
 			),
@@ -129,7 +130,7 @@ export default defineComponent({
 
 		function handleChange(e: MouseEvent) {
 			if (isRadioGroup) {
-				((state.injectedOnRadioGroupChange as unknown) as Function)(
+				(state.injectedOnRadioGroupChange as unknown as Function)(
 					state.radioValue,
 					e
 				);

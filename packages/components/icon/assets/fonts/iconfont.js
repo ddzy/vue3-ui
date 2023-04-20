@@ -1,4 +1,4 @@
-!(function(l) {
+!(function (l) {
 	var a,
 		v,
 		h,
@@ -23,7 +23,7 @@
 	function t() {
 		o || ((o = !0), h());
 	}
-	(a = function() {
+	(a = function () {
 		var l, a, v;
 		((v = document.createElement('div')).innerHTML = i),
 			(i = null),
@@ -41,7 +41,7 @@
 		document.addEventListener
 			? ~['complete', 'loaded', 'interactive'].indexOf(document.readyState)
 				? setTimeout(a, 0)
-				: ((v = function() {
+				: ((v = function () {
 						document.removeEventListener('DOMContentLoaded', v, !1), a();
 				  }),
 				  document.addEventListener('DOMContentLoaded', v, !1))
@@ -49,7 +49,7 @@
 			  ((h = a),
 			  (c = l.document),
 			  (o = !1),
-			  (m = function() {
+			  (m = function () {
 					try {
 						c.documentElement.doScroll('left');
 					} catch (l) {
@@ -57,7 +57,7 @@
 					}
 					t();
 			  })(),
-			  (c.onreadystatechange = function() {
+			  (c.onreadystatechange = function () {
 					'complete' == c.readyState && ((c.onreadystatechange = null), t());
 			  }));
 })(window);

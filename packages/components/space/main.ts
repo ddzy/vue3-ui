@@ -1,7 +1,7 @@
 import { App } from 'vue';
 import Space from './lib/Space.vue';
 
-const install = function(app: App) {
+const install = function (app: App) {
 	app.component(Space.name, Space);
 };
 

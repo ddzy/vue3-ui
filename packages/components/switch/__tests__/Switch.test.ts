@@ -21,10 +21,7 @@ describe('V3Switch 组件测试：', () => {
 		// 默认为【开启】状态
 		expect(wrapper.find('.v3-switch').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeTruthy();
 
 		// 手动关闭
@@ -32,10 +29,7 @@ describe('V3Switch 组件测试：', () => {
 			switchValue: false,
 		});
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeFalsy();
 		expect(wrapper.vm.switchValue).toBeFalsy();
 	});
@@ -94,19 +88,13 @@ describe('V3Switch 组件测试：', () => {
 		await wrapper.find('.v3-switch .v3-switch__active').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeTruthy();
 		// 再次点击则关闭
 		await wrapper.find('.v3-switch .v3-switch__active').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeFalsy();
 	});
 
@@ -167,10 +155,7 @@ describe('V3Switch 组件测试：', () => {
 
 		await wrapper.find('.v3-switch .v3-switch__select').trigger('click');
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeTruthy();
 
 		// 禁用
@@ -179,10 +164,7 @@ describe('V3Switch 组件测试：', () => {
 		});
 		await wrapper.find('.v3-switch .v3-switch__select').trigger('click');
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeTruthy();
 	});
 
@@ -235,10 +217,7 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active')
 		).toBeTruthy();
 
 		await wrapper.find('.v3-switch .v3-switch__select').trigger('click');

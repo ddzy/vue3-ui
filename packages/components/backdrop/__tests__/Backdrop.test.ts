@@ -188,10 +188,7 @@ describe('Backdrop 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-backdrop')
-				.classes()
-				.includes('is-center')
+			wrapper.find('.v3-backdrop').classes().includes('is-center')
 		).toBeTruthy();
 
 		await wrapper.find('.v3-backdrop').trigger('click');
@@ -202,10 +199,7 @@ describe('Backdrop 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-backdrop')
-				.classes()
-				.includes('is-center')
+			wrapper.find('.v3-backdrop').classes().includes('is-center')
 		).toBeFalsy();
 	});
 });

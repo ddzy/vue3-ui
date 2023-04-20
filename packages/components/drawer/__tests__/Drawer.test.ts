@@ -88,10 +88,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-drawer')
-				.classes()
-				.includes('is-right')
+			wrapper.find('.v3-drawer').classes().includes('is-right')
 		).toBeTruthy();
 		await wrapper.find('.v3-icon-close').trigger('click');
 		await nextTick();
@@ -100,16 +97,10 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-drawer')
-				.classes()
-				.includes('is-right')
+			wrapper.find('.v3-drawer').classes().includes('is-right')
 		).toBeFalsy();
 		expect(
-			wrapper
-				.find('.v3-drawer')
-				.classes()
-				.includes('is-bottom')
+			wrapper.find('.v3-drawer').classes().includes('is-bottom')
 		).toBeTruthy();
 	});
 

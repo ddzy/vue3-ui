@@ -46,9 +46,12 @@ export default defineComponent({
 		},
 		/** 对应的值 */
 		value: {
-			type: [String, Boolean, Number, Object] as PropType<
-				TYPES.ISelectOptionValue
-			>,
+			type: [
+				String,
+				Boolean,
+				Number,
+				Object,
+			] as PropType<TYPES.ISelectOptionValue>,
 			required: true,
 		},
 		/** 是否禁用当前选项 */

@@ -97,7 +97,7 @@ export function throttle(
 	};
 	let prevTime = 0;
 
-	return function(...args: any[]) {
+	return function (...args: any[]) {
 		const now = Date.now();
 
 		if (now - prevTime >= defaultOptions.timestamp) {

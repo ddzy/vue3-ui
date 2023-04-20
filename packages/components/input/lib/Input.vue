@@ -83,10 +83,10 @@
 					class="v3-input__suffix"
 					v-if="
 						app.slots.suffix ||
-							props.suffixIcon ||
-							props.clearable ||
-							props.showPassword ||
-							(props.showWordLimit && props.maxlength > 0)
+						props.suffixIcon ||
+						props.clearable ||
+						props.showPassword ||
+						(props.showWordLimit && props.maxlength > 0)
 					"
 				>
 					<div class="v3-input__suffix-inner">

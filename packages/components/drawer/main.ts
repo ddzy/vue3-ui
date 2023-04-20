@@ -1,7 +1,7 @@
 import { App } from 'vue';
 import Drawer from './lib/Drawer.vue';
 
-const install = function(app: App) {
+const install = function (app: App) {
 	app.component(Drawer.name, Drawer);
 };
 

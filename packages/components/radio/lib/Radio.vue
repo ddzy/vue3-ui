@@ -137,7 +137,7 @@ export default defineComponent({
 
 		function handleChange(e: MouseEvent) {
 			if (isRadioGroup) {
-				((state.injectedOnRadioGroupChange as unknown) as Function)(
+				(state.injectedOnRadioGroupChange as unknown as Function)(
 					state.radioValue,
 					e
 				);

@@ -208,7 +208,7 @@ export default defineComponent({
 					state.showDropdown = props.modelValue as boolean;
 
 					if (tippyRef.value) {
-						const tippyObj = (tippyRef.value as unknown) as {
+						const tippyObj = tippyRef.value as unknown as {
 							tippy: ILocalTippyInstance;
 						};
 						if (props.modelValue) {

@@ -1,7 +1,7 @@
 import { App } from 'vue';
 import Input from './lib/Input.vue';
 
-const install = function(app: App) {
+const install = function (app: App) {
 	app.component(Input.name, Input);
 };
 

@@ -22,7 +22,7 @@ const state: IState = reactive({
 	instanceWrapper: document.createElement('div'),
 });
 
-const MessageConstructor: TYPES.IMessageConstructor = function(
+const MessageConstructor: TYPES.IMessageConstructor = function (
 	options: TYPES.IMessageProps
 ) {
 	const defaultOptions = Object.assign(
@@ -76,7 +76,7 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 
 (['success', 'danger', 'info', 'warning'] as TYPES.IMessageType[]).forEach(
 	type => {
-		MessageConstructor[type] = function(options) {
+		MessageConstructor[type] = function (options) {
 			const baseOptions = Object.assign(options, {
 				type,
 			});

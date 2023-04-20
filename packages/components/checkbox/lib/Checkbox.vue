@@ -176,8 +176,9 @@ export default defineComponent({
 		watch(
 			toRef(
 				isCheckboxGroup
-					? (state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps)
-							.props
+					? (
+							state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps
+					  ).props
 					: props,
 				'modelValue'
 			),
@@ -188,7 +189,7 @@ export default defineComponent({
 						props.label!
 					);
 				} else {
-					state.checkboxValue = (newValue as unknown) as boolean;
+					state.checkboxValue = newValue as unknown as boolean;
 				}
 			},
 			{ immediate: true }
@@ -196,7 +197,7 @@ export default defineComponent({
 
 		onMounted(() => {
 			if (isCheckboxGroup) {
-				((state.injectedCheckboxGroupAppendInstance as unknown) as Function)(
+				(state.injectedCheckboxGroupAppendInstance as unknown as Function)(
 					app.value
 				);
 			}
@@ -222,7 +223,7 @@ export default defineComponent({
 
 		function handleChange(e: MouseEvent) {
 			if (isCheckboxGroup) {
-				((state.injectedOnCheckboxGroupChange as unknown) as Function)(
+				(state.injectedOnCheckboxGroupChange as unknown as Function)(
 					state.checkboxValue,
 					props.label,
 					e

@@ -89,12 +89,7 @@ describe('V3Col 组件测试：', () => {
 			},
 		});
 
-		expect(
-			wrapper1
-				.find('.v3-col-4')
-				.classes()
-				.includes('v3-col-offset-4')
-		);
+		expect(wrapper1.find('.v3-col-4').classes().includes('v3-col-offset-4'));
 		expect(wrapper1.find('.v3-col-offset-4').exists()).toBeTruthy();
 	});
 

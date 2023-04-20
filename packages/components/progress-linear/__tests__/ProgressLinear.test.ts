@@ -50,10 +50,7 @@ describe('V3ProgressLinear 组件测试：', () => {
 
 		expect(wrapper.find('.v3-progress-linear').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-progress-linear')
-				.classes()
-				.includes('has-round')
+			wrapper.find('.v3-progress-linear').classes().includes('has-round')
 		).toBeFalsy();
 	});
 

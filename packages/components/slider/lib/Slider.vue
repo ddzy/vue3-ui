@@ -12,8 +12,8 @@
 		<div
 			v-if="
 				context.slots.prepend ||
-					(!context.slots.prepend && props.prependIcon) ||
-					(!context.slots.prepend && !props.prependIcon && props.label)
+				(!context.slots.prepend && props.prependIcon) ||
+				(!context.slots.prepend && !props.prependIcon && props.label)
 			"
 			class="v3-slider__prepend"
 		>
@@ -408,16 +408,10 @@ export default defineComponent({
 						: [props.min, props.max];
 
 				state.donePercent = new Decimal(
-					new Decimal(newModelValue[0])
-						.div(props.max)
-						.mul(100)
-						.toFixed(2)
+					new Decimal(newModelValue[0]).div(props.max).mul(100).toFixed(2)
 				).toNumber();
 				state.donePercent1 = new Decimal(
-					new Decimal(newModelValue[1])
-						.div(props.max)
-						.mul(100)
-						.toFixed(2)
+					new Decimal(newModelValue[1]).div(props.max).mul(100).toFixed(2)
 				).toNumber();
 				state.localModelValue = newModelValue.slice();
 			}
@@ -492,15 +486,9 @@ export default defineComponent({
 			const decimalStep = new Decimal(props.step);
 			const decimalMax = new Decimal(props.max);
 			// 总步数
-			const stepCount = decimalMax
-				.div(decimalStep)
-				.floor()
-				.toNumber();
+			const stepCount = decimalMax.div(decimalStep).floor().toNumber();
 			// 每步所占整个滑动条的百分比
-			const stepPercent = decimalStep
-				.div(decimalMax)
-				.mul(100)
-				.toFixed(2);
+			const stepPercent = decimalStep.div(decimalMax).mul(100).toFixed(2);
 
 			const trackInnerEl = trackInnerRef.value as HTMLElement;
 			const trackInnerRect = trackInnerEl.getBoundingClientRect();
@@ -513,13 +501,7 @@ export default defineComponent({
 				: UTILS.getDomOffsetToDocument(trackInnerEl).left;
 
 			state.halfOfStepPos = new Decimal(trackInnerRectSize)
-				.mul(
-					new Decimal(stepPercent)
-						.mul(1)
-						.div(100)
-						.div(2)
-						.toNumber()
-				)
+				.mul(new Decimal(stepPercent).mul(1).div(100).div(2).toNumber())
 				.round()
 				.toNumber();
 
@@ -532,10 +514,7 @@ export default defineComponent({
 					x: new Decimal(trackInnerRectPos)
 						.plus(
 							new Decimal(trackInnerRectSize).mul(
-								new Decimal(stepPercent)
-									.mul(i)
-									.div(100)
-									.toNumber()
+								new Decimal(stepPercent).mul(i).div(100).toNumber()
 							)
 						)
 						.round()

@@ -50,10 +50,7 @@ describe('V3Row 组件测试：', () => {
 		});
 
 		expect(
-			wrapper1
-				.find('.v3-row')
-				.classes()
-				.includes('v3-row--flex')
+			wrapper1.find('.v3-row').classes().includes('v3-row--flex')
 		).toBeTruthy();
 		expect(wrapper1.find('.is-justify-center').exists()).toBeTruthy();
 		expect(wrapper1.find('.is-align-flex-end').exists()).toBeTruthy();

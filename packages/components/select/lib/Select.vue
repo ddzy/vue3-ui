@@ -42,7 +42,7 @@
 		>
 			<template #suffix>
 				<i
-					style="margin-right: 6px;"
+					style="margin-right: 6px"
 					v-if="!state.showClear"
 					:class="{
 						'v3-icon': true,
@@ -181,9 +181,13 @@ export default defineComponent({
 	props: {
 		/** 下拉框的值 */
 		modelValue: {
-			type: [String, Boolean, Number, Object, Array] as PropType<
-				TYPES.ISelectValue
-			>,
+			type: [
+				String,
+				Boolean,
+				Number,
+				Object,
+				Array,
+			] as PropType<TYPES.ISelectValue>,
 			required: true,
 		},
 		/** 是否开启多选 */
@@ -416,9 +420,8 @@ export default defineComponent({
 		 * 把 V3SelectOption 实例追加到列表，统一管理
 		 */
 		function appendSelectOptionList(instance: any) {
-			state.selectOptionInstanceList = state.selectOptionInstanceList.concat(
-				instance
-			);
+			state.selectOptionInstanceList =
+				state.selectOptionInstanceList.concat(instance);
 		}
 
 		/**
@@ -604,7 +607,7 @@ export default defineComponent({
 		function updateInputHeight() {
 			nextTick(() => {
 				if (tagWrapperRef.value) {
-					const tagEl = (tagWrapperRef.value as unknown) as HTMLDivElement;
+					const tagEl = tagWrapperRef.value as unknown as HTMLDivElement;
 					const newHeight = tagEl.getBoundingClientRect().height;
 
 					state.pendingInputHeight = newHeight;
@@ -618,7 +621,9 @@ export default defineComponent({
 			if (state.dropdownInstance && inputWrapperRef.value) {
 				state.dropdownInstance.setProps({
 					getReferenceClientRect: () =>
-						(inputWrapperRef.value as ComponentPublicInstance).$el.getBoundingClientRect(),
+						(
+							inputWrapperRef.value as ComponentPublicInstance
+						).$el.getBoundingClientRect(),
 				});
 			}
 		}

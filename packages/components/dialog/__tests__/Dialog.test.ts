@@ -222,10 +222,7 @@ describe('V3Dialog 组件测试：', () => {
 			'测试弹窗内容'
 		);
 		expect(
-			wrapper
-				.find('.v3-dialog')
-				.classes()
-				.includes('is-fullscreen')
+			wrapper.find('.v3-dialog').classes().includes('is-fullscreen')
 		).toBeTruthy();
 	});
 
@@ -293,10 +290,7 @@ describe('V3Dialog 组件测试：', () => {
 			'测试弹窗内容'
 		);
 		expect(
-			wrapper
-				.find('.v3-backdrop')
-				.classes()
-				.includes('is-center')
+			wrapper.find('.v3-backdrop').classes().includes('is-center')
 		).toBeTruthy();
 	});
 

@@ -13,7 +13,7 @@ const useThrottle: TYPES.IUseThrottle = function useThrottle(
 ) {
 	let prevTime = Date.now();
 
-	return function(...args) {
+	return function (...args) {
 		const currentTime = Date.now();
 
 		if (currentTime - prevTime >= timestamp) {

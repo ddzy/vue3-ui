@@ -1,7 +1,7 @@
 import { App } from 'vue';
 import RadioButton from './lib/RadioButton.vue';
 
-const install = function(app: App) {
+const install = function (app: App) {
 	app.component(RadioButton.name, RadioButton);
 };
 

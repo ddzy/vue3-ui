@@ -431,22 +431,13 @@ describe('V3Select 组件测试：', () => {
 			1
 		);
 		expect(
-			wrapper
-				.findAll('.v3-input')[0]
-				.classes()
-				.includes('is-size--small')
+			wrapper.findAll('.v3-input')[0].classes().includes('is-size--small')
 		).toBeTruthy();
 		expect(
-			wrapper
-				.findAll('.v3-input')[1]
-				.classes()
-				.includes('is-size--medium')
+			wrapper.findAll('.v3-input')[1].classes().includes('is-size--medium')
 		).toBeTruthy();
 		expect(
-			wrapper
-				.findAll('.v3-input')[2]
-				.classes()
-				.includes('is-size--large')
+			wrapper.findAll('.v3-input')[2].classes().includes('is-size--large')
 		).toBeTruthy();
 	});
 });
