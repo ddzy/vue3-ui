@@ -1,4 +1,5 @@
 .custom-markdown-container {
+	font-size: 14px;
 	color: #333;
 	.octicon {
 		display: inline-block;
@@ -781,6 +782,7 @@
 	height: 100%;
 	margin: 0;
 	background-color: #f6f8fa;
+	line-height: 1.5;
 }
 .custom-markdown-container pre code,
 .custom-markdown-container pre tt {

@@ -175,7 +175,7 @@ $nav-transition-time: v-bind('state.navTransitionTime');
 		top: 0;
 		left: 0;
 		bottom: 0;
-		width: 250px;
+		width: 300px;
 		padding: 20px 0;
 		background-color: #f3f4f5;
 		.sidebar__list {
@@ -195,6 +195,7 @@ $nav-transition-time: v-bind('state.navTransitionTime');
 					text-decoration: none;
 				}
 				&.router-link-active {
+					padding-right: 10px;
 					color: $primary-color;
 					background-color: $primary-color-plain;
 					border-left: 2px solid $primary-color;

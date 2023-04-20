@@ -1,6 +1,6 @@
 import { createApp, h } from 'vue';
 import 'vite-plugin-vuedoc/style.css';
-import Vue3UI from './main.lib';
+import Vue3UI from '../../dist/index.min.mjs';
 import '../../dist/index.css';
 import './main.docs.scss';
 import Main from './main.vue';
