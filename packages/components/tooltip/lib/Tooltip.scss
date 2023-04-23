@@ -1,6 +1,6 @@
 .v3-tooltip {
-  :deep(.tippy-box .tippy-content .v3-base-popper__dropdown) {
-    padding: $padding-small $padding-medium;
-    font-size: $font-size-mini;
-  }
+	.tippy-box .tippy-content .v3-base-popper__dropdown {
+		padding: $padding-small $padding-medium;
+		font-size: $font-size-mini;
+	}
 }

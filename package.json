@@ -57,7 +57,7 @@
 	"dependencies": {
 		"decimal.js": "^10.3.1",
 		"vue": "^3.2.47",
-		"vue-tippy": "^6.0.0-alpha.30"
+		"vue-tippy": "v6"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.1",

@@ -13,7 +13,7 @@
 			:hideOnClick="props.trigger !== 'manual'"
 			:trigger="props.trigger"
 			:theme="props.theme === 'dark' ? 'material' : 'light'"
-			:animation="props.animation"
+			:animation="'perspective'"
 			:placement="props.placement"
 			:zIndex="props.zIndex"
 			:arrow="props.arrow"
@@ -50,9 +50,11 @@
 <script lang="ts">
 import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
-// import 'vue-tippy/tippy.js/dist/tippy.css';
-// import 'vue-tippy/tippy.js/themes/light.css';
-// import 'vue-tippy/tippy.js/themes/material.css';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/themes/material.css';
+import 'tippy.js/animations/perspective.css';
+
 import {
 	computed,
 	defineComponent,
@@ -141,11 +143,6 @@ export default defineComponent({
 			type: Object as PropType<TYPES.IBasePopperOffset>,
 			default: [0, 10],
 		},
-		/** 自定义弹出的动画 */
-		animation: {
-			type: String,
-			default: 'v3-popper-slide-fade',
-		},
 		/** 显示/隐藏的延迟 */
 		delay: {
 			type: Object as PropType<TYPES.IBasePopperDelay>,
@@ -228,7 +225,7 @@ export default defineComponent({
 			state.showDropdown = showDropdown;
 
 			if (!showDropdown) {
-				return showDropdown;
+				return false;
 			}
 
 			context.emit('show', instance);

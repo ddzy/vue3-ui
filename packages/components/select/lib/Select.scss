@@ -30,7 +30,7 @@
 	// 模糊搜索没有匹配的数据/无数据
 	&.is-no-match-data,
 	&.is-no-data {
-		:deep(.tippy-content) {
+		.tippy-content {
 			.v3-select-dropdown__list {
 				p {
 					margin: 0;
@@ -85,7 +85,7 @@
 	.tippy-content {
 		width: 100%;
 	}
-	:deep(.tippy-content) {
+	.tippy-content {
 		padding-left: 0;
 		padding-right: 0;
 		.v3-base-popper__dropdown {

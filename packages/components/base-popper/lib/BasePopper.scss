@@ -1,5 +1,5 @@
 .v3-base-popper {
-	:deep(.tippy-box) {
+	.tippy-box {
 		border-radius: $border-radius-width-default;
 		&[data-theme~='light'] {
 			color: $font-color-default;
@@ -26,7 +26,8 @@
 			transform: translateX(20px);
 		}
 	}
-	:deep(.tippy-content) {
+	.tippy-content {
+		padding: 0;
 		.v3-base-popper__dropdown {
 			padding: $padding-medium $padding-large-1;
 			font-size: $font-size-small;
