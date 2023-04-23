@@ -1,4 +1,7 @@
 .v3-base-popper {
+	div[data-tippy-root] {
+		width: 100%;
+	}
 	.tippy-box {
 		border-radius: $border-radius-width-default;
 		&[data-theme~='light'] {
