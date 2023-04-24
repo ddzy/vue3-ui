@@ -42,6 +42,8 @@ export interface IBasePopperProps {
 	maxWidth: IBasePopperMaxWidth;
 	zIndex: number;
 	title: string;
-	customClass: string;
+	customClass: string | object;
+	customDropdownClass: string | object;
+	customTriggerClass: string | object;
 }
 export const V3BasePopper: SFCWithInstall<IBasePopperProps>

@@ -5,7 +5,7 @@
 		placement="bottom"
 		trigger="manual"
 		maxWidth="none"
-		:class="{
+		:customClass="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
 			['is-disabled']: props.disabled,
@@ -13,6 +13,12 @@
 			['is-no-match-data']: state.isNoMatchData,
 			['is-no-data']: !computedChildrenLength,
 			['is-multiple']: props.multiple,
+		}"
+		:customDropdownClass="{
+			'v3-select__dropdown': true,
+		}"
+		:customTriggerClass="{
+			'v3-select__trigger': true,
 		}"
 		:style="{
 			height: `${state.initialInputHeight}px`,
@@ -117,9 +123,11 @@
 				<slot v-if="computedChildrenLength"></slot>
 				<template v-else>
 					<!-- 未匹配到数据（优先级比【无数据】高） -->
-					<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
+					<p v-if="state.isNoMatchData" class="v3-select-dropdown__empty">
+						{{ props.noMatchText }}
+					</p>
 					<!-- 无数据 -->
-					<p v-else>{{ props.noDataText }}</p>
+					<p v-else class="v3-select-dropdown__empty">{{ props.noDataText }}</p>
 				</template>
 			</ul>
 		</template>
@@ -314,7 +322,8 @@ export default defineComponent({
 			pendingInputHeight: 0,
 			windowResizeHandler: null,
 		});
-		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
+		const app = ref(getCurrentInstance())
+			.value as unknown as ComponentInternalInstance;
 		const tagWrapperRef = ref(null);
 		const inputWrapperRef = ref(null);
 
@@ -622,7 +631,7 @@ export default defineComponent({
 				state.dropdownInstance.setProps({
 					getReferenceClientRect: () =>
 						(
-							inputWrapperRef.value as ComponentPublicInstance
+							inputWrapperRef.value as unknown as ComponentPublicInstance
 						).$el.getBoundingClientRect(),
 				});
 			}
@@ -653,6 +662,53 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss">
+body {
+	div[data-tippy-root] {
+		.tippy-content {
+			padding-left: 0;
+			padding-right: 0;
+			.v3-select__dropdown {
+				padding: $padding-small 0;
+				.v3-select-dropdown__list {
+					width: 100%;
+				}
+				.v3-select-dropdown__item {
+					padding: 0 $padding-medium;
+					user-select: none;
+					line-height: 35px;
+					cursor: pointer;
+					font-size: $font-size-small;
+					transition: all 0.15s ease;
+					&:not(.is-disabled):hover {
+						background-color: $primary-color-plain;
+					}
+
+					&.is-disabled {
+						color: $info-color-little;
+						cursor: not-allowed;
+					}
+
+					&.is-disabled.is-selected {
+						color: $primary-color-middle;
+					}
+
+					&.is-selected:not(.is-disabled) {
+						color: $primary-color;
+					}
+				}
+				// 无数据
+				.v3-select-dropdown__empty {
+					margin: 0;
+					padding: $padding-small 0;
+					text-align: center;
+					color: $info-color-little;
+				}
+			}
+		}
+	}
+}
+</style>
 <style lang="scss">
 @import './Select.scss';
 </style>

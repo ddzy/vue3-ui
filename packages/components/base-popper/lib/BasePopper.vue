@@ -1,12 +1,22 @@
 <template>
 	<div
-		:class="{
-			'v3-base-popper': true,
-			'is-visible': state.showDropdown,
-			'is-disabled': props.disabled,
-			[`is-theme-${props.theme}`]: true,
-			[`${props.customClass}`]: true,
-		}"
+		:class="
+			typeof props.customClass === 'string'
+				? {
+						'v3-base-popper': true,
+						'is-visible': state.showDropdown,
+						'is-disabled': props.disabled,
+						[`is-theme-${props.theme}`]: true,
+						[`${props.customClass}`]: true,
+				  }
+				: {
+						'v3-base-popper': true,
+						'is-visible': state.showDropdown,
+						'is-disabled': props.disabled,
+						[`is-theme-${props.theme}`]: true,
+						...props.customClass,
+				  }
+		"
 	>
 		<tippy
 			ref="tippyRef"
@@ -23,16 +33,17 @@
 			:showOnCreate="state.showDropdown"
 			:delay="props.delay"
 			:offset="props.offset"
+			:appendTo="state.body"
 			:onShow="handleShow"
 			:onHide="handleHide"
 			:onMount="handleMount"
 			:onClickOutside="handleClickOutside"
 		>
-			<div class="v3-base-popper__trigger">
+			<div class="v3-base-popper__trigger" :class="customTriggerClass">
 				<slot></slot>
 			</div>
 			<template #content>
-				<div class="v3-base-popper__dropdown">
+				<div class="v3-base-popper__dropdown" :class="customDropdownClass">
 					<div class="v3-popper-dropdown__title" v-if="props.title">
 						<h3>{{ props.title }}</h3>
 					</div>
@@ -68,6 +79,7 @@ import { Tippy, TippyInstance } from 'vue-tippy';
 
 interface IState {
 	showDropdown: boolean;
+	body: HTMLElement;
 }
 type ILocalTippyInstance = TippyInstance & {
 	hide: () => void;
@@ -177,7 +189,17 @@ export default defineComponent({
 		},
 		/** 自定义类名 */
 		customClass: {
-			type: String,
+			type: [String, Object],
+			default: '',
+		},
+		/** 自定义弹出框的类名 */
+		customDropdownClass: {
+			type: [String, Object],
+			default: '',
+		},
+		/** 自定义触发器的类名 */
+		customTriggerClass: {
+			type: [String, Object],
 			default: '',
 		},
 	},
@@ -185,6 +207,7 @@ export default defineComponent({
 		const state: IState = reactive({
 			/** popper 的显隐状态 */
 			showDropdown: false,
+			body: document.body,
 		});
 		const app = ref(getCurrentInstance()).value;
 		const tippyRef = ref(null);
@@ -264,5 +287,48 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import './BasePopper.scss';
+div[data-tippy-root] {
+	.tippy-box {
+		border-radius: $border-radius-width-default;
+		&[data-theme~='light'] {
+			color: $font-color-default;
+			box-shadow: $box-shadow-large;
+			border: 1px solid $border-color-grey-small;
+		}
+		&[data-theme~='material'] {
+			color: #fff;
+			font-weight: normal;
+		}
+		&[data-animation='v3-popper-slide-fade'][data-state='hidden'] {
+			opacity: 0;
+		}
+		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='top'] {
+			transform: translateY(-20px);
+		}
+		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='bottom'] {
+			transform: translateY(20px);
+		}
+		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='left'] {
+			transform: translateX(-20px);
+		}
+		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='right'] {
+			transform: translateX(20px);
+		}
+	}
+	.tippy-content {
+		padding: 0;
+		.v3-base-popper__dropdown {
+			padding: $padding-medium $padding-large-1;
+			font-size: $font-size-small;
+			.v3-popper-dropdown__title {
+				margin-bottom: $margin-medium;
+				h3 {
+					margin: 0;
+					font-size: $font-size-normal;
+				}
+			}
+		}
+	}
+}
 </style>
+<style lang="scss" scoped></style>

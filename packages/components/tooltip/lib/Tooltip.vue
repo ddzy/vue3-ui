@@ -1,5 +1,10 @@
 <template>
-	<v3-base-popper customClass="v3-tooltip" v-bind="$attrs">
+	<v3-base-popper
+		customClass="v3-tooltip"
+		customDropdownClass="v3-tooltip__dropdown"
+		customTriggerClass="v3-tooltip__trigger"
+		v-bind="$attrs"
+	>
 		<template v-for="(_, v) of context.slots" v-slot:[v]="scope">
 			<slot v-bind="scope" :name="v"></slot>
 		</template>
@@ -36,6 +41,18 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss">
+body {
+	div[data-tippy-root] {
+		.tippy-content {
+			.v3-tooltip__dropdown {
+				padding: $padding-small $padding-medium;
+				font-size: $font-size-mini;
+			}
+		}
+	}
+}
+</style>
 <style lang="scss">
 @import './Tooltip.scss';
 </style>

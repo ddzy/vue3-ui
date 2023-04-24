@@ -1,5 +1,11 @@
 <template>
-	<v3-base-popper customClass="v3-popconfirm" v-bind="$attrs" theme="light">
+	<v3-base-popper
+		customClass="v3-popconfirm"
+		customDropdownClass="v3-popconfirm__dropdown"
+		customTriggerClass="v3-popconfirm__trigger"
+		v-bind="$attrs"
+		theme="light"
+	>
 		<template #default>
 			<slot></slot>
 		</template>
@@ -183,6 +189,34 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss">
+body {
+	div[data-tippy-root] {
+		.tippy-content {
+			.tippy-box {
+				min-width: 200px;
+			}
+			.v3-popconfirm-content__text {
+				display: flex;
+				align-items: center;
+				.v3-popconfirm-text__icon {
+					margin-right: $margin-small;
+					font-size: $font-size-large;
+				}
+			}
+			.v3-popconfirm-content__action {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				margin-top: $margin-large-1;
+				& > .v3-button:last-child {
+					margin-left: $margin-small;
+				}
+			}
+		}
+	}
+}
+</style>
 <style lang="scss">
 @import './Popconfirm.scss';
 </style>
