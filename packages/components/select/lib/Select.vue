@@ -21,7 +21,7 @@
 			'v3-select__trigger': true,
 		}"
 		:style="{
-			height: `${state.initialInputHeight}px`,
+			height: `${state.pendingInputHeight}px`,
 		}"
 		@mount="handleDropdownMount"
 	>
