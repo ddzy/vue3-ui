@@ -75,18 +75,13 @@ import {
 	ref,
 	watch,
 } from 'vue';
-import { Tippy, TippyInstance } from 'vue-tippy';
+import { Tippy } from 'vue-tippy';
+import { Instance } from 'tippy.js';
 
 interface IState {
 	showDropdown: boolean;
 	body: HTMLElement;
 }
-type ILocalTippyInstance = TippyInstance & {
-	hide: () => void;
-	show: () => void;
-	unmount: () => void;
-	mount: () => void;
-};
 
 export default defineComponent({
 	name: 'V3BasePopper',
@@ -229,7 +224,7 @@ export default defineComponent({
 
 					if (tippyRef.value) {
 						const tippyObj = tippyRef.value as unknown as {
-							tippy: ILocalTippyInstance;
+							tippy: Instance;
 						};
 						if (props.modelValue) {
 							tippyObj.tippy.show();
@@ -242,7 +237,7 @@ export default defineComponent({
 			{ immediate: true }
 		);
 
-		function handleShow(instance: ILocalTippyInstance) {
+		function handleShow(instance: Instance) {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
 			const showDropdown = !props.disabled;
 			state.showDropdown = showDropdown;
@@ -254,13 +249,13 @@ export default defineComponent({
 			context.emit('show', instance);
 		}
 
-		function handleHide(instance: ILocalTippyInstance) {
+		function handleHide(instance: Instance) {
 			state.showDropdown = false;
 
 			context.emit('hide', instance);
 		}
 
-		function handleClickOutside(instance: ILocalTippyInstance) {
+		function handleClickOutside(instance: Instance) {
 			if (computedIsManually.value) {
 				context.emit('update:modelValue', false);
 			}
@@ -268,7 +263,7 @@ export default defineComponent({
 			context.emit('clickOutside', instance);
 		}
 
-		function handleMount(instance: ILocalTippyInstance) {
+		function handleMount(instance: Instance) {
 			context.emit('mount', instance);
 		}
 
