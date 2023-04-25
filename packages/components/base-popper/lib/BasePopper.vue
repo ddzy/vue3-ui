@@ -294,30 +294,13 @@ export default defineComponent({
 <style lang="scss">
 div[data-tippy-root] {
 	.tippy-box {
-		border-radius: $border-radius-width-default;
 		&[data-theme~='light'] {
 			color: $font-color-default;
 			box-shadow: $box-shadow-large;
-			border: 1px solid $border-color-grey-small;
 		}
 		&[data-theme~='material'] {
 			color: #fff;
 			font-weight: normal;
-		}
-		&[data-animation='v3-popper-slide-fade'][data-state='hidden'] {
-			opacity: 0;
-		}
-		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='top'] {
-			transform: translateY(-20px);
-		}
-		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='bottom'] {
-			transform: translateY(20px);
-		}
-		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='left'] {
-			transform: translateX(-20px);
-		}
-		&[data-animation='v3-popper-slide-fade'][data-state='hidden'][data-placement^='right'] {
-			transform: translateX(20px);
 		}
 	}
 	.tippy-content {
