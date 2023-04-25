@@ -197,6 +197,11 @@ export default defineComponent({
 			type: [String, Object],
 			default: '',
 		},
+		/** 弹窗框的宽度是否保持和触发器一致 */
+		sameWidth: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {
 		const state: IState = reactive({
@@ -246,6 +251,11 @@ export default defineComponent({
 				return false;
 			}
 
+			if (props.sameWidth) {
+				instance.popper.style.width = `${
+					instance.reference.getBoundingClientRect().width
+				}px`;
+			}
 			context.emit('show', instance);
 		}
 

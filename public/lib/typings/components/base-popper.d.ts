@@ -45,5 +45,6 @@ export interface IBasePopperProps {
 	customClass: string | object;
 	customDropdownClass: string | object;
 	customTriggerClass: string | object;
+	sameWidth: boolean;
 }
 export const V3BasePopper: SFCWithInstall<IBasePopperProps>

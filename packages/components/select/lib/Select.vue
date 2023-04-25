@@ -5,6 +5,7 @@
 		placement="bottom"
 		trigger="manual"
 		maxWidth="none"
+		sameWidth
 		:customClass="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
