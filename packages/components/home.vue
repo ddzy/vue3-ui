@@ -212,18 +212,15 @@ $nav-transition-time: v-bind('state.navTransitionTime');
 	.home__main {
 		flex: 1;
 		box-sizing: border-box;
-		overflow-x: hidden;
 		display: flex;
-		max-width: 1300px;
-		margin: 0 auto;
-		padding: 20px 200px 20px 270px;
+		padding: 0 200px 0 300px;
 		transition: padding-right $nav-transition-time
 			cubic-bezier(0.17, 0.84, 0.44, 1);
 		.home-main__content {
 			flex: 1;
 			box-sizing: border-box;
-			overflow-x: hidden;
-			padding: 0 5px;
+			max-width: 800px;
+			margin: 0 auto;
 		}
 		.home-main__nav {
 			position: fixed;

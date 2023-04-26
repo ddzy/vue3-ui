@@ -3,6 +3,14 @@
 	color: #333;
 	line-height: 1.5;
 	& > {
+		table:not(.vuedoc-demo) {
+			width: 100%;
+			table-layout: fixed;
+			overflow-wrap: break-word;
+			thead {
+				background-color: #f3f4f5;
+			}
+		}
 		h1:not(.vuedoc-demo) {
 			font-size: 26px;
 		}
