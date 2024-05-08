@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { InlineConfig, build, mergeConfig } from 'vite';
-// import commonConfig from '../config/common';
 import vue from '@vitejs/plugin-vue';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
@@ -53,7 +52,7 @@ const commonConfig = {
 			},
 		},
 	},
-}
+};
 
 async function buildAll() {
 	const baseBuildOptions: InlineConfig = {
@@ -62,51 +61,56 @@ async function buildAll() {
 			sourcemap: true,
 			outDir: 'dist',
 			lib: {
-				entry: path.resolve(__dirname, '../packages/components/main.lib.ts'),
+				entry: path.resolve(__dirname, '../packages/components/main.ts'),
 				name: 'Vue3UI',
 			},
 		},
-		plugins: [
-			vue(),
-		],
-	}
+		plugins: [vue()],
+	};
 
 	// index.full.js
-	const buildOptionsOfFull = mergeConfig(commonConfig, mergeConfig(baseBuildOptions, {
-		build: {
-			// 是否清空 dist 文件夹
-			emptyOutDir: true,
-			lib: {
-				fileName: 'index.full',
+	const buildOptionsOfFull = mergeConfig(
+		commonConfig,
+		mergeConfig(baseBuildOptions, {
+			build: {
+				// 是否清空 dist 文件夹
+				emptyOutDir: true,
+				lib: {
+					fileName: 'index.full',
+				},
+				minify: false,
 			},
-			minify: false,
-		},
-	} as InlineConfig));
+		} as InlineConfig)
+	);
 
 	// index.min.js
-	const buildOptionsOfMin = mergeConfig(commonConfig, mergeConfig(baseBuildOptions, {
-		build: {
-			// 是否清空 dist 文件夹
-			emptyOutDir: false,
-			lib: {
-				fileName: 'index.min',
+	const buildOptionsOfMin = mergeConfig(
+		commonConfig,
+		mergeConfig(baseBuildOptions, {
+			build: {
+				// 是否清空 dist 文件夹
+				emptyOutDir: false,
+				lib: {
+					fileName: 'index.min',
+				},
+				minify: 'esbuild',
 			},
-			minify: 'esbuild',
-		},
-	} as InlineConfig));
+		} as InlineConfig)
+	);
 
 	await build(buildOptionsOfFull);
 	await build(buildOptionsOfMin);
 }
 async function buildEach() {
 	/**
- * https://github.com/vitejs/vite/discussions/1736
- */
+	 * https://github.com/vitejs/vite/discussions/1736
+	 */
 	const packagePath = path.resolve(__dirname, '../packages/components');
 
-	fse.readdirSync(packagePath, {
-		withFileTypes: true,
-	})
+	fse
+		.readdirSync(packagePath, {
+			withFileTypes: true,
+		})
 		.filter(v => v.isDirectory())
 		.forEach(async v => {
 			const baseBuildOptions: InlineConfig = {
@@ -125,15 +129,18 @@ async function buildEach() {
 				},
 			};
 
-			const buildOptions = mergeConfig(commonConfig, mergeConfig(baseBuildOptions, {
-				build: {
-					minify: false,
-					emptyOutDir: true,
-					lib: {
-						fileName: 'index',
+			const buildOptions = mergeConfig(
+				commonConfig,
+				mergeConfig(baseBuildOptions, {
+					build: {
+						minify: false,
+						emptyOutDir: true,
+						lib: {
+							fileName: 'index',
+						},
 					},
-				},
-			} as InlineConfig))
+				} as InlineConfig)
+			);
 
 			await build(buildOptions);
 
@@ -144,9 +151,8 @@ async function buildEach() {
 					path.resolve(__dirname, `../dist/packages/${v.name}/lib`),
 					{ overwrite: true }
 				);
-			} catch (error) { }
+			} catch (error) {}
 		});
-
 }
 
 buildAll();

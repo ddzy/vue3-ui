@@ -1,7 +1,7 @@
 import { App } from 'vue';
 import * as TYPES from '@typings/index';
 import './icon/assets/fonts/iconfont.css';
-import './main.lib.scss';
+import './main.scss';
 
 import V3Button from './button/main';
 import V3ButtonGroup from './button-group/main';

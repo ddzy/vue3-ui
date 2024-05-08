@@ -1,8 +1,6 @@
 .
 ├── build
-│   ├── docs.build.ts
-│   ├── lib.build.ts
-│   └── lib_split.build.ts
+│   └── lib.build.ts
 ├── config
 │   └── common.ts
 ├── packages
@@ -51,27 +49,21 @@
 │       ├── switch
 │       ├── tag
 │       ├── tooltip
-│       ├── home.vue
-│       ├── main.docs.scss
-│       ├── main.docs.ts
-│       ├── main.lib.scss
-│       ├── main.lib.ts
-│       ├── main.vue
-│       └── router.ts
+│       ├── main.scss
+│       └── main.ts
 ├── public
-│   ├── lib
-│   │   └── typings
-│   └── lib_split
+│   └── lib
+│       └── typings
 ├── LICENSE
 ├── README.md
 ├── index.html
 ├── jest.config.js
 ├── package.json
+├── pnpm-lock.yaml
 ├── prettier.config.js
 ├── shims-vue.d.ts
 ├── tree.txt
 ├── tsconfig.json
-├── vite.config.ts
-└── yarn.lock
+└── vite.config.ts
 
-52 directories, 22 files
+51 directories, 15 files
