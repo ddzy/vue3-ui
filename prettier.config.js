@@ -10,5 +10,3 @@ module.exports = {
 	htmlWhitespaceSensitivity: 'css', // HTML 元素的换行处理
 	trailingComma: 'es5',
 }
-
-15170493736
