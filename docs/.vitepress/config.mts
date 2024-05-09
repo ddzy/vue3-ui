@@ -42,6 +42,10 @@ export default defineConfig({
 							text: 'Badge 徽标',
 							link: '/components/badge',
 						},
+						{
+							text: 'BasePopper 基础浮窗',
+							link: '/components/base-popper',
+						},
 					],
 				},
 			],
