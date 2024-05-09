@@ -46,6 +46,10 @@ export default defineConfig({
 							text: 'BasePopper 基础浮窗',
 							link: '/components/base-popper',
 						},
+						{
+							text: 'Card 卡片',
+							link: '/components/card',
+						},
 					],
 				},
 			],
