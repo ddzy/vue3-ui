@@ -50,6 +50,10 @@ export default defineConfig({
 							text: 'Card 卡片',
 							link: '/components/card',
 						},
+						{
+							text: 'Carousel 轮播',
+							link: '/components/carousel',
+						},
 					],
 				},
 			],
