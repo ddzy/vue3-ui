@@ -29,7 +29,6 @@
 	"types": "./dist/typings/index.d.ts",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
-		"postinstall": "patch-package",
 		"dev": "pnpm run docs:dev",
 		"serve": "pnpm run dev",
 		"docs:dev": "vitepress dev docs",
