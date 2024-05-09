@@ -34,6 +34,10 @@ export default defineConfig({
 							text: 'Back 返回',
 							link: '/components/back',
 						},
+						{
+							text: 'Backdrop 遮罩层',
+							link: '/components/backdrop',
+						},
 					],
 				},
 			],
