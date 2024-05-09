@@ -38,6 +38,10 @@ export default defineConfig({
 							text: 'Backdrop 遮罩层',
 							link: '/components/backdrop',
 						},
+						{
+							text: 'Badge 徽标',
+							link: '/components/badge',
+						},
 					],
 				},
 			],
