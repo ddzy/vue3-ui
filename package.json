@@ -49,7 +49,9 @@
 		"commitizen": {
 			"path": "node_modules/cz-conventional-changelog",
 			"disableScopeLowerCase": false,
-			"disableSubjectLowerCase": false
+			"disableSubjectLowerCase": false,
+			"maxHeaderWidth": 200,
+			"maxLineWidth": 200
 		}
 	},
 	"lint-staged": {
