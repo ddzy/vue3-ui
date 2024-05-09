@@ -29,6 +29,7 @@
 	"types": "./dist/typings/index.d.ts",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
+		"postinstall": "patch-package",
 		"dev": "pnpm run docs:dev",
 		"serve": "pnpm run dev",
 		"docs:dev": "vitepress dev docs",
@@ -94,5 +95,10 @@
 		"vitepress-theme-demoblock": "3.0.5",
 		"vue-jest": "3.0.7",
 		"vue-tsc": "1.2.0"
+	},
+	"pnpm": {
+		"patchedDependencies": {
+			"vitepress-theme-demoblock@3.0.5": "patches/vitepress-theme-demoblock@3.0.5.patch"
+		}
 	}
 }

@@ -30,6 +30,10 @@ export default defineConfig({
 							text: 'Button 按钮',
 							link: '/components/button',
 						},
+						{
+							text: 'Back 返回',
+							link: '/components/back',
+						},
 					],
 				},
 			],
@@ -42,10 +46,7 @@ export default defineConfig({
 	},
 	markdown: {
 		config: md => {
-			md.use(demoblockPlugin, {
-				// 添加 .vp-raw，配合 postcssIsolateStyles，避免 vitepress 影响示例组件内部的样式
-				customClass: 'demoblock vp-raw',
-			});
+			md.use(demoblockPlugin, {});
 		},
 	},
 	vite: {
@@ -80,6 +81,7 @@ export default defineConfig({
 			postcss: {
 				plugins: [
 					// 避免vitepress的样式(.vp-doc)影响 demo-block 内的样式
+					// vitepress-theme-demoblock 已通过 pnpm patch 添加了 .vp-raw 类名
 					postcssIsolateStyles({
 						includeFiles: [/vp-doc\.css/],
 					}),

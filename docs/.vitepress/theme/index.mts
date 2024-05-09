@@ -4,6 +4,7 @@ import Demo from 'vitepress-theme-demoblock/dist/client/components/Demo.vue';
 import DemoBlock from 'vitepress-theme-demoblock/dist/client/components/DemoBlock.vue';
 
 import Vue3Ui from '../../../packages/components/main';
+import './index.scss';
 
 export default {
 	...DefaultTheme,

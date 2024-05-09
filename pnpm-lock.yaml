@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  vitepress-theme-demoblock@3.0.5:
+    hash: pksbzd4rypcf575wbusx47rozu
+    path: patches/vitepress-theme-demoblock@3.0.5.patch
+
 importers:
 
   .:
@@ -67,7 +72,7 @@ importers:
         specifier: 10.5.4
         version: 10.5.4
       postcss:
-        specifier: ^8.4.38
+        specifier: 8.4.38
         version: 8.4.38
       prettier-eslint-cli:
         specifier: 7.1.0
@@ -98,7 +103,7 @@ importers:
         version: 1.0.1(@algolia/client-search@4.23.3)(@types/node@14.14.37)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.0.4)
       vitepress-theme-demoblock:
         specifier: 3.0.5
-        version: 3.0.5(@algolia/client-search@4.23.3)(@types/node@14.14.37)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.0.4)
+        version: 3.0.5(patch_hash=pksbzd4rypcf575wbusx47rozu)(@algolia/client-search@4.23.3)(@types/node@14.14.37)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.0.4)
       vue-jest:
         specifier: 3.0.7
         version: 3.0.7(babel-core@6.26.3)(vue-template-compiler@2.7.16)(vue@3.2.47)
@@ -9433,7 +9438,7 @@ snapshots:
       stylus: 0.54.8
       terser: 5.16.9
 
-  vitepress-theme-demoblock@3.0.5(@algolia/client-search@4.23.3)(@types/node@14.14.37)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.0.4):
+  vitepress-theme-demoblock@3.0.5(patch_hash=pksbzd4rypcf575wbusx47rozu)(@algolia/client-search@4.23.3)(@types/node@14.14.37)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.0.4):
     dependencies:
       '@floating-ui/vue': 1.0.6(vue@3.4.27(typescript@5.0.4))
       '@mdit-vue/plugin-sfc': 2.1.2
