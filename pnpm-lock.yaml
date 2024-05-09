@@ -66,6 +66,9 @@ importers:
       lint-staged:
         specifier: 10.5.4
         version: 10.5.4
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
       prettier-eslint-cli:
         specifier: 7.1.0
         version: 7.1.0(prettier-eslint@15.0.1)

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { defineConfig } from 'vitepress';
+import { defineConfig, postcssIsolateStyles } from 'vitepress';
 import {
 	demoblockPlugin,
 	demoblockVitePlugin,
@@ -27,19 +27,25 @@ export default defineConfig({
 					text: '基础组件',
 					items: [
 						{
-							text: 'Button',
+							text: 'Button 按钮',
 							link: '/components/button',
 						},
 					],
 				},
 			],
 		},
+		outline: {
+			level: 'deep',
+		},
 
 		socialLinks: [{ icon: 'github', link: 'https://github.com/ddzy/vue3-ui' }],
 	},
 	markdown: {
 		config: md => {
-			md.use(demoblockPlugin);
+			md.use(demoblockPlugin, {
+				// 添加 .vp-raw，配合 postcssIsolateStyles，避免 vitepress 影响示例组件内部的样式
+				customClass: 'demoblock vp-raw',
+			});
 		},
 	},
 	vite: {
@@ -70,6 +76,14 @@ export default defineConfig({
 				scss: {
 					additionalData: `@import "@common/styles/variable.scss";\n@import "@common/styles/reset.scss";`,
 				},
+			},
+			postcss: {
+				plugins: [
+					// 避免vitepress的样式(.vp-doc)影响 demo-block 内的样式
+					postcssIsolateStyles({
+						includeFiles: [/vp-doc\.css/],
+					}),
+				],
 			},
 		},
 	},
