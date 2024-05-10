@@ -102,6 +102,10 @@ export default defineConfig({
 							text: 'Popconfirm 气泡确认框',
 							link: '/components/popconfirm',
 						},
+						{
+							text: 'Popover 弹出消息',
+							link: '/components/popover',
+						},
 					],
 				},
 			],
