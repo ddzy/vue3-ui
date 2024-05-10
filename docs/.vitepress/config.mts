@@ -86,6 +86,10 @@ export default defineConfig({
 							text: 'InputNumber 数字输入框',
 							link: '/components/input-number',
 						},
+						{
+							text: 'InputTextarea 多行文本输入框',
+							link: '/components/input-textarea',
+						},
 					],
 				},
 			],
