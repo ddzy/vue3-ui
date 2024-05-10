@@ -98,6 +98,10 @@ export default defineConfig({
 							text: 'Message 消息提示',
 							link: '/components/message',
 						},
+						{
+							text: 'Popconfirm 气泡确认框',
+							link: '/components/popconfirm',
+						},
 					],
 				},
 			],
