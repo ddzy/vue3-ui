@@ -122,6 +122,10 @@ export default defineConfig({
 							text: 'Slider 滑块',
 							link: '/components/slider',
 						},
+						{
+							text: 'Space 间隔',
+							link: '/components/space',
+						},
 					],
 				},
 			],
