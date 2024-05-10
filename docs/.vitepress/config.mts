@@ -66,6 +66,10 @@ export default defineConfig({
 							text: 'DemoBlock 示例框',
 							link: '/components/demo-block',
 						},
+						{
+							text: 'Dialog 弹窗',
+							link: '/components/dialog',
+						},
 					],
 				},
 			],
