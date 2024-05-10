@@ -175,9 +175,9 @@ export default defineComponent({
 
 ### Radio Events
 
-| 事件名 | 说明             | 回调参数                                               |
-| ------ | ---------------- | ------------------------------------------------------ |
-| change | 值发生变化时触发 | `newValue`, `label`: string/boolean/number, `e`: Event |
+| 事件名 | 说明             | 回调参数                                                 |
+| ------ | ---------------- | -------------------------------------------------------- |
+| change | 值发生变化时触发 | (`newValue`, `label`: string/boolean/number, `e`: Event) |
 
 ### Radio Slots
 
@@ -214,9 +214,9 @@ export default defineComponent({
 
 ### RadioButton Events
 
-| 事件名 | 说明             | 回调参数                                               |
-| ------ | ---------------- | ------------------------------------------------------ |
-| change | 值发生变化时触发 | `newValue`, `label`: string/boolean/number, `e`: Event |
+| 事件名 | 说明             | 回调参数                                                 |
+| ------ | ---------------- | -------------------------------------------------------- |
+| change | 值发生变化时触发 | (`newValue`, `label`: string/boolean/number, `e`: Event) |
 
 ### RadioButton Slots
 

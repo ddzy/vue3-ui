@@ -114,6 +114,10 @@ export default defineConfig({
 							text: 'Radio 单选框',
 							link: '/components/radio',
 						},
+						{
+							text: 'Select 下拉选项',
+							link: '/components/select',
+						},
 					],
 				},
 			],
