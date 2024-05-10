@@ -90,6 +90,10 @@ export default defineConfig({
 							text: 'InputTextarea 多行文本输入框',
 							link: '/components/input-textarea',
 						},
+						{
+							text: 'Loading 加载中',
+							link: '/components/loading',
+						},
 					],
 				},
 			],
