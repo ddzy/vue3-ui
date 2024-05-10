@@ -74,6 +74,10 @@ export default defineConfig({
 							text: 'Divider 分割线',
 							link: '/components/divider',
 						},
+						{
+							text: 'Drawer 抽屉',
+							link: '/components/drawer',
+						},
 					],
 				},
 			],
