@@ -118,6 +118,10 @@ export default defineConfig({
 							text: 'Select 下拉选项',
 							link: '/components/select',
 						},
+						{
+							text: 'Slider 滑块',
+							link: '/components/slider',
+						},
 					],
 				},
 			],
