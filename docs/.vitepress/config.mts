@@ -54,6 +54,10 @@ export default defineConfig({
 							text: 'Carousel 轮播',
 							link: '/components/carousel',
 						},
+						{
+							text: 'Checkbox 复选框',
+							link: '/components/checkbox',
+						},
 					],
 				},
 			],
