@@ -130,6 +130,10 @@ export default defineConfig({
 							text: 'Switch 开关',
 							link: '/components/switch',
 						},
+						{
+							text: 'Tag 标签',
+							link: '/components/tag',
+						},
 					],
 				},
 			],
