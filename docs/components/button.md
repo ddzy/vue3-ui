@@ -638,10 +638,10 @@ export default defineComponent({
 | ---------- | ------------------- | ------- | ------------------------------------------------ | ------- |
 | type       | 按钮的类型          | string  | default/primary/success/danger/warning/info/text | default |
 | nativeType | 按钮的原生类型      | string  | button/submit/reset/menu                         | button  |
-| borderType | 边框类型            | string  | ''/solid/dashed/dotted/double/groove/outset      | ''      |
+| borderType | 边框类型            | string  | solid/dashed/dotted/double/groove/outset         |         |
 | disabled   | 按钮是否禁用        | boolean |                                                  | false   |
 | plain      | 是否为朴素按钮      | boolean |                                                  | false   |
-| icon       | 按钮上的图标        | string  |                                                  | ''      |
+| icon       | 按钮上的图标        | string  |                                                  |         |
 | circle     | 是否为圆形按钮      | boolean |                                                  | false   |
 | loading    | 按钮的 loading 状态 | boolean |                                                  | false   |
 | size       | 按钮尺寸            | string  | small/medium/large                               | medium  |

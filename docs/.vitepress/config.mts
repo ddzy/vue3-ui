@@ -62,6 +62,10 @@ export default defineConfig({
 							text: 'Layout 布局',
 							link: '/components/layout',
 						},
+						{
+							text: 'DemoBlock 示例框',
+							link: '/components/demo-block',
+						},
 					],
 				},
 			],
