@@ -110,6 +110,10 @@ export default defineConfig({
 							text: 'Progress 进度',
 							link: '/components/progress',
 						},
+						{
+							text: 'Radio 单选框',
+							link: '/components/radio',
+						},
 					],
 				},
 			],
