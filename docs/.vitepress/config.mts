@@ -106,6 +106,10 @@ export default defineConfig({
 							text: 'Popover 弹出消息',
 							link: '/components/popover',
 						},
+						{
+							text: 'Progress 进度',
+							link: '/components/progress',
+						},
 					],
 				},
 			],
