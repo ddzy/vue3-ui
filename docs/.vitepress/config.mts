@@ -78,6 +78,10 @@ export default defineConfig({
 							text: 'Drawer 抽屉',
 							link: '/components/drawer',
 						},
+						{
+							text: 'Input 输入框',
+							link: '/components/input',
+						},
 					],
 				},
 			],
@@ -89,7 +93,7 @@ export default defineConfig({
 		socialLinks: [{ icon: 'github', link: 'https://github.com/ddzy/vue3-ui' }],
 	},
 	markdown: {
-		config: md => {
+		config: (md) => {
 			md.use(demoblockPlugin, {});
 		},
 	},
