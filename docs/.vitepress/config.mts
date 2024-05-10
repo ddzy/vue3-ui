@@ -126,6 +126,10 @@ export default defineConfig({
 							text: 'Space 间隔',
 							link: '/components/space',
 						},
+						{
+							text: 'Switch 开关',
+							link: '/components/switch',
+						},
 					],
 				},
 			],
