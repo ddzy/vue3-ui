@@ -94,6 +94,10 @@ export default defineConfig({
 							text: 'Loading 加载中',
 							link: '/components/loading',
 						},
+						{
+							text: 'Message 消息提示',
+							link: '/components/message',
+						},
 					],
 				},
 			],
