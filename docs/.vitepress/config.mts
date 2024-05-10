@@ -70,6 +70,10 @@ export default defineConfig({
 							text: 'Dialog 弹窗',
 							link: '/components/dialog',
 						},
+						{
+							text: 'Divider 分割线',
+							link: '/components/divider',
+						},
 					],
 				},
 			],
