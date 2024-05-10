@@ -31,52 +31,25 @@ export default defineConfig({
 							link: '/components/button',
 						},
 						{
-							text: 'Back 返回',
-							link: '/components/back',
-						},
-						{
-							text: 'Backdrop 遮罩层',
-							link: '/components/backdrop',
-						},
-						{
-							text: 'Badge 徽标',
-							link: '/components/badge',
-						},
-						{
-							text: 'BasePopper 基础浮窗',
-							link: '/components/base-popper',
-						},
-						{
-							text: 'Card 卡片',
-							link: '/components/card',
-						},
-						{
-							text: 'Carousel 轮播',
-							link: '/components/carousel',
-						},
-						{
-							text: 'Checkbox 复选框',
-							link: '/components/checkbox',
-						},
-						{
 							text: 'Layout 布局',
 							link: '/components/layout',
-						},
-						{
-							text: 'DemoBlock 示例框',
-							link: '/components/demo-block',
-						},
-						{
-							text: 'Dialog 弹窗',
-							link: '/components/dialog',
 						},
 						{
 							text: 'Divider 分割线',
 							link: '/components/divider',
 						},
 						{
-							text: 'Drawer 抽屉',
-							link: '/components/drawer',
+							text: 'Space 间隔',
+							link: '/components/space',
+						},
+					],
+				},
+				{
+					text: '表单组件',
+					items: [
+						{
+							text: 'Checkbox 复选框',
+							link: '/components/checkbox',
 						},
 						{
 							text: 'Input 输入框',
@@ -89,6 +62,43 @@ export default defineConfig({
 						{
 							text: 'InputTextarea 多行文本输入框',
 							link: '/components/input-textarea',
+						},
+						{
+							text: 'Radio 单选框',
+							link: '/components/radio',
+						},
+						{
+							text: 'Select 下拉选项',
+							link: '/components/select',
+						},
+						{
+							text: 'Slider 滑块',
+							link: '/components/slider',
+						},
+						{
+							text: 'Switch 开关',
+							link: '/components/switch',
+						},
+					],
+				},
+				{
+					text: '反馈组件',
+					items: [
+						{
+							text: 'BasePopper 基础浮窗',
+							link: '/components/base-popper',
+						},
+						{
+							text: 'Backdrop 遮罩层',
+							link: '/components/backdrop',
+						},
+						{
+							text: 'Dialog 弹窗',
+							link: '/components/dialog',
+						},
+						{
+							text: 'Drawer 抽屉',
+							link: '/components/drawer',
 						},
 						{
 							text: 'Loading 加载中',
@@ -107,36 +117,46 @@ export default defineConfig({
 							link: '/components/popover',
 						},
 						{
+							text: 'Tooltip 气泡提示',
+							link: '/components/tooltip',
+						},
+					],
+				},
+				{
+					text: '数据展示',
+					items: [
+						{
+							text: 'Badge 徽标',
+							link: '/components/badge',
+						},
+						{
+							text: 'Card 卡片',
+							link: '/components/card',
+						},
+						{
+							text: 'Carousel 轮播',
+							link: '/components/carousel',
+						},
+						{
+							text: 'DemoBlock 示例框',
+							link: '/components/demo-block',
+						},
+						{
 							text: 'Progress 进度',
 							link: '/components/progress',
-						},
-						{
-							text: 'Radio 单选框',
-							link: '/components/radio',
-						},
-						{
-							text: 'Select 下拉选项',
-							link: '/components/select',
-						},
-						{
-							text: 'Slider 滑块',
-							link: '/components/slider',
-						},
-						{
-							text: 'Space 间隔',
-							link: '/components/space',
-						},
-						{
-							text: 'Switch 开关',
-							link: '/components/switch',
 						},
 						{
 							text: 'Tag 标签',
 							link: '/components/tag',
 						},
+					],
+				},
+				{
+					text: '其它',
+					items: [
 						{
-							text: 'Tooltip 气泡提示',
-							link: '/components/tooltip',
+							text: 'Back 返回',
+							link: '/components/back',
 						},
 					],
 				},
