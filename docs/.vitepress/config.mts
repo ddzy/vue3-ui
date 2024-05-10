@@ -58,6 +58,10 @@ export default defineConfig({
 							text: 'Checkbox 复选框',
 							link: '/components/checkbox',
 						},
+						{
+							text: 'Layout 布局',
+							link: '/components/layout',
+						},
 					],
 				},
 			],
