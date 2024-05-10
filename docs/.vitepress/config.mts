@@ -134,6 +134,10 @@ export default defineConfig({
 							text: 'Tag 标签',
 							link: '/components/tag',
 						},
+						{
+							text: 'Tooltip 气泡提示',
+							link: '/components/tooltip',
+						},
 					],
 				},
 			],
