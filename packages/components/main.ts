@@ -44,7 +44,7 @@ import V3CarouselItem from './carousel-item/main';
 import V3Drawer from './drawer/main';
 import V3Back from './back/main';
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
 	interface ComponentCustomProperties {
 		$message: TYPES.V3MessageService;
 		$loading: TYPES.V3LoadingService;
@@ -94,42 +94,42 @@ export {
 };
 
 export default function install(app: App) {
-	app.component(V3Button.name, V3Button);
-	app.component(V3ButtonGroup.name, V3ButtonGroup);
-	app.component(V3Checkbox.name, V3Checkbox);
-	app.component(V3CheckboxButton.name, V3CheckboxButton);
-	app.component(V3CheckboxGroup.name, V3CheckboxGroup);
-	app.component(V3Input.name, V3Input);
-	app.component(V3InputNumber.name, V3InputNumber);
-	app.component(V3InputTextarea.name, V3InputTextarea);
-	app.component(V3Radio.name, V3Radio);
-	app.component(V3RadioButton.name, V3RadioButton);
-	app.component(V3RadioGroup.name, V3RadioGroup);
-	app.component(V3DemoBlock.name, V3DemoBlock);
-	app.component(V3Row.name, V3Row);
-	app.component(V3Col.name, V3Col);
-	app.component(V3Select.name, V3Select);
-	app.component(V3SelectOption.name, V3SelectOption);
-	app.component(V3Tag.name, V3Tag);
-	app.component(V3Backdrop.name, V3Backdrop);
-	app.component(V3Dialog.name, V3Dialog);
-	app.component(V3Switch.name, V3Switch);
-	app.component(V3Tooltip.name, V3Tooltip);
-	app.component(V3Popover.name, V3Popover);
-	app.component(V3Divider.name, V3Divider);
-	app.component(V3Space.name, V3Space);
-	app.component(V3Badge.name, V3Badge);
-	app.component(V3Card.name, V3Card);
-	app.component(V3BasePopper.name, V3BasePopper);
-	app.component(V3Popconfirm.name, V3Popconfirm);
-	app.component(V3Slider.name, V3Slider);
-	app.component(V3ProgressLinear.name, V3ProgressLinear);
-	app.component(V3ProgressCircular.name, V3ProgressCircular);
-	app.component(V3Carousel.name, V3Carousel);
-	app.component(V3CarouselItem.name, V3CarouselItem);
-	app.component(V3Drawer.name, V3Drawer);
-	app.component(V3Back.name, V3Back);
+	app.component(V3Button.name!, V3Button);
+	app.component(V3ButtonGroup.name!, V3ButtonGroup);
+	app.component(V3Checkbox.name!, V3Checkbox);
+	app.component(V3CheckboxButton.name!, V3CheckboxButton);
+	app.component(V3CheckboxGroup.name!, V3CheckboxGroup);
+	app.component(V3Input.name!, V3Input);
+	app.component(V3InputNumber.name!, V3InputNumber);
+	app.component(V3InputTextarea.name!, V3InputTextarea);
+	app.component(V3Radio.name!, V3Radio);
+	app.component(V3RadioButton.name!, V3RadioButton);
+	app.component(V3RadioGroup.name!, V3RadioGroup);
+	app.component(V3DemoBlock.name!, V3DemoBlock);
+	app.component(V3Row.name!, V3Row);
+	app.component(V3Col.name!, V3Col);
+	app.component(V3Select.name!, V3Select);
+	app.component(V3SelectOption.name!, V3SelectOption);
+	app.component(V3Tag.name!, V3Tag);
+	app.component(V3Backdrop.name!, V3Backdrop);
+	app.component(V3Dialog.name!, V3Dialog);
+	app.component(V3Switch.name!, V3Switch);
+	app.component(V3Tooltip.name!, V3Tooltip);
+	app.component(V3Popover.name!, V3Popover);
+	app.component(V3Divider.name!, V3Divider);
+	app.component(V3Space.name!, V3Space);
+	app.component(V3Badge.name!, V3Badge);
+	app.component(V3Card.name!, V3Card);
+	app.component(V3BasePopper.name!, V3BasePopper);
+	app.component(V3Popconfirm.name!, V3Popconfirm);
+	app.component(V3Slider.name!, V3Slider);
+	app.component(V3ProgressLinear.name!, V3ProgressLinear);
+	app.component(V3ProgressCircular.name!, V3ProgressCircular);
+	app.component(V3Carousel.name!, V3Carousel);
+	app.component(V3CarouselItem.name!, V3CarouselItem);
+	app.component(V3Drawer.name!, V3Drawer);
+	app.component(V3Back.name!, V3Back);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
-	app.directive(V3LoadingDirective.name, V3LoadingDirective.directive);
+	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);
 }
