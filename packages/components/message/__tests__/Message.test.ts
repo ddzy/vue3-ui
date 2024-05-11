@@ -48,10 +48,10 @@ describe('V3Message 组件测试：', () => {
 
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(2);
 		expect(
-			document.body.querySelector('.v3-message--success').textContent
+			document.body.querySelector('.v3-message--success').textContent,
 		).toBe('成功消息！');
 		expect(document.body.querySelector('.v3-message--danger').textContent).toBe(
-			'失败消息！'
+			'失败消息！',
 		);
 	});
 
@@ -77,7 +77,7 @@ describe('V3Message 组件测试：', () => {
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(1);
 		expect(document.body.querySelector('.test-text')).toBeTruthy();
 		expect(
-			document.body.querySelector('.v3-message--success').textContent
+			document.body.querySelector('.v3-message--success').textContent,
 		).toBe('测试文本');
 	});
 
@@ -105,7 +105,7 @@ describe('V3Message 组件测试：', () => {
 		expect(
 			document.body
 				.querySelector('.v3-message--success')
-				.classList.contains('test-message-wrapper')
+				.classList.contains('test-message-wrapper'),
 		).toBeTruthy();
 	});
 
@@ -132,7 +132,7 @@ describe('V3Message 组件测试：', () => {
 		expect(
 			document.body
 				.querySelector('.v3-message')
-				.classList.contains('is-closeable')
+				.classList.contains('is-closeable'),
 		).toBeTruthy();
 	});
 
@@ -181,8 +181,8 @@ describe('V3Message 组件测试：', () => {
 
 		expect(
 			document.body.querySelector(
-				'.v3-message .v3-message__icon .v3-icon-close'
-			)
+				'.v3-message .v3-message__icon .v3-icon-close',
+			),
 		).toBeInstanceOf(HTMLElement);
 	});
 
@@ -205,7 +205,7 @@ describe('V3Message 组件测试：', () => {
 
 		expect(
 			document.body.querySelector('.v3-message .v3-message__content')
-				.textContent
+				.textContent,
 		).toBe('vnode内容');
 	});
 
@@ -227,7 +227,7 @@ describe('V3Message 组件测试：', () => {
 		});
 
 		expect(
-			document.querySelector('.v3-message').classList.contains('is-center')
+			document.querySelector('.v3-message').classList.contains('is-center'),
 		).toBeTruthy();
 	});
 
@@ -259,7 +259,7 @@ describe('V3Message 组件测试：', () => {
 
 			expect(document.querySelectorAll('.v3-message').length).toBe(1);
 			expect(
-				document.querySelector('.v3-message .v3-message__content').textContent
+				document.querySelector('.v3-message .v3-message__content').textContent,
 			).toBe('测试内容1');
 		}, 4000);
 
@@ -291,10 +291,10 @@ describe('V3Message 组件测试：', () => {
 
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(2);
 		expect(
-			document.body.querySelector('.v3-message--success').textContent
+			document.body.querySelector('.v3-message--success').textContent,
 		).toBe('成功消息！');
 		expect(document.body.querySelector('.v3-message--danger').textContent).toBe(
-			'失败消息！'
+			'失败消息！',
 		);
 	});
 });

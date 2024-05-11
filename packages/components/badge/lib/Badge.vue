@@ -79,7 +79,7 @@ export default defineComponent({
 					state.value = props.value;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		return {

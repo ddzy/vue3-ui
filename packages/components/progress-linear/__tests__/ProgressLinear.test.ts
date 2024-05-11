@@ -50,7 +50,7 @@ describe('V3ProgressLinear 组件测试：', () => {
 
 		expect(wrapper.find('.v3-progress-linear').exists()).toBeTruthy();
 		expect(
-			wrapper.find('.v3-progress-linear').classes().includes('has-round')
+			wrapper.find('.v3-progress-linear').classes().includes('has-round'),
 		).toBeFalsy();
 	});
 
@@ -183,7 +183,7 @@ describe('V3ProgressLinear 组件测试：', () => {
 		const progressComponentList = wrapper.findAll('.v3-progress-linear');
 		expect(progressComponentList.length).toBe(2);
 		expect(
-			progressComponentList[0].classes().includes('has-animation')
+			progressComponentList[0].classes().includes('has-animation'),
 		).toBeFalsy();
 		expect(progressComponentList[1].classes()).toContain('has-animation');
 	});

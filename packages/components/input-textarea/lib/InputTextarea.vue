@@ -97,7 +97,7 @@ export default defineComponent({
 			() => {
 				state.defaultProps.height = props.height;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(props, 'modelValue'),
@@ -106,7 +106,7 @@ export default defineComponent({
 					_autoHeight();
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**

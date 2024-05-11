@@ -76,7 +76,7 @@ export default defineComponent({
 
 		if (isSelect) {
 			const internalSelectInstance = inject(
-				SELECT_INSTANCE_PROVIDE
+				SELECT_INSTANCE_PROVIDE,
 			) as ComponentInternalInstance | null;
 			state.injectedSelectInstance = internalSelectInstance
 				? internalSelectInstance.proxy
@@ -88,7 +88,7 @@ export default defineComponent({
 		 */
 		watch(
 			toRef(state.injectedSelectInstance, 'modelValue'),
-			newValue => {
+			(newValue) => {
 				// 如果值是对象类型，那么需要以【value-key】作比对，判断是否选中
 				if (
 					UTILS.isStrictObject(props.value) &&
@@ -115,13 +115,13 @@ export default defineComponent({
 				) {
 					state.injectedSelectInstance.handleInit(
 						props.value,
-						props.label || props.value
+						props.label || props.value,
 					);
 				}
 
 				state.hasInit = true;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
@@ -158,7 +158,7 @@ export default defineComponent({
 			if (!props.disabled && state.injectedSelectInstance) {
 				state.injectedSelectInstance.handleChange(
 					props.value,
-					props.label || props.value
+					props.label || props.value,
 				);
 			}
 		}

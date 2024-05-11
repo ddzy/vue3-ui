@@ -83,28 +83,28 @@ describe('V3Input 组件测试：', () => {
 				.find('.v3-input__suffix')
 				.find('i')
 				.classes()
-				.includes('v3-icon-search')
+				.includes('v3-icon-search'),
 		).toBeTruthy();
 		expect(
 			wrapper1
 				.find('.v3-input__prefix')
 				.find('i')
 				.classes()
-				.includes('v3-icon-plus')
+				.includes('v3-icon-plus'),
 		).toBeTruthy();
 		expect(
 			wrapper1
 				.find('.v3-input__prepend')
 				.find('i')
 				.classes()
-				.includes('v3-icon-editor')
+				.includes('v3-icon-editor'),
 		).toBeTruthy();
 		expect(
 			wrapper1
 				.find('.v3-input__append')
 				.find('i')
 				.classes()
-				.includes('v3-icon-success')
+				.includes('v3-icon-success'),
 		).toBeTruthy();
 	});
 

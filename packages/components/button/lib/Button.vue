@@ -140,7 +140,7 @@ export default defineComponent({
 
 		watch(
 			props,
-			newValue => {
+			(newValue) => {
 				// 按钮 loading 时展示特定的 icon
 				state.defaultProps.icon = newValue.loading
 					? 'v3-icon-loading'
@@ -150,7 +150,7 @@ export default defineComponent({
 				// 按钮 loading 时也为禁用状态
 				state.defaultProps.disabled = !!newValue.disabled || !!newValue.loading;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function buttonClickListener(e: Event) {
@@ -180,7 +180,7 @@ export default defineComponent({
 			button.addEventListener(
 				'animationend',
 				buttonAnimationEndListener,
-				false
+				false,
 			);
 		});
 		onUnmounted(() => {

@@ -71,7 +71,7 @@ describe('DemoBlock 组件测试：', () => {
 			wrapper1
 				.find('.v3-demo-block__description')
 				.find('.description__tip')
-				.text()
+				.text(),
 		).toBe('简介标题');
 	});
 

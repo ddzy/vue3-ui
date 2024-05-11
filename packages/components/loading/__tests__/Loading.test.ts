@@ -31,14 +31,14 @@ describe('V3Loading 组件测试：', () => {
 		await nextTick();
 		expect(document.body.querySelector('.v3-loading')).toBeTruthy();
 		expect(
-			(document.body.querySelector('.v3-loading') as HTMLElement).classList
+			(document.body.querySelector('.v3-loading') as HTMLElement).classList,
 		).toContain('is-fullscreen');
 		expect(
-			(document.body.querySelector('.v3-loading') as HTMLElement).classList
+			(document.body.querySelector('.v3-loading') as HTMLElement).classList,
 		).toContain('is-fixed');
 		expect(
 			document.body.querySelector('.v3-loading .v3-loading__content span')
-				.innerHTML
+				.innerHTML,
 		).toContain('加载中。。。');
 
 		setTimeout(async () => {
@@ -66,7 +66,7 @@ describe('V3Loading 组件测试：', () => {
 						instance.close();
 					},
 				},
-				() => '关闭'
+				() => '关闭',
 			),
 		});
 
@@ -98,7 +98,7 @@ describe('V3Loading 组件测试：', () => {
 			loading: true,
 		});
 		expect(wrapper.find('.loading-wrapper').classes()).toContain(
-			'v3-loading-parent--relative'
+			'v3-loading-parent--relative',
 		);
 		expect(wrapper.find('.loading-wrapper .v3-loading').exists()).toBeTruthy();
 
@@ -135,10 +135,10 @@ describe('V3Loading 组件测试：', () => {
 		});
 		expect(wrapper.find('.loading-wrapper .v3-loading').exists()).toBeTruthy();
 		expect(wrapper.find('.loading-wrapper .v3-loading__content').text()).toBe(
-			'加载中...'
+			'加载中...',
 		);
 		expect(
-			wrapper.find('.loading-wrapper .v3-loading').attributes().style
+			wrapper.find('.loading-wrapper .v3-loading').attributes().style,
 		).toContain('color: rgb(255, 255, 255)');
 	});
 
@@ -160,7 +160,7 @@ describe('V3Loading 组件测试：', () => {
 						instance.close();
 					},
 				},
-				() => '取消'
+				() => '取消',
 			),
 		});
 

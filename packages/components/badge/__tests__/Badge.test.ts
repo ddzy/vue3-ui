@@ -32,10 +32,10 @@ describe('V3Badge 组件测试：', () => {
 		expect(wrapper.findAll('.v3-badge__content')[0].text()).toBe('9');
 		expect(wrapper.findAll('.v3-badge__content')[3].text()).toBe('new1');
 		expect(
-			wrapper.findAll('.v3-badge')[1].classes().includes('v3-badge--success')
+			wrapper.findAll('.v3-badge')[1].classes().includes('v3-badge--success'),
 		);
 		expect(
-			wrapper.findAll('.v3-badge')[2].classes().includes('v3-badge--danger')
+			wrapper.findAll('.v3-badge')[2].classes().includes('v3-badge--danger'),
 		);
 	});
 
@@ -100,7 +100,7 @@ describe('V3Badge 组件测试：', () => {
 		});
 
 		expect(wrapper.find('.v3-badge__content').attributes().style).toContain(
-			'background-color: red; color: white;'
+			'background-color: red; color: white;',
 		);
 	});
 

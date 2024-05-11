@@ -37,7 +37,7 @@ describe('V3Drawer 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-drawer .v3-drawer__content').text()).toBe(
-			'测试内容'
+			'测试内容',
 		);
 
 		await wrapper
@@ -88,7 +88,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper.find('.v3-drawer').classes().includes('is-right')
+			wrapper.find('.v3-drawer').classes().includes('is-right'),
 		).toBeTruthy();
 		await wrapper.find('.v3-icon-close').trigger('click');
 		await nextTick();
@@ -97,10 +97,10 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper.find('.v3-drawer').classes().includes('is-right')
+			wrapper.find('.v3-drawer').classes().includes('is-right'),
 		).toBeFalsy();
 		expect(
-			wrapper.find('.v3-drawer').classes().includes('is-bottom')
+			wrapper.find('.v3-drawer').classes().includes('is-bottom'),
 		).toBeTruthy();
 	});
 
@@ -156,7 +156,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[1].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer-header__title').text()).toBe(
-			'通过slot自定义标题，优先级比title高'
+			'通过slot自定义标题，优先级比title高',
 		);
 	});
 
@@ -425,7 +425,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer__inner').attributes().style).toContain(
-			'width: 500px'
+			'width: 500px',
 		);
 	});
 
@@ -460,7 +460,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer__inner').attributes().style).toContain(
-			'height: 500px'
+			'height: 500px',
 		);
 	});
 });

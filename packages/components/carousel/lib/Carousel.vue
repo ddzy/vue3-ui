@@ -231,7 +231,7 @@ export default defineComponent({
 				state.isSlideByOrder = true;
 				state.activeIndex = props.modelValue;
 			},
-			{ immediate: false }
+			{ immediate: false },
 		);
 
 		watch(
@@ -243,7 +243,7 @@ export default defineComponent({
 					state.showArrow = false;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		watch(
@@ -256,7 +256,7 @@ export default defineComponent({
 					};
 				}
 			},
-			{ deep: true, immediate: true }
+			{ deep: true, immediate: true },
 		);
 
 		watch(
@@ -287,7 +287,7 @@ export default defineComponent({
 					slideTo(newActiveIndex);
 				});
 			},
-			{ immediate: false }
+			{ immediate: false },
 		);
 
 		watch(
@@ -298,7 +298,7 @@ export default defineComponent({
 					state.showArrow = false;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
@@ -311,7 +311,7 @@ export default defineComponent({
 				handleDocumentVisibilityChange();
 				document.addEventListener(
 					'visibilitychange',
-					handleDocumentVisibilityChange
+					handleDocumentVisibilityChange,
 				);
 			}
 		});
@@ -320,7 +320,7 @@ export default defineComponent({
 			if (!props.disabled && props.autoplay) {
 				document.removeEventListener(
 					'visibilitychange',
-					handleDocumentVisibilityChange
+					handleDocumentVisibilityChange,
 				);
 			}
 		});

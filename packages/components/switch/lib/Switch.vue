@@ -175,7 +175,7 @@ export default defineComponent({
 
 				state.checkedCount += 1;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		watch(
@@ -184,7 +184,7 @@ export default defineComponent({
 				// 根据不同的宽度，动态计算动画的过渡时间
 				state.duration = (0.15 * props.width) / 35;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleSwitch() {
@@ -198,11 +198,11 @@ export default defineComponent({
 			} else {
 				context.emit(
 					'change',
-					!state.isChecked ? props.activeValue : props.inactiveValue
+					!state.isChecked ? props.activeValue : props.inactiveValue,
 				);
 				context.emit(
 					'update:modelValue',
-					!state.isChecked ? props.activeValue : props.inactiveValue
+					!state.isChecked ? props.activeValue : props.inactiveValue,
 				);
 			}
 		}

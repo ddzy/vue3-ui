@@ -201,19 +201,19 @@ export default defineComponent({
 
 		watch(
 			toRef(props, 'modelValue'),
-			newValue => {
+			(newValue) => {
 				if (typeof newValue === 'number' && !isNaN(newValue)) {
 					// 如果超出最大值或者低于最小值，则自动重置为最大值或最小值
 					if (newValue < props.min! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.min.toFixed(props.precision)
+							props.min.toFixed(props.precision),
 						);
 
 						state.inputValue = `${valToNumber}`;
 						context.emit('update:modelValue', valToNumber);
 					} else if (newValue > props.max! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.max!.toFixed(props.precision)
+							props.max!.toFixed(props.precision),
 						);
 
 						state.inputValue = `${props.max}`;
@@ -229,7 +229,7 @@ export default defineComponent({
 						typeof props.min === 'number' && newValue === props.max;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleChange(e: Event) {

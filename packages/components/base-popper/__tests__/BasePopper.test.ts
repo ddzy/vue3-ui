@@ -25,23 +25,23 @@ describe('V3BasePopper 组件测试：', () => {
 
 		// 默认不显示
 		expect(
-			wrapper.find('.v3-base-popper').classes().includes('is-visible')
+			wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 		).toBeFalsy();
 		expect(
-			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').exists()
+			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').exists(),
 		).toBeFalsy();
 
 		// 触发按钮
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper.find('.v3-base-popper').classes().includes('is-visible')
+			wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 		).toBeTruthy();
 		expect(
-			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').exists()
+			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').exists(),
 		).toBeTruthy();
 		expect(
-			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').text()
+			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').text(),
 		).toBe('测试内容');
 	});
 
@@ -79,7 +79,7 @@ describe('V3BasePopper 组件测试：', () => {
 		// 显示
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		expect(
-			wrapper.find('.v3-base-popper').classes().includes('is-visible')
+			wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 		).toBeTruthy();
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 
@@ -88,7 +88,7 @@ describe('V3BasePopper 组件测试：', () => {
 
 		setTimeout(() => {
 			expect(
-				wrapper.find('.v3-base-popper').classes().includes('is-visible')
+				wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 			).toBeFalsy();
 		}, 1000);
 
@@ -130,10 +130,10 @@ describe('V3BasePopper 组件测试：', () => {
 		});
 
 		expect(wrapper.findAll('.v3-base-popper')[0].classes()).toContain(
-			'is-theme-dark'
+			'is-theme-dark',
 		);
 		expect(wrapper.findAll('.v3-base-popper')[1].classes()).toContain(
-			'is-theme-light'
+			'is-theme-light',
 		);
 	});
 
@@ -192,14 +192,14 @@ describe('V3BasePopper 组件测试：', () => {
 
 		setTimeout(() => {
 			expect(
-				wrapper.find('.v3-base-popper').classes().includes('is-visible')
+				wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 			).toBeFalsy();
 			expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
 		}, 500);
 
 		setTimeout(() => {
 			expect(
-				wrapper.find('.v3-base-popper').classes().includes('is-visible')
+				wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 			).toBeTruthy();
 			expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		}, 2500);

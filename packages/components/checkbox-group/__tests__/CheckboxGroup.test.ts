@@ -40,7 +40,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		// 默认选中第二个
 		expect(
 			wrapper1.find('.is-checked').find('input[type="checkbox"]').attributes()
-				.value
+				.value,
 		).toBe('2');
 
 		// 手动全部选中
@@ -245,9 +245,9 @@ describe('CheckboxGroup 组件测试：', () => {
 					// 全选 or 全不选
 					if (v) {
 						this.state.checkboxValue2 = this.state.checkboxOriginValue2.map(
-							innerV => {
+							(innerV) => {
 								return innerV._id;
-							}
+							},
 						) as never[];
 						this.state.checkboxValue1 = true;
 					} else {
@@ -271,7 +271,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(4);
 		// 全选之后图标也要变化
 		expect(
-			wrapper1.find('.controller').find('.v3-icon-checkbox-selected').exists()
+			wrapper1.find('.controller').find('.v3-icon-checkbox-selected').exists(),
 		).toBeTruthy();
 
 		// 手动全不选（再次点击则全不选）
@@ -283,7 +283,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(0);
 		// 全不选之后图标也要变化
 		expect(
-			wrapper1.find('.controller').find('.v3-icon-checkbox-default').exists()
+			wrapper1.find('.controller').find('.v3-icon-checkbox-default').exists(),
 		).toBeTruthy();
 
 		// 全选之后，手动取消选择第一、二项
@@ -307,7 +307,7 @@ describe('CheckboxGroup 组件测试：', () => {
 			wrapper1
 				.find('.controller')
 				.find('.v3-icon-checkbox-indeterminated')
-				.exists()
+				.exists(),
 		).toBeTruthy();
 		// 这时候，再次全选
 		await wrapper1

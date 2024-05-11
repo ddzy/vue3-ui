@@ -372,13 +372,13 @@ describe('V3Button 组件测试：', () => {
 		});
 
 		expect(
-			wrapper.findAll('.v3-button')[0].classes().includes('is-size--small')
+			wrapper.findAll('.v3-button')[0].classes().includes('is-size--small'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-button')[1].classes().includes('is-size--medium')
+			wrapper.findAll('.v3-button')[1].classes().includes('is-size--medium'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-button')[2].classes().includes('is-size--large')
+			wrapper.findAll('.v3-button')[2].classes().includes('is-size--large'),
 		).toBeTruthy();
 	});
 });

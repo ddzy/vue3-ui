@@ -32,7 +32,7 @@ const commonCarouselList = [
 ];
 
 describe('V3Carousel 组件测试：', () => {
-	test('V3Carousel 组件应该正常渲染', async done => {
+	test('V3Carousel 组件应该正常渲染', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -79,13 +79,13 @@ describe('V3Carousel 组件测试：', () => {
 
 		setTimeout(async () => {
 			expect(wrapper.findAll('.v3-carousel__item')[0].classes()).toContain(
-				'v3-carousel-item--current'
+				'v3-carousel-item--current',
 			);
 			expect(wrapper.findAll('.v3-carousel__item')[1].classes()).toContain(
-				'v3-carousel-item--next'
+				'v3-carousel-item--next',
 			);
 			expect(wrapper.findAll('.v3-carousel__item')[3].classes()).toContain(
-				'v3-carousel-item--prev'
+				'v3-carousel-item--prev',
 			);
 			expect(wrapper.find('.v3-carousel-item--current').text()).toBe('Slide 0');
 
@@ -94,36 +94,36 @@ describe('V3Carousel 组件测试：', () => {
 			});
 			setTimeout(async () => {
 				expect(wrapper.findAll('.v3-carousel__item')[2].classes()).toContain(
-					'v3-carousel-item--current'
+					'v3-carousel-item--current',
 				);
 				expect(wrapper.findAll('.v3-carousel__item')[3].classes()).toContain(
-					'v3-carousel-item--next'
+					'v3-carousel-item--next',
 				);
 				expect(wrapper.findAll('.v3-carousel__item')[1].classes()).toContain(
-					'v3-carousel-item--prev'
+					'v3-carousel-item--prev',
 				);
 				expect(wrapper.find('.v3-carousel-item--current').text()).toBe(
-					'Slide 2'
+					'Slide 2',
 				);
 
 				// 点击左切换箭头
 				await wrapper.findAll('.v3-carousel__arrow')[0].trigger('click');
 				expect(wrapper.findAll('.v3-carousel__item')[1].classes()).toContain(
-					'v3-carousel-item--current'
+					'v3-carousel-item--current',
 				);
 				expect(wrapper.vm.carouselIndex).toBe(1);
 
 				// 点击右切换箭头
 				await wrapper.findAll('.v3-carousel__arrow')[1].trigger('click');
 				expect(wrapper.findAll('.v3-carousel__item')[2].classes()).toContain(
-					'v3-carousel-item--current'
+					'v3-carousel-item--current',
 				);
 				expect(wrapper.vm.carouselIndex).toBe(2);
 
 				// 点击任意一个导航按钮
 				await wrapper.find('.v3-carousel-indicator__item').trigger('click');
 				expect(wrapper.findAll('.v3-carousel__item')[0].classes()).toContain(
-					'v3-carousel-item--current'
+					'v3-carousel-item--current',
 				);
 				expect(wrapper.vm.carouselIndex).toBe(0);
 
@@ -132,7 +132,7 @@ describe('V3Carousel 组件测试：', () => {
 		}, 0);
 	});
 
-	test('V3Carousel 组件可以接收【defaultIndex】配置项，用来配置默认要显示的轮播图下标，优先级比【v-model】高', async done => {
+	test('V3Carousel 组件可以接收【defaultIndex】配置项，用来配置默认要显示的轮播图下标，优先级比【v-model】高', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -165,14 +165,14 @@ describe('V3Carousel 组件测试：', () => {
 
 		setTimeout(() => {
 			expect(wrapper.findAll('.v3-carousel__item')[3].classes()).toContain(
-				'v3-carousel-item--current'
+				'v3-carousel-item--current',
 			);
 
 			done();
 		}, 0);
 	});
 
-	test('V3Carousel 组件可以接收【effect】配置项，用来启用渐隐形式的轮播图', async done => {
+	test('V3Carousel 组件可以接收【effect】配置项，用来启用渐隐形式的轮播图', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -219,7 +219,7 @@ describe('V3Carousel 组件测试：', () => {
 
 		setTimeout(async () => {
 			expect(wrapper.find('.v3-carousel').classes()).toContain(
-				'is-effect-fade'
+				'is-effect-fade',
 			);
 
 			await wrapper.setProps({
@@ -227,16 +227,16 @@ describe('V3Carousel 组件测试：', () => {
 			});
 			setTimeout(() => {
 				expect(wrapper.findAll('.v3-carousel__item')[2].classes()).toContain(
-					'v3-carousel-item--current'
+					'v3-carousel-item--current',
 				);
 				expect(wrapper.findAll('.v3-carousel__item')[3].classes()).toContain(
-					'v3-carousel-item--next'
+					'v3-carousel-item--next',
 				);
 				expect(wrapper.findAll('.v3-carousel__item')[1].classes()).toContain(
-					'v3-carousel-item--prev'
+					'v3-carousel-item--prev',
 				);
 				expect(wrapper.find('.v3-carousel-item--current').text()).toBe(
-					'Slide 2'
+					'Slide 2',
 				);
 
 				done();
@@ -244,7 +244,7 @@ describe('V3Carousel 组件测试：', () => {
 		}, 0);
 	});
 
-	test('V3Carousel 组件可以通过【slot=arrowLeft】、【slot=arrowRight】，来自定义切换箭头', async done => {
+	test('V3Carousel 组件可以通过【slot=arrowLeft】、【slot=arrowRight】，来自定义切换箭头', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -314,19 +314,19 @@ describe('V3Carousel 组件测试：', () => {
 		await arrowList[1].trigger('click');
 		expect(wrapper.vm.carouselIndex).toBe(1);
 		expect(wrapper.findAll('.v3-carousel__item')[1].classes()).toContain(
-			'v3-carousel-item--current'
+			'v3-carousel-item--current',
 		);
 
 		await arrowList[0].trigger('click');
 		expect(wrapper.vm.carouselIndex).toBe(0);
 		expect(wrapper.findAll('.v3-carousel__item')[0].classes()).toContain(
-			'v3-carousel-item--current'
+			'v3-carousel-item--current',
 		);
 
 		done();
 	});
 
-	test('V3Carousel 组件可以接收【showArrow】配置项，用来配置箭头的显示时机', async done => {
+	test('V3Carousel 组件可以接收【showArrow】配置项，用来配置箭头的显示时机', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -395,16 +395,16 @@ describe('V3Carousel 组件测试：', () => {
 		expect(carouselList[2].classes()).toContain('is-show-arrow-never');
 
 		expect(carouselList[1].findAll('.v3-carousel__arrow.is-show').length).toBe(
-			2
+			2,
 		);
 		expect(carouselList[2].findAll('.v3-carousel__arrow.is-show').length).toBe(
-			0
+			0,
 		);
 
 		done();
 	});
 
-	test('V3Carousel 组件可以接收【duration、timingFunction】配置项，用来自定义切换时的过渡时间、过渡曲线', async done => {
+	test('V3Carousel 组件可以接收【duration、timingFunction】配置项，用来自定义切换时的过渡时间、过渡曲线', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -437,13 +437,13 @@ describe('V3Carousel 组件测试：', () => {
 
 		await wrapper.find('.v3-carousel__arrow').trigger('click');
 		expect(wrapper.find('.v3-carousel__item').attributes().style).toContain(
-			'transition-duration: 0ms; transition-timing-function: ease;'
+			'transition-duration: 0ms; transition-timing-function: ease;',
 		);
 
 		done();
 	});
 
-	test('V3Carousel 组件可以通过【slot=indicator】，来自定义导航按钮', async done => {
+	test('V3Carousel 组件可以通过【slot=indicator】，来自定义导航按钮', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -504,7 +504,7 @@ describe('V3Carousel 组件测试：', () => {
 		done();
 	});
 
-	test('V3Carousel 组件可以接收【indicatorType】配置项，用来启用不同样式的导航按钮', async done => {
+	test('V3Carousel 组件可以接收【indicatorType】配置项，用来启用不同样式的导航按钮', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -558,7 +558,7 @@ describe('V3Carousel 组件测试：', () => {
 		done();
 	});
 
-	test('V3Carousel 组件可以接收【disabled】配置项，用来禁用轮播图', async done => {
+	test('V3Carousel 组件可以接收【disabled】配置项，用来禁用轮播图', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -597,26 +597,26 @@ describe('V3Carousel 组件测试：', () => {
 		// 点击左箭头
 		await carouselArrowList[0].trigger('click');
 		expect(
-			carouselItemList[3].classes().includes('v3-carousel-item--current')
+			carouselItemList[3].classes().includes('v3-carousel-item--current'),
 		).toBeFalsy();
 		expect(wrapper.vm.carouselIndex).toBe(0);
 
 		// 点击右箭头
 		await carouselArrowList[1].trigger('click');
 		expect(
-			carouselItemList[1].classes().includes('v3-carousel-item--current')
+			carouselItemList[1].classes().includes('v3-carousel-item--current'),
 		).toBeFalsy();
 		expect(wrapper.vm.carouselIndex).toBe(0);
 
 		setTimeout(async () => {
 			const carouselIndicatorList = wrapper.findAll(
-				'.v3-carousel-indicator__item'
+				'.v3-carousel-indicator__item',
 			);
 
 			// 点击任何一个导航按钮
 			await carouselIndicatorList[2].trigger('click');
 			expect(
-				carouselItemList[2].classes().includes('v3-carousel-item--current')
+				carouselItemList[2].classes().includes('v3-carousel-item--current'),
 			).toBeFalsy();
 			expect(wrapper.vm.carouselIndex).toBe(0);
 
@@ -624,7 +624,7 @@ describe('V3Carousel 组件测试：', () => {
 		}, 0);
 	});
 
-	test('V3Carousel 组件可以接收【indicatorPosition】配置项，用来配置导航按钮的摆放位置', async done => {
+	test('V3Carousel 组件可以接收【indicatorPosition】配置项，用来配置导航按钮的摆放位置', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -712,7 +712,7 @@ describe('V3Carousel 组件测试：', () => {
 		done();
 	});
 
-	test('V3Carousel 组件可以接收【direction】配置项，用来启用垂直方向上的轮播图', async done => {
+	test('V3Carousel 组件可以接收【direction】配置项，用来启用垂直方向上的轮播图', async (done) => {
 		const wrapper = mount({
 			components: {
 				V3Carousel,
@@ -747,7 +747,7 @@ describe('V3Carousel 组件测试：', () => {
 
 		setTimeout(async () => {
 			const carouselIndicatorList = wrapper.findAll(
-				'.v3-carousel-indicator__item'
+				'.v3-carousel-indicator__item',
 			);
 
 			// 点击任意一个导航按钮
@@ -756,7 +756,7 @@ describe('V3Carousel 组件测试：', () => {
 				const carouselItemList = wrapper.findAll('.v3-carousel__item');
 
 				expect(carouselItemList[3].classes()).toContain(
-					'v3-carousel-item--current'
+					'v3-carousel-item--current',
 				);
 				expect(wrapper.vm.carouselIndex).toBe(3);
 

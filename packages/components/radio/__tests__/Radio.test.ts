@@ -148,22 +148,22 @@ describe('V3Radio 组件测试：', () => {
 		expect(wrapper.findAll('.v3-radio.is-size--medium').length).toBe(2);
 		expect(wrapper.findAll('.v3-radio.is-size--large').length).toBe(2);
 		expect(
-			wrapper.findAll('.v3-radio')[0].classes().includes('is-size--small')
+			wrapper.findAll('.v3-radio')[0].classes().includes('is-size--small'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-radio')[1].classes().includes('is-size--medium')
+			wrapper.findAll('.v3-radio')[1].classes().includes('is-size--medium'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-radio')[2].classes().includes('is-size--large')
+			wrapper.findAll('.v3-radio')[2].classes().includes('is-size--large'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-radio')[3].classes().includes('is-size--small')
+			wrapper.findAll('.v3-radio')[3].classes().includes('is-size--small'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-radio')[4].classes().includes('is-size--medium')
+			wrapper.findAll('.v3-radio')[4].classes().includes('is-size--medium'),
 		).toBeTruthy();
 		expect(
-			wrapper.findAll('.v3-radio')[5].classes().includes('is-size--large')
+			wrapper.findAll('.v3-radio')[5].classes().includes('is-size--large'),
 		).toBeTruthy();
 	});
 });

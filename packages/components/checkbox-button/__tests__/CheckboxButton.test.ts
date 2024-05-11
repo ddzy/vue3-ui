@@ -91,7 +91,7 @@ describe('V3CheckboxButton 组件测试：', () => {
 		// 默认为【非禁用】状态
 		expect(wrapper1.find('.is-disabled').exists()).toBeFalsy();
 		expect(
-			wrapper1.find('input[type="checkbox"]').attributes().disabled
+			wrapper1.find('input[type="checkbox"]').attributes().disabled,
 		).toBeFalsy();
 
 		// 手动设置为【禁用】状态
@@ -100,7 +100,7 @@ describe('V3CheckboxButton 组件测试：', () => {
 		});
 		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
 		expect(wrapper1.find('input[type="checkbox"]').attributes().disabled).toBe(
-			''
+			'',
 		);
 
 		// 【禁用】状态下点击
@@ -169,13 +169,13 @@ describe('V3CheckboxButton 组件测试：', () => {
 
 		expect(wrapper.findAll('.v3-checkbox-group').length).toBe(3);
 		expect(wrapper.findAll('.v3-checkbox-button.is-size--small').length).toBe(
-			2
+			2,
 		);
 		expect(wrapper.findAll('.v3-checkbox-button.is-size--medium').length).toBe(
-			2
+			2,
 		);
 		expect(wrapper.findAll('.v3-checkbox-button.is-size--large').length).toBe(
-			2
+			2,
 		);
 	});
 });

@@ -172,7 +172,7 @@ export default defineComponent({
 			() => {
 				state.defaultProps.offset = props.offset;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		return {

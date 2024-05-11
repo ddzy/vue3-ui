@@ -9,7 +9,7 @@ import * as TYPES from '@typings/index';
  */
 const useDebounce: TYPES.IUseDebounce = function useDebounce(
 	callback,
-	timestamp = 200
+	timestamp = 200,
 ) {
 	let timer: any = ref(null);
 

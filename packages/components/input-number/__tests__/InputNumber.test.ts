@@ -275,13 +275,13 @@ describe('V3InputNumber 组件测试：', () => {
 		});
 
 		expect(
-			wrapper.findAll('.v3-input-number .v3-input.is-size--small').length
+			wrapper.findAll('.v3-input-number .v3-input.is-size--small').length,
 		).toBe(1);
 		expect(
-			wrapper.findAll('.v3-input-number .v3-input.is-size--medium').length
+			wrapper.findAll('.v3-input-number .v3-input.is-size--medium').length,
 		).toBe(1);
 		expect(
-			wrapper.findAll('.v3-input-number .v3-input.is-size--large').length
+			wrapper.findAll('.v3-input-number .v3-input.is-size--large').length,
 		).toBe(1);
 	});
 });

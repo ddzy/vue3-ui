@@ -32,7 +32,7 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 
 		await wrapper
@@ -97,10 +97,10 @@ describe('V3Dialog 组件测试：', () => {
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog').exists()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(
-			wrapper.findAll('.v3-dialog .v3-dialog-header__action .v3-button').length
+			wrapper.findAll('.v3-dialog .v3-dialog-header__action .v3-button').length,
 		).toBe(2);
 
 		// 点击【取消】按钮，关闭弹窗
@@ -139,10 +139,10 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(wrapper.find('.v3-dialog .v3-dialog-header__title').text()).toBe(
-			'自定义标题'
+			'自定义标题',
 		);
 	});
 
@@ -183,10 +183,10 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(
-			wrapper.findAll('.v3-dialog .v3-dialog__footer .v3-button').length
+			wrapper.findAll('.v3-dialog .v3-dialog__footer .v3-button').length,
 		).toBe(2);
 	});
 
@@ -219,10 +219,10 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(
-			wrapper.find('.v3-dialog').classes().includes('is-fullscreen')
+			wrapper.find('.v3-dialog').classes().includes('is-fullscreen'),
 		).toBeTruthy();
 	});
 
@@ -255,7 +255,7 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(wrapper.find('.custom-dialog').exists()).toBeTruthy();
 	});
@@ -287,10 +287,10 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(
-			wrapper.find('.v3-backdrop').classes().includes('is-center')
+			wrapper.find('.v3-backdrop').classes().includes('is-center'),
 		).toBeTruthy();
 	});
 
@@ -321,7 +321,7 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(document.body.classList.contains('v3-body--fixed')).toBeTruthy();
 
@@ -359,10 +359,10 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 		expect(
-			wrapper.find('.v3-dialog .v3-dialog__header .v3-icon-close').exists()
+			wrapper.find('.v3-dialog .v3-dialog__header .v3-icon-close').exists(),
 		).toBeFalsy();
 	});
 
@@ -399,7 +399,7 @@ describe('V3Dialog 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容'
+			'测试弹窗内容',
 		);
 
 		await wrapper

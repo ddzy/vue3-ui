@@ -23,7 +23,7 @@ const state: IState = reactive({
 });
 
 const MessageConstructor: TYPES.IMessageConstructor = function (
-	options: TYPES.IMessageProps
+	options: TYPES.IMessageProps,
 ) {
 	const defaultOptions = Object.assign(
 		{
@@ -41,7 +41,7 @@ const MessageConstructor: TYPES.IMessageConstructor = function (
 				done();
 			},
 		},
-		options
+		options,
 	);
 
 	// 计算当前消息框的位置
@@ -63,7 +63,7 @@ const MessageConstructor: TYPES.IMessageConstructor = function (
 
 	render(instanceVNode, state.instanceWrapper);
 	document.body.appendChild(
-		state.instanceWrapper.firstElementChild as HTMLElement
+		state.instanceWrapper.firstElementChild as HTMLElement,
 	);
 
 	const instance = (instanceVNode.component as ComponentInternalInstance)
@@ -75,7 +75,7 @@ const MessageConstructor: TYPES.IMessageConstructor = function (
 };
 
 (['success', 'danger', 'info', 'warning'] as TYPES.IMessageType[]).forEach(
-	type => {
+	(type) => {
 		MessageConstructor[type] = function (options) {
 			const baseOptions = Object.assign(options, {
 				type,
@@ -83,10 +83,10 @@ const MessageConstructor: TYPES.IMessageConstructor = function (
 
 			return MessageConstructor(baseOptions);
 		};
-	}
+	},
 );
 
-const useMessage: TYPES.V3MessageHook = options => {
+const useMessage: TYPES.V3MessageHook = (options) => {
 	const instance = MessageConstructor(options);
 
 	return {

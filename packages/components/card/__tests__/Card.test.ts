@@ -34,10 +34,10 @@ describe('V3Card 组件测试：', () => {
 		expect(wrapper.find('.v3-card').classes()).toContain('has-header');
 		expect(wrapper.find('.v3-card').classes()).toContain('is-shadow--small');
 		expect(wrapper.find('.v3-card').classes()).toContain(
-			'is-shadow-trigger--alway'
+			'is-shadow-trigger--alway',
 		);
 		expect(wrapper.find('.v3-card__header').text()).toBe(
-			'自定义标题（优先级比 title props 高）'
+			'自定义标题（优先级比 title props 高）',
 		);
 		expect(wrapper.findAll('.v3-card__body .v3-button').length).toBe(9);
 		expect(wrapper.find('.v3-card__footer').text()).toBe('底部内容');
@@ -99,7 +99,7 @@ describe('V3Card 组件测试：', () => {
 
 		// 默认一直显示阴影
 		expect(wrapper.find('.v3-card').classes()).toContain(
-			'is-shadow-trigger--alway'
+			'is-shadow-trigger--alway',
 		);
 
 		// 鼠标 hover 时显示
@@ -107,7 +107,7 @@ describe('V3Card 组件测试：', () => {
 			shadowTrigger: 'hover',
 		});
 		expect(wrapper.find('.v3-card').classes()).toContain(
-			'is-shadow-trigger--hover'
+			'is-shadow-trigger--hover',
 		);
 
 		// 不显示阴影
@@ -115,7 +115,7 @@ describe('V3Card 组件测试：', () => {
 			shadowTrigger: 'never',
 		});
 		expect(wrapper.find('.v3-card').classes()).toContain(
-			'is-shadow-trigger--never'
+			'is-shadow-trigger--never',
 		);
 	});
 
@@ -153,7 +153,7 @@ describe('V3Card 组件测试：', () => {
 		});
 
 		expect(wrapper.find('.v3-card__body').attributes().style).toContain(
-			'padding: 0px'
+			'padding: 0px',
 		);
 		expect(wrapper.find('.v3-card__header').exists()).toBeFalsy();
 		expect(wrapper.find('.v3-card__footer').exists()).toBeTruthy();

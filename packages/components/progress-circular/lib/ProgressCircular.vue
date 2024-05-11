@@ -72,7 +72,7 @@ export default defineComponent({
 			default: 'custom',
 			validator(v: string) {
 				return ['custom', 'primary', 'success', 'danger', 'warning'].includes(
-					v
+					v,
 				);
 			},
 		},
@@ -134,7 +134,7 @@ export default defineComponent({
 					.mul(percentToFloat)
 					.toNumber()}, ${perimeter.toNumber()}`;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		return {

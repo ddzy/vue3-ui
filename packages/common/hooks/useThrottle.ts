@@ -9,7 +9,7 @@ import * as TYPES from '@typings/index';
 
 const useThrottle: TYPES.IUseThrottle = function useThrottle(
 	callback,
-	timestamp = 200
+	timestamp = 200,
 ) {
 	let prevTime = Date.now();
 

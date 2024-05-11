@@ -58,7 +58,7 @@ export default defineComponent({
 			() => {
 				computeBodyClass();
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**

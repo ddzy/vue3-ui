@@ -143,7 +143,7 @@ describe('Tag 组件测试：', () => {
 		});
 
 		expect(wrapper.find('.v3-tag').attributes().style).toBe(
-			'background-color: rgba(218, 112, 214, 0.5); color: rgb(255, 255, 255); border-color: rgba(218, 112, 214, 1);'
+			'background-color: rgba(218, 112, 214, 0.5); color: rgb(255, 255, 255); border-color: rgba(218, 112, 214, 1);',
 		);
 	});
 });

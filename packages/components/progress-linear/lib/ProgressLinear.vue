@@ -51,7 +51,7 @@ export default defineComponent({
 			default: 'custom',
 			validator(v: string) {
 				return ['custom', 'primary', 'success', 'danger', 'warning'].includes(
-					v
+					v,
 				);
 			},
 		},

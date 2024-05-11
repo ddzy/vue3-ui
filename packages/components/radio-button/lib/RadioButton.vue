@@ -88,10 +88,10 @@ export default defineComponent({
 
 		if (isRadioGroup) {
 			(state.injectedOnRadioGroupChange as unknown as Function) = inject(
-				RADIO_GROUP_CHANGE_FUNC_PROVIDE
+				RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 			)!;
 			(state.injectedRadioGroupInstance as unknown as Function) = inject(
-				RADIO_GROUP_INSTANCE_PROVIDE
+				RADIO_GROUP_INSTANCE_PROVIDE,
 			)!;
 		}
 
@@ -102,12 +102,12 @@ export default defineComponent({
 							state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps
 					  ).props
 					: props,
-				'modelValue'
+				'modelValue',
 			),
-			newValue => {
+			(newValue) => {
 				state.radioValue = newValue as any;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**
@@ -132,7 +132,7 @@ export default defineComponent({
 			if (isRadioGroup) {
 				(state.injectedOnRadioGroupChange as unknown as Function)(
 					state.radioValue,
-					e
+					e,
 				);
 			} else {
 				context.emit('update:modelValue', state.radioValue);

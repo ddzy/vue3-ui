@@ -85,7 +85,7 @@ export default defineComponent({
 							margin: `0 ${props.size}px ${props.size}px 0`,
 						},
 					},
-					v
+					v,
 				);
 
 				// 如果有自定义的分隔符，就需要创建一个分割元素
@@ -101,8 +101,8 @@ export default defineComponent({
 									margin: `0 ${props.size}px ${props.size}px 0`,
 								},
 							},
-							props.separator
-						)
+							props.separator,
+						),
 					);
 				} else {
 					newChildren.push(spaceItem);
@@ -117,7 +117,7 @@ export default defineComponent({
 			() => {
 				state.wrapValue = props.wrap ? 'wrap' : 'nowrap';
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		return () =>
@@ -131,7 +131,7 @@ export default defineComponent({
 						'flex-wrap': state.wrapValue,
 					},
 				},
-				state.children
+				state.children,
 			);
 	},
 });

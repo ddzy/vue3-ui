@@ -273,7 +273,7 @@ export default defineComponent({
 
 		watch(
 			toRef(props, 'maxlength'),
-			newValue => {
+			(newValue) => {
 				// 实时监听【maxlength】的变化，更新最大输入字符数
 				state.totalWordCount = newValue!;
 
@@ -285,11 +285,11 @@ export default defineComponent({
 					state.isValidSuccess = true;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(props, 'modelValue'),
-			newValue => {
+			(newValue) => {
 				if (newValue) {
 					// 实时监听输入框值的变化，更改字符统计的值
 					state.currentWordCount = newValue.length;
@@ -303,22 +303,22 @@ export default defineComponent({
 					state.isValidSuccess = true;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(state, 'isPasswordClearly'),
-			newValue => {
+			(newValue) => {
 				state.defaultProps.type = newValue ? 'text' : 'password';
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(props, 'type'),
-			newValue => {
+			(newValue) => {
 				state.isPasswordClearly = newValue !== 'password';
 				state.defaultProps.type = newValue;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleMouseEnter() {

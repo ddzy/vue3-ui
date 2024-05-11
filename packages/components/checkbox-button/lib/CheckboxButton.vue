@@ -98,13 +98,13 @@ export default defineComponent({
 
 		if (isCheckboxGroup) {
 			state.injectedOnCheckboxGroupChange = inject(
-				CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE
+				CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 			)!;
 			state.injectedCheckboxGroupInstance = inject(
-				CHECKBOX_GROUP_INSTANCE_PROVIDE
+				CHECKBOX_GROUP_INSTANCE_PROVIDE,
 			)!;
 			state.injectedCheckboxGroupAppendInstance = inject(
-				CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE
+				CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 			)!;
 		}
 
@@ -113,7 +113,7 @@ export default defineComponent({
 			() => {
 				state.defaultProps.disabled = props.disabled;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		watch(
@@ -123,25 +123,25 @@ export default defineComponent({
 							state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps
 					  ).props
 					: props,
-				'modelValue'
+				'modelValue',
 			),
-			newValue => {
+			(newValue) => {
 				// 判断选中状态
 				if (isCheckboxGroup) {
 					state.checkboxValue = (newValue as TYPES.ICheckboxLabel[]).includes(
-						props.label!
+						props.label!,
 					);
 				} else {
 					state.checkboxValue = newValue as unknown as boolean;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
 			if (isCheckboxGroup) {
 				(state.injectedCheckboxGroupAppendInstance as unknown as Function)(
-					app.value
+					app.value,
 				);
 			}
 		});
@@ -169,7 +169,7 @@ export default defineComponent({
 				(state.injectedOnCheckboxGroupChange as unknown as Function)(
 					state.checkboxValue,
 					props.label,
-					e
+					e,
 				);
 			} else {
 				context.emit('update:modelValue', state.checkboxValue);

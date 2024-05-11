@@ -155,27 +155,27 @@ export default defineComponent({
 					state.xsOffsetClass = computeResponsiveClass(
 						'xs',
 						props.xs,
-						'offset'
+						'offset',
 					);
 					state.smOffsetClass = computeResponsiveClass(
 						'sm',
 						props.sm,
-						'offset'
+						'offset',
 					);
 					state.mdOffsetClass = computeResponsiveClass(
 						'md',
 						props.md,
-						'offset'
+						'offset',
 					);
 					state.lgOffsetClass = computeResponsiveClass(
 						'lg',
 						props.lg,
-						'offset'
+						'offset',
 					);
 					state.xlOffsetClass = computeResponsiveClass(
 						'xl',
 						props.xl,
-						'offset'
+						'offset',
 					);
 
 					state.xsPushClass = computeResponsiveClass('xs', props.xs, 'push');
@@ -191,7 +191,7 @@ export default defineComponent({
 					state.xlPullClass = computeResponsiveClass('xl', props.xl, 'pull');
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**
@@ -207,7 +207,7 @@ export default defineComponent({
 		function computeResponsiveClass(
 			baseId: string,
 			val: any,
-			childId: string
+			childId: string,
 		): string {
 			if (UTILS.isStrictNumber(val) && val) {
 				return childId === 'span' ? `v3-col-${baseId}-${val}` : '';

@@ -90,7 +90,7 @@ describe('V3Checkbox 组件测试：', () => {
 		// 默认为【非禁用】状态
 		expect(wrapper1.find('.is-disabled').exists()).toBeFalsy();
 		expect(
-			wrapper1.find('input[type="checkbox"]').attributes().disabled
+			wrapper1.find('input[type="checkbox"]').attributes().disabled,
 		).toBeFalsy();
 
 		// 手动设置为【禁用】状态
@@ -99,7 +99,7 @@ describe('V3Checkbox 组件测试：', () => {
 		});
 		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
 		expect(wrapper1.find('input[type="checkbox"]').attributes().disabled).toBe(
-			''
+			'',
 		);
 
 		// 【禁用】状态下点击
@@ -195,7 +195,7 @@ describe('V3Checkbox 组件测试：', () => {
 
 		// 默认不为【非确定】状态
 		expect(
-			wrapper1.find('.v3-checkbox__select--indeterminated').exists()
+			wrapper1.find('.v3-checkbox__select--indeterminated').exists(),
 		).toBeFalsy();
 
 		// 手动设置为【非确定】状态
@@ -203,7 +203,7 @@ describe('V3Checkbox 组件测试：', () => {
 			indeterminate: true,
 		});
 		expect(
-			wrapper1.find('.v3-checkbox__select--indeterminated').exists()
+			wrapper1.find('.v3-checkbox__select--indeterminated').exists(),
 		).toBeTruthy();
 	});
 

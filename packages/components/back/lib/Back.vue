@@ -138,7 +138,7 @@ export default defineComponent({
 				return;
 			}
 
-			UTILS.ease(currentScrollTop, 0, 8, nextScrollTop => {
+			UTILS.ease(currentScrollTop, 0, 8, (nextScrollTop) => {
 				target.scrollTop = nextScrollTop;
 				state.timer = window.requestAnimationFrame(toTopHelper);
 			});
@@ -160,7 +160,7 @@ export default defineComponent({
 				return;
 			}
 
-			UTILS.ease(currentScrollTop, targetM, 8, nextScrollTop => {
+			UTILS.ease(currentScrollTop, targetM, 8, (nextScrollTop) => {
 				target.scrollTop = nextScrollTop;
 				state.timer = window.requestAnimationFrame(toBottomHelper);
 			});

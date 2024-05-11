@@ -33,13 +33,13 @@ const state: IState = reactive({
  * @returns
  */
 const LoadingConstructor: TYPES.ILoadingConstructor = (
-	options: TYPES.ILoadingProps
+	options: TYPES.ILoadingProps,
 ) => {
 	const defaultOptions: Required<TYPES.ILoadingProps> = Object.assign(
 		{
 			content: 'Loading...',
 		},
-		options
+		options,
 	);
 
 	// 利用 VNode 的形式来挂载 loading，避免多余的 DOM 元素
@@ -50,7 +50,7 @@ const LoadingConstructor: TYPES.ILoadingConstructor = (
 
 	render(instanceVNode, state.instanceWrapper);
 	document.body.appendChild(
-		state.instanceWrapper.firstElementChild as HTMLElement
+		state.instanceWrapper.firstElementChild as HTMLElement,
 	);
 
 	// 将当前 loading 实例追加到列表中
@@ -98,7 +98,7 @@ const LoadingDirective: {
  * @param options loading 可配置项
  * @returns loading 实例
  */
-const useLoading: TYPES.V3LoadingHook = options => {
+const useLoading: TYPES.V3LoadingHook = (options) => {
 	const instance = LoadingConstructor(options);
 
 	return {
@@ -125,7 +125,7 @@ function close() {
 function directiveHandler(
 	isLoading: boolean,
 	el: HTMLElement,
-	options: TYPES.ILoadingProps
+	options: TYPES.ILoadingProps,
 ) {
 	if (isLoading) {
 		el.classList.add('v3-loading-parent--relative');

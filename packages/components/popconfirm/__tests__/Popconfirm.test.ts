@@ -52,7 +52,7 @@ describe('V3Popconfirm 组件测试：', () => {
 		expect(wrapper.find('.v3-popconfirm').classes()).toContain('is-visible');
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		expect(wrapper.find('.v3-popconfirm-content__text').text()).toBe(
-			'确定要删除吗？'
+			'确定要删除吗？',
 		);
 
 		// 点击【取消】按钮关闭气泡框
@@ -71,7 +71,7 @@ describe('V3Popconfirm 组件测试：', () => {
 			wrapper
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[1]
-				.classes()
+				.classes(),
 		);
 		// 点击【确定】按钮
 		await wrapper
@@ -115,10 +115,10 @@ describe('V3Popconfirm 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 
 		expect(wrapper.find('.v3-popconfirm-content__text i').classes()).toContain(
-			'v3-icon-Notvisible'
+			'v3-icon-Notvisible',
 		);
 		expect(
-			wrapper.find('.v3-popconfirm-content__text i').attributes().style
+			wrapper.find('.v3-popconfirm-content__text i').attributes().style,
 		).toContain('color: rgb(201, 27, 38);');
 	});
 
@@ -172,14 +172,14 @@ describe('V3Popconfirm 组件测试：', () => {
 				.findAll('.v3-popconfirm')[0]
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[0]
-				.classes()
+				.classes(),
 		).toContain('v3-button--default');
 		expect(
 			wrapper
 				.findAll('.v3-popconfirm')[0]
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[1]
-				.classes()
+				.classes(),
 		).toContain('v3-button--success');
 
 		// 触发第二个气泡框
@@ -190,7 +190,7 @@ describe('V3Popconfirm 组件测试：', () => {
 				.findAll('.v3-popconfirm')[1]
 				.find(' .v3-popconfirm-content__action')
 				.findAll('.v3-button')[1]
-				.classes()
+				.classes(),
 		).toContain('is-size--small');
 
 		// 触发第三个气泡框
@@ -200,14 +200,14 @@ describe('V3Popconfirm 组件测试：', () => {
 				.findAll('.v3-popconfirm')[2]
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[0]
-				.text()
+				.text(),
 		).toBe('不用了');
 		expect(
 			wrapper
 				.findAll('.v3-popconfirm')[2]
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[1]
-				.text()
+				.text(),
 		).toBe('继续');
 	});
 });

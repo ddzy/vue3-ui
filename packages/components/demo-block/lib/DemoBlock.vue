@@ -143,7 +143,7 @@ export default defineComponent({
 					computeFunctionalAreaStyle();
 				}, Number.parseInt(homeState.navTransitionTime));
 			},
-			{ immediate: false }
+			{ immediate: false },
 		);
 
 		onMounted(() => {

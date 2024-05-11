@@ -59,7 +59,7 @@ export function isFunction(v: any) {
  */
 export function hexToRgba(hex: string, opacity: number) {
 	return `rgba(${parseInt('0x' + hex.slice(1, 3))}, ${parseInt(
-		'0x' + hex.slice(3, 5)
+		'0x' + hex.slice(3, 5),
 	)}, ${parseInt('0x' + hex.slice(5, 7))}, ${opacity})`;
 }
 
@@ -89,7 +89,7 @@ export function throttle(
 	callback: Function,
 	options: {
 		timestamp?: number;
-	}
+	},
 ) {
 	const defaultOptions: Required<typeof options> = {
 		timestamp: 100,
@@ -120,7 +120,7 @@ export function ease(
 	currentM: number,
 	targetM: number,
 	v: number = 8,
-	doing = (nextM: number) => {}
+	doing = (nextM: number) => {},
 ) {
 	let nextM = currentM + (targetM - currentM) / v;
 	// 判断滚动方向，解决 scrollTop 的值为小数导致滚动无法触顶的问题

@@ -69,7 +69,7 @@ export default defineComponent({
 					// 如果已选中的个数大于等于最大值，那么禁用其它还未选中的复选框
 					if (props.modelValue.length >= max) {
 						nextTick(() => {
-							state.checkboxInstanceList.forEach(instance => {
+							state.checkboxInstanceList.forEach((instance) => {
 								if (!props.modelValue.includes(instance.proxy.label)) {
 									instance.proxy.state.defaultProps.disabled = true;
 								}
@@ -79,7 +79,7 @@ export default defineComponent({
 					// 如果已选中的个数小于等于最小值，那么禁用已选中的
 					else if (props.modelValue.length <= min) {
 						nextTick(() => {
-							state.checkboxInstanceList.forEach(instance => {
+							state.checkboxInstanceList.forEach((instance) => {
 								if (props.modelValue.includes(instance.proxy.label)) {
 									instance.proxy.state.defaultProps.disabled = true;
 								}
@@ -93,7 +93,7 @@ export default defineComponent({
 						props.modelValue.length < max
 					) {
 						nextTick(() => {
-							state.checkboxInstanceList.forEach(instance => {
+							state.checkboxInstanceList.forEach((instance) => {
 								if (!instance.proxy.disabled) {
 									instance.proxy.state.defaultProps.disabled = false;
 								}
@@ -102,7 +102,7 @@ export default defineComponent({
 					}
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		provide(CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE, handleChange);
@@ -112,12 +112,12 @@ export default defineComponent({
 		function handleChange(
 			newValue: boolean,
 			label: TYPES.ICheckboxLabel,
-			e: MouseEvent
+			e: MouseEvent,
 		) {
 			// 如果【选中】的话，把该复选框的值加到数组里面
 			// 反之，从数组中移除
 			const newModelValue: TYPES.ICheckboxLabel[] = !newValue
-				? props.modelValue.filter(v => {
+				? props.modelValue.filter((v) => {
 						return v !== label;
 				  })
 				: props.modelValue.concat(label);

@@ -56,7 +56,7 @@
 					trigger="manual"
 					:placement="`${computedTooltipPlacement}`"
 					:offset="[0, 20]"
-					@mount="instance => handleTooltipMount(instance, 0)"
+					@mount="(instance) => handleTooltipMount(instance, 0)"
 					@clickOutside="handleTooltipClickOutside(0)"
 				>
 					<div
@@ -84,7 +84,7 @@
 						trigger="manual"
 						:placement="`${computedTooltip1Placement}`"
 						:offset="[0, 20]"
-						@mount="instance => handleTooltipMount(instance, 1)"
+						@mount="(instance) => handleTooltipMount(instance, 1)"
 						@clickOutside="handleTooltipClickOutside(1)"
 					>
 						<div
@@ -347,7 +347,7 @@ export default defineComponent({
 					// 更新已完成的进度
 					updateDonePercent(
 						props.vertical ? pageY.value : pageX.value,
-						state.isMoving ? 0 : state.isMoving1 ? 1 : -1
+						state.isMoving ? 0 : state.isMoving1 ? 1 : -1,
 					);
 					// 更新 tooltip 的位置
 					updateTooltipPosition();
@@ -394,7 +394,7 @@ export default defineComponent({
 					new Decimal(props.modelValue as number)
 						.div(props.max)
 						.mul(100)
-						.toFixed(2)
+						.toFixed(2),
 				).toNumber();
 			} else {
 				// 范围选择器
@@ -408,10 +408,10 @@ export default defineComponent({
 						: [props.min, props.max];
 
 				state.donePercent = new Decimal(
-					new Decimal(newModelValue[0]).div(props.max).mul(100).toFixed(2)
+					new Decimal(newModelValue[0]).div(props.max).mul(100).toFixed(2),
 				).toNumber();
 				state.donePercent1 = new Decimal(
-					new Decimal(newModelValue[1]).div(props.max).mul(100).toFixed(2)
+					new Decimal(newModelValue[1]).div(props.max).mul(100).toFixed(2),
 				).toNumber();
 				state.localModelValue = newModelValue.slice();
 			}
@@ -457,7 +457,7 @@ export default defineComponent({
 					const decimalValue = props.marks[decimalKey.toNumber()];
 					// 找到与标记值相对应的断点（得到偏移量）
 					const foundStop = state.stops.find(
-						v => v.value === decimalKey.toNumber()
+						(v) => v.value === decimalKey.toNumber(),
 					);
 
 					// 过滤掉小于最小值 && 大于最大值的项
@@ -514,8 +514,8 @@ export default defineComponent({
 					x: new Decimal(trackInnerRectPos)
 						.plus(
 							new Decimal(trackInnerRectSize).mul(
-								new Decimal(stepPercent).mul(i).div(100).toNumber()
-							)
+								new Decimal(stepPercent).mul(i).div(100).toNumber(),
+							),
 						)
 						.round()
 						.toNumber(),
@@ -545,7 +545,7 @@ export default defineComponent({
 			// 半个步长所对应的距离
 			const decimalHalfOfStepPos = new Decimal(state.halfOfStepPos);
 			// 寻找鼠标移动时经过的断点
-			const foundMark = state.stops.find(v => {
+			const foundMark = state.stops.find((v) => {
 				const decimalVPos = new Decimal(v.x);
 
 				// 只要在 +=半个步长距离 的范围内，就可以移动滑块了
@@ -798,7 +798,7 @@ export default defineComponent({
 
 			updateDonePercent(
 				props.vertical ? e.pageY : e.pageX,
-				state.isMoving ? 0 : state.isMoving1 ? 1 : -1
+				state.isMoving ? 0 : state.isMoving1 ? 1 : -1,
 			);
 			updateTooltipPosition();
 		}
