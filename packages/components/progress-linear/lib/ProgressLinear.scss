@@ -75,8 +75,8 @@ $progress-theme-list: (
 						rgba(255, 255, 255, 0.5) 50%,
 						transparent 75%
 					);
-					animation: done-track-background-move 2s cubic-bezier(0.17, 0.84, 0.44, 1)
-						infinite;
+					animation: done-track-background-move 2s
+						cubic-bezier(0.17, 0.84, 0.44, 1) infinite;
 				}
 			}
 		}
@@ -104,7 +104,7 @@ $progress-theme-list: (
 	}
 	.v3-progress__append {
 		margin-left: $margin-medium;
-		color: $font-color-medium;
+		color: $font-color-default;
 		i.v3-icon {
 			font-size: 24px;
 		}

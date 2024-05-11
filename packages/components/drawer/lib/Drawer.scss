@@ -135,14 +135,14 @@ $drawer-placement-translation: (
 		&.has-header {
 			.v3-drawer__inner {
 				.v3-drawer__content {
-					border-top: 1px solid $border-color-grey-default;
+					border-top: 1px solid $border-color-default;
 				}
 			}
 		}
 		&.has-footer {
 			.v3-drawer__inner {
 				.v3-drawer__content {
-					border-bottom: 1px solid $border-color-grey-default;
+					border-bottom: 1px solid $border-color-default;
 				}
 			}
 		}

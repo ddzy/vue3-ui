@@ -3,19 +3,19 @@ $button-size-map: (
 		padding: $padding-small $padding-medium,
 		circle-padding: $padding-small,
 		icon-font-size: $font-size-large,
-		font-size: $font-size-mini,
+		font-size: $font-size-small,
 	),
 	medium: (
 		padding: $padding-small $padding-medium,
 		circle-padding: $padding-medium - 2,
 		icon-font-size: $font-size-large,
-		font-size: $font-size-small,
+		font-size: $font-size-default,
 	),
 	large: (
 		padding: $padding-small + 2 $padding-medium,
 		circle-padding: $padding-medium + 2,
 		icon-font-size: $font-size-large-2,
-		font-size: $font-size-small,
+		font-size: $font-size-default,
 	),
 );
 
@@ -97,8 +97,8 @@ $button-type-map: (
 		active-color: #1a83de,
 	),
 	default: (
-		border-color: $default-color,
-		color: $font-color-medium,
+		border-color: $border-color-default,
+		color: $font-color-default,
 		background-color: #fff,
 		hover-background-color: $primary-color-plain,
 		hover-color: $primary-color,

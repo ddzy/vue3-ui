@@ -47,7 +47,7 @@ body {
 		.tippy-content {
 			.v3-tooltip__dropdown {
 				padding: $padding-small $padding-medium;
-				font-size: $font-size-mini;
+				font-size: $font-size-small;
 			}
 		}
 	}

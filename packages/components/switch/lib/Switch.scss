@@ -1,7 +1,7 @@
 .v3-switch {
 	display: flex;
 	align-items: center;
-	font-size: $font-size-small;
+	font-size: $font-size-default;
 	// 选中状态
 	&.is-active {
 		// 首次挂载时不需要动画

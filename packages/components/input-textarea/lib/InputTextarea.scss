@@ -4,7 +4,7 @@ $textarea-resize-list: none, horizontal, vertical, both;
 	display: inline-block;
 	position: relative;
 	padding: $padding-small $padding-medium;
-	border: 1px solid $border-color-grey-default;
+	border: 1px solid $border-color-default;
 	border-radius: $border-radius-width-default;
 	transition: all 0.15s ease;
 
@@ -31,11 +31,11 @@ $textarea-resize-list: none, horizontal, vertical, both;
 		appearance: none;
 		outline: 0;
 		word-break: keep-all;
-		font-size: $font-size-small;
-		color: $font-color-medium;
+		font-size: $font-size-default;
+		color: $font-color-default;
 
 		&::placeholder {
-			color: $border-color-grey-default;
+			color: $border-color-default;
 		}
 		&:hover {
 			border-color: $info-color;

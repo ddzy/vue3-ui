@@ -3,7 +3,7 @@ $card-shadow-size-map: (
 		box-shadow: $box-shadow-small,
 	),
 	medium: (
-		box-shadow: $box-shadow-medium,
+		box-shadow: $box-shadow-default,
 	),
 	large: (
 		box-shadow: $box-shadow-large,
@@ -12,8 +12,8 @@ $card-shadow-size-map: (
 
 .v3-card {
 	background-color: #fff;
-	border: 1px solid $border-color-grey-small;
-  border-radius: $border-radius-width-small;
+	border: 1px solid $border-color-small;
+	border-radius: $border-radius-width-small;
 	transition: box-shadow 0.15s ease;
 
 	@each $key, $value in $card-shadow-size-map {
@@ -38,7 +38,7 @@ $card-shadow-size-map: (
 	}
 
 	.v3-card__header {
-		border-bottom: 1px solid $border-color-grey-small;
+		border-bottom: 1px solid $border-color-small;
 		h4 {
 			margin: 0;
 		}
@@ -49,6 +49,6 @@ $card-shadow-size-map: (
 	}
 
 	.v3-card__footer {
-		border-top: 1px solid $border-color-grey-small;
+		border-top: 1px solid $border-color-small;
 	}
 }

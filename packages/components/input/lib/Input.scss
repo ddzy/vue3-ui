@@ -2,19 +2,19 @@ $input-size-map: (
 	small: (
 		height: 29px,
 		line-height: 27px,
-		font-size: $font-size-mini,
-		icon-font-size: $font-size-normal,
+		font-size: $font-size-small,
+		icon-font-size: $font-size-medium,
 	),
 	medium: (
 		height: 35px,
 		line-height: 33px,
-		font-size: $font-size-small,
+		font-size: $font-size-default,
 		icon-font-size: $font-size-large,
 	),
 	large: (
 		height: 41px,
 		line-height: 39px,
-		font-size: $font-size-small,
+		font-size: $font-size-default,
 		icon-font-size: $font-size-large-2,
 	),
 );
@@ -105,7 +105,7 @@ $input-size-map: (
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__inner-wrapper {
-		border: 1px solid $border-color-grey-default;
+		border: 1px solid $border-color-default;
 	}
 
 	.v3-input__prepend-wrapper,
@@ -160,13 +160,13 @@ $input-size-map: (
 				border: 0;
 				appearance: none;
 				outline: 0;
-				color: $font-color-medium;
+				color: $font-color-default;
 				font-size: inherit;
 				&:disabled {
 					background-color: #fff;
 				}
 				&::placeholder {
-					color: $border-color-grey-default;
+					color: $border-color-default;
 				}
 				&:-moz-placeholder,
 				&::-moz-placeholder {

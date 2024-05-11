@@ -378,7 +378,7 @@ export default defineComponent({
 					}
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
@@ -406,17 +406,17 @@ export default defineComponent({
 		 * 关闭标签
 		 */
 		function handleTagClose(
-			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>
+			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>,
 		) {
 			// 关闭标签时，从已选中的列表中移除该项
-			state.selectedOptionList = state.selectedOptionList.filter(v => {
+			state.selectedOptionList = state.selectedOptionList.filter((v) => {
 				return v.label !== data.label && v.value !== data.value;
 			});
 
 			// 重新计算下拉框的高度
 			updateInputHeight();
 
-			const selectedValueList = state.selectedOptionList.map(v => v.value);
+			const selectedValueList = state.selectedOptionList.map((v) => v.value);
 
 			context.emit('update:modelValue', selectedValueList);
 			context.emit('change', selectedValueList);
@@ -439,7 +439,7 @@ export default defineComponent({
 		 */
 		function subtractSelectOptionList(instance: any) {
 			state.selectOptionInstanceList = state.selectOptionInstanceList.filter(
-				v => v !== instance
+				(v) => v !== instance,
 			);
 		}
 
@@ -447,13 +447,13 @@ export default defineComponent({
 			// 如果是多选
 			if (props.multiple) {
 				const foundSelectedOption = state.selectedOptionList.findIndex(
-					v => v.label === label && v.value === value
+					(v) => v.label === label && v.value === value,
 				);
 
 				// 如果列表中本来就有该值，那么表明是取消勾选，从列表中移除该项
 				if (foundSelectedOption !== -1) {
 					state.selectedOptionList = state.selectedOptionList.filter(
-						(_, i) => i !== foundSelectedOption
+						(_, i) => i !== foundSelectedOption,
 					);
 				} else {
 					// 反之添加到列表中
@@ -470,7 +470,7 @@ export default defineComponent({
 					updateDropdownPosition();
 				}, 0);
 
-				const selectedValueList = state.selectedOptionList.map(v => v.value);
+				const selectedValueList = state.selectedOptionList.map((v) => v.value);
 
 				context.emit('update:modelValue', selectedValueList);
 				context.emit('change', selectedValueList);
@@ -553,19 +553,19 @@ export default defineComponent({
 
 					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
 					state.isNoMatchData = !computedChildrenLength.value;
-					state.selectOptionInstanceList.forEach(v => {
+					state.selectOptionInstanceList.forEach((v) => {
 						v.proxy.state.isShow = true;
 					});
 				} else {
 					// 没有输入值时，需要显示全部的下拉选项
-					state.selectOptionInstanceList.forEach(v => {
+					state.selectOptionInstanceList.forEach((v) => {
 						v.proxy.state.isShow = target.value
 							? v.proxy.label.includes(target.value)
 							: true;
 					});
 
 					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-					const isEmpty = state.selectOptionInstanceList.every(v => {
+					const isEmpty = state.selectOptionInstanceList.every((v) => {
 						return !v.proxy.state.isShow;
 					});
 					state.isNoMatchData = isEmpty;
@@ -583,7 +583,7 @@ export default defineComponent({
 			if (props.filterable) {
 				state.inputValue = '';
 				state.placeholder = state.selectedLabel || state.initialPlaceholder;
-				state.selectOptionInstanceList.forEach(v => {
+				state.selectOptionInstanceList.forEach((v) => {
 					v.proxy.state.isShow = true;
 				});
 
@@ -679,14 +679,14 @@ body {
 					user-select: none;
 					line-height: 35px;
 					cursor: pointer;
-					font-size: $font-size-small;
+					font-size: $font-size-default;
 					transition: all 0.15s ease;
 					&:not(.is-disabled):hover {
 						background-color: $primary-color-plain;
 					}
 
 					&.is-disabled {
-						color: $info-color-little;
+						color: $info-color-middle;
 						cursor: not-allowed;
 					}
 
@@ -703,7 +703,7 @@ body {
 					margin: 0;
 					padding: $padding-small 0;
 					text-align: center;
-					color: $info-color-little;
+					color: $info-color-middle;
 				}
 			}
 		}

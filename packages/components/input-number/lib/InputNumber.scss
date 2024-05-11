@@ -1,9 +1,9 @@
 $input-number-size-map: (
 	small: (
-		icon-font-size: $font-size-small,
+		icon-font-size: $font-size-default,
 	),
 	medium: (
-		icon-font-size: $font-size-normal,
+		icon-font-size: $font-size-medium,
 	),
 	large: (
 		icon-font-size: $font-size-large,
@@ -33,9 +33,9 @@ $input-number-size-map: (
 		// 控制按钮禁用状态
 		&.is-disabled {
 			cursor: not-allowed;
-			color: $border-color-grey-default;
+			color: $border-color-default;
 			&:hover {
-				color: $border-color-grey-default;
+				color: $border-color-default;
 			}
 		}
 	}
@@ -54,15 +54,15 @@ $input-number-size-map: (
 			// 控制按钮禁用状态
 			&.is-disabled {
 				cursor: not-allowed;
-				color: $border-color-grey-default;
+				color: $border-color-default;
 				&:hover {
-					color: $border-color-grey-default;
+					color: $border-color-default;
 				}
 			}
 		}
 
 		.v3-number__control-plus {
-			border-bottom: 1px solid $border-color-grey-default;
+			border-bottom: 1px solid $border-color-default;
 		}
 	}
 

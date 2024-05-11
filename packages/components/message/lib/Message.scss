@@ -1,17 +1,17 @@
 $message-type-map: (
 	success: (
 		background-color: $success-color-plain,
-		color: $success-color-little,
+		color: $success-color,
 		icon-color: $success-color,
 	),
 	danger: (
 		background-color: $danger-color-plain,
-		color: $danger-color-little,
+		color: $danger-color,
 		icon-color: $danger-color,
 	),
 	warning: (
 		background-color: $warning-color-plain,
-		color: $warning-color-little,
+		color: $warning-color,
 		icon-color: $warning-color,
 	),
 	info: (
@@ -84,7 +84,7 @@ $message-type-map: (
 		.v3-message__content {
 			width: 100%;
 			padding: 0 $padding-medium;
-			font-size: $font-size-small;
+			font-size: $font-size-default;
 		}
 
 		.v3-message__close {

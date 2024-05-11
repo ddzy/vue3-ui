@@ -58,9 +58,15 @@ export default defineComponent({
 		});
 
 		function handleClick(row) {
-			V3Message.success({
-				message: row.type,
-			});
+			if (typeof V3Message[row.type] === 'function') {
+				V3Message[row.type]({
+					message: row.type,
+				});
+			} else {
+				V3Message.success({
+					message: row.type,
+				});
+			}
 		}
 
 		return {

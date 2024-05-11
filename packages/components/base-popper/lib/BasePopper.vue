@@ -239,7 +239,7 @@ export default defineComponent({
 					}
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleShow(instance: Instance) {
@@ -307,12 +307,12 @@ div[data-tippy-root] {
 		padding: 0;
 		.v3-base-popper__dropdown {
 			padding: $padding-medium $padding-large-1;
-			font-size: $font-size-small;
+			font-size: $font-size-default;
 			.v3-popper-dropdown__title {
 				margin-bottom: $margin-medium;
 				h3 {
 					margin: 0;
-					font-size: $font-size-normal;
+					font-size: $font-size-medium;
 				}
 			}
 		}
