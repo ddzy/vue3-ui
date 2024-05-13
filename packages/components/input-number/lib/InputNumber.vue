@@ -25,7 +25,7 @@
 					}"
 					@click="handleMinus"
 				>
-					<i class="v3-icon v3-icon-sami-select"></i>
+					<V3Icon type="Minus" />
 				</div>
 
 				<div
@@ -42,7 +42,7 @@
 						}"
 						@click="handlePlus"
 					>
-						<i class="v3-icon v3-icon-arrow-up"></i>
+						<V3Icon type="Up" />
 					</div>
 					<div
 						:class="{
@@ -51,7 +51,7 @@
 						}"
 						@click="handleMinus"
 					>
-						<i class="v3-icon v3-icon-arrow-down"></i>
+						<V3Icon type="Down" />
 					</div>
 				</div>
 			</template>
@@ -66,7 +66,7 @@
 					}"
 					@click="handlePlus"
 				>
-					<i class="v3-icon v3-icon-add-select"></i>
+					<V3Icon type="Plus" />
 				</div>
 
 				<div
@@ -83,7 +83,7 @@
 						}"
 						@click="handlePlus"
 					>
-						<i class="v3-icon v3-icon-arrow-up"></i>
+						<V3Icon type="Up" />
 					</div>
 					<div
 						:class="{
@@ -92,7 +92,7 @@
 						}"
 						@click="handleMinus"
 					>
-						<i class="v3-icon v3-icon-arrow-down"></i>
+						<V3Icon type="Down" />
 					</div>
 				</div>
 			</template>
@@ -109,12 +109,14 @@ import {
 	watch,
 } from 'vue';
 import V3Input from '@components/input/main';
+import V3Icon from '@components/icon/main';
 import * as TYPES from '@typings/index';
 
 export default defineComponent({
 	name: 'V3InputNumber',
 	components: {
 		V3Input,
+		V3Icon,
 	},
 	props: {
 		/** 限制输入的最小值 */

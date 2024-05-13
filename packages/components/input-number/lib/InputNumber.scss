@@ -13,7 +13,7 @@ $input-number-size-map: (
 .v3-input-number {
 	@each $key, $value in $input-number-size-map {
 		& :deep(.v3-input.is-size--#{$key}) {
-			i.v3-icon {
+			.v3-icon {
 				font-size: map-get($map: $value, $key: icon-font-size);
 			}
 		}
@@ -23,6 +23,7 @@ $input-number-size-map: (
 	.v3-number__minus-wrapper,
 	.v3-number__plus-wrapper {
 		cursor: pointer;
+		color: $font-color-default;
 		&:hover {
 			color: $primary-color;
 		}
@@ -33,9 +34,9 @@ $input-number-size-map: (
 		// 控制按钮禁用状态
 		&.is-disabled {
 			cursor: not-allowed;
-			color: $border-color-default;
+			color: $disable-font-color;
 			&:hover {
-				color: $border-color-default;
+				color: $disable-font-color;
 			}
 		}
 	}
@@ -43,6 +44,7 @@ $input-number-size-map: (
 	// 控制组位于【左/右】边
 	.v3-number__control-wrapper {
 		line-height: 1;
+		color: $font-color-default;
 		.v3-number__control-plus,
 		.v3-number__control-minus {
 			padding: 0 $padding-medium;
@@ -54,9 +56,9 @@ $input-number-size-map: (
 			// 控制按钮禁用状态
 			&.is-disabled {
 				cursor: not-allowed;
-				color: $border-color-default;
+				color: $disable-font-color;
 				&:hover {
-					color: $border-color-default;
+					color: $disable-font-color;
 				}
 			}
 		}
