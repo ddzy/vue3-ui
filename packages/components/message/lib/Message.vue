@@ -13,18 +13,13 @@
 				props.center ? 'is-center' : '',
 				props.showClose ? 'is-closeable' : '',
 			]"
-			:id="[`v3-message--${app.uid}`]"
+			:id="`v3-message--${app.uid}`"
 			@mouseenter="mouseEnter"
 			@mouseleave="mouseLeave"
 		>
 			<div class="v3-message__inner">
 				<div class="v3-message__icon">
-					<i
-						:class="{
-							'v3-icon': true,
-							[computedIcon]: true,
-						}"
-					></i>
+					<V3Icon :type="computedIcon" />
 				</div>
 				<div
 					:class="{
@@ -49,7 +44,7 @@
 					<span v-else>{{ message }}</span>
 				</div>
 				<div class="v3-message__close" v-if="props.showClose" @click="close">
-					<i class="v3-icon v3-icon-close"></i>
+					<V3Icon type="CloseSmall" />
 				</div>
 			</div>
 		</div>
@@ -71,10 +66,12 @@ import {
 	toRef,
 } from 'vue';
 import { close } from './MessageConstructor';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Message',
 	components: {
+		V3Icon,
 		/** 当 message 为 VNode 类型时，启用此组件渲染 */
 		RenderVNode: defineComponent({
 			props: {
@@ -161,10 +158,16 @@ export default defineComponent({
 			isShow: true,
 			timer: 0,
 		}) as any;
-		const app = getCurrentInstance();
+		const app = getCurrentInstance()!;
 
 		const computedIcon = computed(() => {
-			return props.icon || `v3-icon-${props.type}-fill`;
+			const iconMap = {
+				success: 'CheckOne',
+				warning: 'Attention',
+				info: 'Info',
+				danger: 'CloseOne',
+			};
+			return props.icon || iconMap[props.type as keyof typeof iconMap];
 		});
 
 		watch(

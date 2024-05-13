@@ -91,6 +91,7 @@ export {
 	V3CarouselItem,
 	V3Drawer,
 	V3Back,
+	V3Icon,
 };
 
 export default function install(app: App) {

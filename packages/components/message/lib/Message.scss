@@ -75,12 +75,6 @@ $message-type-map: (
 			justify-content: center;
 		}
 
-		.v3-message__icon {
-			i {
-				font-size: $font-size-large-2;
-			}
-		}
-
 		.v3-message__content {
 			width: 100%;
 			padding: 0 $padding-medium;
@@ -89,9 +83,6 @@ $message-type-map: (
 
 		.v3-message__close {
 			cursor: pointer;
-			i {
-				font-size: $font-size-large-2;
-			}
 		}
 	}
 }
