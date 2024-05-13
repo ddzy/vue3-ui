@@ -42,6 +42,10 @@ export default defineConfig({
 							text: 'Space 间隔',
 							link: '/components/space',
 						},
+						{
+							text: 'Icon 图标',
+							link: '/components/icon',
+						},
 					],
 				},
 				{

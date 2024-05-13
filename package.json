@@ -60,9 +60,10 @@
 		]
 	},
 	"dependencies": {
+		"@icon-park/vue-next": "^1.4.2",
 		"decimal.js": "10.3.1",
 		"tippy.js": "6.3.7",
-		"vue": "3.2.47",
+		"vue": "3.4.27",
 		"vue-tippy": "v6"
 	},
 	"devDependencies": {
