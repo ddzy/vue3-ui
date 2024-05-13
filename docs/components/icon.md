@@ -10,8 +10,8 @@
   <v3-input v-model="state.keyword" placeholder="搜索图标" class="inputer"></v3-input>
   <div :class="$style['icon-wrapper']">
     <table :class="$style['icon-table']">
-      <tr v-for="v in Math.ceil(state.icons.length / state.columns)" :key="v">
-        <td v-for="vv in (state.icons.slice(v * state.columns, v * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="copy(vv)">
+      <tr v-for="(v, i) in Math.ceil(state.icons.length / state.columns)" :key="i">
+        <td v-for="vv in (state.icons.slice(i * state.columns, i * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="copy(vv)">
           <div :class="$style['icon-item']">
             <v3-icon :class="$style['icon-id']" :type="vv._id" size="22"></v3-icon>
             <span :class="$style['icon-name']">{{ vv._id }}</span>

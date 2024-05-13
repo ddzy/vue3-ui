@@ -8,7 +8,7 @@ export type IButtonType =
 	| 'warning'
 	| 'info'
 	| 'text';
-export type IButtonNativeType = 'button' | 'submit' | 'reset' | 'menu';
+export type IButtonNativeType = 'button' | 'submit' | 'reset';
 export type IButtonBorderType =
 	| 'solid'
 	| 'dashed'
@@ -28,4 +28,4 @@ export interface IButtonProps {
 	loading: boolean;
 	size: IButtonSize;
 }
-export const V3Button: SFCWithInstall<IButtonProps>
+export const V3Button: SFCWithInstall<IButtonProps>;

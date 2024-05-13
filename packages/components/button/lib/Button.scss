@@ -40,7 +40,6 @@ button {
 				padding: map-get($map: $value, $key: circle-padding);
 			}
 			& [class*='v3-icon-'] {
-				height: 1em;
 				font-size: map-get($map: $value, $key: icon-font-size);
 			}
 		}
@@ -66,10 +65,6 @@ button {
 	&.is-circle {
 		padding: 10px;
 		border-radius: 50%;
-		& [class*='v3-icon-'] {
-			width: 20px;
-			height: 20px;
-		}
 	}
 	&,
 	& > a {

@@ -282,47 +282,6 @@ export default defineComponent({
 
 :::
 
-## 文字按钮
-
-:::demo
-
-```vue
-<template>
-	<v3-space :size="12">
-		<v3-button v-for="v in state.btnList" :key="v.type" :type="v.type">
-			{{ v.title }}
-		</v3-button>
-	</v3-space>
-</template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
-
-export default defineComponent({
-	setup() {
-		const btnList: Array<{
-			type: string;
-			title: string;
-		}> = [
-			{
-				type: 'text',
-				title: '文字按钮',
-			},
-		];
-
-		const state = reactive({
-			btnList,
-		});
-
-		return {
-			state,
-		};
-	},
-});
-</script>
-```
-
-:::
-
 ## 带图标的文字按钮
 
 :::demo
@@ -352,12 +311,12 @@ export default defineComponent({
 			{
 				type: 'text',
 				title: '文字按钮 + 图标',
-				icon: 'v3-icon-search',
+				icon: 'Search',
 			},
 			{
 				type: 'text',
 				title: '文字按钮 + 图标',
-				icon: 'v3-icon-link',
+				icon: 'Link',
 			},
 		];
 
@@ -387,6 +346,7 @@ export default defineComponent({
 			:key="v.type"
 			:type="v.type"
 			:icon="v.icon"
+			circle
 		>
 			{{ v.title }}
 		</v3-button>
@@ -403,27 +363,27 @@ export default defineComponent({
 		}> = [
 			{
 				type: 'default',
-				icon: 'v3-icon-search',
+				icon: 'Search',
 			},
 			{
 				type: 'info',
-				icon: 'v3-icon-prompt',
+				icon: 'Info',
 			},
 			{
 				type: 'primary',
-				icon: 'v3-icon-upload',
+				icon: 'Upload',
 			},
 			{
 				type: 'success',
-				icon: 'v3-icon-assessed-badge',
+				icon: 'CheckOne',
 			},
 			{
 				type: 'danger',
-				icon: 'v3-icon-close',
+				icon: 'CloseOne',
 			},
 			{
 				type: 'warning',
-				icon: 'v3-icon-warning',
+				icon: 'Attention',
 			},
 		];
 
@@ -551,17 +511,17 @@ export default defineComponent({
 			{
 				type: 'primary',
 				title: '上一页',
-				icon: 'v3-icon-arrow-left',
+				icon: 'Left',
 			},
 			{
 				type: 'primary',
 				title: '全选',
-				icon: 'v3-icon-assessed-badge',
+				icon: 'Check',
 			},
 			{
 				type: 'primary',
 				title: '下一页',
-				icon: 'v3-icon-arrow-right',
+				icon: 'Right',
 			},
 		];
 
