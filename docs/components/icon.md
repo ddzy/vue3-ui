@@ -13,7 +13,7 @@
       <tr v-for="v in Math.ceil(state.icons.length / state.columns)" :key="v">
         <td v-for="vv in (state.icons.slice(v * state.columns, v * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="copy(vv)">
           <div :class="$style['icon-item']">
-            <v3-icon :class="$style['icon-id']" :type="vv._id" size="24"></v3-icon>
+            <v3-icon :class="$style['icon-id']" :type="vv._id" size="22"></v3-icon>
             <span :class="$style['icon-name']">{{ vv._id }}</span>
           </div>
         </td>
@@ -417,6 +417,7 @@
   }
   .icon-name {
     margin-top: 12px;
+    color: #999;
   }
   .td {
     &:hover {
