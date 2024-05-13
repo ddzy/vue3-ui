@@ -16,6 +16,9 @@ importers:
       '@icon-park/vue-next':
         specifier: ^1.4.2
         version: 1.4.2(vue@3.4.27(typescript@5.0.4))
+      '@vueuse/core':
+        specifier: ^10.9.0
+        version: 10.9.0(vue@3.4.27(typescript@5.0.4))
       decimal.js:
         specifier: 10.3.1
         version: 10.3.1

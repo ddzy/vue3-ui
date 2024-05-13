@@ -8,12 +8,10 @@
 
 <div :class="$style.container">
   <v3-input v-model="state.keyword" placeholder="搜索图标" class="inputer"></v3-input>
-  <div :class="$style['icon-config']">
-  </div>
   <div :class="$style['icon-wrapper']">
     <table :class="$style['icon-table']">
       <tr v-for="v in Math.ceil(state.icons.length / state.columns)" :key="v">
-        <td v-for="vv in (state.icons.slice(v * state.columns, v * state.columns + state.columns))" :key="vv._id" >
+        <td v-for="vv in (state.icons.slice(v * state.columns, v * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="copy(vv)">
           <div :class="$style['icon-item']">
             <v3-icon :class="$style['icon-id']" :type="vv._id" size="24"></v3-icon>
             <span :class="$style['icon-name']">{{ vv._id }}</span>
@@ -26,6 +24,10 @@
 
 <script lang="ts" setup>
   import { reactive } from 'vue';
+  import { useClipboard } from '@vueuse/core';
+  import V3Message from '@components/message/lib/MessageConstructor';
+
+  const clipboard = useClipboard();
 
   const state = reactive({
     keyword: '',
@@ -234,12 +236,24 @@
       },
     ],
   })
-</script>
-<style module lang="postcss">
-  .container {
-    margin-top: 20px;
+
+  function copy(row) {
+    if(!clipboard.isSupported) {
+      return V3Message.warning({
+        message: '您的浏览器不支持 Clipboard API',
+      })
+    }
+    let code = `<V3Icon type="${row._id}" />`
+    clipboard.copy(code);
+    if(clipboard.copied) {
+      V3Message.success({
+        message: code,
+      });
+    }
   }
-  .icon-config {
+</script>
+<style module lang="scss">
+  .container {
     margin-top: 20px;
   }
   .icon-wrapper {
@@ -264,6 +278,11 @@
   }
   .icon-name {
     margin-top: 12px;
+  }
+  .td {
+    &:hover {
+      background-color: #f3f4f5;
+    }
   }
 </style>
 
