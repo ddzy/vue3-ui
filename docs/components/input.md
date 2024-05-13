@@ -72,7 +72,7 @@ export default defineComponent({
 		v-model="state.inputValue"
 		clearable
 		style="max-width: 250px;"
-		:prefixIcon="'v3-icon-editor'"
+		prefixIcon="EditTwo"
 	>
 	</v3-input>
 </template>
@@ -107,10 +107,10 @@ export default defineComponent({
 		v-model="state.inputValue"
 		clearable
 		style="max-width: 250px;"
-		:prefixIcon="'v3-icon-editor'"
+		prefixIcon="EditTwo"
 	>
 		<template #prefix>
-			<i class="v3-icon v3-icon-unlock"></i>
+			<V3Icon type="Unlock" />
 		</template>
 	</v3-input>
 </template>
@@ -143,7 +143,8 @@ export default defineComponent({
 		v-model="state.inputValue"
 		clearable
 		style="max-width: 250px;"
-		:appendIcon="'v3-icon-search'"
+		appendIcon="Search"
+		prependIcon="Link"
 	>
 	</v3-input>
 </template>

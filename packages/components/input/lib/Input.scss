@@ -3,19 +3,16 @@ $input-size-map: (
 		height: 29px,
 		line-height: 27px,
 		font-size: $font-size-small,
-		icon-font-size: $font-size-medium,
 	),
 	medium: (
 		height: 35px,
 		line-height: 33px,
 		font-size: $font-size-default,
-		icon-font-size: $font-size-large,
 	),
 	large: (
 		height: 41px,
 		line-height: 39px,
 		font-size: $font-size-default,
-		icon-font-size: $font-size-large-2,
 	),
 );
 
@@ -31,15 +28,6 @@ $input-size-map: (
 			height: map-get($map: $value, $key: height);
 			line-height: map-get($map: $value, $key: line-height);
 			font-size: map-get($map: $value, $key: font-size);
-
-			.v3-input__prepend-wrapper,
-			.v3-input__append-wrapper,
-			.v3-input__prefix,
-			.v3-input__suffix {
-				& :deep(i.v3-icon) {
-					font-size: map-get($map: $value, $key: icon-font-size);
-				}
-			}
 		}
 	}
 
@@ -123,6 +111,7 @@ $input-size-map: (
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		height: 100%;
 	}
 
 	.v3-input__prepend-wrapper {
@@ -196,14 +185,13 @@ $input-size-map: (
 					display: flex;
 					justify-content: center;
 					align-items: center;
+					height: 100%;
 					.v3-input__clear,
 					.v3-input__password {
 						&:hover {
 							color: $info-color;
 						}
-						i.v3-icon {
-							cursor: pointer;
-						}
+						cursor: pointer;
 					}
 					.v3-input__limit {
 						cursor: default;
