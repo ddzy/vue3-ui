@@ -34,207 +34,346 @@
     columns: 5,
     icons: [
       {
-        _id: 'Plus',
-        name: "加"
+        _id: "CloseOne",
+        name: "CloseOne",
       },
       {
-        _id: 'Minus',
-        name: "减"
+        _id: "Caution",
+        name: "Caution",
       },
       {
-        _id: 'Search',
-        name: "搜索"
+        _id: "Attention",
+        name: "Attention",
       },
       {
-        _id: 'Female',
-        name: "女性"
+        _id: "Info",
+        name: "Info",
       },
       {
-        _id: 'Male',
-        name: "男性"
+        _id: "Like",
+        name: "Like",
       },
       {
-        _id: 'Home',
-        name: "首页"
+        _id: "DislikeTwo",
+        name: "DislikeTwo",
       },
       {
-        _id: 'FullScreen',
-        name: "全局放大"
+        _id: "Checkbox",
+        name: "Checkbox",
       },
       {
-        _id: 'LoadingOne',
-        name: "加载"
+        _id: "ShareTwo",
+        name: "ShareTwo",
       },
       {
-        _id: 'Link',
-        name: "链接"
+        _id: "Check",
+        name: "Check",
       },
       {
-        _id: 'IndexFinger',
-        name: "食指"
+        _id: "CheckOne",
+        name: "CheckOne",
       },
       {
-        _id: 'Star',
-        name: "星星"
+        _id: "Plus",
+        name: "Plus",
       },
       {
-        _id: 'Announcement',
-        name: "公告"
+        _id: "Minus",
+        name: "Minus",
       },
       {
-        _id: 'Setting',
-        name: "设置"
+        _id: "ReduceOne",
+        name: "ReduceOne",
       },
       {
-        _id: 'Config',
-        name: "配置"
+        _id: "LoadingOne",
+        name: "LoadingOne",
       },
       {
-        _id: 'MessageOne',
-        name: "消息"
+        _id: "ZoomIn",
+        name: "ZoomIn",
       },
       {
-        _id: 'PreviewOpen',
-        name: "预览-打开"
+        _id: "ZoomOut",
+        name: "ZoomOut",
       },
       {
-        _id: 'PreviewClose',
-        name: "预览-关闭"
+        _id: "Search",
+        name: "Search",
       },
       {
-        _id: 'Lock',
-        name: "锁定"
+        _id: "EditTwo",
+        name: "EditTwo",
       },
       {
-        _id: 'Unlock',
-        name: "解锁"
+        _id: "Gift",
+        name: "Gift",
       },
       {
-        _id: 'Check',
-        name: "检验"
+        _id: "Navigation",
+        name: "Navigation",
       },
       {
-        _id: 'CheckOne',
-        name: "检验"
+        _id: "Pic",
+        name: "Pic",
       },
       {
-        _id: 'Close',
-        name: "关闭"
+        _id: "PreviewOpen",
+        name: "PreviewOpen",
       },
       {
-        _id: 'CloseOne',
-        name: "关闭"
+        _id: "PreviewClose",
+        name: "PreviewClose",
       },
       {
-        _id: 'Code',
-        name: "代码"
+        _id: "PreviewCloseOne",
+        name: "PreviewCloseOne",
       },
       {
-        _id: 'Copy',
-        name: "复制"
-      },
-
-      {
-        _id: 'Delete',
-        name: "删除"
+        _id: "Down",
+        name: "Down",
       },
       {
-        _id: 'Edit',
-        name: "编辑"
+        _id: "Up",
+        name: "Up",
       },
       {
-        _id: 'VolumeDown',
-        name: "音量减小"
+        _id: "Left",
+        name: "Left",
       },
       {
-        _id: 'VolumeUp',
-        name: "音量增加"
+        _id: "Right",
+        name: "Right",
       },
       {
-        _id: 'ArrowDown',
-        name: "箭头下"
+        _id: "ArrowUp",
+        name: "ArrowUp",
       },
       {
-        _id: 'ArrowUp',
-        name: "箭头上"
+        _id: "ArrowDown",
+        name: "ArrowDown",
       },
       {
-        _id: 'Down',
-        name: "下"
+        _id: "ArrowLeft",
+        name: "ArrowLeft",
       },
       {
-        _id: 'Up',
-        name: "上"
+        _id: "ArrowRight",
+        name: "ArrowRight",
       },
       {
-        _id: 'ArrowCircleDown',
-        name: "圆形箭头下"
+        _id: "ArrowLeftDown",
+        name: "ArrowLeftDown",
       },
       {
-        _id: 'ArrowCircleUp',
-        name: "圆形箭头上"
+        _id: "ArrowLeftUp",
+        name: "ArrowLeftUp",
       },
       {
-        _id: 'ThumbsDown',
-        name: "踩"
+        _id: "ArrowRightDown",
+        name: "ArrowRightDown",
       },
       {
-        _id: 'ThumbsUp',
-        name: "赞"
+        _id: "ArrowRightUp",
+        name: "ArrowRightUp",
       },
       {
-        _id: 'Download',
-        name: "下载"
+        _id: "ToTop",
+        name: "ToTop",
       },
       {
-        _id: 'Export',
-        name: "导出"
+        _id: "ToBottom",
+        name: "ToBottom",
       },
       {
-        _id: 'ToTop',
-        name: "去顶部"
+        _id: "ToLeft",
+        name: "ToLeft",
       },
       {
-        _id: 'ToBottom',
-        name: "去底部"
+        _id: "ToRight",
+        name: "ToRight",
       },
       {
-        _id: 'Share',
-        name: "分享"
+        _id: "MenuUnfold",
+        name: "MenuUnfold",
       },
       {
-        _id: 'Like',
-        name: "喜欢"
+        _id: "Login",
+        name: "Login",
       },
       {
-        _id: 'Unlike',
-        name: "不喜欢"
+        _id: "Logout",
+        name: "Logout",
       },
       {
-        _id: 'Tag',
-        name: "标签"
+        _id: "Send",
+        name: "Send",
       },
       {
-        _id: 'Checkbox',
-        name: "多选框"
+        _id: "Upload",
+        name: "Upload",
       },
       {
-        _id: 'RadioTwo',
-        name: "单选"
+        _id: "Code",
+        name: "Code",
       },
       {
-        _id: 'More',
-        name: "更多"
+        _id: "TwoDimensionalCode",
+        name: "TwoDimensionalCode",
       },
       {
-        _id: 'Refresh',
-        name: "刷新"
+        _id: "dollar",
+        name: "dollar",
       },
       {
-        _id: 'Save',
-        name: "保存"
+        _id: "AddOne",
+        name: "AddOne",
       },
-    ],
+      {
+        _id: "User",
+        name: "User",
+      },
+      {
+        _id: "AddUser",
+        name: "AddUser",
+      },
+      {
+        _id: "ReduceUser",
+        name: "ReduceUser",
+      },
+      {
+        _id: "ShoppingCart",
+        name: "ShoppingCart",
+      },
+      {
+        _id: "Translate",
+        name: "Translate",
+      },
+      {
+        _id: "Delete",
+        name: "Delete",
+      },
+      {
+        _id: "Power",
+        name: "Power",
+      },
+      {
+        _id: "ListCheckbox",
+        name: "ListCheckbox",
+      },
+      {
+        _id: "Message",
+        name: "Message",
+      },
+      {
+        _id: "MessageUnread",
+        name: "MessageUnread",
+      },
+      {
+        _id: "MessageOne",
+        name: "MessageOne",
+      },
+      {
+        _id: "Lock",
+        name: "Lock",
+      },
+      {
+        _id: "Unlock",
+        name: "Unlock",
+      },
+      {
+        _id: "Link",
+        name: "Link",
+      },
+      {
+        _id: "LinkTwo",
+        name: "LinkTwo",
+      },
+      {
+        _id: "Pin",
+        name: "Pin",
+      },
+      {
+        _id: "Drag",
+        name: "Drag",
+      },
+      {
+        _id: "VolumeUp",
+        name: "VolumeUp",
+      },
+      {
+        _id: "VolumeDown",
+        name: "VolumeDown",
+      },
+      {
+        _id: "VolumeMute",
+        name: "VolumeMute",
+      },
+      {
+        _id: "Refresh",
+        name: "Refresh",
+      },
+      {
+        _id: "TagOne",
+        name: "TagOne",
+      },
+      {
+        _id: "Tag",
+        name: "Tag",
+      },
+      {
+        _id: "Star",
+        name: "Star",
+      },
+      {
+        _id: "Home",
+        name: "Home",
+      },
+      {
+        _id: "Male",
+        name: "Male",
+      },
+      {
+        _id: "Female",
+        name: "Female",
+      },
+      {
+        _id: "More",
+        name: "More",
+      },
+      {
+        _id: "MoreOne",
+        name: "MoreOne",
+      },
+      {
+        _id: "MoreTwo",
+        name: "MoreTwo",
+      },
+      {
+        _id: "Rss",
+        name: "Rss",
+      },
+      {
+        _id: "Save",
+        name: "Save",
+      },
+      {
+        _id: "Tool",
+        name: "Tool",
+      },
+      {
+        _id: "Setting",
+        name: "Setting",
+      },
+      {
+        _id: "Upload",
+        name: "Upload",
+      },
+      {
+        _id: "Copy",
+        name: "Copy",
+      }
+    ]
   })
 
   function copy(row) {
@@ -272,7 +411,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 12px 16px !important;
+    padding: 6px 10px !important;
   }
   .icon-id {
   }
