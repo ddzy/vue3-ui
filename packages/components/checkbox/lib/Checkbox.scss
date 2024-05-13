@@ -30,7 +30,7 @@ $checkbox-size-map: (
 			.v3-checkbox__label-wrapper {
 				font-size: map-get($map: $value, $key: label-font-size);
 				.v3-checkbox__select {
-					i {
+					.v3-icon {
 						font-size: map-get($map: $value, $key: checkbox-font-size);
 					}
 				}
@@ -80,7 +80,7 @@ $checkbox-size-map: (
 
 			&:checked:not(:disabled) {
 				& ~ .v3-checkbox__select {
-					i {
+					.v3-icon {
 						color: $primary-color;
 					}
 				}
@@ -90,12 +90,10 @@ $checkbox-size-map: (
 			}
 			&:disabled {
 				& ~ .v3-checkbox__select {
-					i {
-						color: $border-color-default;
-					}
+					opacity: 0.6;
 				}
 				& ~ .v3-checkbox__label {
-					color: $info-color;
+					opacity: 0.6;
 				}
 			}
 		}
@@ -103,9 +101,9 @@ $checkbox-size-map: (
 		.v3-checkbox__select {
 			display: flex;
 			align-items: center;
-			i {
+			.v3-icon {
 				font-size: $font-size-large;
-				color: $info-color;
+				color: $font-color-small;
 				&.v3-checkbox__select--indeterminated {
 					color: $primary-color;
 				}

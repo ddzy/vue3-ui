@@ -10,9 +10,9 @@
 <template>
 	<v3-checkbox
 		v-model="state.checkboxValue1"
-		:defaultIcon="'v3-icon-like'"
-		:selectedIcon="'v3-icon-like1'"
-		:indeterminatedIcon="'v3-icon-sami-select'"
+		:defaultIcon="'Like'"
+		:selectedIcon="'Like'"
+		:indeterminatedIcon="'ReduceOne'"
 		>多选1</v3-checkbox
 	>
 	<v3-checkbox
@@ -237,9 +237,9 @@ export default defineComponent({
 			// 全选 or 全不选
 			if (v) {
 				(state.checkboxValue1 as string[]) = state.checkboxOriginValue1.map(
-					innerV => {
+					(innerV) => {
 						return innerV._id;
-					}
+					},
 				);
 				state.checkboxValue2 = true;
 			} else {
@@ -365,16 +365,16 @@ export default defineComponent({
 
 ### Checkbox Props
 
-| 参数名             | 说明                     | 类型                      | 可选值                 | 默认值                          |
-| ------------------ | ------------------------ | ------------------------- | ---------------------- | ------------------------------- |
-| border             | 是否带有边框             | boolean                   |                        | false                           |
-| disabled           | 禁用状态                 | boolean                   |                        | false                           |
-| label              | 复选框的值               | string / boolean / number |                        |                                 |
-| indeterminate      | 是否为不确定状态         | boolean                   |                        | false                           |
-| selectedIcon       | 选中时的图标             | string                    |                        | v3-icon-checkbox-selected       |
-| indeterminatedIcon | 不确定时的图标           | string                    |                        | v3-icon-checkbox-indeterminated |
-| defaultIcon        | 未选中状态下的图标       | string                    |                        | v3-icon-checkbox-default        |
-| size               | 复选框的尺寸             | string                    | small / medium / large | medium                          |
+| 参数名             | 说明                     | 类型                      | 可选值                 | 默认值       |
+| ------------------ | ------------------------ | ------------------------- | ---------------------- | ------------ |
+| border             | 是否带有边框             | boolean                   |                        | false        |
+| disabled           | 禁用状态                 | boolean                   |                        | false        |
+| label              | 复选框的值               | string / boolean / number |                        |              |
+| indeterminate      | 是否为不确定状态         | boolean                   |                        | false        |
+| selectedIcon       | 选中时的图标             | string                    |                        | CheckCorrect |
+| indeterminatedIcon | 不确定时的图标           | string                    |                        | Reduce       |
+| defaultIcon        | 未选中状态下的图标       | string                    |                        | Square       |
+| size               | 复选框的尺寸             | string                    | small / medium / large | medium       |
 | modelValue         | 单独使用时绑定的 v-model | boolean                   | false                  |
 
 ### Checkbox Events
