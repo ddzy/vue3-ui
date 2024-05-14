@@ -8,9 +8,11 @@
 
 	// 下拉框的按钮动画
 	&.is-visible:not(.is-clearable) {
-		:deep(.v3-base-popper__trigger) {
-			.v3-input__suffix i {
-				transform: rotateZ(180deg);
+		.v3-base-popper__trigger {
+			.v3-input__suffix {
+				.v3-icon {
+					transform: rotateZ(180deg);
+				}
 			}
 		}
 	}
@@ -30,10 +32,12 @@
 
 	.v3-select__trigger {
 		cursor: text;
-		:deep(.v3-input) {
+		.v3-input {
 			background-color: #fff;
-			.v3-input__suffix i {
-				transition: all 0.3s ease;
+			.v3-input__suffix {
+				.v3-icon {
+					transition: all 0.3s ease;
+				}
 			}
 		}
 		.v3-select__tag {

@@ -48,23 +48,13 @@
 			@mouseleave="handleMouseLeave"
 		>
 			<template #suffix>
-				<i
-					style="margin-right: 6px"
-					v-if="!state.showClear"
-					:class="{
-						'v3-icon': true,
-						'v3-icon-arrow-down': true,
-					}"
-				></i>
-				<i
-					style="margin-right: 6px; cursor: pointer"
+				<V3Icon v-if="!state.showClear" style="margin-right: 6px" type="Down" />
+				<V3Icon
 					v-else
-					:class="{
-						'v3-icon': true,
-						'v3-icon-reeor': true,
-					}"
+					style="margin-right: 6px; cursor: pointer"
+					type="CloseOne"
 					@click.stop="handleClear"
-				></i>
+				/>
 			</template>
 		</v3-input>
 		<ul
@@ -78,7 +68,7 @@
 				<li
 					class="v3-select__tag-item"
 					v-for="v in state.selectedOptionList"
-					:key="v"
+					:key="JSON.stringify(v)"
 				>
 					<v3-tag
 						closeable
@@ -98,7 +88,7 @@
 						closeable
 						type="info"
 						v-for="v in state.selectedOptionList.slice(0, 1)"
-						:key="v"
+						:key="JSON.stringify(v)"
 						:size="props.size"
 						@close="handleTagClose(v)"
 						>{{ v.label }}</v3-tag
@@ -142,6 +132,7 @@ import { useDebounce, useThrottle } from '@common/hooks/index';
 import V3Input from '@components/input/main';
 import V3Tag from '@components/tag/main';
 import V3BasePopper from '@components/base-popper/main';
+import V3Icon from '@components/icon/main';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
