@@ -8,9 +8,9 @@
 <template>
 	<div style="display: inline-block">
 		<v3-popconfirm
+			v-model="state.popconfirmValue"
 			content="确定要删除吗？"
 			trigger="manual"
-			v-model="state.popconfirmValue"
 			:confirmBtnLoading="state.popconfirmConfirmBtnLoading"
 			@confirm="handleConfirm"
 			@cancel="handleCancel"
@@ -73,11 +73,11 @@ export default defineComponent({
 		<v3-popconfirm
 			content="要隐藏当前文章吗？"
 			trigger="click"
-			icon="v3-icon-Notvisible"
+			icon="PreviewCloseOne"
 			iconColor="rgba(201, 27, 38, 1)"
 			placement="bottom"
 		>
-			<v3-button type="primary" circle icon="v3-icon-Notvisible"></v3-button>
+			<v3-button type="primary" circle icon="PreviewCloseOne"></v3-button>
 		</v3-popconfirm>
 	</div>
 </template>
@@ -144,7 +144,7 @@ export default defineComponent({
 | cancelBtnText     | 取消按钮的文字          | string  |                                                  | 取消                  |          |
 | cancelBtnType     | 取消按钮的类型          | string  | primary/success/danger/default/warning/info/text | text                  |          |
 | cancelBtnLoading  | 取消按钮的 loading 状态 | boolean |                                                  | false                 |          |
-| icon              | 图标类名                | string  |                                                  | v3-icon-warning-fill  |          |
+| icon              | 图标类名                | string  |                                                  | Attention             |          |
 | iconColor         | 图标颜色                | string  |                                                  | rgba(237, 170, 83, 1) |          |
 | showIcon          | 是否显示图标            | boolean |                                                  | true                  |          |
 

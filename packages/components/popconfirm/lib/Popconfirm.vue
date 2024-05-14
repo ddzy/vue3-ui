@@ -12,17 +12,13 @@
 
 		<template #content>
 			<div class="v3-popconfirm-content__text">
-				<i
+				<V3Icon
 					v-if="props.showIcon"
-					:class="{
-						'v3-icon': true,
-						'v3-popconfirm-text__icon': true,
-						[`${props.icon}`]: true,
-					}"
-					:style="{
-						color: props.iconColor,
-					}"
-				></i>
+					class="v3-popconfirm-text__icon"
+					:type="props.icon"
+					:fill="props.iconColor"
+					:theme="'filled'"
+				/>
 
 				<!-- slot="content" 优先级比 content props 高 -->
 				<slot name="content" v-if="context.slots.content"></slot>
@@ -61,6 +57,7 @@ import {
 } from 'vue';
 import V3BasePopper from '@components/base-popper/main';
 import V3Button from '@components/button/main';
+import V3Icon from '@components/icon/main';
 
 interface IState {}
 
@@ -158,7 +155,7 @@ export default defineComponent({
 		/** 图标类名 */
 		icon: {
 			type: String,
-			default: 'v3-icon-warning-fill',
+			default: 'Attention',
 		},
 		/** 图标颜色 */
 		iconColor: {
