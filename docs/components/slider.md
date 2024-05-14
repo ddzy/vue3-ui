@@ -98,8 +98,8 @@ export default defineComponent({
 <template>
 	<v3-slider
 		v-model="state.sliderValue"
-		prependIcon="v3-icon-sound-Mute"
-		appendIcon="v3-icon-notice"
+		prependIcon="VolumeDown"
+		appendIcon="VolumeUp"
 		label="音量"
 	></v3-slider>
 </template>
@@ -130,8 +130,8 @@ export default defineComponent({
 <template>
 	<v3-slider
 		v-model="state.sliderValue"
-		prependIcon="v3-icon-sound-Mute"
-		appendIcon="v3-icon-notice"
+		prependIcon="VolumeDown"
+		appendIcon="VolumeUp"
 		label="音量"
 		showTooltipAlways
 	></v3-slider>
@@ -163,8 +163,8 @@ export default defineComponent({
 <template>
 	<v3-slider
 		v-model="state.sliderValue"
-		prependIcon="v3-icon-sound-Mute"
-		appendIcon="v3-icon-notice"
+		prependIcon="VolumeDown"
+		appendIcon="VolumeUp"
 		label="音量"
 		showTooltipAlways
 		showStop
@@ -199,8 +199,8 @@ export default defineComponent({
 <template>
 	<v3-slider
 		v-model="state.sliderValue"
-		prependIcon="v3-icon-bad"
-		appendIcon="v3-icon-good"
+		prependIcon="Dislike"
+		appendIcon="Like"
 		label="评分"
 		showTooltipAlways
 		showStop
@@ -253,8 +253,8 @@ export default defineComponent({
 <template>
 	<v3-slider
 		v-model="state.sliderValue"
-		prependIcon="v3-icon-sound-Mute"
-		appendIcon="v3-icon-notice"
+		prependIcon="VolumeDown"
+		appendIcon="VolumeUp"
 		height="200px"
 		vertical
 		:step="25"
@@ -316,8 +316,8 @@ export default defineComponent({
 <template>
 	<v3-slider
 		v-model="state.sliderValue"
-		prependIcon="v3-icon-sound-Mute"
-		appendIcon="v3-icon-notice"
+		prependIcon="VolumeDown"
+		appendIcon="VolumeUp"
 		range
 	></v3-slider>
 </template>

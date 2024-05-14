@@ -19,13 +19,10 @@
 		>
 			<!-- 优先级：slot="prepend" > prependIcon > label -->
 			<slot name="prepend" v-if="context.slots.prepend"></slot>
-			<i
-				:class="{
-					'v3-icon': true,
-					[`${props.prependIcon}`]: true,
-				}"
+			<V3Icon
 				v-else-if="!context.slots.prepend && props.prependIcon"
-			></i>
+				:type="props.prependIcon"
+			/>
 			<label
 				v-else-if="!context.slots.prepend && !props.prependIcon && props.label"
 			>
@@ -143,13 +140,10 @@
 		>
 			<!-- 优先级：slot="append" > appendIcon > label -->
 			<slot name="append" v-if="context.slots.append"></slot>
-			<i
-				:class="{
-					'v3-icon': true,
-					[`${props.appendIcon}`]: true,
-				}"
+			<V3Icon
 				v-else-if="!context.slots.append && props.appendIcon"
-			></i>
+				:type="props.appendIcon"
+			/>
 		</div>
 	</div>
 </template>
@@ -157,6 +151,7 @@
 import * as TYPES from '@typings/index';
 import { usePosition, useResize } from '@common/hooks/index';
 import V3Tooltip from '@components/tooltip/main';
+import V3Icon from '@components/icon/main';
 import {
 	computed,
 	defineComponent,
@@ -206,6 +201,7 @@ export default defineComponent({
 	name: 'V3Slider',
 	components: {
 		V3Tooltip,
+		V3Icon,
 	},
 	props: {
 		/** 滑块的值 */
