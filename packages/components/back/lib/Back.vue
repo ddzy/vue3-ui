@@ -15,7 +15,7 @@
 			@click="toTop"
 		>
 			<div v-if="!context.slots.top" class="v3-back-top__inner" title="去顶部">
-				<i class="v3-icon v3-icon-arrow-up"></i>
+				<V3Icon type="ToTop" />
 			</div>
 			<slot v-else name="top"></slot>
 		</div>
@@ -30,7 +30,7 @@
 				class="v3-back-bottom__inner"
 				title="去底部"
 			>
-				<i class="v3-icon v3-icon-arrow-down"></i>
+				<V3Icon type="ToBottom" />
 			</div>
 			<slot v-else name="bottom"></slot>
 		</div>
@@ -53,9 +53,13 @@ import {
 import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 import * as UTILS from '@common/utils/index';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Back',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 页面滚动距离超过该值时显示去顶部按钮 */
 		distance: {
