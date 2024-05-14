@@ -54,13 +54,7 @@
 					:key="v.icon"
 					@click.stop="handleExtraItemClick(v)"
 				>
-					<i
-						:class="{
-							'v3-icon': true,
-							[v.icon]: true,
-						}"
-						:title="v.title"
-					></i>
+					<V3Icon :type="v.icon" />
 				</div>
 			</div>
 		</div>
@@ -83,6 +77,7 @@ import {
 
 import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
+import V3Icon from '@components/icon/main';
 
 interface IState {
 	isCodeAreaExpand: boolean;
@@ -94,6 +89,9 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3DemoBlock',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 描述区域的提示*/
 		descriptionTip: {
@@ -128,23 +126,10 @@ export default defineComponent({
 			/** 功能区域的样式 */
 			functionalAreaStyle: {},
 		});
-		const app = getCurrentInstance();
+		const app = getCurrentInstance()!;
 		const wrapperRef = ref(document.createElement('div'));
 		const functionalWrapperRef = ref(document.createElement('div'));
 		const codeWrapperRef = ref(document.createElement('div'));
-
-		const homeState: any = inject('HOME_STATE') || {};
-
-		watch(
-			() => homeState.isNavUnfold,
-			() => {
-				// 当切换文档右侧导航栏时，也要重新计算功能区域的样式
-				setTimeout(() => {
-					computeFunctionalAreaStyle();
-				}, Number.parseInt(homeState.navTransitionTime));
-			},
-			{ immediate: false },
-		);
 
 		onMounted(() => {
 			handleWindowResize();
@@ -216,12 +201,12 @@ export default defineComponent({
 			context.emit('extraClick', v);
 		}
 
-		function handleCodeTransitionEnter(el: HTMLElement) {
-			UTILS.handleTransitionEnter(el);
+		function handleCodeTransitionEnter(el: Element) {
+			UTILS.handleTransitionEnter(el as unknown as HTMLElement);
 		}
 
-		function handleCodeTransitionLeave(el: HTMLElement) {
-			UTILS.handleTransitionLeave(el);
+		function handleCodeTransitionLeave(el: Element) {
+			UTILS.handleTransitionLeave(el as unknown as HTMLElement);
 		}
 
 		function handleCodeTransitionAfterEnter() {

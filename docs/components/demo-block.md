@@ -149,11 +149,11 @@ export default defineComponent({
 			extraList: [
 				{
 					title: '转发',
-					icon: 'v3-icon-resonserate',
+					icon: 'Share',
 				},
 				{
 					title: '喜欢',
-					icon: 'v3-icon-like',
+					icon: 'Like',
 				},
 			],
 		});
