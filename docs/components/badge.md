@@ -49,13 +49,13 @@ export default defineComponent({
 <template>
 	<v3-space :size="30">
 		<v3-badge dot type="primary">
-			<v3-button type="primary" icon="v3-icon-assessed-badge"></v3-button>
+			<v3-button type="primary" icon="Setting"></v3-button>
 		</v3-badge>
 		<v3-badge dot type="success">
-			<v3-button type="success" icon="v3-icon-cart-full"></v3-button>
+			<v3-button type="success" icon="Power"></v3-button>
 		</v3-badge>
 		<v3-badge dot type="danger">
-			<v3-button type="danger" icon="v3-icon-CurrencyConverter"></v3-button>
+			<v3-button type="danger" icon="Lightning"></v3-button>
 		</v3-badge>
 		<v3-badge dot type="warning"> 文本4 </v3-badge>
 		<v3-badge dot type="info"> 文本5 </v3-badge>
