@@ -17,7 +17,7 @@
 			}"
 		>
 			<div class="v3-loading__spinning">
-				<i class="v3-icon v3-icon-loading"></i>
+				<V3Icon type="LoadingOne" spin />
 			</div>
 
 			<div class="v3-loading__content" v-if="props.content">
@@ -47,6 +47,7 @@ import {
 } from 'vue';
 import * as TYPES from '@typings/index';
 import V3Backdrop from '@components/backdrop/main';
+import V3Icon from '@components/icon/main';
 import { close } from './LoadingConstructor';
 import VARIABLE from '@common/constants/internal-variable';
 
@@ -58,6 +59,7 @@ export default defineComponent({
 	name: 'V3Loading',
 	components: {
 		V3Backdrop,
+		V3Icon,
 		RenderVNode: defineComponent({
 			props: {
 				vnode: {
@@ -107,7 +109,7 @@ export default defineComponent({
 			/** 当前 loading 的显隐状态 */
 			isShow: true,
 		});
-		const app = ref(getCurrentInstance()).value;
+		const app = ref(getCurrentInstance()!).value;
 
 		watch(
 			toRef(props, 'fullscreen'),
