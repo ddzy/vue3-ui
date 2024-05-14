@@ -39,9 +39,6 @@ button {
 			&.is-circle {
 				padding: map-get($map: $value, $key: circle-padding);
 			}
-			& [class*='v3-icon-'] {
-				font-size: map-get($map: $value, $key: icon-font-size);
-			}
 		}
 	}
 
@@ -92,7 +89,7 @@ $button-type-map: (
 		active-color: #1a83de,
 	),
 	default: (
-		border-color: $border-color-default,
+		border-color: $border-color-large,
 		color: $font-color-default,
 		background-color: #fff,
 		hover-background-color: $primary-color-plain,

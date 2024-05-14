@@ -407,12 +407,14 @@ export default defineComponent({
 
 ```vue
 <template>
-	<v3-space :size="12">
+	<v3-switch v-model="state.loading"></v3-switch>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-space :size="12" :key="state.loading">
 		<v3-button
 			v-for="v in state.btnList"
 			:key="v.type"
 			:type="v.type"
-			:loading="true"
+			:loading="state.loading"
 			:plain="v.plain"
 		>
 			{{ v.title }}
@@ -432,42 +434,37 @@ export default defineComponent({
 				type: 'default',
 				plain: true,
 				title: '朴素按钮 + 图标',
-				loading: false,
 			},
 			{
 				type: 'info',
 				plain: true,
 				title: '朴素按钮 + 图标',
-				loading: false,
 			},
 			{
 				type: 'primary',
 				plain: true,
 				title: '朴素按钮 + 图标',
-				loading: false,
 			},
 			{
 				type: 'success',
 				plain: true,
 				title: '朴素按钮 + 图标',
-				loading: false,
 			},
 			{
 				type: 'danger',
 				plain: true,
 				title: '朴素按钮 + 图标',
-				loading: false,
 			},
 			{
 				type: 'warning',
 				plain: true,
 				title: '朴素按钮 + 图标',
-				loading: false,
 			},
 		];
 
 		const state = reactive({
 			btnList,
+			loading: true,
 		});
 
 		return {
