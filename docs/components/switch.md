@@ -105,8 +105,8 @@ export default defineComponent({
 		v-model="state.switchValue"
 		activeLabel="开"
 		inactiveLabel="关"
-		activeIcon="v3-icon-notice"
-		inactiveIcon="v3-icon-sound-Mute"
+		activeIcon="VolumeNotice"
+		inactiveIcon="VolumeMute"
 	></v3-switch>
 </template>
 <script lang="ts">
