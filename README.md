@@ -6,7 +6,7 @@ vue3 组件库（正式环境请勿使用）
 
 |       组件       |       简介       |        功能        |      单元测试      |        文档        |
 | :--------------: | :--------------: | :----------------: | :----------------: | :----------------: |
-|       Icon       |       图标       | :white_check_mark: | :white_check_mark: |   :construction:   |
+|       Icon       |       图标       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Button      |       按钮       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |   ButtonGroup    |      按钮组      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Input       |      输入框      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
