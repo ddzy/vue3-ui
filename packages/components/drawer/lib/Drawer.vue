@@ -31,11 +31,12 @@
 								<h3>{{ props.title }}</h3>
 							</template>
 						</div>
-						<i
+						<V3Icon
 							v-if="props.showClose"
-							class="v3-icon v3-icon-close v3-drawer-header__close"
+							type="CloseSmall"
+							class="v3-drawer-header__close"
 							@click="handleClose"
-						></i>
+						/>
 					</div>
 					<div class="v3-drawer__content">
 						<slot name="default"></slot>
@@ -87,6 +88,7 @@ import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
 import V3Backdrop from '@components/backdrop/main';
 import V3Button from '@components/button/main';
+import V3Icon from '@components/icon/main';
 
 interface IState {
 	syncedModelValue: boolean;
@@ -97,6 +99,7 @@ export default defineComponent({
 	components: {
 		V3Backdrop,
 		V3Button,
+		V3Icon,
 	},
 	props: {
 		modelValue: {
