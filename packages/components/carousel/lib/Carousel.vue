@@ -32,7 +32,7 @@
 		>
 			<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
-				<i class="v3-icon v3-icon-arrow-left"></i>
+				<V3Icon type="Left" />
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@
 		>
 			<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
-				<i class="v3-icon v3-icon-arrow-right"></i>
+				<V3Icon type="Right" />
 			</div>
 		</div>
 
@@ -91,6 +91,7 @@ import {
 } from 'vue';
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import * as UTILS from '@common/utils/index';
+import V3Icon from '@components/icon/main';
 
 interface IState {
 	carouselItemInstanceList: any[];
@@ -108,7 +109,9 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3Carousel',
-	components: {},
+	components: {
+		V3Icon,
+	},
 	props: {
 		modelValue: {
 			type: Number,
