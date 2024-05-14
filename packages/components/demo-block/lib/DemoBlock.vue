@@ -30,7 +30,9 @@
 				ref="codeWrapperRef"
 				class="v3-demo-block__code v3-demo-block__common"
 			>
-				<slot name="code"></slot>
+				<div class="v3-demo-block-code__inner">
+					<slot name="code"></slot>
+				</div>
 			</div>
 		</transition>
 		<div
