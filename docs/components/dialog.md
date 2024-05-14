@@ -165,10 +165,14 @@ export default defineComponent({
 		</div>
 		<template #footer>
 			<div :class="$style['dialog-footer']">
-				<v3-button type="default" plain @click="state.showDialog = false"
+				<v3-button
+					:class="$style['btn']"
+					type="default"
+					plain
+					@click="state.showDialog = false"
 					>取消</v3-button
 				>
-				<v3-button type="primary">我知道了</v3-button>
+				<v3-button :class="$style['btn']" type="primary">我知道了</v3-button>
 			</div>
 		</template>
 	</v3-dialog>
@@ -188,7 +192,7 @@ export default defineComponent({
 	},
 });
 </script>
-<style module lang="postcss">
+<style module lang="scss">
 .dialog-content {
 	display: flex;
 	align-items: center;
@@ -196,6 +200,11 @@ export default defineComponent({
 .dialog-footer {
 	display: flex;
 	justify-content: flex-end;
+}
+.btn {
+	&:not(:first-child) {
+		margin-left: 8px;
+	}
 }
 </style>
 ```

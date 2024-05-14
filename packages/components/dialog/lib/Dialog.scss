@@ -41,12 +41,12 @@
 			.v3-dialog-header__action {
 				display: flex;
 				align-items: center;
-				:deep(.v3-button) {
+				.v3-button {
 					&:not(:first-child) {
 						margin-left: $margin-medium;
 					}
 				}
-				i.v3-icon.v3-icon-close {
+				.v3-icon {
 					cursor: pointer;
 				}
 			}
