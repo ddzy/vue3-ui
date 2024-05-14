@@ -6,22 +6,22 @@ export type IProgressFormatLabel = (percent: number) => any;
 export interface IProgressProps {
 	percent: number;
 	theme: IProgressTheme;
-	trackWidth: number;
+	trackWidth: number | string;
 	trackColor: string;
 	doneTrackColor: string;
 	showLabel: boolean;
 	formatLabel: IProgressFormatLabel;
 }
-export interface IProgressLinearProps extends IProgressProps {
+export type IProgressLinearProps = Omit<IProgressProps, 'width'> & {
 	width: string;
 	animation: boolean;
 	round: boolean;
 	roundLength: string;
-}
+};
 export interface IProgressCircularProps extends IProgressProps {
 	radius: number;
 	rotate: number;
 }
 
-export const V3ProgressLinear: SFCWithInstall<IProgressLinearProps>
-export const V3ProgressCircular: SFCWithInstall<IProgressCircularProps>
+export const V3ProgressLinear: SFCWithInstall<IProgressLinearProps>;
+export const V3ProgressCircular: SFCWithInstall<IProgressCircularProps>;

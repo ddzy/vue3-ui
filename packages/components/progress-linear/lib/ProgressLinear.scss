@@ -33,6 +33,7 @@ $progress-theme-list: (
 .v3-progress-linear {
 	display: flex;
 	align-items: center;
+	width: var(--progress-width);
 
 	// 有圆角
 	&.has-round {
@@ -88,7 +89,6 @@ $progress-theme-list: (
 			box-sizing: border-box;
 			position: relative;
 			overflow: hidden;
-			width: var(--progress-width);
 			height: var(--progress-track-width);
 		}
 		.v3-progress-track__done {
