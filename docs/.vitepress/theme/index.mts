@@ -1,17 +1,26 @@
 import DefaultTheme from 'vitepress/theme';
 import 'vitepress-theme-demoblock/dist/theme/styles/index.css';
-import Demo from 'vitepress-theme-demoblock/dist/client/components/Demo.vue';
-import DemoBlock from 'vitepress-theme-demoblock/dist/client/components/DemoBlock.vue';
-
-import Vue3Ui from '../../../packages/components/main';
 import './index.scss';
 
 export default {
 	...DefaultTheme,
-	enhanceApp(ctx) {
+	async enhanceApp(ctx) {
 		DefaultTheme.enhanceApp(ctx);
-		ctx.app.component('Demo', Demo);
-		ctx.app.component('DemoBlock', DemoBlock);
-		ctx.app.use(Vue3Ui);
+		// @ts-ignore
+		if (!import.meta.env.SSR) {
+			const { default: Demo } = await import(
+				'vitepress-theme-demoblock/dist/client/components/Demo.vue'
+			);
+			const { default: DemoBlock } = await import(
+				'vitepress-theme-demoblock/dist/client/components/DemoBlock.vue'
+			);
+			const { default: Vue3UI } = await import(
+				'../../../packages/components/main'
+			);
+
+			ctx.app.component('Demo', Demo);
+			ctx.app.component('DemoBlock', DemoBlock);
+			ctx.app.use(Vue3UI);
+		}
 	},
 };

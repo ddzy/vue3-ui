@@ -23,12 +23,11 @@
 </div>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { reactive, getCurrentInstance } from 'vue';
   import { useClipboard } from '@vueuse/core';
-  import V3Message from '@components/message/lib/MessageConstructor';
 
   const clipboard = useClipboard();
-
+  const app = getCurrentInstance().proxy;
   const state = reactive({
     keyword: '',
     columns: 5,
@@ -378,14 +377,14 @@
 
   function copy(row) {
     if(!clipboard.isSupported) {
-      return V3Message.warning({
+      return app.$message.warning({
         message: '您的浏览器不支持 Clipboard API',
       })
     }
     let code = `<V3Icon type="${row._id}" />`
     clipboard.copy(code);
     if(clipboard.copied) {
-      V3Message.success({
+      app.$message.success({
         message: code,
       });
     }

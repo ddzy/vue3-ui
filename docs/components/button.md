@@ -18,8 +18,7 @@
 	</v3-space>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import V3Message from '@components/message/lib/MessageConstructor';
+import { defineComponent, reactive, getCurrentInstance } from 'vue';
 
 export default defineComponent({
 	setup() {
@@ -52,18 +51,18 @@ export default defineComponent({
 				title: '警告按钮',
 			},
 		];
-
+		const app = getCurrentInstance().proxy;
 		const state = reactive({
 			btnList,
 		});
 
 		function handleClick(row) {
-			if (typeof V3Message[row.type] === 'function') {
-				V3Message[row.type]({
+			if (typeof app.$message[row.type] === 'function') {
+				app.$message[row.type]({
 					message: row.type,
 				});
 			} else {
-				V3Message.success({
+				app.$message.success({
 					message: row.type,
 				});
 			}

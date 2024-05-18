@@ -15,7 +15,7 @@ import {
 	useAttrs,
 	toRefs,
 } from 'vue';
-import { IconPark } from '@icon-park/vue-next/es/all';
+import { IconPark } from '@icon-park/vue-next/lib/all';
 import { IconProvider, DEFAULT_ICON_CONFIGS } from '@icon-park/vue-next';
 import '@icon-park/vue-next/styles/index.css';
 
