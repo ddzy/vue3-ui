@@ -36,7 +36,7 @@
 		"docs:build": "vitepress build docs",
 		"build": "pnpm build:lib",
 		"build:lib": "ts-node ./build/lib.build.ts",
-		"build:docs": "pnpm docs:build",
+		"build:docs": "cross-env NODE_OPTIONS=--max-old-space-size=1536 pnpm docs:build",
 		"build:check": "vue-tsc --noEmit && vite build",
 		"test": "jest --coverage",
 		"commit": "git-cz",
