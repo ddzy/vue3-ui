@@ -5,11 +5,10 @@ import {
 	demoblockVitePlugin,
 } from 'vitepress-theme-demoblock';
 
-const isProduction = process.env.VITEPRESS_NODE_ENV === 'production';
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 	lastUpdated: true,
+	base: '/vue3-ui/',
 
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
@@ -179,7 +178,6 @@ export default defineConfig({
 		},
 	},
 	vite: {
-		base: !isProduction ? '/' : '/vue3-ui/',
 		server: {
 			host: true,
 			open: true,
