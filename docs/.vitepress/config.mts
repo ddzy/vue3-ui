@@ -10,7 +10,6 @@ const isProduction = process.env.VITEPRESS_NODE_ENV === 'production';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 	lastUpdated: true,
-	cleanUrls: true,
 
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
