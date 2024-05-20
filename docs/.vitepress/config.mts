@@ -5,6 +5,8 @@ import {
 	demoblockVitePlugin,
 } from 'vitepress-theme-demoblock';
 
+const isProduction = process.env.VITEPRESS_NODE_ENV === 'production';
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 	lastUpdated: true,
@@ -178,6 +180,7 @@ export default defineConfig({
 		},
 	},
 	vite: {
+		base: !isProduction ? '/' : '/vue3-ui/',
 		server: {
 			host: true,
 			open: true,
