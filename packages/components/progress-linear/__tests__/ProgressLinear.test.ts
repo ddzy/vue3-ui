@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { mount } from '@vue/test-utils';
-import V3ProgressLinear from '../main';
+import { V3ProgressLinear } from '@components/main';
 
 describe('V3ProgressLinear 组件测试：', () => {
 	test('V3ProgressLinear 组件应该正常渲染', async () => {

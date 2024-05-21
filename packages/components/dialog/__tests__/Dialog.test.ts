@@ -1,8 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Dialog from '../main';
-import V3Button from '@components/button/main';
-import V3Backdrop from '@components/backdrop/main';
+import { V3Backdrop, V3Button, V3Dialog } from '@components/main';
 
 describe('V3Dialog 组件测试：', () => {
 	test('Dialog 组件应该正常渲染', async () => {

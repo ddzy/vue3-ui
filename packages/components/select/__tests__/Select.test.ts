@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Select from '../main';
-import V3SelectOption from '@components/select-option/main';
+import { V3SelectOption, V3Select } from '@components/main';
 
 describe('V3Select 组件测试：', () => {
 	test('V3Select 组件基本用法', async () => {

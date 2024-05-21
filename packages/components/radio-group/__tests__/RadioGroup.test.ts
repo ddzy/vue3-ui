@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
-import V3RadioGroup from '../main';
-import V3Radio from '@components/radio/main';
+import { V3Radio, V3RadioGroup } from '@components/main';
 
 describe('RadioGroup 组件测试：', () => {
 	test('RadioGroup 组件应该正常进行值的【双向绑定】', async () => {

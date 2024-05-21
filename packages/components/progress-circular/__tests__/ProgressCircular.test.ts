@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { mount } from '@vue/test-utils';
-import V3ProgressCircular from '../main';
+import { V3ProgressCircular } from '@components/main';
 
 describe('V3ProgressCircular 组件测试：', () => {
 	test('V3ProgressCircular 组件应该正常渲染', async () => {

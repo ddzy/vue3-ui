@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Switch from '../main';
+import { V3Switch } from '@components/main';
 
 describe('V3Switch 组件测试：', () => {
 	test('Switch 组件最基本的用法', async () => {
