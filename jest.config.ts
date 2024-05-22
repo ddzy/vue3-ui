@@ -23,7 +23,7 @@ export default {
 		],
 	},
 	// testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
-	testRegex: '/__tests__/Carousel\\.test\\.ts$',
+	testRegex: '/__tests__/Checkbox\\.test\\.ts$',
 	testPathIgnorePatterns: ['Select\\.test\\.ts'],
 	moduleFileExtensions: ['vue', 'js', 'ts'],
 	moduleNameMapper: {
