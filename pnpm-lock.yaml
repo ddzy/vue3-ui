@@ -80,6 +80,9 @@ importers:
       jest-environment-jsdom:
         specifier: 29.7.0
         version: 29.7.0
+      jest-jasmine2:
+        specifier: ^29.7.0
+        version: 29.7.0
       lint-staged:
         specifier: 10.5.4
         version: 10.5.4
@@ -2860,6 +2863,10 @@ packages:
 
   jest-haste-map@29.7.0:
     resolution: {integrity: sha512-fP8u2pyfqx0K1rGn1R9pyE0/KTn+G7PxktWidOBTqFPLYX0b9ksaMFkhK5vrS3DVun09pckLdlx90QthlW7AmA==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+
+  jest-jasmine2@29.7.0:
+    resolution: {integrity: sha512-N3nRpBVTM5erHtMi6ODBUEqG/LpVgSJC8qk14duw88d9Eigx2vL+n4LF1d8eV8pegnnzKyNHdTGxa/NsIKj0Zw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   jest-leak-detector@29.7.0:
@@ -7591,6 +7598,28 @@ snapshots:
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
+
+  jest-jasmine2@29.7.0:
+    dependencies:
+      '@jest/environment': 29.7.0
+      '@jest/expect': 29.7.0
+      '@jest/source-map': 29.6.3
+      '@jest/test-result': 29.7.0
+      '@jest/types': 29.6.3
+      '@types/node': 14.14.37
+      chalk: 4.1.2
+      co: 4.6.0
+      is-generator-fn: 2.1.0
+      jest-each: 29.7.0
+      jest-matcher-utils: 29.7.0
+      jest-message-util: 29.7.0
+      jest-runtime: 29.7.0
+      jest-snapshot: 29.7.0
+      jest-util: 29.7.0
+      p-limit: 3.1.0
+      pretty-format: 29.7.0
+    transitivePeerDependencies:
+      - supports-color
 
   jest-leak-detector@29.7.0:
     dependencies:

@@ -23,7 +23,7 @@ export default {
 		],
 	},
 	// testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
-	testRegex: '/__tests__/ButtonGroup\\.test\\.ts$',
+	testRegex: '/__tests__/Carousel\\.test\\.ts$',
 	testPathIgnorePatterns: ['Select\\.test\\.ts'],
 	moduleFileExtensions: ['vue', 'js', 'ts'],
 	moduleNameMapper: {
@@ -36,4 +36,5 @@ export default {
 	testEnvironmentOptions: {
 		customExportConditions: ['node', 'node-addons'],
 	},
+	testRunner: 'jest-jasmine2',
 } as Config;
