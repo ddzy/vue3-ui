@@ -51,6 +51,9 @@ import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Button',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 按钮的类型 */
 		type: {

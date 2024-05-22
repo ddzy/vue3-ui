@@ -66,6 +66,7 @@ export default defineComponent({
 	components: {
 		V3BasePopper,
 		V3Button,
+		V3Icon,
 	},
 	props: {
 		/** 不可配置主题 */

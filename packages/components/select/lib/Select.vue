@@ -178,6 +178,9 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3Select',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 下拉框的值 */
 		modelValue: {

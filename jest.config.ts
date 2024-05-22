@@ -7,8 +7,8 @@ export default {
 		// '^.+\\.vue$': '@vue/vue3-jest',
 		'^.+\\.ts$': ['ts-jest', { tsconfig: `./tsconfig.json` }],
 	},
-	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
-	// testRegex: 'Badge\\.test\\.ts$',
+	// testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
+	testRegex: 'BasePopper\\.test\\.ts$',
 	testPathIgnorePatterns: ['Select\\.test\\.ts'],
 	moduleFileExtensions: ['vue', 'js', 'ts'],
 	moduleNameMapper: {

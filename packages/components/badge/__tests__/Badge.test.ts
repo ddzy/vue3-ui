@@ -46,15 +46,15 @@ describe('V3Badge 组件测试：', () => {
 			},
 			template: `
         <v3-badge dot type="primary">
-          <v3-button type="primary" icon="v3-icon-assessed-badge"></v3-button>
+          <v3-button type="primary" icon="Search"></v3-button>
         </v3-badge>
         <v3-badge dot type="success">
-          <v3-button type="success" icon="v3-icon-cart-full"></v3-button>
+          <v3-button type="success" icon="Search"></v3-button>
         </v3-badge>
         <v3-badge dot type="danger">
           <v3-button
             type="danger"
-            icon="v3-icon-CurrencyConverter"
+            icon="Search"
           ></v3-button>
         </v3-badge>
         <v3-badge dot type="warning">

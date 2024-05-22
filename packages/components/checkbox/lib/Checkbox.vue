@@ -78,6 +78,9 @@ import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Checkbox',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 是否带有边框 */
 		border: {

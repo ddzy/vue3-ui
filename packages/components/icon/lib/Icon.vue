@@ -1,11 +1,6 @@
 <template>
 	<IconPark v-bind="{ ...props }" :key="state.key" />
 </template>
-<script lang="ts">
-export default {
-	name: 'V3Icon',
-};
-</script>
 <script lang="ts" setup>
 import {
 	PropType,
@@ -25,6 +20,9 @@ IconProvider({
 	...DEFAULT_ICON_CONFIGS,
 	prefix: 'v3',
 	size: '1em',
+});
+defineOptions({
+	name: 'V3Icon',
 });
 
 const props = withDefaults(defineProps<IIconProps>(), {

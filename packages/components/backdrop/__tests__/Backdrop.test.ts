@@ -1,6 +1,6 @@
-import { V3Button, V3Backdrop } from '@components/main';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
+import { V3Button, V3Backdrop } from '@components/main';
 
 describe('Backdrop 组件测试：', () => {
 	test('Backdrop 组件应该正常渲染', async () => {

@@ -32,6 +32,9 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3Tag',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 标签的类型（与 V3Button 大体相同） */
 		type: {
