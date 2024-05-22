@@ -270,7 +270,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(4);
 		// 全选之后图标也要变化
 		expect(
-			wrapper1.find('.controller').find('.v3-icon-checkbox-selected').exists(),
+			wrapper1.find('.controller').find('.v3-icon-check-correct').exists(),
 		).toBeTruthy();
 
 		// 手动全不选（再次点击则全不选）
@@ -282,7 +282,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(0);
 		// 全不选之后图标也要变化
 		expect(
-			wrapper1.find('.controller').find('.v3-icon-checkbox-default').exists(),
+			wrapper1.find('.controller').find('.v3-icon-square').exists(),
 		).toBeTruthy();
 
 		// 全选之后，手动取消选择第一、二项
@@ -303,10 +303,7 @@ describe('CheckboxGroup 组件测试：', () => {
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(2);
 		// 图标也要变为不确定状态
 		expect(
-			wrapper1
-				.find('.controller')
-				.find('.v3-icon-checkbox-indeterminated')
-				.exists(),
+			wrapper1.find('.controller').find('.v3-icon-reduce').exists(),
 		).toBeTruthy();
 		// 这时候，再次全选
 		await wrapper1
