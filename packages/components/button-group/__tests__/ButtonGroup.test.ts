@@ -9,22 +9,19 @@ describe('ButtonGroup 组件测试：', () => {
 				V3ButtonGroup,
 			},
 			template: `
-        <div>
-          <v3-button-group>
-            <v3-button
-              type="primary"
-              icon="v3-icon-arrow-left"
-            >上一页</v3-button>
-            <v3-button
-              type="primary"
-              icon="v3-icon-assessed-badge"
-            ></v3-button>
-            <v3-button type="primary">
-              <span>下一页</span>
-              <i class="v3-icon v3-icon-arrow-right"></i>
-            </v3-button>
-          </v3-button-group>
-        </div>
+        <v3-button-group>
+          <v3-button
+            type="primary"
+            icon="Left"
+          >上一页</v3-button>
+          <v3-button
+            type="primary"
+            icon="More"
+          ></v3-button>
+          <v3-button type="primary" icon="Right">
+            <span>下一页</span>
+          </v3-button>
+        </v3-button-group>
       `,
 		};
 		const wrapper = mount(component);
