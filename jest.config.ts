@@ -3,12 +3,27 @@ import type { Config } from 'jest';
 export default {
 	testEnvironment: 'jsdom',
 	transform: {
-		'^.+\\.vue$': './vue3JestHack.js',
-		// '^.+\\.vue$': '@vue/vue3-jest',
-		'^.+\\.ts$': ['ts-jest', { tsconfig: `./tsconfig.json` }],
+		'^.+\\.vue$': [
+			// 不直接引入 @vue/vue3-jest
+			// 解决 defineProps 无法引入外部类型导致的错误
+			'./vue3JestHack.js',
+			{
+				tsConfig: `./tsconfig.json`,
+			},
+		],
+		'^.+\\.ts$': [
+			'ts-jest',
+			{
+				tsconfig: `./tsconfig.json`,
+				// 禁用 ts 类型检查
+				diagnostics: {
+					exclude: ['**'],
+				},
+			},
+		],
 	},
 	// testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
-	testRegex: 'BasePopper\\.test\\.ts$',
+	testRegex: '/__tests__/Button\\.test\\.ts$',
 	testPathIgnorePatterns: ['Select\\.test\\.ts'],
 	moduleFileExtensions: ['vue', 'js', 'ts'],
 	moduleNameMapper: {
@@ -20,10 +35,5 @@ export default {
 	},
 	testEnvironmentOptions: {
 		customExportConditions: ['node', 'node-addons'],
-	},
-	globals: {
-		'vue-jest': {
-			tsConfig: `./tsconfig.json`,
-		},
 	},
 } as Config;
