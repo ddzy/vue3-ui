@@ -2,16 +2,12 @@
 	<IconPark v-bind="{ ...props }" :key="state.key" />
 </template>
 <script lang="ts" setup>
-import {
-	PropType,
-	defineComponent,
-	reactive,
-	watch,
-	useAttrs,
-	toRefs,
-} from 'vue';
+import { reactive, watch } from 'vue';
 import { IconPark } from '@icon-park/vue-next/lib/all';
-import { IconProvider, DEFAULT_ICON_CONFIGS } from '@icon-park/vue-next';
+import {
+	IconProvider,
+	DEFAULT_ICON_CONFIGS,
+} from '@icon-park/vue-next/lib/index';
 import '@icon-park/vue-next/styles/index.css';
 
 import type { IIconProps } from '@typings/index';
