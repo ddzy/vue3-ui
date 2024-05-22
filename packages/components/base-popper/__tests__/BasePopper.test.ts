@@ -13,19 +13,25 @@ describe('V3BasePopper 组件测试：', () => {
 				V3Button,
 			},
 			template: `
-				<v3-base-popper trigger="click">
-					<v3-button type="primary">触发</v3-button>
+				<v3-base-popper v-model="visible" trigger="click">
+					<v3-button type="primary" @click="visible = !visible">触发</v3-button>
 					<template #content>
 						测试内容
 					</template>
 				</v3-base-popper>
 			`,
+			data() {
+				return {
+					visible: false,
+				};
+			},
 		});
 
 		// 默认不显示
 		expect(
 			wrapper.find('.v3-base-popper').classes().includes('is-visible'),
 		).toBeFalsy();
+		await nextTick();
 		expect(
 			wrapper.find('.v3-base-popper .v3-base-popper__dropdown').exists(),
 		).toBeFalsy();
@@ -54,13 +60,13 @@ describe('V3BasePopper 组件测试：', () => {
 				<v3-base-popper
 					trigger="manual"
 					theme="light"
-					v-model="popperValue"
+					v-model="visible"
 				>
-					<v3-button type="primary" @click="popperValue = true"
+					<v3-button type="primary" @click="visible = true"
 						>触发</v3-button
 					>
 					<template #content>
-						<v3-button type="primary" @click="popperValue = false"
+						<v3-button type="primary" @click="visible = false"
 							>确认</v3-button
 						>
 					</template>
@@ -68,11 +74,16 @@ describe('V3BasePopper 组件测试：', () => {
 			`,
 			data() {
 				return {
-					popperValue: false,
+					visible: false,
 				};
 			},
 		});
 
+		// 默认隐藏
+		expect(
+			wrapper.find('.v3-base-popper').classes().includes('.is-visible'),
+		).toBeFalsy();
+		await nextTick();
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
 
 		// 显示
@@ -123,7 +134,7 @@ describe('V3BasePopper 组件测试：', () => {
 			`,
 			data() {
 				return {
-					popperValue: false,
+					visible: false,
 				};
 			},
 		});
@@ -155,7 +166,7 @@ describe('V3BasePopper 组件测试：', () => {
 			`,
 			data() {
 				return {
-					popperValue: false,
+					visible: false,
 				};
 			},
 		});
