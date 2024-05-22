@@ -7,25 +7,25 @@ const commonCarouselList = [
 	{
 		id: 1,
 		title: '图片一',
-		coverImg: 'https://oos.yyge.top/test/images/5.jpg',
+		coverImg: 'https://oss.yyge.top/test/images/5.jpg',
 		bgColor: 'rgba(0, 160, 255, 1)',
 	},
 	{
 		id: 2,
 		title: '图片二',
-		coverImg: 'https://oos.yyge.top/test/images/6.jpg',
+		coverImg: 'https://oss.yyge.top/test/images/6.jpg',
 		bgColor: 'rgba(99, 185, 49, 1)',
 	},
 	{
 		id: 3,
 		title: '图片三',
-		coverImg: 'https://oos.yyge.top/test/images/7.jpg',
+		coverImg: 'https://oss.yyge.top/test/images/7.jpg',
 		bgColor: 'rgba(201, 27, 38, 1)',
 	},
 	{
 		id: 4,
 		title: '图片四',
-		coverImg: 'https://oos.yyge.top/test/images/8.jpg',
+		coverImg: 'https://oss.yyge.top/test/images/8.jpg',
 		bgColor: 'rgba(237, 170, 83, 1)',
 	},
 ];
