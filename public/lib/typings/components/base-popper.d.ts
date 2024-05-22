@@ -29,6 +29,10 @@ export type IBasePopperTrigger =
 	| 'focusin'
 	| 'manual';
 
+export type IBasePopperAppendTo =
+	| Element
+	| 'parent'
+	| ((ref: Element) => Element);
 export interface IBasePopperProps {
 	modelValue: IBasePopperModelValue;
 	trigger: IBasePopperTrigger;
@@ -46,5 +50,6 @@ export interface IBasePopperProps {
 	customDropdownClass: string | object;
 	customTriggerClass: string | object;
 	sameWidth: boolean;
+	appendTo: IBasePopperAppendTo;
 }
-export const V3BasePopper: SFCWithInstall<IBasePopperProps>
+export const V3BasePopper: SFCWithInstall<IBasePopperProps>;

@@ -33,7 +33,7 @@
 			:showOnCreate="state.showDropdown"
 			:delay="props.delay"
 			:offset="props.offset"
-			:appendTo="state.body"
+			:appendTo="appendTo"
 			:onShow="handleShow"
 			:onHide="handleHide"
 			:onMount="handleMount"
@@ -59,13 +59,6 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
-import VARIABLE from '@common/constants/internal-variable';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/themes/light.css';
-import 'tippy.js/themes/material.css';
-import 'tippy.js/animations/perspective.css';
-
 import {
 	computed,
 	defineComponent,
@@ -77,10 +70,15 @@ import {
 } from 'vue';
 import { Tippy } from 'vue-tippy';
 import { Instance } from 'tippy.js';
+import * as TYPES from '@typings/index';
+import VARIABLE from '@common/constants/internal-variable';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/themes/material.css';
+import 'tippy.js/animations/perspective.css';
 
 interface IState {
 	showDropdown: boolean;
-	body: HTMLElement;
 }
 
 export default defineComponent({
@@ -202,12 +200,16 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		/** 浮框挂载到的元素 */
+		appendTo: {
+			type: [String, Object, Function] as PropType<TYPES.IBasePopperAppendTo>,
+			default: 'parent',
+		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {
 		const state: IState = reactive({
 			/** popper 的显隐状态 */
 			showDropdown: false,
-			body: document.body,
 		});
 		const app = ref(getCurrentInstance()).value;
 		const tippyRef = ref(null);
