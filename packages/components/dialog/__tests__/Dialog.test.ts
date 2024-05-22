@@ -34,7 +34,7 @@ describe('V3Dialog 组件测试：', () => {
 		);
 
 		await wrapper
-			.find('.v3-backdrop .v3-dialog .v3-icon-close')
+			.find('.v3-backdrop .v3-dialog .v3-icon-close-small')
 			.trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
@@ -324,7 +324,7 @@ describe('V3Dialog 组件测试：', () => {
 		expect(document.body.classList.contains('v3-body--fixed')).toBeTruthy();
 
 		await wrapper
-			.find('.v3-dialog .v3-dialog__header .v3-icon-close')
+			.find('.v3-dialog .v3-dialog__header .v3-icon-close-small')
 			.trigger('click');
 		await nextTick();
 		expect(document.body.classList.contains('v3-body--fixed')).toBeFalsy();
@@ -360,7 +360,9 @@ describe('V3Dialog 组件测试：', () => {
 			'测试弹窗内容',
 		);
 		expect(
-			wrapper.find('.v3-dialog .v3-dialog__header .v3-icon-close').exists(),
+			wrapper
+				.find('.v3-dialog .v3-dialog__header .v3-icon-close-small')
+				.exists(),
 		).toBeFalsy();
 	});
 
@@ -401,7 +403,7 @@ describe('V3Dialog 组件测试：', () => {
 		);
 
 		await wrapper
-			.find('.v3-dialog .v3-dialog__header .v3-icon-close')
+			.find('.v3-dialog .v3-dialog__header .v3-icon-close-small')
 			.trigger('click');
 		await nextTick();
 		expect(wrapper.vm.hasTriggered).toBeTruthy();
