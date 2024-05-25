@@ -81,7 +81,7 @@ importers:
         specifier: 29.7.0
         version: 29.7.0
       jest-jasmine2:
-        specifier: ^29.7.0
+        specifier: 29.7.0
         version: 29.7.0
       lint-staged:
         specifier: 10.5.4
