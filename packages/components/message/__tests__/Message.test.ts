@@ -175,13 +175,13 @@ describe('V3Message 组件测试：', () => {
 		wrapper.$message({
 			type: 'success',
 			message: '测试文本',
-			icon: 'v3-icon-close',
+			icon: 'CloseSmall',
 			duration: 0,
 		});
 
 		expect(
 			document.body.querySelector(
-				'.v3-message .v3-message__icon .v3-icon-close',
+				'.v3-message .v3-message__icon .v3-icon-close-small',
 			),
 		).toBeInstanceOf(HTMLElement);
 	});
@@ -199,7 +199,7 @@ describe('V3Message 组件测试：', () => {
 		wrapper.$message({
 			type: 'success',
 			message: h('span', 'vnode内容'),
-			icon: 'v3-icon-close',
+			icon: 'CloseSmall',
 			duration: 0,
 		});
 
