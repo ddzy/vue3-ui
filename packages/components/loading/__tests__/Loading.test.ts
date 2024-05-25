@@ -14,7 +14,7 @@ config.plugins.VueWrapper.install(() => {
 });
 
 describe('V3Loading 组件测试：', () => {
-	test('V3Loading 组件基本用法', async () => {
+	test('V3Loading 组件基本用法：', async () => {
 		const wrapper = mount({
 			template: `
         <div></div>
