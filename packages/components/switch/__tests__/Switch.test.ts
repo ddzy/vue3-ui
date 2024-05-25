@@ -108,8 +108,8 @@ describe('V3Switch 组件测试：', () => {
           v-model="switchValue"
           activeLabel="开"
 					inactiveLabel="关"
-					activeIcon="v3-icon-notice"
-					inactiveIcon="v3-icon-sound-Mute"
+					activeIcon="Plus"
+					inactiveIcon="Minus"
         ></v3-switch>
       `,
 			data() {
@@ -120,12 +120,10 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(
-			wrapper
-				.find('.v3-switch .v3-switch__inactive .v3-icon-sound-Mute')
-				.exists(),
+			wrapper.find('.v3-switch .v3-switch__inactive .v3-icon-minus').exists(),
 		).toBeTruthy();
 		expect(
-			wrapper.find('.v3-switch .v3-switch__active .v3-icon-notice').exists(),
+			wrapper.find('.v3-switch .v3-switch__active .v3-icon-plus').exists(),
 		).toBeTruthy();
 	});
 
@@ -211,6 +209,7 @@ describe('V3Switch 组件测试：', () => {
 			},
 			methods: {
 				handleChange(v: number) {
+					// @ts-ignore
 					this.$emit('change', v);
 				},
 			},
