@@ -179,7 +179,9 @@ interface IState {
 export default defineComponent({
 	name: 'V3Select',
 	components: {
-		V3Icon,
+		V3Input,
+		V3Tag,
+		V3BasePopper,
 	},
 	props: {
 		/** 下拉框的值 */
@@ -279,11 +281,6 @@ export default defineComponent({
 				return ['small', 'medium', 'large'].includes(v);
 			},
 		},
-	},
-	components: {
-		V3Input,
-		V3Tag,
-		V3BasePopper,
 	},
 	setup(props: TYPES.ISelectProps, context) {
 		const state: IState = reactive({
