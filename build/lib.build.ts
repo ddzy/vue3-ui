@@ -1,6 +1,6 @@
-import * as path from 'path';
+import * as path from 'node:path';
 import * as fse from 'fs-extra';
-import { InlineConfig, build, mergeConfig } from 'vite';
+import { type InlineConfig, build, mergeConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
@@ -21,10 +21,6 @@ const commonConfig: InlineConfig = {
 			},
 		],
 	},
-	server: {
-		open: true,
-		port: 8886,
-	},
 	css: {
 		preprocessorOptions: {
 			/** 配置 scss 全局变量的引入方式 */
@@ -36,6 +32,7 @@ const commonConfig: InlineConfig = {
 	// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
 	configFile: false,
 	build: {
+		sourcemap: false,
 		rollupOptions: {
 			external: ['vue'],
 			output: {
@@ -49,6 +46,7 @@ const commonConfig: InlineConfig = {
 					}
 					return chunkInfo.name;
 				},
+				exports: 'named',
 			},
 		},
 	},
@@ -58,16 +56,10 @@ async function buildAll() {
 	const baseBuildOptions: InlineConfig = {
 		publicDir: 'public',
 		build: {
-			sourcemap: true,
 			outDir: 'dist',
 			lib: {
 				entry: path.resolve(__dirname, '../packages/components/main.ts'),
 				name: 'Vue3UI',
-			},
-			rollupOptions: {
-				output: {
-					exports: 'named',
-				},
 			},
 		},
 		plugins: [vue()],
@@ -108,55 +100,48 @@ async function buildAll() {
 }
 
 async function buildEach() {
-	/**
-	 * https://github.com/vitejs/vite/discussions/1736
-	 */
-	const packagePath = path.resolve(__dirname, '../packages/components');
-	// packages/components/xxx
+	const componentPath = path.resolve(__dirname, '../packages/components');
 	const components = (
-		await fse.readdir(packagePath, { withFileTypes: true })
+		await fse.readdir(componentPath, { withFileTypes: true })
 	).filter((v) => v.isDirectory());
+	const buildTasks: Promise<any>[] = [];
+	const buildTask = (config: InlineConfig) => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				await build(config);
+				resolve(undefined);
+			} catch (error) {
+				reject();
+			}
+		});
+	};
 
-	components.forEach(async (v) => {
-		const baseBuildOptions: InlineConfig = {
+	for (const component of components) {
+		const buildOptions = mergeConfig(commonConfig, {
 			publicDir: false,
 			plugins: [vue(), cssInjectedByJsPlugin()],
 			build: {
-				sourcemap: false,
+				minify: 'esbuild',
+				cssCodeSplit: false,
+				emptyOutDir: true,
 				lib: {
-					entry: path.resolve(packagePath, v.name, 'main.ts'),
-					name: v.name.replace(/^.{1}/, ($1) => {
+					entry: path.resolve(componentPath, component.name, 'main.ts'),
+					name: component.name.replace(/^.{1}/, ($1) => {
 						return $1.toUpperCase();
 					}),
+					fileName: 'index',
 				},
-				outDir: `dist/packages/${v.name}`,
-				cssCodeSplit: false,
+				outDir: `dist/packages/${component.name}`,
 			},
-		};
-		const buildOptions = mergeConfig(
-			commonConfig,
-			mergeConfig(baseBuildOptions, {
-				build: {
-					minify: false,
-					emptyOutDir: true,
-					lib: {
-						fileName: 'index',
-					},
-				},
-			} as InlineConfig),
-		);
+		} as InlineConfig);
+		buildTasks.push(buildTask(buildOptions));
+	}
 
-		await build(buildOptions);
-
-		// 打包之后将各个包的源码复制到输出目录中
-		try {
-			await fse.copy(
-				path.resolve(packagePath, v.name, 'lib'),
-				path.resolve(__dirname, `../dist/packages/${v.name}/lib`),
-				{ overwrite: true },
-			);
-		} catch (error) {}
-	});
+	try {
+		await Promise.all(buildTasks);
+	} catch (error) {
+		console.log('error :>> ', error);
+	}
 }
 
 buildAll();
