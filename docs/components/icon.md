@@ -33,8 +33,28 @@
     columns: 5,
     icons: [
       {
+        _id: "Reduce",
+        name: "Reduce",
+      },
+      {
+        _id: "Square",
+        name: "Square",
+      },
+      {
+        _id: "Share",
+        name: "Share",
+      },
+      {
+        _id: "CheckCorrect",
+        name: "CheckCorrect",
+      },
+      {
         _id: "CloseOne",
         name: "CloseOne",
+      },
+      {
+        _id: "CloseSmall",
+        name: "CloseSmall",
       },
       {
         _id: "Caution",

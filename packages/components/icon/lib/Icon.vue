@@ -1,41 +1,84 @@
 <template>
-	<IconPark v-bind="{ ...props }" :key="state.key" />
+	<component
+		:is="computedIcon"
+		:theme="theme"
+		:size="size"
+		:spin="spin"
+		:fill="fill"
+		:strokeWidth="strokeWidth"
+		:strokeLinecap="strokeLinecap"
+		:strokeLinejoin="strokeLinejoin"
+	></component>
 </template>
-<script lang="ts" setup>
-import { reactive, watch } from 'vue';
-import { IconPark } from '@icon-park/vue-next/lib/all';
-import {
-	IconProvider,
-	DEFAULT_ICON_CONFIGS,
-} from '@icon-park/vue-next/lib/index';
+<script lang="ts">
+import { PropType, defineComponent } from 'vue';
+import { IconProvider, DEFAULT_ICON_CONFIGS } from '@icon-park/vue-next';
 import '@icon-park/vue-next/styles/index.css';
-
+import { useChangeCase } from '@vueuse/integrations/useChangeCase';
 import type { IIconProps } from '@typings/index';
+import * as iconMap from './iconMap';
 
-IconProvider({
-	...DEFAULT_ICON_CONFIGS,
-	prefix: 'v3',
-	size: '1em',
-});
-defineOptions({
+export default defineComponent({
 	name: 'V3Icon',
-});
-
-const props = withDefaults(defineProps<IIconProps>(), {
-	theme: 'outline',
-	size: '1em',
-	spin: false,
-	fill: 'currentColor',
-	strokeLinecap: 'round',
-	strokeLinejoin: 'round',
-	strokeWidth: 4,
-});
-const state = reactive({
-	key: 0,
-});
-
-watch(props, () => {
-	state.key += 1;
+	components: {
+		...iconMap,
+	},
+	props: {
+		type: {
+			type: String as PropType<IIconProps['type']>,
+			required: true,
+		},
+		theme: {
+			type: String as PropType<IIconProps['theme']>,
+			default: 'outline',
+			validator(v: string) {
+				return ['outline', 'filled', 'two-tone', 'multi-color'].includes(v);
+			},
+		},
+		size: {
+			type: [String, Number] as PropType<IIconProps['size']>,
+			default: '1em',
+		},
+		spin: {
+			type: Boolean as PropType<IIconProps['spin']>,
+			default: false,
+		},
+		fill: {
+			type: [String, Array] as PropType<IIconProps['fill']>,
+			default: 'currentColor',
+		},
+		strokeLinecap: {
+			type: String as PropType<IIconProps['strokeLinecap']>,
+			default: 'round',
+			validator(v: string) {
+				return ['round', 'butt', 'square'].includes(v);
+			},
+		},
+		strokeLinejoin: {
+			type: String as PropType<IIconProps['strokeLinejoin']>,
+			default: 'round',
+			validator(v: string) {
+				return ['round', 'miter', 'bevel'].includes(v);
+			},
+		},
+		strokeWidth: {
+			type: Number as PropType<IIconProps['strokeWidth']>,
+			default: 4,
+		},
+	},
+	setup() {
+		IconProvider({
+			...DEFAULT_ICON_CONFIGS,
+			prefix: 'v3',
+			size: '1em',
+		});
+	},
+	computed: {
+		computedIcon() {
+			const icon = useChangeCase(this.type, 'pascalCase');
+			return icon.value;
+		},
+	},
 });
 </script>
 <style lang="scss">
