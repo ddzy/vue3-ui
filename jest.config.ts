@@ -30,7 +30,7 @@ export default {
 		'^@/(.*)$': '<rootDir>/$1',
 		'^@common/(.*)$': '<rootDir>/packages/common/$1',
 		'^@components/(.*)$': '<rootDir>/packages/components/$1',
-		'^@typings/(.*)$': '<rootDir>/public/lib/typings/$1',
+		'^@typings/(.*)$': '<rootDir>/public/typings/$1',
 		'\\.(css|scss)$': 'identity-obj-proxy',
 	},
 	testEnvironmentOptions: {

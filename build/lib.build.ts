@@ -17,7 +17,7 @@ const commonConfig = {
 			},
 			{
 				find: '@typings',
-				replacement: path.resolve(__dirname, '/public/lib/typings'),
+				replacement: path.resolve(__dirname, '/public/typings'),
 			},
 		],
 	},
@@ -56,7 +56,7 @@ const commonConfig = {
 
 async function buildAll() {
 	const baseBuildOptions: InlineConfig = {
-		publicDir: 'public/lib',
+		publicDir: 'public',
 		build: {
 			sourcemap: true,
 			outDir: 'dist',
@@ -80,7 +80,7 @@ async function buildAll() {
 				},
 				minify: false,
 			},
-		} as InlineConfig)
+		} as InlineConfig),
 	);
 
 	// index.min.js
@@ -95,7 +95,7 @@ async function buildAll() {
 				},
 				minify: 'esbuild',
 			},
-		} as InlineConfig)
+		} as InlineConfig),
 	);
 
 	await build(buildOptionsOfFull);
@@ -111,8 +111,8 @@ async function buildEach() {
 		.readdirSync(packagePath, {
 			withFileTypes: true,
 		})
-		.filter(v => v.isDirectory())
-		.forEach(async v => {
+		.filter((v) => v.isDirectory())
+		.forEach(async (v) => {
 			const baseBuildOptions: InlineConfig = {
 				publicDir: false,
 				plugins: [vue(), cssInjectedByJsPlugin()],
@@ -120,7 +120,7 @@ async function buildEach() {
 					sourcemap: false,
 					lib: {
 						entry: path.resolve(packagePath, v.name, 'main.ts'),
-						name: v.name.replace(/^.{1}/, $1 => {
+						name: v.name.replace(/^.{1}/, ($1) => {
 							return $1.toUpperCase();
 						}),
 					},
@@ -139,7 +139,7 @@ async function buildEach() {
 							fileName: 'index',
 						},
 					},
-				} as InlineConfig)
+				} as InlineConfig),
 			);
 
 			await build(buildOptions);
@@ -149,7 +149,7 @@ async function buildEach() {
 				fse.copySync(
 					path.resolve(packagePath, v.name, 'lib'),
 					path.resolve(__dirname, `../dist/packages/${v.name}/lib`),
-					{ overwrite: true }
+					{ overwrite: true },
 				);
 			} catch (error) {}
 		});

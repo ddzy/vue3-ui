@@ -14,7 +14,7 @@ export default {
 			},
 			{
 				find: '@typings',
-				replacement: path.resolve(__dirname, '/public/lib/typings'),
+				replacement: path.resolve(__dirname, '/public/typings'),
 			},
 		],
 	},
