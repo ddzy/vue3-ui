@@ -4,7 +4,7 @@ import { InlineConfig, build, mergeConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
-const commonConfig = {
+const commonConfig: InlineConfig = {
 	resolve: {
 		alias: [
 			{
@@ -64,6 +64,11 @@ async function buildAll() {
 				entry: path.resolve(__dirname, '../packages/components/main.ts'),
 				name: 'Vue3UI',
 			},
+			rollupOptions: {
+				output: {
+					exports: 'named',
+				},
+			},
 		},
 		plugins: [vue()],
 	};
@@ -101,58 +106,57 @@ async function buildAll() {
 	await build(buildOptionsOfFull);
 	await build(buildOptionsOfMin);
 }
+
 async function buildEach() {
 	/**
 	 * https://github.com/vitejs/vite/discussions/1736
 	 */
 	const packagePath = path.resolve(__dirname, '../packages/components');
+	// packages/components/xxx
+	const components = (
+		await fse.readdir(packagePath, { withFileTypes: true })
+	).filter((v) => v.isDirectory());
 
-	fse
-		.readdirSync(packagePath, {
-			withFileTypes: true,
-		})
-		.filter((v) => v.isDirectory())
-		.forEach(async (v) => {
-			const baseBuildOptions: InlineConfig = {
-				publicDir: false,
-				plugins: [vue(), cssInjectedByJsPlugin()],
-				build: {
-					sourcemap: false,
-					lib: {
-						entry: path.resolve(packagePath, v.name, 'main.ts'),
-						name: v.name.replace(/^.{1}/, ($1) => {
-							return $1.toUpperCase();
-						}),
-					},
-					outDir: `dist/packages/${v.name}`,
-					cssCodeSplit: false,
+	components.forEach(async (v) => {
+		const baseBuildOptions: InlineConfig = {
+			publicDir: false,
+			plugins: [vue(), cssInjectedByJsPlugin()],
+			build: {
+				sourcemap: false,
+				lib: {
+					entry: path.resolve(packagePath, v.name, 'main.ts'),
+					name: v.name.replace(/^.{1}/, ($1) => {
+						return $1.toUpperCase();
+					}),
 				},
-			};
-
-			const buildOptions = mergeConfig(
-				commonConfig,
-				mergeConfig(baseBuildOptions, {
-					build: {
-						minify: false,
-						emptyOutDir: true,
-						lib: {
-							fileName: 'index',
-						},
+				outDir: `dist/packages/${v.name}`,
+				cssCodeSplit: false,
+			},
+		};
+		const buildOptions = mergeConfig(
+			commonConfig,
+			mergeConfig(baseBuildOptions, {
+				build: {
+					minify: false,
+					emptyOutDir: true,
+					lib: {
+						fileName: 'index',
 					},
-				} as InlineConfig),
+				},
+			} as InlineConfig),
+		);
+
+		await build(buildOptions);
+
+		// 打包之后将各个包的源码复制到输出目录中
+		try {
+			await fse.copy(
+				path.resolve(packagePath, v.name, 'lib'),
+				path.resolve(__dirname, `../dist/packages/${v.name}/lib`),
+				{ overwrite: true },
 			);
-
-			await build(buildOptions);
-
-			// 打包之后将各个包的源码复制到输出目录中
-			try {
-				fse.copySync(
-					path.resolve(packagePath, v.name, 'lib'),
-					path.resolve(__dirname, `../dist/packages/${v.name}/lib`),
-					{ overwrite: true },
-				);
-			} catch (error) {}
-		});
+		} catch (error) {}
+	});
 }
 
 buildAll();
