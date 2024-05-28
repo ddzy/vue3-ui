@@ -3,7 +3,6 @@ import {
   defineComponent,
   getCurrentInstance,
   h,
-  init_vue_runtime_esm_bundler,
   isReactive,
   isRef,
   isVNode,
@@ -15,11 +14,10 @@ import {
   shallowRef,
   unref,
   watch
-} from "./chunk-SXVXR5VZ.js";
-import "./chunk-CEQRFMJQ.js";
+} from "./chunk-EE7GMKVS.js";
+import "./chunk-CSAU5B4Q.js";
 
 // node_modules/.pnpm/vue-tippy@6.4.1_vue@3.4.27_typescript@5.0.4_/node_modules/vue-tippy/dist/vue-tippy.esm-browser.js
-init_vue_runtime_esm_bundler();
 var top = "top";
 var bottom = "bottom";
 var right = "right";

@@ -32,7 +32,7 @@
 		"serve": "vitepress dev docs",
 		"preview": "vitepress preview docs",
 		"build:docs": "vitepress build docs",
-		"build:lib": "ts-node ./build/lib.build.ts",
+		"build:lib": "cross-env NODE_OPTIONS=--max-old-space-size=10240 ts-node ./build/lib.build.ts",
 		"test": "jest --coverage",
 		"commit": "git-cz",
 		"format": "prettier-eslint \"packages/**/*.{js,ts,vue,jsx,tsx}\" --config prettier.config.js --write",

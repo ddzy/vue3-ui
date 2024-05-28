@@ -53,58 +53,37 @@ const commonConfig: InlineConfig = {
 };
 
 async function buildAll() {
-	const baseBuildOptions: InlineConfig = {
-		publicDir: 'public',
-		build: {
-			outDir: 'dist',
-			lib: {
-				entry: path.resolve(__dirname, '../packages/components/main.ts'),
-				name: 'Vue3UI',
-			},
-		},
-		plugins: [vue()],
-	};
-
-	// index.full.js
-	const buildOptionsOfFull = mergeConfig(
-		commonConfig,
-		mergeConfig(baseBuildOptions, {
+	return new Promise(async (resolve, reject) => {
+		const buildOptions = mergeConfig(commonConfig, {
+			plugins: [vue()],
+			publicDir: 'public',
 			build: {
-				// 是否清空 dist 文件夹
 				emptyOutDir: true,
+				outDir: 'dist',
 				lib: {
-					fileName: 'index.full',
+					entry: path.resolve(__dirname, '../packages/components/main.ts'),
+					name: 'Vue3UI',
+					fileName: 'index',
 				},
-				minify: false,
 			},
-		} as InlineConfig),
-	);
+		} as InlineConfig);
 
-	// index.min.js
-	const buildOptionsOfMin = mergeConfig(
-		commonConfig,
-		mergeConfig(baseBuildOptions, {
-			build: {
-				// 是否清空 dist 文件夹
-				emptyOutDir: false,
-				lib: {
-					fileName: 'index.min',
-				},
-				minify: 'esbuild',
-			},
-		} as InlineConfig),
-	);
-
-	await build(buildOptionsOfFull);
-	await build(buildOptionsOfMin);
+		try {
+			await build(buildOptions);
+			resolve(undefined);
+		} catch (error) {
+			reject(error);
+		}
+	});
 }
 
 async function buildEach() {
 	const componentPath = path.resolve(__dirname, '../packages/components');
-	const components = (
+	let components = (
 		await fse.readdir(componentPath, { withFileTypes: true })
 	).filter((v) => v.isDirectory());
-	const buildTasks: Promise<any>[] = [];
+	const tasks: Promise<any>[] = [];
+
 	const buildTask = (config: InlineConfig) => {
 		return new Promise(async (resolve, reject) => {
 			try {
@@ -115,34 +94,59 @@ async function buildEach() {
 			}
 		});
 	};
+	const buildOptions = mergeConfig(commonConfig, {
+		publicDir: false,
+		plugins: [vue(), cssInjectedByJsPlugin()],
+		build: {
+			minify: 'esbuild',
+			cssCodeSplit: false,
+			emptyOutDir: true,
+			lib: {
+				fileName: 'index',
+			},
+		},
+	} as InlineConfig);
 
 	for (const component of components) {
-		const buildOptions = mergeConfig(commonConfig, {
-			publicDir: false,
-			plugins: [vue(), cssInjectedByJsPlugin()],
+		// esmodule 输出到 dist/es
+		const buildOptionsOfESModule = mergeConfig(buildOptions, {
 			build: {
-				minify: 'esbuild',
-				cssCodeSplit: false,
-				emptyOutDir: true,
 				lib: {
 					entry: path.resolve(componentPath, component.name, 'main.ts'),
 					name: component.name.replace(/^.{1}/, ($1) => {
 						return $1.toUpperCase();
 					}),
-					fileName: 'index',
+					formats: ['es'],
 				},
-				outDir: `dist/packages/${component.name}`,
+				outDir: `dist/es/${component.name}`,
 			},
 		} as InlineConfig);
-		buildTasks.push(buildTask(buildOptions));
+		// commonjs 输出到 dist/lib
+		const buildOptionsOfUmd = mergeConfig(buildOptions, {
+			build: {
+				lib: {
+					entry: path.resolve(componentPath, component.name, 'main.ts'),
+					name: component.name.replace(/^.{1}/, ($1) => {
+						return $1.toUpperCase();
+					}),
+					formats: ['cjs'],
+				},
+				outDir: path.resolve(__dirname, `../dist/lib/${component.name}`),
+			},
+		} as InlineConfig);
+
+		tasks.push(buildTask(buildOptionsOfESModule), buildTask(buildOptionsOfUmd));
 	}
 
 	try {
-		await Promise.all(buildTasks);
+		await Promise.all(tasks);
 	} catch (error) {
 		console.log('error :>> ', error);
 	}
 }
 
-buildAll();
-buildEach();
+async function startBuild() {
+	await buildAll();
+	await buildEach();
+}
+startBuild();

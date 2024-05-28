@@ -20,10 +20,10 @@ importers:
         specifier: 10.9.0
         version: 10.9.0(vue@3.4.27(typescript@5.0.4))
       '@vueuse/integrations':
-        specifier: ^10.9.0
+        specifier: 10.9.0
         version: 10.9.0(change-case@4.1.2)(focus-trap@7.5.4)(nprogress@0.2.0)(vue@3.4.27(typescript@5.0.4))
       change-case:
-        specifier: ^4.1.2
+        specifier: 4.1.2
         version: 4.1.2
       decimal.js:
         specifier: 10.3.1
