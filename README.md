@@ -1,6 +1,57 @@
 # vue3-ui
 
-vue3 组件库（正式环境请勿使用）
+vue3 组件库，文档：https://yyge.top/vue3-ui/
+
+## 安装
+
+### npm
+
+```bash
+npm install @felibrary/vue3-ui
+```
+
+### yarn
+
+```bash
+yarn add @felibrary/vue3-ui
+```
+
+### pnpm
+
+```bash
+pnpm add @felibrary/vue3-ui
+```
+
+## 用法
+
+### 全局注册
+
+```ts
+import { createApp } from 'vue';
+import Vue3UI from '@felibrary/vue3-ui';
+import App from './App.vue';
+
+const app = createApp(App);
+app.use(Vue3UI);
+```
+
+### 按需引入
+
+```ts
+// ...
+import { V3Button, V3Card } from '@felibrary/vue3-ui';
+
+app.use(V3Button);
+app.use(V3Card);
+```
+
+### 在组件中使用
+
+```vue
+<template>
+	<v3-button>按钮</v3-button>
+</template>
+```
 
 ## 进度
 
