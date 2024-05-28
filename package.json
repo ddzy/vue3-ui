@@ -24,6 +24,10 @@
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.umd.js",
 			"types": "./dist/typings/index.d.ts"
+		},
+		"./dist/": {
+			"import": "./dist/",
+			"require": "./dist/"
 		}
 	},
 	"types": "./dist/typings/index.d.ts",
