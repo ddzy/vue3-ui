@@ -3,13 +3,15 @@
 layout: home
 
 hero:
-  name: 'vue3-ui'
-  text: 'vue3 components lib'
-  tagline: My great project tagline
+  name: 'Vue3UI'
+  text: 'vue3 组件库'
   actions:
     - theme: brand
       text: 组件
       link: /components/button
+    - theme: alt
+      text: 起步 ➡️
+      link: /guide/
 
 features:
   - icon: ⚡️

@@ -9,11 +9,13 @@ import {
 export default defineConfig({
 	lastUpdated: true,
 	base: '/vue3-ui/',
+	title: 'Vue3UI',
+	description: 'Vue3 组件库',
 
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
-			{ text: '首页', link: '/' },
+			{ text: '指南', link: '/guide/', activeMatch: '^/guide/' },
 			{
 				text: '组件',
 				link: '/components/button',
@@ -22,6 +24,17 @@ export default defineConfig({
 		],
 
 		sidebar: {
+			'/guide/': [
+				{
+					text: '基础',
+					items: [
+						{
+							text: '快速开始',
+							link: '/guide/',
+						},
+					],
+				},
+			],
 			'/components/': [
 				{
 					text: '基础组件',
