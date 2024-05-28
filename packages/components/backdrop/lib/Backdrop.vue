@@ -49,9 +49,9 @@ export default defineComponent({
 			default: true,
 		},
 	},
-	setup(props: TYPES.IBackdropProps, context) {
+	setup(props: Required<TYPES.IBackdropProps>, context) {
 		const state = reactive({});
-		const app = ref(getCurrentInstance()).value;
+		const app = ref(getCurrentInstance()).value!;
 
 		watch(
 			toRef(props, 'modelValue'),

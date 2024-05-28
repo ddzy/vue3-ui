@@ -41,7 +41,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.IDividerProps, context) {
+	setup(props: Required<TYPES.IDividerProps>, context) {
 		const state = reactive({});
 		const app = ref(getCurrentInstance()).value;
 

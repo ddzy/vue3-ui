@@ -15,25 +15,25 @@ export interface ISliderMarkItem {
 
 export interface ISliderProps {
 	modelValue: ISliderModelValue;
-	min: number;
-	max: number;
-	disabled: boolean;
-	step: number;
-	showStop: boolean;
-	showTooltip: boolean;
-	showTooltipAlways: boolean;
-	formatTooltip: ISliderFormatTooltip;
-	range: boolean;
-	vertical: boolean;
-	height: string;
-	label: string;
-	prependIcon: string;
-	appendIcon: string;
-	marks: ISliderMarkItem;
-	thumbColor: string;
-	thumbShadowColor: string;
-	trackColor: string;
-	doneTrackColor: string;
+	min?: number;
+	max?: number;
+	disabled?: boolean;
+	step?: number;
+	showStop?: boolean;
+	showTooltip?: boolean;
+	showTooltipAlways?: boolean;
+	formatTooltip?: ISliderFormatTooltip;
+	range?: boolean;
+	vertical?: boolean;
+	height?: string;
+	label?: string;
+	prependIcon?: string;
+	appendIcon?: string;
+	marks?: ISliderMarkItem;
+	thumbColor?: string;
+	thumbShadowColor?: string;
+	trackColor?: string;
+	doneTrackColor?: string;
 }
 
-export const V3Slider: SFCWithInstall<ISliderProps>
+export const V3Slider: SFCWithInstall<ISliderProps>;

@@ -175,7 +175,7 @@ export default defineComponent({
 			default: (done: Function) => done(),
 		},
 	},
-	setup(props: TYPES.IDrawerProps, context) {
+	setup(props: Required<TYPES.IDrawerProps>, context) {
 		const state: IState = reactive({
 			syncedModelValue: props.modelValue,
 		});

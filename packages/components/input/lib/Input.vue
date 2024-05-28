@@ -242,7 +242,7 @@ export default defineComponent({
 			default: '',
 		},
 	},
-	setup(props: TYPES.IInputProps, context) {
+	setup(props: Required<TYPES.IInputProps>, context) {
 		const state = reactive({
 			defaultProps: {
 				type: '',

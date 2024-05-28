@@ -31,7 +31,7 @@ export default defineComponent({
 	},
 	emits: ['change', 'update:modelValue'],
 
-	setup(props: TYPES.IRadioGroupProps, context) {
+	setup(props: Required<TYPES.IRadioGroupProps>, context) {
 		const state = reactive({});
 		const app = getCurrentInstance();
 

@@ -206,7 +206,7 @@ export default defineComponent({
 			default: 'parent',
 		},
 	},
-	setup(props: TYPES.IBasePopperProps, context) {
+	setup(props: Required<TYPES.IBasePopperProps>, context) {
 		const state: IState = reactive({
 			/** popper 的显隐状态 */
 			showDropdown: false,

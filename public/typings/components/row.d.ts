@@ -12,10 +12,10 @@ export type IRowJustify =
 	| 'flex-end';
 export type IRowAlign = 'start' | 'end' | 'center' | 'flex-start' | 'flex-end';
 export interface IRowProps {
-	gutter: IRowGutter;
-	type: IRowType;
-	justify: IRowJustify;
-	align: IRowAlign;
+	gutter?: IRowGutter;
+	type?: IRowType;
+	justify?: IRowJustify;
+	align?: IRowAlign;
 }
 
 export interface IColBaseOption {
@@ -34,16 +34,16 @@ export type IColMD = number | IColBaseOption;
 export type IColLG = number | IColBaseOption;
 export type IColXL = number | IColBaseOption;
 export interface IColProps {
-  span: IColSpan;
-  offset: IColOffset;
-  push: IColPush;
-  pull: IColPull;
-  xs: IColXS;
-  sm: IColSM;
-  md: IColMD;
-  lg: IColLG;
-  xl: IColXL;
+	span?: IColSpan;
+	offset?: IColOffset;
+	push?: IColPush;
+	pull?: IColPull;
+	xs?: IColXS;
+	sm?: IColSM;
+	md?: IColMD;
+	lg?: IColLG;
+	xl?: IColXL;
 }
 
-export const V3Row: SFCWithInstall<IRowProps>
-export const V3Col: SFCWithInstall<IColProps>
+export const V3Row: SFCWithInstall<IRowProps>;
+export const V3Col: SFCWithInstall<IColProps>;

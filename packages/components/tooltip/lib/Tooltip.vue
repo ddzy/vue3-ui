@@ -28,7 +28,7 @@ export default defineComponent({
 			default: '',
 		},
 	},
-	setup(props: TYPES.ITooltipProps, context) {
+	setup(props: Required<TYPES.ITooltipProps>, context) {
 		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
 

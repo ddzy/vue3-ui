@@ -22,7 +22,7 @@ export default defineComponent({
 	components: {
 		V3BasePopper,
 	},
-	setup(props: TYPES.IPopoverProps, context) {
+	setup(props: Required<TYPES.IPopoverProps>, context) {
 		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
 

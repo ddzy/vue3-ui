@@ -104,7 +104,7 @@ export default defineComponent({
 			default: 0,
 		},
 	},
-	setup(props: TYPES.IColProps) {
+	setup(props: Required<TYPES.IColProps>) {
 		const state = reactive({
 			/** 父级 v3-row 实例 */
 			injectedRowInstance: null,

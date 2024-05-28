@@ -60,7 +60,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.IRowProps) {
+	setup(props: Required<TYPES.IRowProps>) {
 		const state = reactive({});
 		const app = getCurrentInstance();
 

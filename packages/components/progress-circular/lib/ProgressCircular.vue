@@ -112,7 +112,7 @@ export default defineComponent({
 			default: -90,
 		},
 	},
-	setup(props: TYPES.IProgressCircularProps, context) {
+	setup(props: Required<TYPES.IProgressCircularProps>, context) {
 		const state: IState = reactive({
 			strokeDashArray: '',
 		});

@@ -60,7 +60,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	setup(props: TYPES.ISelectOptionProps) {
+	setup(props: Required<TYPES.ISelectOptionProps>) {
 		const state: IState = reactive({
 			/** 当前下拉选项是否选中 */
 			isSelected: false,

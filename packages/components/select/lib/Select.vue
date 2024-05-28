@@ -282,7 +282,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.ISelectProps, context) {
+	setup(props: Required<TYPES.ISelectProps>, context) {
 		const state: IState = reactive({
 			/** 当前的下拉框是否显示 */
 			showDropdown: false,

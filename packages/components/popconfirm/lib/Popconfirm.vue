@@ -79,7 +79,6 @@ export default defineComponent({
 			type: String,
 			default: '',
 		},
-
 		/** 气泡确认框的内容 */
 		content: {
 			type: String,
@@ -169,7 +168,7 @@ export default defineComponent({
 			default: true,
 		},
 	},
-	setup(props: TYPES.IPopconfirmProps, context) {
+	setup(props: Required<TYPES.IPopconfirmProps>, context) {
 		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
 

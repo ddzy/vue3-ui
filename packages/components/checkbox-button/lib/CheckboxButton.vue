@@ -78,7 +78,7 @@ export default defineComponent({
 		},
 	},
 	emits: ['change', 'update:modelValue'],
-	setup(props: TYPES.ICheckboxButtonProps, context) {
+	setup(props: Required<TYPES.ICheckboxButtonProps>, context) {
 		const state = reactive({
 			defaultProps: {
 				disabled: false,
@@ -92,7 +92,7 @@ export default defineComponent({
 			/** CheckboxGroup 的追加当前实例方法 */
 			injectedCheckboxGroupAppendInstance: null,
 		});
-		const app = ref(getCurrentInstance());
+		const app = ref(getCurrentInstance()!);
 		const checkboxRef = ref(document.createElement('input'));
 		const isCheckboxGroup = checkIsCheckboxGroup();
 

@@ -83,7 +83,7 @@ export default defineComponent({
 			default: true,
 		},
 	},
-	setup(props: TYPES.ITagProps, context) {
+	setup(props: Required<TYPES.ITagProps>, context) {
 		const state: IState = reactive({
 			/** 是否显示当前标签 */
 			isShow: true,

@@ -129,7 +129,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.IButtonProps, context) {
+	setup(props: Required<TYPES.IButtonProps>, context) {
 		const state = reactive({
 			defaultProps: {
 				icon: '',

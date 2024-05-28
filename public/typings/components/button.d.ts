@@ -18,14 +18,14 @@ export type IButtonBorderType =
 	| 'outset';
 export type IButtonSize = 'small' | 'medium' | 'large';
 export interface IButtonProps {
-	type: IButtonType;
-	nativeType: IButtonNativeType;
-	borderType: IButtonBorderType;
-	disabled: boolean;
-	plain: boolean;
-	icon: string;
-	circle: boolean;
-	loading: boolean;
-	size: IButtonSize;
+	type?: IButtonType;
+	nativeType?: IButtonNativeType;
+	borderType?: IButtonBorderType;
+	disabled?: boolean;
+	plain?: boolean;
+	icon?: string;
+	circle?: boolean;
+	loading?: boolean;
+	size?: IButtonSize;
 }
 export const V3Button: SFCWithInstall<IButtonProps>;

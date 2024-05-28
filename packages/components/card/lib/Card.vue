@@ -59,7 +59,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.ICardProps, context) {
+	setup(props: Required<TYPES.ICardProps>, context) {
 		const state: IState = reactive({});
 
 		const computedHasHeader = computed(() => {

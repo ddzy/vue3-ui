@@ -112,6 +112,11 @@ import V3Input from '@components/input/main';
 import V3Icon from '@components/icon/main';
 import * as TYPES from '@typings/index';
 
+type ILocalProps = Omit<Required<TYPES.IInputNumberProps>, 'min' | 'max'> & {
+	min?: number;
+	max?: number;
+};
+
 export default defineComponent({
 	name: 'V3InputNumber',
 	components: {
@@ -121,12 +126,12 @@ export default defineComponent({
 	props: {
 		/** 限制输入的最小值 */
 		min: {
-			type: [Number, undefined] as PropType<TYPES.INumberMin>,
+			type: Number,
 			default: undefined,
 		},
 		/** 限制输入的最大值 */
 		max: {
-			type: [Number, undefined] as PropType<TYPES.INumberMax>,
+			type: Number,
 			default: undefined,
 		},
 		/** 步数 */
@@ -179,7 +184,7 @@ export default defineComponent({
 			required: true,
 		},
 	},
-	setup(props: TYPES.IInputNumberProps, context) {
+	setup(props: ILocalProps, context) {
 		const state = reactive({
 			defaultProps: {
 				min: null,

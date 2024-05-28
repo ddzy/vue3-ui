@@ -7,16 +7,20 @@ export type ISpaceAlign =
 	| 'center'
 	| 'flex-start'
 	| 'flex-end';
-export type ISpaceDirection = 'row' | 'column' | 'row-reverse' | 'column-reverse';
+export type ISpaceDirection =
+	| 'row'
+	| 'column'
+	| 'row-reverse'
+	| 'column-reverse';
 export type ISpaceSeparator = VNode | string;
 
 export interface ISpaceProps {
-	customClass: string;
-	align: ISpaceAlign;
-  direction: ISpaceDirection;
-  wrap: boolean;
-  separator: ISpaceSeparator;
-  size: number;
+	customClass?: string;
+	align?: ISpaceAlign;
+	direction?: ISpaceDirection;
+	wrap?: boolean;
+	separator?: ISpaceSeparator;
+	size?: number;
 }
 
-export const V3Space: SFCWithInstall<ISpaceProps>
+export const V3Space: SFCWithInstall<ISpaceProps>;

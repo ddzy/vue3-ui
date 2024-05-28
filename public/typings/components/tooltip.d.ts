@@ -1,7 +1,7 @@
 import { SFCWithInstall } from '../index';
 
 export interface ITooltipProps {
-	title: string;
+	title?: string;
 }
 
-export const V3Tooltip: SFCWithInstall<ITooltipProps>
+export const V3Tooltip: SFCWithInstall<ITooltipProps>;
