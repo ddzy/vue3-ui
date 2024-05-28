@@ -1,62 +1,55 @@
-$font-size-normal: 16px;
-$font-size-small: 14px;
-$font-size-large: 18px;
-$font-size-large-2: 20px;
-$font-size-mini: 12px;
-
-$default-color: rgba(205, 205, 205, 1);
 $primary-color: rgba(0, 160, 255, 1);
 $success-color: rgba(99, 185, 49, 1);
 $danger-color: rgba(201, 27, 38, 1);
-$warning-color: rgba(237, 170, 83, 1);
-$info-color: rgba(184, 176, 176, 1);
+$warning-color: rgba(227, 160, 73, 1);
+$info-color: rgba(174, 166, 166, 1);
 
-$default-color-little: rgba(45, 45, 44, 1);
-$primary-color-little: rgba(0, 170, 250, 1);
-$success-color-little: rgba(111, 191, 87, 1);
-$danger-color-little: rgba(215, 64, 74, 1);
-$warning-color-little: rgba(245, 178, 111, 1);
-$info-color-little: rgba(191, 184, 184, 1);
-
-$default-color-middle: rgba(116, 116, 116, 1);
 $primary-color-middle: rgba(101, 200, 251, 1);
 $success-color-middle: rgba(163, 215, 145, 1);
 $danger-color-middle: rgba(231, 130, 136, 1);
 $warning-color-middle: rgba(249, 206, 162, 1);
 $info-color-middle: rgba(214, 209, 210, 1);
 
-$default-color-plain: rgba(225, 225, 225, 1);
 $primary-color-plain: rgba(223, 243, 254, 1);
 $success-color-plain: rgba(236, 247, 232, 1);
 $danger-color-plain: rgba(250, 228, 229, 1);
 $warning-color-plain: rgba(253, 244, 234, 1);
-$info-color-plain: rgba(243, 243, 243, 1);
+$info-color-plain: rgba(233, 233, 233, 1);
 
-$border-color-grey-small: rgba(238, 238, 238, 1);
-$border-color-grey-default: rgba(221, 221, 221, 1);
+$border-color-small: #eee;
+$border-color-default: #ddd;
+$border-color-large: #cdcdcd;
+
+$font-color-small: #666;
+$font-color-default: #333333;
+
+$disable-font-color: #a8abb2;
+$disable-bg-color: #f5f7fa;
+$disable-border-color: #e4e7ed;
+
+$font-size-small: 12px;
+$font-size-default: 14px;
+$font-size-medium: 16px;
+$font-size-large: 18px;
+$font-size-large-2: 20px;
 
 $border-radius-width-small: 4px;
 $border-radius-width-default: 6px;
 $border-radius-width-large: 30px;
 
-$padding-small: 6px;
+$padding-small: 8px;
 $padding-medium: 12px;
 $padding-large-1: 16px;
 $padding-large-2: 20px;
 
-$margin-small: 6px;
+$margin-small: 8px;
 $margin-medium: 12px;
 $margin-large-1: 16px;
 $margin-large-2: 20px;
 
-$font-color-default: #333;
-$font-color-medium: #666;
-
-$box-shadow-color-default: rgba(245, 245, 245, 1);
-
 $box-shadow-small: 2px 0 5px 0 rgba(238, 238, 238, 0.5),
 	0 4px 10px 0 rgba(238, 238, 238, 0.5), -2px 0 5px 0 rgba(238, 238, 238, 0.5);
-$box-shadow-medium: 2px 0 10px 0 rgba(238, 238, 238, 0.5),
+$box-shadow-default: 2px 0 10px 0 rgba(238, 238, 238, 0.5),
 	0 7px 11px 0 rgba(238, 238, 238, 0.5), -2px 0 10px 0 rgba(238, 238, 238, 0.5);
-$box-shadow-large: 6px 0 10px 0 rgba(238, 238, 238, 0.6),
+$box-shadow-large: 6px 0 10px 0 rgba(238, 238, 238, 0.8),
 	0 10px 13px 0 rgba(238, 238, 238, 0.6), -6px 0 10px 0 rgba(238, 238, 238, 0.6);

@@ -17,17 +17,14 @@
 			}"
 		>
 			<slot></slot>
-			<i
-				class="v3-icon v3-icon-close"
-				v-if="props.closeable"
-				@click="handleClose"
-			></i>
+			<V3Icon v-if="props.closeable" type="CloseSmall" @click="handleClose" />
 		</div>
 	</transition>
 </template>
 <script lang="ts">
 import { defineComponent, PropType, reactive } from 'vue';
-import * as TYPES from '@/public/lib/types/tag';
+import * as TYPES from '@typings/index';
+import V3Icon from '@components/icon/main';
 
 interface IState {
 	isShow: boolean;
@@ -35,6 +32,9 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3Tag',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 标签的类型（与 V3Button 大体相同） */
 		type: {

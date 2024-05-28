@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Select from '../main';
-import V3SelectOption from 'select-option';
+import { V3SelectOption, V3Select } from '@components/main';
 
 describe('V3Select 组件测试：', () => {
 	test('V3Select 组件基本用法', async () => {
@@ -54,10 +53,10 @@ describe('V3Select 组件测试：', () => {
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		expect(wrapper.findAll('.v3-select-dropdown__item').length).toBe(4);
 		expect(
-			wrapper.findAll('.v3-select-dropdown__item.is-selected').length
+			wrapper.findAll('.v3-select-dropdown__item.is-selected').length,
 		).toBe(1);
 		expect(
-			wrapper.findAll('.v3-select-dropdown__item.is-disabled').length
+			wrapper.findAll('.v3-select-dropdown__item.is-disabled').length,
 		).toBe(1);
 
 		// 默认选中第一项
@@ -65,7 +64,7 @@ describe('V3Select 组件测试：', () => {
 			wrapper
 				.findAll('.v3-select-dropdown__item')[0]
 				.classes()
-				.includes('is-selected')
+				.includes('is-selected'),
 		).toBeTruthy();
 
 		// 第二项是禁用的，不能选中
@@ -146,7 +145,7 @@ describe('V3Select 组件测试：', () => {
 		await wrapper.find('.v3-input').trigger('click');
 		expect(wrapper.findAll('.v3-select-dropdown__item').length).toBe(4);
 		expect(
-			wrapper.findAll('.v3-select-dropdown__item.is-selected').length
+			wrapper.findAll('.v3-select-dropdown__item.is-selected').length,
 		).toBe(0);
 
 		// 手动选中第一项
@@ -285,7 +284,7 @@ describe('V3Select 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.findAll('.v3-select__tag-item').length).toBe(2);
 		expect(
-			wrapper.findAll('.v3-select-dropdown__item.is-selected').length
+			wrapper.findAll('.v3-select-dropdown__item.is-selected').length,
 		).toBe(2);
 		expect(wrapper.findAll('.v3-tag')[0].text()).toBe('广州');
 		expect(wrapper.findAll('.v3-tag')[1].text()).toBe('深圳');
@@ -350,7 +349,7 @@ describe('V3Select 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.findAll('.v3-select__tag-item').length).toBe(2);
 		expect(
-			wrapper.findAll('.v3-select-dropdown__item.is-selected').length
+			wrapper.findAll('.v3-select-dropdown__item.is-selected').length,
 		).toBe(2);
 		expect(wrapper.findAll('.v3-tag')[0].text()).toBe('广州');
 		expect(wrapper.findAll('.v3-tag')[1].text()).toBe('+ 1');
@@ -422,31 +421,22 @@ describe('V3Select 组件测试：', () => {
 
 		expect(wrapper.findAll('.v3-select').length).toBe(3);
 		expect(wrapper.findAll('.v3-select .v3-input.is-size--small').length).toBe(
-			1
+			1,
 		);
 		expect(wrapper.findAll('.v3-select .v3-input.is-size--medium').length).toBe(
-			1
+			1,
 		);
 		expect(wrapper.findAll('.v3-select .v3-input.is-size--large').length).toBe(
-			1
+			1,
 		);
 		expect(
-			wrapper
-				.findAll('.v3-input')[0]
-				.classes()
-				.includes('is-size--small')
+			wrapper.findAll('.v3-input')[0].classes().includes('is-size--small'),
 		).toBeTruthy();
 		expect(
-			wrapper
-				.findAll('.v3-input')[1]
-				.classes()
-				.includes('is-size--medium')
+			wrapper.findAll('.v3-input')[1].classes().includes('is-size--medium'),
 		).toBeTruthy();
 		expect(
-			wrapper
-				.findAll('.v3-input')[2]
-				.classes()
-				.includes('is-size--large')
+			wrapper.findAll('.v3-input')[2].classes().includes('is-size--large'),
 		).toBeTruthy();
 	});
 });

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
-import V3DemoBlock from '../main';
+import { V3DemoBlock } from '@components/main';
 
 describe('DemoBlock 组件测试：', () => {
 	test('DemoBlock 组件可以接收【default、description、code】这几个 slot，不传则不显示', async () => {
@@ -71,7 +71,7 @@ describe('DemoBlock 组件测试：', () => {
 			wrapper1
 				.find('.v3-demo-block__description')
 				.find('.description__tip')
-				.text()
+				.text(),
 		).toBe('简介标题');
 	});
 
@@ -135,7 +135,7 @@ describe('DemoBlock 组件测试：', () => {
 					extraList: [
 						{
 							title: '转发',
-							icon: 'v3-icon-resonserate',
+							icon: 'Share',
 						},
 					],
 				});
@@ -155,12 +155,12 @@ describe('DemoBlock 组件测试：', () => {
 		expect(wrapper1.findAll('.functional-extra__item').length).toBe(1);
 
 		// 点击该图标，触发相应的事件
-		await wrapper1.find('.v3-icon-resonserate').trigger('click');
+		await wrapper1.find('.v3-icon-share').trigger('click');
 		expect(wrapper1.emitted()).toHaveProperty('onExtraItemClick');
 		expect(wrapper1.emitted().onExtraItemClick[0]).toEqual([
 			{
 				title: '转发',
-				icon: 'v3-icon-resonserate',
+				icon: 'Share',
 			},
 		]);
 	});

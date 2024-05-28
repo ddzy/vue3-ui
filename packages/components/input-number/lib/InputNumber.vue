@@ -25,7 +25,7 @@
 					}"
 					@click="handleMinus"
 				>
-					<i class="v3-icon v3-icon-sami-select"></i>
+					<V3Icon type="Minus" />
 				</div>
 
 				<div
@@ -42,7 +42,7 @@
 						}"
 						@click="handlePlus"
 					>
-						<i class="v3-icon v3-icon-arrow-up"></i>
+						<V3Icon type="Up" />
 					</div>
 					<div
 						:class="{
@@ -51,7 +51,7 @@
 						}"
 						@click="handleMinus"
 					>
-						<i class="v3-icon v3-icon-arrow-down"></i>
+						<V3Icon type="Down" />
 					</div>
 				</div>
 			</template>
@@ -66,7 +66,7 @@
 					}"
 					@click="handlePlus"
 				>
-					<i class="v3-icon v3-icon-add-select"></i>
+					<V3Icon type="Plus" />
 				</div>
 
 				<div
@@ -83,7 +83,7 @@
 						}"
 						@click="handlePlus"
 					>
-						<i class="v3-icon v3-icon-arrow-up"></i>
+						<V3Icon type="Up" />
 					</div>
 					<div
 						:class="{
@@ -92,7 +92,7 @@
 						}"
 						@click="handleMinus"
 					>
-						<i class="v3-icon v3-icon-arrow-down"></i>
+						<V3Icon type="Down" />
 					</div>
 				</div>
 			</template>
@@ -108,13 +108,15 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import V3Input from 'input';
-import * as TYPES from '@/public/lib/types/input';
+import V3Input from '@components/input/main';
+import V3Icon from '@components/icon/main';
+import * as TYPES from '@typings/index';
 
 export default defineComponent({
 	name: 'V3InputNumber',
 	components: {
 		V3Input,
+		V3Icon,
 	},
 	props: {
 		/** 限制输入的最小值 */
@@ -201,19 +203,19 @@ export default defineComponent({
 
 		watch(
 			toRef(props, 'modelValue'),
-			newValue => {
+			(newValue) => {
 				if (typeof newValue === 'number' && !isNaN(newValue)) {
 					// 如果超出最大值或者低于最小值，则自动重置为最大值或最小值
 					if (newValue < props.min! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.min.toFixed(props.precision)
+							props.min.toFixed(props.precision),
 						);
 
 						state.inputValue = `${valToNumber}`;
 						context.emit('update:modelValue', valToNumber);
 					} else if (newValue > props.max! && typeof props.min === 'number') {
 						const valToNumber = Number.parseFloat(
-							props.max!.toFixed(props.precision)
+							props.max!.toFixed(props.precision),
 						);
 
 						state.inputValue = `${props.max}`;
@@ -229,7 +231,7 @@ export default defineComponent({
 						typeof props.min === 'number' && newValue === props.max;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleChange(e: Event) {

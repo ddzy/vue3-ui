@@ -1,3 +1,10 @@
-import * as Icon from './assets/fonts/iconfont.css';
+import { App } from 'vue';
+import Icon from './lib/Icon.vue';
 
-export default Icon;
+function install(app: App) {
+	app.component(Icon.name!, Icon);
+}
+
+export default Object.assign(Icon, {
+	install,
+});

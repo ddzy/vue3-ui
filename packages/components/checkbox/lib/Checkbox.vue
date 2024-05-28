@@ -29,28 +29,22 @@
           其中，如果状态为【indeterminate】，则图标不能发生变化
           反之，则切换【选中】or【不选中】的图标
         -->
-				<i
+				<V3Icon
 					v-if="props.indeterminate"
-					:class="{
-						'v3-icon': true,
-						'v3-checkbox__select--indeterminated': true,
-						[props.indeterminatedIcon]: true,
-					}"
-				></i>
-				<i
+					:type="props.indeterminatedIcon"
+					:strokeWidth="2"
+					class="v3-checkbox__select--indeterminated"
+				/>
+				<V3Icon
 					v-else-if="!props.indeterminate && state.checkboxValue"
-					:class="{
-						'v3-icon': true,
-						[props.selectedIcon]: true,
-					}"
-				></i>
-				<i
+					:type="props.selectedIcon"
+					:strokeWidth="2"
+				/>
+				<V3Icon
 					v-else-if="!props.indeterminate && !state.checkboxValue"
-					:class="{
-						'v3-icon': true,
-						[props.defaultIcon]: true,
-					}"
-				></i>
+					:type="props.defaultIcon"
+					:strokeWidth="2"
+				/>
 			</div>
 			<div class="v3-checkbox__label">
 				<slot v-if="app.slots.default"></slot>
@@ -74,15 +68,19 @@ import {
 	onMounted,
 	ComponentOptionsWithObjectProps,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/checkbox';
+import * as TYPES from '@typings/index';
 import {
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_INSTANCE_PROVIDE,
 	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 } from '@common/constants/provide-symbol';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Checkbox',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 是否带有边框 */
 		border: {
@@ -107,17 +105,17 @@ export default defineComponent({
 		/** 选中时的复选框图标 */
 		selectedIcon: {
 			type: String,
-			default: 'v3-icon-checkbox-selected',
+			default: 'CheckCorrect',
 		},
 		/** 不确定时的复选框图标 */
 		indeterminatedIcon: {
 			type: String,
-			default: 'v3-icon-checkbox-indeterminated',
+			default: 'Reduce',
 		},
 		/** 未选中状态下的复选框图标 */
 		defaultIcon: {
 			type: String,
-			default: 'v3-icon-checkbox-default',
+			default: 'Square',
 		},
 		/** 复选框的尺寸 */
 		size: {
@@ -149,19 +147,19 @@ export default defineComponent({
 			/** CheckboxGroup 的追加当前实例方法 */
 			injectedCheckboxGroupAppendInstance: null,
 		});
-		const app = ref(getCurrentInstance());
+		const app = ref(getCurrentInstance()!);
 		const checkboxRef = ref(document.createElement('input'));
 		const isCheckboxGroup = checkIsCheckboxGroup();
 
 		if (isCheckboxGroup) {
 			state.injectedOnCheckboxGroupChange = inject(
-				CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE
+				CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 			)!;
 			state.injectedCheckboxGroupInstance = inject(
-				CHECKBOX_GROUP_INSTANCE_PROVIDE
+				CHECKBOX_GROUP_INSTANCE_PROVIDE,
 			)!;
 			state.injectedCheckboxGroupAppendInstance = inject(
-				CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE
+				CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 			)!;
 		}
 
@@ -170,34 +168,35 @@ export default defineComponent({
 			() => {
 				state.defaultProps.disabled = props.disabled;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		watch(
 			toRef(
 				isCheckboxGroup
-					? (state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps)
-							.props
+					? (
+							state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps
+					  ).props
 					: props,
-				'modelValue'
+				'modelValue',
 			),
-			newValue => {
+			(newValue) => {
 				// 判断选中状态
 				if (isCheckboxGroup) {
 					state.checkboxValue = (newValue as TYPES.ICheckboxLabel[]).includes(
-						props.label!
+						props.label!,
 					);
 				} else {
-					state.checkboxValue = (newValue as unknown) as boolean;
+					state.checkboxValue = newValue as unknown as boolean;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
 			if (isCheckboxGroup) {
-				((state.injectedCheckboxGroupAppendInstance as unknown) as Function)(
-					app.value
+				(state.injectedCheckboxGroupAppendInstance as unknown as Function)(
+					app.value,
 				);
 			}
 		});
@@ -220,12 +219,12 @@ export default defineComponent({
 			return result;
 		}
 
-		function handleChange(e: MouseEvent) {
+		function handleChange(e: Event) {
 			if (isCheckboxGroup) {
-				((state.injectedOnCheckboxGroupChange as unknown) as Function)(
+				(state.injectedOnCheckboxGroupChange as unknown as Function)(
 					state.checkboxValue,
 					props.label,
-					e
+					e,
 				);
 			} else {
 				context.emit('update:modelValue', state.checkboxValue);
@@ -236,7 +235,7 @@ export default defineComponent({
 		return {
 			state,
 			props,
-			app: app.value,
+			app,
 			handleChange,
 			checkboxRef,
 			isCheckboxGroup,

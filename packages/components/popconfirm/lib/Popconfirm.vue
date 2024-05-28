@@ -1,22 +1,24 @@
 <template>
-	<v3-base-popper customClass="v3-popconfirm" v-bind="$attrs" theme="light">
+	<v3-base-popper
+		customClass="v3-popconfirm"
+		customDropdownClass="v3-popconfirm__dropdown"
+		customTriggerClass="v3-popconfirm__trigger"
+		v-bind="$attrs"
+		theme="light"
+	>
 		<template #default>
 			<slot></slot>
 		</template>
 
 		<template #content>
 			<div class="v3-popconfirm-content__text">
-				<i
+				<V3Icon
 					v-if="props.showIcon"
-					:class="{
-						'v3-icon': true,
-						'v3-popconfirm-text__icon': true,
-						[`${props.icon}`]: true,
-					}"
-					:style="{
-						color: props.iconColor,
-					}"
-				></i>
+					class="v3-popconfirm-text__icon"
+					:type="props.icon"
+					:fill="props.iconColor"
+					:theme="'filled'"
+				/>
 
 				<!-- slot="content" 优先级比 content props 高 -->
 				<slot name="content" v-if="context.slots.content"></slot>
@@ -45,7 +47,7 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/popconfirm';
+import * as TYPES from '@typings/index';
 import {
 	defineComponent,
 	getCurrentInstance,
@@ -53,8 +55,9 @@ import {
 	reactive,
 	ref,
 } from 'vue';
-import V3BasePopper from 'base-popper';
-import V3Button from 'button';
+import V3BasePopper from '@components/base-popper/main';
+import V3Button from '@components/button/main';
+import V3Icon from '@components/icon/main';
 
 interface IState {}
 
@@ -63,11 +66,12 @@ export default defineComponent({
 	components: {
 		V3BasePopper,
 		V3Button,
+		V3Icon,
 	},
 	props: {
 		/** 不可配置主题 */
 		theme: {
-			type: String as PropType<TYPES.IPopconfirmTheme>,
+			type: String as PropType<TYPES.IBasePopperTheme>,
 			default: 'light',
 		},
 		/** 不可配置标题 */
@@ -152,7 +156,7 @@ export default defineComponent({
 		/** 图标类名 */
 		icon: {
 			type: String,
-			default: 'v3-icon-warning-fill',
+			default: 'Attention',
 		},
 		/** 图标颜色 */
 		iconColor: {
@@ -183,6 +187,34 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss">
+body {
+	div[data-tippy-root] {
+		.tippy-content {
+			.tippy-box {
+				min-width: 200px;
+			}
+			.v3-popconfirm-content__text {
+				display: flex;
+				align-items: center;
+				.v3-popconfirm-text__icon {
+					margin-right: $margin-small;
+					font-size: $font-size-large;
+				}
+			}
+			.v3-popconfirm-content__action {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				margin-top: $margin-large-1;
+				& > .v3-button:last-child {
+					margin-left: $margin-small;
+				}
+			}
+		}
+	}
+}
+</style>
 <style lang="scss">
 @import './Popconfirm.scss';
 </style>

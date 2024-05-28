@@ -5,7 +5,8 @@
 		placement="bottom"
 		trigger="manual"
 		maxWidth="none"
-		:class="{
+		sameWidth
+		:customClass="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
 			['is-disabled']: props.disabled,
@@ -14,8 +15,14 @@
 			['is-no-data']: !computedChildrenLength,
 			['is-multiple']: props.multiple,
 		}"
+		:customDropdownClass="{
+			'v3-select__dropdown': true,
+		}"
+		:customTriggerClass="{
+			'v3-select__trigger': true,
+		}"
 		:style="{
-			height: `${state.initialInputHeight}px`,
+			height: `${state.pendingInputHeight}px`,
 		}"
 		@mount="handleDropdownMount"
 	>
@@ -41,23 +48,13 @@
 			@mouseleave="handleMouseLeave"
 		>
 			<template #suffix>
-				<i
-					style="margin-right: 6px;"
-					v-if="!state.showClear"
-					:class="{
-						'v3-icon': true,
-						'v3-icon-arrow-down': true,
-					}"
-				></i>
-				<i
-					style="margin-right: 6px; cursor: pointer"
+				<V3Icon v-if="!state.showClear" style="margin-right: 6px" type="Down" />
+				<V3Icon
 					v-else
-					:class="{
-						'v3-icon': true,
-						'v3-icon-reeor': true,
-					}"
+					style="margin-right: 6px; cursor: pointer"
+					type="CloseOne"
 					@click.stop="handleClear"
-				></i>
+				/>
 			</template>
 		</v3-input>
 		<ul
@@ -71,7 +68,7 @@
 				<li
 					class="v3-select__tag-item"
 					v-for="v in state.selectedOptionList"
-					:key="v"
+					:key="JSON.stringify(v)"
 				>
 					<v3-tag
 						closeable
@@ -91,7 +88,7 @@
 						closeable
 						type="info"
 						v-for="v in state.selectedOptionList.slice(0, 1)"
-						:key="v"
+						:key="JSON.stringify(v)"
 						:size="props.size"
 						@close="handleTagClose(v)"
 						>{{ v.label }}</v3-tag
@@ -117,22 +114,25 @@
 				<slot v-if="computedChildrenLength"></slot>
 				<template v-else>
 					<!-- 未匹配到数据（优先级比【无数据】高） -->
-					<p v-if="state.isNoMatchData">{{ props.noMatchText }}</p>
+					<p v-if="state.isNoMatchData" class="v3-select-dropdown__empty">
+						{{ props.noMatchText }}
+					</p>
 					<!-- 无数据 -->
-					<p v-else>{{ props.noDataText }}</p>
+					<p v-else class="v3-select-dropdown__empty">{{ props.noDataText }}</p>
 				</template>
 			</ul>
 		</template>
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/select';
+import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import { useDebounce, useThrottle } from '@common/hooks/index';
-import V3Input from 'input';
-import V3Tag from 'tag';
-import V3BasePopper from 'base-popper';
+import V3Input from '@components/input/main';
+import V3Tag from '@components/tag/main';
+import V3BasePopper from '@components/base-popper/main';
+import V3Icon from '@components/icon/main';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
@@ -178,12 +178,21 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3Select',
+	components: {
+		V3Input,
+		V3Tag,
+		V3BasePopper,
+	},
 	props: {
 		/** 下拉框的值 */
 		modelValue: {
-			type: [String, Boolean, Number, Object, Array] as PropType<
-				TYPES.ISelectValue
-			>,
+			type: [
+				String,
+				Boolean,
+				Number,
+				Object,
+				Array,
+			] as PropType<TYPES.ISelectValue>,
 			required: true,
 		},
 		/** 是否开启多选 */
@@ -273,11 +282,6 @@ export default defineComponent({
 			},
 		},
 	},
-	components: {
-		V3Input,
-		V3Tag,
-		V3BasePopper,
-	},
 	setup(props: TYPES.ISelectProps, context) {
 		const state: IState = reactive({
 			/** 当前的下拉框是否显示 */
@@ -310,7 +314,8 @@ export default defineComponent({
 			pendingInputHeight: 0,
 			windowResizeHandler: null,
 		});
-		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
+		const app = ref(getCurrentInstance())
+			.value as unknown as ComponentInternalInstance;
 		const tagWrapperRef = ref(null);
 		const inputWrapperRef = ref(null);
 
@@ -364,7 +369,7 @@ export default defineComponent({
 					}
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
@@ -392,17 +397,17 @@ export default defineComponent({
 		 * 关闭标签
 		 */
 		function handleTagClose(
-			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>
+			data: Pick<TYPES.ISelectOptionProps, 'label' | 'value'>,
 		) {
 			// 关闭标签时，从已选中的列表中移除该项
-			state.selectedOptionList = state.selectedOptionList.filter(v => {
+			state.selectedOptionList = state.selectedOptionList.filter((v) => {
 				return v.label !== data.label && v.value !== data.value;
 			});
 
 			// 重新计算下拉框的高度
 			updateInputHeight();
 
-			const selectedValueList = state.selectedOptionList.map(v => v.value);
+			const selectedValueList = state.selectedOptionList.map((v) => v.value);
 
 			context.emit('update:modelValue', selectedValueList);
 			context.emit('change', selectedValueList);
@@ -416,9 +421,8 @@ export default defineComponent({
 		 * 把 V3SelectOption 实例追加到列表，统一管理
 		 */
 		function appendSelectOptionList(instance: any) {
-			state.selectOptionInstanceList = state.selectOptionInstanceList.concat(
-				instance
-			);
+			state.selectOptionInstanceList =
+				state.selectOptionInstanceList.concat(instance);
 		}
 
 		/**
@@ -426,7 +430,7 @@ export default defineComponent({
 		 */
 		function subtractSelectOptionList(instance: any) {
 			state.selectOptionInstanceList = state.selectOptionInstanceList.filter(
-				v => v !== instance
+				(v) => v !== instance,
 			);
 		}
 
@@ -434,13 +438,13 @@ export default defineComponent({
 			// 如果是多选
 			if (props.multiple) {
 				const foundSelectedOption = state.selectedOptionList.findIndex(
-					v => v.label === label && v.value === value
+					(v) => v.label === label && v.value === value,
 				);
 
 				// 如果列表中本来就有该值，那么表明是取消勾选，从列表中移除该项
 				if (foundSelectedOption !== -1) {
 					state.selectedOptionList = state.selectedOptionList.filter(
-						(_, i) => i !== foundSelectedOption
+						(_, i) => i !== foundSelectedOption,
 					);
 				} else {
 					// 反之添加到列表中
@@ -457,7 +461,7 @@ export default defineComponent({
 					updateDropdownPosition();
 				}, 0);
 
-				const selectedValueList = state.selectedOptionList.map(v => v.value);
+				const selectedValueList = state.selectedOptionList.map((v) => v.value);
 
 				context.emit('update:modelValue', selectedValueList);
 				context.emit('change', selectedValueList);
@@ -540,19 +544,19 @@ export default defineComponent({
 
 					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
 					state.isNoMatchData = !computedChildrenLength.value;
-					state.selectOptionInstanceList.forEach(v => {
+					state.selectOptionInstanceList.forEach((v) => {
 						v.proxy.state.isShow = true;
 					});
 				} else {
 					// 没有输入值时，需要显示全部的下拉选项
-					state.selectOptionInstanceList.forEach(v => {
+					state.selectOptionInstanceList.forEach((v) => {
 						v.proxy.state.isShow = target.value
 							? v.proxy.label.includes(target.value)
 							: true;
 					});
 
 					// 如果本地搜索的时候，结果为空，那么就显示未匹配的文本
-					const isEmpty = state.selectOptionInstanceList.every(v => {
+					const isEmpty = state.selectOptionInstanceList.every((v) => {
 						return !v.proxy.state.isShow;
 					});
 					state.isNoMatchData = isEmpty;
@@ -570,7 +574,7 @@ export default defineComponent({
 			if (props.filterable) {
 				state.inputValue = '';
 				state.placeholder = state.selectedLabel || state.initialPlaceholder;
-				state.selectOptionInstanceList.forEach(v => {
+				state.selectOptionInstanceList.forEach((v) => {
 					v.proxy.state.isShow = true;
 				});
 
@@ -604,7 +608,7 @@ export default defineComponent({
 		function updateInputHeight() {
 			nextTick(() => {
 				if (tagWrapperRef.value) {
-					const tagEl = (tagWrapperRef.value as unknown) as HTMLDivElement;
+					const tagEl = tagWrapperRef.value as unknown as HTMLDivElement;
 					const newHeight = tagEl.getBoundingClientRect().height;
 
 					state.pendingInputHeight = newHeight;
@@ -618,7 +622,9 @@ export default defineComponent({
 			if (state.dropdownInstance && inputWrapperRef.value) {
 				state.dropdownInstance.setProps({
 					getReferenceClientRect: () =>
-						(inputWrapperRef.value as ComponentPublicInstance).$el.getBoundingClientRect(),
+						(
+							inputWrapperRef.value as unknown as ComponentPublicInstance
+						).$el.getBoundingClientRect(),
 				});
 			}
 		}
@@ -648,6 +654,53 @@ export default defineComponent({
 	},
 });
 </script>
+<style lang="scss">
+body {
+	div[data-tippy-root] {
+		.tippy-content {
+			padding-left: 0;
+			padding-right: 0;
+			.v3-select__dropdown {
+				padding: $padding-small 0;
+				.v3-select-dropdown__list {
+					width: 100%;
+				}
+				.v3-select-dropdown__item {
+					padding: 0 $padding-medium;
+					user-select: none;
+					line-height: 35px;
+					cursor: pointer;
+					font-size: $font-size-default;
+					transition: all 0.15s ease;
+					&:not(.is-disabled):hover {
+						background-color: $primary-color-plain;
+					}
+
+					&.is-disabled {
+						color: $info-color-middle;
+						cursor: not-allowed;
+					}
+
+					&.is-disabled.is-selected {
+						color: $primary-color-middle;
+					}
+
+					&.is-selected:not(.is-disabled) {
+						color: $primary-color;
+					}
+				}
+				// 无数据
+				.v3-select-dropdown__empty {
+					margin: 0;
+					padding: $padding-small 0;
+					text-align: center;
+					color: $info-color-middle;
+				}
+			}
+		}
+	}
+}
+</style>
 <style lang="scss">
 @import './Select.scss';
 </style>

@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import * as TYPES from '@/public/lib/types/message';
+import * as TYPES from '@typings/index';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
@@ -22,8 +22,8 @@ const state: IState = reactive({
 	instanceWrapper: document.createElement('div'),
 });
 
-const MessageConstructor: TYPES.IMessageConstructor = function(
-	options: TYPES.IMessageProps
+const MessageConstructor: TYPES.IMessageConstructor = function (
+	options: TYPES.IMessageProps,
 ) {
 	const defaultOptions = Object.assign(
 		{
@@ -41,7 +41,7 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 				done();
 			},
 		},
-		options
+		options,
 	);
 
 	// 计算当前消息框的位置
@@ -63,7 +63,7 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 
 	render(instanceVNode, state.instanceWrapper);
 	document.body.appendChild(
-		state.instanceWrapper.firstElementChild as HTMLElement
+		state.instanceWrapper.firstElementChild as HTMLElement,
 	);
 
 	const instance = (instanceVNode.component as ComponentInternalInstance)
@@ -75,19 +75,26 @@ const MessageConstructor: TYPES.IMessageConstructor = function(
 };
 
 (['success', 'danger', 'info', 'warning'] as TYPES.IMessageType[]).forEach(
-	type => {
-		MessageConstructor[type] = function(options) {
+	(type) => {
+		MessageConstructor[type] = function (options) {
 			const baseOptions = Object.assign(options, {
 				type,
 			});
 
 			return MessageConstructor(baseOptions);
 		};
-	}
+	},
 );
 
-export default MessageConstructor;
-export function close(instance: ComponentPublicInstance) {
+const useMessage: TYPES.V3MessageHook = (options) => {
+	const instance = MessageConstructor(options);
+
+	return {
+		instance,
+	};
+};
+
+function close(instance: ComponentPublicInstance) {
 	// 记录当前关闭的消息框的下标
 	let interruptIndex = 0;
 	// 记录上一个消息框的位置，便于回溯
@@ -111,3 +118,6 @@ export function close(instance: ComponentPublicInstance) {
 		prevOffset = currentOffset;
 	}
 }
+
+export default MessageConstructor;
+export { close, useMessage };

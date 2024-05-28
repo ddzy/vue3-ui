@@ -1,19 +1,29 @@
 <template>
 	<div
-		:class="{
-			'v3-base-popper': true,
-			'is-visible': state.showDropdown,
-			'is-disabled': props.disabled,
-			[`is-theme-${props.theme}`]: true,
-			[`${props.customClass}`]: true,
-		}"
+		:class="
+			typeof props.customClass === 'string'
+				? {
+						'v3-base-popper': true,
+						'is-visible': state.showDropdown,
+						'is-disabled': props.disabled,
+						[`is-theme-${props.theme}`]: true,
+						[`${props.customClass}`]: true,
+				  }
+				: {
+						'v3-base-popper': true,
+						'is-visible': state.showDropdown,
+						'is-disabled': props.disabled,
+						[`is-theme-${props.theme}`]: true,
+						...props.customClass,
+				  }
+		"
 	>
 		<tippy
 			ref="tippyRef"
 			:hideOnClick="props.trigger !== 'manual'"
 			:trigger="props.trigger"
 			:theme="props.theme === 'dark' ? 'material' : 'light'"
-			:animation="props.animation"
+			:animation="'perspective'"
 			:placement="props.placement"
 			:zIndex="props.zIndex"
 			:arrow="props.arrow"
@@ -23,16 +33,17 @@
 			:showOnCreate="state.showDropdown"
 			:delay="props.delay"
 			:offset="props.offset"
+			:appendTo="appendTo"
 			:onShow="handleShow"
 			:onHide="handleHide"
 			:onMount="handleMount"
 			:onClickOutside="handleClickOutside"
 		>
-			<div class="v3-base-popper__trigger">
+			<div class="v3-base-popper__trigger" :class="customTriggerClass">
 				<slot></slot>
 			</div>
 			<template #content>
-				<div class="v3-base-popper__dropdown">
+				<div class="v3-base-popper__dropdown" :class="customDropdownClass">
 					<div class="v3-popper-dropdown__title" v-if="props.title">
 						<h3>{{ props.title }}</h3>
 					</div>
@@ -48,11 +59,6 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/base-popper';
-import VARIABLE from '@common/constants/internal-variable';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/themes/light.css';
-import 'tippy.js/themes/material.css';
 import {
 	computed,
 	defineComponent,
@@ -62,17 +68,18 @@ import {
 	ref,
 	watch,
 } from 'vue';
-import { Tippy, TippyInstance } from 'vue-tippy';
+import { Tippy } from 'vue-tippy';
+import { Instance } from 'tippy.js';
+import * as TYPES from '@typings/index';
+import VARIABLE from '@common/constants/internal-variable';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/themes/material.css';
+import 'tippy.js/animations/perspective.css';
 
 interface IState {
 	showDropdown: boolean;
 }
-type ILocalTippyInstance = TippyInstance & {
-	hide: () => void;
-	show: () => void;
-	unmount: () => void;
-	mount: () => void;
-};
 
 export default defineComponent({
 	name: 'V3BasePopper',
@@ -141,11 +148,6 @@ export default defineComponent({
 			type: Object as PropType<TYPES.IBasePopperOffset>,
 			default: [0, 10],
 		},
-		/** 自定义弹出的动画 */
-		animation: {
-			type: String,
-			default: 'v3-popper-slide-fade',
-		},
 		/** 显示/隐藏的延迟 */
 		delay: {
 			type: Object as PropType<TYPES.IBasePopperDelay>,
@@ -180,8 +182,28 @@ export default defineComponent({
 		},
 		/** 自定义类名 */
 		customClass: {
-			type: String,
+			type: [String, Object],
 			default: '',
+		},
+		/** 自定义弹出框的类名 */
+		customDropdownClass: {
+			type: [String, Object],
+			default: '',
+		},
+		/** 自定义触发器的类名 */
+		customTriggerClass: {
+			type: [String, Object],
+			default: '',
+		},
+		/** 弹窗框的宽度是否保持和触发器一致 */
+		sameWidth: {
+			type: Boolean,
+			default: false,
+		},
+		/** 浮框挂载到的元素 */
+		appendTo: {
+			type: [String, Object, Function] as PropType<TYPES.IBasePopperAppendTo>,
+			default: 'parent',
 		},
 	},
 	setup(props: TYPES.IBasePopperProps, context) {
@@ -208,8 +230,8 @@ export default defineComponent({
 					state.showDropdown = props.modelValue as boolean;
 
 					if (tippyRef.value) {
-						const tippyObj = (tippyRef.value as unknown) as {
-							tippy: ILocalTippyInstance;
+						const tippyObj = tippyRef.value as unknown as {
+							tippy: Instance;
 						};
 						if (props.modelValue) {
 							tippyObj.tippy.show();
@@ -219,28 +241,33 @@ export default defineComponent({
 					}
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
-		function handleShow(instance: ILocalTippyInstance) {
+		function handleShow(instance: Instance) {
 			// 如果当前下拉框为禁用状态，那么下拉菜单不需要显示
 			const showDropdown = !props.disabled;
 			state.showDropdown = showDropdown;
 
 			if (!showDropdown) {
-				return showDropdown;
+				return false;
 			}
 
+			if (props.sameWidth) {
+				instance.popper.style.width = `${
+					instance.reference.getBoundingClientRect().width
+				}px`;
+			}
 			context.emit('show', instance);
 		}
 
-		function handleHide(instance: ILocalTippyInstance) {
+		function handleHide(instance: Instance) {
 			state.showDropdown = false;
 
 			context.emit('hide', instance);
 		}
 
-		function handleClickOutside(instance: ILocalTippyInstance) {
+		function handleClickOutside(instance: Instance) {
 			if (computedIsManually.value) {
 				context.emit('update:modelValue', false);
 			}
@@ -248,7 +275,7 @@ export default defineComponent({
 			context.emit('clickOutside', instance);
 		}
 
-		function handleMount(instance: ILocalTippyInstance) {
+		function handleMount(instance: Instance) {
 			context.emit('mount', instance);
 		}
 
@@ -267,5 +294,31 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import './BasePopper.scss';
+div[data-tippy-root] {
+	.tippy-box {
+		&[data-theme~='light'] {
+			color: $font-color-default;
+			box-shadow: $box-shadow-large;
+		}
+		&[data-theme~='material'] {
+			color: #fff;
+			font-weight: normal;
+		}
+	}
+	.tippy-content {
+		padding: 0;
+		.v3-base-popper__dropdown {
+			padding: $padding-medium $padding-large-1;
+			font-size: $font-size-default;
+			.v3-popper-dropdown__title {
+				margin-bottom: $margin-medium;
+				h3 {
+					margin: 0;
+					font-size: $font-size-medium;
+				}
+			}
+		}
+	}
+}
 </style>
+<style lang="scss" scoped></style>

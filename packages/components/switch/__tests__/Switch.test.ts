@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Switch from '../main';
+import { V3Switch } from '@components/main';
 
 describe('V3Switch 组件测试：', () => {
 	test('Switch 组件最基本的用法', async () => {
@@ -21,10 +21,7 @@ describe('V3Switch 组件测试：', () => {
 		// 默认为【开启】状态
 		expect(wrapper.find('.v3-switch').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeTruthy();
 
 		// 手动关闭
@@ -32,10 +29,7 @@ describe('V3Switch 组件测试：', () => {
 			switchValue: false,
 		});
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeFalsy();
 		expect(wrapper.vm.switchValue).toBeFalsy();
 	});
@@ -60,7 +54,7 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(wrapper.find('.v3-switch').attributes().style).toBe(
-			`--active-color: rgba(0, 160, 255, 1); --inactive-color: rgba(184, 176, 176, 1); --active-color-shadow: rgba(0, 160, 255, 0.8); --inactive-color-shadow: rgba(184, 176, 176, 0.8); --active-color-track: rgba(0, 160, 255, 0.4); --inactive-color-track: rgba(184, 176, 176, 0.4); --active-color-transparent: rgba(0, 160, 255, 0); --inactive-color-transparent: rgba(184, 176, 176, 0); --move-duration: 0.15s;`
+			`--active-color: rgba(0, 160, 255, 1); --inactive-color: rgba(184, 176, 176, 1); --active-color-shadow: rgba(0, 160, 255, 0.8); --inactive-color-shadow: rgba(184, 176, 176, 0.8); --active-color-track: rgba(0, 160, 255, 0.4); --inactive-color-track: rgba(184, 176, 176, 0.4); --active-color-transparent: rgba(0, 160, 255, 0); --inactive-color-transparent: rgba(184, 176, 176, 0); --move-duration: 0.15s;`,
 		);
 	});
 
@@ -84,29 +78,23 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(wrapper.findAll('.v3-switch .v3-switch__label')[0].text()).toBe(
-			'关'
+			'关',
 		);
 		expect(wrapper.findAll('.v3-switch .v3-switch__label')[1].text()).toBe(
-			'开'
+			'开',
 		);
 
 		// 第一次点击开启
 		await wrapper.find('.v3-switch .v3-switch__active').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeTruthy();
 		// 再次点击则关闭
 		await wrapper.find('.v3-switch .v3-switch__active').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeFalsy();
 	});
 
@@ -120,8 +108,8 @@ describe('V3Switch 组件测试：', () => {
           v-model="switchValue"
           activeLabel="开"
 					inactiveLabel="关"
-					activeIcon="v3-icon-notice"
-					inactiveIcon="v3-icon-sound-Mute"
+					activeIcon="Plus"
+					inactiveIcon="Minus"
         ></v3-switch>
       `,
 			data() {
@@ -132,12 +120,10 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(
-			wrapper
-				.find('.v3-switch .v3-switch__inactive .v3-icon-sound-Mute')
-				.exists()
+			wrapper.find('.v3-switch .v3-switch__inactive .v3-icon-minus').exists(),
 		).toBeTruthy();
 		expect(
-			wrapper.find('.v3-switch .v3-switch__active .v3-icon-notice').exists()
+			wrapper.find('.v3-switch .v3-switch__active .v3-icon-plus').exists(),
 		).toBeTruthy();
 	});
 
@@ -167,10 +153,7 @@ describe('V3Switch 组件测试：', () => {
 
 		await wrapper.find('.v3-switch .v3-switch__select').trigger('click');
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeTruthy();
 
 		// 禁用
@@ -179,10 +162,7 @@ describe('V3Switch 组件测试：', () => {
 		});
 		await wrapper.find('.v3-switch .v3-switch__select').trigger('click');
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeTruthy();
 	});
 
@@ -205,7 +185,7 @@ describe('V3Switch 组件测试：', () => {
 		});
 
 		expect(
-			wrapper.find('.v3-switch .v3-switch__select').attributes().style
+			wrapper.find('.v3-switch .v3-switch__select').attributes().style,
 		).toContain('width: 60px;');
 	});
 
@@ -229,16 +209,14 @@ describe('V3Switch 组件测试：', () => {
 			},
 			methods: {
 				handleChange(v: number) {
+					// @ts-ignore
 					this.$emit('change', v);
 				},
 			},
 		});
 
 		expect(
-			wrapper
-				.find('.v3-switch')
-				.classes()
-				.includes('is-active')
+			wrapper.find('.v3-switch').classes().includes('is-active'),
 		).toBeTruthy();
 
 		await wrapper.find('.v3-switch .v3-switch__select').trigger('click');

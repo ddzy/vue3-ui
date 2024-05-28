@@ -12,7 +12,7 @@
 	</li>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/select';
+import * as TYPES from '@typings/index';
 import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import * as UTILS from '@common/utils/index';
 import {
@@ -46,9 +46,12 @@ export default defineComponent({
 		},
 		/** 对应的值 */
 		value: {
-			type: [String, Boolean, Number, Object] as PropType<
-				TYPES.ISelectOptionValue
-			>,
+			type: [
+				String,
+				Boolean,
+				Number,
+				Object,
+			] as PropType<TYPES.ISelectOptionValue>,
 			required: true,
 		},
 		/** 是否禁用当前选项 */
@@ -57,7 +60,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	setup(props) {
+	setup(props: TYPES.ISelectOptionProps) {
 		const state: IState = reactive({
 			/** 当前下拉选项是否选中 */
 			isSelected: false,
@@ -73,7 +76,7 @@ export default defineComponent({
 
 		if (isSelect) {
 			const internalSelectInstance = inject(
-				SELECT_INSTANCE_PROVIDE
+				SELECT_INSTANCE_PROVIDE,
 			) as ComponentInternalInstance | null;
 			state.injectedSelectInstance = internalSelectInstance
 				? internalSelectInstance.proxy
@@ -85,7 +88,7 @@ export default defineComponent({
 		 */
 		watch(
 			toRef(state.injectedSelectInstance, 'modelValue'),
-			newValue => {
+			(newValue) => {
 				// 如果值是对象类型，那么需要以【value-key】作比对，判断是否选中
 				if (
 					UTILS.isStrictObject(props.value) &&
@@ -112,13 +115,13 @@ export default defineComponent({
 				) {
 					state.injectedSelectInstance.handleInit(
 						props.value,
-						props.label || props.value
+						props.label || props.value,
 					);
 				}
 
 				state.hasInit = true;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
@@ -155,7 +158,7 @@ export default defineComponent({
 			if (!props.disabled && state.injectedSelectInstance) {
 				state.injectedSelectInstance.handleChange(
 					props.value,
-					props.label || props.value
+					props.label || props.value,
 				);
 			}
 		}

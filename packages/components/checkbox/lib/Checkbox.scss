@@ -1,18 +1,18 @@
 $checkbox-size-map: (
 	small: (
 		padding: 0 $padding-medium,
-		checkbox-font-size: $font-size-normal,
-		label-font-size: $font-size-mini,
+		checkbox-font-size: $font-size-medium,
+		label-font-size: $font-size-small,
 	),
 	medium: (
 		padding: 3px $padding-medium,
 		checkbox-font-size: $font-size-large,
-		label-font-size: $font-size-small,
+		label-font-size: $font-size-default,
 	),
 	large: (
 		padding: 4px $padding-medium,
 		checkbox-font-size: $font-size-large-2,
-		label-font-size: $font-size-small,
+		label-font-size: $font-size-default,
 	),
 );
 
@@ -30,7 +30,7 @@ $checkbox-size-map: (
 			.v3-checkbox__label-wrapper {
 				font-size: map-get($map: $value, $key: label-font-size);
 				.v3-checkbox__select {
-					i {
+					.v3-icon {
 						font-size: map-get($map: $value, $key: checkbox-font-size);
 					}
 				}
@@ -48,7 +48,7 @@ $checkbox-size-map: (
 	// 有边框的复选框
 	&.is-bordered {
 		.v3-checkbox__label-wrapper {
-			border: 1px solid $border-color-grey-default;
+			border: 1px solid $border-color-default;
 			border-radius: $border-radius-width-small;
 			padding: $padding-small $padding-medium;
 		}
@@ -56,7 +56,7 @@ $checkbox-size-map: (
 
 	&.is-disabled.is-bordered {
 		.v3-checkbox__label-wrapper {
-			border-color: $border-color-grey-small;
+			border-color: $border-color-small;
 		}
 	}
 
@@ -72,7 +72,7 @@ $checkbox-size-map: (
 		align-items: center;
 		user-select: none;
 		cursor: pointer;
-		font-size: $font-size-small;
+		font-size: $font-size-default;
 		color: $font-color-default;
 
 		.v3-checkbox__input {
@@ -80,7 +80,7 @@ $checkbox-size-map: (
 
 			&:checked:not(:disabled) {
 				& ~ .v3-checkbox__select {
-					i {
+					.v3-icon {
 						color: $primary-color;
 					}
 				}
@@ -90,12 +90,10 @@ $checkbox-size-map: (
 			}
 			&:disabled {
 				& ~ .v3-checkbox__select {
-					i {
-						color: $border-color-grey-default;
-					}
+					opacity: 0.6;
 				}
 				& ~ .v3-checkbox__label {
-					color: $info-color;
+					opacity: 0.6;
 				}
 			}
 		}
@@ -103,9 +101,9 @@ $checkbox-size-map: (
 		.v3-checkbox__select {
 			display: flex;
 			align-items: center;
-			i {
+			.v3-icon {
 				font-size: $font-size-large;
-				color: $info-color;
+				color: $font-color-small;
 				&.v3-checkbox__select--indeterminated {
 					color: $primary-color;
 				}

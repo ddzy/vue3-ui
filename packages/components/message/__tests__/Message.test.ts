@@ -2,7 +2,7 @@
 
 import { nextTick, h } from '@vue/runtime-core';
 import { mount, config } from '@vue/test-utils';
-import V3Message from '../lib/MessageConstructor';
+import { useMessage, V3Message } from '@components/main';
 
 jest.useFakeTimers();
 
@@ -18,6 +18,7 @@ function generateWrapper() {
 config.plugins.VueWrapper.install(() => {
 	return {
 		$message: V3Message,
+		useMessage,
 	};
 });
 
@@ -47,10 +48,10 @@ describe('V3Message 组件测试：', () => {
 
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(2);
 		expect(
-			document.body.querySelector('.v3-message--success').textContent
+			document.body.querySelector('.v3-message--success').textContent,
 		).toBe('成功消息！');
 		expect(document.body.querySelector('.v3-message--danger').textContent).toBe(
-			'失败消息！'
+			'失败消息！',
 		);
 	});
 
@@ -76,7 +77,7 @@ describe('V3Message 组件测试：', () => {
 		expect(document.body.querySelectorAll('.v3-message').length).toBe(1);
 		expect(document.body.querySelector('.test-text')).toBeTruthy();
 		expect(
-			document.body.querySelector('.v3-message--success').textContent
+			document.body.querySelector('.v3-message--success').textContent,
 		).toBe('测试文本');
 	});
 
@@ -104,7 +105,7 @@ describe('V3Message 组件测试：', () => {
 		expect(
 			document.body
 				.querySelector('.v3-message--success')
-				.classList.contains('test-message-wrapper')
+				.classList.contains('test-message-wrapper'),
 		).toBeTruthy();
 	});
 
@@ -131,7 +132,7 @@ describe('V3Message 组件测试：', () => {
 		expect(
 			document.body
 				.querySelector('.v3-message')
-				.classList.contains('is-closeable')
+				.classList.contains('is-closeable'),
 		).toBeTruthy();
 	});
 
@@ -174,14 +175,14 @@ describe('V3Message 组件测试：', () => {
 		wrapper.$message({
 			type: 'success',
 			message: '测试文本',
-			icon: 'v3-icon-close',
+			icon: 'CloseSmall',
 			duration: 0,
 		});
 
 		expect(
 			document.body.querySelector(
-				'.v3-message .v3-message__icon .v3-icon-close'
-			)
+				'.v3-message .v3-message__icon .v3-icon-close-small',
+			),
 		).toBeInstanceOf(HTMLElement);
 	});
 
@@ -198,13 +199,13 @@ describe('V3Message 组件测试：', () => {
 		wrapper.$message({
 			type: 'success',
 			message: h('span', 'vnode内容'),
-			icon: 'v3-icon-close',
+			icon: 'CloseSmall',
 			duration: 0,
 		});
 
 		expect(
 			document.body.querySelector('.v3-message .v3-message__content')
-				.textContent
+				.textContent,
 		).toBe('vnode内容');
 	});
 
@@ -226,7 +227,7 @@ describe('V3Message 组件测试：', () => {
 		});
 
 		expect(
-			document.querySelector('.v3-message').classList.contains('is-center')
+			document.querySelector('.v3-message').classList.contains('is-center'),
 		).toBeTruthy();
 	});
 
@@ -258,10 +259,42 @@ describe('V3Message 组件测试：', () => {
 
 			expect(document.querySelectorAll('.v3-message').length).toBe(1);
 			expect(
-				document.querySelector('.v3-message .v3-message__content').textContent
+				document.querySelector('.v3-message .v3-message__content').textContent,
 			).toBe('测试内容1');
 		}, 4000);
 
 		jest.advanceTimersByTime(4000);
+	});
+
+	test('V3Message 组件可以通过 Composition 的形式使用', async () => {
+		generateWrapper();
+
+		const wrapper = mount({
+			attachTo: document.getElementById('app'),
+			template: `
+        <div></div>
+      `,
+		});
+
+		wrapper.useMessage({
+			type: 'success',
+			message: '成功消息！',
+			duration: 0,
+		});
+		wrapper.useMessage({
+			type: 'danger',
+			message: '失败消息！',
+			duration: 0,
+		});
+
+		await nextTick();
+
+		expect(document.body.querySelectorAll('.v3-message').length).toBe(2);
+		expect(
+			document.body.querySelector('.v3-message--success').textContent,
+		).toBe('成功消息！');
+		expect(document.body.querySelector('.v3-message--danger').textContent).toBe(
+			'失败消息！',
+		);
 	});
 });

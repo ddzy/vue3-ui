@@ -2,20 +2,17 @@ $input-size-map: (
 	small: (
 		height: 29px,
 		line-height: 27px,
-		font-size: $font-size-mini,
-		icon-font-size: $font-size-normal,
+		font-size: $font-size-small,
 	),
 	medium: (
 		height: 35px,
 		line-height: 33px,
-		font-size: $font-size-small,
-		icon-font-size: $font-size-large,
+		font-size: $font-size-default,
 	),
 	large: (
 		height: 41px,
 		line-height: 39px,
-		font-size: $font-size-small,
-		icon-font-size: $font-size-large-2,
+		font-size: $font-size-default,
 	),
 );
 
@@ -31,15 +28,6 @@ $input-size-map: (
 			height: map-get($map: $value, $key: height);
 			line-height: map-get($map: $value, $key: line-height);
 			font-size: map-get($map: $value, $key: font-size);
-
-			.v3-input__prepend-wrapper,
-			.v3-input__append-wrapper,
-			.v3-input__prefix,
-			.v3-input__suffix {
-				& :deep(i.v3-icon) {
-					font-size: map-get($map: $value, $key: icon-font-size);
-				}
-			}
 		}
 	}
 
@@ -105,7 +93,7 @@ $input-size-map: (
 	.v3-input__prepend-wrapper,
 	.v3-input__append-wrapper,
 	.v3-input__inner-wrapper {
-		border: 1px solid $border-color-grey-default;
+		border: 1px solid $border-color-default;
 	}
 
 	.v3-input__prepend-wrapper,
@@ -123,6 +111,7 @@ $input-size-map: (
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		height: 100%;
 	}
 
 	.v3-input__prepend-wrapper {
@@ -160,13 +149,13 @@ $input-size-map: (
 				border: 0;
 				appearance: none;
 				outline: 0;
-				color: $font-color-medium;
+				color: $font-color-default;
 				font-size: inherit;
 				&:disabled {
 					background-color: #fff;
 				}
 				&::placeholder {
-					color: $border-color-grey-default;
+					color: $border-color-default;
 				}
 				&:-moz-placeholder,
 				&::-moz-placeholder {
@@ -196,14 +185,13 @@ $input-size-map: (
 					display: flex;
 					justify-content: center;
 					align-items: center;
+					height: 100%;
 					.v3-input__clear,
 					.v3-input__password {
 						&:hover {
 							color: $info-color;
 						}
-						i.v3-icon {
-							cursor: pointer;
-						}
+						cursor: pointer;
 					}
 					.v3-input__limit {
 						cursor: default;

@@ -64,7 +64,7 @@ export default defineComponent({
 
 		const computedClass = computed(() => {
 			return state.typeList
-				.map(v => {
+				.map((v) => {
 					return `v3-carousel-item--${v}`;
 				})
 				.join(' ');
@@ -72,7 +72,7 @@ export default defineComponent({
 
 		if (isCarouselExist) {
 			const internalCarouselInstance = inject(
-				CAROUSEL_INSTANCE_PROVIDE
+				CAROUSEL_INSTANCE_PROVIDE,
 			) as ComponentInternalInstance | null;
 			state.injectedCarouselInstance = internalCarouselInstance
 				? internalCarouselInstance.proxy
@@ -86,7 +86,7 @@ export default defineComponent({
 				state.width = parentEl.getBoundingClientRect().width;
 				// 将当前组件实例存储到 V3Carousel 组件中统一管理
 				state.injectedCarouselInstance.appendCarouselItemInstanceToList(
-					app.proxy
+					app.proxy,
 				);
 			}
 		});

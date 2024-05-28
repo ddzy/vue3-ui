@@ -36,7 +36,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/input';
+import * as TYPES from '@typings/index';
 
 export default defineComponent({
 	name: 'V3InputTextarea',
@@ -97,7 +97,7 @@ export default defineComponent({
 			() => {
 				state.defaultProps.height = props.height;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(props, 'modelValue'),
@@ -106,7 +106,7 @@ export default defineComponent({
 					_autoHeight();
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**

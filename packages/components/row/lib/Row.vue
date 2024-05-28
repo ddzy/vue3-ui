@@ -19,7 +19,7 @@ import {
 	reactive,
 } from 'vue';
 
-import * as TYPES from '@/public/lib/types/row';
+import * as TYPES from '@typings/index';
 import { ROW_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
 export default defineComponent({

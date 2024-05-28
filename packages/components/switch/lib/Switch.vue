@@ -5,7 +5,6 @@
 			'is-disabled': props.disabled,
 			'is-loading': props.loading,
 			'is-active': state.isChecked,
-			'is-disabled': props.disabled,
 			'has-animation': ![0, 1].includes(state.checkedCount),
 		}"
 		:style="{
@@ -37,11 +36,7 @@
 			@click="handleSwitch"
 		>
 			<!-- 状态图标比文字的优先级高 -->
-			<i
-				class="v3-icon"
-				v-if="props.inactiveIcon"
-				:class="[props.inactiveIcon || '']"
-			></i>
+			<V3Icon v-if="props.inactiveIcon" :type="props.inactiveIcon" />
 			<span v-if="!props.inactiveIcon && props.inactiveLabel">{{
 				props.inactiveLabel
 			}}</span>
@@ -65,11 +60,7 @@
 			@click="handleSwitch"
 		>
 			<!-- 状态图标比文字的优先级高 -->
-			<i
-				class="v3-icon"
-				v-if="props.activeIcon"
-				:class="[props.activeIcon || '']"
-			></i>
+			<V3Icon v-if="props.activeIcon" :type="props.activeIcon" />
 			<span v-else-if="!props.activeIcon && props.activeLabel">{{
 				props.activeLabel
 			}}</span>
@@ -87,10 +78,14 @@ import {
 	watch,
 } from 'vue';
 import { hexToRgba } from '@common/utils/index';
-import * as TYPES from '@/public/lib/types/switch';
+import * as TYPES from '@typings/index';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Switch',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 绑定值，默认为 true/false */
 		modelValue: {
@@ -162,7 +157,7 @@ export default defineComponent({
 			/** 记录选中的次数 */
 			checkedCount: 0,
 		});
-		const app = ref(getCurrentInstance()).value;
+		const app = ref(getCurrentInstance()!).value;
 
 		watch(
 			toRef(props, 'modelValue'),
@@ -175,7 +170,7 @@ export default defineComponent({
 
 				state.checkedCount += 1;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		watch(
@@ -184,7 +179,7 @@ export default defineComponent({
 				// 根据不同的宽度，动态计算动画的过渡时间
 				state.duration = (0.15 * props.width) / 35;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleSwitch() {
@@ -198,11 +193,11 @@ export default defineComponent({
 			} else {
 				context.emit(
 					'change',
-					!state.isChecked ? props.activeValue : props.inactiveValue
+					!state.isChecked ? props.activeValue : props.inactiveValue,
 				);
 				context.emit(
 					'update:modelValue',
-					!state.isChecked ? props.activeValue : props.inactiveValue
+					!state.isChecked ? props.activeValue : props.inactiveValue,
 				);
 			}
 		}

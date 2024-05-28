@@ -1,10 +1,12 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Drawer from '../main';
-import V3Button from 'button';
-import V3Backdrop from 'backdrop';
-import V3Radio from 'radio';
-import V3RadioGroup from 'radio-group';
+import {
+	V3RadioGroup,
+	V3Radio,
+	V3Backdrop,
+	V3Button,
+	V3Drawer,
+} from '@components/main';
 
 describe('V3Drawer 组件测试：', () => {
 	test('Drawer 组件应该正常渲染', async () => {
@@ -37,11 +39,11 @@ describe('V3Drawer 组件测试：', () => {
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
 		expect(wrapper.find('.v3-drawer .v3-drawer__content').text()).toBe(
-			'测试内容'
+			'测试内容',
 		);
 
 		await wrapper
-			.find('.v3-backdrop .v3-drawer .v3-icon-close')
+			.find('.v3-backdrop .v3-drawer .v3-icon-close-small')
 			.trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
@@ -88,28 +90,19 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-drawer')
-				.classes()
-				.includes('is-right')
+			wrapper.find('.v3-drawer').classes().includes('is-right'),
 		).toBeTruthy();
-		await wrapper.find('.v3-icon-close').trigger('click');
+		await wrapper.find('.v3-icon-close-small').trigger('click');
 		await nextTick();
 		await wrapper.find('input[type="radio"][value="bottom"]').setValue();
 		await nextTick();
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
 		expect(
-			wrapper
-				.find('.v3-drawer')
-				.classes()
-				.includes('is-right')
+			wrapper.find('.v3-drawer').classes().includes('is-right'),
 		).toBeFalsy();
 		expect(
-			wrapper
-				.find('.v3-drawer')
-				.classes()
-				.includes('is-bottom')
+			wrapper.find('.v3-drawer').classes().includes('is-bottom'),
 		).toBeTruthy();
 	});
 
@@ -159,13 +152,13 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer-header__title').text()).toBe('测试标题');
-		await wrapper.find('.v3-icon-close').trigger('click');
+		await wrapper.find('.v3-icon-close-small').trigger('click');
 
 		await nextTick();
 		await wrapper.findAll('.v3-button')[1].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer-header__title').text()).toBe(
-			'通过slot自定义标题，优先级比title高'
+			'通过slot自定义标题，优先级比title高',
 		);
 	});
 
@@ -198,7 +191,7 @@ describe('V3Drawer 组件测试：', () => {
 
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		await nextTick();
-		expect(wrapper.find('.v3-icon-close').exists()).toBeFalsy();
+		expect(wrapper.find('.v3-icon-close-small').exists()).toBeFalsy();
 	});
 
 	test('Drawer 组件可以接受【closeOnClickBackdrop】配置项，用来控制是否可以通过点击遮罩层来关闭抽屉', async () => {
@@ -392,6 +385,7 @@ describe('V3Drawer 组件测试：', () => {
 			},
 			methods: {
 				handleConfirm() {
+					// @ts-ignore
 					this.loading = !this.loading;
 				},
 			},
@@ -434,7 +428,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer__inner').attributes().style).toContain(
-			'width: 500px'
+			'width: 500px',
 		);
 	});
 
@@ -469,7 +463,7 @@ describe('V3Drawer 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		await nextTick();
 		expect(wrapper.find('.v3-drawer__inner').attributes().style).toContain(
-			'height: 500px'
+			'height: 500px',
 		);
 	});
 });

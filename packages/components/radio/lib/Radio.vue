@@ -45,7 +45,7 @@ import {
 	watch,
 	inject,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/radio';
+import * as TYPES from '@typings/index';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 	RADIO_GROUP_INSTANCE_PROVIDE,
@@ -100,7 +100,7 @@ export default defineComponent({
 
 		if (isRadioGroup) {
 			state.injectedOnRadioGroupChange = inject(
-				RADIO_GROUP_CHANGE_FUNC_PROVIDE
+				RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 			);
 			state.injectedRadioGroupInstance = inject(RADIO_GROUP_INSTANCE_PROVIDE);
 		}
@@ -108,13 +108,13 @@ export default defineComponent({
 		watch(
 			toRef(
 				isRadioGroup ? (state.injectedRadioGroupInstance as any).props : props,
-				'modelValue'
+				'modelValue',
 			),
 			(newValue: any) => {
 				state.radioValue = newValue;
 				state.checkedCount += 1;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**
@@ -137,9 +137,9 @@ export default defineComponent({
 
 		function handleChange(e: MouseEvent) {
 			if (isRadioGroup) {
-				((state.injectedOnRadioGroupChange as unknown) as Function)(
+				(state.injectedOnRadioGroupChange as unknown as Function)(
 					state.radioValue,
-					e
+					e,
 				);
 			} else {
 				context.emit('update:modelValue', state.radioValue);

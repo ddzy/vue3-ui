@@ -28,10 +28,9 @@
 					:cy="props.radius + props.trackWidth"
 					:r="props.radius"
 					:stroke-dasharray="state.strokeDashArray"
-					:transform="
-						`rotate(${props.rotate}, ${props.radius +
-							props.trackWidth}, ${props.radius + props.trackWidth})`
-					"
+					:transform="`rotate(${props.rotate}, ${
+						props.radius + props.trackWidth
+					}, ${props.radius + props.trackWidth})`"
 				></circle>
 			</g>
 			<text
@@ -50,7 +49,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/progress';
+import * as TYPES from '@typings/index';
 import { computed, defineComponent, PropType, reactive, watch } from 'vue';
 import Decimal from 'decimal.js';
 
@@ -73,7 +72,7 @@ export default defineComponent({
 			default: 'custom',
 			validator(v: string) {
 				return ['custom', 'primary', 'success', 'danger', 'warning'].includes(
-					v
+					v,
 				);
 			},
 		},
@@ -135,7 +134,7 @@ export default defineComponent({
 					.mul(percentToFloat)
 					.toNumber()}, ${perimeter.toNumber()}`;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		return {

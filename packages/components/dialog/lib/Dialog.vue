@@ -35,11 +35,11 @@
 								{{ v.text }}
 							</v3-button>
 						</template>
-						<i
-							class="v3-icon v3-icon-close"
+						<V3Icon
 							v-else-if="!props.headerActions.length && props.showClose"
+							type="CloseSmall"
 							@click="handleClose"
-						></i>
+						/>
 					</div>
 				</div>
 				<div class="v3-dialog__body">
@@ -62,15 +62,17 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/dialog';
-import V3Backdrop from 'backdrop';
-import V3Button from 'button';
+import * as TYPES from '@typings/index';
+import V3Backdrop from '@components/backdrop/main';
+import V3Button from '@components/button/main';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Dialog',
 	components: {
 		V3Backdrop,
 		V3Button,
+		V3Icon,
 	},
 	props: {
 		/** 弹窗的显隐状态 */

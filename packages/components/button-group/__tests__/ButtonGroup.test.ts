@@ -1,31 +1,27 @@
 import { mount } from '@vue/test-utils';
-import ButtonGroup from '../main';
-import Button from 'button';
+import { V3Button, V3ButtonGroup } from '@components/main';
 
 describe('ButtonGroup 组件测试：', () => {
 	test('ButtonGroup 组件应该正常接收【Button】组件作为 slot 并渲染', () => {
 		const component = {
 			components: {
-				ButtonGroup,
-				Button,
+				V3Button,
+				V3ButtonGroup,
 			},
 			template: `
-        <div>
-          <button-group>
-            <Button
-              type="primary"
-              icon="v3-icon-arrow-left"
-            >上一页</Button>
-            <Button
-              type="primary"
-              icon="v3-icon-assessed-badge"
-            ></Button>
-            <Button type="primary">
-              <span>下一页</span>
-              <i class="v3-icon v3-icon-arrow-right"></i>
-            </Button>
-          </button-group>
-        </div>
+        <v3-button-group>
+          <v3-button
+            type="primary"
+            icon="Left"
+          >上一页</v3-button>
+          <v3-button
+            type="primary"
+            icon="More"
+          ></v3-button>
+          <v3-button type="primary" icon="Right">
+            <span>下一页</span>
+          </v3-button>
+        </v3-button-group>
       `,
 		};
 		const wrapper = mount(component);

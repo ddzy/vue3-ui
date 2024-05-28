@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
-import V3Space from '../main';
-import V3Button from 'button';
+import { V3Button, V3Space } from '@components/main';
 
 describe('V3Space 组件测试：', () => {
 	test('V3Space 组件基本用法：', async () => {
@@ -22,10 +21,7 @@ describe('V3Space 组件测试：', () => {
 
 		expect(wrapper.findAll('.v3-space__item').length).toBe(5);
 		expect(
-			wrapper
-				.find('.v3-space__item')
-				.find('.v3-button')
-				.exists()
+			wrapper.find('.v3-space__item').find('.v3-button').exists(),
 		).toBeTruthy();
 	});
 
@@ -47,10 +43,7 @@ describe('V3Space 组件测试：', () => {
 		});
 
 		expect(
-			wrapper
-				.find('.v3-space')
-				.classes()
-				.includes('space-wrapper')
+			wrapper.find('.v3-space').classes().includes('space-wrapper'),
 		).toBeTruthy();
 	});
 
@@ -102,7 +95,7 @@ describe('V3Space 组件测试：', () => {
 		});
 
 		expect(wrapper.find('.v3-space__item').attributes().style).toContain(
-			'margin: 0px 20px 20px 0px'
+			'margin: 0px 20px 20px 0px',
 		);
 	});
 

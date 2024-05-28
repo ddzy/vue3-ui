@@ -1,21 +1,21 @@
 $radio-size-map: (
 	small: (
-		padding: $padding-small / 2 $padding-medium,
+		padding: calc($padding-small / 2) $padding-medium,
 		radio-width: 12px,
 		radio-height: 12px,
-		label-font-size: $font-size-mini,
+		label-font-size: $font-size-small,
 	),
 	medium: (
 		padding: $padding-small $padding-medium,
 		radio-width: 14px,
 		radio-height: 14px,
-		label-font-size: $font-size-small,
+		label-font-size: $font-size-default,
 	),
 	large: (
 		padding: $padding-small + 2 $padding-medium,
 		radio-width: 16px,
 		radio-height: 16px,
-		label-font-size: $font-size-small,
+		label-font-size: $font-size-default,
 	),
 );
 
@@ -52,7 +52,7 @@ $radio-size-map: (
 	// 有边框的单选框
 	&.is-bordered {
 		.v3-radio__label-wrapper {
-			border: 1px solid $border-color-grey-default;
+			border: 1px solid $border-color-default;
 			border-radius: $border-radius-width-small;
 			padding: $padding-small $padding-medium;
 		}
@@ -60,7 +60,7 @@ $radio-size-map: (
 
 	&.is-disabled.is-bordered {
 		.v3-radio__label-wrapper {
-			border-color: $border-color-grey-small;
+			border-color: $border-color-small;
 		}
 	}
 
@@ -76,7 +76,7 @@ $radio-size-map: (
 		align-items: center;
 		user-select: none;
 		cursor: pointer;
-		font-size: $font-size-small;
+		font-size: $font-size-default;
 		color: $font-color-default;
 
 		.v3-radio__input {
@@ -104,7 +104,7 @@ $radio-size-map: (
 			}
 			&:disabled {
 				& ~ .v3-radio__select {
-					border-color: $border-color-grey-default;
+					border-color: $border-color-default;
 					&::after {
 						background-color: $info-color;
 					}

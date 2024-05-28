@@ -3,19 +3,19 @@ $button-size-map: (
 		padding: $padding-small $padding-medium,
 		circle-padding: $padding-small,
 		icon-font-size: $font-size-large,
-		font-size: $font-size-mini,
+		font-size: $font-size-small,
 	),
 	medium: (
 		padding: $padding-small $padding-medium,
 		circle-padding: $padding-medium - 2,
 		icon-font-size: $font-size-large,
-		font-size: $font-size-small,
+		font-size: $font-size-default,
 	),
 	large: (
 		padding: $padding-small + 2 $padding-medium,
 		circle-padding: $padding-medium + 2,
 		icon-font-size: $font-size-large-2,
-		font-size: $font-size-small,
+		font-size: $font-size-default,
 	),
 );
 
@@ -38,10 +38,6 @@ button {
 			font-size: map-get($map: $value, $key: font-size);
 			&.is-circle {
 				padding: map-get($map: $value, $key: circle-padding);
-			}
-			& [class*='v3-icon-'] {
-				height: 1em;
-				font-size: map-get($map: $value, $key: icon-font-size);
 			}
 		}
 	}
@@ -66,10 +62,6 @@ button {
 	&.is-circle {
 		padding: 10px;
 		border-radius: 50%;
-		& [class*='v3-icon-'] {
-			width: 20px;
-			height: 20px;
-		}
 	}
 	&,
 	& > a {
@@ -97,8 +89,8 @@ $button-type-map: (
 		active-color: #1a83de,
 	),
 	default: (
-		border-color: $default-color,
-		color: $font-color-medium,
+		border-color: $border-color-large,
+		color: $font-color-default,
 		background-color: #fff,
 		hover-background-color: $primary-color-plain,
 		hover-color: $primary-color,
@@ -156,7 +148,7 @@ $button-type-map: (
 		background-color: $info-color,
 		active-animation: infoButtonActive 0.3s ease-out 0s 1,
 		plain-background-color: $info-color-plain,
-		plain-color: $info-color,
+		plain-color: $font-color-small,
 		plain-hover-background-color: $info-color,
 		plain-hover-color: #fff,
 		plain-hover-border-color: $info-color,

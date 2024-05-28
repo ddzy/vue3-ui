@@ -33,13 +33,10 @@
 		>
 			<div class="v3-input__prepend">
 				<slot name="prepend" v-if="app.slots.prepend"></slot>
-				<i
+				<V3Icon
 					v-else-if="!app.slots.prepend && props.prependIcon"
-					:class="{
-						'v3-icon': true,
-						[props.prependIcon]: true,
-					}"
-				></i>
+					:type="props.prependIcon"
+				/>
 			</div>
 		</div>
 
@@ -53,13 +50,10 @@
 				<!-- 前缀区域 -->
 				<div class="v3-input__prefix">
 					<slot name="prefix" v-if="app.slots.prefix"></slot>
-					<i
-						:class="{
-							'v3-icon': true,
-							[props.prefixIcon]: true,
-						}"
+					<V3Icon
 						v-else-if="!app.slots.prefix && props.prefixIcon"
-					></i>
+						:type="props.prefixIcon"
+					/>
 				</div>
 
 				<!-- 输入框区域 -->
@@ -83,41 +77,36 @@
 					class="v3-input__suffix"
 					v-if="
 						app.slots.suffix ||
-							props.suffixIcon ||
-							props.clearable ||
-							props.showPassword ||
-							(props.showWordLimit && props.maxlength > 0)
+						props.suffixIcon ||
+						props.clearable ||
+						props.showPassword ||
+						(props.showWordLimit && props.maxlength > 0)
 					"
 				>
 					<div class="v3-input__suffix-inner">
 						<!-- 后缀图标区域 -->
 						<slot name="suffix" v-if="app.slots.suffix"></slot>
-						<i
+						<V3Icon
 							v-else-if="!app.slots.suffix && props.suffixIcon"
-							:class="{
-								'v3-icon': true,
-								[props.suffixIcon]: true,
-								'v3-input__suffix-item': true,
-							}"
-						></i>
+							:type="props.suffixIcon"
+							class="v3-input__suffix-item"
+						/>
 						<!-- 清除按钮区域 -->
-						<i
-							class="v3-icon v3-icon-reeor v3-input__clear v3-input__suffix-item"
+						<V3Icon
 							v-if="props.clearable && state.isShowClearable"
+							type="CloseOne"
+							class="v3-input__clear v3-input__suffix-item"
 							@click="handleClear"
-						></i>
+						/>
 						<!-- 密码区域 -->
-						<i
+						<V3Icon
 							v-if="props.showPassword"
-							:class="{
-								'v3-icon': true,
-								'v3-icon-browse': state.isPasswordClearly,
-								'v3-icon-Notvisible': !state.isPasswordClearly,
-								'v3-input__password': true,
-								'v3-input__suffix-item': true,
-							}"
+							:type="
+								state.isPasswordClearly ? 'PreviewOpen' : 'PreviewCloseOne'
+							"
+							class="v3-input__password v3-input__suffix-item"
 							@click="togglePasswordClearly"
-						></i>
+						/>
 						<!-- 字符数量限制区域 -->
 						<div
 							class="v3-input__limit v3-input__suffix-item"
@@ -146,13 +135,10 @@
 		>
 			<div class="v3-input__append">
 				<slot name="append" v-if="app.slots.append"></slot>
-				<i
+				<V3Icon
 					v-if="!app.slots.append && props.appendIcon"
-					:class="{
-						'v3-icon': true,
-						[props.appendIcon]: true,
-					}"
-				></i>
+					:type="props.appendIcon"
+				/>
 			</div>
 		</div>
 	</div>
@@ -167,10 +153,14 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/input';
+import * as TYPES from '@typings/index';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Input',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 输入框的类型 */
 		type: {
@@ -268,12 +258,12 @@ export default defineComponent({
 			/** 是否验证成功 */
 			isValidSuccess: true,
 		});
-		const app = getCurrentInstance();
+		const app = getCurrentInstance()!;
 		const inputRef = ref<HTMLInputElement>(document.createElement('input'));
 
 		watch(
 			toRef(props, 'maxlength'),
-			newValue => {
+			(newValue) => {
 				// 实时监听【maxlength】的变化，更新最大输入字符数
 				state.totalWordCount = newValue!;
 
@@ -285,11 +275,11 @@ export default defineComponent({
 					state.isValidSuccess = true;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(props, 'modelValue'),
-			newValue => {
+			(newValue) => {
 				if (newValue) {
 					// 实时监听输入框值的变化，更改字符统计的值
 					state.currentWordCount = newValue.length;
@@ -303,22 +293,22 @@ export default defineComponent({
 					state.isValidSuccess = true;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(state, 'isPasswordClearly'),
-			newValue => {
+			(newValue) => {
 				state.defaultProps.type = newValue ? 'text' : 'password';
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 		watch(
 			toRef(props, 'type'),
-			newValue => {
+			(newValue) => {
 				state.isPasswordClearly = newValue !== 'password';
 				state.defaultProps.type = newValue;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function handleMouseEnter() {

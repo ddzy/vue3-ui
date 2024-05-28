@@ -1,13 +1,12 @@
 import { mount } from '@vue/test-utils';
-import { reactive } from 'vue';
-import V3Row from '../main';
-import V3Col from 'col';
+import { SetupContext, reactive } from 'vue';
+import { V3Col, V3Row } from '@components/main';
 
 describe('V3Row 组件测试：', () => {
 	beforeAll(() => {
 		Object.defineProperty(window, 'matchMedia', {
 			writable: true,
-			value: jest.fn().mockImplementation(query => ({
+			value: jest.fn().mockImplementation((query) => ({
 				matches: false,
 				media: query,
 				onchange: null,
@@ -21,7 +20,7 @@ describe('V3Row 组件测试：', () => {
 	});
 
 	test('V3Row 应该正常接收【justify、align】配置项，用来自定义 flexbox 布局的主轴和副轴的排列方式', async () => {
-		const wrapper1 = mount({
+		const wrapper = mount({
 			template: `
         <div>
           <v3-row justify="center" align="flex-end">
@@ -40,7 +39,7 @@ describe('V3Row 组件测试：', () => {
 			components: {
 				V3Row,
 			},
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({});
 
 				return {
@@ -50,17 +49,14 @@ describe('V3Row 组件测试：', () => {
 		});
 
 		expect(
-			wrapper1
-				.find('.v3-row')
-				.classes()
-				.includes('v3-row--flex')
+			wrapper.find('.v3-row').classes().includes('v3-row--flex'),
 		).toBeTruthy();
-		expect(wrapper1.find('.is-justify-center').exists()).toBeTruthy();
-		expect(wrapper1.find('.is-align-flex-end').exists()).toBeTruthy();
+		expect(wrapper.find('.is-justify-center').exists()).toBeTruthy();
+		expect(wrapper.find('.is-align-flex-end').exists()).toBeTruthy();
 	});
 
 	test('V3Row 应该正常接收【gutter】配置项，用来自定义列间距', async () => {
-		const wrapper1 = mount({
+		const wrapper = mount({
 			template: `
         <div>
           <v3-row :gutter="20">
@@ -80,7 +76,7 @@ describe('V3Row 组件测试：', () => {
 				V3Row,
 				V3Col,
 			},
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({});
 
 				return {
@@ -89,7 +85,7 @@ describe('V3Row 组件测试：', () => {
 			},
 		});
 
-		const colElement = wrapper1.find('.v3-col').element;
+		const colElement = wrapper.find('.v3-col').element;
 
 		expect(window.getComputedStyle(colElement).paddingLeft).toBe('10px');
 		expect(window.getComputedStyle(colElement).paddingRight).toBe('10px');

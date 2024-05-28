@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
-import V3Tooltip from '../main';
-import V3Button from 'button';
+import { V3Button, V3Tooltip } from '@components/main';
 
 jest.useFakeTimers();
 
@@ -50,7 +49,7 @@ describe('V3Tooltip 组件测试：', () => {
 		await wrapper.find('.v3-button--default').trigger('click');
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		expect(wrapper.find('.v3-base-popper__dropdown').text()).toBe(
-			'听过这样一句话，并不是每一条鱼，都生活在同一片海里。每个人都有自己的幸福阈值，如鱼饮水，冷暖自知。若用自己的经验随意去评价他人的生活，只会给彼此带来麻烦和困扰'
+			'听过这样一句话，并不是每一条鱼，都生活在同一片海里。每个人都有自己的幸福阈值，如鱼饮水，冷暖自知。若用自己的经验随意去评价他人的生活，只会给彼此带来麻烦和困扰',
 		);
 	});
 

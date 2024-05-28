@@ -20,7 +20,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType, reactive, toRef, watch } from 'vue';
-import * as TYPES from '@/public/lib/types/badge';
+import * as TYPES from '@typings/index';
 
 interface IState {
 	value: TYPES.IBadgeValue;
@@ -79,7 +79,7 @@ export default defineComponent({
 					state.value = props.value;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		return {

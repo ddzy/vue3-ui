@@ -1,7 +1,6 @@
-import V3Button from 'button';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import V3Backdrop from '../main';
+import { V3Button, V3Backdrop } from '@components/main';
 
 describe('Backdrop 组件测试：', () => {
 	test('Backdrop 组件应该正常渲染', async () => {
@@ -188,10 +187,7 @@ describe('Backdrop 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-backdrop')
-				.classes()
-				.includes('is-center')
+			wrapper.find('.v3-backdrop').classes().includes('is-center'),
 		).toBeTruthy();
 
 		await wrapper.find('.v3-backdrop').trigger('click');
@@ -202,10 +198,7 @@ describe('Backdrop 组件测试：', () => {
 		await wrapper.findAll('.v3-button')[0].trigger('click');
 		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
 		expect(
-			wrapper
-				.find('.v3-backdrop')
-				.classes()
-				.includes('is-center')
+			wrapper.find('.v3-backdrop').classes().includes('is-center'),
 		).toBeFalsy();
 	});
 });

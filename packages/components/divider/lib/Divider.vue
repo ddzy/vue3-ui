@@ -19,7 +19,7 @@ import {
 	reactive,
 	ref,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/divider';
+import * as TYPES from '@typings/index';
 
 export default defineComponent({
 	name: 'V3Divider',

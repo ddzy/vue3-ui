@@ -1,22 +1,38 @@
-import * as path from 'path';
-import { build, mergeConfig } from 'vite';
-import commonConfig from '../config/common';
+import * as path from 'node:path';
+import * as fse from 'fs-extra';
+import { type InlineConfig, build, mergeConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
-const libName = 'vue3-ui';
-const buildOptions = mergeConfig(commonConfig, {
+const commonConfig: InlineConfig = {
+	resolve: {
+		alias: [
+			{
+				find: '@common',
+				replacement: path.resolve(__dirname, '/packages/common'),
+			},
+			{
+				find: '@components',
+				replacement: path.resolve(__dirname, '/packages/components'),
+			},
+			{
+				find: '@typings',
+				replacement: path.resolve(__dirname, '/public/typings'),
+			},
+		],
+	},
+	css: {
+		preprocessorOptions: {
+			/** 配置 scss 全局变量的引入方式 */
+			scss: {
+				additionalData: `@import "./packages/common/styles/variable";\n@import "./packages/common/styles/reset";`,
+			},
+		},
+	},
 	// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
 	configFile: false,
-	publicDir: 'public/lib',
 	build: {
-		// 是否清空 dist 文件夹
-		emptyOutDir: true,
-		lib: {
-			entry: path.resolve(__dirname, '../packages/components/main.lib.ts'),
-			fileName: libName,
-			name: libName,
-		},
-		outDir: `dist`,
+		sourcemap: false,
 		rollupOptions: {
 			external: ['vue'],
 			output: {
@@ -26,16 +42,111 @@ const buildOptions = mergeConfig(commonConfig, {
 				},
 				assetFileNames(chunkInfo: any) {
 					if (chunkInfo.name === 'style.css') {
-						return `${libName}.css`;
+						return `index.css`;
 					}
 					return chunkInfo.name;
 				},
+				exports: 'named',
 			},
 		},
 	},
-	plugins: [
-		vue(),
-	],
-});
+};
 
-build(buildOptions);
+async function buildAll() {
+	return new Promise(async (resolve, reject) => {
+		const buildOptions = mergeConfig(commonConfig, {
+			plugins: [vue()],
+			publicDir: 'public',
+			build: {
+				emptyOutDir: true,
+				outDir: 'dist',
+				lib: {
+					entry: path.resolve(__dirname, '../packages/components/main.ts'),
+					name: 'Vue3UI',
+					fileName: 'index',
+				},
+			},
+		} as InlineConfig);
+
+		try {
+			await build(buildOptions);
+			resolve(undefined);
+		} catch (error) {
+			reject(error);
+		}
+	});
+}
+
+async function buildEach() {
+	const componentPath = path.resolve(__dirname, '../packages/components');
+	let components = (
+		await fse.readdir(componentPath, { withFileTypes: true })
+	).filter((v) => v.isDirectory());
+	const tasks: Promise<any>[] = [];
+
+	const buildTask = (config: InlineConfig) => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				await build(config);
+				resolve(undefined);
+			} catch (error) {
+				reject();
+			}
+		});
+	};
+	const buildOptions = mergeConfig(commonConfig, {
+		publicDir: false,
+		plugins: [vue(), cssInjectedByJsPlugin()],
+		build: {
+			minify: 'esbuild',
+			cssCodeSplit: false,
+			emptyOutDir: true,
+			lib: {
+				fileName: 'index',
+			},
+		},
+	} as InlineConfig);
+
+	for (const component of components) {
+		// esmodule 输出到 dist/es
+		const buildOptionsOfESModule = mergeConfig(buildOptions, {
+			build: {
+				lib: {
+					entry: path.resolve(componentPath, component.name, 'main.ts'),
+					name: component.name.replace(/^.{1}/, ($1) => {
+						return $1.toUpperCase();
+					}),
+					formats: ['es'],
+				},
+				outDir: `dist/es/${component.name}`,
+			},
+		} as InlineConfig);
+		// commonjs 输出到 dist/lib
+		const buildOptionsOfUmd = mergeConfig(buildOptions, {
+			build: {
+				lib: {
+					entry: path.resolve(componentPath, component.name, 'main.ts'),
+					name: component.name.replace(/^.{1}/, ($1) => {
+						return $1.toUpperCase();
+					}),
+					formats: ['cjs'],
+				},
+				outDir: path.resolve(__dirname, `../dist/lib/${component.name}`),
+			},
+		} as InlineConfig);
+
+		tasks.push(buildTask(buildOptionsOfESModule), buildTask(buildOptionsOfUmd));
+	}
+
+	try {
+		await Promise.all(tasks);
+	} catch (error) {
+		console.log('error :>> ', error);
+	}
+}
+
+async function startBuild() {
+	await buildAll();
+	await buildEach();
+}
+startBuild();

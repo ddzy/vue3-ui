@@ -32,7 +32,7 @@
 		>
 			<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
-				<i class="v3-icon v3-icon-arrow-left"></i>
+				<V3Icon type="Left" />
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@
 		>
 			<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
 			<div v-else class="v3-carousel-arrow__inner">
-				<i class="v3-icon v3-icon-arrow-right"></i>
+				<V3Icon type="Right" />
 			</div>
 		</div>
 
@@ -74,7 +74,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/carousel';
+import * as TYPES from '@typings/index';
 import {
 	ComponentInternalInstance,
 	computed,
@@ -91,6 +91,7 @@ import {
 } from 'vue';
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import * as UTILS from '@common/utils/index';
+import V3Icon from '@components/icon/main';
 
 interface IState {
 	carouselItemInstanceList: any[];
@@ -108,7 +109,9 @@ interface IState {
 
 export default defineComponent({
 	name: 'V3Carousel',
-	components: {},
+	components: {
+		V3Icon,
+	},
 	props: {
 		modelValue: {
 			type: Number,
@@ -231,7 +234,7 @@ export default defineComponent({
 				state.isSlideByOrder = true;
 				state.activeIndex = props.modelValue;
 			},
-			{ immediate: false }
+			{ immediate: false },
 		);
 
 		watch(
@@ -243,7 +246,7 @@ export default defineComponent({
 					state.showArrow = false;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		watch(
@@ -256,7 +259,7 @@ export default defineComponent({
 					};
 				}
 			},
-			{ deep: true, immediate: true }
+			{ deep: true, immediate: true },
 		);
 
 		watch(
@@ -287,7 +290,7 @@ export default defineComponent({
 					slideTo(newActiveIndex);
 				});
 			},
-			{ immediate: false }
+			{ immediate: false },
 		);
 
 		watch(
@@ -298,7 +301,7 @@ export default defineComponent({
 					state.showArrow = false;
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		onMounted(() => {
@@ -311,7 +314,7 @@ export default defineComponent({
 				handleDocumentVisibilityChange();
 				document.addEventListener(
 					'visibilitychange',
-					handleDocumentVisibilityChange
+					handleDocumentVisibilityChange,
 				);
 			}
 		});
@@ -320,7 +323,7 @@ export default defineComponent({
 			if (!props.disabled && props.autoplay) {
 				document.removeEventListener(
 					'visibilitychange',
-					handleDocumentVisibilityChange
+					handleDocumentVisibilityChange,
 				);
 			}
 		});
@@ -329,9 +332,8 @@ export default defineComponent({
 		 * 收集 V3CarouselItem 组件实例，统一管理
 		 */
 		function appendCarouselItemInstanceToList(instance: any) {
-			state.carouselItemInstanceList = state.carouselItemInstanceList.concat(
-				instance
-			);
+			state.carouselItemInstanceList =
+				state.carouselItemInstanceList.concat(instance);
 		}
 
 		function slidePrev() {

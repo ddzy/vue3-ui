@@ -28,16 +28,14 @@
 			[`${state.xlPullClass}`]: true,
 		}"
 		:style="{
-			[state.injectedRowInstance
-				? 'padding-left'
-				: '']: state.injectedRowInstance
-				? `${state.injectedRowInstance.props.gutter / 2}px`
-				: 0,
-			[state.injectedRowInstance
-				? 'padding-right'
-				: '']: state.injectedRowInstance
-				? `${state.injectedRowInstance.props.gutter / 2}px`
-				: 0,
+			[state.injectedRowInstance ? 'padding-left' : '']:
+				state.injectedRowInstance
+					? `${state.injectedRowInstance.props.gutter / 2}px`
+					: 0,
+			[state.injectedRowInstance ? 'padding-right' : '']:
+				state.injectedRowInstance
+					? `${state.injectedRowInstance.props.gutter / 2}px`
+					: 0,
 		}"
 	>
 		<slot></slot>
@@ -53,7 +51,7 @@ import {
 	watch,
 } from 'vue';
 
-import * as TYPES from '@/public/lib/types/row';
+import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
 import { ROW_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
@@ -157,27 +155,27 @@ export default defineComponent({
 					state.xsOffsetClass = computeResponsiveClass(
 						'xs',
 						props.xs,
-						'offset'
+						'offset',
 					);
 					state.smOffsetClass = computeResponsiveClass(
 						'sm',
 						props.sm,
-						'offset'
+						'offset',
 					);
 					state.mdOffsetClass = computeResponsiveClass(
 						'md',
 						props.md,
-						'offset'
+						'offset',
 					);
 					state.lgOffsetClass = computeResponsiveClass(
 						'lg',
 						props.lg,
-						'offset'
+						'offset',
 					);
 					state.xlOffsetClass = computeResponsiveClass(
 						'xl',
 						props.xl,
-						'offset'
+						'offset',
 					);
 
 					state.xsPushClass = computeResponsiveClass('xs', props.xs, 'push');
@@ -193,7 +191,7 @@ export default defineComponent({
 					state.xlPullClass = computeResponsiveClass('xl', props.xl, 'pull');
 				}
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**
@@ -209,7 +207,7 @@ export default defineComponent({
 		function computeResponsiveClass(
 			baseId: string,
 			val: any,
-			childId: string
+			childId: string,
 		): string {
 			if (UTILS.isStrictNumber(val) && val) {
 				return childId === 'span' ? `v3-col-${baseId}-${val}` : '';

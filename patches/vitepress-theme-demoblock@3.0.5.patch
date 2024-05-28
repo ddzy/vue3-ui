@@ -1,0 +1,20 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index bb9f603ac66f08771546eb75ca279d29af9e57aa..0000000000000000000000000000000000000000
+diff --git a/dist/client/components/Demo.vue b/dist/client/components/Demo.vue
+index 605ad22510f198406db9a4badf5f322c2afcbec3..68b706f8d3548406293e2aeeaf20a45e9663e1aa 100644
+--- a/dist/client/components/Demo.vue
++++ b/dist/client/components/Demo.vue
+@@ -1,7 +1,11 @@
+ <template>
+   <ClientOnly>
+     <div ref="demoblock" :class="['demoblock', blockClass, customClass ? customClass : '']">
+-      <div class="demoblock-view">
++      <!-- 
++        利用 pnpm patch 追加更改 
++        避免 vitepress 的自带样式（.vp-doc）影响示例组件样式
++      -->
++      <div class="demoblock-view vp-raw">
+         <slot />
+       </div>
+       <div class="demoblock-divider demoblock-divider--horizontal"></div>

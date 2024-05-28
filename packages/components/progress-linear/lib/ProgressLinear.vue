@@ -31,7 +31,7 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/progress';
+import * as TYPES from '@typings/index';
 import { computed, defineComponent, PropType, reactive } from 'vue';
 
 interface IState {}
@@ -51,7 +51,7 @@ export default defineComponent({
 			default: 'custom',
 			validator(v: string) {
 				return ['custom', 'primary', 'success', 'danger', 'warning'].includes(
-					v
+					v,
 				);
 			},
 		},

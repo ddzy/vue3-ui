@@ -13,7 +13,8 @@
 		"paths": {
 			"@common/*": ["./packages/common/*"],
 			"@components/*": ["./packages/components/*"],
-			"@/*": ["./*"]
+			"@/*": ["./*"],
+			"@typings/*": ["./public/typings/*"]
 		},
 		"baseUrl": "."
 	},
@@ -29,8 +30,9 @@
 		"/**/*.ts"
 	],
 	"ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  },
+		"compilerOptions": {
+			"module": "commonjs",
+			"esModuleInterop": true
+		}
+	}
 }

@@ -15,25 +15,21 @@
 		}"
 	>
 		<a v-if="props.type === 'text'" @click.prevent>
-			<i
+			<V3Icon
 				v-if="state.defaultProps.icon"
-				:class="{
-					'v3-icon': !!state.defaultProps.icon,
-					[state.defaultProps.icon]: true,
-				}"
-			></i>
+				:type="state.defaultProps.icon"
+				:spin="props.loading"
+			/>
 			<span>
 				<slot></slot>
 			</span>
 		</a>
 		<template v-else>
-			<i
+			<V3Icon
 				v-if="state.defaultProps.icon"
-				:class="{
-					'v3-icon': !!state.defaultProps.icon,
-					[state.defaultProps.icon]: true,
-				}"
-			></i>
+				:type="state.defaultProps.icon"
+				:spin="props.loading"
+			/>
 			<span>
 				<slot></slot>
 			</span>
@@ -41,7 +37,7 @@
 	</button>
 </template>
 <script lang="ts">
-import * as TYPES from '@/public/lib/types/button';
+import * as TYPES from '@typings/index';
 import {
 	defineComponent,
 	onMounted,
@@ -51,9 +47,13 @@ import {
 	ref,
 	watch,
 } from 'vue';
+import V3Icon from '@components/icon/main';
 
 export default defineComponent({
 	name: 'V3Button',
+	components: {
+		V3Icon,
+	},
 	props: {
 		/** 按钮的类型 */
 		type: {
@@ -76,7 +76,7 @@ export default defineComponent({
 			type: String as PropType<TYPES.IButtonNativeType>,
 			default: 'button',
 			validator: (v: string) => {
-				return ['button', 'submit', 'reset', 'menu'].includes(v);
+				return ['button', 'submit', 'reset'].includes(v);
 			},
 		},
 		/** 边框类型 */
@@ -140,17 +140,17 @@ export default defineComponent({
 
 		watch(
 			props,
-			newValue => {
+			(newValue) => {
 				// 按钮 loading 时展示特定的 icon
 				state.defaultProps.icon = newValue.loading
-					? 'v3-icon-loading'
+					? 'LoadingOne'
 					: newValue.icon
 					? newValue.icon
 					: '';
 				// 按钮 loading 时也为禁用状态
 				state.defaultProps.disabled = !!newValue.disabled || !!newValue.loading;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		function buttonClickListener(e: Event) {
@@ -180,7 +180,7 @@ export default defineComponent({
 			button.addEventListener(
 				'animationend',
 				buttonAnimationEndListener,
-				false
+				false,
 			);
 		});
 		onUnmounted(() => {

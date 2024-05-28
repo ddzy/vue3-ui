@@ -4,7 +4,7 @@ import Loading, {
 	useLoading,
 } from './lib/LoadingConstructor';
 
-Loading.install = function(app: App) {
+Loading.install = function (app: App) {
 	app.config.globalProperties.$loading = Loading;
 	app.directive(LoadingDirective.name, LoadingDirective.directive);
 };

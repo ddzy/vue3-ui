@@ -1,7 +1,7 @@
 .v3-switch {
 	display: flex;
 	align-items: center;
-	font-size: $font-size-small;
+	font-size: $font-size-default;
 	// 选中状态
 	&.is-active {
 		// 首次挂载时不需要动画
@@ -63,8 +63,8 @@
 		color: $font-color-default;
 		user-select: none;
 		cursor: pointer;
-		i.v3-icon {
-			font-size: $font-size-large-2;
+		.v3-icon {
+			font-size: $font-size-medium;
 		}
 	}
 

@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
-import V3CheckboxButton from '../main';
-import V3CheckboxGroup from 'checkbox-group';
+import { V3CheckboxGroup, V3CheckboxButton } from '@components/main';
 
 describe('V3CheckboxButton 组件测试：', () => {
 	test('单一的 V3CheckboxButton 组件进行双向绑定的值应该是【布尔值】', async () => {
@@ -91,7 +90,7 @@ describe('V3CheckboxButton 组件测试：', () => {
 		// 默认为【非禁用】状态
 		expect(wrapper1.find('.is-disabled').exists()).toBeFalsy();
 		expect(
-			wrapper1.find('input[type="checkbox"]').attributes().disabled
+			wrapper1.find('input[type="checkbox"]').attributes().disabled,
 		).toBeFalsy();
 
 		// 手动设置为【禁用】状态
@@ -100,7 +99,7 @@ describe('V3CheckboxButton 组件测试：', () => {
 		});
 		expect(wrapper1.find('.is-disabled').exists()).toBeTruthy();
 		expect(wrapper1.find('input[type="checkbox"]').attributes().disabled).toBe(
-			''
+			'',
 		);
 
 		// 【禁用】状态下点击
@@ -169,13 +168,13 @@ describe('V3CheckboxButton 组件测试：', () => {
 
 		expect(wrapper.findAll('.v3-checkbox-group').length).toBe(3);
 		expect(wrapper.findAll('.v3-checkbox-button.is-size--small').length).toBe(
-			2
+			2,
 		);
 		expect(wrapper.findAll('.v3-checkbox-button.is-size--medium').length).toBe(
-			2
+			2,
 		);
 		expect(wrapper.findAll('.v3-checkbox-button.is-size--large').length).toBe(
-			2
+			2,
 		);
 	});
 });

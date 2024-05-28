@@ -33,7 +33,7 @@ $badge-type-map: (
 				}
 			}
 			&:not(.is-dot) {
-				span {
+				.v3-badge__content {
 					background-color: map-get($map: $value, $key: background-color);
 					color: map-get($map: $value, $key: color);
 				}
@@ -56,11 +56,11 @@ $badge-type-map: (
 			right: 10px;
 			transform: translate(100%, -50%);
 		}
-		span {
-			padding: 0 $padding-small;
+		.v3-badge__content {
+			padding: 2px $padding-small;
 			border-radius: $border-radius-width-large;
 			box-shadow: 0 0 0 1px #fff;
-			font-size: $font-size-mini;
+			font-size: $font-size-small;
 		}
 	}
 

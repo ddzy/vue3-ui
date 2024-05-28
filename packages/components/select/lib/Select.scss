@@ -8,9 +8,11 @@
 
 	// 下拉框的按钮动画
 	&.is-visible:not(.is-clearable) {
-		:deep(.v3-base-popper__trigger) {
-			.v3-input__suffix i {
-				transform: rotateZ(180deg);
+		.v3-base-popper__trigger {
+			.v3-input__suffix {
+				.v3-icon {
+					transform: rotateZ(180deg);
+				}
 			}
 		}
 	}
@@ -27,43 +29,28 @@
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
-	// 模糊搜索没有匹配的数据/无数据
-	&.is-no-match-data,
-	&.is-no-data {
-		:deep(.tippy-content) {
-			.v3-select-dropdown__list {
-				p {
-					margin: 0;
-					padding: $padding-small 0;
-					line-height: 20px;
-					text-align: center;
-					color: #bbb;
-					font-size: $font-size-small;
+
+	.v3-select__trigger {
+		cursor: text;
+		.v3-input {
+			background-color: #fff;
+			.v3-input__suffix {
+				.v3-icon {
+					transition: all 0.3s ease;
 				}
 			}
 		}
-	}
-
-	:deep(.v3-input) {
-		background-color: #fff;
-		.v3-input__suffix i {
-			transition: all 0.3s ease;
-		}
-	}
-
-	:deep(.v3-base-popper__trigger) {
-		cursor: text;
 		.v3-select__tag {
 			position: absolute;
 			top: 0;
 			left: 0;
 			box-sizing: border-box;
 			width: 100%;
-			padding: $padding-small / 2;
+			padding: calc($padding-small / 2);
 			padding-right: 30px;
 			.v3-select__tag-item {
 				display: inline-block;
-				margin: $margin-small / 2;
+				margin: calc($margin-small / 2);
 			}
 			input {
 				box-sizing: border-box;
@@ -72,57 +59,9 @@
 				padding: 0;
 				width: 100%;
 				height: 25px;
-				padding: $padding-small / 2;
+				padding: calc($padding-small / 2);
 				line-height: 25px;
-				color: $font-color-medium;
-			}
-		}
-	}
-
-	// 自动适配下拉框的宽度
-	:deep([data-tippy-root]),
-	.tippy-box,
-	.tippy-content {
-		width: 100%;
-	}
-	:deep(.tippy-content) {
-		padding-left: 0;
-		padding-right: 0;
-		.v3-base-popper__dropdown {
-			padding: $padding-small 0;
-			.v3-select-dropdown__list {
-				width: 100%;
-			}
-			.v3-select-dropdown__item {
-				padding: 0 $padding-medium;
-				user-select: none;
-				line-height: 35px;
-				cursor: pointer;
-				font-size: $font-size-small;
-				transition: all 0.15s ease;
-				&:not(.is-disabled):hover {
-					background-color: $primary-color-plain;
-				}
-
-				&.is-disabled {
-					color: $info-color-little;
-					cursor: not-allowed;
-				}
-
-				&.is-disabled.is-selected {
-					color: $primary-color-middle;
-				}
-
-				&.is-selected:not(.is-disabled) {
-					color: $primary-color;
-				}
-			}
-			// 无数据
-			:deep(.v3-select-dropdown__empty) {
-				margin: 0;
-				padding: $padding-small 0;
-				text-align: center;
-				color: $info-color-little;
+				color: $font-color-default;
 			}
 		}
 	}

@@ -2,15 +2,15 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	& > :deep(.v3-button) {
+	& > .v3-button {
 		margin: 0;
 	}
-	& > :deep(.v3-button:not(:nth-last-of-type(1))) {
+	& > .v3-button:not(:nth-last-of-type(1)) {
 		border-right: 1px solid rgba(255, 255, 255, 0.5);
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
-	& > :deep(.v3-button:not(:nth-of-type(1))) {
+	& > .v3-button:not(:nth-of-type(1)) {
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 	}

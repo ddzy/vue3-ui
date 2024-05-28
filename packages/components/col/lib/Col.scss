@@ -24,19 +24,19 @@ $MAX_COL: 12;
 		.v3-col {
 			@if $id == '' {
 				&.v3-col-#{$responseType}-#{$v} {
-					width: $v * 100 / $MAX_COL * 1%;
+					width: calc($v * 100 / $MAX_COL * 1%);
 				}
 			} @else if $id == 'offset' {
 				&.v3-col-#{$responseType}-#{$id}-#{$v} {
-					margin-left: $v * 100 / $MAX_COL * 1%;
+					margin-left: calc($v * 100 / $MAX_COL * 1%);
 				}
 			} @else if $id == 'push' {
 				&.v3-col-#{$responseType}-#{$id}-#{$v} {
-					left: $v * 100 / $MAX_COL * 1%;
+					left: calc($v * 100 / $MAX_COL * 1%);
 				}
 			} @else if $id == 'pull' {
 				&.v3-col-#{$responseType}-#{$id}-#{$v} {
-					right: $v * 100 / $MAX_COL * 1%;
+					right: calc($v * 100 / $MAX_COL * 1%);
 				}
 			}
 		}
@@ -46,19 +46,19 @@ $MAX_COL: 12;
 	@for $v from $MIN_COL to ($MAX_COL + 1) {
 		@if $id == '' {
 			&.v3-col-#{$v} {
-				width: $v * 100 / $MAX_COL * 1%;
+				width: calc($v * 100 / $MAX_COL * 1%);
 			}
 		} @else if $id == 'offset' {
 			&.v3-col-#{$id}-#{$v} {
-				margin-left: $v * 100 / $MAX_COL * 1%;
+				margin-left: calc($v * 100 / $MAX_COL * 1%);
 			}
 		} @else if $id == 'push' {
 			&.v3-col-#{$id}-#{$v} {
-				left: $v * 100 / $MAX_COL * 1%;
+				left: calc($v * 100 / $MAX_COL * 1%);
 			}
 		} @else if $id == 'pull' {
 			&.v3-col-#{$id}-#{$v} {
-				right: $v * 100 / $MAX_COL * 1%;
+				right: calc($v * 100 / $MAX_COL * 1%);
 			}
 		}
 	}

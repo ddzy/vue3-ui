@@ -22,7 +22,7 @@ import {
 	toRef,
 	watch,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/backdrop';
+import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 
 export default defineComponent({
@@ -58,7 +58,7 @@ export default defineComponent({
 			() => {
 				computeBodyClass();
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**

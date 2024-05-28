@@ -40,7 +40,7 @@ import {
 	inject,
 	ComponentOptionsWithObjectProps,
 } from 'vue';
-import * as TYPES from '@/public/lib/types/radio';
+import * as TYPES from '@typings/index';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 	RADIO_GROUP_INSTANCE_PROVIDE,
@@ -87,26 +87,27 @@ export default defineComponent({
 		const isRadioGroup = checkIsRadioGroup();
 
 		if (isRadioGroup) {
-			((state.injectedOnRadioGroupChange as unknown) as Function) = inject(
-				RADIO_GROUP_CHANGE_FUNC_PROVIDE
+			(state.injectedOnRadioGroupChange as unknown as Function) = inject(
+				RADIO_GROUP_CHANGE_FUNC_PROVIDE,
 			)!;
-			((state.injectedRadioGroupInstance as unknown) as Function) = inject(
-				RADIO_GROUP_INSTANCE_PROVIDE
+			(state.injectedRadioGroupInstance as unknown as Function) = inject(
+				RADIO_GROUP_INSTANCE_PROVIDE,
 			)!;
 		}
 
 		watch(
 			toRef(
 				isRadioGroup
-					? (state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps)
-							.props
+					? (
+							state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps
+					  ).props
 					: props,
-				'modelValue'
+				'modelValue',
 			),
-			newValue => {
+			(newValue) => {
 				state.radioValue = newValue as any;
 			},
-			{ immediate: true }
+			{ immediate: true },
 		);
 
 		/**
@@ -129,9 +130,9 @@ export default defineComponent({
 
 		function handleChange(e: MouseEvent) {
 			if (isRadioGroup) {
-				((state.injectedOnRadioGroupChange as unknown) as Function)(
+				(state.injectedOnRadioGroupChange as unknown as Function)(
 					state.radioValue,
-					e
+					e,
 				);
 			} else {
 				context.emit('update:modelValue', state.radioValue);

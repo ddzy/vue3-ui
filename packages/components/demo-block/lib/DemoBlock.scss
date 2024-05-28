@@ -1,8 +1,8 @@
 .v3-demo-block {
 	overflow: hidden;
-	border: 1px solid $border-color-grey-small;
+	border: 1px solid $border-color-small;
 	border-radius: $border-radius-width-default;
-	font-size: $font-size-small;
+	font-size: $font-size-default;
 	color: $font-color-default;
 	transition: all 0.15s ease;
 	&:hover {
@@ -11,7 +11,7 @@
 
 	.v3-demo-block__common {
 		&:not(:first-child) {
-			border-top: 1px solid $border-color-grey-small;
+			border-top: 1px solid $border-color-small;
 		}
 	}
 	.v3-demo-block__view {
@@ -29,8 +29,12 @@
 		}
 	}
 	.v3-demo-block__code {
+		box-sizing: border-box;
 		overflow: hidden;
 		transition: height 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
+		.v3-demo-block-code__inner {
+			padding: $padding-medium;
+		}
 	}
 	.v3-demo-block__functional {
 		box-sizing: border-box;
@@ -48,7 +52,7 @@
 		&.is-fixed {
 			position: fixed;
 			bottom: 0;
-			border: 1px solid $border-color-grey-small;
+			border: 1px solid $border-color-small;
 		}
 
 		.functional__expand,
@@ -57,7 +61,7 @@
 		}
 		.functional__expand {
 			text-align: right;
-			color: $info-color-little;
+			color: $font-color-small;
 		}
 		.functional__extra {
 			display: flex;
