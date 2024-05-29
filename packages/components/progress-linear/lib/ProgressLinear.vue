@@ -101,7 +101,7 @@ export default defineComponent({
 			default: '100px',
 		},
 	},
-	setup(props: TYPES.IProgressLinearProps, context) {
+	setup(props: Required<TYPES.IProgressLinearProps>, context) {
 		const state: IState = reactive({});
 
 		const computedLabel = computed(() => {

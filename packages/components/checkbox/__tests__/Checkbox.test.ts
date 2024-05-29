@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { nextTick, reactive } from 'vue';
+import { SetupContext, nextTick, reactive } from 'vue';
 import { V3Checkbox } from '@components/main';
 
 describe('V3Checkbox 组件测试：', () => {
@@ -12,7 +12,6 @@ describe('V3Checkbox 组件测试：', () => {
             @change="handleChange"
           >多选1</v3-checkbox
           >
-
           <div class="shouldView" v-if="state.shouldView"></div>
         </div>
       `,
@@ -20,7 +19,7 @@ describe('V3Checkbox 组件测试：', () => {
 				V3Checkbox,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});
@@ -70,7 +69,7 @@ describe('V3Checkbox 组件测试：', () => {
 				disabled: Boolean,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});
@@ -128,7 +127,7 @@ describe('V3Checkbox 组件测试：', () => {
 				border: Boolean,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});
@@ -176,7 +175,7 @@ describe('V3Checkbox 组件测试：', () => {
 				indeterminate: Boolean,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});
@@ -194,16 +193,14 @@ describe('V3Checkbox 组件测试：', () => {
 		});
 
 		// 默认不为【非确定】状态
-		expect(
-			wrapper.find('.v3-checkbox__select--indeterminated').exists(),
-		).toBeFalsy();
+		expect(wrapper.find('.v3-checkbox.is-indeterminated').exists()).toBeFalsy();
 
 		// 手动设置为【非确定】状态
 		await wrapper.setProps({
 			indeterminate: true,
 		});
 		expect(
-			wrapper.find('.v3-checkbox__select--indeterminated').exists(),
+			wrapper.find('.v3-checkbox.is-indeterminated').exists(),
 		).toBeTruthy();
 	});
 
@@ -229,7 +226,7 @@ describe('V3Checkbox 组件测试：', () => {
 				indeterminate: Boolean,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});

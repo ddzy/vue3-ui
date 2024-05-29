@@ -34,22 +34,22 @@ export type IBasePopperAppendTo =
 	| 'parent'
 	| ((ref: Element) => Element);
 export interface IBasePopperProps {
-	modelValue: IBasePopperModelValue;
-	trigger: IBasePopperTrigger;
-	placement: IBasePopperPlacement;
-	disabled: boolean;
-	arrow: boolean;
-	delay: IBasePopperDelay;
-	content: string;
-	theme: IBasePopperTheme;
-	offset: IBasePopperOffset;
-	maxWidth: IBasePopperMaxWidth;
-	zIndex: number;
-	title: string;
-	customClass: string | object;
-	customDropdownClass: string | object;
-	customTriggerClass: string | object;
-	sameWidth: boolean;
-	appendTo: IBasePopperAppendTo;
+	modelValue?: IBasePopperModelValue;
+	trigger?: IBasePopperTrigger;
+	placement?: IBasePopperPlacement;
+	disabled?: boolean;
+	arrow?: boolean;
+	delay?: IBasePopperDelay;
+	content?: string;
+	theme?: IBasePopperTheme;
+	offset?: IBasePopperOffset;
+	maxWidth?: IBasePopperMaxWidth;
+	zIndex?: number;
+	title?: string;
+	customClass?: string | object;
+	customDropdownClass?: string | object;
+	customTriggerClass?: string | object;
+	sameWidth?: boolean;
+	appendTo?: IBasePopperAppendTo;
 }
 export const V3BasePopper: SFCWithInstall<IBasePopperProps>;

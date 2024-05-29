@@ -55,7 +55,7 @@ export default defineComponent({
 			default: 6,
 		},
 	},
-	setup(props: TYPES.ISpaceProps, context) {
+	setup(props: Required<TYPES.ISpaceProps>, context) {
 		const state: IState = reactive({
 			/** 重新组装的子元素列表 */
 			children: [],

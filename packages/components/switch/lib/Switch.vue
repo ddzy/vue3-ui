@@ -148,7 +148,7 @@ export default defineComponent({
 			default: '#C91B26',
 		},
 	},
-	setup(props: TYPES.ISwitchProps, context) {
+	setup(props: Required<TYPES.ISwitchProps>, context) {
 		const state = reactive({
 			/** 当前开关是否选中 */
 			isChecked: false,

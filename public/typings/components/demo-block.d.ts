@@ -6,10 +6,10 @@ export interface IDemoBlockExtraItem {
 	action?: string;
 }
 export interface IDemoBlockProps {
-	descriptionTip: string;
-	expandedBtnText: string;
-	defaultBtnText: string;
-	extraList: IDemoBlockExtraItem[];
+	descriptionTip?: string;
+	expandedBtnText?: string;
+	defaultBtnText?: string;
+	extraList?: IDemoBlockExtraItem[];
 }
 
-export const V3DemoBlock: SFCWithInstall<IDemoBlockProps>
+export const V3DemoBlock: SFCWithInstall<IDemoBlockProps>;

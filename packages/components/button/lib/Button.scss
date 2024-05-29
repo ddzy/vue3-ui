@@ -226,23 +226,23 @@ $button-border-type: dashed, dotted, double, groove, outset;
 // 按钮点击时的动画
 $button-box-shadow-map: (
 	primary: (
-		startColor: rgba(0, 160, 255, 0.6),
+		startColor: $primary-color-medium,
 		endColor: rgba(0, 160, 255, 0),
 	),
 	success: (
-		startColor: rgba(99, 185, 49, 0.6),
+		startColor: $success-color-medium,
 		endColor: rgba(99, 185, 49, 0),
 	),
 	danger: (
-		startColor: rgba(201, 27, 38, 0.6),
+		startColor: $danger-color-medium,
 		endColor: rgba(201, 27, 38, 0),
 	),
 	warning: (
-		startColor: rgba(237, 170, 83, 0.6),
+		startColor: $warning-color-medium,
 		endColor: rgba(237, 170, 83, 0),
 	),
 	info: (
-		startColor: rgba(184, 176, 176, 0.6),
+		startColor: $info-color-medium,
 		endColor: rgba(184, 176, 176, 0),
 	),
 );

@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
 		V3Dialog: typeof import('../index').V3Dialog;
 		V3Divider: typeof import('../index').V3Divider;
 		V3Drawer: typeof import('../index').V3Drawer;
+		V3Icon: typeof import('../index').V3Icon;
 		V3Input: typeof import('../index').V3Input;
 		V3InputNumber: typeof import('../index').V3InputNumber;
 		V3InputTextarea: typeof import('../index').V3InputTextarea;

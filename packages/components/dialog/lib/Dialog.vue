@@ -136,7 +136,7 @@ export default defineComponent({
 			default: null,
 		},
 	},
-	setup(props: TYPES.IDialogProps, context) {
+	setup(props: Required<TYPES.IDialogProps>, context) {
 		const state = reactive({
 			syncedModelValue: false,
 		});

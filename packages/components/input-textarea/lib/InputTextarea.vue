@@ -83,7 +83,7 @@ export default defineComponent({
 			default: '',
 		},
 	},
-	setup(props: TYPES.ITextareaProps, context) {
+	setup(props: Required<TYPES.ITextareaProps>, context) {
 		const state = reactive({
 			defaultProps: {
 				height: 0,

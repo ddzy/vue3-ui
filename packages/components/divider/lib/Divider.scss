@@ -6,14 +6,14 @@
 		width: 1px;
 		height: 1em;
 		margin: 0 $margin-small + 2;
-		background-color: $info-color-middle;
+		background-color: $info-color-medium;
 		vertical-align: middle;
 	}
 	// 水平方向
 	&.is-horizontal {
 		width: 100%;
 		height: 1px;
-		background-color: $info-color-middle;
+		background-color: $info-color-medium;
 		margin: $margin-large-2 0;
 	}
 	// 内容的位置

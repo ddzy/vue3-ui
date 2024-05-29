@@ -85,7 +85,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.IBackProps, context) {
+	setup(props: Required<TYPES.IBackProps>, context) {
 		const state = reactive({
 			showTop: false,
 			showBottom: false,

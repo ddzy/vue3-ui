@@ -282,7 +282,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.ISelectProps, context) {
+	setup(props: Required<TYPES.ISelectProps>, context) {
 		const state: IState = reactive({
 			/** 当前的下拉框是否显示 */
 			showDropdown: false,
@@ -677,12 +677,12 @@ body {
 					}
 
 					&.is-disabled {
-						color: $info-color-middle;
+						color: $info-color-medium;
 						cursor: not-allowed;
 					}
 
 					&.is-disabled.is-selected {
-						color: $primary-color-middle;
+						color: $primary-color-medium;
 					}
 
 					&.is-selected:not(.is-disabled) {
@@ -694,7 +694,7 @@ body {
 					margin: 0;
 					padding: $padding-small 0;
 					text-align: center;
-					color: $info-color-middle;
+					color: $info-color-medium;
 				}
 			}
 		}

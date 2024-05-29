@@ -117,7 +117,7 @@ export default defineComponent({
 		},
 	},
 	emits: ['extraClick'],
-	setup(props: TYPES.IDemoBlockProps, context) {
+	setup(props: Required<TYPES.IDemoBlockProps>, context) {
 		const state: IState = reactive({
 			/** 详情区域是否展开 */
 			isCodeAreaExpand: false,

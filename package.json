@@ -1,6 +1,6 @@
 {
 	"name": "@felibrary/vue3-ui",
-	"version": "0.0.4",
+	"version": "0.0.6",
 	"description": "vue3 ui组件库",
 	"keywords": [
 		"ui",
@@ -24,6 +24,10 @@
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.umd.js",
 			"types": "./dist/typings/index.d.ts"
+		},
+		"./dist/": {
+			"import": "./dist/",
+			"require": "./dist/"
 		}
 	},
 	"types": "./dist/typings/index.d.ts",

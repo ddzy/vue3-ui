@@ -7,9 +7,9 @@ export type ICardShadowTrigger = 'hover' | 'alway' | 'never';
 export type ICardShadowSize = 'small' | 'medium' | 'large';
 
 export interface ICardProps {
-	title: string;
-	bodyStyle: ICardBodyStyle;
-	shadowTrigger: ICardShadowTrigger;
-	shadowSize: ICardShadowSize;
+	title?: string;
+	bodyStyle?: ICardBodyStyle;
+	shadowTrigger?: ICardShadowTrigger;
+	shadowSize?: ICardShadowSize;
 }
-export const V3Card: SFCWithInstall<ICardProps>
+export const V3Card: SFCWithInstall<ICardProps>;

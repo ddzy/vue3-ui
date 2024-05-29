@@ -34,18 +34,18 @@ export default defineComponent({
 		},
 		/** 限制的最小选择个数 */
 		min: {
-			type: [Number, undefined] as PropType<TYPES.ICheckboxGroupMin>,
-			default: undefined,
+			type: [Number],
+			default: -1,
 		},
 		/** 限制的最大选择个数 */
 		max: {
-			type: [Number, undefined] as PropType<TYPES.ICheckboxGroupMax>,
-			default: undefined,
+			type: [Number],
+			default: -1,
 		},
 	},
 	emits: ['change', 'update:modelValue'],
 
-	setup(props: TYPES.ICheckboxGroupProps, context) {
+	setup(props: Required<TYPES.ICheckboxGroupProps>, context) {
 		const state = reactive({
 			/** checkbox 实例列表 */
 			checkboxInstanceList: [],
@@ -57,15 +57,14 @@ export default defineComponent({
 		watch(
 			props,
 			() => {
+				if (props.min < 0 || props.max < 0 || props.min === props.max) {
+					return;
+				}
 				let min = props.min ? (props.min >= 0 ? props.min : 0) : 0;
 				let max = props.max;
 
-				if (min === max) {
-					return;
-				}
-
 				// 如果做了最大/最小选择个数的限制，则要做相应的处理
-				else if (max) {
+				if (max) {
 					// 如果已选中的个数大于等于最大值，那么禁用其它还未选中的复选框
 					if (props.modelValue.length >= max) {
 						nextTick(() => {

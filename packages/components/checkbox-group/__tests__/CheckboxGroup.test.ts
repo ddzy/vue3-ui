@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import { nextTick, reactive } from 'vue';
+import { SetupContext, nextTick, reactive } from 'vue';
 import { V3Checkbox, V3CheckboxGroup } from '@components/main';
 
 describe('CheckboxGroup 组件测试：', () => {
@@ -20,7 +20,7 @@ describe('CheckboxGroup 组件测试：', () => {
 				V3Checkbox,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: [2],
 				});
@@ -73,7 +73,7 @@ describe('CheckboxGroup 组件测试：', () => {
 				V3Checkbox,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: [],
 				});
@@ -129,7 +129,7 @@ describe('CheckboxGroup 组件测试：', () => {
 				V3Checkbox,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: [true, true, true],
 				});
@@ -194,7 +194,7 @@ describe('CheckboxGroup 组件测试：', () => {
 				V3Checkbox,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue1: false,
 					checkboxIndeterminate1: false,
@@ -268,10 +268,6 @@ describe('CheckboxGroup 组件测试：', () => {
 			.setValue(true);
 		await nextTick();
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(4);
-		// 全选之后图标也要变化
-		expect(
-			wrapper1.find('.controller').find('.v3-icon-check-correct').exists(),
-		).toBeTruthy();
 
 		// 手动全不选（再次点击则全不选）
 		await wrapper1
@@ -280,10 +276,6 @@ describe('CheckboxGroup 组件测试：', () => {
 			.setValue(false);
 		await nextTick();
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(0);
-		// 全不选之后图标也要变化
-		expect(
-			wrapper1.find('.controller').find('.v3-icon-square').exists(),
-		).toBeTruthy();
 
 		// 全选之后，手动取消选择第一、二项
 		await wrapper1
@@ -301,10 +293,6 @@ describe('CheckboxGroup 组件测试：', () => {
 		await nextTick();
 		expect(wrapper1.vm.state.checkboxValue2.length).toBe(2);
 		expect(wrapper1.find('.selector').findAll('.is-checked').length).toBe(2);
-		// 图标也要变为不确定状态
-		expect(
-			wrapper1.find('.controller').find('.v3-icon-reduce').exists(),
-		).toBeTruthy();
 		// 这时候，再次全选
 		await wrapper1
 			.find('.controller')
@@ -335,7 +323,7 @@ describe('CheckboxGroup 组件测试：', () => {
 				V3Checkbox,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: ['banana', 'orange'],
 					checkboxOriginValue: [

@@ -198,7 +198,7 @@ export default defineComponent({
 			},
 		},
 	},
-	setup(props: TYPES.ICarouselProps, context) {
+	setup(props: Required<TYPES.ICarouselProps>, context) {
 		const state: IState = reactive({
 			/** 轮播项实例列表 */
 			carouselItemInstanceList: [],

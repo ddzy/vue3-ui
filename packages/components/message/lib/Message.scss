@@ -3,25 +3,25 @@ $message-type-map: (
 		background-color: $success-color-plain,
 		color: $success-color,
 		icon-color: $success-color,
-		shadow-color: $success-color-middle,
+		shadow-color: $success-color-medium,
 	),
 	danger: (
 		background-color: $danger-color-plain,
 		color: $danger-color,
 		icon-color: $danger-color,
-		shadow-color: $danger-color-middle,
+		shadow-color: $danger-color-medium,
 	),
 	warning: (
 		background-color: $warning-color-plain,
 		color: $warning-color,
 		icon-color: $warning-color,
-		shadow-color: $warning-color-middle,
+		shadow-color: $warning-color-medium,
 	),
 	info: (
 		background-color: $info-color-plain,
 		color: $font-color-small,
 		icon-color: $font-color-small,
-		shadow-color: $info-color-middle,
+		shadow-color: $info-color-medium,
 	),
 );
 

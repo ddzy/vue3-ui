@@ -305,7 +305,7 @@ export default defineComponent({
 			default: 'rgba(0, 160, 255, 1)',
 		},
 	},
-	setup(props: TYPES.ISliderProps, context) {
+	setup(props: Required<TYPES.ISliderProps>, context) {
 		const state: IState = reactive({
 			/** 是否处于拖动状态 */
 			isMoving: false,

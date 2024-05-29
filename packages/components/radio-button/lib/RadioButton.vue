@@ -73,7 +73,7 @@ export default defineComponent({
 		},
 	},
 	emits: ['change', 'update:modelValue'],
-	setup(props: TYPES.IRadioButtonProps, context) {
+	setup(props: Required<TYPES.IRadioButtonProps>, context) {
 		const state = reactive({
 			/** 单选框的值 */
 			radioValue: null,
@@ -82,7 +82,7 @@ export default defineComponent({
 			/** RadioGroup 实例 */
 			injectedRadioGroupInstance: null,
 		});
-		const app = getCurrentInstance();
+		const app = getCurrentInstance()!;
 		const radioRef = ref(document.createElement('input'));
 		const isRadioGroup = checkIsRadioGroup();
 

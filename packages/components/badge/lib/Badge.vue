@@ -63,7 +63,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	setup(props: TYPES.IBadgeProps, context) {
+	setup(props: Required<TYPES.IBadgeProps>, context) {
 		const state: IState = reactive({
 			value: '',
 		});
