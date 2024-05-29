@@ -164,7 +164,7 @@ export default defineComponent({
 			return result;
 		}
 
-		function handleChange(e: MouseEvent) {
+		function handleChange(e: Event) {
 			if (isCheckboxGroup) {
 				(state.injectedOnCheckboxGroupChange as unknown as Function)(
 					state.checkboxValue,

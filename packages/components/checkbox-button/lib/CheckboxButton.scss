@@ -39,6 +39,7 @@ $checkbox-button-size-map: (
 	&.is-checked:not(.is-disabled) {
 		.v3-checkbox-button__label-wrapper {
 			background-color: $primary-color;
+			border-color: transparent;
 		}
 	}
 
@@ -65,6 +66,7 @@ $checkbox-button-size-map: (
 		transition: all 0.15s ease;
 
 		&:hover {
+			border-color: $primary-color;
 			.v3-checkbox-button__label {
 				color: $primary-color;
 			}
