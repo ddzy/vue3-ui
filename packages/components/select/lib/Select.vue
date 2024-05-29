@@ -677,12 +677,12 @@ body {
 					}
 
 					&.is-disabled {
-						color: $info-color-middle;
+						color: $info-color-medium;
 						cursor: not-allowed;
 					}
 
 					&.is-disabled.is-selected {
-						color: $primary-color-middle;
+						color: $primary-color-medium;
 					}
 
 					&.is-selected:not(.is-disabled) {
@@ -694,7 +694,7 @@ body {
 					margin: 0;
 					padding: $padding-small 0;
 					text-align: center;
-					color: $info-color-middle;
+					color: $info-color-medium;
 				}
 			}
 		}
