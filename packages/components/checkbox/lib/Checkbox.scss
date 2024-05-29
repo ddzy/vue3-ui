@@ -16,6 +16,32 @@ $checkbox-size-map: (
 	),
 );
 
+@keyframes checkbox-inkwell {
+	0% {
+		box-shadow: 0 0 0 0 $primary-color;
+	}
+	100% {
+		box-shadow: 0 0 0 2px rgba(0, 160, 255, 0);
+	}
+}
+
+@mixin checkbox-active {
+	svg {
+		animation: checkbox-inkwell 0.3s ease 0s 1;
+		rect {
+			stroke: none;
+			stroke-width: 0;
+			fill: $primary-color;
+		}
+		polyline {
+			&.is-indeterminated,
+			&:not(.is-indeterminated) {
+				stroke-dashoffset: 0;
+			}
+		}
+	}
+}
+
 .v3-checkbox {
 	display: inline-block;
 	margin-left: $margin-medium;
@@ -29,11 +55,6 @@ $checkbox-size-map: (
 		&.is-size--#{$key} {
 			.v3-checkbox__label-wrapper {
 				font-size: map-get($map: $value, $key: label-font-size);
-				.v3-checkbox__select {
-					.v3-icon {
-						font-size: map-get($map: $value, $key: checkbox-font-size);
-					}
-				}
 			}
 		}
 	}
@@ -66,6 +87,14 @@ $checkbox-size-map: (
 		}
 	}
 
+	&.is-indeterminated:not(.is-disabled) {
+		.v3-checkbox__select {
+			&:not(.is-custom-icon) {
+				@include checkbox-active();
+			}
+		}
+	}
+
 	.v3-checkbox__label-wrapper {
 		display: flex;
 		justify-content: flex-start;
@@ -80,8 +109,13 @@ $checkbox-size-map: (
 
 			&:checked:not(:disabled) {
 				& ~ .v3-checkbox__select {
-					.v3-icon {
-						color: $primary-color;
+					&.is-custom-icon {
+						.v3-icon {
+							color: $primary-color;
+						}
+					}
+					&:not(.is-custom-icon) {
+						@include checkbox-active();
 					}
 				}
 				& ~ .v3-checkbox__label {
@@ -101,11 +135,36 @@ $checkbox-size-map: (
 		.v3-checkbox__select {
 			display: flex;
 			align-items: center;
-			.v3-icon {
-				font-size: $font-size-large;
-				color: $font-color-small;
-				&.v3-checkbox__select--indeterminated {
-					color: $primary-color;
+			&.is-custom-icon {
+				.v3-icon {
+					font-size: 1em;
+					color: $font-color-small;
+					&.is-indeterminated {
+						color: $primary-color;
+					}
+				}
+			}
+			&:not(.is-custom-icon) {
+				svg {
+					border-radius: 1px;
+					rect {
+						stroke: $border-color-large;
+						stroke-width: 6;
+						fill: transparent;
+						transition: all 0.3s ease;
+					}
+					polyline {
+						transition: all 0.3s ease;
+						&.is-indeterminated {
+							// 线条总长度
+							stroke-dasharray: 20;
+							stroke-dashoffset: 20;
+						}
+						&:not(.is-indeterminated) {
+							stroke-dasharray: 50;
+							stroke-dashoffset: 50;
+						}
+					}
 				}
 			}
 		}
