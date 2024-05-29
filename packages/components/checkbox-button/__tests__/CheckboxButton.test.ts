@@ -20,7 +20,7 @@ describe('V3CheckboxButton 组件测试：', () => {
 				V3CheckboxButton,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});
@@ -70,7 +70,7 @@ describe('V3CheckboxButton 组件测试：', () => {
 				disabled: Boolean,
 			},
 			emits: ['change'],
-			setup(props, context) {
+			setup(props: any, context: SetupContext) {
 				const state = reactive({
 					checkboxValue: false,
 				});
