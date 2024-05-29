@@ -54,7 +54,7 @@
 					/>
 				</template>
 				<!-- viewBox 旨在让子元素在 40x40 范围内定义大小，方便自适应 -->
-				<svg v-else width="1em" height="1em" viewBox="0 0 40 40">
+				<svg v-else viewBox="0 0 40 40">
 					<rect x="0" y="0" width="100%" height="100%" rx="4" />
 					<!-- 不确定状态的线条 -->
 					<polyline

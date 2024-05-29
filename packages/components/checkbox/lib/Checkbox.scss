@@ -1,18 +1,21 @@
 $checkbox-size-map: (
 	small: (
-		padding: 0 $padding-medium,
-		checkbox-font-size: $font-size-medium,
+		padding: 2 $padding-medium,
 		label-font-size: $font-size-small,
+		svg-size: 1em,
+		svg-stroke-width: 6,
 	),
 	medium: (
-		padding: 3px $padding-medium,
-		checkbox-font-size: $font-size-large,
+		padding: 6px $padding-medium,
 		label-font-size: $font-size-default,
+		svg-size: 1em,
+		svg-stroke-width: 6,
 	),
 	large: (
-		padding: 4px $padding-medium,
-		checkbox-font-size: $font-size-large-2,
+		padding: 8px $padding-medium,
 		label-font-size: $font-size-default,
+		svg-size: $font-size-medium,
+		svg-stroke-width: 4,
 	),
 );
 
@@ -55,6 +58,15 @@ $checkbox-size-map: (
 		&.is-size--#{$key} {
 			.v3-checkbox__label-wrapper {
 				font-size: map-get($map: $value, $key: label-font-size);
+				.v3-checkbox__select {
+					svg {
+						width: map-get($map: $value, $key: svg-size);
+						height: map-get($map: $value, $key: svg-size);
+						rect {
+							stroke-width: map-get($map: $value, $key: svg-stroke-width);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -144,26 +156,24 @@ $checkbox-size-map: (
 					}
 				}
 			}
-			&:not(.is-custom-icon) {
-				svg {
-					border-radius: 1px;
-					rect {
-						stroke: $border-color-large;
-						stroke-width: 6;
-						fill: transparent;
-						transition: all 0.3s ease;
+			svg {
+				border-radius: 1px;
+				rect {
+					stroke: $border-color-large;
+					stroke-width: 6;
+					fill: transparent;
+					transition: all 0.3s ease;
+				}
+				polyline {
+					transition: all 0.3s ease;
+					&.is-indeterminated {
+						// 线条总长度
+						stroke-dasharray: 20;
+						stroke-dashoffset: 20;
 					}
-					polyline {
-						transition: all 0.3s ease;
-						&.is-indeterminated {
-							// 线条总长度
-							stroke-dasharray: 20;
-							stroke-dashoffset: 20;
-						}
-						&:not(.is-indeterminated) {
-							stroke-dasharray: 50;
-							stroke-dashoffset: 50;
-						}
+					&:not(.is-indeterminated) {
+						stroke-dasharray: 50;
+						stroke-dashoffset: 50;
 					}
 				}
 			}
