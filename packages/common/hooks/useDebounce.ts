@@ -1,5 +1,9 @@
 import { ref } from 'vue';
-import * as TYPES from '@typings/index';
+
+type IUseDebounce = (
+	callback: (args: any[]) => void,
+	timestamp?: number,
+) => (args: any[]) => void;
 
 /**
  * 防抖 hook
@@ -7,10 +11,8 @@ import * as TYPES from '@typings/index';
  * @param timestamp 时间戳
  * @returns
  */
-const useDebounce: TYPES.IUseDebounce = function useDebounce(
-	callback,
-	timestamp = 200,
-) {
+
+const useDebounce: IUseDebounce = function (callback, timestamp = 200) {
 	let timer: any = ref(null);
 
 	return function (...args) {
@@ -23,4 +25,5 @@ const useDebounce: TYPES.IUseDebounce = function useDebounce(
 		}, timestamp);
 	};
 };
+
 export default useDebounce;

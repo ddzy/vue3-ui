@@ -1,4 +1,7 @@
-import * as TYPES from '@typings/index';
+type IUseThrottle = (
+	callback: (...args: any[]) => void,
+	timestamp?: number,
+) => (...args: any[]) => void;
 
 /**
  * 节流 hook
@@ -6,14 +9,13 @@ import * as TYPES from '@typings/index';
  * @param timestamp 每隔多少秒执行一次回调
  * @returns
  */
-
-const useThrottle: TYPES.IUseThrottle = function useThrottle(
+const useThrottle: IUseThrottle = function useThrottle(
 	callback,
 	timestamp = 200,
 ) {
 	let prevTime = Date.now();
 
-	return function (...args) {
+	return function (this: any, ...args) {
 		const currentTime = Date.now();
 
 		if (currentTime - prevTime >= timestamp) {

@@ -1,14 +1,19 @@
+import { SFCWithInstall } from '../index';
+
 export interface IImageProps {
 	src: string;
 	previewSrc?: string;
 	previewDisabled?: boolean;
-	fallbackSrc?: string;
 	width?: string | number;
 	height?: string | number;
 	lazy?: boolean;
+	lazyOptions?: IImageLazyOptions;
 	objectFit?: IImageObjectFit;
 	showToolbar?: boolean;
 	rounded?: boolean;
+}
+export interface IImageLazyOptions {
+	useIntersectionObserver?: boolean;
 }
 export type IImageObjectFit =
 	| 'fill'
@@ -16,3 +21,5 @@ export type IImageObjectFit =
 	| 'cover'
 	| 'scale-down'
 	| 'none';
+
+export const V3Image: SFCWithInstall<IImageProps>;

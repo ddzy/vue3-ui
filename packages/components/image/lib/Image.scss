@@ -1,2 +1,25 @@
 .v3-image {
+	background-color: $disable-bg-color;
+	.v3-image__inner {
+		width: 100%;
+		height: 100%;
+		max-width: 100%;
+	}
+	.v3-image__failed,
+	.v3-image__loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		font-size: 30px;
+	}
+	.v3-image__failed {
+		font-size: 30px;
+		color: $font-color-small;
+	}
+	.v3-image__loading {
+		font-size: 20px;
+		color: $font-color-small;
+	}
 }
