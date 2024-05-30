@@ -13,6 +13,7 @@ export interface IImageProps {
 	showToolbar?: boolean;
 	showLoading?: boolean;
 	rounded?: boolean;
+	radius?: string | number;
 }
 export interface IImageLazyOptions {
 	useIntersectionObserver?: boolean;

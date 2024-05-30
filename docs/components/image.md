@@ -87,3 +87,47 @@ function loadImgFailed() {
 ```
 
 :::
+
+## 展示头像
+
+:::info
+可以通过`rounded`、`radius`来显示头像，`rounded`的优先级高于`radius`
+:::
+
+:::demo
+
+```vue
+<template>
+	<v3-space :size="20">
+		<v3-image
+			v-for="v in sizes"
+			:key="v"
+			:width="v"
+			:height="v"
+			:radius="v / 8"
+			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF2.jpg"
+		></v3-image>
+	</v3-space>
+	<v3-divider direction="horizontal">
+		<span>rounded属性优先级高于radius</span>
+		<V3Icon type="ArrowDown" />
+	</v3-divider>
+	<v3-space :size="20">
+		<v3-image
+			v-for="v in sizes"
+			:key="v"
+			:width="v"
+			:height="v"
+			:radius="v"
+			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF2.jpg"
+			rounded
+		></v3-image>
+	</v3-space>
+</template>
+<script lang="ts" setup>
+const sizes = [16, 32, 64];
+</script>
+<style module lang="scss"></style>
+```
+
+:::

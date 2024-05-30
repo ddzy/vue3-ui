@@ -6,10 +6,13 @@
 			'is-lazy': props.lazy,
 			'is-failed': isFailed,
 			'has-toolbar': props.showToolbar,
+			'has-animation': props.animated,
+			'has-loading': props.showLoading,
 		}"
 		:style="{
 			width: computedSize.width,
 			height: computedSize.height,
+			'--border-radius': computedRadius,
 		}"
 	>
 		<Transition :name="props.animated ? 'v3-image-fade' : ''" mode="out-in">
@@ -85,6 +88,8 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	showLoading: false,
 	/** 是否圆形（显示为头像） */
 	rounded: false,
+	/** 圆角大小(50%时的效果等同于`rounded`)，当`rounded`为`true`时，忽略本参数 */
+	radius: 0,
 });
 const slots = useSlots();
 const state = reactive({});
@@ -109,6 +114,17 @@ const computedSize = computed(() => {
 		width,
 		height,
 	};
+});
+const computedRadius = computed(() => {
+	const reg = /^\d+$/;
+	let radius = `${props.rounded ? '50%' : props.radius}`;
+	// 加上"px"单位
+	if (reg.test(radius)) {
+		radius = `${radius}px`;
+	}
+	console.log('radius :>> ', radius);
+
+	return radius;
 });
 
 let { isLoading, isFailed } = useImage({ src: props.src });
