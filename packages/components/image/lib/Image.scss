@@ -1,3 +1,16 @@
+.v3-image-fade-enter-from,
+.v3-image-fade-leave-to {
+	opacity: 0;
+}
+.v3-image-fade-enter-active,
+.v3-image-fade-leave-active {
+	transition: opacity 0.5s ease;
+}
+.v3-image-fade-enter-to,
+.v3-image-fade-leave-from {
+	opacity: 1;
+}
+
 .v3-image {
 	background-color: $disable-bg-color;
 	.v3-image__inner {

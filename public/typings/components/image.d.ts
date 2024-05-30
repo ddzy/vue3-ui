@@ -7,9 +7,11 @@ export interface IImageProps {
 	width?: string | number;
 	height?: string | number;
 	lazy?: boolean;
+	animated?: boolean;
 	lazyOptions?: IImageLazyOptions;
 	objectFit?: IImageObjectFit;
 	showToolbar?: boolean;
+	showLoading?: boolean;
 	rounded?: boolean;
 }
 export interface IImageLazyOptions {
