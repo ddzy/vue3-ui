@@ -166,6 +166,10 @@ export default defineConfig({
 							text: 'Tag 标签',
 							link: '/components/tag',
 						},
+						{
+							text: 'Image 图片',
+							link: '/components/image',
+						},
 					],
 				},
 				{

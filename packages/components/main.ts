@@ -43,6 +43,7 @@ import V3CarouselItem from './carousel-item/main';
 import V3Drawer from './drawer/main';
 import V3Back from './back/main';
 import V3Icon from './icon/main';
+import V3Image from './image/main';
 
 declare module 'vue' {
 	interface ComponentCustomProperties {
@@ -92,6 +93,7 @@ export {
 	V3Drawer,
 	V3Back,
 	V3Icon,
+	V3Image,
 };
 
 export default function install(app: App) {
@@ -131,6 +133,7 @@ export default function install(app: App) {
 	app.component(V3Drawer.name!, V3Drawer);
 	app.component(V3Back.name!, V3Back);
 	app.component(V3Icon.name!, V3Icon);
+	app.component(V3Image.name!, V3Image);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);

@@ -25,3 +25,4 @@ export * from './switch';
 export * from './tag';
 export * from './tooltip';
 export * from './icon';
+export * from './image';
