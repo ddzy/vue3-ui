@@ -17,7 +17,7 @@
 		}"
 	>
 		<Transition
-			v-if="!!state.src"
+			v-if="canRender"
 			:name="props.animated ? 'v3-image-fade' : ''"
 			mode="out-in"
 		>
@@ -25,7 +25,7 @@
 				<img
 					v-if="!isFailed"
 					class="v3-image__inner"
-					:src="state.src"
+					:src="props.src"
 					:[`data-preview-src`]="props.previewSrc || src"
 					:width="computedSize.width"
 					:height="computedSize.height"
@@ -137,16 +137,18 @@ const computedRadius = computed(() => {
 	return radius;
 });
 
+// 懒加载需要延迟渲染
+let canRender = ref(false);
 let isLoading = ref(false);
 let isFailed = ref(false);
 let prevStop = () => {};
+
 watch(
 	() => props.src,
 	() => {
 		const _next = () => {
-			state.src = props.src;
 			const { isLoading: _isLoading, isFailed: _isFailed } = useImage({
-				src: state.src,
+				src: props.src,
 			});
 			isLoading = _isLoading;
 			isFailed = _isFailed;
@@ -163,9 +165,9 @@ watch(
 						target,
 						([{ isIntersecting }]) => {
 							if (isIntersecting) {
-								// 等到图片出现在可视区域时再加载
-								// 避免重复加载
-								if (!state.src) {
+								// 等到图片出现在可视区域时再渲染子元素，同时避免重复渲染
+								if (!canRender.value) {
+									canRender.value = true;
 									_next();
 								}
 							}
@@ -175,10 +177,9 @@ watch(
 				}
 			});
 		} else {
-			// 避免重复加载
-			if (!state.src) {
-				_next();
-			}
+			// 非懒加载，直接渲染子元素
+			canRender.value = true;
+			_next();
 		}
 	},
 	{ immediate: true },
