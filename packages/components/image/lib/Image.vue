@@ -96,14 +96,14 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	/** 是否显示预览的工具栏 */
 	showToolbar: true,
 	/** 是否开启 loading 效果 */
-	showLoading: false,
+	showLoading: true,
 	/** 是否圆形（显示为头像） */
 	rounded: false,
 	/** 圆角大小(50%时的效果等同于`rounded`)，当`rounded`为`true`时，忽略本参数 */
 	radius: 0,
 });
 const slots = useSlots();
-const containerRef = ref(null);
+const containerRef = ref();
 const extractNumReg = /^\d+/g;
 
 const computedSize = computed(() => {
@@ -186,24 +186,21 @@ watch(
 		if (props.lazy && props.lazyOptions.useIntersectionObserver) {
 			// 如果开启了懒加载
 			onMounted(() => {
-				const target = containerRef.value;
-				if (target) {
-					// 每次 src 变化，取消上次监听的元素，防止重复监听
-					prevStop();
-					const { stop } = useIntersectionObserver(
-						target,
-						([{ isIntersecting }]) => {
-							if (isIntersecting) {
-								// 等到图片出现在可视区域时再渲染子元素，同时避免重复渲染
-								if (!canRender.value) {
-									canRender.value = true;
-									_next();
-								}
+				// 每次 src 变化，取消上次监听的元素，防止重复监听
+				prevStop();
+				const { stop } = useIntersectionObserver(
+					containerRef.value,
+					([{ isIntersecting }]) => {
+						if (isIntersecting) {
+							// 等到图片出现在可视区域时再渲染子元素，同时避免重复渲染
+							if (!canRender.value) {
+								canRender.value = true;
+								_next();
 							}
-						},
-					);
-					prevStop = stop;
-				}
+						}
+					},
+				);
+				prevStop = stop;
 			});
 		} else {
 			// 非懒加载，直接渲染子元素

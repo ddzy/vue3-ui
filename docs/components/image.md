@@ -39,9 +39,9 @@ const objectFits = ['fill', 'contain', 'cover', 'scale-down', 'none'];
 
 ```vue
 <template>
-	<v3-space :size="20" :key="key">
-		<v3-image :src="imgSrc" :width="100" :height="100"> </v3-image>
-		<v3-image :src="imgSrc" :width="100" :height="100">
+	<v3-space :key="key" :size="20">
+		<v3-image :src="imgSrc" :width="100" :height="100" showLoading> </v3-image>
+		<v3-image :src="imgSrc" :width="100" :height="100" showLoading>
 			<template #failed>
 				<div :class="$style['failed-wrapper']">
 					<span>FAILED</span>
@@ -54,23 +54,17 @@ const objectFits = ['fill', 'contain', 'cover', 'scale-down', 'none'];
 			</template>
 		</v3-image>
 	</v3-space>
-	<v3-space>
-		<v3-button type="primary" @click="loadImg">加载图片</v3-button>
-		<v3-button type="danger" @click="loadImgFailed">加载失败</v3-button>
+	<v3-space :size="8">
+		<v3-button type="primary" @click="flush">重新加载</v3-button>
 	</v3-space>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+const imgSrc = 'http://oss.yyge.top/test/images/%E8%AF%B8%E8%91%9B.jpg';
 const key = ref(0);
-const imgSrc = ref('');
-function loadImg() {
+function flush() {
 	key.value += 1;
-	imgSrc.value = 'http://oss.yyge.top/test/images/%E8%AF%B8%E8%91%9B.jpg';
-}
-function loadImgFailed() {
-	key.value += 1;
-	imgSrc.value = '';
 }
 </script>
 <style module>
