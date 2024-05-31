@@ -14,6 +14,8 @@
 			width: computedSize.width,
 			height: computedSize.height,
 			'--border-radius': computedRadius,
+			'--font-size': computedFontSize,
+			'--loading-font-size': computedLoadingFontSize,
 		}"
 	>
 		<Transition
@@ -59,6 +61,7 @@
 </template>
 <script lang="ts" setup>
 import { Ref, computed, onMounted, reactive, ref, useSlots, watch } from 'vue';
+import Decimal from 'decimal.js';
 import type { IImageProps } from '@typings/index';
 import { useImage, useIntersectionObserver } from '@common/hooks/index';
 import V3Icon from '@components/icon/main';
@@ -100,10 +103,8 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	radius: 0,
 });
 const slots = useSlots();
-const state = reactive({
-	src: '',
-});
 const containerRef = ref(null);
+const extractNumReg = /^\d+/g;
 
 const computedSize = computed(() => {
 	const width = props.width
@@ -135,6 +136,34 @@ const computedRadius = computed(() => {
 	}
 
 	return radius;
+});
+const computedFontSize = computed(() => {
+	// 根据图片大小，计算合适的文字大小
+	// 以 100x100 => font-size: 30px 为基准
+	let matchedWidth = computedSize.value.width.match(extractNumReg);
+	let width = matchedWidth ? matchedWidth[0] : 0;
+	let matchedHeight = computedSize.value.height.match(extractNumReg);
+	let height = matchedHeight ? matchedHeight[0] : 0;
+
+	// 基准值取宽高中的最小值
+	let base = Decimal.min(width, height);
+	let fontSize = base.mul(30).div(100);
+
+	return `${fontSize}px`;
+});
+const computedLoadingFontSize = computed(() => {
+	// 根据图片大小，计算合适的loading大小
+	// 以 100x100 => font-size: 20px 为基准
+	let matchedWidth = computedSize.value.width.match(extractNumReg);
+	let width = matchedWidth ? matchedWidth[0] : 0;
+	let matchedHeight = computedSize.value.height.match(extractNumReg);
+	let height = matchedHeight ? matchedHeight[0] : 0;
+
+	// 基准值取宽高中的最小值
+	let base = Decimal.min(width, height);
+	let fontSize = base.mul(20).div(100);
+
+	return `${fontSize}px`;
 });
 
 // 懒加载需要延迟渲染

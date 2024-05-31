@@ -27,14 +27,14 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
-		font-size: 30px;
+		font-size: var(--font-size);
 	}
 	.v3-image__failed {
-		font-size: 30px;
+		font-size: var(--font-size);
 		color: $font-color-small;
 	}
 	.v3-image__loading {
-		font-size: 20px;
+		font-size: var(--loading-font-size);
 		color: $font-color-small;
 	}
 }
