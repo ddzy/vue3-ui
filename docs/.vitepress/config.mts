@@ -11,6 +11,12 @@ export default defineConfig({
 	base: '/vue3-ui/',
 	title: 'Vue3UI',
 	description: 'Vue3 组件库',
+	head: [
+		[
+			'link',
+			{ rel: 'icon', type: 'image/x-icon', href: '/vue3-ui/favicon.ico' },
+		],
+	],
 
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
@@ -188,6 +194,7 @@ export default defineConfig({
 		},
 
 		socialLinks: [{ icon: 'github', link: 'https://github.com/ddzy/vue3-ui' }],
+		logo: '/logo.png',
 	},
 	markdown: {
 		config: (md) => {
