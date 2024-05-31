@@ -17,6 +17,9 @@ export interface IImageProps {
 }
 export interface IImageLazyOptions {
 	useIntersectionObserver?: boolean;
+	intersectionRoot?: Element | Document | null;
+	intersectionRootMargin?: string;
+	intersectionThreshold?: number | number[];
 }
 export type IImageObjectFit =
 	| 'fill'

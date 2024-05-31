@@ -17,7 +17,7 @@
 			:objectFit="v"
 			:width="100"
 			:height="100"
-			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF2.jpg"
+			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF9.jpg"
 		></v3-image>
 	</v3-space>
 </template>
@@ -66,7 +66,7 @@ const key = ref(0);
 const imgSrc = ref('');
 function loadImg() {
 	key.value += 1;
-	imgSrc.value = 'http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF2.jpg';
+	imgSrc.value = 'http://oss.yyge.top/test/images/%E8%AF%B8%E8%91%9B.jpg';
 }
 function loadImgFailed() {
 	key.value += 1;
@@ -105,7 +105,7 @@ function loadImgFailed() {
 			:width="v"
 			:height="v"
 			:radius="v / 8"
-			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF2.jpg"
+			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF9.jpg"
 		></v3-image>
 	</v3-space>
 	<v3-divider direction="horizontal">
@@ -119,13 +119,47 @@ function loadImgFailed() {
 			:width="v"
 			:height="v"
 			:radius="v"
-			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF2.jpg"
+			src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF9.jpg"
 			rounded
 		></v3-image>
 	</v3-space>
 </template>
 <script lang="ts" setup>
-const sizes = [16, 32, 64];
+const sizes = [16, 24, 32, 40];
+</script>
+<style module lang="scss"></style>
+```
+
+:::
+
+## 图片懒加载
+
+:::info
+可以通过`lazy`属性来开启懒加载，如果`lazy`和`lazyOptions.useIntersectionObserver`均为`true`，则使用[IntersectionObserver API](https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver)；反之则使用`img`标签原生[loading](https://developer.mozilla.org/zh-CN/docs/Web/Performance/Lazy_loading)
+:::
+
+:::demo
+
+```vue
+<template>
+	<v3-image
+		v-for="v in imgs"
+		:key="v"
+		:src="v"
+		:width="'100%'"
+		:height="600"
+		lazy
+		style="margin-bottom: 20px;"
+	>
+	</v3-image>
+</template>
+<script lang="ts" setup>
+const imgs = [
+	'http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF6.jpg',
+	'http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF7.jpg',
+	'http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF8.jpg',
+	'http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF9.jpg',
+];
 </script>
 <style module lang="scss"></style>
 ```

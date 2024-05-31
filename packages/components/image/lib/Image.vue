@@ -1,6 +1,7 @@
 <template>
 	<div
 		class="v3-image"
+		ref="containerRef"
 		:class="{
 			'is-rounded': props.rounded,
 			'is-lazy': props.lazy,
@@ -15,12 +16,16 @@
 			'--border-radius': computedRadius,
 		}"
 	>
-		<Transition :name="props.animated ? 'v3-image-fade' : ''" mode="out-in">
+		<Transition
+			v-if="!!state.src"
+			:name="props.animated ? 'v3-image-fade' : ''"
+			mode="out-in"
+		>
 			<template v-if="!isLoading">
 				<img
 					v-if="!isFailed"
 					class="v3-image__inner"
-					:src="props.src"
+					:src="state.src"
 					:[`data-preview-src`]="props.previewSrc || src"
 					:width="computedSize.width"
 					:height="computedSize.height"
@@ -53,9 +58,9 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { Ref, computed, reactive, ref, useSlots, watch } from 'vue';
+import { Ref, computed, onMounted, reactive, ref, useSlots, watch } from 'vue';
 import type { IImageProps } from '@typings/index';
-import { useImage } from '@common/hooks/index';
+import { useImage, useIntersectionObserver } from '@common/hooks/index';
 import V3Icon from '@components/icon/main';
 
 defineOptions({
@@ -72,13 +77,16 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	/** 图片原生height属性 */
 	height: 0,
 	/** 是否开启懒加载 */
-	lazy: true,
+	lazy: false,
 	/** 是否开启动画效果 */
 	animated: true,
 	/** 懒加载参数 */
 	lazyOptions: () => ({
 		/** 是否使用 IntersectionObserver API 代替原生 loading 属性 */
-		useIntersectionObserver: false,
+		useIntersectionObserver: true,
+		intersectionRoot: null,
+		intersectionRootMargin: '0px 0px 0px 0px',
+		intersectionThreshold: 0,
 	}),
 	/** 同 css object-fit 属性 */
 	objectFit: 'fill',
@@ -92,7 +100,10 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	radius: 0,
 });
 const slots = useSlots();
-const state = reactive({});
+const state = reactive({
+	src: '',
+});
+const containerRef = ref(null);
 
 const computedSize = computed(() => {
 	const width = props.width
@@ -122,22 +133,55 @@ const computedRadius = computed(() => {
 	if (reg.test(radius)) {
 		radius = `${radius}px`;
 	}
-	console.log('radius :>> ', radius);
 
 	return radius;
 });
 
-let { isLoading, isFailed } = useImage({ src: props.src });
-
+let isLoading = ref(false);
+let isFailed = ref(false);
+let prevStop = () => {};
 watch(
 	() => props.src,
 	() => {
-		const { isLoading: _isLoading, isFailed: _isFailed } = useImage({
-			src: props.src,
-		});
-		isLoading = _isLoading;
-		isFailed = _isFailed;
+		const _next = () => {
+			state.src = props.src;
+			const { isLoading: _isLoading, isFailed: _isFailed } = useImage({
+				src: state.src,
+			});
+			isLoading = _isLoading;
+			isFailed = _isFailed;
+		};
+
+		if (props.lazy && props.lazyOptions.useIntersectionObserver) {
+			// 如果开启了懒加载
+			onMounted(() => {
+				const target = containerRef.value;
+				if (target) {
+					// 每次 src 变化，取消上次监听的元素，防止重复监听
+					prevStop();
+					const { stop } = useIntersectionObserver(
+						target,
+						([{ isIntersecting }]) => {
+							if (isIntersecting) {
+								// 等到图片出现在可视区域时再加载
+								// 避免重复加载
+								if (!state.src) {
+									_next();
+								}
+							}
+						},
+					);
+					prevStop = stop;
+				}
+			});
+		} else {
+			// 避免重复加载
+			if (!state.src) {
+				_next();
+			}
+		}
 	},
+	{ immediate: true },
 );
 </script>
 <style lang="scss">
