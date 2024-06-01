@@ -5,5 +5,6 @@ export interface IBackdropProps {
 	fixed?: boolean;
 	customClass?: string;
 	center?: boolean;
+	closeOnClick?: boolean;
 }
 export const V3Backdrop: SFCWithInstall<IBackdropProps>;

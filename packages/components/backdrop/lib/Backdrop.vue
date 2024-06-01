@@ -1,87 +1,69 @@
 <template>
-	<transition name="v3-backdrop-fade">
-		<div
-			class="v3-backdrop"
-			v-show="props.modelValue"
-			:id="`v3-backdrop-${app.uid}`"
-			:style="{
-				zIndex: VARIABLE.getNextZIndex(),
-			}"
-			:class="`${props.customClass} ${props.center ? 'is-center' : ''}`"
-		>
-			<slot></slot>
-		</div>
-	</transition>
+	<teleport to="body">
+		<transition name="v3-backdrop-fade">
+			<div
+				v-show="props.modelValue"
+				class="v3-backdrop"
+				:id="`v3-backdrop-${app.uid}`"
+				:style="{
+					zIndex: VARIABLE.getNextZIndex(),
+				}"
+				:class="`${props.customClass} ${props.center ? 'is-center' : ''}`"
+				@click="close"
+			>
+				<slot></slot>
+			</div>
+		</transition>
+	</teleport>
 </template>
-<script lang="ts">
-import {
-	defineComponent,
-	getCurrentInstance,
-	reactive,
-	ref,
-	toRef,
-	watch,
-} from 'vue';
-import * as TYPES from '@typings/index';
+<script lang="ts" setup>
+import { ComponentInternalInstance, getCurrentInstance, watch } from 'vue';
+import type { IBackdropProps } from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
 
-export default defineComponent({
+defineOptions({
 	name: 'V3Backdrop',
-	props: {
-		/** 遮罩层的显隐状态 */
-		modelValue: {
-			type: Boolean,
-			required: true,
-		},
-		/** 是否避免滚动穿透 */
-		fixed: {
-			type: Boolean,
-			default: false,
-		},
-		/** 自定义遮罩层的类名 */
-		customClass: {
-			type: String,
-			default: '',
-		},
-		/** 内部的元素是否要水平垂直居中 */
-		center: {
-			type: Boolean,
-			default: true,
-		},
-	},
-	setup(props: Required<TYPES.IBackdropProps>, context) {
-		const state = reactive({});
-		const app = ref(getCurrentInstance()).value!;
-
-		watch(
-			toRef(props, 'modelValue'),
-			() => {
-				computeBodyClass();
-			},
-			{ immediate: true },
-		);
-
-		/**
-		 * 解决滚动穿透
-		 */
-		function computeBodyClass() {
-			if (props.modelValue) {
-				if (props.fixed) {
-					document.body.classList.add('v3-body--fixed');
-				}
-			} else {
-				document.body.classList.remove('v3-body--fixed');
-			}
-		}
-
-		return {
-			props,
-			state,
-			app,
-			VARIABLE,
-		};
-	},
 });
+const props = withDefaults(defineProps<IBackdropProps>(), {
+	/** v-model */
+	modelValue: false,
+	/** 是否避免滚动穿透 */
+	fixed: false,
+	/** 自定义遮罩层的类名 */
+	customClass: '',
+	/** 内部的元素是否要水平垂直居中 */
+	center: true,
+	/** 点击遮罩层是否关闭 */
+	closeOnClick: true,
+});
+const app = getCurrentInstance() as ComponentInternalInstance;
+
+watch(
+	() => props.modelValue,
+	() => {
+		fixedBody();
+	},
+	{ immediate: true },
+);
+
+/**
+ * 解决滚动穿透
+ */
+function fixedBody() {
+	if (props.modelValue) {
+		if (props.fixed) {
+			document.body.classList.add('v3-body--fixed');
+		}
+	} else {
+		document.body.classList.remove('v3-body--fixed');
+	}
+}
+
+function close() {
+	if (app && props.closeOnClick) {
+		app.emit('update:modelValue', false);
+	}
+}
 </script>
 <style lang="scss">
 .v3-body--fixed {
