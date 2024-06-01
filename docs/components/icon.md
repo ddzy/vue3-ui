@@ -1,7 +1,7 @@
 # Icon 图标
 
 :::warning
-`vue3-ui` 底层图标采用 [IconPark](https://iconpark.oceanengine.com/home)，以下仅列举部分图标，更多图标可参考：[官方图标库](https://iconpark.oceanengine.com/official)
+`vue3-ui` 底层图标采用 [IconPark](https://iconpark.oceanengine.com/home)
 :::
 
 ## 图标集合
@@ -391,6 +391,18 @@
       {
         _id: "Copy",
         name: "Copy",
+      },
+      {
+        _id: "Redo",
+        name: "Redo",
+      },
+      {
+        _id: "Undo",
+        name: "Undo",
+      },
+      {
+        _id: "Close",
+        name: "Close",
       }
     ]
   })
