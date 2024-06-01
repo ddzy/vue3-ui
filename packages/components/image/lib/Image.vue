@@ -62,17 +62,18 @@
 
 		<ImagePreview
 			v-if="props.preview"
-			:show.sync="showPreviewDialog"
+			v-model="showPreviewDialog"
 			:preview-src="props.previewSrc || props.src"
+			:show-toolbar="props.showToolbar"
 		/>
 	</div>
 </template>
 <script lang="ts" setup>
-import { Ref, computed, onMounted, reactive, ref, useSlots, watch } from 'vue';
-import Decimal from 'decimal.js';
-import type { IImageProps } from '@typings/index';
 import { useImage, useIntersectionObserver } from '@common/hooks/index';
 import V3Icon from '@components/icon/main';
+import type { IImageProps } from '@typings/index';
+import Decimal from 'decimal.js';
+import { computed, onMounted, ref, useSlots, watch } from 'vue';
 import ImagePreview from './ImagePreview.vue';
 
 defineOptions({
@@ -222,7 +223,6 @@ watch(
 let showPreviewDialog = ref(false);
 function handlePreview() {
 	if (props.preview) {
-		console.log('"backdrop父元素被点击了" :>> ', 'backdrop父元素被点击了');
 		showPreviewDialog.value = true;
 	}
 }

@@ -1,0 +1,29 @@
+.v3-image-preview {
+	.v3-image-preview__inner {
+	}
+	.v3-image-preview__toolbar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		height: 50px;
+		padding: 0 30px;
+		background-color: rgba($color: #000000, $alpha: 0.2);
+		.v3-image-preview__toolbar__list {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.v3-image-preview__toolbar__item {
+			margin-left: 30px;
+			.v3-icon {
+				color: #fff;
+				font-size: 24px;
+				cursor: pointer;
+			}
+		}
+	}
+}
