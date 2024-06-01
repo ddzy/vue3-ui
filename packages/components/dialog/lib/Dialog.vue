@@ -81,7 +81,7 @@ const props = withDefaults(defineProps<IDialogProps>(), {
 	/** header 区域的操作按钮组 */
 	headerActions: () => [],
 	/** 关闭弹窗前要触发的事件（执行 done 回调则表明关闭弹窗，反之则不关闭） */
-	beforeClose: () => (done: Function) => {
+	beforeClose: (done: Function) => {
 		done();
 	},
 });
@@ -94,7 +94,7 @@ const model = defineModel();
 function handleClose() {
 	// 关闭之前的处理
 	props.beforeClose(() => {
-		emit('update:modelValue', false);
+		model.value = false;
 	});
 }
 </script>
