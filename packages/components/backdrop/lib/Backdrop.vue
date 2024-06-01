@@ -2,7 +2,7 @@
 	<teleport to="body">
 		<transition name="v3-backdrop-fade">
 			<div
-				v-show="props.modelValue"
+				v-show="model"
 				class="v3-backdrop"
 				:id="`v3-backdrop-${app.uid}`"
 				:style="{
@@ -36,10 +36,16 @@ const props = withDefaults(defineProps<IBackdropProps>(), {
 	/** 点击遮罩层是否关闭 */
 	closeOnClick: true,
 });
+const emit = defineEmits<{
+	(e: 'update:modelValue', v: boolean): void;
+	(e: 'close'): void;
+}>();
 const app = getCurrentInstance() as ComponentInternalInstance;
 
+const model = defineModel();
+
 watch(
-	() => props.modelValue,
+	model,
 	() => {
 		fixedBody();
 	},
@@ -50,7 +56,7 @@ watch(
  * 解决滚动穿透
  */
 function fixedBody() {
-	if (props.modelValue) {
+	if (model.value) {
 		if (props.fixed) {
 			document.body.classList.add('v3-body--fixed');
 		}
@@ -60,9 +66,10 @@ function fixedBody() {
 }
 
 function close() {
-	if (app && props.closeOnClick) {
-		app.emit('update:modelValue', false);
+	if (props.closeOnClick) {
+		model.value = false;
 	}
+	emit('close');
 }
 </script>
 <style lang="scss">

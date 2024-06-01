@@ -7,12 +7,15 @@
 ```vue
 <template>
 	<v3-button type="primary" @click="show = true">打开遮罩层</v3-button>
-	<v3-backdrop v-model="show"> </v3-backdrop>
+	<v3-backdrop v-model="show" @close="handleClose"> </v3-backdrop>
 </template>
 <script lang="ts" setup>
 import { defineComponent, ref } from 'vue';
 
 const show = ref(false);
+function handleClose() {
+	console.log('closed');
+}
 </script>
 ```
 
