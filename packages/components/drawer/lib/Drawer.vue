@@ -12,6 +12,7 @@
 				'has-header': computedHasHeader,
 				'has-footer': computedHasFooter,
 			}"
+			@click.self="handleContainerClick"
 		>
 			<transition :name="`v3-drawer-translate-${props.placement}`">
 				<div
@@ -159,6 +160,12 @@ function handleClose() {
 
 function handleConfirm() {
 	UTILS.isFunction(props.onConfirm) && props.onConfirm(_closeHelper);
+}
+
+function handleContainerClick() {
+	if (props.closeOnClickBackdrop) {
+		handleClose();
+	}
 }
 </script>
 <style lang="scss">
