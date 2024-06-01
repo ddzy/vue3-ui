@@ -1,5 +1,10 @@
 <template>
-	<v3-backdrop v-model="model" :center="props.center" :fixed="props.fixed">
+	<v3-backdrop
+		v-model="model"
+		:center="props.center"
+		:fixed="props.fixed"
+		:close-on-click="props.closeOnClickBackdrop"
+	>
 		<transition name="v3-dialog-translate">
 			<div
 				v-if="model"
