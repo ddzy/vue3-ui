@@ -1,11 +1,9 @@
 // @ts-nocheck
 
-import * as TYPES from '@typings/index';
 import { isStrictObject } from '@common/utils';
+import * as TYPES from '@typings/index';
 import {
 	ComponentInternalInstance,
-	ComponentPublicInstance,
-	createVNode,
 	FunctionDirective,
 	h,
 	reactive,
@@ -14,8 +12,8 @@ import {
 import Loading from './Loading.vue';
 
 interface IState {
-	loadingMap: Map<HTMLElement, ComponentPublicInstance<any, any>>;
-	loadingSingleInstance: ComponentPublicInstance<any, any> | null;
+	loadingMap: Map<HTMLElement, ComponentInternalInstance>;
+	loadingInstance: ComponentInternalInstance | null;
 	instanceWrapper: HTMLElement;
 }
 
@@ -23,45 +21,43 @@ const state: IState = reactive({
 	/** loading 挂载元素 -> loading 实例映射表 */
 	loadingMap: new Map(),
 	/** 全屏状态下的 loading 单例 */
-	loadingSingleInstance: null,
+	loadingInstance: null,
 	instanceWrapper: document.createElement('div'),
 });
 
 /**
- * 使用方式：实例调用
+ * 使用方式：实例调用（this.$loading）
  * @param options 配置项
  * @returns
  */
 const LoadingConstructor: TYPES.ILoadingConstructor = (
 	options: TYPES.ILoadingProps,
 ) => {
-	const defaultOptions: Required<TYPES.ILoadingProps> = Object.assign(
-		{
-			content: 'Loading...',
-		},
-		options,
-	);
+	const defaultOptions: Required<TYPES.ILoadingProps> = {
+		content: 'Loading...',
+		...options,
+		fullscreen: true, // 通过实例调用时，强制全屏
+	};
 
-	// 利用 VNode 的形式来挂载 loading，避免多余的 DOM 元素
 	state.instanceWrapper = document.createElement('div');
-	const instanceVNode = createVNode(Loading, {
+	const instanceVNode = h(Loading, {
 		...defaultOptions,
 	});
 
+	// 将 Loading 渲染到 body 上
 	render(instanceVNode, state.instanceWrapper);
-	document.body.appendChild(
-		state.instanceWrapper.firstElementChild as HTMLElement,
-	);
+	document.body.appendChild(state.instanceWrapper.firstElementChild);
 
 	// 将当前 loading 实例追加到列表中
-	const instance = (instanceVNode.component as ComponentInternalInstance)
-		.proxy as ComponentPublicInstance;
-	state.loadingSingleInstance = instance;
+	state.loadingInstance = instanceVNode.component as ComponentInternalInstance;
 
-	return state.loadingSingleInstance;
+	return Object.assign(state.loadingInstance, {
+		close,
+	});
 };
+
 /**
- * 使用方式：自定义指令
+ * 使用方式：自定义指令（v-loading）
  */
 const LoadingDirective: {
 	name: string;
@@ -93,8 +89,9 @@ const LoadingDirective: {
 		}
 	},
 };
+
 /**
- * 使用方式：Composition API
+ * 使用方式：Composition API（useLoading）
  * @param options loading 可配置项
  * @returns loading 实例
  */
@@ -111,7 +108,7 @@ const useLoading: TYPES.V3LoadingHook = (options) => {
  */
 function close() {
 	// 关闭 loading
-	state.loadingSingleInstance.state.isShow = false;
+	state.loadingInstance.exposed.close();
 	// 删除滚动穿透类
 	document.body.classList.remove('v3-body--fixed');
 }
@@ -129,9 +126,9 @@ function directiveHandler(
 ) {
 	if (isLoading) {
 		el.classList.add('v3-loading-parent--relative');
-
+		// 如果当前 DOM 元素已经创建过 loading，那么直接显示 loading，避免重复创建
 		if (state.loadingMap.has(el)) {
-			state.loadingMap.get(el).state.isShow = true;
+			state.loadingMap.get(el).exposed.open();
 		} else {
 			const loadingVNode = h(Loading, {
 				...options,
@@ -140,17 +137,16 @@ function directiveHandler(
 				fixed: false,
 			});
 			render(loadingVNode, el);
-
 			// 将当前实例追加到映射表
-			if (loadingVNode.component && loadingVNode.component.proxy) {
-				state.loadingMap.set(el, loadingVNode.component.proxy);
+			if (loadingVNode.component) {
+				state.loadingMap.set(el, loadingVNode.component);
 			}
 		}
 	} else {
 		for (const [key, value] of state.loadingMap.entries()) {
 			if (key === el) {
 				// 关闭 loading
-				value.state.isShow = false;
+				value.exposed.close();
 			}
 		}
 	}

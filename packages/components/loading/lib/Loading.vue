@@ -1,15 +1,14 @@
 <template>
-	<!-- 反之，如果是容器内的 loading -->
 	<transition name="v3-loading-fade" appear>
 		<div
-			v-if="state.isShow"
+			v-if="isShow"
 			:class="[
 				'v3-loading',
 				props.fullscreen ? 'is-fullscreen' : '',
 				props.fixed ? 'is-fixed' : '',
 				props.customClass,
 			]"
-			:id="`v3-loading-${app.uid}`"
+			:id="`v3-loading-${app && app.uid}`"
 			:style="{
 				backgroundColor: props.backgroundColor,
 				color: props.color,
@@ -27,125 +26,68 @@
 				</span>
 
 				<!-- 如果自定义内容为 VNode -->
-				<RenderVNode v-else :vnode="props.content" />
+				<component v-else :is="h(props.content)" />
 			</div>
 		</div>
 	</transition>
 </template>
-<script lang="ts">
-import {
-	defineComponent,
-	h,
-	PropType,
-	reactive,
-	VNode,
-	isVNode,
-	ref,
-	getCurrentInstance,
-	watch,
-	toRef,
-} from 'vue';
-import * as TYPES from '@typings/index';
-import V3Backdrop from '@components/backdrop/main';
-import V3Icon from '@components/icon/main';
-import { close } from './LoadingConstructor';
+<script lang="ts" setup>
 import VARIABLE from '@common/constants/internal-variable';
+import V3Icon from '@components/icon/main';
+import { ILoadingProps } from '@typings/index';
+import { getCurrentInstance, h, isVNode, ref, watch } from 'vue';
 
-interface IState {
-	isShow: boolean;
+defineOptions({
+	name: 'V3Loading',
+});
+const props = withDefaults(defineProps<ILoadingProps>(), {
+	/** 是否全屏显示 */
+	fullscreen: false,
+	/** 是否避免滚动穿透 */
+	fixed: true,
+	/** 自定义 loading 内容 */
+	content: '',
+	/** 自定义 loading 遮罩层的背景色 */
+	backgroundColor: '',
+	/** 自定义 loading 的文字颜色 */
+	color: '',
+	/** 自定义 loading 容器类名 */
+	customClass: '',
+});
+const app = getCurrentInstance();
+
+watch(
+	() => props.fullscreen,
+	() => {
+		fixedBody();
+	},
+	{ immediate: true },
+);
+
+const isShow = ref(true);
+function close() {
+	isShow.value = false;
+}
+function open() {
+	isShow.value = true;
 }
 
-export default defineComponent({
-	name: 'V3Loading',
-	components: {
-		V3Backdrop,
-		V3Icon,
-		RenderVNode: defineComponent({
-			props: {
-				vnode: {
-					type: Object as PropType<VNode>,
-					default: null,
-				},
-			},
-			setup(props) {
-				return () => h(props.vnode);
-			},
-		}),
-	},
-	props: {
-		/** 是否全屏显示 */
-		fullscreen: {
-			type: Boolean,
-			default: false,
-		},
-		/** 是否避免滚动穿透 */
-		fixed: {
-			type: Boolean,
-			default: true,
-		},
-		/** 自定义 loading 内容 */
-		content: {
-			type: [String, Object] as PropType<TYPES.ILoadingContent>,
-			default: '',
-		},
-		/** 自定义 loading 遮罩层的背景色 */
-		backgroundColor: {
-			type: String,
-			default: '',
-		},
-		/** 自定义 loading 的文字颜色 */
-		color: {
-			type: String,
-			default: '',
-		},
-		/** 自定义 loading 容器类名 */
-		customClass: {
-			type: String,
-			default: '',
-		},
-	},
-	setup(props: Required<TYPES.ILoadingProps>, context) {
-		const state: IState = reactive({
-			/** 当前 loading 的显隐状态 */
-			isShow: true,
-		});
-		const app = ref(getCurrentInstance()!).value;
-
-		watch(
-			toRef(props, 'fullscreen'),
-			() => {
-				computeBodyClass();
-			},
-			{ immediate: true },
-		);
-
-		/**
-		 * 解决滚动穿透
-		 */
-		function computeBodyClass() {
-			if (props.fullscreen) {
-				if (props.fixed) {
-					document.body.classList.add('v3-body--fixed');
-				}
-			} else {
-				document.body.classList.remove('v3-body--fixed');
-			}
+/**
+ * 解决滚动穿透
+ */
+function fixedBody() {
+	if (props.fullscreen) {
+		if (props.fixed) {
+			document.body.classList.add('v3-body--fixed');
 		}
+	} else {
+		document.body.classList.remove('v3-body--fixed');
+	}
+}
 
-		return {
-			state,
-			props,
-			context,
-			app,
-			isVNode,
-			VARIABLE,
-		};
-	},
-	methods: {
-		close() {
-			close();
-		},
-	},
+defineExpose({
+	close,
+	open,
 });
 </script>
 <style lang="scss">
