@@ -29,6 +29,25 @@ const objectFits = ['fill', 'contain', 'cover', 'scale-down', 'none'];
 
 :::
 
+## 图片预览
+
+:::demo
+
+```vue
+<template>
+	<v3-image
+		src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF9.jpg"
+		:width="100"
+		:height="100"
+	>
+	</v3-image>
+</template>
+<script lang="ts" setup></script>
+<style module lang="scss"></style>
+```
+
+:::
+
 ## 图像加载中/加载失败
 
 :::info

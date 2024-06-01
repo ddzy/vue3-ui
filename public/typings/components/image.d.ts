@@ -3,7 +3,7 @@ import { SFCWithInstall } from '../index';
 export interface IImageProps {
 	src: string;
 	previewSrc?: string;
-	previewDisabled?: boolean;
+	preview?: boolean;
 	width?: string | number;
 	height?: string | number;
 	lazy?: boolean;

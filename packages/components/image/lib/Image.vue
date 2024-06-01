@@ -9,6 +9,7 @@
 			'has-toolbar': props.showToolbar,
 			'has-animation': props.animated,
 			'has-loading': props.showLoading,
+			'can-preview': props.preview,
 		}"
 		:style="{
 			width: computedSize.width,
@@ -40,6 +41,7 @@
 						objectFit: props.objectFit,
 					}"
 					alt=""
+					@click="handlePreview"
 				/>
 				<!-- 图片加载失败的slot -->
 				<template v-else>
@@ -57,6 +59,12 @@
 				</div>
 			</template>
 		</Transition>
+
+		<ImagePreview
+			v-if="props.preview"
+			:show.sync="showPreviewDialog"
+			:preview-src="props.previewSrc || props.src"
+		/>
 	</div>
 </template>
 <script lang="ts" setup>
@@ -65,6 +73,7 @@ import Decimal from 'decimal.js';
 import type { IImageProps } from '@typings/index';
 import { useImage, useIntersectionObserver } from '@common/hooks/index';
 import V3Icon from '@components/icon/main';
+import ImagePreview from './ImagePreview.vue';
 
 defineOptions({
 	name: 'V3Image',
@@ -73,8 +82,8 @@ defineOptions({
 const props = withDefaults(defineProps<IImageProps>(), {
 	/** 预览的图片URL，未提供则使用 src */
 	previewSrc: '',
-	/** 是否禁用预览 */
-	previewDisabled: false,
+	/** 是否开启预览 */
+	preview: true,
 	/** 图片原生width属性，指定width/height可以让浏览器预留位置加载图片，避免布局发生大的变化 */
 	width: 0,
 	/** 图片原生height属性 */
@@ -171,7 +180,6 @@ let canRender = ref(false);
 let isLoading = ref(false);
 let isFailed = ref(false);
 let prevStop = () => {};
-
 watch(
 	() => props.src,
 	() => {
@@ -210,6 +218,14 @@ watch(
 	},
 	{ immediate: true },
 );
+
+let showPreviewDialog = ref(false);
+function handlePreview() {
+	if (props.preview) {
+		console.log('"backdrop父元素被点击了" :>> ', 'backdrop父元素被点击了');
+		showPreviewDialog.value = true;
+	}
+}
 </script>
 <style lang="scss">
 @import './Image.scss';

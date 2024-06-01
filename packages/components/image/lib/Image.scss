@@ -14,6 +14,9 @@
 .v3-image {
 	background-color: $disable-bg-color;
 	border-radius: var(--border-radius);
+	&.can-preview {
+		cursor: pointer;
+	}
 	.v3-image__inner {
 		width: 100%;
 		height: 100%;
