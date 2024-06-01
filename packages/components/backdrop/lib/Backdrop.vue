@@ -9,7 +9,7 @@
 					zIndex: VARIABLE.getNextZIndex(),
 				}"
 				:class="`${props.customClass} ${props.center ? 'is-center' : ''}`"
-				@click="close"
+				@click.self="close"
 			>
 				<slot></slot>
 			</div>
