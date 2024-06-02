@@ -1,11 +1,23 @@
 import { ref, type Ref } from 'vue';
 
-type IUseImage = (options: { src: string; onFailed?: (e: Event) => void }) => {
+type IUseImage = (options: IUseImageOptions) => IUseImageReturn;
+interface IUseImageOptions {
+	/** 图片链接 */
+	src: string;
+	/** 图片加载失败时的回调 */
+	onFailed?: (e: Event) => void;
+}
+type IUseImageReturn = {
+	/** 图片是否正在加载 */
 	isLoading: Ref<boolean>;
+	/** 图片是否加载失败 */
 	isFailed: Ref<boolean>;
 	data: Ref<Event | undefined>;
 };
 
+/**
+ * 加载图片
+ */
 const useImage: IUseImage = (options) => {
 	const defaultOptions: typeof options = {
 		...options,

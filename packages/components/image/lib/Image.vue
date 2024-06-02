@@ -73,7 +73,7 @@ import { useImage, useIntersectionObserver } from '@common/hooks/index';
 import V3Icon from '@components/icon/main';
 import type { IImageProps } from '@typings/index';
 import Decimal from 'decimal.js';
-import { computed, onMounted, ref, useSlots, watch } from 'vue';
+import { computed, ref, useSlots, watch } from 'vue';
 import ImagePreview from './ImagePreview.vue';
 
 defineOptions({
@@ -113,7 +113,7 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	radius: 0,
 });
 const slots = useSlots();
-const containerRef = ref();
+const containerRef = ref(null);
 const extractNumReg = /^\d+/g;
 
 const computedSize = computed(() => {
@@ -194,23 +194,21 @@ watch(
 
 		if (props.lazy && props.lazyOptions.useIntersectionObserver) {
 			// 如果开启了懒加载
-			onMounted(() => {
-				// 每次 src 变化，取消上次监听的元素，防止重复监听
-				prevStop();
-				const { stop } = useIntersectionObserver(
-					containerRef.value,
-					([{ isIntersecting }]) => {
-						if (isIntersecting) {
-							// 等到图片出现在可视区域时再渲染子元素，同时避免重复渲染
-							if (!canRender.value) {
-								canRender.value = true;
-								_next();
-							}
+			// 每次 src 变化，取消上次监听的元素，防止重复监听
+			prevStop();
+			const { stop } = useIntersectionObserver(
+				document.createElement('div'),
+				([{ isIntersecting }]) => {
+					if (isIntersecting) {
+						// 等到图片出现在可视区域时再渲染子元素，同时避免重复渲染
+						if (!canRender.value) {
+							canRender.value = true;
+							_next();
 						}
-					},
-				);
-				prevStop = stop;
-			});
+					}
+				},
+			);
+			prevStop = stop;
 		} else {
 			// 非懒加载，直接渲染子元素
 			canRender.value = true;

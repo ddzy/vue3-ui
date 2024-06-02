@@ -1,39 +1,61 @@
-import { onMounted, onUnmounted, ref } from 'vue';
+import { MaybeRefOrGetter, onUnmounted, ref, toValue, watch } from 'vue';
 
 type IUseIntersectionObserver = (
-	target: Element | Element[],
+	/** 需要监听的目标 DOM 元素 */
+	target: MaybeRefOrGetter<HTMLElement | HTMLElement[] | null>,
+	/** 监听时的回调 */
 	callback: (
 		entries: IntersectionObserverEntry[],
 		observer: IntersectionObserver,
 	) => void,
-	options?: IntersectionObserverInit & {
-		cleanup?: boolean; // 组件卸载时是否自动清除全部监听
-	},
-) => {
+	options?: IUseIntersectionObserverOptions,
+) => IUseIntersectionObserverReturn;
+interface IUseIntersectionObserverOptions {
+	/** 组件卸载时是否自动清除全部监听 */
+	stopAfterUnmount?: boolean;
+	root?: Element | Document | null;
+	rootMargin?: string;
+	threshold?: number | number[];
+}
+type IUseIntersectionObserverReturn = {
+	/** 停止所有监听 */
 	stop: () => void;
 };
 
+/**
+ * 监听 DOM 元素可见性
+ */
 const useIntersectionObserver: IUseIntersectionObserver = (
 	target,
 	callback,
-	options = {
-		cleanup: true,
-	},
+	options = {},
 ) => {
-	const targets = Array.isArray(target) ? target : [target];
-	const io = new IntersectionObserver(callback, options);
-	const stop = () => {
-		io.disconnect();
+	const defaultOptions: IUseIntersectionObserverOptions = {
+		stopAfterUnmount: true,
+		...options,
 	};
-	targets.forEach((t) => {
-		io.observe(t);
+	const io = ref<IntersectionObserver | null>(null);
+
+	watch(
+		() => toValue(target),
+		(target) => {
+			if (target) {
+				io.value = new IntersectionObserver(callback, defaultOptions);
+				target = Array.isArray(target) ? target : [target];
+				target.forEach((v) => {
+					io.value && io.value.observe(v);
+				});
+			}
+		},
+		{ immediate: true },
+	);
+	onUnmounted(() => {
+		defaultOptions.stopAfterUnmount && stop();
 	});
 
-	onUnmounted(() => {
-		if (options.cleanup) {
-			stop();
-		}
-	});
+	function stop() {
+		io.value && io.value.disconnect();
+	}
 
 	return {
 		stop,

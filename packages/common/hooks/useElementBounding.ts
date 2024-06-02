@@ -51,6 +51,7 @@ const useElementBounding: IUseElementBounding = (el, options = {}) => {
 				update();
 			}
 		},
+		{ immediate: true },
 	);
 	if (defaultOptions.windowResize) {
 	}

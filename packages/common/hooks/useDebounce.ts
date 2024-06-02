@@ -1,19 +1,18 @@
 import { ref } from 'vue';
 
 type IUseDebounce = (
+	/** 触发时的回调 */
 	callback: (args: any[]) => void,
+	/** 触发频率 */
 	timestamp?: number,
-) => (args: any[]) => void;
+) => IUseDebounceReturn;
+type IUseDebounceReturn = (args: any[]) => void;
 
 /**
- * 防抖 hook
- * @param callback 回调
- * @param timestamp 时间戳
- * @returns
+ * 防抖
  */
-
 const useDebounce: IUseDebounce = function (callback, timestamp = 200) {
-	let timer: any = ref(null);
+	let timer: any = ref(0);
 
 	return function (...args) {
 		if (timer.value) {

@@ -1,13 +1,13 @@
 type IUseThrottle = (
+	/** 触发时的回调 */
 	callback: (...args: any[]) => void,
+	/** 触发频率 */
 	timestamp?: number,
-) => (...args: any[]) => void;
+) => IUseThrottleReturn;
+type IUseThrottleReturn = (...args: any[]) => void;
 
 /**
- * 节流 hook
- * @param callback 回调
- * @param timestamp 每隔多少秒执行一次回调
- * @returns
+ * 节流
  */
 const useThrottle: IUseThrottle = function useThrottle(
 	callback,
@@ -17,7 +17,6 @@ const useThrottle: IUseThrottle = function useThrottle(
 
 	return function (this: any, ...args) {
 		const currentTime = Date.now();
-
 		if (currentTime - prevTime >= timestamp) {
 			callback.apply(this, args);
 			prevTime = currentTime;
