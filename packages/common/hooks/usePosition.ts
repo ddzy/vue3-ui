@@ -1,7 +1,7 @@
 import { onMounted, onUnmounted, reactive, ref, type Ref } from 'vue';
 import useThrottle from './useThrottle';
 
-type IUsePosition = (options: {
+type IUsePosition = (options?: {
 	throttleTime?: number;
 	callback?: Function;
 }) => {
@@ -11,9 +11,7 @@ type IUsePosition = (options: {
 	pageY: Ref<number>;
 };
 
-const usePosition: IUsePosition = function usePosition(options) {
-	options = options || {};
-
+const usePosition: IUsePosition = function usePosition(options = {}) {
 	const defaultOptions = reactive({
 		throttleTime: 0,
 		callback: () => {},

@@ -1,25 +1,21 @@
-import { onMounted, onUnmounted, reactive, ref } from 'vue';
+import { onMounted, onUnmounted, reactive } from 'vue';
 import useThrottle from './useThrottle';
-import * as TYPES from '@typings/index';
 
-type IUseResize = (options: {
+type IUseResize = (options?: {
 	throttleTime?: number;
 	callback?: (e: MouseEvent) => void;
 }) => void;
 
-const useResize: IUseResize = function useResize(options) {
-	options = options || {};
-
+const useResize: IUseResize = function useResize(options = {}) {
 	const defaultOptions = reactive({
 		throttleTime: 0,
-		callback: (e: MouseEvent) => {},
+		callback: () => {},
 		...options,
 	});
 
 	function handleResize(e: MouseEvent) {
 		defaultOptions.callback(e);
 	}
-
 	const resizeHelper = useThrottle(handleResize, defaultOptions.throttleTime);
 
 	onMounted(() => {

@@ -39,6 +39,7 @@ const objectFits = ['fill', 'contain', 'cover', 'scale-down', 'none'];
 		src="http://oss.yyge.top/test/images/%E9%A3%8E%E6%99%AF9.jpg"
 		:width="100"
 		:height="100"
+		preview
 	>
 	</v3-image>
 </template>

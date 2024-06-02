@@ -3,6 +3,7 @@
 		<img
 			v-if="props.previewSrc"
 			:src="props.previewSrc"
+			ref="imgRef"
 			alt=""
 			class="v3-image-preview__inner"
 			draggable="true"
@@ -29,8 +30,10 @@
 	</v3-backdrop>
 </template>
 <script lang="ts" setup>
+import useElementBounding from '@common/hooks/useElementBounding';
 import V3Backdrop from '@components/backdrop/main';
 import V3Icon from '@components/icon/main';
+import { onMounted, ref } from 'vue';
 
 interface IImagePreviewProps {
 	modelValue: boolean;
@@ -48,6 +51,12 @@ const emit = defineEmits<{
 	(e: 'update:modelValue', v: boolean): void;
 }>();
 const model = defineModel();
+
+const imgRef = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+	useElementBounding(imgRef.value);
+});
 </script>
 <style lang="scss">
 @import './ImagePreview.scss';

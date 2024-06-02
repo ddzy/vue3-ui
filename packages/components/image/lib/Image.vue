@@ -84,7 +84,7 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	/** 预览的图片URL，未提供则使用 src */
 	previewSrc: '',
 	/** 是否开启预览 */
-	preview: true,
+	preview: false,
 	/** 图片原生width属性，指定width/height可以让浏览器预留位置加载图片，避免布局发生大的变化 */
 	width: 0,
 	/** 图片原生height属性 */
