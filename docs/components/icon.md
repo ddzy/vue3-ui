@@ -11,7 +11,7 @@
   <div :class="$style['icon-wrapper']">
     <table :class="$style['icon-table']">
       <tr v-for="(v, i) in Math.ceil(state.icons.length / state.columns)" :key="i">
-        <td v-for="vv in (state.icons.slice(i * state.columns, i * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="copy(vv)">
+        <td v-for="vv in (state.icons.slice(i * state.columns, i * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="handleCopy(vv)">
           <div :class="$style['icon-item']">
             <v3-icon :class="$style['icon-id']" :type="vv._id" size="22"></v3-icon>
             <span :class="$style['icon-name']">{{ vv._id }}</span>
@@ -24,9 +24,9 @@
 
 <script lang="ts" setup>
   import { reactive, getCurrentInstance } from 'vue';
-  import { useClipboard } from '@vueuse/core';
+  import { useClipboard } from '@common/hooks/index'; 
 
-  const clipboard = useClipboard();
+  const clipboard = useClipboard({ legacy: true });
   const app = getCurrentInstance().proxy;
   const state = reactive({
     keyword: '',
@@ -407,18 +407,13 @@
     ]
   })
 
-  function copy(row) {
-    if(!clipboard.isSupported) {
-      return app.$message.warning({
-        message: '您的浏览器不支持 Clipboard API',
-      })
-    }
+  function handleCopy(row) {
     let code = `<V3Icon type="${row._id}" />`
-    clipboard.copy(code);
-    if(clipboard.copied) {
+    clipboard.copy(code)
+    if(clipboard.isCopied.value) {
       app.$message.success({
         message: code,
-      });
+      })
     }
   }
 </script>
