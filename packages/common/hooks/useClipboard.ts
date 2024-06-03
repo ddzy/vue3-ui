@@ -8,6 +8,7 @@ import {
 	watch,
 	type Ref,
 } from 'vue';
+import useEventListener from './useEventListener';
 import usePermission from './usePermission';
 import useSupport from './useSupport';
 
@@ -55,7 +56,7 @@ const useClipboard: IUseClipboard = (options = {}) => {
 		() => {
 			if (isSupport.value) {
 				// 监听剪贴板的 copy / cut 事件，更新文本
-				function _handler(e: ClipboardEvent) {
+				useEventListener(document, ['copy', 'cut'], (e) => {
 					if (isSupportExecCommand.value && defaultOptions.legacy) {
 						legacyRead();
 					} else if (isSupportClipboardAPI.value && hasReadPermission.value) {
@@ -63,9 +64,7 @@ const useClipboard: IUseClipboard = (options = {}) => {
 					} else if (isSupportExecCommand.value) {
 						legacyRead();
 					}
-				}
-				document.addEventListener('copy', _handler);
-				document.addEventListener('cut', _handler);
+				});
 			}
 		},
 		{ immediate: true },
