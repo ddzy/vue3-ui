@@ -1,6 +1,7 @@
 import useClipboard from './useClipboard';
 import useDebounce from './useDebounce';
 import useElementBounding from './useElementBounding';
+import useEventListener from './useEventListener';
 import useImage from './useImage';
 import useIntersectionObserver from './useIntersectionObserver';
 import usePermission from './usePermission';
@@ -13,6 +14,7 @@ export {
 	useClipboard,
 	useDebounce,
 	useElementBounding,
+	useEventListener,
 	useImage,
 	useIntersectionObserver,
 	usePermission,

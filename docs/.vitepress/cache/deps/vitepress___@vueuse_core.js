@@ -106,13 +106,13 @@ import {
   watchTriggerable,
   watchWithFilter,
   whenever
-} from "./chunk-55WBZI2F.js";
+} from "./chunk-G7XWOB3M.js";
 import {
   del,
   isVue2,
   isVue3,
   set
-} from "./chunk-SLEAYFX5.js";
+} from "./chunk-U3ZX57HA.js";
 import {
   Fragment,
   TransitionGroup,
@@ -139,10 +139,10 @@ import {
   version,
   watch,
   watchEffect
-} from "./chunk-EE7GMKVS.js";
+} from "./chunk-OBQW7BUI.js";
 import "./chunk-CSAU5B4Q.js";
 
-// node_modules/.pnpm/@vueuse+core@10.9.0_vue@3.4.27_typescript@5.0.4_/node_modules/@vueuse/core/index.mjs
+// node_modules/.pnpm/@vueuse+core@10.9.0_vue@3.4.27_typescript@5.4.5_/node_modules/@vueuse/core/index.mjs
 function computedAsync(evaluationCallback, initialState, optionsOrRef) {
   let options;
   if (isRef(optionsOrRef)) {
