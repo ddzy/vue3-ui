@@ -23,10 +23,10 @@
 </div>
 
 <script lang="ts" setup>
-  import { reactive, getCurrentInstance } from 'vue';
+  import { reactive, watch, getCurrentInstance } from 'vue';
   import { useClipboard } from '@common/hooks/index'; 
 
-  const clipboard = useClipboard({ legacy: true });
+  const clipboard = useClipboard();
   const app = getCurrentInstance().proxy;
   const state = reactive({
     keyword: '',
@@ -407,14 +407,20 @@
     ]
   })
 
+  watch(clipboard.isCopied, () => {
+    if(clipboard.isCopied.value) {
+      app.$message.success({
+        message: clipboard.text.value,
+      })
+    }
+  })
+  watch(clipboard.text, () => {
+    console.log(clipboard.text.value);
+  })
+
   function handleCopy(row) {
     let code = `<V3Icon type="${row._id}" />`
     clipboard.copy(code)
-    if(clipboard.isCopied.value) {
-      app.$message.success({
-        message: code,
-      })
-    }
   }
 </script>
 <style module lang="scss">

@@ -40,7 +40,7 @@ const usePermission: IUsePermission = (name) => {
 			try {
 				let _name = name as PermissionName;
 				const result = await navigator.permissions.query({ name: _name });
-				if (result.state === 'granted') {
+				if (['granted', 'prompt'].includes(result.state)) {
 					hasPermission.value = true;
 				} else {
 					hasPermission.value = false;
