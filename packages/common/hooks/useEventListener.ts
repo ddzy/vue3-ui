@@ -39,7 +39,7 @@ type IUseEventListenerEventPass<
 	: EVENT_MAP[IUseEventListenerEvent<TARGET>];
 
 type IUseEventListenerCallback<EVENT_PASS> = (e: EVENT_PASS) => void;
-interface IUseEventListenerOptions {
+interface IUseEventListenerOptions extends AddEventListenerOptions {
 	/** 页面卸载时是否清理监听器 */
 	stopAfterUnmount?: boolean;
 }
