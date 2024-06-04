@@ -4,6 +4,7 @@ import useElementBounding from './useElementBounding';
 import useEventListener from './useEventListener';
 import useImage from './useImage';
 import useIntersectionObserver from './useIntersectionObserver';
+import useMounted from './useMounted';
 import usePermission from './usePermission';
 import usePosition from './usePosition';
 import useResize from './useResize';
@@ -17,6 +18,7 @@ export {
 	useEventListener,
 	useImage,
 	useIntersectionObserver,
+	useMounted,
 	usePermission,
 	usePosition,
 	useResize,

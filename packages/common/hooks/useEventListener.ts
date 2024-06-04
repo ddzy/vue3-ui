@@ -7,6 +7,7 @@ import {
 	watch,
 } from 'vue';
 import { Arrayable } from './hooks';
+import useMounted from './useMounted';
 
 interface ICustomTarget {
 	addEventListener(event: string, callback: any, options?: any): void;
@@ -68,6 +69,7 @@ export default function useEventListener<
 		stopAfterUnmount: true,
 		...options,
 	};
+
 	const events: string[] = reactive([]);
 	if (!Array.isArray(event)) {
 		events.push(event.toString());
@@ -82,7 +84,6 @@ export default function useEventListener<
 			t.removeEventListener(e, c);
 		};
 	};
-
 	watch(
 		() => toValue(target),
 		(t) => {
@@ -95,12 +96,22 @@ export default function useEventListener<
 		{ immediate: true },
 	);
 
-	onUnmounted(() => {
-		// 清理监听器
-		if (defaultOptions.stopAfterUnmount) {
-			stop();
-		}
-	});
+	const isMounted = useMounted();
+	watch(
+		isMounted,
+		(v) => {
+			// onUnmounted is called when there is no active component instance to be associated with
+			if (v) {
+				onUnmounted(() => {
+					// 清理监听器
+					if (defaultOptions.stopAfterUnmount) {
+						stop();
+					}
+				});
+			}
+		},
+		{ immediate: true },
+	);
 
 	function stop() {
 		cleanups.forEach((v) => v());
