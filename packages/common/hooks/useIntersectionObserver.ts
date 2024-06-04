@@ -1,5 +1,4 @@
-import { MaybeRefOrGetter, onUnmounted, ref, toValue, watch } from 'vue';
-import useMounted from './useMounted';
+import { MaybeRefOrGetter, ref, toValue, watch } from 'vue';
 
 type IUseIntersectionObserver = (
 	/** 需要监听的目标 DOM 元素 */
@@ -12,8 +11,6 @@ type IUseIntersectionObserver = (
 	options?: IUseIntersectionObserverOptions,
 ) => IUseIntersectionObserverReturn;
 interface IUseIntersectionObserverOptions {
-	/** 组件卸载时是否自动清除全部监听 */
-	stopAfterUnmount?: boolean;
 	root?: Element | Document | null;
 	rootMargin?: string;
 	threshold?: number | number[];
@@ -32,11 +29,9 @@ const useIntersectionObserver: IUseIntersectionObserver = (
 	options = {},
 ) => {
 	const defaultOptions: IUseIntersectionObserverOptions = {
-		stopAfterUnmount: true,
 		...options,
 	};
 	const io = ref<IntersectionObserver | null>(null);
-	const isMounted = useMounted();
 
 	watch(
 		() => toValue(target),
@@ -46,19 +41,6 @@ const useIntersectionObserver: IUseIntersectionObserver = (
 				target = Array.isArray(target) ? target : [target];
 				target.forEach((v) => {
 					io.value && io.value.observe(v);
-				});
-			}
-		},
-		{ immediate: true },
-	);
-
-	watch(
-		isMounted,
-		(newValue) => {
-			console.log('newValue :>> ', newValue);
-			if (newValue) {
-				onUnmounted(() => {
-					defaultOptions.stopAfterUnmount && stop();
 				});
 			}
 		},

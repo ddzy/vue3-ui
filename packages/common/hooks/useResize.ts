@@ -1,6 +1,4 @@
-import { watch } from 'vue';
 import useEventListener from './useEventListener';
-import useMounted from './useMounted';
 import useThrottle from './useThrottle';
 
 type IUseResize = (options?: IUseResizeOptions) => IUseResizeReturn;
@@ -26,17 +24,7 @@ const useResize: IUseResize = (options = {}) => {
 		defaultOptions.callback(e);
 	}
 	const resizeHelper = useThrottle(handleResize, defaultOptions.throttleTime);
-
-	const isMounted = useMounted();
-	watch(
-		isMounted,
-		(newValue) => {
-			if (newValue) {
-				useEventListener(window, 'resize', resizeHelper);
-			}
-		},
-		{ immediate: true },
-	);
+	useEventListener(window, 'resize', resizeHelper);
 
 	return {};
 };

@@ -1,4 +1,4 @@
-import { onMounted, ref, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 
 type IUseSupport = (callback: () => boolean) => IUseSupportReturn;
 type IUseSupportReturn = Ref<boolean>;
@@ -8,13 +8,11 @@ type IUseSupportReturn = Ref<boolean>;
  */
 const useSupport: IUseSupport = (callback) => {
 	const isSupport = ref(false);
-	onMounted(() => {
-		try {
-			isSupport.value = callback();
-		} catch (error) {
-			isSupport.value = false;
-		}
-	});
+	try {
+		isSupport.value = callback();
+	} catch (error) {
+		isSupport.value = false;
+	}
 
 	return isSupport;
 };

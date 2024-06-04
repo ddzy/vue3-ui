@@ -1,6 +1,5 @@
-import { ref, watch, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import useEventListener from './useEventListener';
-import useMounted from './useMounted';
 import useThrottle from './useThrottle';
 
 type IUsePosition = (options?: IUsePositionOptions) => IUsePositionReturn;
@@ -39,18 +38,7 @@ const usePosition: IUsePosition = (options = {}) => {
 		defaultOptions.callback();
 	}
 	const moveHelper = useThrottle(handleMove, defaultOptions.throttleTime);
-
-	const isMounted = useMounted();
-	watch(
-		isMounted,
-		(newValue) => {
-			// 保证组件挂载成功才监听
-			if (newValue) {
-				useEventListener(document, 'mousemove', moveHelper);
-			}
-		},
-		{ immediate: true },
-	);
+	useEventListener(document, 'mousemove', moveHelper);
 
 	return {
 		clientX,

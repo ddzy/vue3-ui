@@ -1,13 +1,5 @@
-import {
-	MaybeRefOrGetter,
-	UnwrapRef,
-	onUnmounted,
-	reactive,
-	toValue,
-	watch,
-} from 'vue';
+import { MaybeRefOrGetter, UnwrapRef, reactive, toValue, watch } from 'vue';
 import { Arrayable } from './hooks';
-import useMounted from './useMounted';
 
 interface ICustomTarget {
 	addEventListener(event: string, callback: any, options?: any): void;
@@ -39,10 +31,7 @@ type IUseEventListenerEventPass<
 	: EVENT_MAP[IUseEventListenerEvent<TARGET>];
 
 type IUseEventListenerCallback<EVENT_PASS> = (e: EVENT_PASS) => void;
-interface IUseEventListenerOptions extends AddEventListenerOptions {
-	/** 页面卸载时是否清理监听器 */
-	stopAfterUnmount?: boolean;
-}
+interface IUseEventListenerOptions extends AddEventListenerOptions {}
 type IUseEventListenerReturn = () => void;
 
 /**
@@ -66,7 +55,6 @@ export default function useEventListener<
 	options?: IUseEventListenerOptions,
 ): IUseEventListenerReturn {
 	const defaultOptions: typeof options = {
-		stopAfterUnmount: true,
 		...options,
 	};
 
@@ -92,24 +80,6 @@ export default function useEventListener<
 			events.forEach((e) => {
 				cleanups.push(register(t, e, callback, defaultOptions));
 			});
-		},
-		{ immediate: true },
-	);
-
-	const isMounted = useMounted();
-	watch(
-		isMounted,
-		(v) => {
-			// 保证组件挂载成功
-			// onUnmounted is called when there is no active component instance to be associated with
-			if (v) {
-				onUnmounted(() => {
-					// 清理监听器
-					if (defaultOptions.stopAfterUnmount) {
-						stop();
-					}
-				});
-			}
 		},
 		{ immediate: true },
 	);

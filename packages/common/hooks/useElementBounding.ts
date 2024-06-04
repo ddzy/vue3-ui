@@ -1,6 +1,5 @@
 import { MaybeRefOrGetter, ref, toValue, watch, type Ref } from 'vue';
 import useEventListener from './useEventListener';
-import useMounted from './useMounted';
 import useThrottle from './useThrottle';
 
 type IUseElementBounding = (
@@ -46,8 +45,6 @@ const useElementBounding: IUseElementBounding = (el, options = {}) => {
 	const top = ref(0);
 	const right = ref(0);
 	const bottom = ref(0);
-	const isMounted = useMounted();
-	const _updateHelper = useThrottle(update, defaultOptions.throttleTime);
 
 	watch(
 		() => toValue(el),
@@ -59,22 +56,7 @@ const useElementBounding: IUseElementBounding = (el, options = {}) => {
 		{ immediate: true },
 	);
 
-	watch(
-		isMounted,
-		(newValue) => {
-			// 确保组件挂载成功才监听
-			if (newValue) {
-				if (defaultOptions.windowResize) {
-					useEventListener(window, 'resize', _updateHelper);
-				}
-				if (defaultOptions.windowScroll) {
-					useEventListener(window, 'scroll', _updateHelper);
-				}
-			}
-		},
-		{ immediate: true },
-	);
-
+	const _updateHelper = useThrottle(update, defaultOptions.throttleTime);
 	function update() {
 		const target = toValue(el);
 		if (target) {
@@ -88,6 +70,13 @@ const useElementBounding: IUseElementBounding = (el, options = {}) => {
 			right.value = bounding.right;
 			bottom.value = bounding.bottom;
 		}
+	}
+
+	if (defaultOptions.windowResize) {
+		useEventListener(window, 'resize', _updateHelper);
+	}
+	if (defaultOptions.windowScroll) {
+		useEventListener(window, 'scroll', _updateHelper);
 	}
 
 	return {
