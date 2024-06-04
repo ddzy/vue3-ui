@@ -1,4 +1,5 @@
 import { MaybeRefOrGetter, onUnmounted, ref, toValue, watch } from 'vue';
+import useMounted from './useMounted';
 
 type IUseIntersectionObserver = (
 	/** 需要监听的目标 DOM 元素 */
@@ -35,6 +36,7 @@ const useIntersectionObserver: IUseIntersectionObserver = (
 		...options,
 	};
 	const io = ref<IntersectionObserver | null>(null);
+	const isMounted = useMounted();
 
 	watch(
 		() => toValue(target),
@@ -49,9 +51,18 @@ const useIntersectionObserver: IUseIntersectionObserver = (
 		},
 		{ immediate: true },
 	);
-	onUnmounted(() => {
-		defaultOptions.stopAfterUnmount && stop();
-	});
+
+	watch(
+		isMounted,
+		(newValue) => {
+			if (newValue) {
+				onUnmounted(() => {
+					defaultOptions.stopAfterUnmount && stop();
+				});
+			}
+		},
+		{ immediate: true },
+	);
 
 	function stop() {
 		io.value && io.value.disconnect();

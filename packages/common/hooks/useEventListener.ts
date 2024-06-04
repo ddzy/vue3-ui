@@ -100,6 +100,7 @@ export default function useEventListener<
 	watch(
 		isMounted,
 		(v) => {
+			// 保证组件挂载成功
 			// onUnmounted is called when there is no active component instance to be associated with
 			if (v) {
 				onUnmounted(() => {
