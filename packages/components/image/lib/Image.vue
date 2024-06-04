@@ -113,7 +113,7 @@ const props = withDefaults(defineProps<IImageProps>(), {
 	radius: 0,
 });
 const slots = useSlots();
-const containerRef = ref(null);
+const containerRef = ref();
 const extractNumReg = /^\d+/g;
 
 const computedSize = computed(() => {
@@ -197,7 +197,7 @@ watch(
 			// 每次 src 变化，取消上次监听的元素，防止重复监听
 			prevStop();
 			const { stop } = useIntersectionObserver(
-				document.createElement('div'),
+				containerRef,
 				([{ isIntersecting }]) => {
 					if (isIntersecting) {
 						// 等到图片出现在可视区域时再渲染子元素，同时避免重复渲染

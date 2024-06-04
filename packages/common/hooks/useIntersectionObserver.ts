@@ -2,7 +2,7 @@ import { MaybeRefOrGetter, ref, toValue, watch } from 'vue';
 
 type IUseIntersectionObserver = (
 	/** 需要监听的目标 DOM 元素 */
-	target: MaybeRefOrGetter<HTMLElement | HTMLElement[] | null>,
+	target: MaybeRefOrGetter<HTMLElement | HTMLElement[]>,
 	/** 监听时的回调 */
 	callback: (
 		entries: IntersectionObserverEntry[],
