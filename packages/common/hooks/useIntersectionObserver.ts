@@ -55,6 +55,7 @@ const useIntersectionObserver: IUseIntersectionObserver = (
 	watch(
 		isMounted,
 		(newValue) => {
+			console.log('newValue :>> ', newValue);
 			if (newValue) {
 				onUnmounted(() => {
 					defaultOptions.stopAfterUnmount && stop();

@@ -33,7 +33,7 @@
 import useElementBounding from '@common/hooks/useElementBounding';
 import V3Backdrop from '@components/backdrop/main';
 import V3Icon from '@components/icon/main';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 interface IImagePreviewProps {
 	modelValue: boolean;
@@ -52,11 +52,8 @@ const emit = defineEmits<{
 }>();
 const model = defineModel();
 
-const imgRef = ref<HTMLElement | null>(null);
-
-onMounted(() => {
-	useElementBounding(imgRef.value);
-});
+const imgRef = ref();
+const imgRect = useElementBounding(imgRef);
 </script>
 <style lang="scss">
 @import './ImagePreview.scss';
