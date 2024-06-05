@@ -6,6 +6,7 @@ import useEventListener from './useEventListener';
 import useImage from './useImage';
 import useIntersectionObserver from './useIntersectionObserver';
 import useMounted from './useMounted';
+import useMouseInElement from './useMouseInElement';
 import usePermission from './usePermission';
 import usePosition from './usePosition';
 import useResize from './useResize';
@@ -21,6 +22,7 @@ export {
 	useImage,
 	useIntersectionObserver,
 	useMounted,
+	useMouseInElement,
 	usePermission,
 	usePosition,
 	useResize,

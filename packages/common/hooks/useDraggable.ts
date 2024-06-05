@@ -13,6 +13,13 @@ type IUseDraggable = (
 type IUseDraggableOptions = {};
 type IUseDraggableReturn = {};
 
+/**
+ * 使得元素可拖拽
+ * @param source 需要拖拽的元素
+ * @param target 拖拽的容器（限制在该元素内部拖动）
+ * @param options
+ * @returns
+ */
 const useDraggable: IUseDraggable = (
 	source,
 	target = document.body,
@@ -26,7 +33,6 @@ const useDraggable: IUseDraggable = (
 	const startX = ref(0);
 	const startY = ref(0);
 	const { left, top, update } = useElementBounding(source);
-
 	const { clientX, clientY } = usePosition({
 		callback() {
 			if (isDragging.value) {
