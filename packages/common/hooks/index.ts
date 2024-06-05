@@ -1,5 +1,6 @@
 import useClipboard from './useClipboard';
 import useDebounce from './useDebounce';
+import useDraggable from './useDraggable';
 import useElementBounding from './useElementBounding';
 import useEventListener from './useEventListener';
 import useImage from './useImage';
@@ -14,6 +15,7 @@ import useThrottle from './useThrottle';
 export {
 	useClipboard,
 	useDebounce,
+	useDraggable,
 	useElementBounding,
 	useEventListener,
 	useImage,

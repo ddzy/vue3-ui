@@ -1,12 +1,17 @@
 <template>
-	<v3-backdrop v-model="model" custom-class="v3-image-preview" fixed>
+	<v3-backdrop
+		v-model="model"
+		ref="imgWrapperRef"
+		custom-class="v3-image-preview"
+		fixed
+		:close-on-click="false"
+	>
 		<img
 			v-if="props.previewSrc"
 			:src="props.previewSrc"
 			ref="imgRef"
 			alt=""
 			class="v3-image-preview__inner"
-			draggable="true"
 		/>
 		<div v-if="props.showToolbar" class="v3-image-preview__toolbar">
 			<ul class="v3-image-preview__toolbar__list">
@@ -30,10 +35,10 @@
 	</v3-backdrop>
 </template>
 <script lang="ts" setup>
-import useElementBounding from '@common/hooks/useElementBounding';
+import { useDraggable } from '@common/hooks';
 import V3Backdrop from '@components/backdrop/main';
 import V3Icon from '@components/icon/main';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 interface IImagePreviewProps {
 	modelValue: boolean;
@@ -52,8 +57,11 @@ const emit = defineEmits<{
 }>();
 const model = defineModel();
 
+const imgWrapperRef = ref();
 const imgRef = ref();
-const imgRect = useElementBounding(imgRef);
+onMounted(() => {
+	const {} = useDraggable(imgRef, imgWrapperRef.value.wrapperRef);
+});
 </script>
 <style lang="scss">
 @import './ImagePreview.scss';

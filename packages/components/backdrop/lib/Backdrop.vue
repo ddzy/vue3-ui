@@ -3,6 +3,7 @@
 		<transition name="v3-backdrop-fade">
 			<div
 				v-show="model"
+				ref="wrapperRef"
 				class="v3-backdrop"
 				:id="`v3-backdrop-${app.uid}`"
 				:style="{
@@ -17,9 +18,9 @@
 	</teleport>
 </template>
 <script lang="ts" setup>
-import { ComponentInternalInstance, getCurrentInstance, watch } from 'vue';
-import type { IBackdropProps } from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
+import type { IBackdropProps } from '@typings/index';
+import { ComponentInternalInstance, getCurrentInstance, ref, watch } from 'vue';
 
 defineOptions({
 	name: 'V3Backdrop',
@@ -41,8 +42,9 @@ const emit = defineEmits<{
 	(e: 'close'): void;
 }>();
 const app = getCurrentInstance() as ComponentInternalInstance;
-
 const model = defineModel();
+
+const wrapperRef = ref();
 
 watch(
 	model,
@@ -71,6 +73,10 @@ function close() {
 	}
 	emit('close');
 }
+
+defineExpose({
+	wrapperRef,
+});
 </script>
 <style lang="scss">
 .v3-body--fixed {
