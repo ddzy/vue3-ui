@@ -12,11 +12,13 @@ interface ICustomEventMap {
 type IUseEventListenerTarget = MaybeRefOrGetter<
 	Window | Document | HTMLElement | ICustomTarget
 >;
-type IUseEventListenerEventMap<TARGET> = UnwrapRef<TARGET> extends Window
+type IUseEventListenerEventMap<TARGET> = UnwrapRef<TARGET> extends
+	| Window
+	| (() => Window)
 	? WindowEventMap
-	: UnwrapRef<TARGET> extends Document
+	: UnwrapRef<TARGET> extends Document | (() => Document)
 	? DocumentEventMap
-	: UnwrapRef<TARGET> extends HTMLElement
+	: UnwrapRef<TARGET> extends HTMLElement | (() => HTMLElement)
 	? HTMLElementEventMap
 	: ICustomEventMap;
 type IUseEventListenerEvent<TARGET> = keyof IUseEventListenerEventMap<TARGET>;
@@ -26,9 +28,8 @@ type IUseEventListenerEventPass<
 	TARGET extends IUseEventListenerTarget,
 	EVENT_MAP extends IUseEventListenerEventMap<TARGET>,
 	EVENT extends Arrayable<IUseEventListenerEvent<TARGET>>,
-> = EVENT extends Array<any>
-	? EVENT_MAP[EVENT[0]]
-	: EVENT_MAP[IUseEventListenerEvent<TARGET>];
+	// @ts-ignore
+> = EVENT extends Array<any> ? EVENT_MAP[EVENT[0]] : EVENT_MAP[EVENT];
 
 type IUseEventListenerCallback<EVENT_PASS> = (e: EVENT_PASS) => void;
 interface IUseEventListenerOptions extends AddEventListenerOptions {}
