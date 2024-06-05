@@ -4,7 +4,7 @@ import useThrottle from './useThrottle';
 
 type IUseElementBounding = (
 	/** DOM 元素 */
-	el: MaybeRefOrGetter<HTMLElement>,
+	el: MaybeRefOrGetter<HTMLElement | undefined>,
 	options?: IUseElementBoundingOptions,
 ) => IUseElementBoundingReturn;
 interface IUseElementBoundingOptions {
@@ -56,7 +56,6 @@ const useElementBounding: IUseElementBounding = (el, options = {}) => {
 		{ immediate: true },
 	);
 
-	const _updateHelper = useThrottle(update, defaultOptions.throttleTime);
 	function update() {
 		const target = toValue(el);
 		if (target) {
@@ -65,13 +64,13 @@ const useElementBounding: IUseElementBounding = (el, options = {}) => {
 			height.value = bounding.height;
 			x.value = bounding.x;
 			y.value = bounding.y;
-			left.value = bounding.y;
+			left.value = bounding.left;
 			top.value = bounding.top;
 			right.value = bounding.right;
 			bottom.value = bounding.bottom;
 		}
 	}
-
+	const _updateHelper = useThrottle(update, defaultOptions.throttleTime);
 	if (defaultOptions.windowResize) {
 		useEventListener(window, 'resize', _updateHelper);
 	}
