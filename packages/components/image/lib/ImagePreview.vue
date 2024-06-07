@@ -9,6 +9,9 @@
 		<img
 			v-if="props.previewSrc"
 			:src="props.previewSrc"
+			:style="{
+				transform: `scale(${scale})`,
+			}"
 			ref="imgRef"
 			alt=""
 			class="v3-image-preview__inner"
@@ -22,13 +25,13 @@
 					<v3-icon type="Redo"></v3-icon>
 				</li>
 				<li class="v3-image-preview__toolbar__item">
-					<v3-icon type="ZoomOut"></v3-icon>
+					<v3-icon type="ZoomOut" @click="handleZoomOut"></v3-icon>
 				</li>
 				<li class="v3-image-preview__toolbar__item">
-					<v3-icon type="ZoomIn"></v3-icon>
+					<v3-icon type="ZoomIn" @click="handleZoomIn"></v3-icon>
 				</li>
 				<li class="v3-image-preview__toolbar__item">
-					<v3-icon type="Close"></v3-icon>
+					<v3-icon type="Close" @click="model = false"></v3-icon>
 				</li>
 			</ul>
 		</div>
@@ -38,7 +41,7 @@
 import { useDraggable } from '@common/hooks';
 import V3Backdrop from '@components/backdrop/main';
 import V3Icon from '@components/icon/main';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 interface IImagePreviewProps {
 	modelValue: boolean;
@@ -57,11 +60,19 @@ const emit = defineEmits<{
 }>();
 const model = defineModel();
 
+// 可拖动
 const imgWrapperRef = ref();
 const imgRef = ref();
-onMounted(() => {
-	const {} = useDraggable(imgRef, imgWrapperRef.value.wrapperRef);
-});
+useDraggable(imgRef);
+
+// 可放大缩小
+const scale = ref(1);
+function handleZoomIn() {
+	scale.value += 0.2;
+}
+function handleZoomOut() {
+	scale.value -= 0.2;
+}
 </script>
 <style lang="scss">
 @import './ImagePreview.scss';

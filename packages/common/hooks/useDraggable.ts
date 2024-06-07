@@ -1,5 +1,4 @@
 import { MaybeRefOrGetter, ref, toValue, watch } from 'vue';
-import useElementBounding from './useElementBounding';
 import useEventListener from './useEventListener';
 import usePosition from './usePosition';
 
@@ -29,17 +28,21 @@ const useDraggable: IUseDraggable = (
 		...options,
 	};
 	const isDragging = ref(false);
-	// 开始拖拽时，鼠标到拖拽元素的左边界/上边界的距离
-	const startX = ref(0);
-	const startY = ref(0);
-	const { left, top, update } = useElementBounding(source);
+	const prevClientX = ref(0);
+	const prevClientY = ref(0);
+	const translateX = ref(0);
+	const translateY = ref(0);
 	const { clientX, clientY } = usePosition({
 		callback() {
 			if (isDragging.value) {
 				const _source = toValue(source);
 				if (_source) {
-					_source.style.left = `${clientX.value - startX.value}px`;
-					_source.style.top = `${clientY.value - startY.value}px`;
+					// 根据鼠标相邻两次移动之间的差值，与元素已经移动的距离累加，得出最终移动的距离
+					translateX.value += clientX.value - prevClientX.value;
+					translateY.value += clientY.value - prevClientY.value;
+					_source.style.translate = `${translateX.value}px ${translateY.value}px 0`;
+					prevClientX.value = clientX.value;
+					prevClientY.value = clientY.value;
 				}
 			}
 		},
@@ -56,9 +59,8 @@ const useDraggable: IUseDraggable = (
 				e.preventDefault();
 			});
 			useEventListener(source, 'mousedown', (e) => {
-				update();
-				startX.value = e.clientX - left.value;
-				startY.value = e.clientY - top.value;
+				prevClientX.value = e.clientX;
+				prevClientY.value = e.clientY;
 				isDragging.value = true;
 			});
 			useEventListener(document, 'mouseup', (e) => {

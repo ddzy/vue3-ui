@@ -10,6 +10,7 @@ import useMouseInElement from './useMouseInElement';
 import usePermission from './usePermission';
 import usePosition from './usePosition';
 import useResize from './useResize';
+import useResizeObserver from './useResizeObserver';
 import useSupport from './useSupport';
 import useThrottle from './useThrottle';
 
@@ -26,6 +27,7 @@ export {
 	usePermission,
 	usePosition,
 	useResize,
+	useResizeObserver,
 	useSupport,
 	useThrottle,
 };
