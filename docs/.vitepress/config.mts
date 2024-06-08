@@ -218,6 +218,10 @@ export default defineConfig({
 					replacement: path.resolve(__dirname, '../../packages/components'),
 				},
 				{
+					find: '@hooks',
+					replacement: path.resolve(__dirname, '../../packages/hooks'),
+				},
+				{
 					find: '@typings',
 					replacement: path.resolve(__dirname, '../../public/lib/typings'),
 				},

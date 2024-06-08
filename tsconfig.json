@@ -13,6 +13,7 @@
 		"paths": {
 			"@common/*": ["./packages/common/*"],
 			"@components/*": ["./packages/components/*"],
+			"@hooks/*": ["./packages/hooks/*"],
 			"@/*": ["./*"],
 			"@typings/*": ["./public/typings/*"]
 		},

@@ -148,21 +148,21 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
-import { usePosition, useResize } from '@common/hooks/index';
-import V3Tooltip from '@components/tooltip/main';
+import * as UTILS from '@common/utils/index';
 import V3Icon from '@components/icon/main';
+import V3Tooltip from '@components/tooltip/main';
+import { usePosition, useResize } from '@hooks/index';
+import * as TYPES from '@typings/index';
+import Decimal from 'decimal.js';
 import {
+	PropType,
 	computed,
 	defineComponent,
 	onMounted,
 	onUnmounted,
-	PropType,
 	reactive,
 	ref,
 } from 'vue';
-import Decimal from 'decimal.js';
-import * as UTILS from '@common/utils/index';
 
 interface ILocalMarkItem {
 	value: number;

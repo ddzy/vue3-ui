@@ -1,7 +1,7 @@
-import * as path from 'node:path';
-import * as fse from 'fs-extra';
-import { type InlineConfig, build, mergeConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import * as fse from 'fs-extra';
+import * as path from 'node:path';
+import { build, mergeConfig, type InlineConfig } from 'vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 const commonConfig: InlineConfig = {
@@ -14,6 +14,10 @@ const commonConfig: InlineConfig = {
 			{
 				find: '@components',
 				replacement: path.resolve(__dirname, '/packages/components'),
+			},
+			{
+				find: '@hooks',
+				replacement: path.resolve(__dirname, '/packages/hooks'),
 			},
 			{
 				find: '@typings',

@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
   import { reactive, watch, getCurrentInstance } from 'vue';
-  import { useClipboard } from '@common/hooks/index'; 
+  import { useClipboard } from '@hooks/index'; 
 
   const clipboard = useClipboard();
   const app = getCurrentInstance().proxy;
