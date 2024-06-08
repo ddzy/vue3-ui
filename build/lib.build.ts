@@ -56,7 +56,7 @@ const commonConfig: InlineConfig = {
 	},
 };
 
-async function buildAll() {
+async function buildAllComponents() {
 	return new Promise(async (resolve, reject) => {
 		const buildOptions = mergeConfig(commonConfig, {
 			plugins: [vue()],
@@ -81,7 +81,7 @@ async function buildAll() {
 	});
 }
 
-async function buildEach() {
+async function buildEachComponent() {
 	const componentPath = path.resolve(__dirname, '../packages/components');
 	let components = (
 		await fse.readdir(componentPath, { withFileTypes: true })
@@ -112,7 +112,7 @@ async function buildEach() {
 	} as InlineConfig);
 
 	for (const component of components) {
-		// esmodule 输出到 dist/es
+		// esmodule 输出到 dist/components/es
 		const buildOptionsOfESModule = mergeConfig(buildOptions, {
 			build: {
 				lib: {
@@ -122,11 +122,11 @@ async function buildEach() {
 					}),
 					formats: ['es'],
 				},
-				outDir: `dist/es/${component.name}`,
+				outDir: `dist/components/es/${component.name}`,
 			},
 		} as InlineConfig);
-		// commonjs 输出到 dist/lib
-		const buildOptionsOfUmd = mergeConfig(buildOptions, {
+		// commonjs 输出到 dist/components/lib
+		const buildOptionsOfCjs = mergeConfig(buildOptions, {
 			build: {
 				lib: {
 					entry: path.resolve(componentPath, component.name, 'main.ts'),
@@ -135,11 +135,14 @@ async function buildEach() {
 					}),
 					formats: ['cjs'],
 				},
-				outDir: path.resolve(__dirname, `../dist/lib/${component.name}`),
+				outDir: path.resolve(
+					__dirname,
+					`../dist/components/lib/${component.name}`,
+				),
 			},
 		} as InlineConfig);
 
-		tasks.push(buildTask(buildOptionsOfESModule), buildTask(buildOptionsOfUmd));
+		tasks.push(buildTask(buildOptionsOfESModule), buildTask(buildOptionsOfCjs));
 	}
 
 	try {
@@ -149,8 +152,68 @@ async function buildEach() {
 	}
 }
 
+async function buildAllHooks() {
+	const hooksPath = path.resolve(__dirname, '../packages/hooks');
+	const buildOptions = mergeConfig(commonConfig, {
+		publicDir: false,
+		build: {
+			minify: 'esbuild',
+			emptyOutDir: true,
+			lib: {
+				fileName: 'index',
+				entry: path.resolve(hooksPath, 'index.ts'),
+				formats: ['es', 'cjs'],
+			},
+			outDir: `dist/hooks`,
+		},
+	} as InlineConfig);
+
+	await build(buildOptions);
+}
+
+async function buildEachHook() {
+	const hooksPath = path.resolve(__dirname, '../packages/hooks');
+	const hooks = await fse.readdir(hooksPath, { withFileTypes: true });
+
+	hooks
+		.filter((v) => v.name.startsWith('use'))
+		.forEach(async (v) => {
+			const buildOptionsOfESModule = mergeConfig(commonConfig, {
+				publicDir: false,
+				build: {
+					minify: 'esbuild',
+					emptyOutDir: false,
+					lib: {
+						fileName: v.name.replace(/\.\w+$/, ''),
+						entry: path.resolve(hooksPath, v.name),
+						formats: ['es'],
+					},
+					outDir: `dist/hooks/es`,
+				},
+			} as InlineConfig);
+			const buildOptionsOfCjs = mergeConfig(commonConfig, {
+				publicDir: false,
+				build: {
+					minify: 'esbuild',
+					emptyOutDir: false,
+					lib: {
+						fileName: v.name.replace(/\.\w+$/, ''),
+						entry: path.resolve(hooksPath, v.name),
+						formats: ['cjs'],
+					},
+					outDir: `dist/hooks/lib`,
+				},
+			} as InlineConfig);
+
+			await build(buildOptionsOfESModule);
+			await build(buildOptionsOfCjs);
+		});
+}
+
 async function startBuild() {
-	await buildAll();
-	await buildEach();
+	await buildAllComponents();
+	await buildEachComponent();
+	await buildAllHooks();
+	await buildEachHook();
 }
 startBuild();
