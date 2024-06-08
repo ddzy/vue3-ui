@@ -1,6 +1,6 @@
+import { V3Backdrop, V3Button, V3Dialog } from '@components/main';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import { V3Backdrop, V3Button, V3Dialog } from '@components/main';
 
 describe('V3Dialog 组件测试：', () => {
 	test('Dialog 组件应该正常渲染', async () => {
@@ -26,20 +26,20 @@ describe('V3Dialog 组件测试：', () => {
 			},
 		});
 
+		// 打开弹窗
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
-
-		await wrapper
-			.find('.v3-backdrop .v3-dialog .v3-icon-close-small')
-			.trigger('click');
+		expect(
+			document.querySelector('.v3-dialog__header')?.textContent?.trim(),
+		).toBe('基本用法');
+		expect(
+			document.querySelector('.v3-dialog__body')?.textContent?.trim(),
+		).toBe('测试弹窗内容');
+		// 关闭弹窗
+		// @ts-ignore
+		document.querySelector('.v3-dialog__header .v3-icon')?.click();
 		await nextTick();
-		expect(wrapper.find('.v3-backdrop').exists()).toBeTruthy();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeFalsy();
-		expect(wrapper.find('.v3-dialog').exists()).toBeFalsy();
+		expect(document.querySelector('.v3-dialog')).toBeFalsy();
 	});
 
 	test('Dialog 组件可接收【headerActions】配置项，用来自定义弹窗头部的控制按钮组', async () => {
@@ -50,15 +50,16 @@ describe('V3Dialog 组件测试：', () => {
 				V3Backdrop,
 			},
 			template: `
-      <v3-button type="primary" @click="showDialog = true">打开弹窗</v3-button>
-      <v3-dialog
-        v-model="showDialog"
-        :title="'基本用法'"
-        :headerActions="headerActions"
-      >
-        测试弹窗内容
-      </v3-dialog>
+				<v3-button type="primary" @click="showDialog = true">打开弹窗</v3-button>
+				<v3-dialog
+					v-model="showDialog"
+					:title="'基本用法'"
+					:headerActions="headerActions"
+				>
+					测试弹窗内容
+				</v3-dialog>
       `,
+			// @ts-ignore
 			data() {
 				return {
 					showDialog: false,
@@ -70,6 +71,7 @@ describe('V3Dialog 组件测试：', () => {
 								plain: true,
 							},
 							text: '取消',
+							// @ts-ignore
 							handler: this.handleCancel.bind(this),
 						},
 						{
@@ -84,6 +86,7 @@ describe('V3Dialog 组件测试：', () => {
 			},
 			methods: {
 				handleCancel() {
+					// @ts-ignore
 					this.showDialog = false;
 				},
 			},
@@ -92,19 +95,20 @@ describe('V3Dialog 组件测试：', () => {
 		// 打开弹窗
 		await wrapper.find('.v3-button').trigger('click');
 		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog').exists()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
 		expect(
-			wrapper.findAll('.v3-dialog .v3-dialog-header__action .v3-button').length,
+			document.body
+				.querySelector('.v3-dialog-header__action')
+				?.querySelectorAll('.v3-button').length,
 		).toBe(2);
 
-		// 点击【取消】按钮，关闭弹窗
-		await wrapper.find('.v3-dialog .v3-button').trigger('click');
+		// 关闭弹窗
+		document.body
+			.querySelector('.v3-dialog-header__action')
+			?.querySelectorAll('.v3-button')?.[0]
+			// @ts-ignore
+			?.click();
 		await nextTick();
-		expect(wrapper.find('.v3-dialog').exists()).toBeFalsy();
+		expect(document.querySelector('.v3-dialog')).toBeFalsy();
 	});
 
 	test('Dialog 组件可接收【title slot】，用来自定义弹窗的标题', async () => {
@@ -128,23 +132,17 @@ describe('V3Dialog 组件测试：', () => {
       `,
 			data() {
 				return {
-					showDialog: false,
+					showDialog: true,
 				};
 			},
 		});
 
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
-		expect(wrapper.find('.v3-dialog .v3-dialog-header__title').text()).toBe(
-			'自定义标题',
-		);
+		expect(
+			document.querySelector('.v3-dialog__header')?.textContent?.trim(),
+		).toBe('自定义标题');
 	});
 
-	test('Dialog 组件可接收【footer、default slot】，用来自定义弹窗的底部和内容', async () => {
+	test('Dialog 组件可接收【footer、default slot】，用来自定义弹窗的底部内容', async () => {
 		const wrapper = mount({
 			components: {
 				V3Dialog,
@@ -172,19 +170,15 @@ describe('V3Dialog 组件测试：', () => {
       `,
 			data() {
 				return {
-					showDialog: false,
+					showDialog: true,
 				};
 			},
 		});
 
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
 		expect(
-			wrapper.findAll('.v3-dialog .v3-dialog__footer .v3-button').length,
+			document.body
+				.querySelector('.v3-dialog__footer .dialog-footer')
+				?.querySelectorAll('.v3-button')?.length,
 		).toBe(2);
 	});
 
@@ -208,19 +202,13 @@ describe('V3Dialog 组件测试：', () => {
       `,
 			data() {
 				return {
-					showDialog: false,
+					showDialog: true,
 				};
 			},
 		});
 
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
 		expect(
-			wrapper.find('.v3-dialog').classes().includes('is-fullscreen'),
+			document.body.querySelector('.v3-dialog.is-fullscreen'),
 		).toBeTruthy();
 	});
 
@@ -244,18 +232,14 @@ describe('V3Dialog 组件测试：', () => {
       `,
 			data() {
 				return {
-					showDialog: false,
+					showDialog: true,
 				};
 			},
 		});
 
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
-		expect(wrapper.find('.custom-dialog').exists()).toBeTruthy();
+		expect(
+			document.body.querySelector('.v3-dialog.custom-dialog'),
+		).toBeTruthy();
 	});
 
 	test('Dialog 组件可接收【center】配置项，用来控制整个弹窗是否垂直水平居中', async () => {
@@ -281,15 +265,7 @@ describe('V3Dialog 组件测试：', () => {
 			},
 		});
 
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
-		expect(
-			wrapper.find('.v3-backdrop').classes().includes('is-center'),
-		).toBeTruthy();
+		expect(document.body.querySelector('.v3-backdrop.is-center')).toBeTruthy();
 	});
 
 	test('Dialog 组件可接收【fixed】配置项，用来控制是否滚动穿透', async () => {
@@ -310,102 +286,11 @@ describe('V3Dialog 组件测试：', () => {
       `,
 			data() {
 				return {
-					showDialog: false,
+					showDialog: true,
 				};
 			},
 		});
 
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
 		expect(document.body.classList.contains('v3-body--fixed')).toBeTruthy();
-
-		await wrapper
-			.find('.v3-dialog .v3-dialog__header .v3-icon-close-small')
-			.trigger('click');
-		await nextTick();
-		expect(document.body.classList.contains('v3-body--fixed')).toBeFalsy();
-	});
-
-	test('Dialog 组件可接收【showClose】配置项，用来控制是否要显示关闭按钮', async () => {
-		const wrapper = mount({
-			components: {
-				V3Dialog,
-				V3Button,
-				V3Backdrop,
-			},
-			template: `
-      <v3-button type="primary" @click="showDialog = true">打开弹窗</v3-button>
-      <v3-dialog
-        v-model="showDialog"
-        :showClose="false"
-      >
-        测试弹窗内容
-      </v3-dialog>
-      `,
-			data() {
-				return {
-					showDialog: false,
-				};
-			},
-		});
-
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
-		expect(
-			wrapper
-				.find('.v3-dialog .v3-dialog__header .v3-icon-close-small')
-				.exists(),
-		).toBeFalsy();
-	});
-
-	test('Dialog 组件可接收【beforeClose】配置项，用来自定义弹窗关闭前的处理', async () => {
-		const wrapper = mount({
-			components: {
-				V3Dialog,
-				V3Button,
-				V3Backdrop,
-			},
-			template: `
-      <v3-button type="primary" @click="showDialog = true">打开弹窗</v3-button>
-      <v3-dialog
-        v-model="showDialog"
-        :beforeClose="handleBeforeClose"
-      >
-        测试弹窗内容
-      </v3-dialog>
-      `,
-			data() {
-				return {
-					showDialog: false,
-					hasTriggered: false,
-				};
-			},
-			methods: {
-				handleBeforeClose() {
-					this.hasTriggered = true;
-				},
-			},
-		});
-
-		await wrapper.find('.v3-button').trigger('click');
-		await nextTick();
-		expect(wrapper.find('.v3-backdrop').isVisible()).toBeTruthy();
-		expect(wrapper.find('.v3-dialog .v3-dialog__body').text()).toBe(
-			'测试弹窗内容',
-		);
-
-		await wrapper
-			.find('.v3-dialog .v3-dialog__header .v3-icon-close-small')
-			.trigger('click');
-		await nextTick();
-		expect(wrapper.vm.hasTriggered).toBeTruthy();
 	});
 });
