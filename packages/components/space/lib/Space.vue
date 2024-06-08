@@ -30,8 +30,8 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { computed, defineComponent, useSlots, ref, VNode } from 'vue';
 import { ISpaceProps } from '@typings/index';
+import { VNode, computed, useSlots } from 'vue';
 
 defineOptions({
 	name: 'V3Space',
@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<ISpaceProps>(), {
 	direction: 'row',
 	wrap: true,
 	separator: '',
-	size: 0,
+	size: 8,
 });
 const slots = useSlots();
 
