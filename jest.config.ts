@@ -22,8 +22,8 @@ export default {
 			},
 		],
 	},
-	// testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
-	testRegex: '/__tests__/Backdrop\\.test\\.ts$',
+	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
+	// testRegex: '/__tests__/Drawer\\.test\\.ts$',
 	testPathIgnorePatterns: ['Select\\.test\\.ts'],
 	moduleFileExtensions: ['vue', 'js', 'ts'],
 	moduleNameMapper: {

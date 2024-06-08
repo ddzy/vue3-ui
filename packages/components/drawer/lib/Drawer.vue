@@ -5,82 +5,77 @@
 		:fixed="true"
 		:close-on-click="props.closeOnClickBackdrop"
 	>
-		<div
-			class="v3-drawer"
-			:class="{
-				[`is-${props.placement}`]: true,
-				'has-header': computedHasHeader,
-				'has-footer': computedHasFooter,
-			}"
-			@click.self="handleContainerClick"
-		>
-			<transition :name="`v3-drawer-translate-${props.placement}`">
-				<div
-					v-if="model"
-					class="v3-drawer__inner"
-					:style="{
-						width: computedWidth,
-						height: computedHeight,
-					}"
-				>
-					<div class="v3-drawer__header">
-						<div class="v3-drawer-header__title">
-							<template v-if="slots.header">
-								<slot name="header"></slot>
-							</template>
-							<template v-else-if="!slots.header && props.title">
-								<h3>{{ props.title }}</h3>
-							</template>
-						</div>
-						<V3Icon
-							v-if="props.showClose"
-							type="CloseSmall"
-							class="v3-drawer-header__close"
-							@click="handleClose"
-						/>
-					</div>
-					<div class="v3-drawer__content">
-						<slot name="default"></slot>
-					</div>
-					<div class="v3-drawer__footer">
-						<template v-if="slots.footer">
-							<slot name="footer"></slot>
+		<transition :name="`v3-drawer-translate-${props.placement}`">
+			<div
+				v-if="model"
+				class="v3-drawer"
+				:class="{
+					[`is-${props.placement}`]: true,
+					'has-header': computedHasHeader,
+					'has-footer': computedHasFooter,
+				}"
+				:style="{
+					width: computedWidth,
+					height: computedHeight,
+				}"
+			>
+				<div class="v3-drawer__header">
+					<div class="v3-drawer-header__title">
+						<template v-if="slots.header">
+							<slot name="header"></slot>
 						</template>
-						<div
-							v-else
-							class="v3-drawer-footer__btns"
-							:class="{
-								'has-confirm': props.showConfirm,
-								'has-cancel': props.showCancel,
-							}"
+						<template v-else-if="!slots.header && props.title">
+							<h3>{{ props.title }}</h3>
+						</template>
+					</div>
+					<V3Icon
+						v-if="props.showClose"
+						type="CloseSmall"
+						class="v3-drawer-header__close"
+						@click="handleClose"
+					/>
+				</div>
+				<div class="v3-drawer__content">
+					<slot name="default"></slot>
+				</div>
+				<div class="v3-drawer__footer">
+					<template v-if="slots.footer">
+						<slot name="footer"></slot>
+					</template>
+					<div
+						v-else
+						class="v3-drawer-footer__btns"
+						:class="{
+							'has-confirm': props.showConfirm,
+							'has-cancel': props.showCancel,
+						}"
+					>
+						<v3-button
+							v-if="props.showConfirm"
+							:type="'primary'"
+							:loading="props.confirmLoading"
+							@click="handleConfirm"
+							>{{ props.confirmText }}</v3-button
 						>
-							<v3-button
-								v-if="props.showConfirm"
-								:type="'primary'"
-								:loading="props.confirmLoading"
-								@click="handleConfirm"
-								>{{ props.confirmText }}</v3-button
-							>
-							<v3-button
-								v-if="props.showCancel"
-								:type="'default'"
-								@click="handleClose"
-								>{{ props.cancelText }}</v3-button
-							>
-						</div>
+						<v3-button
+							v-if="props.showCancel"
+							:type="'default'"
+							@click="handleClose"
+							>{{ props.cancelText }}</v3-button
+						>
 					</div>
 				</div>
-			</transition>
-		</div>
+			</div>
+		</transition>
 	</v3-backdrop>
 </template>
 <script lang="ts" setup>
-import { computed, useSlots, watch } from 'vue';
-import { IDrawerProps } from '@typings/index';
 import * as UTILS from '@common/utils/index';
 import V3Backdrop from '@components/backdrop/main';
 import V3Button from '@components/button/main';
 import V3Icon from '@components/icon/main';
+import { IDrawerProps } from '@typings/index';
+import { computed, useSlots } from 'vue';
 
 defineOptions({
 	name: 'V3Drawer',
@@ -160,12 +155,6 @@ function handleClose() {
 
 function handleConfirm() {
 	UTILS.isFunction(props.onConfirm) && props.onConfirm(_closeHelper);
-}
-
-function handleContainerClick() {
-	if (props.closeOnClickBackdrop) {
-		handleClose();
-	}
 }
 </script>
 <style lang="scss">
