@@ -93,3 +93,4 @@ app.use(V3Card);
 |     Carousel     |      轮播图      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Drawer      |       抽屉       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Back       |       返回       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|      Image       |       图片       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
