@@ -1,6 +1,7 @@
 .v3-image-preview {
 	user-select: none;
 	.v3-image-preview__inner {
+		transition: transform 0.3s ease;
 	}
 	.v3-image-preview__toolbar {
 		position: absolute;

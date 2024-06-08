@@ -4,13 +4,13 @@
 		ref="imgWrapperRef"
 		custom-class="v3-image-preview"
 		fixed
-		:close-on-click="false"
+		:close-on-click="true"
 	>
 		<img
 			v-if="props.previewSrc"
 			:src="props.previewSrc"
 			:style="{
-				transform: `scale(${scale})`,
+				transform: `scale(${scale}) rotateZ(${rotate}deg)`,
 			}"
 			ref="imgRef"
 			alt=""
@@ -19,10 +19,10 @@
 		<div v-if="props.showToolbar" class="v3-image-preview__toolbar">
 			<ul class="v3-image-preview__toolbar__list">
 				<li class="v3-image-preview__toolbar__item">
-					<v3-icon type="Undo"></v3-icon>
+					<v3-icon type="Undo" @click="handleRotateLeft"></v3-icon>
 				</li>
 				<li class="v3-image-preview__toolbar__item">
-					<v3-icon type="Redo"></v3-icon>
+					<v3-icon type="Redo" @click="handleRotateRight"></v3-icon>
 				</li>
 				<li class="v3-image-preview__toolbar__item">
 					<v3-icon type="ZoomOut" @click="handleZoomOut"></v3-icon>
@@ -72,6 +72,15 @@ function handleZoomIn() {
 }
 function handleZoomOut() {
 	scale.value -= 0.2;
+}
+
+// 左右旋转
+const rotate = ref(0);
+function handleRotateLeft() {
+	rotate.value -= 90;
+}
+function handleRotateRight() {
+	rotate.value += 90;
 }
 </script>
 <style lang="scss">
