@@ -179,3 +179,38 @@ const imgs = [
 ```
 
 :::
+
+## API
+
+### Drawer Props
+
+| 参数名      | 说明                                                                                        | 类型                        | 可选值                                     | 默认值 |
+| ----------- | ------------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------------ | ------ |
+| previewSrc  | 预览的图片 URL，未提供则使用`src`                                                           | string                      |                                            |        |
+| preview     | 是否开启预览                                                                                | boolean                     |                                            | false  |
+| width       | 图片原生`width`属性，指定`width`/`height`可以让浏览器预留位置加载图片，避免布局发生大的变化 | string / number             |                                            | 0      |
+| height      | 图片原生`height`属性                                                                        | string / number             |                                            | 0      |
+| lazy        | 是否开启懒加载                                                                              | boolean                     |                                            | false  |
+| animated    | 是否开启动画效果                                                                            | boolean                     |                                            | true   |
+| lazyOptions | 懒加载参数                                                                                  | [LazyOptions](#lazyoptions) |                                            |        |
+| objectFit   | 同 css `object-fit` 属性                                                                    | string                      | fill / contain / cover / sacle-down / none | 'fill' |
+| showToolbar | 是否显示预览的工具栏                                                                        | boolean                     |                                            | true   |
+| showLoading | 是否开启`loading`效果                                                                       | boolean                     |                                            | true   |
+| rounded     | 是否圆形（显示为头像）                                                                      | boolean                     |                                            | false  |
+| radius      | 圆角大小(50%时的效果等同于`rounded`)，当`rounded`为`true`时，忽略本参数                     | string / number             |                                            | 0      |
+
+#### LazyOptions
+
+| 参数名                  | 说明                                                                                           | 类型                  | 可选值 | 默认值            |
+| ----------------------- | ---------------------------------------------------------------------------------------------- | --------------------- | ------ | ----------------- |
+| useIntersectionObserver | 是否使用 `IntersectionObserver` API 代替原生 `loading` 属性                                    | boolean               |        | true              |
+| intersectionRoot        | [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root)             | Element/Documnet/null |        | null              |
+| intersectionRootMargin  | [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) | string                |        | '0px 0px 0px 0px' |
+| intersectionThreshold   | [thresholds](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) | number / number[]     |        | 0                 |
+
+### Drawer Slots
+
+| 插槽名  | 说明                       | 子标签 |
+| ------- | -------------------------- | ------ |
+| failed  | 自定义图片加载失败时的内容 |        |
+| loading | 自定义图片加载时的内容     |        |
