@@ -76,11 +76,13 @@ export default function useEventListener<
 	watch(
 		() => toValue(target),
 		(t) => {
-			// 监听的对象发生变化，注销掉先前注册的所有监听器
-			stop();
-			events.forEach((e) => {
-				cleanups.push(register(t, e, callback, defaultOptions));
-			});
+			if (t) {
+				// 监听的对象发生变化，注销掉先前注册的所有监听器
+				stop();
+				events.forEach((e) => {
+					cleanups.push(register(t, e, callback, defaultOptions));
+				});
+			}
 		},
 		{ immediate: true },
 	);
