@@ -1,13 +1,14 @@
 import {
 	ComputedRef,
 	MaybeRefOrGetter,
+	type Ref,
 	computed,
 	nextTick,
 	ref,
 	toValue,
 	watch,
-	type Ref,
 } from 'vue';
+
 import useEventListener from './useEventListener';
 import usePermission from './usePermission';
 import useSupport from './useSupport';

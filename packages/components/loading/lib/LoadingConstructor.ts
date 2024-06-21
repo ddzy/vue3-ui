@@ -1,7 +1,4 @@
 // @ts-nocheck
-
-import { isStrictObject } from '@common/utils';
-import * as TYPES from '@typings/index';
 import {
 	ComponentInternalInstance,
 	FunctionDirective,
@@ -9,6 +6,10 @@ import {
 	reactive,
 	render,
 } from 'vue';
+
+import * as TYPES from '@typings/index';
+import { isStrictObject } from '@common/utils';
+
 import Loading from './Loading.vue';
 
 interface IState {

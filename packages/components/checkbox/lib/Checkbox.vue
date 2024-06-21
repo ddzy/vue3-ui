@@ -41,21 +41,21 @@
 						:type="props.indeterminatedIcon"
 						:strokeWidth="2"
 						class="is-indeterminated"
-					/>
+					></V3Icon>
 					<V3Icon
 						v-else-if="!props.indeterminate && state.checkboxValue"
 						:type="props.selectedIcon"
 						:strokeWidth="2"
-					/>
+					></V3Icon>
 					<V3Icon
 						v-else-if="!props.indeterminate && !state.checkboxValue"
 						:type="props.defaultIcon"
 						:strokeWidth="2"
-					/>
+					></V3Icon>
 				</template>
 				<!-- viewBox 旨在让子元素在 40x40 范围内定义大小，方便自适应 -->
 				<svg v-else viewBox="0 0 40 40">
-					<rect x="0" y="0" width="100%" height="100%" rx="4" />
+					<rect x="0" y="0" width="100%" height="100%" rx="4"></rect>
 					<!-- 不确定状态的线条 -->
 					<polyline
 						v-if="props.indeterminate"
@@ -88,23 +88,24 @@
 </template>
 <script lang="ts">
 import {
+	ComponentOptionsWithObjectProps,
+	PropType,
+	computed,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
+	inject,
+	onMounted,
 	reactive,
 	ref,
 	toRef,
 	watch,
-	inject,
-	onMounted,
-	ComponentOptionsWithObjectProps,
-	computed,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 import {
+	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_INSTANCE_PROVIDE,
-	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 } from '@common/constants/provide-symbol';
 import V3Icon from '@components/icon/main';
 
@@ -215,7 +216,7 @@ export default defineComponent({
 				isCheckboxGroup
 					? (
 							state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps
-					  ).props
+						).props
 					: props,
 				'modelValue',
 			),

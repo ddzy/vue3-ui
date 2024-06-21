@@ -1,4 +1,5 @@
-import { ref, type Ref } from 'vue';
+import { type Ref, ref } from 'vue';
+
 import useEventListener from './useEventListener';
 import useThrottle from './useThrottle';
 

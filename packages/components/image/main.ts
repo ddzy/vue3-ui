@@ -1,4 +1,5 @@
 import { type App } from 'vue';
+
 import Image from './lib/Image.vue';
 
 function install(app: App) {

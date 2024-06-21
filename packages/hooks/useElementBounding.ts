@@ -1,4 +1,5 @@
-import { MaybeRefOrGetter, ref, toValue, watch, type Ref } from 'vue';
+import { MaybeRefOrGetter, type Ref, ref, toValue, watch } from 'vue';
+
 import useEventListener from './useEventListener';
 import useThrottle from './useThrottle';
 

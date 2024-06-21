@@ -11,11 +11,13 @@
 	></component>
 </template>
 <script lang="ts">
+import { PropType, defineComponent } from 'vue';
+
 import { DEFAULT_ICON_CONFIGS, IconProvider } from '@icon-park/vue-next';
 import '@icon-park/vue-next/styles/index.css';
 import type { IIconProps } from '@typings/index';
 import { useChangeCase } from '@vueuse/integrations/useChangeCase';
-import { PropType, defineComponent } from 'vue';
+
 import * as iconMap from './iconMap';
 
 export default defineComponent({

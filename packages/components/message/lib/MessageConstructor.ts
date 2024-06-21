@@ -1,6 +1,4 @@
 // @ts-nocheck
-
-import * as TYPES from '@typings/index';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
@@ -8,6 +6,9 @@ import {
 	reactive,
 	render,
 } from 'vue';
+
+import * as TYPES from '@typings/index';
+
 import Message from './Message.vue';
 
 interface IState {

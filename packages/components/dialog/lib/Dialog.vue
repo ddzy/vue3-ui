@@ -53,11 +53,12 @@
 	</v3-backdrop>
 </template>
 <script lang="ts" setup>
+import { useSlots } from 'vue';
+
 import V3Backdrop from '@components/backdrop/main';
 import V3Button from '@components/button/main';
 import V3Icon from '@components/icon/main';
 import type { IDialogProps } from '@typings/index';
-import { useSlots } from 'vue';
 
 defineOptions({
 	name: 'V3Dialog',

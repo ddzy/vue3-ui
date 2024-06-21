@@ -22,7 +22,8 @@
 	</transition>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue';
+import { PropType, defineComponent, reactive } from 'vue';
+
 import * as TYPES from '@typings/index';
 import V3Icon from '@components/icon/main';
 

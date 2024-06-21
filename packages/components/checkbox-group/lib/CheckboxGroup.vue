@@ -8,22 +8,23 @@
 	</div>
 </template>
 <script lang="ts">
+import {
+	Component,
+	PropType,
+	defineComponent,
+	getCurrentInstance,
+	nextTick,
+	provide,
+	reactive,
+	watch,
+} from 'vue';
+
 import * as TYPES from '@typings/index';
 import {
 	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_CHANGE_FUNC_PROVIDE,
 	CHECKBOX_GROUP_INSTANCE_PROVIDE,
 } from '@common/constants/provide-symbol';
-import {
-	Component,
-	defineComponent,
-	getCurrentInstance,
-	nextTick,
-	PropType,
-	provide,
-	reactive,
-	watch,
-} from 'vue';
 
 export default defineComponent({
 	name: 'V3CheckboxGroup',
@@ -118,7 +119,7 @@ export default defineComponent({
 			const newModelValue: TYPES.ICheckboxLabel[] = !newValue
 				? props.modelValue.filter((v) => {
 						return v !== label;
-				  })
+					})
 				: props.modelValue.concat(label);
 
 			context.emit('update:modelValue', newModelValue);

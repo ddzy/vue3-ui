@@ -125,14 +125,6 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import VARIABLE from '@common/constants/internal-variable';
-import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
-import V3BasePopper from '@components/base-popper/main';
-import V3Icon from '@components/icon/main';
-import V3Input from '@components/input/main';
-import V3Tag from '@components/tag/main';
-import { useDebounce, useThrottle } from '@hooks/index';
-import * as TYPES from '@typings/index';
 import {
 	ComponentInternalInstance,
 	ComponentPublicInstance,
@@ -149,6 +141,15 @@ import {
 	toRef,
 	watch,
 } from 'vue';
+
+import * as TYPES from '@typings/index';
+import VARIABLE from '@common/constants/internal-variable';
+import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
+import V3BasePopper from '@components/base-popper/main';
+import V3Icon from '@components/icon/main';
+import V3Input from '@components/input/main';
+import V3Tag from '@components/tag/main';
+import { useDebounce, useThrottle } from '@hooks/index';
 
 type ILocalDropdownInstance = {
 	hide: () => void;

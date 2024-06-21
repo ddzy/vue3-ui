@@ -49,8 +49,9 @@
 	</div>
 </template>
 <script lang="ts">
+import { PropType, computed, defineComponent, reactive, watch } from 'vue';
+
 import * as TYPES from '@typings/index';
-import { computed, defineComponent, PropType, reactive, watch } from 'vue';
 import Decimal from 'decimal.js';
 
 interface IState {

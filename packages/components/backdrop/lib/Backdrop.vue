@@ -18,9 +18,10 @@
 	</teleport>
 </template>
 <script lang="ts" setup>
+import { ComponentInternalInstance, getCurrentInstance, ref, watch } from 'vue';
+
 import VARIABLE from '@common/constants/internal-variable';
 import type { IBackdropProps } from '@typings/index';
-import { ComponentInternalInstance, getCurrentInstance, ref, watch } from 'vue';
 
 defineOptions({
 	name: 'V3Backdrop',

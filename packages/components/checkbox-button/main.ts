@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import CheckboxButton from './lib/CheckboxButton.vue';
 
 const install = function (app: App) {

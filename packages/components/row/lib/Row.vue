@@ -12,9 +12,9 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	provide,
 	reactive,
 } from 'vue';

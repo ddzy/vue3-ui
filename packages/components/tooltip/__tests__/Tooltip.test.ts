@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
 import { V3Button, V3Tooltip } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 jest.useFakeTimers();
 

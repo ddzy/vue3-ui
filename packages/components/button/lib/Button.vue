@@ -37,16 +37,17 @@
 	</button>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
 import {
+	PropType,
 	defineComponent,
 	onMounted,
 	onUnmounted,
-	PropType,
 	reactive,
 	ref,
 	watch,
 } from 'vue';
+
+import * as TYPES from '@typings/index';
 import V3Icon from '@components/icon/main';
 
 export default defineComponent({
@@ -145,8 +146,8 @@ export default defineComponent({
 				state.defaultProps.icon = newValue.loading
 					? 'LoadingOne'
 					: newValue.icon
-					? newValue.icon
-					: '';
+						? newValue.icon
+						: '';
 				// 按钮 loading 时也为禁用状态
 				state.defaultProps.disabled = !!newValue.disabled || !!newValue.loading;
 			},

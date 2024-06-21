@@ -39,13 +39,14 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import VARIABLE from '@common/constants/internal-variable';
+import { computed, ref, useSlots } from 'vue';
+
 import * as UTILS from '@common/utils/index';
+import VARIABLE from '@common/constants/internal-variable';
 import V3Button from '@components/button/main';
 import useEventListener from '@hooks/useEventListener';
 import useThrottle from '@hooks/useThrottle';
 import { IBackProps } from '@typings/index';
-import { computed, ref, useSlots } from 'vue';
 
 defineOptions({
 	name: 'V3Back',

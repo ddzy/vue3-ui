@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
 import { V3Button, V3ButtonGroup } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('ButtonGroup 组件测试：', () => {
 	test('ButtonGroup 组件应该正常接收【Button】组件作为 slot 并渲染', () => {

@@ -1,4 +1,4 @@
-import { ref, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue';
+import { type MaybeRefOrGetter, type Ref, ref, toValue, watch } from 'vue';
 
 type IUsePermission = (
 	/** 权限名称 */

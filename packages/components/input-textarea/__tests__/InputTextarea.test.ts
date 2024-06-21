@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
+
 import { V3InputTextarea } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('InputTextarea 组件测试：', () => {
 	test('InputTextarea 组件使用【v-model】双向绑定', async () => {

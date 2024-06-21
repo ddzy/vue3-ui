@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Card from './lib/Card.vue';
 
 function install(app: App) {

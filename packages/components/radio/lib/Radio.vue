@@ -36,15 +36,16 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
+	inject,
 	reactive,
 	ref,
 	toRef,
 	watch,
-	inject,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,

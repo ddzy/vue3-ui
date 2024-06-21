@@ -1,9 +1,10 @@
 // @ts-nocheck
+import { h, nextTick } from 'vue';
 
-import { mount, config } from '@vue/test-utils';
-import { nextTick, h } from 'vue';
-import { LoadingDirective } from '../main';
 import { V3Button, V3Loading, useLoading } from '@components/main';
+import { config, mount } from '@vue/test-utils';
+
+import { LoadingDirective } from '../main';
 
 jest.useFakeTimers();
 

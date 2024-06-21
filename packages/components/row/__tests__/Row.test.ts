@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
 import { SetupContext, reactive } from 'vue';
+
 import { V3Col, V3Row } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Row 组件测试：', () => {
 	beforeAll(() => {

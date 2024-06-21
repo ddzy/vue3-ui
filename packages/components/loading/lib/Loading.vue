@@ -32,10 +32,11 @@
 	</transition>
 </template>
 <script lang="ts" setup>
+import { getCurrentInstance, h, isVNode, ref, watch } from 'vue';
+
 import VARIABLE from '@common/constants/internal-variable';
 import V3Icon from '@components/icon/main';
 import { ILoadingProps } from '@typings/index';
-import { getCurrentInstance, h, isVNode, ref, watch } from 'vue';
 
 defineOptions({
 	name: 'V3Loading',

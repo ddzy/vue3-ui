@@ -65,20 +65,20 @@
 <script lang="ts">
 import {
 	CSSProperties,
+	PropType,
 	defineComponent,
 	getCurrentInstance,
+	inject,
+	nextTick,
 	onBeforeUnmount,
 	onMounted,
-	PropType,
 	reactive,
 	ref,
-	inject,
 	watch,
-	nextTick,
 } from 'vue';
 
-import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
+import * as TYPES from '@typings/index';
 import V3Icon from '@components/icon/main';
 
 interface IState {

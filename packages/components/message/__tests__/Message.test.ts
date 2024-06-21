@@ -1,8 +1,7 @@
 // @ts-nocheck
-
-import { nextTick, h } from '@vue/runtime-core';
-import { mount, config } from '@vue/test-utils';
-import { useMessage, V3Message } from '@components/main';
+import { V3Message, useMessage } from '@components/main';
+import { h, nextTick } from '@vue/runtime-core';
+import { config, mount } from '@vue/test-utils';
 
 jest.useFakeTimers();
 

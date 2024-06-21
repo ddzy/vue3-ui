@@ -1,7 +1,8 @@
+import { nextTick } from 'vue';
+
+import { V3BasePopper, V3Button } from '@components/main';
 import { mount } from '@vue/test-utils';
 import 'regenerator-runtime/runtime';
-import { nextTick } from 'vue';
-import { V3Button, V3BasePopper } from '@components/main';
 
 jest.useFakeTimers();
 

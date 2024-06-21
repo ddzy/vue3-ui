@@ -13,12 +13,13 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	reactive,
 	ref,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 
 export default defineComponent({

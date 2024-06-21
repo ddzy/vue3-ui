@@ -1,3 +1,5 @@
+import { nextTick } from 'vue';
+
 import {
 	V3Backdrop,
 	V3Button,
@@ -6,7 +8,6 @@ import {
 	V3RadioGroup,
 } from '@components/main';
 import { mount } from '@vue/test-utils';
-import { nextTick } from 'vue';
 
 describe('V3Drawer 组件测试：', () => {
 	// test 测试方法不会自动清理 DOM

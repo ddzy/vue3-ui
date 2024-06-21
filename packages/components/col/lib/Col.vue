@@ -43,16 +43,16 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
 	inject,
-	PropType,
 	reactive,
 	watch,
 } from 'vue';
 
-import * as TYPES from '@typings/index';
 import * as UTILS from '@common/utils/index';
+import * as TYPES from '@typings/index';
 import { ROW_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
 export default defineComponent({

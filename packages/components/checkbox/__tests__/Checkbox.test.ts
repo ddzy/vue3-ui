@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
 import { SetupContext, nextTick, reactive } from 'vue';
+
 import { V3Checkbox } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Checkbox 组件测试：', () => {
 	test('单一的 V3Checkbox 组件进行双向绑定的值应该是【布尔值】', async () => {

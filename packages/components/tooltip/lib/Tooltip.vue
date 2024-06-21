@@ -12,6 +12,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
+
 import * as TYPES from '@typings/index';
 import V3BasePopper from '@components/base-popper/main';
 

@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Button from './lib/Button.vue';
 
 function install(app: App) {

@@ -1,4 +1,4 @@
-import { getCurrentInstance, onMounted, ref, type Ref } from 'vue';
+import { type Ref, getCurrentInstance, onMounted, ref } from 'vue';
 
 type IUseMounted = (options?: IUseMountedOptions) => IUseMountedReturn;
 interface IUseMountedOptions {}

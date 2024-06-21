@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
+
 import { V3Tag } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('Tag 组件测试：', () => {
 	test('Tag 组件有五种内置的【type】类型', async () => {

@@ -30,16 +30,17 @@
 </template>
 <script lang="ts">
 import {
+	ComponentOptionsWithObjectProps,
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
+	inject,
 	reactive,
 	ref,
 	toRef,
 	watch,
-	inject,
-	ComponentOptionsWithObjectProps,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,
@@ -100,7 +101,7 @@ export default defineComponent({
 				isRadioGroup
 					? (
 							state.injectedRadioGroupInstance! as ComponentOptionsWithObjectProps
-					  ).props
+						).props
 					: props,
 				'modelValue',
 			),

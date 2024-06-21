@@ -69,11 +69,13 @@
 	</div>
 </template>
 <script lang="ts" setup>
+import { computed, ref, useSlots, watch } from 'vue';
+
 import V3Icon from '@components/icon/main';
 import { useImage, useIntersectionObserver } from '@hooks/index';
 import type { IImageProps } from '@typings/index';
 import Decimal from 'decimal.js';
-import { computed, ref, useSlots, watch } from 'vue';
+
 import ImagePreview from './ImagePreview.vue';
 
 defineOptions({
@@ -121,15 +123,15 @@ const computedSize = computed(() => {
 		? typeof props.width === 'string'
 			? props.width
 			: typeof props.width === 'number'
-			? `${props.width}px`
-			: ''
+				? `${props.width}px`
+				: ''
 		: '';
 	const height = props.height
 		? typeof props.height === 'string'
 			? props.height
 			: typeof props.height === 'number'
-			? `${props.height}px`
-			: ''
+				? `${props.height}px`
+				: ''
 		: '';
 
 	return {

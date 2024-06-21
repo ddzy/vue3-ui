@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Message, { useMessage } from './lib/MessageConstructor';
 
 Message.install = function (app: App) {

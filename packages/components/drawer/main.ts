@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Drawer from './lib/Drawer.vue';
 
 const install = function (app: App) {

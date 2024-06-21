@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Row from './lib/Row.vue';
 
 const install = function (app: App) {

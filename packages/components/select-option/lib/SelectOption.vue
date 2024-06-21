@@ -12,22 +12,23 @@
 	</li>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
-import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
-import * as UTILS from '@common/utils/index';
 import {
 	ComponentInternalInstance,
+	PropType,
 	defineComponent,
 	getCurrentInstance,
 	inject,
 	onBeforeUnmount,
 	onMounted,
-	PropType,
 	reactive,
 	ref,
 	toRef,
 	watch,
 } from 'vue';
+
+import * as UTILS from '@common/utils/index';
+import * as TYPES from '@typings/index';
+import { SELECT_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
 interface IState {
 	isSelected: boolean;

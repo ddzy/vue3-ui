@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import RadioGroup from './lib/RadioGroup.vue';
 
 const install = function (app: App) {

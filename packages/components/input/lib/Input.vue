@@ -145,14 +145,15 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	reactive,
 	ref,
 	toRef,
 	watch,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 import V3Icon from '@components/icon/main';
 

@@ -1,4 +1,5 @@
 import { MaybeRefOrGetter, UnwrapRef, reactive, toValue, watch } from 'vue';
+
 import { Arrayable } from './hooks';
 
 interface ICustomTarget {
@@ -12,15 +13,14 @@ interface ICustomEventMap {
 type IUseEventListenerTarget = MaybeRefOrGetter<
 	Window | Document | HTMLElement | ICustomTarget
 >;
-type IUseEventListenerEventMap<TARGET> = UnwrapRef<TARGET> extends
-	| Window
-	| (() => Window)
-	? WindowEventMap
-	: UnwrapRef<TARGET> extends Document | (() => Document)
-	? DocumentEventMap
-	: UnwrapRef<TARGET> extends HTMLElement | (() => HTMLElement)
-	? HTMLElementEventMap
-	: ICustomEventMap;
+type IUseEventListenerEventMap<TARGET> =
+	UnwrapRef<TARGET> extends Window | (() => Window)
+		? WindowEventMap
+		: UnwrapRef<TARGET> extends Document | (() => Document)
+			? DocumentEventMap
+			: UnwrapRef<TARGET> extends HTMLElement | (() => HTMLElement)
+				? HTMLElementEventMap
+				: ICustomEventMap;
 type IUseEventListenerEvent<TARGET> = keyof IUseEventListenerEventMap<TARGET>;
 
 // 回调中传递的事件对象

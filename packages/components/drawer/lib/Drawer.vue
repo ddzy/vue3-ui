@@ -70,12 +70,13 @@
 	</v3-backdrop>
 </template>
 <script lang="ts" setup>
+import { computed, useSlots } from 'vue';
+
 import * as UTILS from '@common/utils/index';
 import V3Backdrop from '@components/backdrop/main';
 import V3Button from '@components/button/main';
 import V3Icon from '@components/icon/main';
 import { IDrawerProps } from '@typings/index';
-import { computed, useSlots } from 'vue';
 
 defineOptions({
 	name: 'V3Drawer',
@@ -125,8 +126,8 @@ const computedWidth = computed(() => {
 		? UTILS.isStrictNumber(props.width)
 			? `${props.width}px`
 			: UTILS.isString(props.width)
-			? props.width
-			: `0px`
+				? props.width
+				: `0px`
 		: `100%`;
 });
 const computedHeight = computed(() => {
@@ -134,8 +135,8 @@ const computedHeight = computed(() => {
 		? UTILS.isStrictNumber(props.height)
 			? `${props.height}px`
 			: UTILS.isString(props.height)
-			? props.height
-			: `0px`
+				? props.height
+				: `0px`
 		: `100%`;
 });
 const computedHasHeader = computed(() => {

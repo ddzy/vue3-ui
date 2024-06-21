@@ -1,4 +1,4 @@
-import { ref, type Ref } from 'vue';
+import { type Ref, ref } from 'vue';
 
 type IUseImage = (options: IUseImageOptions) => IUseImageReturn;
 interface IUseImageOptions {

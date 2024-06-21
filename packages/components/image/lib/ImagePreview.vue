@@ -38,10 +38,11 @@
 	</v3-backdrop>
 </template>
 <script lang="ts" setup>
+import { ref } from 'vue';
+
 import V3Backdrop from '@components/backdrop/main';
 import V3Icon from '@components/icon/main';
 import { useDraggable } from '@hooks/index';
-import { ref } from 'vue';
 
 interface IImagePreviewProps {
 	modelValue: boolean;

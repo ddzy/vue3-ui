@@ -1,7 +1,6 @@
 // @ts-nocheck
-
+import { V3Carousel, V3CarouselItem } from '@components/main';
 import { mount } from '@vue/test-utils';
-import { V3CarouselItem, V3Carousel } from '@components/main';
 
 const commonCarouselList = [
 	{
