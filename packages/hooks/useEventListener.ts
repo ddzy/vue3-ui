@@ -1,4 +1,11 @@
-import { MaybeRefOrGetter, UnwrapRef, reactive, toValue, watch } from 'vue';
+import {
+	MaybeRefOrGetter,
+	UnwrapRef,
+	onScopeDispose,
+	reactive,
+	toValue,
+	watch,
+} from 'vue';
 
 import { Arrayable } from './hooks';
 
@@ -91,6 +98,10 @@ export default function useEventListener<
 		cleanups.forEach((v) => v());
 		cleanups.length = 0;
 	}
+
+	onScopeDispose(() => {
+		stop();
+	});
 
 	return stop;
 }
