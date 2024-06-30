@@ -68,18 +68,17 @@ import {
 	PropType,
 	defineComponent,
 	getCurrentInstance,
-	inject,
 	nextTick,
-	onBeforeUnmount,
 	onMounted,
 	reactive,
 	ref,
-	watch,
 } from 'vue';
 
 import * as UTILS from '@common/utils/index';
 import * as TYPES from '@typings/index';
 import V3Icon from '@components/icon/main';
+import useEventListener from '@hooks/useEventListener';
+import useThrottle from '@hooks/useThrottle';
 
 interface IState {
 	isCodeAreaExpand: boolean;
@@ -133,23 +132,11 @@ export default defineComponent({
 		const functionalWrapperRef = ref(document.createElement('div'));
 		const codeWrapperRef = ref(document.createElement('div'));
 
+		useEventListener(window, 'scroll', useThrottle(handleWindowScroll));
+		useEventListener(window, 'resize', useThrottle(handleWindowResize));
+
 		onMounted(() => {
 			handleWindowResize();
-
-			state.windowScrollHelper = UTILS.throttle(handleWindowScroll, {
-				timestamp: 20,
-			});
-			window.addEventListener('scroll', state.windowScrollHelper);
-
-			state.windowResizeHelper = UTILS.throttle(handleWindowResize, {
-				timestamp: 20,
-			});
-			window.addEventListener('resize', state.windowResizeHelper);
-		});
-
-		onBeforeUnmount(() => {
-			window.removeEventListener('scroll', state.windowScrollHelper);
-			window.removeEventListener('resize', state.windowResizeHelper);
 		});
 
 		function computeFunctionalAreaStyle() {

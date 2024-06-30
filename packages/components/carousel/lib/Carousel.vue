@@ -77,11 +77,9 @@
 import {
 	ComponentInternalInstance,
 	PropType,
-	computed,
 	defineComponent,
 	getCurrentInstance,
 	nextTick,
-	onBeforeUnmount,
 	onMounted,
 	provide,
 	reactive,
@@ -93,6 +91,7 @@ import * as UTILS from '@common/utils/index';
 import * as TYPES from '@typings/index';
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 import V3Icon from '@components/icon/main';
+import useEventListener from '@hooks/useEventListener';
 
 interface IState {
 	carouselItemInstanceList: any[];
@@ -313,16 +312,8 @@ export default defineComponent({
 
 			if (!props.disabled && props.autoplay) {
 				handleDocumentVisibilityChange();
-				document.addEventListener(
-					'visibilitychange',
-					handleDocumentVisibilityChange,
-				);
-			}
-		});
-
-		onBeforeUnmount(() => {
-			if (!props.disabled && props.autoplay) {
-				document.removeEventListener(
+				useEventListener(
+					document,
 					'visibilitychange',
 					handleDocumentVisibilityChange,
 				);

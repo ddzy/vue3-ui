@@ -133,8 +133,6 @@ import {
 	defineComponent,
 	getCurrentInstance,
 	nextTick,
-	onBeforeUnmount,
-	onMounted,
 	provide,
 	reactive,
 	ref,
@@ -149,7 +147,7 @@ import V3BasePopper from '@components/base-popper/main';
 import V3Icon from '@components/icon/main';
 import V3Input from '@components/input/main';
 import V3Tag from '@components/tag/main';
-import { useDebounce, useThrottle } from '@hooks/index';
+import { useDebounce, useEventListener, useThrottle } from '@hooks/index';
 
 type ILocalDropdownInstance = {
 	hide: () => void;
@@ -322,6 +320,10 @@ export default defineComponent({
 
 		provide(SELECT_INSTANCE_PROVIDE, app);
 
+		if (props.multiple) {
+			useEventListener(window, 'resize', useThrottle(handleWindowResize, 200));
+		}
+
 		/**
 		 * 计算 slot 的长度（即判断内容是否为空）
 		 */
@@ -372,19 +374,6 @@ export default defineComponent({
 			},
 			{ immediate: true },
 		);
-
-		onMounted(() => {
-			if (props.multiple) {
-				state.windowResizeHandler = useThrottle(handleWindowResize, 200);
-				window.addEventListener('resize', state.windowResizeHandler);
-			}
-		});
-		onBeforeUnmount(() => {
-			if (props.multiple && typeof state.windowResizeHandler === 'function') {
-				window.removeEventListener('resize', state.windowResizeHandler);
-				state.windowResizeHandler = () => {};
-			}
-		});
 
 		function handleWindowResize() {
 			// 窗口大小发生变化时，需要更新下拉框的高度和下拉菜单的位置
