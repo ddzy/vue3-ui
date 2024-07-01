@@ -176,6 +176,10 @@ export default defineConfig({
 							text: 'Image 图片',
 							link: '/components/image',
 						},
+						{
+							text: 'Tab 标签页',
+							link: '/components/tab',
+						},
 					],
 				},
 				{

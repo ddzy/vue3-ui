@@ -43,6 +43,8 @@ import V3Select from './select/main';
 import V3Slider from './slider/main';
 import V3Space from './space/main';
 import V3Switch from './switch/main';
+import V3TabPane from './tab-pane/main';
+import V3Tab from './tab/main';
 import V3Tag from './tag/main';
 import V3Tooltip from './tooltip/main';
 
@@ -95,6 +97,8 @@ export {
 	V3Back,
 	V3Icon,
 	V3Image,
+	V3Tab,
+	V3TabPane,
 };
 
 export default function install(app: App) {
@@ -135,6 +139,8 @@ export default function install(app: App) {
 	app.component(V3Back.name!, V3Back);
 	app.component(V3Icon.name!, V3Icon);
 	app.component(V3Image.name!, V3Image);
+	app.component(V3Tab.name!, V3Tab);
+	app.component(V3TabPane.name!, V3TabPane);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);
