@@ -1,2 +1,35 @@
 .v3-tab {
+	.v3-tab__header {
+		position: relative;
+		font-size: $font-size-default;
+		.v3-tab__nav {
+			display: flex;
+			.v3-tab__nav-item {
+				cursor: pointer;
+				&.is-active {
+					color: $primary-color;
+				}
+				&:not(:first-child) {
+					margin-left: $margin-large-2;
+				}
+			}
+		}
+		.v3-tab__track {
+			height: 1px;
+			margin-top: $margin-medium;
+			background-color: $border-color-default;
+		}
+		.v3-tab__line {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 50px;
+			height: 2px;
+			background-color: $primary-color;
+			transition: all 0.3s ease;
+		}
+	}
+	.v3-tab__body {
+		margin-top: $margin-medium;
+	}
 }

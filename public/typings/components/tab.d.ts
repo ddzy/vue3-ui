@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import { DeepReadonly } from 'vue';
 
 export interface ITabProps {
 	modelValue?: string | number;
@@ -11,6 +11,7 @@ export interface ITabProps {
 	showHeader?: boolean;
 	centeredHeader?: boolean;
 }
+export type ITabModelValue = string | number;
 export type ITabType = 'bar' | 'line' | 'card';
 export type ITabSize = 'small' | 'medium' | 'large';
 export type ITabTrigger = 'click' | 'hover';
@@ -24,8 +25,9 @@ export interface ITabPaneProps {
 }
 
 export interface ITabProvide {
-	tabPanes: Ref<ITabPaneProvide[]>;
+	updateTabPanes: (v: ITabPaneProvide) => void;
 }
 export interface ITabPaneProvide {
-	props: ITabPaneProps;
+	props: DeepReadonly<ITabPaneProps>;
+	updateActive: (v: boolean) => void;
 }
