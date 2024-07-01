@@ -1,26 +1,63 @@
 .v3-tab {
-	&.is-type-bar {
+	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
 				margin-top: $margin-small;
 			}
 		}
 	}
+	&.is-card {
+		.v3-tab__header {
+			display: flex;
+			align-items: flex-end;
+			border-bottom: 1px solid $border-color-small;
+			.v3-tab__nav-item {
+				padding: $padding-medium $padding-large-2;
+				background-color: #f7f8f9;
+				border: 1px solid $border-color-small;
+				border-bottom: none;
+				border-radius: $border-radius-width-small $border-radius-width-small 0 0 ;
+				&:not(:first-child) {
+					margin-left: $margin-small;
+				}
+			}
+		}
+	}
+	&.is-card.is-closable {
+		.v3-tab__header {
+			.v3-tab__nav-item {
+				padding: $padding-medium;
+			}
+		}
+	}
+
 	.v3-tab__header {
 		position: relative;
 		font-size: $font-size-default;
 		.v3-tab__nav {
 			display: flex;
-			.v3-tab__nav-item {
-				cursor: pointer;
-				&.is-active {
-					color: $primary-color;
-				}
-				&:not(:first-child) {
-					margin-left: $margin-large-2;
+		}
+		.v3-tab__nav-item {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			&.is-active {
+				color: $primary-color;
+			}
+			&:not(:first-child) {
+				margin-left: $margin-large-2;
+			}
+			.v3-tab__nav-close {
+				margin-left: $margin-small;
+				border-radius: 50%;
+				font-size: 16px;
+				&:hover {
+					background-color: $info-color-plain;
 				}
 			}
 		}
+
 		.v3-tab__track {
 			height: 1px;
 			background-color: $border-color-default;
@@ -34,6 +71,11 @@
 			margin-top: $margin-medium;
 			background-color: $primary-color;
 			transition: all 0.3s ease;
+		}
+		.v3-tab__add {
+			padding: $padding-medium $padding-small;
+			font-size: 16px;
+			cursor: pointer;
 		}
 	}
 	.v3-tab__body {

@@ -76,3 +76,35 @@ const trigger = ref<string>('click');
 ```
 
 :::
+
+## 不同风格的页签
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<v3-radio-group v-model="type">
+			<v3-radio label="bar">bar</v3-radio>
+			<v3-radio label="line">line</v3-radio>
+			<v3-radio label="card">card</v3-radio>
+		</v3-radio-group>
+		<v3-checkbox v-model="closable">是否可关闭</v3-checkbox>
+	</v3-space>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tab :type="type" :closable="closable">
+		<v3-tab-pane v-for="v in 4" :key="v" :name="v" :title="`标签${v}`">{{
+			v
+		}}</v3-tab-pane>
+	</v3-tab>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const type = ref<string>('card');
+const closable = ref<boolean>(false);
+</script>
+
+```
+
+:::

@@ -1,7 +1,8 @@
 <template>
 	<div
 		:class="{
-			[`is-type-${props.type}`]: true,
+			[`is-${props.type}`]: true,
+			[`is-closable`]: props.closable,
 		}"
 		class="v3-tab"
 	>
@@ -18,10 +19,16 @@
 					@click="props.trigger === 'click' && toggleTab(v)"
 					@mouseover="props.trigger === 'hover' && toggleTab(v)"
 				>
-					{{ v.props.title }}
+					<span>{{ v.props.title }}</span>
+					<V3Icon
+						v-if="props.closable"
+						class="v3-tab__nav-close"
+						type="CloseSmall"
+					/>
 				</li>
 			</ul>
 			<div
+				v-if="props.type !== 'card'"
 				:style="{
 					width: `${tabLineStyle.width}px`,
 					left: `${tabLineStyle.left}px`,
@@ -29,6 +36,9 @@
 				class="v3-tab__line"
 			></div>
 			<div v-if="props.type === 'line'" class="v3-tab__track"></div>
+			<div v-if="props.type === 'card'" class="v3-tab__add">
+				<V3Icon type="Plus" />
+			</div>
 		</div>
 		<div
 			:style="{
@@ -48,6 +58,7 @@ import { watch } from 'vue';
 import { nextTick } from 'vue';
 
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
+import V3Icon from '@components/icon/main';
 import useElementBounding from '@hooks/useElementBounding';
 import { ITabModelValue, ITabPaneProvide, ITabProps } from '@typings/index';
 
