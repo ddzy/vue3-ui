@@ -15,7 +15,8 @@
 					}"
 					ref="tabNavRefs"
 					class="v3-tab__nav-item"
-					@click="toggleTab(v)"
+					@click="props.trigger === 'click' && toggleTab(v)"
+					@mouseover="props.trigger === 'hover' && toggleTab(v)"
 				>
 					{{ v.props.title }}
 				</li>
@@ -40,11 +41,10 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { DeepReadonly, reactive, useSlots } from 'vue';
+import { reactive } from 'vue';
 import { ref } from 'vue';
 import { provide } from 'vue';
 import { watch } from 'vue';
-import { Ref } from 'vue';
 import { nextTick } from 'vue';
 
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
