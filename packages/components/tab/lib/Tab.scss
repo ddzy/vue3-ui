@@ -1,4 +1,11 @@
 .v3-tab {
+	&.is-type-bar {
+		.v3-tab__header {
+			.v3-tab__line {
+				margin-top: $margin-small;
+			}
+		}
+	}
 	.v3-tab__header {
 		position: relative;
 		font-size: $font-size-default;
@@ -16,15 +23,15 @@
 		}
 		.v3-tab__track {
 			height: 1px;
-			margin-top: $margin-medium;
 			background-color: $border-color-default;
 		}
 		.v3-tab__line {
-			position: absolute;
+			position: relative;
 			bottom: 0;
 			left: 0;
 			width: 50px;
 			height: 2px;
+			margin-top: $margin-medium;
 			background-color: $primary-color;
 			transition: all 0.3s ease;
 		}

@@ -1,5 +1,10 @@
 <template>
-	<div class="v3-tab">
+	<div
+		:class="{
+			[`is-type-${props.type}`]: true,
+		}"
+		class="v3-tab"
+	>
 		<div ref="tabHeaderRef" class="v3-tab__header">
 			<ul class="v3-tab__nav">
 				<li
@@ -22,7 +27,7 @@
 				}"
 				class="v3-tab__line"
 			></div>
-			<div class="v3-tab__track"></div>
+			<div v-if="props.type === 'line'" class="v3-tab__track"></div>
 		</div>
 		<div class="v3-tab__body">
 			<slot></slot>
