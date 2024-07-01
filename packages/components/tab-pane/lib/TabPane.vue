@@ -1,7 +1,17 @@
 <template>
-	<div v-if="active" class="v3-tab-pane">
-		<slot></slot>
-	</div>
+	<transition
+		:css="false"
+		@before-enter="handleBeforeEnter"
+		@after-leave="handleBeforeEnter"
+		@enter="handleEnter"
+		@leave="handleLeave"
+		@after-enter="handleAfterEnter"
+		@before-leave="handleAfterEnter"
+	>
+		<div v-if="active" class="v3-tab-pane">
+			<slot></slot>
+		</div>
+	</transition>
 </template>
 <script lang="ts" setup>
 import { inject } from 'vue';
@@ -46,6 +56,31 @@ watch(
 	},
 	{ immediate: true },
 );
+
+function handleBeforeEnter(el: Element) {
+	const _el = el as HTMLElement;
+	_el.style.cssText += `opacity: 0; transform: translateX(20px);`;
+}
+function handleEnter(el: Element, done: Function) {
+	const _el = el as HTMLElement;
+	_el.style.cssText += `transition: all 0.3s ease;`;
+	if (tab) {
+		tab.updateTabHeight(_el.offsetHeight);
+		done();
+	}
+}
+function handleLeave(el: Element, done: Function) {
+	const _el = el as HTMLElement;
+	_el.style.cssText += `transition: all 0s ease;`;
+	if (tab) {
+		tab.updateTabHeight(0);
+		done();
+	}
+}
+function handleAfterEnter(el: Element) {
+	const _el = el as HTMLElement;
+	_el.style.cssText += `opacity: 1; transform: translateX(0);`;
+}
 </script>
 <style lang="scss" scoped>
 @import './TabPane.scss';

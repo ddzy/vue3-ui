@@ -37,6 +37,10 @@
 		}
 	}
 	.v3-tab__body {
+		overflow: hidden;
 		margin-top: $margin-medium;
+		transition: height 0.3s ease;
+		font-size: $font-size-default;
+		line-height: $line-height-default;
 	}
 }

@@ -26,6 +26,7 @@ export interface ITabPaneProps {
 
 export interface ITabProvide {
 	updateTabPanes: (v: ITabPaneProvide) => void;
+	updateTabHeight: (v: number) => void;
 }
 export interface ITabPaneProvide {
 	props: DeepReadonly<ITabPaneProps>;

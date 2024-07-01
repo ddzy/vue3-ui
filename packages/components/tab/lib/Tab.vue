@@ -29,7 +29,12 @@
 			></div>
 			<div v-if="props.type === 'line'" class="v3-tab__track"></div>
 		</div>
-		<div class="v3-tab__body">
+		<div
+			:style="{
+				height: `${tabHeight}px`,
+			}"
+			class="v3-tab__body"
+		>
 			<slot></slot>
 		</div>
 	</div>
@@ -88,6 +93,7 @@ function updateTabPanes(row: ITabPaneProvide) {
 }
 provide(TAB_PROVIDE, {
 	updateTabPanes,
+	updateTabHeight,
 });
 
 const tabLineStyle = reactive({
@@ -124,6 +130,12 @@ watch(
 	},
 	{ immediate: true },
 );
+
+// 由于 TabPane 的高度可能不一致，所以动态更新容器的高度，避免闪动
+const tabHeight = ref<number>(0);
+function updateTabHeight(newTabHeight: number) {
+	tabHeight.value = newTabHeight;
+}
 </script>
 <style lang="scss">
 @import './Tab.scss';
