@@ -1,4 +1,10 @@
-import { MaybeRefOrGetter, toValue, watch } from 'vue';
+import {
+	MaybeRefOrGetter,
+	getCurrentScope,
+	onScopeDispose,
+	toValue,
+	watch,
+} from 'vue';
 
 type IUseResizeObserver = (
 	/** 需要监听的 DOM 元素 */
@@ -35,7 +41,7 @@ const useResizeObserver: IUseResizeObserver = (
 			if (target) {
 				target = Array.isArray(target) ? target : [target];
 				target.forEach((t) => {
-					observer.observe(t, options);
+					observer.observe(t, defaultOptions);
 				});
 			}
 		},
@@ -44,6 +50,12 @@ const useResizeObserver: IUseResizeObserver = (
 
 	function stop() {
 		observer && observer.disconnect();
+	}
+
+	if (getCurrentScope()) {
+		onScopeDispose(() => {
+			stop();
+		});
 	}
 
 	return {

@@ -60,6 +60,7 @@ import { nextTick } from 'vue';
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
 import V3Icon from '@components/icon/main';
 import useElementBounding from '@hooks/useElementBounding';
+import useResizeObserver from '@hooks/useResizeObserver';
 import { ITabModelValue, ITabPaneProvide, ITabProps } from '@typings/index';
 
 defineOptions({
@@ -141,6 +142,9 @@ watch(
 	},
 	{ immediate: true },
 );
+useResizeObserver(tabHeaderRef, () => {
+	updateTabLine();
+});
 
 // 由于 TabPane 的高度可能不一致，所以动态更新容器的高度，避免闪动
 const tabHeight = ref<number>(0);
