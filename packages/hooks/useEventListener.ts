@@ -1,6 +1,7 @@
 import {
 	MaybeRefOrGetter,
 	UnwrapRef,
+	getCurrentScope,
 	onScopeDispose,
 	reactive,
 	toValue,
@@ -99,9 +100,11 @@ export default function useEventListener<
 		cleanups.length = 0;
 	}
 
-	onScopeDispose(() => {
-		stop();
-	});
+	if (getCurrentScope()) {
+		onScopeDispose(() => {
+			stop();
+		});
+	}
 
 	return stop;
 }
