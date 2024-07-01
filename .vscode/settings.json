@@ -2,8 +2,6 @@
 	"prettier.configPath": "prettier.config.js",
 	// 保存文件时触发
 	"editor.codeActionsOnSave": {
-		// 删除没有使用的导入，自动将 import 排序
-		// vscode 需安装插件：Remove Unused Imports
-		"source.removeUnusedImports": true
+		"source.removeUnusedImports": "explicit"
 	}
 }
