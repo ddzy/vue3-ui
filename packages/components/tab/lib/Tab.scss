@@ -16,7 +16,7 @@
 				background-color: #f7f8f9;
 				border: 1px solid $border-color-small;
 				border-bottom: none;
-				border-radius: $border-radius-width-small $border-radius-width-small 0 0 ;
+				border-radius: $border-radius-width-small $border-radius-width-small 0 0;
 				&:not(:first-child) {
 					margin-left: $margin-small;
 				}
@@ -44,14 +44,25 @@
 			cursor: pointer;
 			&.is-active {
 				color: $primary-color;
+				&.show-close-active {
+					.v3-tab__nav-close {
+						display: block;
+					}
+				}
+			}
+			&.show-close-always {
+				.v3-tab__nav-close {
+					display: block;
+				}
 			}
 			&:not(:first-child) {
 				margin-left: $margin-large-2;
 			}
 			.v3-tab__nav-close {
+				display: none;
 				margin-left: $margin-small;
 				border-radius: 50%;
-				font-size: 16px;
+				font-size: 1em;
 				&:hover {
 					background-color: $info-color-plain;
 				}

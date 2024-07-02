@@ -18,6 +18,7 @@ import { inject } from 'vue';
 import { watch } from 'vue';
 import { ref } from 'vue';
 import { readonly } from 'vue';
+import { onBeforeUnmount } from 'vue';
 
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
 import { ITabPaneProps, ITabPaneProvide, ITabProvide } from '@typings/index';
@@ -81,6 +82,12 @@ function handleAfterEnter(el: Element) {
 	const _el = el as HTMLElement;
 	_el.style.cssText += `opacity: 1; transform: translateX(0);`;
 }
+
+onBeforeUnmount(() => {
+	if (tab) {
+		tab.removeTabPanes(props.name);
+	}
+});
 </script>
 <style lang="scss" scoped>
 @import './TabPane.scss';

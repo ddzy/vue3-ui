@@ -8,7 +8,7 @@
 
 ```vue
 <template>
-	<v3-tab v-model="currentActiveTab" trigger="hover">
+	<v3-tab v-model="currentActiveTab">
 		<v3-tab-pane v-for="v in tabs" :key="v._id" :name="v._id" :title="v.name">{{
 			v.content
 		}}</v3-tab-pane>
@@ -72,7 +72,6 @@ import { ref } from 'vue';
 
 const trigger = ref<string>('click');
 </script>
-
 ```
 
 :::
@@ -104,7 +103,59 @@ import { ref } from 'vue';
 const type = ref<string>('card');
 const closable = ref<boolean>(false);
 </script>
+```
 
+:::
+
+## 可增减的页签
+
+:::demo
+
+```vue
+<template>
+	<v3-space :size="0">
+		<span>显示关闭按钮的时机：</span>
+		<v3-radio-group v-model="showClose">
+			<v3-radio label="always">always</v3-radio>
+			<v3-radio label="active">active</v3-radio>
+		</v3-radio-group>
+	</v3-space>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tab
+		v-model="currentActiveTab"
+		:showClose="showClose"
+		type="card"
+		addable
+		closable
+		@add="handleAdd"
+		@close="handleClose"
+	>
+		<v3-tab-pane v-for="v in tabs" :key="v" :name="v" :title="`标签${v}`">{{
+			v
+		}}</v3-tab-pane>
+	</v3-tab>
+</template>
+<script lang="ts" setup>
+import { nextTick, ref } from 'vue';
+
+const currentActiveTab = ref<number>(1);
+const tabs = ref<number[]>([1, 2, 3, 4]);
+const showClose = ref<string>('always');
+function handleAdd() {
+	// tabs.value.push(Math.max(...tabs.value) + 1);
+	const newTab = Math.max(...tabs.value) + 1;
+	const newTabs = tabs.value.concat(newTab);
+	tabs.value = newTabs;
+	currentActiveTab.value = newTab;
+}
+async function handleClose(name: number) {
+	const closedIndex = tabs.value.findIndex((v) => v === name);
+	let newActiveIndex = Math.max(closedIndex - 1, 0);
+	let newTabs = tabs.value.filter((v) => v !== name);
+	tabs.value = newTabs;
+	currentActiveTab.value = newTabs[newActiveIndex];
+}
+</script>
 ```
 
 :::
