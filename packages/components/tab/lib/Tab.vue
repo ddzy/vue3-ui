@@ -7,28 +7,40 @@
 		class="v3-tab"
 	>
 		<div ref="tabHeaderRef" class="v3-tab__header">
-			<ul class="v3-tab__nav">
-				<li
-					v-for="v in tabPanes"
-					:key="v.props.name"
+			<div class="v3-tab__nav">
+				<div
 					:class="{
-						'is-active': v.props.name === model,
-						[`show-close-${props.showClose}`]: true,
+						'can-scroll': canTabNavScroll,
+						'is-arrived-left': arrivedState.left,
+						'is-arrived-right': arrivedState.right,
 					}"
-					ref="tabNavRefs"
-					class="v3-tab__nav-item"
-					@click="props.trigger === 'click' && toggleTab(v)"
-					@mouseover="props.trigger === 'hover' && toggleTab(v)"
+					ref="tabNavWrapperRef"
+					class="v3-tab__nav-inner"
 				>
-					<span>{{ v.props.title }}</span>
-					<V3Icon
-						v-if="props.closable && props.type === 'card'"
-						class="v3-tab__nav-close"
-						type="CloseSmall"
-						@click.stop="handleClose(v)"
-					/>
-				</li>
-			</ul>
+					<ul ref="tabNavListRef" class="v3-tab__nav-list">
+						<li
+							v-for="v in tabPanes"
+							:key="v.props.name"
+							:class="{
+								'is-active': v.props.name === model,
+								[`show-close-${props.showClose}`]: true,
+							}"
+							ref="tabNavRefs"
+							class="v3-tab__nav-item"
+							@click="props.trigger === 'click' && toggleTab(v)"
+							@mouseover="props.trigger === 'hover' && toggleTab(v)"
+						>
+							<span>{{ v.props.title }}</span>
+							<V3Icon
+								v-if="props.closable && props.type === 'card'"
+								class="v3-tab__nav-close"
+								type="CloseSmall"
+								@click.stop="handleClose(v)"
+							/>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div
 				v-if="props.type !== 'card'"
 				:style="{
@@ -66,8 +78,11 @@ import { nextTick } from 'vue';
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
 import V3Icon from '@components/icon/main';
 import useElementBounding from '@hooks/useElementBounding';
+import useEventListener from '@hooks/useEventListener';
+import useResize from '@hooks/useResize';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { ITabModelValue, ITabPaneProvide, ITabProps } from '@typings/index';
+import { useScroll } from '@vueuse/core';
 
 defineOptions({
 	name: 'V3Tab',
@@ -81,7 +96,7 @@ const props = withDefaults(defineProps<ITabProps>(), {
 	/** 是否可关闭页签 */
 	closable: false,
 	/** 显示关闭按钮的时机 */
-	showClose: 'active',
+	showClose: 'always',
 	/** 页签大小 */
 	size: 'medium',
 	/** 切换页签的方式 */
@@ -163,6 +178,7 @@ watch(
 );
 useResizeObserver(tabHeaderRef, () => {
 	updateTabLine();
+	updateCanScroll();
 });
 watch(props, async () => {
 	await nextTick();
@@ -174,6 +190,23 @@ const tabHeight = ref<number>(0);
 function updateTabHeight(newTabHeight: number) {
 	tabHeight.value = newTabHeight;
 }
+
+// 页签头部是否可以滚动，便于添加首尾阴影效果
+const canTabNavScroll = ref<boolean>(false);
+function updateCanScroll() {
+	if (tabNavWrapperRef.value) {
+		canTabNavScroll.value =
+			tabNavWrapperRef.value.scrollWidth !== tabNavWrapperRef.value.offsetWidth;
+	}
+}
+
+const tabNavWrapperRef = ref<HTMLElement>();
+const tabNavListRef = ref<HTMLElement>();
+const { arrivedState } = useScroll(tabNavWrapperRef);
+// 页签切换器列表大小（个数）发生变化的时候
+useResizeObserver(tabNavListRef, () => {
+	updateCanScroll();
+});
 
 function handleAdd() {
 	emit('add');
