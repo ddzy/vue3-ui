@@ -19,16 +19,16 @@
 				>
 					<ul ref="tabNavListRef" class="v3-tab__nav-list">
 						<li
-							v-for="v in tabPanes"
+							v-for="(v, i) in tabPanes"
 							:key="v.props.name"
 							:class="{
 								'is-active': v.props.name === model,
 								[`show-close-${props.showClose}`]: true,
 							}"
-							ref="tabNavRefs"
+							ref="tabNavItemRefs"
 							class="v3-tab__nav-item"
-							@click="props.trigger === 'click' && toggleTab(v)"
-							@mouseover="props.trigger === 'hover' && toggleTab(v)"
+							@click="props.trigger === 'click' && toggleTab(v, i)"
+							@mouseover="props.trigger === 'hover' && toggleTab(v, i)"
 						>
 							<span>{{ v.props.title }}</span>
 							<V3Icon
@@ -147,19 +147,28 @@ const tabLineStyle = reactive({
 	width: 0,
 });
 const tabHeaderRef = ref<HTMLElement>();
-const tabNavRefs = ref<HTMLElement[]>([]);
-function toggleTab(row: ITabPaneProvide) {
+const tabNavItemRefs = ref<HTMLElement[]>([]);
+function toggleTab(row: ITabPaneProvide, rowIndex: number) {
 	model.value = row.props.name;
 }
-function updateTabLine() {
+async function updateTabLine() {
 	// 更新指示线的位置和大小
 	const header = tabHeaderRef.value;
-	const nav = tabNavRefs.value.find((v) => v.classList.contains('is-active'));
+	const nav = tabNavItemRefs.value.find((v) =>
+		v.classList.contains('is-active'),
+	);
 	if (header && nav) {
 		const headerRect = useElementBounding(header);
 		const navRect = useElementBounding(nav);
 		tabLineStyle.width = navRect.width.value || tabLineStyle.width;
 		tabLineStyle.left = navRect.left.value - headerRect.left.value;
+		await nextTick();
+		// 将当前活跃的tab切换器滚动到可视区域
+		nav.scrollIntoView({
+			behavior: 'smooth',
+			inline: props.centeredHeader ? 'center' : 'nearest',
+			block: 'nearest',
+		});
 	}
 }
 watch(
