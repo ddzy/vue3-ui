@@ -1,4 +1,9 @@
+$pacement-map: ();
+
 .v3-tab {
+	&.is-placement-left {
+	}
+
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
@@ -93,6 +98,7 @@
 			cursor: pointer;
 			&.is-active {
 				color: $primary-color;
+				background-color: #fff;
 				&.show-close-active {
 					.v3-tab__nav-close {
 						display: block;

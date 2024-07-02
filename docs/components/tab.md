@@ -159,3 +159,31 @@ async function handleClose(name: number) {
 ```
 
 :::
+
+## 不同方向
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<v3-radio-group v-model="placement">
+			<v3-radio label="top">top</v3-radio>
+			<v3-radio label="right">right</v3-radio>
+			<v3-radio label="bottom">bottom</v3-radio>
+			<v3-radio label="left">left</v3-radio>
+		</v3-radio-group>
+	</v3-space>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tab :placement="placement">
+		<v3-tab-pane v-for="v in 4" :key="v" :name="v" :title="`标签${v}`">{{
+			v
+		}}</v3-tab-pane>
+	</v3-tab>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const placement = ref<string>('left');
+</script>
+```

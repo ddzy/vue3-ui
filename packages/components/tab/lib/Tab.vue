@@ -3,6 +3,7 @@
 		:class="{
 			[`is-${props.type}`]: true,
 			[`is-closable`]: props.closable,
+			[`is-placement-${props.placement}`]: true,
 		}"
 		class="v3-tab"
 	>
@@ -78,8 +79,6 @@ import { nextTick } from 'vue';
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
 import V3Icon from '@components/icon/main';
 import useElementBounding from '@hooks/useElementBounding';
-import useEventListener from '@hooks/useEventListener';
-import useResize from '@hooks/useResize';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { ITabModelValue, ITabPaneProvide, ITabProps } from '@typings/index';
 import { useScroll } from '@vueuse/core';
