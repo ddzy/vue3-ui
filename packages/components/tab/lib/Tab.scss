@@ -156,7 +156,7 @@ $pacement-map: ();
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
-				margin-right: $margin-small;
+				margin-left: $margin-small;
 			}
 		}
 	}
@@ -193,10 +193,10 @@ $pacement-map: ();
 
 	.v3-tab__header {
 		position: relative;
-		font-size: $font-size-default;
 		display: flex;
-		flex-direction: row-reverse;
+		flex-direction: row;
 		flex-shrink: 0;
+		font-size: $font-size-default;
 		.v3-tab__nav {
 			position: relative;
 			flex-shrink: 0;
@@ -284,7 +284,7 @@ $pacement-map: ();
 			left: 0;
 			width: 2px;
 			height: 50px;
-			margin-right: $margin-medium;
+			margin-left: $margin-medium;
 			background-color: $primary-color;
 			transition: all 0.3s ease;
 		}
