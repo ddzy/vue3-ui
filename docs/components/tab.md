@@ -142,7 +142,6 @@ const currentActiveTab = ref<number>(1);
 const tabs = ref<number[]>([1, 2, 3, 4]);
 const showClose = ref<string>('always');
 function handleAdd() {
-	// tabs.value.push(Math.max(...tabs.value) + 1);
 	const newTab = Math.max(...tabs.value) + 1;
 	const newTabs = tabs.value.concat(newTab);
 	tabs.value = newTabs;

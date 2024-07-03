@@ -27,7 +27,11 @@
 							:class="{
 								'is-active': v.props.name === model,
 								[`show-close-${props.showClose}`]: true,
+								index: i,
+								[`name-${v.props.name}`]: true,
+								[`index-${i}`]: true,
 							}"
+							:data-name="v.props.name"
 							ref="tabNavItemRefs"
 							class="v3-tab__nav-item"
 							@click="props.trigger === 'click' && toggleTab(v, i)"
@@ -76,11 +80,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { reactive } from 'vue';
-import { ref } from 'vue';
-import { provide } from 'vue';
-import { watch } from 'vue';
-import { nextTick } from 'vue';
+import { nextTick, provide, reactive, ref, watch } from 'vue';
 
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
 import V3Icon from '@components/icon/main';
@@ -121,14 +121,15 @@ const emit = defineEmits<{
 const model = defineModel<ITabModelValue>();
 
 provide(TAB_PROVIDE, {
-	updateTabPanes,
+	addTabPane,
 	updateTabHeight,
-	removeTabPanes,
+	removeTabPane,
+	scrollIntoView,
 });
 
 // 存储所有 TabPane 的数据，统一调度管理
 const tabPanes = ref<ITabPaneProvide[]>([]);
-function updateTabPanes(row: ITabPaneProvide) {
+function addTabPane(row: ITabPaneProvide) {
 	// 默认选中第一个
 	if (typeof model.value === 'undefined') {
 		model.value = row.props.name;
@@ -143,7 +144,7 @@ function updateTabPanes(row: ITabPaneProvide) {
 	}
 }
 // 移除某个 TabPane
-function removeTabPanes(name: ITabModelValue) {
+function removeTabPane(name: ITabModelValue) {
 	tabPanes.value = tabPanes.value.filter((v) => v.props.name !== name);
 }
 
@@ -155,7 +156,7 @@ const tabLineStyle = reactive({
 });
 const tabHeaderRef = ref<HTMLElement>();
 const tabNavItemRefs = ref<HTMLElement[]>([]);
-function toggleTab(row: ITabPaneProvide, rowIndex: number) {
+async function toggleTab(row: ITabPaneProvide, rowIndex: number) {
 	model.value = row.props.name;
 }
 async function updateTabLine() {
@@ -179,12 +180,6 @@ async function updateTabLine() {
 			tabLineStyle.left = props.placement === 'left' ? 1 : -1;
 		}
 		await nextTick();
-		// 将当前活跃的tab切换器滚动到可视区域
-		nav.scrollIntoView({
-			behavior: 'smooth',
-			inline: props.centeredHeader ? 'center' : 'nearest',
-			block: 'nearest',
-		});
 	}
 }
 watch(
@@ -205,12 +200,33 @@ useResizeObserver(tabHeaderRef, () => {
 	updateTabLine();
 	updateCanScroll();
 });
-watch(props, async () => {
-	await nextTick();
-	updateTabLine();
-});
 
-// 由于 TabPane 的高度可能不一致，所以动态更新容器的高度，避免闪动
+/**
+ * 将当前活跃的切换器滚动到可视区域
+ * @param name TabPane 的 name 属性
+ */
+async function scrollIntoView(name: ITabModelValue) {
+	const tabNav = tabNavItemRefs.value.find((v) => {
+		return v.dataset.name == name;
+	});
+	if (tabNav) {
+		tabNav.scrollIntoView({
+			behavior: 'smooth',
+			inline: ['top', 'bottom'].includes(props.placement)
+				? props.centeredHeader
+					? 'center'
+					: 'nearest'
+				: 'nearest',
+			block: ['left', 'right'].includes(props.placement)
+				? props.centeredHeader
+					? 'center'
+					: 'nearest'
+				: 'nearest',
+		});
+	}
+}
+
+// 由于 TabPane 的高度可能不一致，所以切换tab时，动态更新容器的高度，避免闪动
 const tabHeight = ref<number>(0);
 function updateTabHeight(newTabHeight: number) {
 	tabHeight.value = newTabHeight;
@@ -228,8 +244,8 @@ function updateCanScroll() {
 const tabNavWrapperRef = ref<HTMLElement>();
 const tabNavListRef = ref<HTMLElement>();
 const { arrivedState } = useScroll(tabNavWrapperRef);
-// 页签切换器列表大小（个数）发生变化的时候
-useResizeObserver(tabNavListRef, () => {
+// 页签切换器列表大小发生变化的时候
+useResizeObserver(tabNavListRef, async () => {
 	updateCanScroll();
 });
 

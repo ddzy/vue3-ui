@@ -1,6 +1,5 @@
 <template>
 	<transition
-		:css="false"
 		@before-enter="handleBeforeEnter"
 		@after-leave="handleBeforeEnter"
 		@enter="handleEnter"
@@ -14,14 +13,10 @@
 	</transition>
 </template>
 <script lang="ts" setup>
-import { inject } from 'vue';
-import { watch } from 'vue';
-import { ref } from 'vue';
-import { readonly } from 'vue';
-import { onBeforeUnmount } from 'vue';
+import { inject, nextTick, onBeforeUnmount, readonly, ref, watch } from 'vue';
 
 import { TAB_PROVIDE } from '@common/constants/provide-symbol';
-import { ITabPaneProps, ITabPaneProvide, ITabProvide } from '@typings/index';
+import { ITabPaneProps, ITabProvide } from '@typings/index';
 
 defineOptions({
 	name: 'V3TabPane',
@@ -37,22 +32,34 @@ const props = withDefaults(defineProps<ITabPaneProps>(), {
 	/** 当前页签是否可关闭 */
 	closable: true,
 });
+const tab = inject<ITabProvide>(TAB_PROVIDE);
 
-// 将当前 tab-pane 的参数注入到 tab 中统一调度
 const active = ref<boolean>(false);
 function updateActive(newActive: boolean) {
 	active.value = newActive;
 }
 
-const tab = inject<ITabProvide>(TAB_PROVIDE);
 watch(
 	props,
-	() => {
+	async () => {
+		// 将当前 TabPane 的数据存储到 Tab 中，统一调度
 		if (tab) {
-			tab.updateTabPanes({
+			tab.addTabPane({
 				props: readonly(props),
 				updateActive,
 			});
+		}
+	},
+	{ immediate: true },
+);
+
+watch(
+	active,
+	async (newValue) => {
+		// 如果当前 TabPane 为显示状态，那么将对应的切换器滚动到可视区域
+		if (newValue && tab) {
+			await nextTick();
+			tab.scrollIntoView(props.name);
 		}
 	},
 	{ immediate: true },
@@ -83,9 +90,10 @@ function handleAfterEnter(el: Element) {
 	_el.style.cssText += `opacity: 1; transform: translateX(0);`;
 }
 
-onBeforeUnmount(() => {
+onBeforeUnmount(async () => {
+	// 当前 TabPane 隐藏时，从 Tab 中移除该 TabPane 的数据
 	if (tab) {
-		tab.removeTabPanes(props.name);
+		tab.removeTabPane(props.name);
 	}
 });
 </script>
