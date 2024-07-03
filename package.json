@@ -64,6 +64,7 @@
 		"@vueuse/integrations": "10.9.0",
 		"change-case": "4.1.2",
 		"decimal.js": "10.3.1",
+		"smooth-scroll-into-view-if-needed": "2.0.2",
 		"tippy.js": "6.3.7",
 		"vue": "3.4.27",
 		"vue-tippy": "v6"

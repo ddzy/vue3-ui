@@ -60,6 +60,7 @@ watch(
 		if (newValue && tab) {
 			await nextTick();
 			tab.scrollIntoView(props.name);
+			tab.updateTabLine();
 		}
 	},
 	{ immediate: true },

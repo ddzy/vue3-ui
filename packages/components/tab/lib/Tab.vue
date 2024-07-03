@@ -88,6 +88,7 @@ import useElementBounding from '@hooks/useElementBounding';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { ITabModelValue, ITabPaneProvide, ITabProps } from '@typings/index';
 import { useScroll } from '@vueuse/core';
+import scrollIntoViewPolyfill from 'smooth-scroll-into-view-if-needed';
 
 defineOptions({
 	name: 'V3Tab',
@@ -122,8 +123,9 @@ const model = defineModel<ITabModelValue>();
 
 provide(TAB_PROVIDE, {
 	addTabPane,
-	updateTabHeight,
 	removeTabPane,
+	updateTabHeight,
+	updateTabLine,
 	scrollIntoView,
 });
 
@@ -162,20 +164,20 @@ async function toggleTab(row: ITabPaneProvide, rowIndex: number) {
 async function updateTabLine() {
 	// 更新指示线的位置和大小
 	const header = tabHeaderRef.value;
-	const nav = tabNavItemRefs.value.find((v) =>
+	const navItem = tabNavItemRefs.value.find((v) =>
 		v.classList.contains('is-active'),
 	);
-	if (header && nav) {
+	if (header && navItem) {
 		const headerRect = useElementBounding(header);
-		const navRect = useElementBounding(nav);
+		const navItemRect = useElementBounding(navItem);
 		if (['top', 'bottom'].includes(props.placement)) {
-			tabLineStyle.width = navRect.width.value || tabLineStyle.width;
-			tabLineStyle.left = navRect.left.value - headerRect.left.value;
+			tabLineStyle.width = navItemRect.width.value || tabLineStyle.width;
+			tabLineStyle.left = navItemRect.left.value - headerRect.left.value;
 			tabLineStyle.height = 2;
 			tabLineStyle.top = props.placement === 'top' ? 1 : -1;
 		} else if (['left', 'right'].includes(props.placement)) {
-			tabLineStyle.height = navRect.height.value || tabLineStyle.height;
-			tabLineStyle.top = navRect.top.value - headerRect.top.value;
+			tabLineStyle.height = navItemRect.height.value || tabLineStyle.height;
+			tabLineStyle.top = navItemRect.top.value - headerRect.top.value;
 			tabLineStyle.width = 2;
 			tabLineStyle.left = props.placement === 'left' ? 1 : -1;
 		}
@@ -190,7 +192,6 @@ watch(
 			v.updateActive(false);
 			if (v.props.name === newValue) {
 				v.updateActive(true);
-				updateTabLine();
 			}
 		});
 	},
@@ -206,24 +207,29 @@ useResizeObserver(tabHeaderRef, () => {
  * @param name TabPane 的 name 属性
  */
 async function scrollIntoView(name: ITabModelValue) {
-	const tabNav = tabNavItemRefs.value.find((v) => {
-		return v.dataset.name == name;
-	});
-	if (tabNav) {
-		tabNav.scrollIntoView({
-			behavior: 'smooth',
-			inline: ['top', 'bottom'].includes(props.placement)
-				? props.centeredHeader
-					? 'center'
-					: 'nearest'
-				: 'nearest',
-			block: ['left', 'right'].includes(props.placement)
-				? props.centeredHeader
-					? 'center'
-					: 'nearest'
-				: 'nearest',
+	return new Promise(async (resolve, reject) => {
+		const tabNav = tabNavItemRefs.value.find((v) => {
+			return v.dataset.name == name;
 		});
-	}
+		if (tabNav) {
+			await scrollIntoViewPolyfill(tabNav, {
+				behavior: 'smooth',
+				inline: ['top', 'bottom'].includes(props.placement)
+					? props.centeredHeader
+						? 'center'
+						: 'nearest'
+					: 'nearest',
+				block: ['left', 'right'].includes(props.placement)
+					? props.centeredHeader
+						? 'center'
+						: 'nearest'
+					: 'nearest',
+			});
+			resolve(true);
+		} else {
+			resolve(false);
+		}
+	});
 }
 
 // 由于 TabPane 的高度可能不一致，所以切换tab时，动态更新容器的高度，避免闪动
@@ -241,11 +247,18 @@ function updateCanScroll() {
 	}
 }
 
-const tabNavWrapperRef = ref<HTMLElement>();
+const tabNavWrapperRef = ref<HTMLElement>(document.createElement('div'));
 const tabNavListRef = ref<HTMLElement>();
-const { arrivedState } = useScroll(tabNavWrapperRef);
+const { arrivedState } = useScroll(tabNavWrapperRef, {
+	throttle: 100,
+	onScroll() {
+		// 切换器列表滚动时，实时更新指示线
+		updateTabLine();
+	},
+});
 // 页签切换器列表大小发生变化的时候
 useResizeObserver(tabNavListRef, async () => {
+	updateTabLine();
 	updateCanScroll();
 });
 

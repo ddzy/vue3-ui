@@ -30,7 +30,8 @@ export interface ITabProvide {
 	addTabPane: (v: ITabPaneProvide) => void;
 	removeTabPane: (v: ITabModelValue) => void;
 	updateTabHeight: (v: number) => void;
-	scrollIntoView: (v: ITabModelValue) => void;
+	updateTabLine: () => void;
+	scrollIntoView: (v: ITabModelValue) => Promise<void>;
 }
 export interface ITabPaneProvide {
 	props: DeepReadonly<ITabPaneProps>;
