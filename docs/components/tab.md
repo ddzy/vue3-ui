@@ -193,7 +193,7 @@ async function handleClose(name: number) {
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const placement = ref<string>('left');
+const placement = ref<string>('top');
 const type = ref<string>('bar');
 </script>
 ```

@@ -171,12 +171,12 @@ async function updateTabLine() {
 			tabLineStyle.width = navRect.width.value || tabLineStyle.width;
 			tabLineStyle.left = navRect.left.value - headerRect.left.value;
 			tabLineStyle.height = 2;
-			tabLineStyle.top = 0;
+			tabLineStyle.top = props.placement === 'top' ? 1 : -1;
 		} else if (['left', 'right'].includes(props.placement)) {
 			tabLineStyle.height = navRect.height.value || tabLineStyle.height;
 			tabLineStyle.top = navRect.top.value - headerRect.top.value;
 			tabLineStyle.width = 2;
-			tabLineStyle.left = 0;
+			tabLineStyle.left = props.placement === 'left' ? 1 : -1;
 		}
 		await nextTick();
 		// 将当前活跃的tab切换器滚动到可视区域
