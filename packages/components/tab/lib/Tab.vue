@@ -167,12 +167,12 @@ async function updateTabLine() {
 	if (header && nav) {
 		const headerRect = useElementBounding(header);
 		const navRect = useElementBounding(nav);
-		if (props.placement === 'top') {
+		if (['top', 'bottom'].includes(props.placement)) {
 			tabLineStyle.width = navRect.width.value || tabLineStyle.width;
 			tabLineStyle.left = navRect.left.value - headerRect.left.value;
 			tabLineStyle.height = 2;
 			tabLineStyle.top = 0;
-		} else if (props.placement === 'left') {
+		} else if (['left', 'right'].includes(props.placement)) {
 			tabLineStyle.height = navRect.height.value || tabLineStyle.height;
 			tabLineStyle.top = navRect.top.value - headerRect.top.value;
 			tabLineStyle.width = 2;
