@@ -1,9 +1,7 @@
 $pacement-map: ();
 
-.v3-tab {
-	&.is-placement-left {
-	}
-
+.v3-tab.is-placement-top {
+	line-height: $line-height-default;
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
@@ -149,6 +147,157 @@ $pacement-map: ();
 		margin-top: $margin-medium;
 		transition: height 0.3s ease;
 		font-size: $font-size-default;
-		line-height: $line-height-default;
+	}
+}
+
+.v3-tab.is-placement-left {
+	display: flex;
+	line-height: $line-height-default;
+	&.is-bar {
+		.v3-tab__header {
+			.v3-tab__line {
+				margin-right: $margin-small;
+			}
+		}
+	}
+	&.is-card {
+		.v3-tab__header {
+			display: flex;
+			align-items: flex-end;
+			border-right: 1px solid $border-color-small;
+			.v3-tab__nav {
+				flex: 1;
+			}
+			.v3-tab__nav-item {
+				padding: $padding-medium $padding-large-2;
+				background-color: #f7f8f9;
+				border: 1px solid $border-color-small;
+				border-right: none;
+				border-radius: $border-radius-width-small 0 0 $border-radius-width-small;
+				&:not(:first-child) {
+					margin-top: $margin-small;
+				}
+			}
+			.v3-tab__add {
+				flex-shrink: 0;
+			}
+		}
+	}
+	&.is-card.is-closable {
+		.v3-tab__header {
+			.v3-tab__nav-item {
+				padding: $padding-medium;
+			}
+		}
+	}
+
+	.v3-tab__header {
+		position: relative;
+		font-size: $font-size-default;
+		display: flex;
+		flex-direction: row-reverse;
+		flex-shrink: 0;
+		.v3-tab__nav {
+			position: relative;
+			flex-shrink: 0;
+		}
+		.v3-tab__nav-inner {
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			&.can-scroll {
+				&:not(.is-arrived-left):not(.is-arrived-right) {
+					mask-size: 100% 100%;
+					mask-repeat: no-repeat;
+					mask-image: linear-gradient(
+						to bottom,
+						transparent 0,
+						#fff 5%,
+						#fff 95%,
+						transparent 100%
+					);
+				}
+				&.is-arrived-bottom {
+					mask-image: linear-gradient(
+						to bottom,
+						transparent 0%,
+						#fff 10%,
+						#fff 100%
+					);
+				}
+				&.is-arrived-top {
+					mask-image: linear-gradient(
+						to top,
+						transparent 0%,
+						#fff 10%,
+						#fff 100%
+					);
+				}
+			}
+		}
+		.v3-tab__nav-list {
+			display: flex;
+			flex-direction: column;
+		}
+		.v3-tab__nav-item {
+			flex-shrink: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			&.is-active {
+				color: $primary-color;
+				background-color: #fff;
+				&.show-close-active {
+					.v3-tab__nav-close {
+						display: block;
+					}
+				}
+			}
+			&.show-close-always {
+				.v3-tab__nav-close {
+					display: block;
+				}
+			}
+			&:not(:first-child) {
+				margin-top: $margin-large-2;
+			}
+			.v3-tab__nav-close {
+				display: none;
+				margin-left: $margin-small;
+				border-radius: 50%;
+				font-size: 1em;
+				&:hover {
+					background-color: $info-color-plain;
+				}
+			}
+		}
+
+		.v3-tab__track {
+			width: 1px;
+			height: 100%;
+			background-color: $border-color-default;
+		}
+		.v3-tab__line {
+			position: relative;
+			bottom: 0;
+			left: 0;
+			width: 2px;
+			height: 50px;
+			margin-right: $margin-medium;
+			background-color: $primary-color;
+			transition: all 0.3s ease;
+		}
+		.v3-tab__add {
+			padding: $padding-medium $padding-small;
+			font-size: 16px;
+			cursor: pointer;
+		}
+	}
+	.v3-tab__body {
+		flex: 1;
+		margin-left: $margin-medium;
+		transition: height 0.3s ease;
+		font-size: $font-size-default;
 	}
 }

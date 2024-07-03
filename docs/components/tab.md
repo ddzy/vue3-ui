@@ -160,13 +160,14 @@ async function handleClose(name: number) {
 
 :::
 
-## 不同方向
+## 不同方向和风格
 
 :::demo
 
 ```vue
 <template>
 	<v3-space>
+		<span>方向：</span>
 		<v3-radio-group v-model="placement">
 			<v3-radio label="top">top</v3-radio>
 			<v3-radio label="right">right</v3-radio>
@@ -174,8 +175,16 @@ async function handleClose(name: number) {
 			<v3-radio label="left">left</v3-radio>
 		</v3-radio-group>
 	</v3-space>
+	<v3-space>
+		<span>风格：</span>
+		<v3-radio-group v-model="type">
+			<v3-radio label="bar">bar</v3-radio>
+			<v3-radio label="line">line</v3-radio>
+			<v3-radio label="card">card</v3-radio>
+		</v3-radio-group>
+	</v3-space>
 	<v3-divider direction="horizontal"></v3-divider>
-	<v3-tab :placement="placement">
+	<v3-tab :placement="placement" :type="type" closable>
 		<v3-tab-pane v-for="v in 4" :key="v" :name="v" :title="`标签${v}`">{{
 			v
 		}}</v3-tab-pane>
@@ -185,5 +194,6 @@ async function handleClose(name: number) {
 import { ref } from 'vue';
 
 const placement = ref<string>('left');
+const type = ref<string>('bar');
 </script>
 ```

@@ -14,6 +14,8 @@
 						'can-scroll': canTabNavScroll,
 						'is-arrived-left': arrivedState.left,
 						'is-arrived-right': arrivedState.right,
+						'is-arrived-top': arrivedState.top,
+						'is-arrived-bottom': arrivedState.bottom,
 					}"
 					ref="tabNavWrapperRef"
 					class="v3-tab__nav-inner"
@@ -47,6 +49,8 @@
 				:style="{
 					width: `${tabLineStyle.width}px`,
 					left: `${tabLineStyle.left}px`,
+					height: `${tabLineStyle.height}px`,
+					top: `${tabLineStyle.top}px`,
 				}"
 				class="v3-tab__line"
 			></div>
@@ -61,7 +65,9 @@
 		</div>
 		<div
 			:style="{
-				height: `${tabHeight}px`,
+				height: ['top', 'bottom'].includes(props.placement)
+					? `${tabHeight}px`
+					: 'auto',
 			}"
 			class="v3-tab__body"
 		>
@@ -144,6 +150,8 @@ function removeTabPanes(name: ITabModelValue) {
 const tabLineStyle = reactive({
 	left: 0,
 	width: 0,
+	top: 0,
+	height: 0,
 });
 const tabHeaderRef = ref<HTMLElement>();
 const tabNavItemRefs = ref<HTMLElement[]>([]);
@@ -159,8 +167,17 @@ async function updateTabLine() {
 	if (header && nav) {
 		const headerRect = useElementBounding(header);
 		const navRect = useElementBounding(nav);
-		tabLineStyle.width = navRect.width.value || tabLineStyle.width;
-		tabLineStyle.left = navRect.left.value - headerRect.left.value;
+		if (props.placement === 'top') {
+			tabLineStyle.width = navRect.width.value || tabLineStyle.width;
+			tabLineStyle.left = navRect.left.value - headerRect.left.value;
+			tabLineStyle.height = 2;
+			tabLineStyle.top = 0;
+		} else if (props.placement === 'left') {
+			tabLineStyle.height = navRect.height.value || tabLineStyle.height;
+			tabLineStyle.top = navRect.top.value - headerRect.top.value;
+			tabLineStyle.width = 2;
+			tabLineStyle.left = 0;
+		}
 		await nextTick();
 		// 将当前活跃的tab切换器滚动到可视区域
 		nav.scrollIntoView({
