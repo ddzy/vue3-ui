@@ -121,12 +121,22 @@ const emit = defineEmits<{
 }>();
 const model = defineModel<ITabModelValue>();
 
+// 页签头部是否可以滚动，便于添加首尾阴影效果
+const canTabNavScroll = ref<boolean>(false);
+function updateCanScroll() {
+	if (tabNavWrapperRef.value) {
+		canTabNavScroll.value =
+			tabNavWrapperRef.value.scrollWidth !== tabNavWrapperRef.value.offsetWidth;
+	}
+}
+
 provide(TAB_PROVIDE, {
 	addTabPane,
 	removeTabPane,
 	updateTabHeight,
 	updateTabLine,
 	scrollIntoView,
+	canTabNavScroll,
 });
 
 // 存储所有 TabPane 的数据，统一调度管理
@@ -174,12 +184,14 @@ async function updateTabLine() {
 			tabLineStyle.width = navItemRect.width.value || tabLineStyle.width;
 			tabLineStyle.left = navItemRect.left.value - headerRect.left.value;
 			tabLineStyle.height = 2;
-			tabLineStyle.top = props.placement === 'top' ? 1 : -1;
+			tabLineStyle.top =
+				props.type === 'line' ? (props.placement === 'top' ? 1 : -1) : 0;
 		} else if (['left', 'right'].includes(props.placement)) {
 			tabLineStyle.height = navItemRect.height.value || tabLineStyle.height;
 			tabLineStyle.top = navItemRect.top.value - headerRect.top.value;
 			tabLineStyle.width = 2;
-			tabLineStyle.left = props.placement === 'left' ? 1 : -1;
+			tabLineStyle.left =
+				props.type === 'line' ? (props.placement === 'left' ? 1 : -1) : 0;
 		}
 		await nextTick();
 	}
@@ -236,15 +248,6 @@ async function scrollIntoView(name: ITabModelValue) {
 const tabHeight = ref<number>(0);
 function updateTabHeight(newTabHeight: number) {
 	tabHeight.value = newTabHeight;
-}
-
-// 页签头部是否可以滚动，便于添加首尾阴影效果
-const canTabNavScroll = ref<boolean>(false);
-function updateCanScroll() {
-	if (tabNavWrapperRef.value) {
-		canTabNavScroll.value =
-			tabNavWrapperRef.value.scrollWidth !== tabNavWrapperRef.value.offsetWidth;
-	}
 }
 
 const tabNavWrapperRef = ref<HTMLElement>(document.createElement('div'));

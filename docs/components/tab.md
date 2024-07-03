@@ -44,7 +44,7 @@ const tabs = [
 		content: `大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。江山如画，一时多少豪杰。`,
 	},
 ];
-const currentActiveTab = ref<number>(1);
+const currentActiveTab = ref<number>(5);
 </script>
 ```
 

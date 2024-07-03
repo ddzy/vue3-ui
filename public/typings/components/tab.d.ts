@@ -1,4 +1,4 @@
-import { DeepReadonly } from 'vue';
+import { DeepReadonly, Ref } from 'vue';
 
 export interface ITabProps {
 	modelValue?: ITabModelValue;
@@ -32,6 +32,7 @@ export interface ITabProvide {
 	updateTabHeight: (v: number) => void;
 	updateTabLine: () => void;
 	scrollIntoView: (v: ITabModelValue) => Promise<void>;
+	canTabNavScroll: Ref<boolean>;
 }
 export interface ITabPaneProvide {
 	props: DeepReadonly<ITabPaneProps>;

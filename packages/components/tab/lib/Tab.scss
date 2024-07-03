@@ -41,6 +41,7 @@
 
 	.v3-tab__header {
 		position: relative;
+		overflow: hidden;
 		font-size: $font-size-default;
 		.v3-tab__nav {
 			position: relative;
