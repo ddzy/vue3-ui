@@ -6,6 +6,9 @@ import {
 	watch,
 } from 'vue';
 
+import { noop } from '.';
+import useSupport from './useSupport';
+
 type IUseResizeObserver = (
 	/** 需要监听的 DOM 元素 */
 	target: MaybeRefOrGetter<Element | Element[] | undefined>,
@@ -33,6 +36,13 @@ const useResizeObserver: IUseResizeObserver = (
 	const defaultOptions: IUseResizeObserverOptions = {
 		...options,
 	};
+	const isSupport = useSupport(() => !!globalThis.ResizeObserver);
+	if (!isSupport.value) {
+		return {
+			stop: noop,
+		};
+	}
+
 	const observer = new ResizeObserver(callback);
 
 	watch(
