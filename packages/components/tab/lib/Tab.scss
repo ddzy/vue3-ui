@@ -595,6 +595,12 @@
 		font-size: $font-size-medium;
 	}
 
+	&:not(.has-header) {
+		.v3-tab__body {
+			margin: 0;
+		}
+	}
+
 	.v3-tab__header {
 		.v3-tab__nav-item {
 			user-select: none;

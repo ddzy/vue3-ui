@@ -5,10 +5,11 @@
 			[`is-size-${props.size}`]: true,
 			[`is-closable`]: props.closable,
 			[`is-placement-${props.placement}`]: true,
+			'has-header': props.showHeader,
 		}"
 		class="v3-tab"
 	>
-		<div ref="tabHeaderRef" class="v3-tab__header">
+		<div v-if="showHeader" ref="tabHeaderRef" class="v3-tab__header">
 			<div class="v3-tab__nav">
 				<div
 					:class="{

@@ -234,3 +234,33 @@ const tabs = ref([
 ```
 
 :::
+
+## 不显示切换器
+
+可以通过将`showHeader`设置为`false`，从而不显示切换器，可以自定义自己的切换器
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<v3-radio-group v-model="currentActiveTab">
+			<v3-radio v-for="v in tabs" :label="v">{{ v }}</v3-radio>
+		</v3-radio-group>
+	</v3-space>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tab v-model="currentActiveTab" :showHeader="false">
+		<v3-tab-pane v-for="v in tabs" :key="v" :name="v" :title="`标签${v}`">{{
+			v
+		}}</v3-tab-pane>
+	</v3-tab>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const tabs = ref(['北京', '上海', '广州', '深圳']);
+const currentActiveTab = ref('北京');
+</script>
+```
+
+:::
