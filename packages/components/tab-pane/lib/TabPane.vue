@@ -59,9 +59,6 @@ watch(
 		// 如果当前 TabPane 为显示状态，那么将对应的切换器滚动到可视区域
 		if (newValue && tab) {
 			await nextTick();
-			if (tab.canTabNavScroll.value) {
-				tab.scrollIntoView(props.name);
-			}
 			tab.updateTabLine();
 		}
 	},

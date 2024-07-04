@@ -125,8 +125,11 @@ const model = defineModel<ITabModelValue>();
 const canTabNavScroll = ref<boolean>(false);
 function updateCanScroll() {
 	if (tabNavWrapperRef.value) {
-		canTabNavScroll.value =
-			tabNavWrapperRef.value.scrollWidth !== tabNavWrapperRef.value.offsetWidth;
+		if (['top', 'bottom'].includes(props.placement)) {
+			canTabNavScroll.value = !!tabNavWrapperRef.value.scrollLeft;
+		} else {
+			canTabNavScroll.value = !!tabNavWrapperRef.value.scrollTop;
+		}
 	}
 }
 
@@ -253,7 +256,7 @@ function updateTabHeight(newTabHeight: number) {
 const tabNavWrapperRef = ref<HTMLElement>(document.createElement('div'));
 const tabNavListRef = ref<HTMLElement>();
 const { arrivedState } = useScroll(tabNavWrapperRef, {
-	throttle: 100,
+	throttle: 200,
 	onScroll() {
 		// 切换器列表滚动时，实时更新指示线
 		updateTabLine();
