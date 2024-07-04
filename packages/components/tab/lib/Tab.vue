@@ -26,6 +26,7 @@
 							:key="v.props.name"
 							:class="{
 								'is-active': v.props.name === model,
+								'is-disabled': v.props.disabled,
 								[`show-close-${props.showClose}`]: true,
 								index: i,
 								[`name-${v.props.name}`]: true,
@@ -34,8 +35,16 @@
 							:data-name="v.props.name"
 							ref="tabNavItemRefs"
 							class="v3-tab__nav-item"
-							@click="props.trigger === 'click' && toggleTab(v, i)"
-							@mouseover="props.trigger === 'hover' && toggleTab(v, i)"
+							@click="
+								props.trigger === 'click' &&
+									!v.props.disabled &&
+									toggleTab(v, i)
+							"
+							@mouseover="
+								props.trigger === 'hover' &&
+									!v.props.disabled &&
+									toggleTab(v, i)
+							"
 						>
 							<span>{{ v.props.title }}</span>
 							<V3Icon

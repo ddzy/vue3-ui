@@ -196,3 +196,58 @@ const placement = ref<string>('top');
 const type = ref<string>('bar');
 </script>
 ```
+
+:::
+
+## 禁用状态
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<v3-radio-group v-model="type">
+			<v3-radio label="bar">bar</v3-radio>
+			<v3-radio label="line">line</v3-radio>
+			<v3-radio label="card">card</v3-radio>
+		</v3-radio-group>
+	</v3-space>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tab v-model="currentActiveTab" :type="type">
+		<v3-tab-pane
+			v-for="v in tabs"
+			:key="v.name"
+			:name="v.name"
+			:title="`标签${v.name}`"
+			:disabled="v.disabled"
+			>{{ v.name }}</v3-tab-pane
+		>
+	</v3-tab>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const currentActiveTab = ref(2);
+const type = ref<string>('card');
+const tabs = ref([
+	{
+		name: 1,
+		disabled: false,
+	},
+	{
+		name: 2,
+		disabled: true,
+	},
+	{
+		name: 3,
+		disabled: false,
+	},
+	{
+		name: 4,
+		disabled: false,
+	},
+]);
+</script>
+```
+
+:::

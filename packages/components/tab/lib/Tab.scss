@@ -1,8 +1,3 @@
-.v3-tab {
-	line-height: $line-height-default;
-	font-size: $font-size-default;
-}
-
 .v3-tab.is-placement-top {
 	&.is-bar {
 		.v3-tab__header {
@@ -588,5 +583,19 @@
 		flex: 1;
 		margin-left: $margin-medium;
 		transition: height 0.3s ease;
+	}
+}
+
+.v3-tab {
+	line-height: $line-height-default;
+	font-size: $font-size-default;
+	.v3-tab__header {
+		.v3-tab__nav-item {
+			user-select: none;
+			&.is-disabled {
+				cursor: not-allowed;
+				opacity: 0.5;
+			}
+		}
 	}
 }

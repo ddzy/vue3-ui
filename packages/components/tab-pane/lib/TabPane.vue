@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<ITabPaneProps>(), {
 	/** 页签的唯一标识名称 */
 	name: 0,
 	/** 页签的标题 */
-	title: '0',
+	title: '',
 	/** 是否禁用当前页签 */
 	disabled: false,
 	/** 当前页签是否可关闭 */
