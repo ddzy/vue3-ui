@@ -138,8 +138,8 @@ const closable = ref<boolean>(false);
 <script lang="ts" setup>
 import { nextTick, ref } from 'vue';
 
-const currentActiveTab = ref<number>(1);
-const tabs = ref<number[]>([1, 2, 3, 4]);
+const currentActiveTab = ref<number>(5);
+const tabs = ref<number[]>([1, 2, 3, 4, 5, 6, 7, 8]);
 const showClose = ref<string>('always');
 function handleAdd() {
 	const newTab = Math.max(...tabs.value) + 1;

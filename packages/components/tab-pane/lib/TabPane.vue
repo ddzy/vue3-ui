@@ -53,13 +53,18 @@ watch(
 	{ immediate: true },
 );
 
-watch(active, async (newValue) => {
-	// 如果当前 TabPane 为显示状态，那么同步更新指示线的位置大小
-	if (newValue && tab) {
-		await nextTick();
-		tab.updateTabLine();
-	}
-});
+watch(
+	active,
+	async (newValue) => {
+		// 如果当前 TabPane 为显示状态，那么同步更新指示线的位置大小
+		if (newValue && tab) {
+			await nextTick();
+			tab.updateTabLine();
+			tab.scrollIntoView(props.name);
+		}
+	},
+	{ immediate: true },
+);
 
 function handleBeforeEnter(el: Element) {
 	const _el = el as HTMLElement;

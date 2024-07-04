@@ -88,7 +88,6 @@ import useElementBounding from '@hooks/useElementBounding';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { ITabModelValue, ITabPaneProvide, ITabProps } from '@typings/index';
 import { useScroll } from '@vueuse/core';
-import scrollIntoViewPolyfill from 'smooth-scroll-into-view-if-needed';
 
 defineOptions({
 	name: 'V3Tab',
@@ -218,46 +217,11 @@ useResizeObserver(tabHeaderRef, () => {
 	updateCanScroll();
 });
 
-/**
- * 将当前活跃的切换器滚动到可视区域
- * @param name TabPane 的 name 属性
- */
-async function scrollIntoView(name: ITabModelValue) {
-	return new Promise(async (resolve, reject) => {
-		const tabNav = tabNavItemRefs.value.find((v) => {
-			return v.dataset.name == name;
-		});
-		if (tabNav) {
-			await scrollIntoViewPolyfill(tabNav, {
-				behavior: 'smooth',
-				inline: ['top', 'bottom'].includes(props.placement)
-					? props.centeredHeader
-						? 'center'
-						: 'nearest'
-					: 'nearest',
-				block: ['left', 'right'].includes(props.placement)
-					? props.centeredHeader
-						? 'center'
-						: 'nearest'
-					: 'nearest',
-			});
-			resolve(true);
-		} else {
-			resolve(false);
-		}
-	});
-}
-
-// 由于 TabPane 的高度可能不一致，所以切换tab时，动态更新容器的高度，避免闪动
-const tabHeight = ref<number>(0);
-function updateTabHeight(newTabHeight: number) {
-	tabHeight.value = newTabHeight;
-}
-
 const tabNavWrapperRef = ref<HTMLElement>(document.createElement('div'));
 const tabNavListRef = ref<HTMLElement>();
-const { arrivedState } = useScroll(tabNavWrapperRef, {
-	throttle: 200,
+const { arrivedState, x, y } = useScroll(tabNavWrapperRef, {
+	throttle: 100,
+	behavior: 'smooth',
 	onScroll() {
 		// 切换器列表滚动时，实时更新指示线
 		updateTabLine();
@@ -269,6 +233,43 @@ useResizeObserver(tabNavListRef, async () => {
 	updateTabLine();
 	updateCanScroll();
 });
+
+// 由于 TabPane 的高度可能不一致，所以切换tab时，动态更新容器的高度，避免闪动
+const tabHeight = ref<number>(0);
+function updateTabHeight(newTabHeight: number) {
+	tabHeight.value = newTabHeight;
+}
+
+/**
+ * 将当前活跃的切换器滚动到可视区域
+ * @param name TabPane 的 name 属性
+ */
+async function scrollIntoView(name: ITabModelValue) {
+	const navWrapper = tabNavWrapperRef.value;
+	const navItem = tabNavItemRefs.value.find((v) => {
+		return v.dataset.name == name;
+	});
+	if (navWrapper && navItem) {
+		const navWrapperRect = useElementBounding(navWrapper);
+		const navItemRect = useElementBounding(navItem);
+
+		if (['top', 'bottom'].includes(props.placement)) {
+			x.value =
+				navItem.offsetLeft -
+				navWrapperRect.width.value +
+				(props.centeredHeader
+					? navWrapperRect.width.value / 2 + navItemRect.width.value / 2
+					: navItemRect.width.value + navItemRect.width.value / 2);
+		} else {
+			y.value =
+				navItem.offsetHeight -
+				navWrapperRect.height.value +
+				(props.centeredHeader
+					? navWrapperRect.height.value / 2 + navItemRect.height.value / 2
+					: navItemRect.height.value + navItemRect.height.value / 2);
+		}
+	}
+}
 
 async function handleAdd() {
 	emit('add');
