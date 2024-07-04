@@ -264,3 +264,28 @@ const currentActiveTab = ref('北京');
 ```
 
 :::
+
+## API
+
+### Tab Props
+
+| 参数名         | 说明                                          | 类型    | 可选值                      | 默认值 | 是否必填 |
+| -------------- | --------------------------------------------- | ------- | --------------------------- | ------ | -------- |
+| type           | 页签类型                                      | string  | bar / line / card           | bar    |          |
+| addable        | 是否可动态增加页签，只当`type = 'card'`时有效 | boolean |                             | false  |          |
+| closable       | 是否可关闭页签，只当`type = 'card'`时有效     | boolean |                             | false  |          |
+| showClose      | 显示关闭按钮的时机，只当`type = 'card'`时有效 | string  | always / hover              | always |          |
+| size           | 页签大小                                      | string  | small / medium / large      | medium |          |
+| trigger        | 切换页签的方式                                | string  | click / hover               | click  |          |
+| placement      | 页签切换器的位置                              | string  | top / right / bottom / left | top    |          |
+| showHeader     | 是否显示页签切换器                            | boolean |                             | true   |          |
+| centeredHeader | 当前活跃的页签切换器项是否始终保持居中        | boolean |                             | true   |          |
+
+### TabPane Props
+
+| 参数名   | 说明               | 类型            | 可选值 | 默认值 | 是否必填 |
+| -------- | ------------------ | --------------- | ------ | ------ | -------- |
+| name     | 页签的唯一标识     | string / number |        | 0      |          |
+| title    | 页签的标题         | string          |        | ''     |          |
+| disabled | 是否禁用当前页签   | boolean         |        | false  |          |
+| closable | 当前页签是否可关闭 | boolean         |        | true   |          |
