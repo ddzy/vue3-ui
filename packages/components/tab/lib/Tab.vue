@@ -133,12 +133,16 @@ const model = defineModel<ITabModelValue>();
 
 // 页签头部是否可以滚动，便于添加首尾阴影效果
 const canTabNavScroll = ref<boolean>(false);
-function updateCanScroll() {
+async function updateCanScroll() {
 	if (tabNavWrapperRef.value) {
 		if (['top', 'bottom'].includes(props.placement)) {
-			canTabNavScroll.value = !!tabNavWrapperRef.value.scrollLeft;
+			canTabNavScroll.value =
+				tabNavWrapperRef.value.scrollWidth > tabNavWrapperRef.value.clientWidth;
 		} else {
-			canTabNavScroll.value = !!tabNavWrapperRef.value.scrollTop;
+			canTabNavScroll.value =
+				tabNavWrapperRef.value.scrollHeight -
+					tabNavWrapperRef.value.clientHeight >
+				1;
 		}
 	}
 }
@@ -236,7 +240,7 @@ const { arrivedState, x, y } = useScroll(tabNavWrapperRef, {
 	onScroll() {
 		// 切换器列表滚动时，实时更新指示线
 		updateTabLine();
-		updateCanScroll();
+		canTabNavScroll.value = true;
 	},
 });
 // 页签切换器列表大小发生变化的时候
