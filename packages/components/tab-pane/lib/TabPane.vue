@@ -53,17 +53,13 @@ watch(
 	{ immediate: true },
 );
 
-watch(
-	active,
-	async (newValue) => {
-		// 如果当前 TabPane 为显示状态，那么将对应的切换器滚动到可视区域
-		if (newValue && tab) {
-			await nextTick();
-			tab.updateTabLine();
-		}
-	},
-	{ immediate: true },
-);
+watch(active, async (newValue) => {
+	// 如果当前 TabPane 为显示状态，那么同步更新指示线的位置大小
+	if (newValue && tab) {
+		await nextTick();
+		tab.updateTabLine();
+	}
+});
 
 function handleBeforeEnter(el: Element) {
 	const _el = el as HTMLElement;

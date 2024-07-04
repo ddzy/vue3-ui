@@ -1,5 +1,9 @@
-.v3-tab.is-placement-top {
+.v3-tab {
 	line-height: $line-height-default;
+	font-size: $font-size-default;
+}
+
+.v3-tab.is-placement-top {
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
@@ -42,7 +46,6 @@
 	.v3-tab__header {
 		position: relative;
 		overflow: hidden;
-		font-size: $font-size-default;
 		.v3-tab__nav {
 			position: relative;
 		}
@@ -140,13 +143,11 @@
 		overflow: hidden;
 		margin-top: $margin-medium;
 		transition: height 0.3s ease;
-		font-size: $font-size-default;
 	}
 }
 
 .v3-tab.is-placement-left {
 	display: flex;
-	line-height: $line-height-default;
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
@@ -189,7 +190,6 @@
 		position: relative;
 		display: flex;
 		flex-shrink: 0;
-		font-size: $font-size-default;
 		.v3-tab__nav {
 			position: relative;
 			flex-shrink: 0;
@@ -291,14 +291,12 @@
 		flex: 1;
 		margin-left: $margin-medium;
 		transition: height 0.3s ease;
-		font-size: $font-size-default;
 	}
 }
 
 .v3-tab.is-placement-bottom {
 	display: flex;
 	flex-direction: column-reverse;
-	line-height: $line-height-default;
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
@@ -340,7 +338,6 @@
 		display: flex;
 		flex-direction: column-reverse;
 		position: relative;
-		font-size: $font-size-default;
 		.v3-tab__nav {
 			position: relative;
 		}
@@ -442,14 +439,12 @@
 		overflow: hidden;
 		margin-bottom: $margin-medium;
 		transition: height 0.3s ease;
-		font-size: $font-size-default;
 	}
 }
 
 .v3-tab.is-placement-right {
 	display: flex;
 	flex-direction: row-reverse;
-	line-height: $line-height-default;
 	&.is-bar {
 		.v3-tab__header {
 			.v3-tab__line {
@@ -492,7 +487,6 @@
 		display: flex;
 		flex-direction: row-reverse;
 		flex-shrink: 0;
-		font-size: $font-size-default;
 		.v3-tab__nav {
 			position: relative;
 			flex-shrink: 0;
@@ -594,6 +588,5 @@
 		flex: 1;
 		margin-left: $margin-medium;
 		transition: height 0.3s ease;
-		font-size: $font-size-default;
 	}
 }

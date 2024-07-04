@@ -173,6 +173,7 @@ const tabHeaderRef = ref<HTMLElement>();
 const tabNavItemRefs = ref<HTMLElement[]>([]);
 async function toggleTab(row: ITabPaneProvide, rowIndex: number) {
 	model.value = row.props.name;
+	await nextTick();
 }
 async function updateTabLine() {
 	// 更新指示线的位置和大小
@@ -260,6 +261,7 @@ const { arrivedState } = useScroll(tabNavWrapperRef, {
 	onScroll() {
 		// 切换器列表滚动时，实时更新指示线
 		updateTabLine();
+		updateCanScroll();
 	},
 });
 // 页签切换器列表大小发生变化的时候
@@ -268,8 +270,9 @@ useResizeObserver(tabNavListRef, async () => {
 	updateCanScroll();
 });
 
-function handleAdd() {
+async function handleAdd() {
 	emit('add');
+	await nextTick();
 }
 function handleClose(row: ITabPaneProvide) {
 	emit('close', row.props.name);
