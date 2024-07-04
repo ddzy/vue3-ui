@@ -2,6 +2,7 @@
 	<div
 		:class="{
 			[`is-${props.type}`]: true,
+			[`is-size-${props.size}`]: true,
 			[`is-closable`]: props.closable,
 			[`is-placement-${props.placement}`]: true,
 		}"

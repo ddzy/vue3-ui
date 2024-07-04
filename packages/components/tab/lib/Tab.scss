@@ -585,6 +585,16 @@
 .v3-tab {
 	line-height: $line-height-default;
 	font-size: $font-size-default;
+
+	&.is-size-small {
+		line-height: $line-height-default;
+		font-size: $font-size-small;
+	}
+	&.is-size-large {
+		line-height: $line-height-large;
+		font-size: $font-size-medium;
+	}
+
 	.v3-tab__header {
 		.v3-tab__nav-item {
 			user-select: none;

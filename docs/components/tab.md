@@ -76,37 +76,6 @@ const trigger = ref<string>('click');
 
 :::
 
-## 不同风格的页签
-
-:::demo
-
-```vue
-<template>
-	<v3-space>
-		<v3-radio-group v-model="type">
-			<v3-radio label="bar">bar</v3-radio>
-			<v3-radio label="line">line</v3-radio>
-			<v3-radio label="card">card</v3-radio>
-		</v3-radio-group>
-		<v3-checkbox v-model="closable">是否可关闭</v3-checkbox>
-	</v3-space>
-	<v3-divider direction="horizontal"></v3-divider>
-	<v3-tab :type="type" :closable="closable">
-		<v3-tab-pane v-for="v in 4" :key="v" :name="v" :title="`标签${v}`">{{
-			v
-		}}</v3-tab-pane>
-	</v3-tab>
-</template>
-<script lang="ts" setup>
-import { ref } from 'vue';
-
-const type = ref<string>('card');
-const closable = ref<boolean>(false);
-</script>
-```
-
-:::
-
 ## 可增减的页签
 
 :::demo
@@ -164,7 +133,7 @@ async function handleClose(name: number) {
 
 :::
 
-## 不同方向和风格
+## 不同风格的页签
 
 :::demo
 
@@ -187,8 +156,16 @@ async function handleClose(name: number) {
 			<v3-radio label="card">card</v3-radio>
 		</v3-radio-group>
 	</v3-space>
+	<v3-space>
+		<span>大小：</span>
+		<v3-radio-group v-model="size">
+			<v3-radio label="small">small</v3-radio>
+			<v3-radio label="medium">medium</v3-radio>
+			<v3-radio label="large">large</v3-radio>
+		</v3-radio-group>
+	</v3-space>
 	<v3-divider direction="horizontal"></v3-divider>
-	<v3-tab :placement="placement" :type="type" closable>
+	<v3-tab :placement="placement" :type="type" :size="size">
 		<v3-tab-pane v-for="v in 4" :key="v" :name="v" :title="`标签${v}`">{{
 			v
 		}}</v3-tab-pane>
@@ -199,6 +176,7 @@ import { ref } from 'vue';
 
 const placement = ref<string>('top');
 const type = ref<string>('bar');
+const size = ref<string>('medium');
 </script>
 ```
 
