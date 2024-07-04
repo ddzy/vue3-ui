@@ -130,9 +130,14 @@ const closable = ref<boolean>(false);
 		@add="handleAdd"
 		@close="handleClose"
 	>
-		<v3-tab-pane v-for="v in tabs" :key="v" :name="v" :title="`标签${v}`">{{
-			v
-		}}</v3-tab-pane>
+		<v3-tab-pane
+			v-for="(v, i) in tabs"
+			:key="v"
+			:name="v"
+			:title="`标签${v}`"
+			:closable="i % 2 === 0"
+			>{{ v }}</v3-tab-pane
+		>
 	</v3-tab>
 </template>
 <script lang="ts" setup>

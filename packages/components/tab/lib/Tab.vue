@@ -48,7 +48,9 @@
 						>
 							<span>{{ v.props.title }}</span>
 							<V3Icon
-								v-if="props.closable && props.type === 'card'"
+								v-if="
+									props.closable && v.props.closable && props.type === 'card'
+								"
 								class="v3-tab__nav-close"
 								type="CloseSmall"
 								@click.stop="handleClose(v)"
