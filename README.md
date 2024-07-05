@@ -28,7 +28,9 @@ pnpm add @felibrary/vue3-ui
 
 ```ts
 import { createApp } from 'vue';
+
 import Vue3UI from '@felibrary/vue3-ui';
+
 import App from './App.vue';
 
 const app = createApp(App);
@@ -94,3 +96,4 @@ app.use(V3Card);
 |      Drawer      |       抽屉       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |       Back       |       返回       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |      Image       |       图片       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|       Tab        |      标签页      | :white_check_mark: | :white_check_mark: | :white_check_mark: |
