@@ -4,7 +4,9 @@
 			[`is-${props.type}`]: true,
 			[`is-size-${props.size}`]: true,
 			[`is-closable`]: props.closable,
+			[`is-addable`]: props.addable,
 			[`is-placement-${props.placement}`]: true,
+			[`is-trigger-${props.trigger}`]: true,
 			'has-header': props.showHeader,
 		}"
 		class="v3-tab"
@@ -290,7 +292,6 @@ async function scrollIntoView(name: ITabModelValue) {
 
 async function handleAdd() {
 	emit('add');
-	await nextTick();
 }
 function handleClose(row: ITabPaneProvide) {
 	emit('close', row.props.name);

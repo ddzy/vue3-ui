@@ -14,6 +14,8 @@ import useResizeObserver from './useResizeObserver';
 import useSupport from './useSupport';
 import useThrottle from './useThrottle';
 
+const noop = () => {};
+
 export {
 	useClipboard,
 	useDebounce,
@@ -30,4 +32,5 @@ export {
 	useResizeObserver,
 	useSupport,
 	useThrottle,
+	noop,
 };
