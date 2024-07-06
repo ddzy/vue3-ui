@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
 import { nextTick, reactive } from 'vue';
-import { V3Input, V3Icon } from '@components/main';
+
+import { V3Icon, V3Input } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Input 组件测试：', () => {
 	test('V3Input 组件接收【type】，指定输入框类型：', async () => {

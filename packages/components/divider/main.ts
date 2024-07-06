@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Divider from './lib/Divider.vue';
 
 const install = function (app: App) {

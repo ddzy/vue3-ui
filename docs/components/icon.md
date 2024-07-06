@@ -1,7 +1,7 @@
 # Icon 图标
 
 :::warning
-`vue3-ui` 底层图标采用 [IconPark](https://iconpark.oceanengine.com/home)，以下仅列举部分图标，更多图标可参考：[官方图标库](https://iconpark.oceanengine.com/official)
+`vue3-ui` 底层图标采用 [IconPark](https://iconpark.oceanengine.com/home)
 :::
 
 ## 图标集合
@@ -11,7 +11,7 @@
   <div :class="$style['icon-wrapper']">
     <table :class="$style['icon-table']">
       <tr v-for="(v, i) in Math.ceil(state.icons.length / state.columns)" :key="i">
-        <td v-for="vv in (state.icons.slice(i * state.columns, i * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="copy(vv)">
+        <td v-for="vv in (state.icons.slice(i * state.columns, i * state.columns + state.columns))" :key="vv._id" :class="$style.td"  @click="handleCopy(vv)">
           <div :class="$style['icon-item']">
             <v3-icon :class="$style['icon-id']" :type="vv._id" size="22"></v3-icon>
             <span :class="$style['icon-name']">{{ vv._id }}</span>
@@ -23,8 +23,8 @@
 </div>
 
 <script lang="ts" setup>
-  import { reactive, getCurrentInstance } from 'vue';
-  import { useClipboard } from '@vueuse/core';
+  import { reactive, watch, getCurrentInstance } from 'vue';
+  import { useClipboard } from '@hooks/index'; 
 
   const clipboard = useClipboard();
   const app = getCurrentInstance().proxy;
@@ -391,23 +391,36 @@
       {
         _id: "Copy",
         name: "Copy",
+      },
+      {
+        _id: "Redo",
+        name: "Redo",
+      },
+      {
+        _id: "Undo",
+        name: "Undo",
+      },
+      {
+        _id: "Close",
+        name: "Close",
       }
     ]
   })
 
-  function copy(row) {
-    if(!clipboard.isSupported) {
-      return app.$message.warning({
-        message: '您的浏览器不支持 Clipboard API',
+  watch(clipboard.isCopied, () => {
+    if(clipboard.isCopied.value) {
+      app.$message.success({
+        message: clipboard.text.value,
       })
     }
+  })
+  watch(clipboard.text, () => {
+    console.log(clipboard.text.value);
+  })
+
+  function handleCopy(row) {
     let code = `<V3Icon type="${row._id}" />`
-    clipboard.copy(code);
-    if(clipboard.copied) {
-      app.$message.success({
-        message: code,
-      });
-    }
+    clipboard.copy(code)
   }
 </script>
 <style module lang="scss">

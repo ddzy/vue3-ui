@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Icon from './lib/Icon.vue';
 
 function install(app: App) {

@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
 import { V3Button, V3Card } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Card 组件测试：', () => {
 	test('V3Card 组件基本用法', async () => {

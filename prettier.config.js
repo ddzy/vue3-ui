@@ -18,4 +18,9 @@ module.exports = {
 	htmlWhitespaceSensitivity: 'css',
 	// 尾随逗号
 	trailingComma: 'all',
+	plugins: ['@trivago/prettier-plugin-sort-imports'],
+	importOrder: ['^(vue)(.*)', '<THIRD_PARTY_MODULES>', '@/(.*)', '^[./]'],
+	importOrderSeparation: true,
+	importOrderSortSpecifiers: true,
+	importOrderGroupNamespaceSpecifiers: true,
 };

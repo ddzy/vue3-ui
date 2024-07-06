@@ -1,6 +1,7 @@
 import { nextTick } from 'vue';
-import { mount } from '@vue/test-utils';
+
 import { V3Button } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Button 组件测试：', () => {
 	test('V3Button 组件应该正常接收 props', () => {

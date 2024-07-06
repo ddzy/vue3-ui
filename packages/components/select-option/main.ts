@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import SelectOption from './lib/SelectOption.vue';
 
 const install = function (app: App) {

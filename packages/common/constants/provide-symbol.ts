@@ -35,3 +35,8 @@ export const SELECT_INSTANCE_PROVIDE = Symbol('SELECT_INSTANCE_PROVIDE');
  * v3-carousel
  */
 export const CAROUSEL_INSTANCE_PROVIDE = Symbol('CAROUSEL_INSTANCE_PROVIDE');
+
+/**
+ * v3-tab
+ */
+export const TAB_PROVIDE = Symbol('TAB_PROVIDE');

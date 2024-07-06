@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Checkbox from './lib/Checkbox.vue';
 
 const install = function (app: App) {

@@ -11,6 +11,12 @@ export default defineConfig({
 	base: '/vue3-ui/',
 	title: 'Vue3UI',
 	description: 'Vue3 组件库',
+	head: [
+		[
+			'link',
+			{ rel: 'icon', type: 'image/x-icon', href: '/vue3-ui/favicon.ico' },
+		],
+	],
 
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
@@ -166,6 +172,14 @@ export default defineConfig({
 							text: 'Tag 标签',
 							link: '/components/tag',
 						},
+						{
+							text: 'Image 图片',
+							link: '/components/image',
+						},
+						{
+							text: 'Tab 标签页',
+							link: '/components/tab',
+						},
 					],
 				},
 				{
@@ -184,6 +198,7 @@ export default defineConfig({
 		},
 
 		socialLinks: [{ icon: 'github', link: 'https://github.com/ddzy/vue3-ui' }],
+		logo: '/logo.png',
 	},
 	markdown: {
 		config: (md) => {
@@ -205,6 +220,10 @@ export default defineConfig({
 				{
 					find: '@components',
 					replacement: path.resolve(__dirname, '../../packages/components'),
+				},
+				{
+					find: '@hooks',
+					replacement: path.resolve(__dirname, '../../packages/hooks'),
 				},
 				{
 					find: '@typings',

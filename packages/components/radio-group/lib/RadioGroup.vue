@@ -9,12 +9,13 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
-	reactive,
 	provide,
+	reactive,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 import {
 	RADIO_GROUP_CHANGE_FUNC_PROVIDE,

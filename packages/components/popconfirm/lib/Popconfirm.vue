@@ -47,14 +47,15 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	reactive,
 	ref,
 } from 'vue';
+
+import * as TYPES from '@typings/index';
 import V3BasePopper from '@components/base-popper/main';
 import V3Button from '@components/button/main';
 import V3Icon from '@components/icon/main';

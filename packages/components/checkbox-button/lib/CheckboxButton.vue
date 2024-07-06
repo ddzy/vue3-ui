@@ -33,17 +33,18 @@
 </template>
 <script lang="ts">
 import {
+	ComponentOptionsWithObjectProps,
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
+	inject,
+	onMounted,
 	reactive,
 	ref,
 	toRef,
 	watch,
-	inject,
-	onMounted,
-	ComponentOptionsWithObjectProps,
 } from 'vue';
+
 import * as TYPES from '@typings/index';
 import {
 	CHECKBOX_GROUP_ADD_INSTANCE_FUNC_PROVIDE,
@@ -121,7 +122,7 @@ export default defineComponent({
 				isCheckboxGroup
 					? (
 							state.injectedCheckboxGroupInstance! as ComponentOptionsWithObjectProps
-					  ).props
+						).props
 					: props,
 				'modelValue',
 			),

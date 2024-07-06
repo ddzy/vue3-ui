@@ -1,48 +1,52 @@
 import { App } from 'vue';
-import * as TYPES from '@typings/index';
-import './main.scss';
 
-import V3Button from './button/main';
+import * as TYPES from '@typings/index';
+
+import V3Back from './back/main';
+import V3Backdrop from './backdrop/main';
+import V3Badge from './badge/main';
+import V3BasePopper from './base-popper/main';
 import V3ButtonGroup from './button-group/main';
-import V3Checkbox from './checkbox/main';
+import V3Button from './button/main';
+import V3Card from './card/main';
+import V3CarouselItem from './carousel-item/main';
+import V3Carousel from './carousel/main';
 import V3CheckboxButton from './checkbox-button/main';
 import V3CheckboxGroup from './checkbox-group/main';
-import V3Input from './input/main';
+import V3Checkbox from './checkbox/main';
+import V3Col from './col/main';
+import V3DemoBlock from './demo-block/main';
+import V3Dialog from './dialog/main';
+import V3Divider from './divider/main';
+import V3Drawer from './drawer/main';
+import V3Icon from './icon/main';
+import V3Image from './image/main';
 import V3InputNumber from './input-number/main';
 import V3InputTextarea from './input-textarea/main';
-import V3Radio from './radio/main';
-import V3RadioButton from './radio-button/main';
-import V3RadioGroup from './radio-group/main';
-import V3DemoBlock from './demo-block/main';
-import V3Row from './row/main';
-import V3Col from './col/main';
-import V3Message, { useMessage } from './message/main';
-import V3Select from './select/main';
-import V3SelectOption from './select-option/main';
-import V3Tag from './tag/main';
-import V3Backdrop from './backdrop/main';
-import V3Dialog from './dialog/main';
-import V3Switch from './switch/main';
-import V3Tooltip from './tooltip/main';
-import V3Popover from './popover/main';
-import V3Divider from './divider/main';
-import V3Space from './space/main';
-import V3Badge from './badge/main';
+import V3Input from './input/main';
 import V3Loading, {
 	LoadingDirective as V3LoadingDirective,
 	useLoading,
 } from './loading/main';
-import V3Card from './card/main';
-import V3BasePopper from './base-popper/main';
+import './main.scss';
+import V3Message, { useMessage } from './message/main';
 import V3Popconfirm from './popconfirm/main';
-import V3Slider from './slider/main';
-import V3ProgressLinear from './progress-linear/main';
+import V3Popover from './popover/main';
 import V3ProgressCircular from './progress-circular/main';
-import V3Carousel from './carousel/main';
-import V3CarouselItem from './carousel-item/main';
-import V3Drawer from './drawer/main';
-import V3Back from './back/main';
-import V3Icon from './icon/main';
+import V3ProgressLinear from './progress-linear/main';
+import V3RadioButton from './radio-button/main';
+import V3RadioGroup from './radio-group/main';
+import V3Radio from './radio/main';
+import V3Row from './row/main';
+import V3SelectOption from './select-option/main';
+import V3Select from './select/main';
+import V3Slider from './slider/main';
+import V3Space from './space/main';
+import V3Switch from './switch/main';
+import V3TabPane from './tab-pane/main';
+import V3Tab from './tab/main';
+import V3Tag from './tag/main';
+import V3Tooltip from './tooltip/main';
 
 declare module 'vue' {
 	interface ComponentCustomProperties {
@@ -92,6 +96,9 @@ export {
 	V3Drawer,
 	V3Back,
 	V3Icon,
+	V3Image,
+	V3Tab,
+	V3TabPane,
 };
 
 export default function install(app: App) {
@@ -131,6 +138,9 @@ export default function install(app: App) {
 	app.component(V3Drawer.name!, V3Drawer);
 	app.component(V3Back.name!, V3Back);
 	app.component(V3Icon.name!, V3Icon);
+	app.component(V3Image.name!, V3Image);
+	app.component(V3Tab.name!, V3Tab);
+	app.component(V3TabPane.name!, V3TabPane);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);

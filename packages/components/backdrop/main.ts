@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Backdrop from './lib/Backdrop.vue';
 
 const install = function (app: App) {

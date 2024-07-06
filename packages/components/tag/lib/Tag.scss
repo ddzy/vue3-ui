@@ -83,11 +83,11 @@ $tag-size-list: (
 	),
 	medium: (
 		font-size: $font-size-default,
-		padding: 4px $padding-small,
+		padding: 6px $padding-small,
 		margin-left: 4px,
 	),
 	large: (
-		font-size: $font-size-default,
+		font-size: $font-size-medium,
 		padding: 6px $padding-medium,
 		margin-left: 6px,
 	),

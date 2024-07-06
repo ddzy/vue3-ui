@@ -8,14 +8,14 @@
 						'is-disabled': props.disabled,
 						[`is-theme-${props.theme}`]: true,
 						[`${props.customClass}`]: true,
-				  }
+					}
 				: {
 						'v3-base-popper': true,
 						'is-visible': state.showDropdown,
 						'is-disabled': props.disabled,
 						[`is-theme-${props.theme}`]: true,
 						...props.customClass,
-				  }
+					}
 		"
 	>
 		<tippy
@@ -60,22 +60,23 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	computed,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	reactive,
 	ref,
 	watch,
 } from 'vue';
 import { Tippy } from 'vue-tippy';
-import { Instance } from 'tippy.js';
+
 import * as TYPES from '@typings/index';
 import VARIABLE from '@common/constants/internal-variable';
+import { Instance } from 'tippy.js';
+import 'tippy.js/animations/perspective.css';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import 'tippy.js/themes/material.css';
-import 'tippy.js/animations/perspective.css';
 
 interface IState {
 	showDropdown: boolean;

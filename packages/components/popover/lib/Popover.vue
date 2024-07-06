@@ -11,8 +11,9 @@
 	</v3-base-popper>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
 import { defineComponent, getCurrentInstance, reactive, ref } from 'vue';
+
+import * as TYPES from '@typings/index';
 import V3BasePopper from '@components/base-popper/main';
 
 interface IState {}

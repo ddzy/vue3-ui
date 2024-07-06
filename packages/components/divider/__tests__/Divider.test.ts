@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
 import { V3Divider, V3Icon } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Divider 组件测试：', () => {
 	test('V3Divider 组件应该正常工作', () => {

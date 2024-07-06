@@ -6,10 +6,8 @@
 
 ```vue
 <template>
-	<v3-button type="primary" @click="state.showDialog = true"
-		>打开弹窗</v3-button
-	>
-	<v3-dialog v-model="state.showDialog" :title="'标题'">
+	<v3-button type="primary" @click="show = true">打开弹窗</v3-button>
+	<v3-dialog v-model="show" :title="'标题'">
 		<div class="dialog-content">
 			天下之患，最不可为者，名为治平无事，而其实有不测之忧，坐观其变，而不为之所，则恐至于不可救，起而强为之则天下狃于治平之安，而不吾信
 			——《苏东坡 晁错论》
@@ -20,20 +18,10 @@
 		</div>
 	</v3-dialog>
 </template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
+<script lang="ts" setup>
+import { defineComponent, ref, watch } from 'vue';
 
-export default defineComponent({
-	setup() {
-		const state = reactive({
-			showDialog: false,
-		});
-
-		return {
-			state,
-		};
-	},
-});
+const show = ref(false);
 </script>
 ```
 
@@ -150,11 +138,9 @@ export default defineComponent({
 
 ```vue
 <template>
-	<v3-button type="primary" @click="state.showDialog = true"
-		>打开弹窗</v3-button
-	>
+	<v3-button type="primary" @click="show = true">打开弹窗</v3-button>
 	<v3-dialog
-		v-model="state.showDialog"
+		v-model="show"
 		width="25%"
 		:title="'提示'"
 		:closeOnClickBackdrop="false"
@@ -169,7 +155,7 @@ export default defineComponent({
 					:class="$style['btn']"
 					type="default"
 					plain
-					@click="state.showDialog = false"
+					@click="show = false"
 					>取消</v3-button
 				>
 				<v3-button :class="$style['btn']" type="primary">我知道了</v3-button>
@@ -177,22 +163,12 @@ export default defineComponent({
 		</template>
 	</v3-dialog>
 </template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
+<script lang="ts" setup>
+import { defineComponent, ref } from 'vue';
 
-export default defineComponent({
-	setup() {
-		const state = reactive({
-			showDialog: false,
-		});
-
-		return {
-			state,
-		};
-	},
-});
+const show = ref(false);
 </script>
-<style module lang="scss">
+<style module>
 .dialog-content {
 	display: flex;
 	align-items: center;
@@ -217,10 +193,8 @@ export default defineComponent({
 
 ```vue
 <template>
-	<v3-button type="primary" @click="state.showDialog = true"
-		>打开弹窗</v3-button
-	>
-	<v3-dialog v-model="state.showDialog" fullscreen width="50%">
+	<v3-button type="primary" @click="show = true">打开弹窗</v3-button>
+	<v3-dialog v-model="show" fullscreen width="50%">
 		<div class="dialog-content">
 			1
 			每个人都渴望被认可，赞美之于人心，如阳光之于万物。有时，一个善意的赞许，就能给人莫大的信心和鼓励，让人体会到生活的美好。
@@ -300,20 +274,10 @@ export default defineComponent({
 		</div>
 	</v3-dialog>
 </template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
+<script lang="ts" setup>
+import { defineComponent, ref } from 'vue';
 
-export default defineComponent({
-	setup() {
-		const state = reactive({
-			showDialog: false,
-		});
-
-		return {
-			state,
-		};
-	},
-});
+const show = ref(false);
 </script>
 ```
 
@@ -325,20 +289,18 @@ export default defineComponent({
 
 ```vue
 <template>
-	<v3-button type="primary" @click="state.showDialog = true"
-		>打开弹窗</v3-button
-	>
-	<v3-dialog v-model="state.showDialog" :title="'标题'">
+	<v3-button type="primary" @click="show = true">打开弹窗</v3-button>
+	<v3-dialog v-model="show" :title="'标题'">
 		<div class="dialog-content">
 			天下之患，最不可为者，名为治平无事，而其实有不测之忧，坐观其变，而不为之所，则恐至于不可救，起而强为之则天下狃于治平之安，而不吾信
 			——《苏东坡 晁错论》
 			大汉开国元勋淮阴侯韩信死于长乐钟室，年仅三十五岁。随后，韩信三族被诛，数千无辜，血染长安，哭号之声，传荡千古，当是时，寒风凛冽，长空飘雪，长安满城人尽嗟叹，无不悲怆，皆言淮阴侯一饭千金，不忘漂母；解衣推食，宁负汉皇？萧何一言<span
 				style="color: rgba(0, 160, 255, 1); cursor: pointer"
-				@click="state.showDialog2 = true"
+				@click="show2 = true"
 				>查看全文</span
 			>
 		</div>
-		<v3-dialog v-model="state.showDialog2">
+		<v3-dialog v-model="show2">
 			天下之患，最不可为者，名为治平无事，而其实有不测之忧，坐观其变，而不为之所，则恐至于不可救，起而强为之则天下狃于治平之安，而不吾信
 			——《苏东坡 晁错论》
 			大汉开国元勋淮阴侯韩信死于长乐钟室，年仅三十五岁。随后，韩信三族被诛，数千无辜，血染长安，哭号之声，传荡千古，当是时，寒风凛冽，长空飘雪，长安满城人尽嗟叹，无不悲怆，皆言淮阴侯一饭千金，不忘漂母；解衣推食，宁负汉皇？萧何一言便强入贺，欲谋逆者怎会坦率如斯？是侯不负汉，而汉忍于负侯，侯之死，冤乎哉！
@@ -348,21 +310,11 @@ export default defineComponent({
 		</v3-dialog>
 	</v3-dialog>
 </template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
+<script lang="ts" setup>
+import { defineComponent, ref } from 'vue';
 
-export default defineComponent({
-	setup() {
-		const state = reactive({
-			showDialog: false,
-			showDialog2: false,
-		});
-
-		return {
-			state,
-		};
-	},
-});
+const show = ref(false);
+const show2 = ref(false);
 </script>
 ```
 

@@ -19,7 +19,8 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive, toRef, watch } from 'vue';
+import { PropType, defineComponent, reactive, toRef, watch } from 'vue';
+
 import * as TYPES from '@typings/index';
 
 interface IState {

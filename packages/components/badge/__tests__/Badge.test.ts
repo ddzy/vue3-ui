@@ -1,5 +1,5 @@
+import { V3Badge, V3Button } from '@components/main';
 import { mount } from '@vue/test-utils';
-import { V3Button, V3Badge } from '@components/main';
 
 describe('V3Badge 组件测试：', () => {
 	test('V3Badge 组件基本用法', async () => {

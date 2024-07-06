@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Loading, {
 	LoadingDirective,
 	useLoading,

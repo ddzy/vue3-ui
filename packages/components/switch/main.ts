@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import Switch from './lib/Switch.vue';
 
 const install = function (app: App) {

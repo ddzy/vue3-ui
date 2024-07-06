@@ -69,16 +69,17 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	reactive,
 	ref,
 	toRef,
 	watch,
 } from 'vue';
-import { hexToRgba } from '@common/utils/index';
+
 import * as TYPES from '@typings/index';
+import { hexToRgba } from '@common/utils/index';
 import V3Icon from '@components/icon/main';
 
 export default defineComponent({

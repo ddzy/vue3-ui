@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils';
 import { V3Icon } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3Icon组件单元测试：', () => {
 	test('V3Icon 组件接收【type】，指定图标类型：', async () => {

@@ -1,3 +1,7 @@
 {
-	"prettier.configPath": "prettier.config.js"
+	"prettier.configPath": "prettier.config.js",
+	// 保存文件时触发
+	"editor.codeActionsOnSave": {
+		"source.removeUnusedImports": "explicit"
+	}
 }

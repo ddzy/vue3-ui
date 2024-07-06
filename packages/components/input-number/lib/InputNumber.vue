@@ -101,16 +101,17 @@
 </template>
 <script lang="ts">
 import {
+	PropType,
 	defineComponent,
 	getCurrentInstance,
-	PropType,
 	reactive,
 	toRef,
 	watch,
 } from 'vue';
-import V3Input from '@components/input/main';
-import V3Icon from '@components/icon/main';
+
 import * as TYPES from '@typings/index';
+import V3Icon from '@components/icon/main';
+import V3Input from '@components/input/main';
 
 type ILocalProps = Omit<Required<TYPES.IInputNumberProps>, 'min' | 'max'> & {
 	min?: number;

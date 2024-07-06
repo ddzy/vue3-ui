@@ -42,9 +42,7 @@
 					class="v3-slider-track__done"
 					:style="{
 						[`${props.vertical ? 'height' : 'width'}`]: `${computedDoneWidth}%`,
-						[`${
-							props.range ? (props.vertical ? 'top' : 'left') : ''
-						}`]: `${computedDoneLeft}%`,
+						[`${props.range ? (props.vertical ? 'top' : 'left') : ''}`]: `${computedDoneLeft}%`,
 						backgroundColor: props.doneTrackColor,
 					}"
 				></div>
@@ -88,9 +86,7 @@
 							ref="thumbRef1"
 							class="v3-slider-track__thumb v3-slider-track-thumb-1"
 							:style="{
-								[`${
-									props.vertical ? 'top' : 'left'
-								}`]: `${state.donePercent1}%`,
+								[`${props.vertical ? 'top' : 'left'}`]: `${state.donePercent1}%`,
 								backgroundColor: props.thumbColor,
 								'--thumb-shadow-color': props.thumbShadowColor,
 							}"
@@ -148,21 +144,22 @@
 	</div>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
-import { usePosition, useResize } from '@common/hooks/index';
-import V3Tooltip from '@components/tooltip/main';
-import V3Icon from '@components/icon/main';
 import {
+	PropType,
 	computed,
 	defineComponent,
 	onMounted,
 	onUnmounted,
-	PropType,
 	reactive,
 	ref,
 } from 'vue';
-import Decimal from 'decimal.js';
+
 import * as UTILS from '@common/utils/index';
+import * as TYPES from '@typings/index';
+import V3Icon from '@components/icon/main';
+import V3Tooltip from '@components/tooltip/main';
+import { usePosition, useResize } from '@hooks/index';
+import Decimal from 'decimal.js';
 
 interface ILocalMarkItem {
 	value: number;
@@ -400,7 +397,7 @@ export default defineComponent({
 						? [
 								Math.min(oldModelValue[0], oldModelValue[1]),
 								Math.max(oldModelValue[0], oldModelValue[1]),
-						  ]
+							]
 						: [props.min, props.max];
 
 				state.donePercent = new Decimal(

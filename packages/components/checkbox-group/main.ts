@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import CheckboxGroup from './lib/CheckboxGroup.vue';
 
 const install = function (app: App) {

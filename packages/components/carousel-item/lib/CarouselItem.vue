@@ -35,6 +35,7 @@ import {
 	reactive,
 	ref,
 } from 'vue';
+
 import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
 
 type ICarouselItemType = 'current' | 'next' | 'prev';

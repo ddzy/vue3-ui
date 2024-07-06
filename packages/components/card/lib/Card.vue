@@ -24,7 +24,8 @@
 	</div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive } from 'vue';
+import { PropType, computed, defineComponent, reactive } from 'vue';
+
 import * as TYPES from '@typings/index';
 
 interface IState {}

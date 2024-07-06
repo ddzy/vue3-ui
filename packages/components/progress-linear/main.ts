@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import ProgressLinear from './lib/ProgressLinear.vue';
 
 const install = function (app: App) {

@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
 import { reactive } from 'vue';
-import { V3CheckboxGroup, V3CheckboxButton } from '@components/main';
+
+import { V3CheckboxButton, V3CheckboxGroup } from '@components/main';
+import { mount } from '@vue/test-utils';
 
 describe('V3CheckboxButton 组件测试：', () => {
 	test('单一的 V3CheckboxButton 组件进行双向绑定的值应该是【布尔值】', async () => {

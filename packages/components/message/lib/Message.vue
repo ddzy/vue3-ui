@@ -51,22 +51,24 @@
 	</transition>
 </template>
 <script lang="ts">
-import * as TYPES from '@typings/index';
-import VARIABLE from '@common/constants/internal-variable';
 import {
-	defineComponent,
-	getCurrentInstance,
 	PropType,
-	reactive,
-	watch,
-	h,
-	isVNode,
 	VNode,
 	computed,
+	defineComponent,
+	getCurrentInstance,
+	h,
+	isVNode,
+	reactive,
 	toRef,
+	watch,
 } from 'vue';
-import { close } from './MessageConstructor';
+
+import * as TYPES from '@typings/index';
+import VARIABLE from '@common/constants/internal-variable';
 import V3Icon from '@components/icon/main';
+
+import { close } from './MessageConstructor';
 
 export default defineComponent({
 	name: 'V3Message',

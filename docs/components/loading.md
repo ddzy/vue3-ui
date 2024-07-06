@@ -8,31 +8,20 @@
 <template>
 	<v3-button type="primary" @click="handleClick">点我</v3-button>
 </template>
-<script lang="ts">
-import { defineComponent, reactive, getCurrentInstance } from 'vue';
+<script lang="ts" setup>
+import { getCurrentInstance, h } from 'vue';
+const app = getCurrentInstance().proxy;
 
-export default defineComponent({
-	setup() {
-		const state = reactive({});
-		const app = getCurrentInstance().proxy;
+function handleClick() {
+	const instance = app.$loading({
+		fullscreen: true,
+		content: '加载中。。。',
+	});
 
-		function handleClick() {
-			const instance = app.$loading({
-				fullscreen: true,
-				content: `加载中。。。`,
-			});
-
-			setTimeout(() => {
-				instance.close();
-			}, 2000);
-		}
-
-		return {
-			state,
-			handleClick,
-		};
-	},
-});
+	setTimeout(() => {
+		instance.close();
+	}, 2000);
+}
 </script>
 ```
 
@@ -46,39 +35,28 @@ export default defineComponent({
 <template>
 	<v3-button type="primary" @click="handleClick">点我</v3-button>
 </template>
-<script lang="ts">
-import { defineComponent, reactive, getCurrentInstance, h } from 'vue';
+<script lang="ts" setup>
+import { getCurrentInstance, h } from 'vue';
+const app = getCurrentInstance().proxy;
 
-export default defineComponent({
-	setup() {
-		const state = reactive({});
-		const app = getCurrentInstance().proxy;
-
-		function handleClick() {
-			const instance = app.$loading({
-				fullscreen: true,
-				content: h(
-					'button',
-					{
-						onClick: () => {
-							instance.close();
-							app.$message({
-								type: 'success',
-								message: '手动关闭 loading~',
-							});
-						},
-					},
-					'取消',
-				),
-			});
-		}
-
-		return {
-			state,
-			handleClick,
-		};
-	},
-});
+function handleClick() {
+	const instance = app.$loading({
+		fullscreen: true,
+		content: h(
+			'button',
+			{
+				onClick: () => {
+					instance.close();
+					app.$message({
+						type: 'success',
+						message: '手动关闭 loading~',
+					});
+				},
+			},
+			'取消',
+		),
+	});
+}
 </script>
 ```
 
@@ -91,33 +69,22 @@ export default defineComponent({
 ```vue
 <template>
 	<v3-button type="primary" @click="handleClick">点我</v3-button>
-	<v3-card style="margin-top: 6px;" title="标题" v-loading="state.loading">
+	<v3-card style="margin-top: 6px;" title="标题" v-loading="loading">
 		Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, fugiat
 		consectetur blanditiis aspernatur, magnam cumque dignissimos iusto quisquam
 		velit quidem deserunt! Quaerat ad incidunt ducimus, distinctio omnis rerum
 		vitae obcaecati.
 	</v3-card>
 </template>
-<script lang="ts">
-import { defineComponent, reactive, getCurrentInstance, h } from 'vue';
+<script lang="ts" setup>
+import { getCurrentInstance, ref } from 'vue';
 
-export default defineComponent({
-	setup() {
-		const state = reactive({
-			loading: false,
-		});
-		const app = getCurrentInstance().proxy;
+const app = getCurrentInstance().proxy;
 
-		function handleClick() {
-			state.loading = !state.loading;
-		}
-
-		return {
-			state,
-			handleClick,
-		};
-	},
-});
+const loading = ref(false);
+function handleClick() {
+	loading.value = !loading.value;
+}
 </script>
 ```
 
@@ -133,7 +100,7 @@ export default defineComponent({
 	<v3-card
 		style="margin-top: 6px;"
 		v-loading="{
-			loading: state.loading,
+			loading: loading,
 			content: '加载中...',
 			backgroundColor: 'rgba(0, 0, 0, .4)',
 			color: '#fff',
@@ -154,28 +121,17 @@ export default defineComponent({
 		</template>
 	</v3-card>
 </template>
-<script lang="ts">
-import { defineComponent, reactive, getCurrentInstance, h } from 'vue';
+<script lang="ts" setup>
+import { getCurrentInstance, ref } from 'vue';
 
-export default defineComponent({
-	setup() {
-		const state = reactive({
-			loading: false,
-		});
-		const app = getCurrentInstance().proxy;
+const app = getCurrentInstance().proxy;
 
-		function handleClick() {
-			state.loading = !state.loading;
-		}
-
-		return {
-			state,
-			handleClick,
-		};
-	},
-});
+const loading = ref(false);
+function handleClick() {
+	loading.value = !loading.value;
+}
 </script>
-<style module lang="postcss">
+<style module>
 .img {
 	display: block;
 	width: 100%;

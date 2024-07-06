@@ -1,4 +1,5 @@
 import { App } from 'vue';
+
 import CarouselItem from './lib/CarouselItem.vue';
 
 const install = function (app: App) {
