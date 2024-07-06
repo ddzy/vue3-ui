@@ -180,6 +180,10 @@ export default defineConfig({
 							text: 'Tab 标签页',
 							link: '/components/tab',
 						},
+						{
+							text: 'Collapse 折叠面板',
+							link: '/components/collapse',
+						},
 					],
 				},
 				{
