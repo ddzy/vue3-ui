@@ -10,7 +10,10 @@
 				'show-border': showHeaderBorder,
 			}"
 			class="v3-collapse-item__header"
-			@click="computedIsEntireArea && updateActive(!active)"
+			@click="
+				computedIsEntireArea &&
+					collapse?.toggleCollapseItem(props.name, !active)
+			"
 		>
 			<v3-icon
 				type="Right"
@@ -18,7 +21,7 @@
 				@click="
 					(computedIsEntireArea ||
 						collapse?.props.triggerArea?.includes('icon')) &&
-						updateActive(!active)
+						collapse?.toggleCollapseItem(props.name, !active)
 				"
 			></v3-icon>
 			<div
@@ -26,7 +29,7 @@
 				@click="
 					(computedIsEntireArea ||
 						collapse?.props.triggerArea?.includes('title')) &&
-						updateActive(!active)
+						collapse?.toggleCollapseItem(props.name, !active)
 				"
 			>
 				<span>{{ props.title }}</span>
@@ -36,7 +39,7 @@
 				@click="
 					(computedIsEntireArea ||
 						collapse?.props.triggerArea?.includes('extra')) &&
-						updateActive(!active)
+						collapse?.toggleCollapseItem(props.name, !active)
 				"
 			></div>
 		</div>
