@@ -8,7 +8,7 @@
 			flexWrap: computedWrap,
 		}"
 	>
-		<template v-for="(v, i) in computedChildren">
+		<template v-for="(v, i) in computedChildren" :key="v">
 			<div
 				class="v3-space__item"
 				:style="{

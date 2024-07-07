@@ -6,10 +6,10 @@
 
 ```vue
 <template>
-	<v3-row>
+	<v3-space>
 		<span>展开了：</span>
 		<span>{{ currentActiveCollapse }}</span>
-	</v3-row>
+	</v3-space>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-collapse v-model="currentActiveCollapse">
 		<v3-collapse-item v-for="v in collapses" :key="v" :name="v" :title="v">{{
