@@ -64,11 +64,20 @@ function addCollapseItem(row: ICollapseItemProvide) {
 function toggleCollapseItem(name: ICollapseItemName, active: boolean) {
 	if (Array.isArray(model.value)) {
 		if (active) {
-			// @ts-ignore
-			model.value = model.value.concat(name);
+			if (props.accordion) {
+				// @ts-ignore
+				model.value = [name];
+			} else {
+				// @ts-ignore
+				model.value = model.value.concat(name);
+			}
 		} else {
-			// @ts-ignore
-			model.value = model.value.filter((v) => v !== name);
+			if (props.accordion) {
+				model.value = [];
+			} else {
+				// @ts-ignore
+				model.value = model.value.filter((v) => v !== name);
+			}
 		}
 	} else if (!isUndefined(model.value)) {
 		if (active) {
