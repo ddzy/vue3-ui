@@ -1,2 +1,15 @@
 .v3-collapse {
+	& > .v3-collapse-item {
+		&:first-child {
+			border-radius: $border-radius-width-default $border-radius-width-default 0
+				0;
+		}
+		&:not(:first-child) {
+			border-top: none;
+		}
+		&:last-child {
+			border-radius: 0 0 $border-radius-width-default
+				$border-radius-width-default;
+		}
+	}
 }

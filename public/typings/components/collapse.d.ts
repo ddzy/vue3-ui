@@ -17,3 +17,12 @@ export interface ICollapseItemProps {
 	disabled?: boolean;
 	displayStrategy?: ICollapseDisplayStrategy;
 }
+
+export interface ICollapseProvide {
+	props: ICollapseProps;
+	addCollapseItem: (v: ICollapseItemProvide) => void;
+}
+export interface ICollapseItemProvide {
+	props: ICollapseItemProps;
+	updateActive: (v: boolean) => void;
+}
