@@ -17,12 +17,35 @@
 		&.show-border {
 			border-bottom: 1px solid $border-color-default;
 		}
+		&.can-trigger {
+			cursor: pointer;
+		}
 	}
 	.v3-collapse-item__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		transition: transform 0.3s ease;
+		cursor: default;
+		&.can-trigger {
+			cursor: pointer;
+		}
 	}
 	.v3-collapse-item__title {
 		margin-left: $margin-small;
+		cursor: default;
+		&.can-trigger {
+			cursor: pointer;
+		}
+	}
+	.v3-collapse-item__extra {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+		cursor: default;
+		&.can-trigger {
+			cursor: pointer;
+		}
 	}
 	.v3-collapse-item__body {
 		transition: height 0.3s ease;

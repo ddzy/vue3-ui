@@ -8,40 +8,38 @@
 		<div
 			:class="{
 				'show-border': showHeaderBorder,
+				'can-trigger': collapse?.props.triggerArea?.includes('space'),
 			}"
 			class="v3-collapse-item__header"
-			@click="
-				computedIsEntireArea &&
-					collapse?.toggleCollapseItem(props.name, !active)
-			"
+			@click="handleHeaderClick"
 		>
-			<v3-icon
-				type="Right"
-				class="v3-collapse-item__icon"
-				@click="
-					(computedIsEntireArea ||
-						collapse?.props.triggerArea?.includes('icon')) &&
-						collapse?.toggleCollapseItem(props.name, !active)
-				"
-			></v3-icon>
 			<div
+				:class="{
+					'can-trigger': collapse?.props.triggerArea?.includes('icon'),
+				}"
+				ref="headerIconRef"
+				class="v3-collapse-item__icon"
+			>
+				<v3-icon type="Right"></v3-icon>
+			</div>
+			<div
+				:class="{
+					'can-trigger': collapse?.props.triggerArea?.includes('title'),
+				}"
+				ref="headerTitleRef"
 				class="v3-collapse-item__title"
-				@click="
-					(computedIsEntireArea ||
-						collapse?.props.triggerArea?.includes('title')) &&
-						collapse?.toggleCollapseItem(props.name, !active)
-				"
 			>
 				<span>{{ props.title }}</span>
 			</div>
 			<div
+				:class="{
+					'can-trigger': collapse?.props.triggerArea?.includes('extra'),
+				}"
+				ref="headerExtraRef"
 				class="v3-collapse-item__extra"
-				@click="
-					(computedIsEntireArea ||
-						collapse?.props.triggerArea?.includes('extra')) &&
-						collapse?.toggleCollapseItem(props.name, !active)
-				"
-			></div>
+			>
+				<slot name="extra"></slot>
+			</div>
 		</div>
 		<template v-if="computedDisplayStrategy === 'if'">
 			<transition
@@ -94,6 +92,9 @@ const props = withDefaults(defineProps<ICollapseItemProps>(), {
 	/** 显示策略（v-if/v-show），如果值为 undefined，那么使用 Collapse 的对应值 */
 	displayStrategy: undefined,
 });
+const computedDisplayStrategy = computed(() => {
+	return props.displayStrategy || collapse?.props.displayStrategy;
+});
 
 const active = ref(false);
 function updateActive(newActive: boolean) {
@@ -111,15 +112,6 @@ onMounted(() => {
 	}
 });
 
-const computedIsEntireArea = computed(() => {
-	return collapse
-		? collapse.props.triggerArea?.sort().join(',') === 'extra,icon,title'
-		: true;
-});
-const computedDisplayStrategy = computed(() => {
-	return props.displayStrategy || collapse?.props.displayStrategy;
-});
-
 // 是否显示 header 区域的 border，折叠框展开前显示，折叠后隐藏
 const showHeaderBorder = ref(active.value);
 function handleEnter(el: Element) {
@@ -135,6 +127,40 @@ function handleBeforeEnter() {
 }
 function handleAfterLeave() {
 	showHeaderBorder.value = false;
+}
+
+// 判断可点击切换的区域
+const headerIconRef = ref<HTMLElement>(document.createElement('div'));
+const headerTitleRef = ref<HTMLElement>(document.createElement('div'));
+const headerExtraRef = ref<HTMLElement>(document.createElement('div'));
+function handleHeaderClick(e: Event) {
+	if (collapse) {
+		const event = e as MouseEvent;
+		const path = event.composedPath();
+		const canIconTrigger = collapse.props.triggerArea?.includes('icon');
+		const canTitleTrigger = collapse.props.triggerArea?.includes('title');
+		const canExtraTrigger = collapse.props.triggerArea?.includes('extra');
+		const canSpaceTrigger = collapse.props.triggerArea?.includes('space');
+
+		function next() {
+			collapse?.toggleCollapseItem(props.name, !active.value);
+		}
+
+		if (canIconTrigger && path.includes(headerIconRef.value)) {
+			next();
+		} else if (canTitleTrigger && path.includes(headerTitleRef.value)) {
+			next();
+		} else if (canExtraTrigger && path.includes(headerExtraRef.value)) {
+			next();
+		} else if (
+			canSpaceTrigger &&
+			!path.includes(headerIconRef.value) &&
+			!path.includes(headerTitleRef.value) &&
+			!path.includes(headerExtraRef.value)
+		) {
+			next();
+		}
+	}
 }
 </script>
 <style lang="scss">

@@ -9,7 +9,7 @@ export interface ICollapseProps {
 export type ICollapseModelValue = string | string[] | number | number[];
 export type ICollapseDisplayStrategy = 'if' | 'show';
 export type ICollapseArrowPlacement = 'start' | 'end';
-export type ICollapseTriggerArea = Array<'icon' | 'title' | 'extra'>;
+export type ICollapseTriggerArea = Array<'space' | 'icon' | 'title' | 'extra'>;
 
 export interface ICollapseItemProps {
 	name?: ICollapseItemName;

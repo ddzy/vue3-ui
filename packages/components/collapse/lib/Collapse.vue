@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<ICollapseProps>(), {
 	/** 箭头的位置 */
 	arrowPlacement: 'start',
 	/** 可点击切换的区域 */
-	triggerArea: () => ['icon', 'title', 'extra'],
+	triggerArea: () => ['space', 'icon', 'title', 'extra'],
 });
 
 provide<ICollapseProvide>(COLLAPSE_PROVIDE, {
