@@ -27,11 +27,17 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<ICollapseProps>(), {
+	/** v-model 绑定值（当绑定一个非数组值时，效果同`accordion`手风琴模式 */
 	modelValue: () => [],
+	/** 手风琴模式 */
 	accordion: false,
+	/** 简约模式 */
 	plain: false,
+	/** CollapseItem 显示策略 */
 	displayStrategy: 'if',
+	/** 箭头的位置 */
 	arrowPlacement: 'start',
+	/** 可点击切换的区域 */
 	triggerArea: () => ['icon', 'title', 'extra'],
 });
 
@@ -83,12 +89,15 @@ function toggleCollapseItem(name: ICollapseItemName, active: boolean) {
 		if (active) {
 			model.value = name;
 		} else {
+			// @ts-ignore
 			model.value = undefined;
 		}
 	}
 }
 
-const model = defineModel<ICollapseModelValue>();
+const model = defineModel<ICollapseModelValue>({
+	default: () => [],
+});
 watch(
 	model,
 	async (newValue) => {

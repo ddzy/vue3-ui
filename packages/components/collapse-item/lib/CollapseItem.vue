@@ -43,7 +43,7 @@
 				"
 			></div>
 		</div>
-		<template v-if="props.displayStrategy === 'if'">
+		<template v-if="computedDisplayStrategy === 'if'">
 			<transition
 				@enter="handleEnter"
 				@leave="handleLeave"
@@ -57,7 +57,7 @@
 				</div>
 			</transition>
 		</template>
-		<template v-else-if="props.displayStrategy === 'show'">
+		<template v-else-if="computedDisplayStrategy === 'show'">
 			<transition
 				@enter="handleEnter"
 				@leave="handleLeave"
@@ -85,24 +85,22 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<ICollapseItemProps>(), {
+	/** 唯一标识，默认为当前组件的 uid */
 	name: getCurrentInstance()?.uid,
+	/** 标题，默认为当前组件的 uid */
 	title: `${getCurrentInstance()?.uid}`,
+	/** 是否禁用 */
 	disabled: false,
-	displayStrategy: 'if',
+	/** 显示策略（v-if/v-show），如果值为 undefined，那么使用 Collapse 的对应值 */
+	displayStrategy: undefined,
 });
-const collapse = inject<ICollapseProvide>(COLLAPSE_PROVIDE);
 
 const active = ref(false);
 function updateActive(newActive: boolean) {
 	active.value = newActive;
 }
 
-const computedIsEntireArea = computed(() => {
-	return collapse
-		? collapse.props.triggerArea?.sort().join(',') === 'extra,icon,title'
-		: true;
-});
-
+const collapse = inject<ICollapseProvide>(COLLAPSE_PROVIDE);
 // 页面挂载后，将当前 CollapseItem 交给 Collapse 统一调度
 onMounted(() => {
 	if (collapse) {
@@ -111,6 +109,15 @@ onMounted(() => {
 			updateActive,
 		});
 	}
+});
+
+const computedIsEntireArea = computed(() => {
+	return collapse
+		? collapse.props.triggerArea?.sort().join(',') === 'extra,icon,title'
+		: true;
+});
+const computedDisplayStrategy = computed(() => {
+	return props.displayStrategy || collapse?.props.displayStrategy;
 });
 
 // 是否显示 header 区域的 border，折叠框展开前显示，折叠后隐藏
