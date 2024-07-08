@@ -152,3 +152,29 @@ const arrowPlacement = ref('start');
 ```
 
 :::
+
+## 简约模式
+
+:::demo
+
+```vue
+<template>
+	<v3-checkbox v-model="plain">plain</v3-checkbox>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-collapse :plain="plain">
+		<v3-collapse-item v-for="(v, i) in 4" :key="v" :name="v" :title="`${v}`">
+			{{ v }}
+			<template #extra>
+				<v3-icon type="Setting"></v3-icon>
+			</template>
+		</v3-collapse-item>
+	</v3-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const plain = ref(true);
+</script>
+```
+
+:::
