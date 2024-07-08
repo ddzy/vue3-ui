@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<ICollapseProps>(), {
 	/** 简约模式 */
 	plain: false,
 	/** CollapseItem 显示策略 */
-	displayStrategy: 'if',
+	displayStrategy: 'show',
 	/** 箭头的位置 */
 	arrowPlacement: 'start',
 	/** 可点击切换的区域 */
