@@ -312,3 +312,45 @@ const currentActiveCollapse = ref([]);
 ```
 
 :::
+
+## API
+
+### Collapse Props
+
+| 参数名          | 说明                                              | 类型                                  | 可选值                       | 默认值                      | 必填 |
+| --------------- | ------------------------------------------------- | ------------------------------------- | ---------------------------- | --------------------------- | ---- |
+| v-model         | 注意：当绑定一个非数组值时，效果等同于`accordion` | strign / string[] / number / number[] |                              | []                          |      |
+| accordion       | 手风琴模式                                        | boolean                               |                              | false                       |      |
+| plain           | 简约模式                                          | boolean                               |                              | false                       |      |
+| displayStrategy | ColapseItem显示策略（if => v-if, show => v-show） | string                                | show / if                    | show                        |      |
+| arrowPlacement  | 箭头位置                                          | string                                | start / end                  | start                       |      |
+| triggerArea     | 可点击切换的区域                                  | string                                | space / icon / title / extra | [space, icon, title, extra] |      |
+
+### Collapse Events
+
+| 事件名 | 说明 | 回调参数 |
+| ------ | ---- | -------- |
+
+### Collapse Slots
+
+| 插槽名  | 说明     | 子标签 |
+| ------- | -------- | ------ |
+| default | 默认插槽 |        |
+
+### CollapseItem Props
+
+| 参数名          | 说明                                                                     | 类型            | 可选值    | 默认值                   | 必填 |
+| --------------- | ------------------------------------------------------------------------ | --------------- | --------- | ------------------------ | ---- |
+| name            | 唯一标识                                                                 | string / number |           | getCurrentInstance().uid |      |
+| title           | 标题                                                                     | string          |           | getCurrentInstance().uid |      |
+| disabled        | 是否禁用                                                                 | boolean         |           | false                    |      |
+| displayStrategy | 显示策略（v-if/v-show），如果值为`undefined`，那么使用 Collapse 的对应值 | string          | show / if | undefined                |      |
+
+### Collapse Slots
+
+| 插槽名  | 说明     | 子标签 |
+| ------- | -------- | ------ |
+| default | 默认插槽 |        |
+| icon    | 图标     |        |
+| title   | 标题     |        |
+| extra   | 额外区域 |        |
