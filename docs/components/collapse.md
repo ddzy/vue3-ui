@@ -185,19 +185,9 @@ const plain = ref(true);
 
 ```vue
 <template>
-	<v3-space>
-		<span>展开了：</span>
-		<span
-			>{{ activeParent
-			}}{{
-				activeParent && activeChild && activeParent.length && activeChild.length
-					? '-'
-					: ''
-			}}{{ activeChild }}</span
-		>
-	</v3-space>
+	<v3-checkbox v-model="plain">plain</v3-checkbox>
 	<v3-divider direction="horizontal"></v3-divider>
-	<v3-collapse v-model="activeParent">
+	<v3-collapse v-model="activeParent" :plain="plain">
 		<v3-collapse-item
 			v-for="(v, i) in collapses"
 			:key="v.name"
@@ -205,7 +195,7 @@ const plain = ref(true);
 			:title="v.name"
 		>
 			<span v-if="!v?.children?.length">{{ v.content }}</span>
-			<v3-collapse v-else v-model="activeChild">
+			<v3-collapse v-else v-model="activeChild" :plain="plain">
 				<v3-collapse-item
 					v-for="vv in v.children"
 					:key="vv.name"
@@ -282,6 +272,7 @@ const collapses = ref([
 ]);
 const activeParent = ref([]);
 const activeChild = ref([]);
+const plain = ref(false);
 </script>
 ```
 
