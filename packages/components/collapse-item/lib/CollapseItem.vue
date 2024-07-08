@@ -21,7 +21,8 @@
 				}"
 				ref="headerTitleRef"
 			>
-				<span>{{ props.title }}</span>
+				<slot v-if="!!slots.title" :active="active" name="title"></slot>
+				<span v-else>{{ props.title }}</span>
 			</div>
 			<div
 				v-if="!!slots.extra"
@@ -31,7 +32,7 @@
 				}"
 				ref="headerExtraRef"
 			>
-				<slot name="extra"></slot>
+				<slot :active="active" name="extra"></slot>
 			</div>
 			<ReusableIcon v-if="collapse?.props.arrowPlacement === 'end'" />
 		</div>

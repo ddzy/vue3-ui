@@ -280,6 +280,8 @@ const plain = ref(false);
 
 ## 自定义slot
 
+可通过`slot=icon/title/extra`自定义折叠面板的header
+
 :::demo
 
 ```vue
@@ -291,6 +293,12 @@ const plain = ref(false);
 				<v3-icon
 					:type="scope.active ? 'PreviewClose' : 'PreviewOpen'"
 				></v3-icon>
+			</template>
+			<template #title="scope">
+				<div>{{ scope.active ? '展开标题😭' : '收起标题🙂' }}</div>
+			</template>
+			<template #extra="scope">
+				<v3-button type="primary" size="small">删除</v3-button>
 			</template>
 		</v3-collapse-item>
 	</v3-collapse>
