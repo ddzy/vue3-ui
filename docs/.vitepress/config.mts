@@ -1,4 +1,5 @@
 import * as path from 'path';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import { defineConfig, postcssIsolateStyles } from 'vitepress';
 import {
 	demoblockPlugin,
@@ -214,7 +215,7 @@ export default defineConfig({
 			host: true,
 			open: true,
 		},
-		plugins: [demoblockVitePlugin() as any],
+		plugins: [vueJsx(), demoblockVitePlugin() as any],
 		resolve: {
 			alias: [
 				{

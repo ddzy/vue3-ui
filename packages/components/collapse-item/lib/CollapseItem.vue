@@ -13,15 +13,7 @@
 			class="v3-collapse-item__header"
 			@click="handleHeaderClick"
 		>
-			<div
-				:class="{
-					'can-trigger': collapse?.props.triggerArea?.includes('icon'),
-				}"
-				ref="headerIconRef"
-				class="v3-collapse-item__icon"
-			>
-				<v3-icon type="Right"></v3-icon>
-			</div>
+			<ReusableIcon v-if="collapse?.props.arrowPlacement === 'start'" />
 			<div
 				:class="{
 					'can-trigger': collapse?.props.triggerArea?.includes('title'),
@@ -40,6 +32,7 @@
 			>
 				<slot name="extra"></slot>
 			</div>
+			<ReusableIcon v-if="collapse?.props.arrowPlacement === 'end'" />
 		</div>
 		<template v-if="computedDisplayStrategy === 'if'">
 			<transition
@@ -71,7 +64,7 @@
 		</template>
 	</div>
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { computed, getCurrentInstance, inject, onMounted, ref } from 'vue';
 
 import { COLLAPSE_PROVIDE } from '@common/constants/provide-symbol';
@@ -96,6 +89,7 @@ const computedDisplayStrategy = computed(() => {
 	return props.displayStrategy || collapse?.props.displayStrategy;
 });
 
+// 当前面板是否展开
 const active = ref(false);
 function updateActive(newActive: boolean) {
 	active.value = newActive;
@@ -161,6 +155,20 @@ function handleHeaderClick(e: Event) {
 			next();
 		}
 	}
+}
+
+function ReusableIcon() {
+	return (
+		<div
+			class={{
+				'can-trigger': collapse?.props.triggerArea?.includes('icon'),
+				'v3-collapse-item__icon': true,
+			}}
+			ref="headerIconRef"
+		>
+			<v3-icon type={'Right'}></v3-icon>
+		</div>
+	);
 }
 </script>
 <style lang="scss">

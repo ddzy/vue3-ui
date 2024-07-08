@@ -1,7 +1,7 @@
-import vue from '@vitejs/plugin-vue';
 import * as fse from 'fs-extra';
 import * as path from 'node:path';
-import { build, mergeConfig, type InlineConfig } from 'vite';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import { type InlineConfig, build, mergeConfig } from 'vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 const commonConfig: InlineConfig = {
@@ -59,7 +59,7 @@ const commonConfig: InlineConfig = {
 async function buildAllComponents() {
 	return new Promise(async (resolve, reject) => {
 		const buildOptions = mergeConfig(commonConfig, {
-			plugins: [vue()],
+			plugins: [vueJsx()],
 			publicDir: 'public',
 			build: {
 				emptyOutDir: true,
@@ -100,7 +100,7 @@ async function buildEachComponent() {
 	};
 	const buildOptions = mergeConfig(commonConfig, {
 		publicDir: false,
-		plugins: [vue(), cssInjectedByJsPlugin()],
+		plugins: [vueJsx(), cssInjectedByJsPlugin()],
 		build: {
 			minify: 'esbuild',
 			cssCodeSplit: false,

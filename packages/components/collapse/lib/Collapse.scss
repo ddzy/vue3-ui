@@ -1,4 +1,14 @@
 .v3-collapse {
+	&.is-arrow-end {
+		& > .v3-collapse-item {
+			.v3-collapse-item__title {
+				margin-left: 0;
+			}
+			.v3-collapse-item__icon {
+				margin-left: $margin-small;
+			}
+		}
+	}
 	& > .v3-collapse-item {
 		&:first-child {
 			border-radius: $border-radius-width-default $border-radius-width-default 0

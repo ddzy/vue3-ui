@@ -123,3 +123,32 @@ const triggerArea = ref(['space', 'icon', 'title', 'extra']);
 ```
 
 :::
+
+## 箭头位置
+
+:::demo
+
+```vue
+<template>
+	<v3-radio-group v-model="arrowPlacement">
+		<v3-radio label="start">start</v3-radio>
+		<v3-radio label="end">end</v3-radio>
+	</v3-radio-group>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-collapse :arrowPlacement="arrowPlacement">
+		<v3-collapse-item v-for="(v, i) in 4" :key="v" :name="v" :title="`${v}`">
+			{{ v }}
+			<template #extra>
+				<v3-icon type="Setting"></v3-icon>
+			</template>
+		</v3-collapse-item>
+	</v3-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const arrowPlacement = ref('start');
+</script>
+```
+
+:::
