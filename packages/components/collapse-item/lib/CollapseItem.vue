@@ -1,34 +1,35 @@
 <template>
 	<div
 		:class="{
+			'v3-collapse-item': true,
 			'is-active': active,
 		}"
-		class="v3-collapse-item"
 	>
 		<div
 			:class="{
+				'v3-collapse-item__header': true,
 				'show-border': showHeaderBorder,
 				'can-trigger': collapse?.props.triggerArea?.includes('space'),
 			}"
-			class="v3-collapse-item__header"
 			@click="handleHeaderClick"
 		>
 			<ReusableIcon v-if="collapse?.props.arrowPlacement === 'start'" />
 			<div
 				:class="{
+					'v3-collapse-item__title': true,
 					'can-trigger': collapse?.props.triggerArea?.includes('title'),
 				}"
 				ref="headerTitleRef"
-				class="v3-collapse-item__title"
 			>
 				<span>{{ props.title }}</span>
 			</div>
 			<div
+				v-if="!!slots.extra"
 				:class="{
+					'v3-collapse-item__extra': true,
 					'can-trigger': collapse?.props.triggerArea?.includes('extra'),
 				}"
 				ref="headerExtraRef"
-				class="v3-collapse-item__extra"
 			>
 				<slot name="extra"></slot>
 			</div>
@@ -152,9 +153,9 @@ function ReusableIcon() {
 	return (
 		<div
 			class={{
+				'v3-collapse-item__icon': true,
 				'can-trigger': collapse?.props.triggerArea?.includes('icon'),
 				'is-slot': !!slots.icon,
-				'v3-collapse-item__icon': true,
 			}}
 			ref="headerIconRef"
 		>

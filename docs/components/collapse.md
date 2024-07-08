@@ -299,7 +299,7 @@ const plain = ref(false);
 import { ref, watch } from 'vue';
 
 const collapses = ref(['北京', '上海', '广州', '深圳']);
-const currentActiveCollapse = ref(['北京']);
+const currentActiveCollapse = ref([]);
 </script>
 ```
 

@@ -1,10 +1,10 @@
 <template>
 	<div
 		:class="{
+			'v3-collapse': true,
 			'is-plain': props.plain,
 			[`is-arrow-${props.arrowPlacement}`]: true,
 		}"
-		class="v3-collapse"
 	>
 		<slot></slot>
 	</div>
