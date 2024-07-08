@@ -34,42 +34,19 @@
 			</div>
 			<ReusableIcon v-if="collapse?.props.arrowPlacement === 'end'" />
 		</div>
-		<template v-if="computedDisplayStrategy === 'if'">
-			<transition
-				@enter="handleEnter"
-				@leave="handleLeave"
-				@before-leave="handleBeforeLeave"
-				@before-enter="handleBeforeEnter"
-				@after-leave="handleAfterLeave"
-				@after-enter="handleAfterEnter"
-			>
-				<div v-if="active" class="v3-collapse-item__body">
-					<div class="v3-collapse-item__body-inner">
-						<slot></slot>
-					</div>
-				</div>
-			</transition>
-		</template>
-		<template v-else-if="computedDisplayStrategy === 'show'">
-			<transition
-				@enter="handleEnter"
-				@leave="handleLeave"
-				@before-leave="handleBeforeLeave"
-				@before-enter="handleBeforeEnter"
-				@after-leave="handleAfterLeave"
-				@after-enter="handleAfterEnter"
-			>
-				<div v-show="active" class="v3-collapse-item__body">
-					<div class="v3-collapse-item__body-inner">
-						<slot></slot>
-					</div>
-				</div>
-			</transition>
-		</template>
+		<ReusableBody />
 	</div>
 </template>
 <script lang="tsx" setup>
-import { computed, getCurrentInstance, inject, onMounted, ref } from 'vue';
+import {
+	Transition,
+	computed,
+	getCurrentInstance,
+	inject,
+	onMounted,
+	ref,
+	useSlots,
+} from 'vue';
 
 import { COLLAPSE_PROVIDE } from '@common/constants/provide-symbol';
 import { handleTransitionEnter, handleTransitionLeave } from '@common/utils';
@@ -89,6 +66,7 @@ const props = withDefaults(defineProps<ICollapseItemProps>(), {
 	/** 显示策略（v-if/v-show），如果值为 undefined，那么使用 Collapse 的对应值 */
 	displayStrategy: undefined,
 });
+const slots = useSlots();
 const computedDisplayStrategy = computed(() => {
 	return props.displayStrategy || collapse?.props.displayStrategy;
 });
@@ -181,6 +159,30 @@ function ReusableIcon() {
 		>
 			<v3-icon type={'Right'}></v3-icon>
 		</div>
+	);
+}
+function ReusableBody() {
+	return (
+		<Transition
+			onEnter={handleEnter}
+			onLeave={handleLeave}
+			onBeforeLeave={handleBeforeLeave}
+			onBeforeEnter={handleBeforeEnter}
+			onAfterLeave={handleAfterLeave}
+			onAfterEnter={handleAfterEnter}
+		>
+			{computedDisplayStrategy.value === 'show' ? (
+				<div v-show={active.value} class="v3-collapse-item__body">
+					<div class="v3-collapse-item__body-inner">{slots?.default?.()}</div>
+				</div>
+			) : active.value ? (
+				<div class="v3-collapse-item__body">
+					<div class="v3-collapse-item__body-inner">{slots?.default?.()}</div>
+				</div>
+			) : (
+				<template></template>
+			)}
+		</Transition>
 	);
 }
 </script>
