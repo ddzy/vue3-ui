@@ -178,3 +178,111 @@ const plain = ref(true);
 ```
 
 :::
+
+## 嵌套使用
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<span>展开了：</span>
+		<span
+			>{{ activeParent
+			}}{{
+				activeParent && activeChild && activeParent.length && activeChild.length
+					? '-'
+					: ''
+			}}{{ activeChild }}</span
+		>
+	</v3-space>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-collapse v-model="activeParent">
+		<v3-collapse-item
+			v-for="(v, i) in collapses"
+			:key="v.name"
+			:name="v.name"
+			:title="v.name"
+		>
+			<span v-if="!v?.children?.length">{{ v.content }}</span>
+			<v3-collapse v-else v-model="activeChild">
+				<v3-collapse-item
+					v-for="vv in v.children"
+					:key="vv.name"
+					:name="vv.name"
+					:title="vv.name"
+					>{{ vv.content }}</v3-collapse-item
+				>
+			</v3-collapse>
+		</v3-collapse-item>
+	</v3-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const collapses = ref([
+	{
+		name: '北京',
+		content: '北京',
+		children: [
+			{
+				name: '慕田峪长城',
+				content: '慕田峪长城',
+				children: [],
+			},
+			{
+				name: '故宫',
+				content: '故宫',
+				children: [
+					{
+						name: '太和门',
+						content: '太和门',
+					},
+					{
+						name: '太和殿前广场',
+						content: '太和殿前广场',
+					},
+					{
+						name: '太和殿',
+						content: '太和殿',
+					},
+					{
+						name: '中和殿',
+						content: '中和殿',
+					},
+				],
+			},
+			{
+				name: '天坛公园',
+				content: '天坛公园',
+				children: [],
+			},
+			{
+				name: '颐和园',
+				content: '颐和园',
+				children: [],
+			},
+		],
+	},
+	{
+		name: '上海',
+		content: `上海市，簡稱滬，別稱申，是中華人民共和國直轄市，中國的經濟、金融、貿易、航運、商業、上游製造和對外開放中心，上海也是一座港口城市，是中國人口第二多的城市，是中國最發達的城市之一，也是一座全球城市。`,
+		children: [],
+	},
+	{
+		name: '广州',
+		content: '广州',
+		children: [],
+	},
+	{
+		name: '深圳',
+		content: '深圳',
+		children: [],
+	},
+]);
+const activeParent = ref([]);
+const activeChild = ref([]);
+</script>
+```
+
+:::

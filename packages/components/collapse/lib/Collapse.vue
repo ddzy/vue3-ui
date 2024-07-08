@@ -28,8 +28,6 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<ICollapseProps>(), {
-	/** v-model 绑定值（当绑定一个非数组值时，效果同`accordion`手风琴模式 */
-	modelValue: () => [],
 	/** 手风琴模式 */
 	accordion: false,
 	/** 简约模式 */
@@ -96,6 +94,7 @@ function toggleCollapseItem(name: ICollapseItemName, active: boolean) {
 	}
 }
 
+// v-model 绑定值（当绑定一个非数组值时，效果同`accordion`手风琴模式
 const model = defineModel<ICollapseModelValue>({
 	default: () => [],
 });

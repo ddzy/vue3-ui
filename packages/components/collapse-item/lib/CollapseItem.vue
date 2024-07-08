@@ -38,8 +38,10 @@
 			<transition
 				@enter="handleEnter"
 				@leave="handleLeave"
+				@before-leave="handleBeforeLeave"
 				@before-enter="handleBeforeEnter"
 				@after-leave="handleAfterLeave"
+				@after-enter="handleAfterEnter"
 			>
 				<div v-if="active" class="v3-collapse-item__body">
 					<div class="v3-collapse-item__body-inner">
@@ -52,8 +54,10 @@
 			<transition
 				@enter="handleEnter"
 				@leave="handleLeave"
+				@before-leave="handleBeforeLeave"
 				@before-enter="handleBeforeEnter"
 				@after-leave="handleAfterLeave"
+				@after-enter="handleAfterEnter"
 			>
 				<div v-show="active" class="v3-collapse-item__body">
 					<div class="v3-collapse-item__body-inner">
@@ -118,6 +122,15 @@ function handleLeave(el: Element) {
 }
 function handleBeforeEnter() {
 	showHeaderBorder.value = true;
+}
+function handleAfterEnter(el: Element) {
+	const element = el as HTMLElement;
+	element.style.cssText += `height: auto`;
+}
+function handleBeforeLeave(el: Element) {
+	const element = el as HTMLElement;
+	const { height } = element.getBoundingClientRect();
+	element.style.cssText += `height: ${height}px`;
 }
 function handleAfterLeave() {
 	showHeaderBorder.value = false;
