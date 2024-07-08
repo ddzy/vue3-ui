@@ -24,11 +24,13 @@
 	}
 	&.is-arrow-end {
 		& > .v3-collapse-item {
-			& > .v3-collapse-item__title {
-				margin-left: 0;
-			}
-			& > .v3-collapse-item__icon {
-				margin-left: $margin-small;
+			& > .v3-collapse-item__header {
+				& > .v3-collapse-item__title {
+					margin-left: 0;
+				}
+				& > .v3-collapse-item__icon {
+					margin-left: $margin-small;
+				}
 			}
 		}
 	}

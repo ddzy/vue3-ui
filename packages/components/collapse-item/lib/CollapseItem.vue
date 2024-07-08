@@ -153,11 +153,16 @@ function ReusableIcon() {
 		<div
 			class={{
 				'can-trigger': collapse?.props.triggerArea?.includes('icon'),
+				'is-slot': !!slots.icon,
 				'v3-collapse-item__icon': true,
 			}}
 			ref="headerIconRef"
 		>
-			<v3-icon type={'Right'}></v3-icon>
+			{!!slots.icon ? (
+				slots?.icon?.({ active: active.value })
+			) : (
+				<v3-icon type="Right"></v3-icon>
+			)}
 		</div>
 	);
 }
