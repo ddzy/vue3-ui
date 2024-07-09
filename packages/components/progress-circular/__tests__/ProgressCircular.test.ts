@@ -1,8 +1,13 @@
-// @ts-nocheck
 import { V3ProgressCircular } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3ProgressCircular 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3ProgressCircular 组件应该正常渲染', async () => {
 		const wrapper = mount({
 			template: `

@@ -8,9 +8,10 @@ import {
 	V3RadioGroup,
 } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Drawer 组件测试：', () => {
-	// test 测试方法不会自动清理 DOM
+	// 自动清理 DOM
 	afterEach(() => {
 		document.getElementsByTagName('html')[0].innerHTML = '';
 	});

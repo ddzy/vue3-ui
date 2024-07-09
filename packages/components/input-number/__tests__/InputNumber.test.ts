@@ -1,9 +1,15 @@
-import { nextTick, reactive } from 'vue';
+import { nextTick } from 'vue';
 
 import { V3InputNumber } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3InputNumber 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3InputNumber 接收【step】，并按照指定的步长来递增或递减', async () => {
 		const wrapper = mount(V3InputNumber, {
 			props: {

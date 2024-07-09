@@ -3,10 +3,16 @@ import { nextTick } from 'vue';
 import { V3BasePopper, V3Button } from '@components/main';
 import { mount } from '@vue/test-utils';
 import 'regenerator-runtime/runtime';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('V3BasePopper 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3BasePopper 基本使用：', async () => {
 		const wrapper = mount({
 			components: {
@@ -103,7 +109,7 @@ describe('V3BasePopper 组件测试：', () => {
 			).toBeFalsy();
 		}, 1000);
 
-		jest.advanceTimersByTime(1000);
+		vi.advanceTimersByTime(1000);
 	});
 
 	test('V3BasePopper 可以接收【theme】配置项，用来启用不同的内置主题', async () => {
@@ -215,7 +221,7 @@ describe('V3BasePopper 组件测试：', () => {
 			expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		}, 2500);
 
-		jest.advanceTimersByTime(500);
+		vi.advanceTimersByTime(500);
 	});
 
 	test('V3BasePopper 可以接收【customClass】配置项，用来自定义类名', async () => {

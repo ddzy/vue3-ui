@@ -1,7 +1,13 @@
 import { V3Badge, V3Button } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Badge 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Badge 组件基本用法', async () => {
 		const wrapper = mount({
 			components: {

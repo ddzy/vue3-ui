@@ -1,9 +1,13 @@
-import { reactive } from 'vue';
-
-import { V3Input, V3Radio } from '@components/main';
+import { V3Radio } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Radio 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Radio 组件应该正常接收【border】属性，并展示为带有边框的单选按钮', async () => {
 		const wrapper = mount(V3Radio);
 

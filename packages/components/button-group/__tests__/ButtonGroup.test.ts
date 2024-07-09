@@ -1,7 +1,13 @@
 import { V3Button, V3ButtonGroup } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('ButtonGroup 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('ButtonGroup 组件应该正常接收【Button】组件作为 slot 并渲染', () => {
 		const component = {
 			components: {

@@ -2,8 +2,14 @@ import { SetupContext, reactive } from 'vue';
 
 import { V3Radio, V3RadioGroup } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('RadioGroup 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('RadioGroup 组件应该正常进行值的【双向绑定】', async () => {
 		const wrapper1 = mount({
 			template: `

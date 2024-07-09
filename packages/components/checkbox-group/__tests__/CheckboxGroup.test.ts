@@ -1,9 +1,15 @@
 import { SetupContext, nextTick, reactive } from 'vue';
 
 import { V3Checkbox, V3CheckboxGroup } from '@components/main';
-import { mount, shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('CheckboxGroup 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('CheckboxGroup 应该正常双向绑定一组数字类型的值', async () => {
 		const wrapper1 = mount({
 			template: `

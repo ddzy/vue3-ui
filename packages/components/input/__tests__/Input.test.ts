@@ -1,9 +1,13 @@
-import { nextTick, reactive } from 'vue';
-
-import { V3Icon, V3Input } from '@components/main';
+import { V3Input } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Input 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Input 组件接收【type】，指定输入框类型：', async () => {
 		const wrapper = mount(V3Input, {
 			props: {

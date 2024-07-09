@@ -1,9 +1,10 @@
-// @ts-nocheck
-import { V3Message, useMessage } from '@components/main';
-import { h, nextTick } from '@vue/runtime-core';
-import { config, mount } from '@vue/test-utils';
+import { h, nextTick } from 'vue';
 
-jest.useFakeTimers();
+import { V3Message, useMessage } from '@components/main';
+import { config, mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test, vi } from 'vitest';
+
+vi.useFakeTimers();
 
 function generateWrapper() {
 	document.body.innerHTML = `
@@ -22,6 +23,11 @@ config.plugins.VueWrapper.install(() => {
 });
 
 describe('V3Message 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Message 组件可接收【type、message、duration】等配置项，并通过【this.$message】来直接使用', async () => {
 		generateWrapper();
 
@@ -262,7 +268,7 @@ describe('V3Message 组件测试：', () => {
 			).toBe('测试内容1');
 		}, 4000);
 
-		jest.advanceTimersByTime(4000);
+		vi.advanceTimersByTime(4000);
 	});
 
 	test('V3Message 组件可以通过 Composition 的形式使用', async () => {

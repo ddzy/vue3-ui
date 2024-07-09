@@ -2,8 +2,9 @@ import { nextTick } from 'vue';
 
 import { V3Tab, V3TabPane } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
-Element.prototype.scrollTo = jest.fn();
+Element.prototype.scrollTo = vi.fn();
 
 describe('Tab组件测试：', () => {
 	// 自动清理 DOM

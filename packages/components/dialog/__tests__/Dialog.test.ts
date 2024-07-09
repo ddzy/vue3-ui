@@ -2,8 +2,14 @@ import { nextTick } from 'vue';
 
 import { V3Backdrop, V3Button, V3Dialog } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Dialog 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('Dialog 组件应该正常渲染', async () => {
 		const wrapper = mount({
 			components: {

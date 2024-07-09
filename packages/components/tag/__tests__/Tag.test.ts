@@ -2,8 +2,14 @@ import { nextTick } from 'vue';
 
 import { V3Tag } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('Tag 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('Tag 组件有五种内置的【type】类型', async () => {
 		const wrapper = mount({
 			template: `
