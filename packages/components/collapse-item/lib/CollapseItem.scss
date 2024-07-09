@@ -11,6 +11,17 @@
 			}
 		}
 	}
+	&.is-disabled {
+		& > .v3-collapse-item__header {
+			opacity: 0.5;
+			cursor: not-allowed;
+			.v3-collapse-item__icon,
+			.v3-collapse-item__title,
+			.v3-collapse-item__extra {
+				cursor: not-allowed;
+			}
+		}
+	}
 	& > .v3-collapse-item__header {
 		display: flex;
 		align-items: center;

@@ -313,6 +313,33 @@ const currentActiveCollapse = ref([]);
 
 :::
 
+## 禁用某个CollapseItem
+
+:::demo
+
+```vue
+<template>
+	<v3-collapse v-model="currentActiveCollapse">
+		<v3-collapse-item
+			v-for="(v, i) in collapses"
+			:key="v"
+			:name="v"
+			:title="v"
+			:disabled="i % 2 === 0"
+			>{{ v }}</v3-collapse-item
+		>
+	</v3-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const collapses = ref(['北京', '上海', '广州', '深圳']);
+const currentActiveCollapse = ref(['北京']);
+</script>
+```
+
+:::
+
 ## API
 
 ### Collapse Props

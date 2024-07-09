@@ -3,13 +3,15 @@
 		:class="{
 			'v3-collapse-item': true,
 			'is-active': active,
+			'is-disabled': props.disabled,
 		}"
 	>
 		<div
 			:class="{
 				'v3-collapse-item__header': true,
 				'show-border': showHeaderBorder,
-				'can-trigger': collapse?.props.triggerArea?.includes('space'),
+				'can-trigger':
+					!props.disabled && collapse?.props.triggerArea?.includes('space'),
 			}"
 			@click="handleHeaderClick"
 		>
@@ -17,7 +19,8 @@
 			<div
 				:class="{
 					'v3-collapse-item__title': true,
-					'can-trigger': collapse?.props.triggerArea?.includes('title'),
+					'can-trigger':
+						!props.disabled && collapse?.props.triggerArea?.includes('title'),
 				}"
 				ref="headerTitleRef"
 			>
@@ -28,7 +31,8 @@
 				v-if="!!slots.extra"
 				:class="{
 					'v3-collapse-item__extra': true,
-					'can-trigger': collapse?.props.triggerArea?.includes('extra'),
+					'can-trigger':
+						!props.disabled && collapse?.props.triggerArea?.includes('extra'),
 				}"
 				ref="headerExtraRef"
 			>
@@ -121,6 +125,9 @@ const headerIconRef = ref<HTMLElement>(document.createElement('div'));
 const headerTitleRef = ref<HTMLElement>(document.createElement('div'));
 const headerExtraRef = ref<HTMLElement>(document.createElement('div'));
 function handleHeaderClick(e: Event) {
+	if (props.disabled) {
+		return;
+	}
 	if (collapse) {
 		const event = e as MouseEvent;
 		const path = event.composedPath();
@@ -155,7 +162,8 @@ function ReusableIcon() {
 		<div
 			class={{
 				'v3-collapse-item__icon': true,
-				'can-trigger': collapse?.props.triggerArea?.includes('icon'),
+				'can-trigger':
+					!props.disabled && collapse?.props.triggerArea?.includes('icon'),
 				'is-slot': !!slots.icon,
 			}}
 			ref="headerIconRef"
