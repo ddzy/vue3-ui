@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import * as path from 'node:path';
 import vuePlugin from '@vitejs/plugin-vue';
+import vueJsxPlugin from '@vitejs/plugin-vue-jsx';
 import { InlineConfig, defineConfig, mergeConfig } from 'vite';
 
 // 组件库打包、组件文档、组件单元测试共用
@@ -41,6 +42,7 @@ export default defineConfig(
 		server: {
 			port: 5174,
 		},
+		// 单元测试相关配置
 		test: {
 			environment: 'jsdom',
 			include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
@@ -53,6 +55,6 @@ export default defineConfig(
 				'**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
 			],
 		},
-		plugins: [vuePlugin()],
+		plugins: [vuePlugin(), vueJsxPlugin()],
 	} as InlineConfig),
 );

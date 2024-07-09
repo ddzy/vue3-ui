@@ -1,10 +1,12 @@
-import * as path from 'path';
-import vueJsx from '@vitejs/plugin-vue-jsx';
+import vueJsxPlugin from '@vitejs/plugin-vue-jsx';
+import { mergeConfig } from 'vite';
 import { defineConfig, postcssIsolateStyles } from 'vitepress';
 import {
 	demoblockPlugin,
 	demoblockVitePlugin,
 } from 'vitepress-theme-demoblock';
+
+import { baseConfig } from '../../vite.config';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -210,39 +212,13 @@ export default defineConfig({
 			md.use(demoblockPlugin, {});
 		},
 	},
-	vite: {
+	vite: mergeConfig(baseConfig, {
 		server: {
 			host: true,
 			open: true,
 		},
-		plugins: [vueJsx(), demoblockVitePlugin() as any],
-		resolve: {
-			alias: [
-				{
-					find: '@common',
-					replacement: path.resolve(__dirname, '../../packages/common'),
-				},
-				{
-					find: '@components',
-					replacement: path.resolve(__dirname, '../../packages/components'),
-				},
-				{
-					find: '@hooks',
-					replacement: path.resolve(__dirname, '../../packages/hooks'),
-				},
-				{
-					find: '@typings',
-					replacement: path.resolve(__dirname, '../../public/lib/typings'),
-				},
-			],
-		},
+		plugins: [vueJsxPlugin(), demoblockVitePlugin() as any],
 		css: {
-			preprocessorOptions: {
-				/** 配置 scss 全局变量的引入方式 */
-				scss: {
-					additionalData: `@import "@common/styles/variable.scss";\n@import "@common/styles/reset.scss";`,
-				},
-			},
 			postcss: {
 				plugins: [
 					// 避免vitepress的样式(.vp-doc)影响 demo-block 内的样式
@@ -253,5 +229,5 @@ export default defineConfig({
 				],
 			},
 		},
-	},
+	}),
 });
