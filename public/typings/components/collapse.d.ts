@@ -1,3 +1,5 @@
+import { SFCWithInstall } from "../utils/util";
+
 export interface ICollapseProps {
 	modelValue?: ICollapseModelValue;
 	accordion?: boolean;
@@ -28,3 +30,5 @@ export interface ICollapseItemProvide {
 	props: ICollapseItemProps;
 	updateActive: (v: boolean) => void;
 }
+export const V3Carousel: SFCWithInstall<ICollapseProps>;
+export const V3CarouselItem: SFCWithInstall<ICollapseItemProps>;
