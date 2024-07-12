@@ -20,13 +20,13 @@ import { computed, inject, onMounted, ref } from 'vue';
 
 import { CAROUSEL_PROVIDE } from '@common/constants/provide-symbol';
 
-import { ICarouselItemProps, ICarouselProvide } from '@/public/typings';
+import { ICarouselProvide } from '@/public/typings';
 
 defineOptions({
 	name: 'V3CarouselItem',
 });
 
-const props = withDefaults(defineProps<ICarouselItemProps>(), {});
+const props = withDefaults(defineProps(), {});
 const carousel = inject<ICarouselProvide>(CAROUSEL_PROVIDE);
 
 const active = ref(false);

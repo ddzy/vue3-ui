@@ -6,7 +6,7 @@
 
 ```vue
 <template>
-	<v3-carousel v-model="currentActiveCarousel" height="300px">
+	<v3-carousel v-model="currentActiveIndex" height="300px">
 		<v3-carousel-item
 			v-for="(v, i) in carousels"
 			:key="i"
@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 
-const currentActiveCarousel = ref(0);
+const currentActiveIndex = ref(0);
 const carousels = ref([
 	{
 		bgColor: 'rgba(0, 160, 255, 1)',

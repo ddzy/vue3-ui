@@ -141,7 +141,7 @@ export function ease(
 
 /**
  *
- * @param ms setTimeout等待秒数
+ * @param ms 毫秒
  * @returns
  */
 export function sleep(ms: number) {

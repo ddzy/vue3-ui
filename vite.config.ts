@@ -46,7 +46,7 @@ export default defineConfig(
 		test: {
 			environment: 'jsdom',
 			include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
-			// include: ['**/*/__tests__/Collapse.test.ts'],
+			// include: ['**/*/__tests__/Carousel.test.ts'],
 			exclude: [
 				'**/*/__tests__/Select.test.ts',
 				'**/node_modules/**',

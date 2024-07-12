@@ -32,7 +32,7 @@
 			@click="slidePrev"
 		>
 			<slot name="arrowLeft" v-if="slots.arrowLeft"></slot>
-			<div v-else class="v3-carousel-arrow__inner">
+			<div v-else class="v3-carousel__arrow-inner">
 				<V3Icon type="Left" />
 			</div>
 		</div>
@@ -40,14 +40,14 @@
 		<!-- 右切换箭头 -->
 		<div
 			:class="{
-				'v3-carousel__arrow is-right': true,
+				'v3-carousel__arrow': true,
 				'is-right': true,
 				'is-show': showArrow,
 			}"
 			@click="slideNext"
 		>
 			<slot name="arrowRight" v-if="slots.arrowRight"></slot>
-			<div v-else class="v3-carousel-arrow__inner">
+			<div v-else class="v3-carousel__arrow-inner">
 				<V3Icon type="Right" />
 			</div>
 		</div>
@@ -55,12 +55,12 @@
 		<!-- 导航按钮 -->
 		<div v-if="props.showIndicator" class="v3-carousel__indicator">
 			<slot v-if="slots.indicator" name="indicator"></slot>
-			<ul v-else class="v3-carousel-indicator__list">
+			<ul v-else class="v3-carousel__indicator-list">
 				<li
 					v-for="(v, i) in carouselItems"
 					:key="i"
 					:class="{
-						'v3-carousel-indicator__item': true,
+						'v3-carousel__indicator-item': true,
 						'is-active': model === i,
 						'is-disabled': props.disabled,
 					}"
