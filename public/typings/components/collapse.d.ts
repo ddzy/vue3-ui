@@ -30,5 +30,5 @@ export interface ICollapseItemProvide {
 	props: ICollapseItemProps;
 	updateActive: (v: boolean) => void;
 }
-export const V3Carousel: SFCWithInstall<ICollapseProps>;
-export const V3CarouselItem: SFCWithInstall<ICollapseItemProps>;
+export const V3Collapse: SFCWithInstall<ICollapseProps>;
+export const V3CollapseItem: SFCWithInstall<ICollapseItemProps>;
