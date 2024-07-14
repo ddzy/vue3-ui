@@ -71,7 +71,7 @@ $indicator-position-list: (
 
 	&.is-disabled {
 		.v3-carousel__arrow,
-		.v3-carousel__indicator .v3-carousel-indicator__item {
+		.v3-carousel__indicator .v3-carousel__indicator-item {
 			cursor: not-allowed;
 		}
 	}
@@ -79,7 +79,7 @@ $indicator-position-list: (
 	@each $key, $value in $indicator-type-list {
 		&.is-indicator-type-#{$key} {
 			.v3-carousel__indicator {
-				.v3-carousel-indicator__item {
+				.v3-carousel__indicator-item {
 					width: map-get($map: $value, $key: indicator-item-width);
 					height: map-get($map: $value, $key: indicator-item-height);
 					border-radius: map-get(
@@ -105,13 +105,13 @@ $indicator-position-list: (
 					$map: $value,
 					$key: indicator-wrapper-background-image
 				);
-				.v3-carousel-indicator__list {
+				.v3-carousel__indicator-list {
 					flex-direction: map-get(
 						$map: $value,
 						$key: indicator-list-flex-direction
 					);
 				}
-				.v3-carousel-indicator__item {
+				.v3-carousel__indicator-item {
 					margin: map-get($map: $value, $key: indicator-item-margin);
 				}
 			}
@@ -146,7 +146,7 @@ $indicator-position-list: (
 				right: 20px;
 			}
 		}
-		.v3-carousel-arrow__inner {
+		.v3-carousel__arrow-inner {
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -169,10 +169,10 @@ $indicator-position-list: (
 		align-items: center;
 		transform: translate3d(0, 0, 0);
 
-		.v3-carousel-indicator__list {
+		.v3-carousel__indicator-list {
 			display: flex;
 		}
-		.v3-carousel-indicator__item {
+		.v3-carousel__indicator-item {
 			background-color: rgba(0, 0, 0, 0.6);
 			cursor: pointer;
 			&.is-active {

@@ -2,22 +2,27 @@ import { SetupContext, reactive } from 'vue';
 
 import { V3Col, V3Row } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
 
 describe('V3Row 组件测试：', () => {
 	beforeAll(() => {
 		Object.defineProperty(window, 'matchMedia', {
 			writable: true,
-			value: jest.fn().mockImplementation((query) => ({
+			value: vi.fn().mockImplementation((query) => ({
 				matches: false,
 				media: query,
 				onchange: null,
-				addListener: jest.fn(), // Deprecated
-				removeListener: jest.fn(), // Deprecated
-				addEventListener: jest.fn(),
-				removeEventListener: jest.fn(),
-				dispatchEvent: jest.fn(),
+				addListener: vi.fn(), // Deprecated
+				removeListener: vi.fn(), // Deprecated
+				addEventListener: vi.fn(),
+				removeEventListener: vi.fn(),
+				dispatchEvent: vi.fn(),
 			})),
 		});
+	});
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
 	});
 
 	test('V3Row 应该正常接收【justify、align】配置项，用来自定义 flexbox 布局的主轴和副轴的排列方式', async () => {

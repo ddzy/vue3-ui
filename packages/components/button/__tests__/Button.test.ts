@@ -2,8 +2,14 @@ import { nextTick } from 'vue';
 
 import { V3Button } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Button 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Button 组件应该正常接收 props', () => {
 		const wrapper = mount(V3Button, {
 			props: {

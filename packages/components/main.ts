@@ -15,6 +15,8 @@ import V3CheckboxButton from './checkbox-button/main';
 import V3CheckboxGroup from './checkbox-group/main';
 import V3Checkbox from './checkbox/main';
 import V3Col from './col/main';
+import V3CollapseItem from './collapse-item/main';
+import V3Collapse from './collapse/main';
 import V3DemoBlock from './demo-block/main';
 import V3Dialog from './dialog/main';
 import V3Divider from './divider/main';
@@ -99,6 +101,8 @@ export {
 	V3Image,
 	V3Tab,
 	V3TabPane,
+	V3Collapse,
+	V3CollapseItem,
 };
 
 export default function install(app: App) {
@@ -141,6 +145,8 @@ export default function install(app: App) {
 	app.component(V3Image.name!, V3Image);
 	app.component(V3Tab.name!, V3Tab);
 	app.component(V3TabPane.name!, V3TabPane);
+	app.component(V3Collapse.name!, V3Collapse);
+	app.component(V3CollapseItem.name!, V3CollapseItem);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);

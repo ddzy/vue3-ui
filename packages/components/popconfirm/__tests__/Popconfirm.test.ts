@@ -2,10 +2,16 @@ import { nextTick } from 'vue';
 
 import { V3Button, V3Popconfirm } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('V3Popconfirm 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Popconfirm 组件基本使用', async () => {
 		const wrapper = mount({
 			components: {
@@ -82,7 +88,7 @@ describe('V3Popconfirm 组件测试：', () => {
 			expect(wrapper.emitted()).toHaveProperty('confirm');
 		}, 1000);
 
-		jest.runAllTimers();
+		vi.runAllTimers();
 	});
 
 	test('V3Popconfirm 组件可以接收【icon、iconColor】配置项，用来自定义图标和图标颜色', async () => {

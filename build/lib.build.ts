@@ -1,38 +1,13 @@
-import vue from '@vitejs/plugin-vue';
 import * as fse from 'fs-extra';
 import * as path from 'node:path';
-import { build, mergeConfig, type InlineConfig } from 'vite';
+import vuePlugin from '@vitejs/plugin-vue';
+import vueJsxPlugin from '@vitejs/plugin-vue-jsx';
+import { type InlineConfig, build, mergeConfig } from 'vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
-const commonConfig: InlineConfig = {
-	resolve: {
-		alias: [
-			{
-				find: '@common',
-				replacement: path.resolve(__dirname, '/packages/common'),
-			},
-			{
-				find: '@components',
-				replacement: path.resolve(__dirname, '/packages/components'),
-			},
-			{
-				find: '@hooks',
-				replacement: path.resolve(__dirname, '/packages/hooks'),
-			},
-			{
-				find: '@typings',
-				replacement: path.resolve(__dirname, '/public/typings'),
-			},
-		],
-	},
-	css: {
-		preprocessorOptions: {
-			/** 配置 scss 全局变量的引入方式 */
-			scss: {
-				additionalData: `@import "./packages/common/styles/variable";\n@import "./packages/common/styles/reset";`,
-			},
-		},
-	},
+import { baseConfig } from '../vite.config';
+
+const commonConfig: InlineConfig = mergeConfig(baseConfig, {
 	// 由于采用手动打包，所以禁止自动寻找 vite.config.ts 配置文件，避免打包失败
 	configFile: false,
 	build: {
@@ -54,12 +29,12 @@ const commonConfig: InlineConfig = {
 			},
 		},
 	},
-};
+});
 
 async function buildAllComponents() {
 	return new Promise(async (resolve, reject) => {
 		const buildOptions = mergeConfig(commonConfig, {
-			plugins: [vue()],
+			plugins: [vuePlugin(), vueJsxPlugin()],
 			publicDir: 'public',
 			build: {
 				emptyOutDir: true,
@@ -100,7 +75,7 @@ async function buildEachComponent() {
 	};
 	const buildOptions = mergeConfig(commonConfig, {
 		publicDir: false,
-		plugins: [vue(), cssInjectedByJsPlugin()],
+		plugins: [vuePlugin(), vueJsxPlugin(), cssInjectedByJsPlugin()],
 		build: {
 			minify: 'esbuild',
 			cssCodeSplit: false,

@@ -1,9 +1,15 @@
 import { V3Button, V3Popover } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('V3Popover 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Popover 基本用法', async () => {
 		const wrapper = mount({
 			components: {
@@ -109,6 +115,6 @@ describe('V3Popover 组件测试：', () => {
 			expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		});
 
-		jest.advanceTimersByTime(1000);
+		vi.advanceTimersByTime(1000);
 	});
 });

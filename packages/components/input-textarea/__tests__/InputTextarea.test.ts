@@ -1,9 +1,13 @@
-import { nextTick, reactive } from 'vue';
-
 import { V3InputTextarea } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('InputTextarea 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('InputTextarea 组件使用【v-model】双向绑定', async () => {
 		const wrapper = mount(V3InputTextarea, {
 			props: {

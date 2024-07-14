@@ -1,5 +1,6 @@
-import DefaultTheme from 'vitepress/theme';
 import 'vitepress-theme-demoblock/dist/theme/styles/index.css';
+import DefaultTheme from 'vitepress/theme';
+
 import './index.scss';
 
 export default {

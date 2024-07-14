@@ -1,0 +1,69 @@
+.v3-collapse-item {
+	overflow: hidden;
+	font-size: $font-size-default;
+	line-height: $line-height-default;
+	border: 1px solid $border-color-default;
+	cursor: default;
+	&.is-active {
+		& > .v3-collapse-item__header {
+			.v3-collapse-item__icon:not(.is-slot) {
+				transform: rotateZ(90deg);
+			}
+		}
+	}
+	&.is-disabled {
+		& > .v3-collapse-item__header {
+			opacity: 0.5;
+			cursor: not-allowed;
+			.v3-collapse-item__icon,
+			.v3-collapse-item__title,
+			.v3-collapse-item__extra {
+				cursor: not-allowed;
+			}
+		}
+	}
+	& > .v3-collapse-item__header {
+		display: flex;
+		align-items: center;
+		padding: $padding-medium;
+		background-color: #f7f8f9;
+		&.show-border {
+			border-bottom: 1px solid $border-color-default;
+		}
+		&.can-trigger {
+			cursor: pointer;
+		}
+		.v3-collapse-item__icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: transform 0.3s ease;
+			cursor: default;
+			&.can-trigger {
+				cursor: pointer;
+			}
+		}
+		.v3-collapse-item__title {
+			margin-left: $margin-small;
+			cursor: default;
+			&.can-trigger {
+				cursor: pointer;
+			}
+		}
+		.v3-collapse-item__extra {
+			display: flex;
+			align-items: center;
+			margin-left: auto;
+			cursor: default;
+			&.can-trigger {
+				cursor: pointer;
+			}
+		}
+	}
+	& > .v3-collapse-item__body {
+		transition: height 0.3s ease;
+		.v3-collapse-item__body-inner {
+			padding: $padding-medium;
+		}
+	}
+}

@@ -50,6 +50,9 @@ export function isString(v: any) {
 export function isFunction(v: any) {
 	return typeof v === 'function';
 }
+export function isUndefined(v: any) {
+	return typeof v === 'undefined';
+}
 
 /**
  * 将 16 进制颜色值转换为 rgba 格式
@@ -134,4 +137,13 @@ export function ease(
 	}
 	prevM = nextM;
 	doing(nextM);
+}
+
+/**
+ *
+ * @param ms 毫秒
+ * @returns
+ */
+export function sleep(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }

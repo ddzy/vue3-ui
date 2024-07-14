@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { h, nextTick } from 'vue';
 
 import { V3Button, V3Loading, useLoading } from '@components/main';
 import { config, mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import { LoadingDirective } from '../main';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 config.plugins.VueWrapper.install(() => {
 	return {
@@ -15,6 +15,11 @@ config.plugins.VueWrapper.install(() => {
 });
 
 describe('V3Loading 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('V3Loading 组件基本用法：', async () => {
 		const wrapper = mount({
 			template: `
@@ -48,7 +53,7 @@ describe('V3Loading 组件测试：', () => {
 
 			expect(document.body.querySelector('.v3-loading')).toBeFalsy();
 		}, 3000);
-		jest.advanceTimersByTime(3000);
+		vi.advanceTimersByTime(3000);
 	});
 
 	test('V3Loading 组件可以接收 VNode，用来自定义内容', async () => {

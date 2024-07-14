@@ -1,4 +1,5 @@
 import { DeepReadonly, Ref } from 'vue';
+import { SFCWithInstall } from '../utils/util';
 
 export interface ITabProps {
 	modelValue?: ITabModelValue;
@@ -38,3 +39,5 @@ export interface ITabPaneProvide {
 	props: DeepReadonly<ITabPaneProps>;
 	updateActive: (v: boolean) => void;
 }
+export const V3Tab: SFCWithInstall<ITabProps>;
+export const V3TabPane: SFCWithInstall<ITabPaneProps>;

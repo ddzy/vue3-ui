@@ -2,8 +2,14 @@ import { nextTick } from 'vue';
 
 import { V3Switch } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('V3Switch 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('Switch 组件最基本的用法', async () => {
 		const wrapper = mount({
 			components: {

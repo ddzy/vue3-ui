@@ -2,8 +2,14 @@ import { nextTick, reactive } from 'vue';
 
 import { V3DemoBlock } from '@components/main';
 import { mount } from '@vue/test-utils';
+import { afterEach, describe, expect, test } from 'vitest';
 
 describe('DemoBlock 组件测试：', () => {
+	// 自动清理 DOM
+	afterEach(() => {
+		document.getElementsByTagName('html')[0].innerHTML = '';
+	});
+
 	test('DemoBlock 组件可以接收【default、description、code】这几个 slot，不传则不显示', async () => {
 		const wrapper1 = mount({
 			template: `

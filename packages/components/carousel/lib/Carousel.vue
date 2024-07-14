@@ -1,8 +1,8 @@
 <template>
 	<div
-		class="v3-carousel"
 		:class="{
-			'is-empty': !state.carouselItemInstanceList.length,
+			'v3-carousel': true,
+			'is-empty': !carouselItems.length,
 			'is-autoplay': props.autoplay,
 			'is-disabled': props.disabled,
 			'is-show-indicator': props.showIndicator,
@@ -13,57 +13,55 @@
 			[`is-indicator-position-${props.indicatorPosition}`]: true,
 		}"
 		:style="{
-			width: props.width ? `${props.width}px` : '100%',
-			height: props.height ? `${props.height}px` : '100%',
+			width: props.width,
+			height: props.height,
 		}"
 		@mouseenter="handleCarouselMouseEnter"
 		@mouseleave="handleCarouselMouseLeave"
 	>
 		<!-- 轮播列表 -->
-		<slot name="default"></slot>
+		<slot></slot>
 
 		<!-- 左切换箭头 -->
 		<div
-			class="v3-carousel__arrow is-left"
 			:class="{
-				'is-show': state.showArrow,
+				'v3-carousel__arrow': true,
+				'is-left': true,
+				'is-show': showArrow,
 			}"
 			@click="slidePrev"
 		>
-			<slot name="arrowLeft" v-if="context.slots.arrowLeft"></slot>
-			<div v-else class="v3-carousel-arrow__inner">
+			<slot name="arrowLeft" v-if="slots.arrowLeft"></slot>
+			<div v-else class="v3-carousel__arrow-inner">
 				<V3Icon type="Left" />
 			</div>
 		</div>
 
 		<!-- 右切换箭头 -->
 		<div
-			class="v3-carousel__arrow is-right"
 			:class="{
-				'is-show': state.showArrow,
+				'v3-carousel__arrow': true,
+				'is-right': true,
+				'is-show': showArrow,
 			}"
 			@click="slideNext"
 		>
-			<slot name="arrowRight" v-if="context.slots.arrowRight"></slot>
-			<div v-else class="v3-carousel-arrow__inner">
+			<slot name="arrowRight" v-if="slots.arrowRight"></slot>
+			<div v-else class="v3-carousel__arrow-inner">
 				<V3Icon type="Right" />
 			</div>
 		</div>
 
 		<!-- 导航按钮 -->
-		<div
-			v-if="props.showIndicator"
-			class="v3-carousel__indicator"
-			@click="state.isSlideByOrder = false"
-		>
-			<slot v-if="context.slots.indicator" name="indicator"></slot>
-			<ul v-else class="v3-carousel-indicator__list">
+		<div v-if="props.showIndicator" class="v3-carousel__indicator">
+			<slot v-if="slots.indicator" name="indicator"></slot>
+			<ul v-else class="v3-carousel__indicator-list">
 				<li
-					v-for="(v, i) in state.carouselItemInstanceList"
-					class="v3-carousel-indicator__item"
+					v-for="(v, i) in carouselItems"
 					:key="i"
 					:class="{
-						'is-active': state.activeIndex === i,
+						'v3-carousel__indicator-item': true,
+						'is-active': model === i,
 						'is-disabled': props.disabled,
 					}"
 					@click="handleIndicatorItemClick(i)"
@@ -73,410 +71,202 @@
 		</div>
 	</div>
 </template>
-<script lang="ts">
-import {
-	ComponentInternalInstance,
-	PropType,
-	defineComponent,
-	getCurrentInstance,
-	nextTick,
-	onMounted,
-	provide,
-	reactive,
-	ref,
-	watch,
-} from 'vue';
+<script lang="ts" setup>
+import { computed, nextTick, provide, ref, useSlots, watch } from 'vue';
 
-import * as UTILS from '@common/utils/index';
-import * as TYPES from '@typings/index';
-import { CAROUSEL_INSTANCE_PROVIDE } from '@common/constants/provide-symbol';
+import { CAROUSEL_PROVIDE } from '@common/constants/provide-symbol';
+import { isStrictObject } from '@common/utils';
 import V3Icon from '@components/icon/main';
 import useEventListener from '@hooks/useEventListener';
 
-interface IState {
-	carouselItemInstanceList: any[];
-	showArrow: boolean;
-	slideDirection: 'prev' | 'next';
-	isSlideFirstly: boolean;
-	activeIndex: number;
-	autoplayTimer: any;
-	autoplay: {
-		interval: number;
-		pauseOnHover: boolean;
-	};
-	isSlideByOrder: boolean;
+import {
+	ICarouselItemProvide,
+	ICarouselProps,
+	ICarouselProvide,
+} from '@/public/typings';
+
+defineOptions({
+	name: 'V3Carousel',
+});
+
+const props = withDefaults(defineProps<ICarouselProps>(), {
+	/** 轮播图容器宽度 */
+	width: '100%',
+	/** 轮播图容器高度 */
+	height: '100%',
+	/** 轮播图动画形式 */
+	effect: 'slide',
+	/** 是否自动播放 */
+	autoplay: false,
+	/** 同 CSS 属性 transition-duration */
+	duration: 300,
+	/** 同 CSS 属性 transition-timing-function */
+	timingFunction: 'ease',
+	/** 是否禁用轮播图（不响应一切事件和切换动作） */
+	disabled: false,
+	/** 轮播图的方向 */
+	direction: 'horizontal',
+	/** 是否显示切换箭头 */
+	showArrow: 'always',
+	/** 是否显示导航按钮 */
+	showIndicator: true,
+	/** 导航按钮的类型 */
+	indicatorType: 'dot',
+	/** 导航按钮的位置 */
+	indicatorPosition: 'bottom',
+});
+const slots = useSlots();
+
+// 存储所有 CarouselItem，统一调度
+const carouselItems = ref<ICarouselItemProvide[]>([]);
+function addCarouselItem(row: ICarouselItemProvide) {
+	carouselItems.value.push(row);
 }
 
-export default defineComponent({
-	name: 'V3Carousel',
-	components: {
-		V3Icon,
-	},
-	props: {
-		modelValue: {
-			type: Number,
-			default: -1,
-		},
-		/** 默认要展示的轮播图下标 */
-		defaultIndex: {
-			type: Number,
-			default: 0,
-		},
-		/** 轮播图容器宽度 */
-		width: {
-			type: Number,
-			default: 0,
-		},
-		/** 轮播图容器高度 */
-		height: {
-			type: Number,
-			default: 0,
-		},
-		/** 轮播图形式 */
-		effect: {
-			type: String as PropType<TYPES.ICarouselEffect>,
-			default: 'slide',
-			validator(v: string) {
-				return ['slide', 'fade'].includes(v);
-			},
-		},
-		/** 是否自动播放 */
-		autoplay: {
-			type: [Boolean, Object] as PropType<TYPES.ICarouselAutoplay>,
-			default: false,
-		},
-		/** 同 CSS 属性 transition-duration */
-		duration: {
-			type: Number,
-			default: 300,
-		},
-		/** 同 CSS 属性 transition-timing-function */
-		timingFunction: {
-			type: String,
-			default: 'cubic-bezier(0.17, 0.84, 0.44, 1)',
-		},
-		/** 是否禁用轮播图（不响应一切事件和切换动作） */
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		/** 轮播图的方向 */
-		direction: {
-			type: String as PropType<TYPES.ICarouselDirection>,
-			default: 'horizontal',
-			validator(v: string) {
-				return ['horizontal', 'vertical'].includes(v);
-			},
-		},
-		/** 是否显示切换箭头 */
-		showArrow: {
-			type: String as PropType<TYPES.ICarouselShowArrow>,
-			default: 'always',
-			validator(v: string) {
-				return ['always', 'hover', 'never'].includes(v);
-			},
-		},
-		/** 是否显示导航按钮 */
-		showIndicator: {
-			type: Boolean,
-			default: true,
-		},
-		/** 导航按钮的类型 */
-		indicatorType: {
-			type: String as PropType<TYPES.ICarouselIndicatorType>,
-			default: 'dot',
-			validator(v: string) {
-				return ['dot', 'line'].includes(v);
-			},
-		},
-		/** 导航按钮的位置 */
-		indicatorPosition: {
-			type: String as PropType<TYPES.ICarouselIndicatorPosition>,
-			default: 'bottom',
-			validator(v: string) {
-				return ['left', 'top', 'right', 'bottom'].includes(v);
-			},
-		},
-	},
-	setup(props: Required<TYPES.ICarouselProps>, context) {
-		const state: IState = reactive({
-			/** 轮播项实例列表 */
-			carouselItemInstanceList: [],
-			/** 箭头是否显示 */
-			showArrow: false,
-			/** 切换方向（不同的切换方向会应用不同的动画） */
-			slideDirection: 'next',
-			/** 是否首次进行轮播（首次不需要动画效果） */
-			isSlideFirstly: false,
-			/** 当前的轮播图下标 */
-			activeIndex: props.defaultIndex,
-			autoplayTimer: 0,
-			/** 自动轮播的配置 */
-			autoplay: {
-				interval: 2000,
-				/** 鼠标悬停于轮播图容器内，是否停止播放 */
-				pauseOnHover: true,
-			},
-			/** 是否按照顺序切换轮播（便于计算滑动的方向） */
-			isSlideByOrder: false,
+const model = defineModel({
+	default: 0,
+});
+watch(
+	model,
+	async (newValue) => {
+		await nextTick();
+		carouselItems.value.forEach((v, i) => {
+			v.updateActive(i === newValue);
 		});
-		const app = ref(getCurrentInstance()).value as ComponentInternalInstance;
+	},
+	{ immediate: true },
+);
 
-		provide(CAROUSEL_INSTANCE_PROVIDE, app);
-
-		watch(
-			() => props.modelValue,
-			() => {
-				if (props.disabled) {
-					return;
-				}
-
-				state.isSlideByOrder = true;
-				state.activeIndex = props.modelValue;
-			},
-			{ immediate: false },
-		);
-
-		watch(
-			() => props.showArrow,
-			() => {
-				if (props.showArrow === 'always') {
-					state.showArrow = true;
-				} else {
-					state.showArrow = false;
-				}
-			},
-			{ immediate: true },
-		);
-
-		watch(
-			() => props.autoplay,
-			() => {
-				if (UTILS.isStrictObject(props.autoplay)) {
-					state.autoplay = {
-						...state.autoplay,
-						...(props.autoplay as object),
-					};
-				}
-			},
-			{ deep: true, immediate: true },
-		);
-
-		watch(
-			() => state.activeIndex,
-			(newActiveIndex, oldActiveIndex) => {
-				state.isSlideFirstly = false;
-
-				if (props.disabled) {
-					return;
-				}
-
-				if (
-					newActiveIndex === 0 &&
-					oldActiveIndex === state.carouselItemInstanceList.length - 1
-				) {
-					state.slideDirection = state.isSlideByOrder ? 'next' : 'prev';
-				} else if (
-					newActiveIndex === state.carouselItemInstanceList.length - 1 &&
-					oldActiveIndex === 0
-				) {
-					state.slideDirection = state.isSlideByOrder ? 'prev' : 'next';
-				} else {
-					state.slideDirection =
-						newActiveIndex > oldActiveIndex ? 'next' : 'prev';
-				}
-
-				nextTick(() => {
-					slideTo(newActiveIndex);
-				});
-			},
-			{ immediate: false },
-		);
-
-		watch(
-			() => props.indicatorPosition,
-			() => {
-				// 如果导航按钮在左右两边，那么就不显示箭头，避免遮挡
-				if (['left', 'right'].includes(props.indicatorPosition)) {
-					state.showArrow = false;
-				}
-			},
-			{ immediate: true },
-		);
-
-		onMounted(() => {
-			state.isSlideFirstly = true;
-			nextTick(() => {
-				slideTo(state.activeIndex);
-			});
-
-			if (!props.disabled && props.autoplay) {
-				handleDocumentVisibilityChange();
-				useEventListener(
-					document,
-					'visibilitychange',
-					handleDocumentVisibilityChange,
-				);
-			}
-		});
-
-		/**
-		 * 收集 V3CarouselItem 组件实例，统一管理
-		 */
-		function appendCarouselItemInstanceToList(instance: any) {
-			state.carouselItemInstanceList =
-				state.carouselItemInstanceList.concat(instance);
+// 是否显示箭头
+const showArrow = ref(false);
+watch(
+	() => props.showArrow,
+	(newValue) => {
+		if (newValue === 'always') {
+			showArrow.value = true;
 		}
+	},
+	{ immediate: true },
+);
 
-		function slidePrev() {
-			if (props.disabled) {
-				return;
-			}
-
-			state.isSlideByOrder = true;
-
-			const newActiveIndex =
-				state.activeIndex - 1 < 0
-					? state.carouselItemInstanceList.length - 1
-					: state.activeIndex - 1;
-			if (props.modelValue >= 0) {
-				context.emit('update:modelValue', newActiveIndex);
-			} else {
-				state.activeIndex = newActiveIndex;
-			}
-		}
-
-		function slideNext() {
-			if (props.disabled) {
-				return;
-			}
-
-			state.isSlideByOrder = true;
-
-			const newActiveIndex =
-				state.activeIndex + 1 > state.carouselItemInstanceList.length - 1
-					? 0
-					: state.activeIndex + 1;
-			if (props.modelValue >= 0) {
-				context.emit('update:modelValue', newActiveIndex);
-			} else {
-				state.activeIndex = newActiveIndex;
-			}
-		}
-
-		function slideTo(index: number) {
-			const length = state.carouselItemInstanceList.length;
-			let currentIndex = index;
-			let nextIndex = -1;
-			let prevIndex = -1;
-
-			if (!length) {
-				return;
-			} else if (length === 1) {
-				nextIndex = prevIndex = currentIndex;
-			} else if (length === 2) {
-				nextIndex = prevIndex = currentIndex === 0 ? length - 1 : 0;
-			} else {
-				nextIndex = currentIndex === length - 1 ? 0 : currentIndex + 1;
-				prevIndex = currentIndex === 0 ? length - 1 : currentIndex - 1;
-			}
-
-			state.carouselItemInstanceList.forEach((v, i, s) => {
-				if (i === currentIndex && i === nextIndex && i === prevIndex) {
-					v.state.typeList = ['current', 'next', 'prev'];
-				} else if (i === currentIndex) {
-					v.state.typeList = ['current'];
-				} else if (i === nextIndex && i === prevIndex) {
-					v.state.typeList = ['prev', 'next'];
-				} else if (i === nextIndex) {
-					v.state.typeList = ['next'];
-				} else if (i === prevIndex) {
-					v.state.typeList = ['prev'];
+// 自动轮播
+const computedAutoPlay = computed(() => {
+	const autoplayOptions = {
+		interval: 3000,
+		pauseOnHover: true,
+	};
+	return props.autoplay === false
+		? false
+		: props.autoplay === true
+			? autoplayOptions
+			: isStrictObject(props.autoplay)
+				? {
+						...autoplayOptions,
+						...props.autoplay,
+					}
+				: autoplayOptions;
+});
+const autoplayTimer = ref(0);
+function startAutoplay() {
+	if (computedAutoPlay.value) {
+		autoplayTimer.value = window.setInterval(() => {
+			slideNext();
+		}, computedAutoPlay.value.interval);
+	}
+}
+function endAutoplay() {
+	window.clearInterval(autoplayTimer.value);
+}
+watch(
+	computedAutoPlay,
+	(newValue) => {
+		if (!props.disabled && newValue) {
+			startAutoplay();
+			useEventListener(document, 'visibilitychange', () => {
+				// 只当页面可见时才启动自动轮播
+				if (!document.hidden) {
+					startAutoplay();
 				} else {
-					v.state.typeList = [];
+					endAutoplay();
 				}
-
-				v.state.isShow = i === index;
 			});
 		}
-
-		function handleDocumentVisibilityChange() {
-			// 只当页面为可见状态时才启动自动轮播
-			if (!document.hidden) {
-				state.autoplayTimer = window.setInterval(() => {
-					slideNext();
-				}, state.autoplay.interval);
-			} else {
-				window.clearInterval(state.autoplayTimer);
-			}
-		}
-
-		function handleCarouselMouseEnter() {
-			if (props.disabled) {
-				return;
-			}
-
-			if (props.showArrow === 'hover') {
-				state.showArrow = true;
-			}
-
-			if (props.autoplay && state.autoplay.pauseOnHover) {
-				window.clearInterval(state.autoplayTimer);
-			}
-		}
-
-		function handleCarouselMouseLeave() {
-			if (props.disabled) {
-				return;
-			}
-
-			if (props.showArrow === 'hover') {
-				state.showArrow = false;
-			}
-
-			if (props.autoplay && state.autoplay.pauseOnHover) {
-				handleDocumentVisibilityChange();
-			}
-		}
-
-		function handleIndicatorItemClick(rowIndex: number) {
-			if (props.disabled) {
-				return;
-			}
-
-			if (props.modelValue >= 0) {
-				context.emit('update:modelValue', rowIndex);
-			} else {
-				state.activeIndex = rowIndex;
-			}
-		}
-
-		function handleIndicatorItemMouseEnter(rowIndex: number) {
-			if (props.disabled) {
-				return;
-			}
-
-			if (props.modelValue >= 0) {
-				context.emit('update:modelValue', rowIndex);
-			} else {
-				state.activeIndex = rowIndex;
-			}
-		}
-
-		return {
-			state,
-			props,
-			context,
-			appendCarouselItemInstanceToList,
-			slidePrev,
-			slideNext,
-			slideTo,
-			handleCarouselMouseEnter,
-			handleCarouselMouseLeave,
-			handleIndicatorItemClick,
-			handleIndicatorItemMouseEnter,
-		};
 	},
+	{ immediate: true },
+);
+
+// 轮播滚动方向
+const slideDirection = ref<'next' | 'prev'>('next');
+watch(model, (newValue, oldValue) => {
+	if (newValue === 0 && oldValue === carouselItems.value.length - 1) {
+		slideDirection.value = 'next';
+	} else if (newValue === carouselItems.value.length - 1 && oldValue === 0) {
+		slideDirection.value = 'prev';
+	} else {
+		slideDirection.value = newValue - oldValue < 0 ? 'prev' : 'next';
+	}
+});
+
+function handleCarouselMouseEnter() {
+	if (props.disabled) {
+		return;
+	}
+	if (props.showArrow === 'hover') {
+		showArrow.value = true;
+	}
+	if (computedAutoPlay.value && computedAutoPlay.value.pauseOnHover) {
+		endAutoplay();
+	}
+}
+
+function handleCarouselMouseLeave() {
+	if (props.disabled) {
+		return;
+	}
+	if (props.showArrow === 'hover') {
+		showArrow.value = false;
+	}
+	if (computedAutoPlay.value && computedAutoPlay.value.pauseOnHover) {
+		startAutoplay();
+	}
+}
+
+function handleIndicatorItemClick(rowIndex: number) {
+	if (props.disabled) {
+		return;
+	}
+	model.value = rowIndex;
+}
+
+function handleIndicatorItemMouseEnter(rowIndex: number) {
+	if (props.disabled) {
+		return;
+	}
+	model.value = rowIndex;
+}
+
+function slideNext() {
+	if (props.disabled) {
+		return;
+	}
+	const newModelValue =
+		model.value + 1 > carouselItems.value.length - 1 ? 0 : model.value + 1;
+	model.value = newModelValue;
+}
+
+function slidePrev() {
+	if (props.disabled) {
+		return;
+	}
+	const newModelValue =
+		model.value - 1 < 0 ? carouselItems.value.length - 1 : model.value - 1;
+	model.value = newModelValue;
+}
+
+provide<ICarouselProvide>(CAROUSEL_PROVIDE, {
+	props,
+	slideDirection,
+	addCarouselItem,
 });
 </script>
 <style lang="scss">
