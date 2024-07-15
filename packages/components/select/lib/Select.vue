@@ -6,6 +6,7 @@
 		trigger="manual"
 		maxWidth="none"
 		sameWidth
+		:appendTo="appendTo"
 		:customClass="{
 			['v3-select']: true,
 			['is-visible']: state.showDropdown,
@@ -626,6 +627,7 @@ export default defineComponent({
 			computedChildrenLength,
 			tagWrapperRef,
 			inputWrapperRef,
+			appendTo: document.body,
 			appendSelectOptionList,
 			subtractSelectOptionList,
 			handleChange,

@@ -1,5 +1,6 @@
 <template>
 	<v3-base-popper
+		:appendTo="appendTo"
 		customClass="v3-tooltip"
 		customDropdownClass="v3-tooltip__dropdown"
 		customTriggerClass="v3-tooltip__trigger"
@@ -38,6 +39,7 @@ export default defineComponent({
 			app,
 			props,
 			context,
+			appendTo: document.body,
 		};
 	},
 });
