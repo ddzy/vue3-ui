@@ -47,6 +47,8 @@ import V3Space from './space/main';
 import V3Switch from './switch/main';
 import V3TabPane from './tab-pane/main';
 import V3Tab from './tab/main';
+import V3TableColumn from './table-column/main';
+import V3Table from './table/main';
 import V3Tag from './tag/main';
 import V3Tooltip from './tooltip/main';
 
@@ -103,6 +105,8 @@ export {
 	V3TabPane,
 	V3Collapse,
 	V3CollapseItem,
+	V3Table,
+	V3TableColumn,
 };
 
 export default function install(app: App) {
@@ -147,6 +151,8 @@ export default function install(app: App) {
 	app.component(V3TabPane.name!, V3TabPane);
 	app.component(V3Collapse.name!, V3Collapse);
 	app.component(V3CollapseItem.name!, V3CollapseItem);
+	app.component(V3Table.name!, V3Table);
+	app.component(V3TableColumn.name!, V3TableColumn);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);

@@ -187,6 +187,10 @@ export default defineConfig({
 							text: 'Collapse 折叠面板',
 							link: '/components/collapse',
 						},
+						{
+							text: 'Table 表格',
+							link: '/components/table',
+						},
 					],
 				},
 				{
