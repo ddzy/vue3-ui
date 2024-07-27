@@ -45,3 +45,8 @@ export const TAB_PROVIDE = Symbol('TAB_PROVIDE');
  * v3-collapse
  */
 export const COLLAPSE_PROVIDE = Symbol('COLLAPSE_PROVIDE');
+
+/**
+ * v3-table
+ */
+export const TABLE_PROVIDE = Symbol('TABLE_PROVIDE');

@@ -1,6 +1,5 @@
-export interface ITableProps<D = any> {
-	data?: D[];
-	columns?: ITableColumnProps[];
+export interface ITableProps {
+	data?: any[];
 	border?: boolean;
 	stripe?: boolean;
 	height?: string | number;

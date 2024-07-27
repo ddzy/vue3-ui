@@ -1,7 +1,9 @@
 <template>
-	<div class="v3-table-column">table-column</div>
+	<slot></slot>
 </template>
 <script lang="ts" setup>
+import { useSlots } from 'vue';
+
 import { ITableColumnProps } from '@/public/typings';
 
 defineOptions({
@@ -30,6 +32,7 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	className: '',
 	labelClassName: '',
 });
+const slots = useSlots();
 </script>
 <style lang="scss">
 @import './TableColumn.scss';
