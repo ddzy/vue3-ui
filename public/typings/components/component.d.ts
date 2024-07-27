@@ -28,3 +28,4 @@ export * from './icon';
 export * from './image';
 export * from './tab';
 export * from './collapse';
+export * from './table';
