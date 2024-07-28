@@ -1,13 +1,34 @@
 <template>
-	<div class="v3-table">
+	<div
+		:class="{
+			'v3-table': true,
+			'has-header': props.showHeader,
+		}"
+	>
 		<div class="v3-table__header">
 			<div class="v3-table__header-inner">
 				<table>
 					<thead>
 						<tr>
-							<td v-for="(v, i) in computedHeaderColumns" :key="i">
-								<component :is="v"></component>
-							</td>
+							<template v-for="(v, i) in computedColumns" :key="i">
+								<component :is="v">
+									<template #default="scope">
+										<td
+											:class="{
+												[`is-align-${scope.props.headerAlign}`]: true,
+											}"
+										>
+											<div class="v3-table__cell">
+												<component
+													v-if="(v?.children as any)?.label"
+													:is="(v?.children as any)?.label"
+												></component>
+												<span v-else>{{ scope.props.label }}</span>
+											</div>
+										</td>
+									</template>
+								</component>
+							</template>
 						</tr>
 					</thead>
 				</table>
@@ -18,18 +39,28 @@
 				<table>
 					<tbody>
 						<tr v-for="(v, i) in data" :key="i">
-							<td v-for="(vv, ii) in computedBodyColumns" :key="ii">
+							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
-									<component
-										v-if="(vv?.children as any)?.default"
-										:is="(vv?.children as any)?.default"
-										:row="v"
-										:rowIndex="i"
-										:columnIndex="ii"
-									></component>
-									<span v-else>{{ v[vv?.props?.prop] }}</span>
+									<template #default="scope">
+										<td
+											:class="{
+												[`is-align-${scope.props.align}`]: true,
+											}"
+										>
+											<div class="v3-table__cell">
+												<component
+													v-if="(vv?.children as any)?.default"
+													:is="(vv?.children as any)?.default"
+													:row="v"
+													:rowIndex="i"
+													:columnIndex="ii"
+												></component>
+												<span v-else>{{ v[vv?.props?.prop] }}</span>
+											</div>
+										</td>
+									</template>
 								</component>
-							</td>
+							</template>
 						</tr>
 					</tbody>
 				</table>
@@ -38,7 +69,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { computed, h, useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
 
 import { isStrictObject } from '@common/utils';
 import { V3TableColumn } from '@components/main';
@@ -82,24 +113,6 @@ const computedColumns = computed(() => {
 			isStrictObject(v.type) && (v.type as any).name === V3TableColumn.name,
 	);
 	return columns;
-});
-const computedHeaderColumns = computed(() => {
-	const result = computedColumns.value.map((v) => {
-		return h(V3TableColumn, v.props, {
-			// @ts-ignore
-			default: v?.children?.label || (() => h('span', null, v?.props?.label)),
-		});
-	});
-	return result;
-});
-const computedBodyColumns = computed(() => {
-	const result = computedColumns.value.map((v) => {
-		return h(V3TableColumn, v.props, {
-			// @ts-ignore
-			default: v?.children?.default,
-		});
-	});
-	return result;
 });
 </script>
 <style lang="scss">

@@ -1,2 +1,40 @@
+$align-map: (left, center, right);
+
 .v3-table {
+	.v3-table__header-inner {
+		overflow-x: auto;
+		font-weight: bold;
+		color: $font-color-small;
+		table {
+			border-bottom: none;
+		}
+		.v3-table__cell {
+			padding: 0 $padding-small;
+		}
+	}
+	.v3-table__body-inner {
+		overflow-x: auto;
+		table {
+			tr {
+				td {
+					border-top: none;
+				}
+			}
+		}
+	}
+	table {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		td {
+			padding: $padding-small 0;
+			border: 1px solid $border-color-small;
+			vertical-align: middle;
+			@each $key in $align-map {
+				&.is-align-#{$key} {
+					text-align: $key;
+				}
+			}
+		}
+	}
 }

@@ -31,8 +31,8 @@ export interface ITableColumnProps {
 	prop?: string;
 	label?: string;
 	type?: ITableColumnType;
-	align?: ITableColumnAlign;
-	headerAlign?: ITableColumnAlign;
+	align?: ITableAlign;
+	headerAlign?: ITableAlign;
 	width?: string | number;
 	minWidth?: string | number;
 	fixed?: boolean;
@@ -49,5 +49,5 @@ export type ITableColumnType =
 	| 'radio'
 	| 'index'
 	| 'expand';
-export type ITableColumnAlign = 'left' | 'center' | 'right';
+export type ITableAlign = 'left' | 'center' | 'right';
 export type ITableColumnSortable = boolean | 'custom';

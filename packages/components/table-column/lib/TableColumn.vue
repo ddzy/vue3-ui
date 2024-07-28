@@ -1,5 +1,5 @@
 <template>
-	<slot v-bind="attrs"></slot>
+	<slot v-bind="{ props }"></slot>
 </template>
 <script lang="ts" setup>
 import { useAttrs, useSlots } from 'vue';
