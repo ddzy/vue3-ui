@@ -4,6 +4,7 @@
 		:class="props.customClass"
 		:style="{
 			flexDirection: props.direction,
+			justifyContent: props.justify,
 			alignItems: props.align,
 			flexWrap: computedWrap,
 		}"
@@ -40,6 +41,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<ISpaceProps>(), {
 	customClass: '',
+	justify: 'flex-start',
 	align: 'center',
 	direction: 'row',
 	wrap: true,
