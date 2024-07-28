@@ -16,19 +16,20 @@
 							<template v-for="(v, i) in computedColumns" :key="i">
 								<component :is="v">
 									<template #default="scope">
-										<td
+										<th
 											:class="{
+												'v3-table__cell': true,
 												[`is-align-${scope.props.headerAlign}`]: true,
 											}"
 										>
-											<div class="v3-table__cell">
+											<div class="v3-table__cell-inner">
 												<component
 													v-if="(v?.children as any)?.label"
 													:is="(v?.children as any)?.label"
 												></component>
 												<span v-else>{{ scope.props.label }}</span>
 											</div>
-										</td>
+										</th>
 									</template>
 								</component>
 							</template>
@@ -41,16 +42,25 @@
 			<div class="v3-table__body-inner">
 				<table>
 					<tbody>
-						<tr v-for="(v, i) in data" :key="i">
+						<tr
+							v-for="(v, i) in data"
+							:key="i"
+							:class="{
+								'v3-table__row': true,
+								[`v3-table__row-${i}`]: true,
+							}"
+						>
 							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
 									<template #default="scope">
 										<td
 											:class="{
+												'v3-table__cell': true,
+												[`v3-table__cell-${i}-${ii}`]: true,
 												[`is-align-${scope.props.align}`]: true,
 											}"
 										>
-											<div class="v3-table__cell">
+											<div class="v3-table__cell-inner">
 												<component
 													v-if="(vv?.children as any)?.default"
 													:is="(vv?.children as any)?.default"

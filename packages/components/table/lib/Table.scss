@@ -2,7 +2,8 @@ $align-map: (left, center, right);
 
 .v3-table {
 	&.has-border {
-		td {
+		td,
+		th {
 			border-top-width: 1px;
 			border-left-width: 1px;
 			border-right-width: 1px;
@@ -39,7 +40,7 @@ $align-map: (left, center, right);
 	.v3-table__header-inner,
 	.v3-table__body-inner {
 		overflow-x: auto;
-		.v3-table__cell {
+		.v3-table__cell-inner {
 			padding: 0 $padding-small;
 		}
 	}
@@ -53,7 +54,8 @@ $align-map: (left, center, right);
 		width: 100%;
 		table-layout: fixed;
 		border-collapse: collapse;
-		td {
+		td,
+		th {
 			padding: $padding-small 0;
 			border: 1px solid $border-color-small;
 			border-top-width: 0;
