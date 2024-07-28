@@ -12,6 +12,11 @@ $align-map: (left, center, right);
 			border-left-width: 1px;
 			border-right-width: 1px;
 		}
+		.v3-table__body {
+			&.has-bottom-border {
+				border-bottom: 1px solid $border-color-small;
+			}
+		}
 	}
 	&.has-border.has-header {
 		.v3-table__body-inner {
@@ -58,7 +63,7 @@ $align-map: (left, center, right);
 		display: flex;
 		align-items: stretch;
 		&.has-shadow {
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 		}
 	}
 	.v3-table__header-inner {

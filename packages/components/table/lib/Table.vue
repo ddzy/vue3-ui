@@ -53,8 +53,18 @@
 				</thead>
 			</table>
 		</div>
-		<div ref="tableBodyRef" class="v3-table__body">
-			<table class="v3-table__body-inner">
+		<div
+			ref="tableBodyRef"
+			:class="{
+				'v3-table__body': true,
+				'has-bottom-border': !arrivedState.bottom,
+			}"
+		>
+			<table
+				:class="{
+					'v3-table__body-inner': true,
+				}"
+			>
 				<tbody>
 					<tr
 						v-for="(v, i) in data"
