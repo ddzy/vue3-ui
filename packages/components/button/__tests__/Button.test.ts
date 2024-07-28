@@ -36,14 +36,14 @@ describe('V3Button 组件测试：', () => {
 		const wrapper = mount(V3Button);
 
 		// 按钮默认为【default】类型
-		expect(wrapper.find('.v3-button--default').exists()).toBeTruthy();
+		expect(wrapper.find('.is-type-default').exists()).toBeTruthy();
 
 		// 手动修改类型
 		await wrapper.setProps({
 			type: 'success',
 		});
-		expect(wrapper.find('.v3-button--default').exists()).toBeFalsy();
-		expect(wrapper.find('.v3-button--success').exists()).toBeTruthy();
+		expect(wrapper.find('.is-type-default').exists()).toBeFalsy();
+		expect(wrapper.find('.is-type-success').exists()).toBeTruthy();
 	});
 
 	test('V3Button 组件应该正常接收【nativeType】配置项，用来自定义按钮的原生类型', async () => {

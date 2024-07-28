@@ -65,7 +65,7 @@ button {
 	}
 	&,
 	& > a {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		& > * {
 			display: inline-block;
@@ -82,7 +82,7 @@ $button-type-map: (
 		padding: 0,
 		border-radius: 0,
 		border-width: 0,
-		background-color: #fff,
+		background-color: transparent,
 		color: $primary-color,
 		text-decoration: none,
 		link-color: $primary-color,
@@ -154,61 +154,63 @@ $button-type-map: (
 		plain-hover-border-color: $info-color,
 	),
 );
-@each $key, $value in $button-type-map {
-	.v3-button--#{$key} {
-		@if $key == default {
-			border: 1px solid map-get($map: $value, $key: border-color);
-			color: map-get($map: $value, $key: color);
-			background-color: map-get($map: $value, $key: background-color);
-			&:hover:not(:disabled) {
-				background-color: map-get($map: $value, $key: hover-background-color);
-				color: map-get($map: $value, $key: hover-color);
-				border-color: map-get($map: $value, $key: hover-border-color);
-			}
-			&.is-active {
-				animation: map-get($map: $value, $key: active-animation);
-			}
-			&.is-plain {
+.v3-button {
+	@each $key, $value in $button-type-map {
+		&.is-type-#{$key} {
+			@if $key == default {
+				border: 1px solid map-get($map: $value, $key: border-color);
+				color: map-get($map: $value, $key: color);
+				background-color: map-get($map: $value, $key: background-color);
 				&:hover:not(:disabled) {
-					background-color: map-get(
-						$map: $value,
-						$key: plain-hover-background-color
-					);
+					background-color: map-get($map: $value, $key: hover-background-color);
+					color: map-get($map: $value, $key: hover-color);
+					border-color: map-get($map: $value, $key: hover-border-color);
 				}
-			}
-		} @else if $key == text {
-			padding: map-get($map: $value, $key: padding);
-			border-radius: map-get($map: $value, $key: border-radius);
-			border-width: map-get($map: $value, $key: border-width);
-			background-color: map-get($map: $value, $key: background-color);
-			color: map-get($map: $value, $key: color);
-			& > a {
-				text-decoration: map-get($map: $value, $key: text-decoration);
-				&:link,
-				&:visited {
-					color: map-get($map: $value, $key: link-color);
+				&.is-active {
+					animation: map-get($map: $value, $key: active-animation);
 				}
-				&:active {
-					color: map-get($map: $value, $key: active-color);
+				&.is-plain {
+					&:hover:not(:disabled) {
+						background-color: map-get(
+							$map: $value,
+							$key: plain-hover-background-color
+						);
+					}
 				}
-			}
-		} @else {
-			background-color: map-get($map: $value, $key: background-color);
-			color: map-get($map: $value, $key: color);
-			border: 1px solid map-get($map: $value, $key: border-color);
-			&.is-active {
-				animation: map-get($map: $value, $key: active-animation);
-			}
-			&.is-plain {
-				background-color: map-get($map: $value, $key: plain-background-color);
-				color: map-get($map: $value, $key: plain-color);
-				&:hover:not(:disabled) {
-					background-color: map-get(
-						$map: $value,
-						$key: plain-hover-background-color
-					);
-					color: map-get($map: $value, $key: plain-hover-color);
-					border-color: map-get($map: $value, $key: plain-hover-border-color);
+			} @else if $key == text {
+				padding: map-get($map: $value, $key: padding);
+				border-radius: map-get($map: $value, $key: border-radius);
+				border-width: map-get($map: $value, $key: border-width);
+				background-color: map-get($map: $value, $key: background-color);
+				color: map-get($map: $value, $key: color);
+				& > a {
+					text-decoration: map-get($map: $value, $key: text-decoration);
+					&:link,
+					&:visited {
+						color: map-get($map: $value, $key: link-color);
+					}
+					&:active {
+						color: map-get($map: $value, $key: active-color);
+					}
+				}
+			} @else {
+				background-color: map-get($map: $value, $key: background-color);
+				color: map-get($map: $value, $key: color);
+				border: 1px solid map-get($map: $value, $key: border-color);
+				&.is-active {
+					animation: map-get($map: $value, $key: active-animation);
+				}
+				&.is-plain {
+					background-color: map-get($map: $value, $key: plain-background-color);
+					color: map-get($map: $value, $key: plain-color);
+					&:hover:not(:disabled) {
+						background-color: map-get(
+							$map: $value,
+							$key: plain-hover-background-color
+						);
+						color: map-get($map: $value, $key: plain-hover-color);
+						border-color: map-get($map: $value, $key: plain-hover-border-color);
+					}
 				}
 			}
 		}
@@ -217,9 +219,11 @@ $button-type-map: (
 
 // 按钮边框类型
 $button-border-type: dashed, dotted, double, groove, outset;
-@each $v in $button-border-type {
-	.#{'has-border--' + $v} {
-		border-style: $v;
+.v3-button {
+	@each $v in $button-border-type {
+		&.#{'has-border--' + $v} {
+			border-style: $v;
+		}
 	}
 }
 
