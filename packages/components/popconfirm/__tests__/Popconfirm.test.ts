@@ -175,14 +175,14 @@ describe('V3Popconfirm 组件测试：', () => {
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[0]
 				.classes(),
-		).toContain('v3-button--default');
+		).toContain('is-type-default');
 		expect(
 			wrapper
 				.findAll('.v3-popconfirm')[0]
 				.find('.v3-popconfirm-content__action')
 				.findAll('.v3-button')[1]
 				.classes(),
-		).toContain('v3-button--success');
+		).toContain('is-type-success');
 
 		// 触发第二个气泡框
 		await wrapper.find('.btn-2').trigger('click');

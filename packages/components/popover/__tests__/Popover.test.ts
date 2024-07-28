@@ -27,7 +27,7 @@ describe('V3Popover 组件测试：', () => {
       `,
 		});
 
-		await wrapper.find('.v3-button--default').trigger('click');
+		await wrapper.find('.is-type-default').trigger('click');
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		expect(wrapper.find('.v3-popper-dropdown__title').text()).toBe('标题');
 		expect(wrapper.find('.v3-popper-dropdown__content').text()).toBe(
@@ -56,7 +56,7 @@ describe('V3Popover 组件测试：', () => {
       `,
 		});
 
-		await wrapper.find('.v3-button--default').trigger('click');
+		await wrapper.find('.is-type-default').trigger('click');
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
 		expect(wrapper.find('.v3-popper-dropdown__title').exists()).toBeFalsy();
 		expect(wrapper.find('.v3-popper-dropdown__content').text()).toBe(
@@ -81,7 +81,7 @@ describe('V3Popover 组件测试：', () => {
       `,
 		});
 
-		await wrapper.find('.v3-button--default').trigger('click');
+		await wrapper.find('.is-type-default').trigger('click');
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
 	});
 
@@ -108,7 +108,7 @@ describe('V3Popover 组件测试：', () => {
 			}, 1000);
 		}
 
-		await wrapper.find('.v3-button--default').trigger('click');
+		await wrapper.find('.is-type-default').trigger('click');
 		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
 
 		doAsync(() => {
