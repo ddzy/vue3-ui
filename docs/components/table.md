@@ -109,6 +109,7 @@ const data = [
 
 ```vue
 <template>
+	<v3-checkbox v-model="showHeader">是否显示表头</v3-checkbox>
 	<v3-checkbox v-model="border">是否显示边框</v3-checkbox>
 	<v3-checkbox v-model="stripe">是否显示条纹</v3-checkbox>
 	<v3-checkbox v-model="highlightHoverRow">是否hover时高亮行</v3-checkbox>
@@ -117,7 +118,7 @@ const data = [
 		:data="data"
 		:border="border"
 		:stripe="stripe"
-		:showHeader="true"
+		:showHeader="showHeader"
 		:highlightHoverRow="highlightHoverRow"
 	>
 		<v3-table-column prop="name" label="姓名"> </v3-table-column>
@@ -128,6 +129,7 @@ const data = [
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+const showHeader = ref(true);
 const border = ref(true);
 const stripe = ref(true);
 const highlightHoverRow = ref(true);
