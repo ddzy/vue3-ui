@@ -61,7 +61,7 @@ const data = [
 		<v3-table-column prop="address" label="地址"></v3-table-column>
 		<v3-table-column prop="handle" label="操作">
 			<template #default="scope">
-				<v3-space justify="center">
+				<v3-space>
 					<v3-button type="text">编辑</v3-button>
 					<v3-button type="text">删除</v3-button>
 				</v3-space>
@@ -93,7 +93,6 @@ const data = [
 <style module>
 .custom-label {
 	display: flex;
-	justify-content: center;
 	align-items: center;
 }
 .red {
@@ -118,6 +117,7 @@ const data = [
 		:data="data"
 		:border="border"
 		:stripe="stripe"
+		:showHeader="true"
 		:highlightHoverRow="highlightHoverRow"
 	>
 		<v3-table-column prop="name" label="姓名"> </v3-table-column>
@@ -149,16 +149,6 @@ const data = [
 	},
 ];
 </script>
-<style module>
-.custom-label {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.red {
-	color: red;
-}
-</style>
 ```
 
 :::

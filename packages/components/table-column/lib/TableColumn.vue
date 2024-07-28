@@ -17,8 +17,8 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	label: '',
 	/** 表格列的类型 */
 	type: 'default',
-	align: 'center',
-	headerAlign: 'center',
+	align: 'left',
+	headerAlign: 'left',
 	width: 'auto',
 	minWidth: 'none',
 	/** 本列是否固定 */

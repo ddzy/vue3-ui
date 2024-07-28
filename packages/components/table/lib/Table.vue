@@ -8,7 +8,7 @@
 			'is-highlight': props.highlightHoverRow,
 		}"
 	>
-		<div class="v3-table__header">
+		<div v-if="props.showHeader" class="v3-table__header">
 			<div class="v3-table__header-inner">
 				<table>
 					<thead>
@@ -87,9 +87,9 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	/** 表格数据 */
 	data: () => [],
 	/** 是否显示边框 */
-	border: true,
+	border: false,
 	/** 是否显示条纹 */
-	stripe: true,
+	stripe: false,
 	/** 表格高度 */
 	height: 'auto',
 	/** 表格最大高度 */

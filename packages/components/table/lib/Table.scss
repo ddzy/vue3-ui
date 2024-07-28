@@ -2,60 +2,52 @@ $align-map: (left, center, right);
 
 .v3-table {
 	&.has-border {
-		table {
+		td {
+			border-top-width: 1px;
+			border-left-width: 1px;
+			border-right-width: 1px;
+		}
+	}
+	&.has-border.has-header {
+		.v3-table__body-inner {
 			td {
-				border-top-width: 1px;
-				border-left-width: 1px;
-				border-right-width: 1px;
+				border-top-width: 0px;
 			}
 		}
 	}
 	&.is-stripe {
 		.v3-table__body-inner {
-			table {
-				tr:nth-child(even) {
-					td {
-						background-color: #f9f9f9;
-					}
+			tr:nth-child(even) {
+				td {
+					background-color: #f9f9f9;
 				}
 			}
 		}
 	}
 	&.is-highlight {
 		.v3-table__body-inner {
-			table {
-				tr {
-					&:hover {
-						td {
-							background-color: #f3f4f5;
-						}
+			tr {
+				&:hover {
+					td {
+						background-color: #f3f4f5;
 					}
 				}
 			}
 		}
 	}
 
-	.v3-table__header-inner {
+	.v3-table__header-inner,
+	.v3-table__body-inner {
 		overflow-x: auto;
-		font-weight: bold;
-		color: $font-color-small;
-		table {
-			border-bottom: none;
-		}
 		.v3-table__cell {
 			padding: 0 $padding-small;
 		}
 	}
+	.v3-table__header-inner {
+		font-weight: bold;
+		color: $font-color-small;
+	}
 	.v3-table__body-inner {
-		overflow-x: auto;
-		table {
-			td {
-				border-top: none;
-			}
-		}
-		.v3-table__cell {
-			padding: 0 $padding-small;
-		}
 	}
 	table {
 		width: 100%;
