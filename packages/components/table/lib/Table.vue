@@ -12,15 +12,14 @@
 			<div class="v3-table__header-inner">
 				<table>
 					<thead>
-						<tr>
+						<tr
+							:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
+						>
 							<template v-for="(v, i) in computedColumns" :key="i">
 								<component :is="v">
 									<template #default="scope">
 										<th
-											:class="{
-												'v3-table__cell': true,
-												[`is-align-${scope.props.headerAlign}`]: true,
-											}"
+											:class="`v3-table__cell is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName}`"
 										>
 											<div class="v3-table__cell-inner">
 												<component
@@ -45,20 +44,13 @@
 						<tr
 							v-for="(v, i) in data"
 							:key="i"
-							:class="{
-								'v3-table__row': true,
-								[`v3-table__row-${i}`]: true,
-							}"
+							:class="`v3-table__row v3-table__row-${i} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
 						>
 							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="{
-												'v3-table__cell': true,
-												[`v3-table__cell-${i}-${ii}`]: true,
-												[`is-align-${scope.props.align}`]: true,
-											}"
+											:class="`v3-table__cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName}`"
 										>
 											<div class="v3-table__cell-inner">
 												<component
