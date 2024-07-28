@@ -9,10 +9,10 @@
 	<v3-table :data="data">
 		<v3-table-column prop="name" label="姓名">
 			<template #label>
-				<h1>姓名slot</h1>
+				<p>姓名slot</p>
 			</template>
-			<template v-slot="scope">
-				<span>{{ 1 }}</span>
+			<template #default="scope">
+				<span :class="$style.red">{{ scope.row.name }}</span>
 			</template>
 		</v3-table-column>
 		<v3-table-column prop="age" label="年龄"></v3-table-column>
@@ -40,6 +40,11 @@ const data = [
 	},
 ];
 </script>
+<style module>
+.red {
+	color: red;
+}
+</style>
 ```
 
 :::

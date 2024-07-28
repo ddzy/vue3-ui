@@ -20,7 +20,14 @@
 						<tr v-for="(v, i) in data" :key="i">
 							<td v-for="(vv, ii) in computedBodyColumns" :key="ii">
 								<component :is="vv">
-									<span>{{ v[vv?.props?.prop] }}</span>
+									<component
+										v-if="(vv?.children as any)?.default"
+										:is="(vv?.children as any)?.default"
+										:row="v"
+										:rowIndex="i"
+										:columnIndex="ii"
+									></component>
+									<span v-else>{{ v[vv?.props?.prop] }}</span>
 								</component>
 							</td>
 						</tr>
@@ -31,15 +38,10 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import {
-	VNodeNormalizedChildren,
-	cloneVNode,
-	computed,
-	h,
-	useSlots,
-} from 'vue';
+import { computed, h, useSlots } from 'vue';
 
-import { isFunction, isStrictObject } from '@common/utils';
+import { isStrictObject } from '@common/utils';
+import { V3TableColumn } from '@components/main';
 
 import { ITableProps } from '@/public/typings';
 
@@ -74,54 +76,29 @@ const props = withDefaults(defineProps<ITableProps>(), {
 });
 const slots = useSlots();
 
+const computedColumns = computed(() => {
+	const columns = (slots?.default?.() || []).filter(
+		(v) =>
+			isStrictObject(v.type) && (v.type as any).name === V3TableColumn.name,
+	);
+	return columns;
+});
 const computedHeaderColumns = computed(() => {
-	const columns = slots?.default?.() || [];
-	let result = columns.map((v) => {
-		let clonedColumn = cloneVNode(v);
-		let children: VNodeNormalizedChildren = null;
-		if (
-			clonedColumn.children &&
-			isStrictObject(clonedColumn.children) &&
-			isFunction((clonedColumn.children as any).label)
-		) {
-			children = {
-				default: h((clonedColumn.children as any).label),
-			};
-		} else {
-			children = [
-				h('span', null, {
-					default: () => clonedColumn?.props?.label,
-				}),
-			];
-		}
-		clonedColumn.children = children;
-
-		return clonedColumn;
+	const result = computedColumns.value.map((v) => {
+		return h(V3TableColumn, v.props, {
+			// @ts-ignore
+			default: v?.children?.label || (() => h('span', null, v?.props?.label)),
+		});
 	});
-
 	return result;
 });
 const computedBodyColumns = computed(() => {
-	const columns = slots?.default?.() || [];
-	let result = columns.map((v) => {
-		let clonedColumn = cloneVNode(v);
-		let children: VNodeNormalizedChildren = null;
-		if (
-			clonedColumn.children &&
-			isStrictObject(clonedColumn.children) &&
-			isFunction((clonedColumn.children as any).default)
-		) {
-			children = {
-				default: (clonedColumn.children as any).default,
-			};
-		} else {
-			children = [];
-		}
-		clonedColumn.children = children;
-
-		return clonedColumn;
+	const result = computedColumns.value.map((v) => {
+		return h(V3TableColumn, v.props, {
+			// @ts-ignore
+			default: v?.children?.default,
+		});
 	});
-
 	return result;
 });
 </script>

@@ -1,8 +1,8 @@
 <template>
-	<slot></slot>
+	<slot v-bind="attrs"></slot>
 </template>
 <script lang="ts" setup>
-import { useSlots } from 'vue';
+import { useAttrs, useSlots } from 'vue';
 
 import { ITableColumnProps } from '@/public/typings';
 
@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	labelClassName: '',
 });
 const slots = useSlots();
+const attrs = useAttrs();
 </script>
 <style lang="scss">
 @import './TableColumn.scss';
