@@ -4,80 +4,96 @@
 			'v3-table': true,
 			'has-header': props.showHeader,
 			'has-border': props.border,
+			'has-scrollbar': hasScrollbar,
 			'is-stripe': props.stripe,
 			'is-highlight': props.highlightHoverRow,
 		}"
+		:style="{
+			maxHeight: computedMaxHeight,
+		}"
 	>
-		<div v-if="props.showHeader" class="v3-table__header">
-			<div class="v3-table__header-inner">
-				<table>
-					<thead>
-						<tr
-							:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
-						>
-							<template v-for="(v, i) in computedColumns" :key="i">
-								<component :is="v">
-									<template #default="scope">
-										<th
-											:class="`v3-table__cell is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName}`"
-										>
-											<div class="v3-table__cell-inner">
-												<component
-													v-if="(v?.children as any)?.label"
-													:is="(v?.children as any)?.label"
-												></component>
-												<span v-else>{{ scope.props.label }}</span>
-											</div>
-										</th>
-									</template>
-								</component>
-							</template>
-						</tr>
-					</thead>
-				</table>
-			</div>
+		<div
+			v-if="props.showHeader"
+			:class="{
+				'v3-table__header': true,
+				'has-shadow': !arrivedState.top,
+			}"
+		>
+			<table class="v3-table__header-inner">
+				<thead>
+					<tr
+						:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
+					>
+						<template v-for="(v, i) in computedColumns" :key="i">
+							<component :is="v">
+								<template #default="scope">
+									<th
+										:class="`v3-table__cell is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName}`"
+									>
+										<div class="v3-table__cell-inner">
+											<component
+												v-if="(v?.children as any)?.label"
+												:is="(v?.children as any)?.label"
+											></component>
+											<span v-else>{{ scope.props.label }}</span>
+										</div>
+									</th>
+								</template>
+							</component>
+						</template>
+						<!-- 填充滚动条宽度 -->
+						<th
+							v-show="hasScrollbar"
+							:style="{
+								width: `${scrollbarWidth}px`,
+							}"
+							class="v3-table__header-thumb"
+						></th>
+					</tr>
+				</thead>
+			</table>
 		</div>
-		<div class="v3-table__body">
-			<div class="v3-table__body-inner">
-				<table>
-					<tbody>
-						<tr
-							v-for="(v, i) in data"
-							:key="i"
-							:class="`v3-table__row v3-table__row-${i} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
-						>
-							<template v-for="(vv, ii) in computedColumns" :key="ii">
-								<component :is="vv">
-									<template #default="scope">
-										<td
-											:class="`v3-table__cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName}`"
-										>
-											<div class="v3-table__cell-inner">
-												<component
-													v-if="(vv?.children as any)?.default"
-													:is="(vv?.children as any)?.default"
-													:row="v"
-													:rowIndex="i"
-													:columnIndex="ii"
-												></component>
-												<span v-else>{{ v[vv?.props?.prop] }}</span>
-											</div>
-										</td>
-									</template>
-								</component>
-							</template>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<div ref="tableBodyRef" class="v3-table__body">
+			<table class="v3-table__body-inner">
+				<tbody>
+					<tr
+						v-for="(v, i) in data"
+						:key="i"
+						:class="`v3-table__row v3-table__row-${i} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
+					>
+						<template v-for="(vv, ii) in computedColumns" :key="ii">
+							<component :is="vv">
+								<template #default="scope">
+									<td
+										:class="`v3-table__cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName}`"
+									>
+										<div class="v3-table__cell-inner">
+											<component
+												v-if="(vv?.children as any)?.default"
+												:is="(vv?.children as any)?.default"
+												:row="v"
+												:rowIndex="i"
+												:columnIndex="ii"
+											></component>
+											<span v-else>{{ v[vv?.props?.prop] }}</span>
+										</div>
+									</td>
+								</template>
+							</component>
+						</template>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </template>
 <script lang="ts" setup>
-import { computed, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 
-import { isStrictObject } from '@common/utils';
+import { isNumber, isStrictObject } from '@common/utils';
 import { V3TableColumn } from '@components/main';
+import useResizeObserver from '@hooks/useResizeObserver';
+import { useScroll } from '@vueuse/core';
 
 import { ITableProps } from '@/public/typings';
 
@@ -119,6 +135,38 @@ const computedColumns = computed(() => {
 	);
 	return columns;
 });
+
+const computedMaxHeight = computed(() => {
+	return isNumber(props.maxHeight) ? `${props.maxHeight}px` : props.maxHeight;
+});
+
+const tableBodyRef = ref<HTMLElement>();
+
+// 表格是否出现了滚动条
+const hasScrollbar = ref(false);
+function updateHasScrollbar() {
+	if (tableBodyRef.value) {
+		const { offsetWidth, clientWidth } = tableBodyRef.value;
+		hasScrollbar.value = offsetWidth !== clientWidth;
+	}
+}
+useResizeObserver(tableBodyRef, () => {
+	updateHasScrollbar();
+});
+const { arrivedState, x, y, isScrolling } = useScroll(tableBodyRef, {
+	throttle: 0,
+});
+
+// 滚动条宽度
+const scrollbarWidth = ref(0);
+function updateScrollbarWidth() {
+	const div = document.createElement('div');
+	div.style.cssText += `position: fixed; left: -99999px; top: -99999px; z-index: -1; overflow: scroll; width: 100px; height: 100px;`;
+	document.body.appendChild(div);
+	scrollbarWidth.value = div.offsetWidth - div.clientWidth;
+	document.body.removeChild(div);
+}
+updateScrollbarWidth();
 </script>
 <style lang="scss">
 @import './Table.scss';

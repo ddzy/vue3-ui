@@ -229,3 +229,65 @@ const data = [
 ```
 
 :::
+
+## 固定表头
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data" maxHeight="200px" border>
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="address" label="地址"></v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = [
+	{
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+	},
+	{
+		name: 'Bob',
+		age: 11,
+		address: '广东省河源市源城区',
+	},
+	{
+		name: 'Carl',
+		age: 18,
+		address: '四川省成都市新都区',
+	},
+	{
+		name: 'Davide',
+		age: 50,
+		address: '湖北省荆州市沙市区',
+	},
+	{
+		name: 'Emma',
+		age: 34,
+		address: '甘肃省兰州市城关区',
+	},
+	{
+		name: 'Alick',
+		age: 25,
+		address: '北京市朝阳区',
+	},
+	{
+		name: 'Bolice',
+		age: 11,
+		address: '广东省广州市越秀区',
+	},
+	{
+		name: 'John',
+		age: 33,
+		address: '广东省东莞市南城区',
+	},
+];
+</script>
+```
+
+:::
