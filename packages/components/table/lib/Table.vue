@@ -3,6 +3,9 @@
 		:class="{
 			'v3-table': true,
 			'has-header': props.showHeader,
+			'has-border': props.border,
+			'is-stripe': props.stripe,
+			'is-highlight': props.highlightHoverRow,
 		}"
 	>
 		<div class="v3-table__header">
@@ -96,7 +99,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	/** 是否显示表头 */
 	showHeader: true,
 	/** 是否高亮当前hover的行 */
-	highlightCurrentRow: true,
+	highlightHoverRow: true,
 	rowClassName: '',
 	cellClassName: '',
 	headerRowClassName: '',

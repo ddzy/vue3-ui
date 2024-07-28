@@ -6,7 +6,7 @@ export interface ITableProps {
 	maxHeight?: string | number;
 	size?: ITableSize;
 	showHeader?: boolean;
-	highlightCurrentRow?: boolean;
+	highlightHoverRow?: boolean;
 	rowClassName?: ITableRowClassName;
 	cellClassName?: ITableCellClassName;
 	headerRowClassName?: ITableRowClassName;

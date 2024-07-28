@@ -1,6 +1,40 @@
 $align-map: (left, center, right);
 
 .v3-table {
+	&.has-border {
+		table {
+			td {
+				border-top-width: 1px;
+				border-left-width: 1px;
+				border-right-width: 1px;
+			}
+		}
+	}
+	&.is-stripe {
+		.v3-table__body-inner {
+			table {
+				tr:nth-child(even) {
+					td {
+						background-color: #f9f9f9;
+					}
+				}
+			}
+		}
+	}
+	&.is-highlight {
+		.v3-table__body-inner {
+			table {
+				tr {
+					&:hover {
+						td {
+							background-color: #f3f4f5;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.v3-table__header-inner {
 		overflow-x: auto;
 		font-weight: bold;
@@ -15,11 +49,12 @@ $align-map: (left, center, right);
 	.v3-table__body-inner {
 		overflow-x: auto;
 		table {
-			tr {
-				td {
-					border-top: none;
-				}
+			td {
+				border-top: none;
 			}
+		}
+		.v3-table__cell {
+			padding: 0 $padding-small;
 		}
 	}
 	table {
@@ -29,6 +64,9 @@ $align-map: (left, center, right);
 		td {
 			padding: $padding-small 0;
 			border: 1px solid $border-color-small;
+			border-top-width: 0;
+			border-left-width: 0;
+			border-right-width: 0;
 			vertical-align: middle;
 			@each $key in $align-map {
 				&.is-align-#{$key} {
