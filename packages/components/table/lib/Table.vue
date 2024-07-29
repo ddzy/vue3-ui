@@ -20,6 +20,7 @@
 			}"
 		>
 			<table class="v3-table__header-inner">
+				<reusable-colgroup></reusable-colgroup>
 				<thead>
 					<tr
 						:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
@@ -65,6 +66,7 @@
 					'v3-table__body-inner': true,
 				}"
 			>
+				<reusable-colgroup></reusable-colgroup>
 				<tbody>
 					<tr
 						v-for="(v, i) in data"
@@ -97,15 +99,21 @@
 		</div>
 	</div>
 </template>
-<script lang="ts" setup>
-import { computed, ref, useSlots } from 'vue';
+<script lang="tsx" setup>
+import {
+	ComponentObjectPropsOptions,
+	ComponentOptions,
+	computed,
+	ref,
+	useSlots,
+} from 'vue';
 
 import { isNumber, isStrictObject } from '@common/utils';
 import { V3TableColumn } from '@components/main';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 
-import { ITableProps } from '@/public/typings';
+import { ITableColumnProps, ITableProps } from '@/public/typings';
 
 defineOptions({
 	name: 'V3Table',
@@ -177,6 +185,31 @@ function updateScrollbarWidth() {
 	document.body.removeChild(div);
 }
 updateScrollbarWidth();
+
+function ReusableColgroup() {
+	return (
+		<colgroup>
+			{computedColumns.value.map((v, i) => {
+				const columnProps = (v.type as ComponentOptions)
+					.props as ComponentObjectPropsOptions<ITableColumnProps>;
+				// @ts-ignore
+				const defaultWidth = columnProps?.width?.default;
+
+				return (
+					<col
+						key={i}
+						style={{
+							width:
+								(isNumber(v?.props?.width)
+									? `${v?.props?.width}px`
+									: v?.props?.width) || defaultWidth,
+						}}
+					></col>
+				);
+			})}
+		</colgroup>
+	);
+}
 </script>
 <style lang="scss">
 @import './Table.scss';

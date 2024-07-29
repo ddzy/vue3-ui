@@ -305,3 +305,44 @@ const data = [
 ```
 
 :::
+
+## 固定列宽
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data">
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column
+			prop="address"
+			label="地址"
+			width="110px"
+		></v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = [
+	{
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+	},
+	{
+		name: 'Bob',
+		age: 30,
+		address: '广东省河源市源城区',
+	},
+	{
+		name: 'Carl',
+		age: 40,
+		address: '四川省成都市新都区',
+	},
+];
+</script>
+```
+
+:::
