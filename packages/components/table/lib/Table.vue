@@ -20,7 +20,7 @@
 			}"
 		>
 			<table class="v3-table__header-inner">
-				<reusable-colgroup></reusable-colgroup>
+				<reusable-colgroup :isHeader="true"></reusable-colgroup>
 				<thead>
 					<tr
 						:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
@@ -29,7 +29,7 @@
 							<component :is="v">
 								<template #default="scope">
 									<th
-										:class="`v3-table__cell is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+										:class="`v3-table__cell v3-table__header-cell ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -38,6 +38,7 @@
 											></component>
 											<span v-else>{{ scope.props.label }}</span>
 										</div>
+										<div class="v3-table__cell-resizer"></div>
 									</th>
 								</template>
 							</component>
@@ -77,7 +78,7 @@
 							<component :is="vv">
 								<template #default="scope">
 									<td
-										:class="`v3-table__cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+										:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -186,7 +187,7 @@ function updateScrollbarWidth() {
 }
 updateScrollbarWidth();
 
-function ReusableColgroup() {
+function ReusableColgroup(props: { isHeader?: boolean }) {
 	return (
 		<colgroup>
 			{computedColumns.value.map((v, i) => {
@@ -198,6 +199,7 @@ function ReusableColgroup() {
 				return (
 					<col
 						key={i}
+						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
 						style={{
 							width:
 								(isNumber(v?.props?.width)

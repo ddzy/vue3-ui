@@ -4,6 +4,7 @@ $align-map: (left, center, right);
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 
 	&.has-border {
 		td,
@@ -74,6 +75,9 @@ $align-map: (left, center, right);
 		flex-shrink: 0;
 		border: 1px solid $border-color-small;
 	}
+	.v3-table__header-cell {
+		position: relative;
+	}
 
 	.v3-table__body {
 		flex: 1;
@@ -83,6 +87,15 @@ $align-map: (left, center, right);
 
 	.v3-table__cell-inner {
 		padding: 0 $padding-small;
+	}
+
+	.v3-table__cell-resizer {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: -1px;
+		width: 4px;
+		cursor: col-resize;
 	}
 
 	table {
