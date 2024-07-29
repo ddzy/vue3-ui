@@ -28,7 +28,7 @@
 							<component :is="v">
 								<template #default="scope">
 									<th
-										:class="`v3-table__cell is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName}`"
+										:class="`v3-table__cell is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -75,7 +75,7 @@
 							<component :is="vv">
 								<template #default="scope">
 									<td
-										:class="`v3-table__cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName}`"
+										:class="`v3-table__cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -163,7 +163,7 @@ function updateHasScrollbar() {
 useResizeObserver(tableBodyRef, () => {
 	updateHasScrollbar();
 });
-const { arrivedState, x, y, isScrolling } = useScroll(tableBodyRef, {
+const { arrivedState } = useScroll(tableBodyRef, {
 	throttle: 0,
 });
 

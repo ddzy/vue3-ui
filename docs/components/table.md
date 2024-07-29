@@ -170,7 +170,13 @@ const data = [
 		:headerRowClassName="headerRowClass"
 		:headerCellClassName="headerCellClass"
 	>
-		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column
+			prop="name"
+			label="姓名"
+			:labelClassName="columnLabelClass"
+			:className="columnClass"
+		>
+		</v3-table-column>
 		<v3-table-column prop="age" label="年龄"></v3-table-column>
 		<v3-table-column prop="address" label="地址"></v3-table-column>
 	</v3-table>
@@ -184,6 +190,8 @@ const rowClass = $style['custom-row'];
 const cellClass = $style['custom-cell'];
 const headerRowClass = $style['custom-header-row'];
 const headerCellClass = $style['custom-header-cell'];
+const columnLabelClass = $style['custom-column-label__name'];
+const columnClass = $style['custom-column__name'];
 const data = [
 	{
 		name: 'Alice',
@@ -224,6 +232,12 @@ const data = [
 }
 .custom-header-cell {
 	color: rgba(0, 160, 255, 1);
+}
+.custom-column-label__name {
+	color: red;
+}
+.custom-column__name {
+	color: orange;
 }
 </style>
 ```
