@@ -1,3 +1,5 @@
+import * as mathjs from 'mathjs';
+
 export function handleTransitionEnter(el: HTMLElement): void {
 	el.style.height = 'auto';
 	const offsetHeight = el.offsetHeight;
@@ -146,4 +148,67 @@ export function ease(
  */
 export function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * 精度加法
+ * @param args 数字
+ * @returns
+ */
+export function add(...args: number[]) {
+	const result = args.slice(1).reduce((total, current) => {
+		total = mathjs.number(
+			mathjs.add(mathjs.bignumber(total), mathjs.bignumber(current)),
+		);
+		return total;
+	}, args[0]);
+	return result;
+}
+
+/**
+ * 精度减法
+ * @param args 数字
+ * @returns
+ */
+export function subtract(...args: number[]) {
+	const result = args.slice(1).reduce((total, current) => {
+		total = mathjs.number(
+			mathjs.subtract(mathjs.bignumber(total), mathjs.bignumber(current)),
+		);
+		return total;
+	}, args[0]);
+	return result;
+}
+
+/**
+ * 精度乘法
+ * @param args 数字
+ * @returns
+ */
+export function multiply(...args: number[]) {
+	const result = args.slice(1).reduce((total, current) => {
+		total = mathjs.number(
+			// @ts-ignore
+			mathjs.multiply(mathjs.bignumber(total), mathjs.bignumber(current)),
+		);
+		return total;
+	}, args[0]);
+	return result;
+}
+
+/**
+ * 精度除法
+ * @param args 数字
+ * @returns
+ */
+export function divide(...args: number[]) {
+	const result = args.slice(1).reduce((total, current) => {
+		// @ts-ignore
+		total = mathjs.number(
+			// @ts-ignore
+			mathjs.divide(mathjs.bignumber(total), mathjs.bignumber(current)),
+		);
+		return total;
+	}, args[0]);
+	return result;
 }

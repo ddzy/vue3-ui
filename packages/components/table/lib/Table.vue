@@ -30,6 +30,7 @@
 								<template #default="scope">
 									<th
 										:class="`v3-table__cell v3-table__header-cell ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+										ref="tableHeaderCellRefs"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -101,20 +102,16 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import {
-	ComponentObjectPropsOptions,
-	ComponentOptions,
-	computed,
-	ref,
-	useSlots,
-} from 'vue';
+import { computed, onMounted, ref, useSlots } from 'vue';
 
 import { isNumber, isStrictObject } from '@common/utils';
+import '@common/utils/index';
 import { V3TableColumn } from '@components/main';
+import useElementBounding from '@hooks/useElementBounding';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 
-import { ITableColumnProps, ITableProps } from '@/public/typings';
+import { ITableProps } from '@/public/typings';
 
 defineOptions({
 	name: 'V3Table',
@@ -124,7 +121,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	/** 表格数据 */
 	data: () => [],
 	/** 是否显示边框 */
-	border: false,
+	border: true,
 	/** 是否显示条纹 */
 	stripe: false,
 	/** 表格高度 */
@@ -160,6 +157,7 @@ const computedMaxHeight = computed(() => {
 });
 
 const tableBodyRef = ref<HTMLElement>();
+const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 
 // 表格是否出现了滚动条
 const hasScrollbar = ref(false);
@@ -187,25 +185,24 @@ function updateScrollbarWidth() {
 }
 updateScrollbarWidth();
 
+// 列宽
+const columnWidths = ref<number[]>([]);
+onMounted(() => {
+	columnWidths.value = tableHeaderCellRefs.value.map((v) => {
+		const { width } = useElementBounding(v);
+		return width.value;
+	});
+});
+
 function ReusableColgroup(props: { isHeader?: boolean }) {
 	return (
 		<colgroup>
-			{computedColumns.value.map((v, i) => {
-				const columnProps = (v.type as ComponentOptions)
-					.props as ComponentObjectPropsOptions<ITableColumnProps>;
-				// @ts-ignore
-				const defaultWidth = columnProps?.width?.default;
-
+			{columnWidths.value.map((v, i) => {
 				return (
 					<col
 						key={i}
 						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
-						style={{
-							width:
-								(isNumber(v?.props?.width)
-									? `${v?.props?.width}px`
-									: v?.props?.width) || defaultWidth,
-						}}
+						width={v || 'auto'}
 					></col>
 				);
 			})}

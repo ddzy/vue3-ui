@@ -1,10 +1,11 @@
 $align-map: (left, center, right);
 
 .v3-table {
-	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	overflow-x: auto;
+	overflow-y: hidden;
 
 	&.has-border {
 		td,
