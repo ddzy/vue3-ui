@@ -112,7 +112,6 @@ import { computed, onMounted, ref, useSlots } from 'vue';
 import { divide, isNumber, isStrictObject } from '@common/utils';
 import '@common/utils/index';
 import { V3TableColumn } from '@components/main';
-import useElementBounding from '@hooks/useElementBounding';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 
@@ -176,7 +175,7 @@ function updateHasScrollbar() {
 useResizeObserver(tableBodyRef, () => {
 	updateHasScrollbar();
 });
-const { arrivedState, x, y } = useScroll(tableBodyRef, {
+const { arrivedState, x } = useScroll(tableBodyRef, {
 	throttle: 0,
 });
 
@@ -194,14 +193,24 @@ updateScrollbarWidth();
 // 列宽
 const columnWidths = ref<number[]>([]);
 onMounted(() => {
-	const tableRect = useElementBounding(tableRef);
-	let averageWidth = Math.floor(
-		divide(tableRect.width.value, computedColumns.value.length),
-	);
-	columnWidths.value = computedColumns.value.map((v) => {
+	if (!tableRef.value) {
+		return;
+	}
+	// 如果某一列单独指定了宽度，则该列使用指定的宽度，反之使用根据表格的初始宽度计算而来的平均宽度
+	let remainWidth = tableRef.value.clientWidth - scrollbarWidth.value;
+	let newColumnWidths = computedColumns.value.map((v) => {
 		let propsWidth = Number.parseFloat(v?.props?.width);
-		return propsWidth || averageWidth || 0;
+		if (!Number.isNaN(propsWidth)) {
+			remainWidth -= propsWidth;
+		}
+		return propsWidth;
 	});
+	let averageCount = newColumnWidths.filter((v) => Number.isNaN(v)).length;
+	let averageWidth = divide(remainWidth, averageCount);
+	newColumnWidths = newColumnWidths.map((v) =>
+		Number.isNaN(v) ? averageWidth : v,
+	);
+	columnWidths.value = newColumnWidths;
 });
 
 function ReusableColgroup(props: { isHeader?: boolean }) {
