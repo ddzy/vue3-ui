@@ -20,7 +20,7 @@ $v3-table-border-color: $border-color-small;
 					&:not(:first-child):not(:last-child) {
 						border-left-width: $v3-table-border-width;
 					}
-					&:not(:last-child) {
+					&:not(:last-child):not(:nth-last-child(2)) {
 						border-right-width: $v3-table-border-width;
 					}
 				}
@@ -97,17 +97,13 @@ $v3-table-border-color: $border-color-small;
 
 	.v3-table__header {
 		flex-shrink: 0;
-		display: flex;
-		align-items: stretch;
-		overflow: hidden;
-		width: 1506px;
-		&.has-shadow {
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-		}
 	}
 	.v3-table__header-inner {
 		font-weight: bold;
 		color: $font-color-small;
+		&.has-shadow {
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+		}
 	}
 	.v3-table__header-gap {
 		flex-shrink: 0;
@@ -118,7 +114,6 @@ $v3-table-border-color: $border-color-small;
 
 	.v3-table__body {
 		flex: 1;
-		height: 0;
 		overflow: auto;
 	}
 

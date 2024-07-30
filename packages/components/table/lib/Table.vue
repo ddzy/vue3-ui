@@ -13,18 +13,18 @@
 		:style="{
 			maxHeight: computedMaxHeight,
 		}"
+		ref="tableRef"
 	>
-		<div
-			v-if="props.showHeader"
-			:class="{
-				'v3-table__header': true,
-				'has-shadow': !arrivedState.top,
-			}"
-			:style="{
-				transform: `translate3d(-${x}px, 0, 0)`,
-			}"
-		>
-			<table class="v3-table__header-inner">
+		<div v-if="props.showHeader" class="v3-table__header">
+			<table
+				:class="{
+					'v3-table__header-inner': true,
+					'has-shadow': !arrivedState.top,
+				}"
+				:style="{
+					transform: `translate3d(-${x}px, 0, 0)`,
+				}"
+			>
 				<reusable-colgroup :isHeader="true"></reusable-colgroup>
 				<thead>
 					<tr
@@ -109,7 +109,7 @@
 <script lang="tsx" setup>
 import { computed, onMounted, ref, useSlots } from 'vue';
 
-import { isNumber, isStrictObject } from '@common/utils';
+import { divide, isNumber, isStrictObject } from '@common/utils';
 import '@common/utils/index';
 import { V3TableColumn } from '@components/main';
 import useElementBounding from '@hooks/useElementBounding';
@@ -126,7 +126,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	/** 表格数据 */
 	data: () => [],
 	/** 是否显示边框 */
-	border: true,
+	border: false,
 	/** 是否显示条纹 */
 	stripe: false,
 	/** 表格高度 */
@@ -161,6 +161,7 @@ const computedMaxHeight = computed(() => {
 	return isNumber(props.maxHeight) ? `${props.maxHeight}px` : props.maxHeight;
 });
 
+const tableRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 
@@ -193,21 +194,25 @@ updateScrollbarWidth();
 // 列宽
 const columnWidths = ref<number[]>([]);
 onMounted(() => {
-	columnWidths.value = tableHeaderCellRefs.value.map((v) => {
-		const { width } = useElementBounding(v);
-		return width.value;
+	const tableRect = useElementBounding(tableRef);
+	let averageWidth = Math.floor(
+		divide(tableRect.width.value, computedColumns.value.length),
+	);
+	columnWidths.value = computedColumns.value.map((v) => {
+		let propsWidth = Number.parseFloat(v?.props?.width);
+		return propsWidth || averageWidth || 0;
 	});
 });
 
 function ReusableColgroup(props: { isHeader?: boolean }) {
 	return (
 		<colgroup>
-			{computedColumns.value.map((v, i) => {
+			{columnWidths.value.map((v, i) => {
 				return (
 					<col
 						key={i}
 						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
-						width={500}
+						width={v}
 					></col>
 				);
 			})}
