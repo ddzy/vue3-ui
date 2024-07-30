@@ -7,6 +7,8 @@
 			'has-scrollbar': hasScrollbar,
 			'is-stripe': props.stripe,
 			'is-highlight': props.highlightHoverRow,
+			'show-left-border': true,
+			'show-right-border': true,
 		}"
 		:style="{
 			maxHeight: computedMaxHeight,
@@ -17,6 +19,9 @@
 			:class="{
 				'v3-table__header': true,
 				'has-shadow': !arrivedState.top,
+			}"
+			:style="{
+				transform: `translate3d(-${x}px, 0, 0)`,
 			}"
 		>
 			<table class="v3-table__header-inner">
@@ -50,7 +55,7 @@
 							:style="{
 								width: `${scrollbarWidth}px`,
 							}"
-							class="v3-table__header-thumb"
+							class="v3-table__header-gap"
 						></th>
 					</tr>
 				</thead>
@@ -60,7 +65,7 @@
 			ref="tableBodyRef"
 			:class="{
 				'v3-table__body': true,
-				'has-bottom-border': !arrivedState.bottom,
+				'show-bottom-border': !arrivedState.bottom,
 			}"
 		>
 			<table
@@ -170,7 +175,7 @@ function updateHasScrollbar() {
 useResizeObserver(tableBodyRef, () => {
 	updateHasScrollbar();
 });
-const { arrivedState } = useScroll(tableBodyRef, {
+const { arrivedState, x, y } = useScroll(tableBodyRef, {
 	throttle: 0,
 });
 
@@ -197,12 +202,12 @@ onMounted(() => {
 function ReusableColgroup(props: { isHeader?: boolean }) {
 	return (
 		<colgroup>
-			{columnWidths.value.map((v, i) => {
+			{computedColumns.value.map((v, i) => {
 				return (
 					<col
 						key={i}
 						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
-						width={v || 'auto'}
+						width={500}
 					></col>
 				);
 			})}

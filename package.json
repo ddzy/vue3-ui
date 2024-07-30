@@ -33,7 +33,7 @@
 	"types": "./dist/typings/index.d.ts",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
-		"serve": "vitepress dev docs",
+		"serve": "cross-env NODE_OPTIONS=--max-old-space-size=10240 vitepress dev docs",
 		"preview": "vitepress preview docs",
 		"build:docs": "vitepress build docs",
 		"build:lib": "cross-env NODE_OPTIONS=--max-old-space-size=10240 ts-node ./build/lib.build.ts",
