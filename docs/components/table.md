@@ -353,32 +353,37 @@ const data = [
 
 ```vue
 <template>
-	<v3-table :data="data" border>
+	<v3-table :data="data" border maxHeight="200px">
 		<v3-table-column prop="name" label="姓名" width="100"></v3-table-column>
 		<v3-table-column prop="age" label="年龄" width="100"></v3-table-column>
 		<v3-table-column prop="address" label="地址"></v3-table-column>
 	</v3-table>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-const data = [
-	{
-		name: 'Alice',
-		age: 20,
-		address: '辽宁省大连市沙河口区',
-	},
-	{
-		name: 'Bob',
-		age: 30,
-		address: '广东省河源市源城区',
-	},
-	{
-		name: 'Carl',
-		age: 40,
-		address: '四川省成都市新都区',
-	},
-];
+const data = ref([]);
+onMounted(() => {
+	setTimeout(() => {
+		data.value = [
+			{
+				name: 'Alice',
+				age: 20,
+				address: '辽宁省大连市沙河口区',
+			},
+			{
+				name: 'Bob',
+				age: 11,
+				address: '广东省河源市源城区',
+			},
+			{
+				name: 'Carl',
+				age: 18,
+				address: '四川省成都市新都区',
+			},
+		];
+	}, 1000);
+});
 </script>
 ```
 
