@@ -354,8 +354,8 @@ const data = [
 ```vue
 <template>
 	<v3-table :data="data" border>
-		<v3-table-column prop="name" label="姓名" width="500"></v3-table-column>
-		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="name" label="姓名" width="100"></v3-table-column>
+		<v3-table-column prop="age" label="年龄" width="100"></v3-table-column>
 		<v3-table-column prop="address" label="地址"></v3-table-column>
 	</v3-table>
 </template>

@@ -109,7 +109,7 @@
 <script lang="tsx" setup>
 import { computed, onMounted, ref, useSlots } from 'vue';
 
-import { divide, isNumber, isStrictObject } from '@common/utils';
+import { add, divide, isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
 import { V3TableColumn } from '@components/main';
 import useResizeObserver from '@hooks/useResizeObserver';
@@ -196,21 +196,38 @@ onMounted(() => {
 	if (!tableRef.value) {
 		return;
 	}
-	// 如果某一列单独指定了宽度，则该列使用指定的宽度，反之使用根据表格的初始宽度计算而来的平均宽度
-	let remainWidth = tableRef.value.clientWidth - scrollbarWidth.value;
-	let newColumnWidths = computedColumns.value.map((v) => {
-		let propsWidth = Number.parseFloat(v?.props?.width);
-		if (!Number.isNaN(propsWidth)) {
-			remainWidth -= propsWidth;
-		}
-		return propsWidth;
-	});
-	let averageCount = newColumnWidths.filter((v) => Number.isNaN(v)).length;
-	let averageWidth = divide(remainWidth, averageCount);
-	newColumnWidths = newColumnWidths.map((v) =>
-		Number.isNaN(v) ? averageWidth : v,
-	);
-	columnWidths.value = newColumnWidths;
+	let totalWidth = tableRef.value.clientWidth - scrollbarWidth.value;
+	let propsTotalWidth = computedColumns.value.reduce((total, current) => {
+		let propsWidth = Number.parseFloat(current?.props?.width) || 0;
+		total = add(total, propsWidth);
+		return total;
+	}, 0);
+	// 如果指定的所有列宽总和超出表格宽度
+	// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = 表格初始宽度 / 列的个数
+	if (propsTotalWidth > totalWidth) {
+		let averageCount = computedColumns.value.length;
+		let averageWidth = Math.floor(divide(totalWidth, averageCount));
+		columnWidths.value = computedColumns.value.map((v) => {
+			let propsWidth = Number.parseFloat(v?.props?.width);
+			return !Number.isNaN(propsWidth) ? propsWidth : averageWidth;
+		});
+	} else {
+		// 反之
+		// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = (表格初始宽度 - 指定了宽度的列的总宽度) / 未指定宽度的列的个数
+		let newColumnWidths = computedColumns.value.map((v) => {
+			let propsWidth = Number.parseFloat(v?.props?.width);
+			if (!Number.isNaN(propsWidth)) {
+				totalWidth = subtract(totalWidth, propsWidth);
+			}
+			return propsWidth;
+		});
+		let averageCount = newColumnWidths.filter((v) => Number.isNaN(v)).length;
+		let averageWidth = Math.floor(divide(totalWidth, averageCount));
+		newColumnWidths = newColumnWidths.map((v) =>
+			Number.isNaN(v) ? averageWidth : v,
+		);
+		columnWidths.value = newColumnWidths;
+	}
 });
 
 function ReusableColgroup(props: { isHeader?: boolean }) {
