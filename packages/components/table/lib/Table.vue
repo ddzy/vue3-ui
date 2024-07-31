@@ -4,9 +4,10 @@
 			'v3-table': true,
 			'has-header': props.showHeader,
 			'has-border': props.border,
-			'has-scrollbar': hasScrollbar,
+			'has-vertical-scrollbar': hasVerticalScrollbar,
 			'is-stripe': props.stripe,
 			'is-highlight': props.highlightHoverRow,
+			'is-resizing': isResizerMouseDown,
 			'show-left-border': true,
 			'show-right-border': true,
 		}"
@@ -44,14 +45,17 @@
 											></component>
 											<span v-else>{{ scope.props.label }}</span>
 										</div>
-										<div class="v3-table__cell-resizer"></div>
+										<div
+											class="v3-table__cell-resizer"
+											@mousedown="handleResizerMouseDown($event, i)"
+										></div>
 									</th>
 								</template>
 							</component>
 						</template>
 						<!-- 填充滚动条宽度 -->
 						<th
-							v-show="hasScrollbar"
+							v-show="hasVerticalScrollbar"
 							:style="{
 								width: `${scrollbarWidth}px`,
 							}"
@@ -112,6 +116,7 @@ import { computed, onMounted, ref, useSlots } from 'vue';
 import { add, divide, isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
 import { V3TableColumn } from '@components/main';
+import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 
@@ -164,12 +169,12 @@ const tableRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 
-// 表格是否出现了滚动条
-const hasScrollbar = ref(false);
+// 表格是否出现了纵向滚动条
+const hasVerticalScrollbar = ref(false);
 function updateHasScrollbar() {
 	if (tableBodyRef.value) {
 		const { offsetWidth, clientWidth } = tableBodyRef.value;
-		hasScrollbar.value = offsetWidth !== clientWidth;
+		hasVerticalScrollbar.value = offsetWidth !== clientWidth;
 	}
 }
 useResizeObserver(tableBodyRef, () => {
@@ -245,6 +250,58 @@ function ReusableColgroup(props: { isHeader?: boolean }) {
 		</colgroup>
 	);
 }
+
+// 表头拖拽大小
+const isResizerMouseDown = ref(false);
+const resizerStartPosition = ref(0);
+const resizerIndex = ref(-1);
+function handleResizerMouseDown(e: MouseEvent, i: number) {
+	isResizerMouseDown.value = true;
+	resizerIndex.value = i;
+	resizerStartPosition.value = e.pageX;
+}
+useEventListener(document, 'mouseup', (e) => {
+	if (isResizerMouseDown.value) {
+		isResizerMouseDown.value = false;
+		const newColumnWidths = columnWidths.value.slice();
+		const resizerEndPosition = e.pageX;
+		const diff = subtract(resizerEndPosition, resizerStartPosition.value);
+		if (resizerIndex.value !== -1 && tableRef.value) {
+			// 更新拖拽线左侧一列的宽度
+			newColumnWidths[resizerIndex.value] += diff;
+
+			// 表格初始宽度
+			let initialTableWidth = tableRef.value.clientWidth - scrollbarWidth.value;
+			// 拖拽后所有列的总宽度
+			let totalColumnWidth = newColumnWidths.reduce((total, current) => {
+				total += current;
+				return total;
+			}, 0);
+			// 拖拽线右侧一列的宽度
+			let rightColumnWidth = newColumnWidths[resizerIndex.value + 1];
+			if (totalColumnWidth <= initialTableWidth) {
+				// 如果拖拽后列的总宽度没有超出表格初始宽度，那么还需要重新计算拖拽线右侧一列的宽度
+				rightColumnWidth = newColumnWidths.reduce(
+					(total, current, currentIndex) => {
+						if (currentIndex !== resizerIndex.value + 1) {
+							total -= current;
+						}
+						return total;
+					},
+					initialTableWidth,
+				);
+			}
+			newColumnWidths[resizerIndex.value + 1] = rightColumnWidth;
+
+			// 更新每一列的宽度，每列的宽度不能小于最小值
+			columnWidths.value = newColumnWidths.map((v, i) => {
+				let minWidth =
+					Number.parseFloat(computedColumns.value[i]?.props?.minWidth) || 30;
+				return Math.max(v, minWidth);
+			});
+		}
+	}
+});
 </script>
 <style lang="scss">
 @import './Table.scss';

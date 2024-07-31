@@ -9,6 +9,7 @@ $v3-table-border-color: $border-color-small;
 	flex-direction: column;
 	position: relative;
 	overflow: hidden;
+	word-wrap: break-word;
 
 	&.has-border {
 		border-left: $v3-table-border-width $v3-table-border-style transparent;
@@ -76,7 +77,10 @@ $v3-table-border-color: $border-color-small;
 			}
 		}
 	}
-	&.has-scrollbar {
+	&.is-resizing {
+		user-select: none;
+	}
+	&.has-vertical-scrollbar {
 		.v3-table__header {
 			.v3-table__cell {
 				&:nth-last-child(2) {
@@ -125,7 +129,7 @@ $v3-table-border-color: $border-color-small;
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		right: -$v3-table-border-width;
+		right: 0;
 		width: 4px;
 		cursor: col-resize;
 	}

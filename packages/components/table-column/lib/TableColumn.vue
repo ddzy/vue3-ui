@@ -2,8 +2,6 @@
 	<slot v-bind="{ props }"></slot>
 </template>
 <script lang="ts" setup>
-import { useAttrs, useSlots } from 'vue';
-
 import { ITableColumnProps } from '@/public/typings';
 
 defineOptions({
@@ -20,7 +18,8 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	align: 'left',
 	headerAlign: 'left',
 	width: 'auto',
-	minWidth: 'none',
+	/** 该列的最小宽度 */
+	minWidth: '30',
 	/** 本列是否固定 */
 	fixed: false,
 	/** 本列是否可排序 */
@@ -32,8 +31,6 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	className: '',
 	labelClassName: '',
 });
-const slots = useSlots();
-const attrs = useAttrs();
 </script>
 <style lang="scss">
 @import './TableColumn.scss';
