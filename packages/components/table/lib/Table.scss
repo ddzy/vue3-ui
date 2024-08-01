@@ -122,6 +122,14 @@ $v3-table-border-color: $border-color-small;
 		overflow: auto;
 	}
 
+	.v3-table__empty {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 60px;
+		color: #aaa;
+	}
+
 	.v3-table__cell-inner {
 		padding: 0 $padding-small;
 	}

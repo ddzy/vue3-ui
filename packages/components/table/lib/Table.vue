@@ -68,6 +68,7 @@
 			</table>
 		</div>
 		<div
+			v-if="props.data.length"
 			ref="tableBodyRef"
 			:class="{
 				'v3-table__body': true,
@@ -109,6 +110,10 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+		<slot v-else-if="slots?.empty" name="empty"></slot>
+		<div v-else class="v3-table__empty">
+			<span>{{ props.emptyText }}</span>
 		</div>
 	</div>
 </template>

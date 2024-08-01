@@ -438,3 +438,62 @@ const data = ref([
 ```
 
 :::
+
+## 空状态
+
+可以通过`emptyText`自定义空文本，也可以通过`slot='empty'`自定义空状态显示的内容
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data">
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="address" label="地址"></v3-table-column>
+	</v3-table>
+	<v3-table :data="data" emptyText="什么都没有~">
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="address" label="地址"></v3-table-column>
+	</v3-table>
+	<v3-table :data="data">
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="address" label="地址"></v3-table-column>
+		<template #empty>
+			<div :class="$style.empty">
+				<img
+					src="https://oss.yyge.top/test/images/empty.png"
+					:class="$style['empty-img']"
+				/>
+				<span :class="$style['empty-text']">无数据</span>
+			</div>
+		</template>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const radio = ref('get');
+const data = ref([]);
+</script>
+<style module>
+.empty {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+}
+.empty-img {
+	width: 200px;
+	height: 128px;
+}
+.empty-text {
+	color: #aaa;
+}
+</style>
+```
+
+:::
