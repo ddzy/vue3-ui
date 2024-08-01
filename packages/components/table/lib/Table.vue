@@ -46,6 +46,7 @@
 											<span v-else>{{ scope.props.label }}</span>
 										</div>
 										<div
+											v-if="scope.props.resizable"
 											class="v3-table__cell-resizer"
 											@mousedown="handleResizerMouseDown($event, i)"
 										></div>
@@ -198,13 +199,13 @@ updateScrollbarWidth();
 // 列宽
 const columnWidths = ref<number[]>([]);
 watch(
-	[hasVerticalScrollbar, tableRef],
-	([newHasVerticalScrollbar, newTableRef]) => {
-		if (!newTableRef) {
+	[hasVerticalScrollbar],
+	([newHasVerticalScrollbar]) => {
+		if (!tableBodyRef.value) {
 			return;
 		}
 		// 一般表格数据都是异步获取的，所以需要根据滚动条的变化，计算表格的初始宽度
-		let tableWidth = newTableRef.clientWidth;
+		let tableWidth = tableBodyRef.value.clientWidth;
 		if (newHasVerticalScrollbar) {
 			tableWidth -= scrollbarWidth.value;
 		}

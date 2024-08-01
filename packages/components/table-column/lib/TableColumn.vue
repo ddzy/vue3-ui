@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	sortable: false,
 	/** 当不为自定义排序时，采用的排序策略（等同于 Array.sort 方法） */
 	sortMethod: () => -1,
-	resizable: true,
+	resizable: false,
 	formatter: (row: any) => row,
 	className: '',
 	labelClassName: '',

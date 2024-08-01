@@ -354,9 +354,19 @@ const data = [
 ```vue
 <template>
 	<v3-table :data="data" border maxHeight="200px">
-		<v3-table-column prop="name" label="姓名" width="100"></v3-table-column>
-		<v3-table-column prop="age" label="年龄" width="100"></v3-table-column>
-		<v3-table-column prop="address" label="地址"></v3-table-column>
+		<v3-table-column
+			prop="name"
+			label="姓名"
+			width="100"
+			resizable
+		></v3-table-column>
+		<v3-table-column
+			prop="age"
+			label="年龄"
+			width="100"
+			resizable
+		></v3-table-column>
+		<v3-table-column prop="address" label="地址" resizable></v3-table-column>
 	</v3-table>
 </template>
 <script lang="ts" setup>
