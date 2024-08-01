@@ -112,7 +112,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { computed, ref, useSlots, watch } from 'vue';
+import { computed, onMounted, ref, useSlots } from 'vue';
 
 import { add, divide, isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
@@ -196,63 +196,62 @@ function updateScrollbarWidth() {
 }
 updateScrollbarWidth();
 
+// 表格宽度
+const computedTableWidth = computed(() => {
+	return tableRef.value ? tableRef.value.clientWidth : 0;
+});
+
 // 列宽
 const columnWidths = ref<number[]>([]);
-watch(
-	[hasVerticalScrollbar],
-	([newHasVerticalScrollbar]) => {
-		if (!tableBodyRef.value) {
-			return;
-		}
-		// 一般表格数据都是异步获取的，所以需要根据滚动条的变化，计算表格的初始宽度
-		let tableWidth = tableBodyRef.value.clientWidth;
-		if (newHasVerticalScrollbar) {
-			tableWidth -= scrollbarWidth.value;
-		}
-		let propsTotalWidth = computedColumns.value.reduce((total, current) => {
-			let propsWidth = Number.parseFloat(current?.props?.width) || 0;
-			total = add(total, propsWidth);
-			return total;
-		}, 0);
-		// 如果指定的所有列宽总和超出表格宽度
-		// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = 表格初始宽度 / 列的个数
-		if (propsTotalWidth > tableWidth) {
-			let averageCount = computedColumns.value.length;
-			let averageWidth = Math.floor(divide(tableWidth, averageCount));
-			columnWidths.value = computedColumns.value.map((v) => {
-				let propsWidth = Number.parseFloat(v?.props?.width);
-				return !Number.isNaN(propsWidth) ? propsWidth : averageWidth;
-			});
-		} else {
-			// 反之
-			// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = (表格初始宽度 - 指定了宽度的列的总宽度) / 未指定宽度的列的个数
-			let newColumnWidths = computedColumns.value.map((v) => {
-				let propsWidth = Number.parseFloat(v?.props?.width);
-				if (!Number.isNaN(propsWidth)) {
-					tableWidth = subtract(tableWidth, propsWidth);
-				}
-				return propsWidth;
-			});
-			let averageCount = newColumnWidths.filter((v) => Number.isNaN(v)).length;
-			let averageWidth = Math.floor(divide(tableWidth, averageCount));
-			newColumnWidths = newColumnWidths.map((v) =>
-				Number.isNaN(v) ? averageWidth : v,
-			);
-			columnWidths.value = newColumnWidths;
-		}
-	},
-	{ immediate: true },
-);
+onMounted(() => {
+	let tableWidth = computedTableWidth.value;
+	let propsTotalWidth = computedColumns.value.reduce((total, current) => {
+		let propsWidth = Number.parseFloat(current?.props?.width) || 0;
+		total = add(total, propsWidth);
+		return total;
+	}, 0);
+	// 如果指定的所有列宽总和超出表格宽度
+	// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = 表格初始宽度 / 列的个数
+	if (propsTotalWidth > tableWidth) {
+		let averageCount = computedColumns.value.length;
+		let averageWidth = Math.floor(divide(tableWidth, averageCount));
+		columnWidths.value = computedColumns.value.map((v) => {
+			let propsWidth = Number.parseFloat(v?.props?.width);
+			return !Number.isNaN(propsWidth) ? propsWidth : averageWidth;
+		});
+	} else {
+		// 反之
+		// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = (表格初始宽度 - 指定了宽度的列的总宽度) / 未指定宽度的列的个数
+		let newColumnWidths = computedColumns.value.map((v) => {
+			let propsWidth = Number.parseFloat(v?.props?.width);
+			if (!Number.isNaN(propsWidth)) {
+				tableWidth = subtract(tableWidth, propsWidth);
+			}
+			return propsWidth;
+		});
+		let averageCount = newColumnWidths.filter((v) => Number.isNaN(v)).length;
+		let averageWidth = Math.floor(divide(tableWidth, averageCount));
+		newColumnWidths = newColumnWidths.map((v) =>
+			Number.isNaN(v) ? averageWidth : v,
+		);
+		columnWidths.value = newColumnWidths;
+	}
+});
 
 function ReusableColgroup(props: { isHeader?: boolean }) {
 	return (
 		<colgroup>
 			{columnWidths.value.map((v, i) => {
-				return (
+				return v ? (
 					<col
 						key={i}
 						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
 						width={v}
+					></col>
+				) : (
+					<col
+						key={i}
+						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
 					></col>
 				);
 			})}
@@ -279,10 +278,7 @@ useEventListener(document, 'mouseup', (e) => {
 			// 更新拖拽线左侧一列的宽度
 			newColumnWidths[resizerIndex.value] += diff;
 			// 表格初始宽度
-			let tableWidth = tableRef.value.clientWidth;
-			if (hasVerticalScrollbar.value) {
-				tableWidth -= scrollbarWidth.value;
-			}
+			let tableWidth = computedTableWidth.value;
 			// 拖拽后所有列的总宽度
 			let totalColumnWidth = newColumnWidths.reduce((total, current) => {
 				total += current;

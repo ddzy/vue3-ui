@@ -353,7 +353,7 @@ const data = [
 
 ```vue
 <template>
-	<v3-table :data="data" border maxHeight="200px">
+	<v3-table :data="data" border>
 		<v3-table-column
 			prop="name"
 			label="姓名"
