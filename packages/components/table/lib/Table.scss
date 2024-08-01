@@ -79,6 +79,7 @@ $v3-table-border-color: $border-color-small;
 	}
 	&.is-resizing {
 		user-select: none;
+		cursor: col-resize;
 	}
 	&.has-vertical-scrollbar {
 		.v3-table__header {

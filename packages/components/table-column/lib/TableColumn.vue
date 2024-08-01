@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	type: 'default',
 	align: 'left',
 	headerAlign: 'left',
-	width: 'auto',
+	width: '',
 	/** 该列的最小宽度 */
 	minWidth: '30',
 	/** 本列是否固定 */

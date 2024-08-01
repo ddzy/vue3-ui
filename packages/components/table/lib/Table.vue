@@ -114,7 +114,7 @@
 <script lang="tsx" setup>
 import { computed, onMounted, ref, useSlots } from 'vue';
 
-import { add, divide, isNumber, isStrictObject, subtract } from '@common/utils';
+import { isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
 import { V3TableColumn } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
@@ -202,51 +202,37 @@ const computedTableWidth = computed(() => {
 });
 
 // 列宽
-const columnWidths = ref<number[]>([]);
+const columnWidths = ref<
+	Array<{
+		width: number;
+		minWidth: number;
+		isResized: boolean;
+	}>
+>([]);
 onMounted(() => {
-	let tableWidth = computedTableWidth.value;
-	let propsTotalWidth = computedColumns.value.reduce((total, current) => {
-		let propsWidth = Number.parseFloat(current?.props?.width) || 0;
-		total = add(total, propsWidth);
-		return total;
-	}, 0);
-	// 如果指定的所有列宽总和超出表格宽度
-	// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = 表格初始宽度 / 列的个数
-	if (propsTotalWidth > tableWidth) {
-		let averageCount = computedColumns.value.length;
-		let averageWidth = Math.floor(divide(tableWidth, averageCount));
-		columnWidths.value = computedColumns.value.map((v) => {
-			let propsWidth = Number.parseFloat(v?.props?.width);
-			return !Number.isNaN(propsWidth) ? propsWidth : averageWidth;
-		});
-	} else {
-		// 反之
-		// 如果指定了列宽，则该列使用指定的宽度，剩余的列宽 = (表格初始宽度 - 指定了宽度的列的总宽度) / 未指定宽度的列的个数
-		let newColumnWidths = computedColumns.value.map((v) => {
-			let propsWidth = Number.parseFloat(v?.props?.width);
-			if (!Number.isNaN(propsWidth)) {
-				tableWidth = subtract(tableWidth, propsWidth);
-			}
-			return propsWidth;
-		});
-		let averageCount = newColumnWidths.filter((v) => Number.isNaN(v)).length;
-		let averageWidth = Math.floor(divide(tableWidth, averageCount));
-		newColumnWidths = newColumnWidths.map((v) =>
-			Number.isNaN(v) ? averageWidth : v,
+	columnWidths.value = computedColumns.value.map((v) => {
+		let propsWidth = Number.parseFloat(v?.props?.width);
+		let propsMinWidth = Number.parseFloat(
+			// @ts-ignore
+			v?.props?.minWidth || v?.type?.props?.minWidth?.default,
 		);
-		columnWidths.value = newColumnWidths;
-	}
+		return {
+			width: propsWidth || 0,
+			minWidth: propsMinWidth,
+			isResized: !Number.isNaN(propsWidth),
+		};
+	});
 });
 
 function ReusableColgroup(props: { isHeader?: boolean }) {
 	return (
 		<colgroup>
 			{columnWidths.value.map((v, i) => {
-				return v ? (
+				return v.width ? (
 					<col
 						key={i}
 						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
-						width={v}
+						width={v.width}
 					></col>
 				) : (
 					<col
@@ -259,7 +245,7 @@ function ReusableColgroup(props: { isHeader?: boolean }) {
 	);
 }
 
-// 表头拖拽大小
+// 表头拖拽
 const isResizerMouseDown = ref(false);
 const resizerStartPosition = ref(0);
 const resizerIndex = ref(-1);
@@ -268,49 +254,26 @@ function handleResizerMouseDown(e: MouseEvent, i: number) {
 	resizerIndex.value = i;
 	resizerStartPosition.value = e.pageX;
 }
-useEventListener(document, 'mouseup', (e) => {
+useEventListener(document, 'mouseup', () => {
+	isResizerMouseDown.value = false;
+});
+useEventListener(document, 'mousemove', (e) => {
 	if (isResizerMouseDown.value) {
-		isResizerMouseDown.value = false;
-		let newColumnWidths = columnWidths.value.slice();
 		const resizerEndPosition = e.pageX;
 		const diff = subtract(resizerEndPosition, resizerStartPosition.value);
-		if (resizerIndex.value !== -1 && tableRef.value) {
-			// 更新拖拽线左侧一列的宽度
-			newColumnWidths[resizerIndex.value] += diff;
-			// 表格初始宽度
-			let tableWidth = computedTableWidth.value;
-			// 拖拽后所有列的总宽度
-			let totalColumnWidth = newColumnWidths.reduce((total, current) => {
-				total += current;
-				return total;
-			}, 0);
-			// 拖拽线右侧一列的宽度
-			let rightColumnWidth = newColumnWidths[resizerIndex.value + 1];
-			if (totalColumnWidth <= tableWidth) {
-				// 如果拖拽后列的总宽度没有超出表格初始宽度，那么还需要重新计算拖拽线右侧一列的宽度
-				rightColumnWidth = newColumnWidths.reduce(
-					(total, current, currentIndex) => {
-						if (currentIndex !== resizerIndex.value + 1) {
-							total -= current;
-						}
-						return total;
-					},
-					tableWidth,
-				);
+		// 所有列的列宽不能小于最小值
+		columnWidths.value = columnWidths.value.map((v, i) => {
+			let width = tableHeaderCellRefs.value[i].offsetWidth;
+			if (i === resizerIndex.value) {
+				width += diff;
 			}
-			newColumnWidths[resizerIndex.value + 1] = rightColumnWidth;
-			// 更新每一列的宽度，每列的宽度不能小于最小值
-			newColumnWidths = newColumnWidths.map((v, i) => {
-				let minWidth = Number.parseFloat(
-					computedColumns.value[i]?.props?.minWidth ||
-						// @ts-ignore
-						computedColumns.value[i]?.type?.props?.minWidth?.default,
-				);
-				return Math.max(v, minWidth);
-			});
-
-			columnWidths.value = newColumnWidths;
-		}
+			width = Math.max(width, columnWidths.value[resizerIndex.value].minWidth);
+			return {
+				...v,
+				width,
+			};
+		});
+		resizerStartPosition.value = e.pageX;
 	}
 });
 </script>
