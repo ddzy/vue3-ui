@@ -266,6 +266,8 @@ useEventListener(document, 'mousemove', (e) => {
 			let width = tableHeaderCellRefs.value[i].offsetWidth;
 			if (i === resizerIndex.value) {
 				width += diff;
+			} else if (i === resizerIndex.value + 1) {
+				width -= diff;
 			}
 			width = Math.max(width, columnWidths.value[resizerIndex.value].minWidth);
 			return {
