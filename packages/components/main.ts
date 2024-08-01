@@ -107,6 +107,7 @@ export {
 	V3CollapseItem,
 	V3Table,
 	V3TableColumn,
+	V3LoadingDirective,
 };
 
 export default function install(app: App) {

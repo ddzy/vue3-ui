@@ -13,6 +13,7 @@ export interface ITableProps {
 	headerCellClassName?: ITableCellClassName;
 	rowKey?: string | ((data: { row: any; rowIndex: number }) => string);
 	emptyText?: string;
+	loading?: boolean;
 }
 export type ITableSize = 'small' | 'medium' | 'large';
 export type ITableRowClassName =

@@ -1,5 +1,6 @@
 <template>
 	<div
+		v-loading="props.loading"
 		:class="{
 			'v3-table': true,
 			'has-header': props.showHeader,
@@ -116,7 +117,7 @@ import { computed, onMounted, ref, useSlots } from 'vue';
 
 import { isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
-import { V3TableColumn } from '@components/main';
+import { V3LoadingDirective, V3TableColumn } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
@@ -125,6 +126,9 @@ import { ITableProps } from '@/public/typings';
 
 defineOptions({
 	name: 'V3Table',
+	directives: {
+		[V3LoadingDirective.name]: V3LoadingDirective.directive,
+	},
 });
 
 const props = withDefaults(defineProps<ITableProps>(), {
@@ -151,6 +155,8 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	rowKey: '',
 	/** 表格为空时展示的文本，也可通过 slot=empty 自定义 */
 	emptyText: '暂无数据',
+	/** 表格是否加载中 */
+	loading: false,
 });
 const slots = useSlots();
 
