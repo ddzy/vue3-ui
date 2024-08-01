@@ -45,11 +45,11 @@
 											></component>
 											<span v-else>{{ scope.props.label }}</span>
 										</div>
-										<div
+										<a
 											v-if="scope.props.resizable"
 											class="v3-table__cell-resizer"
 											@mousedown="handleResizerMouseDown($event, i)"
-										></div>
+										></a>
 									</th>
 								</template>
 							</component>

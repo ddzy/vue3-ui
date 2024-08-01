@@ -127,11 +127,15 @@ $v3-table-border-color: $border-color-small;
 
 	.v3-table__cell-resizer {
 		position: absolute;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		width: 4px;
+		top: 20%;
+		bottom: 20%;
+		right: 1px;
+		width: 2px;
+		background-color: #f3f4f5;
 		cursor: col-resize;
+		&:active {
+			background-color: $success-color;
+		}
 	}
 
 	table {
