@@ -306,7 +306,7 @@ const data = [
 
 :::
 
-## 固定列宽
+## 指定列宽
 
 :::demo
 
@@ -494,6 +494,74 @@ const data = ref([]);
 	color: #aaa;
 }
 </style>
+```
+
+:::
+
+## 值预处理
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data" border>
+		<v3-table-column
+			v-for="v in columns"
+			v-bind="v"
+			:key="v.prop"
+		></v3-table-column>
+		<v3-table-column prop="handle" label="操作">
+			<v3-button type="text" icon="EditTwo"></v3-button>
+			<v3-divider></v3-divider>
+			<v3-button type="text" icon="Delete"></v3-button>
+		</v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+		create_time: Date.now(),
+	},
+	{
+		name: 'Bob',
+		age: 30,
+		address: '广东省河源市源城区',
+		create_time: Date.now(),
+	},
+	{
+		name: 'Carl',
+		age: 40,
+		address: '四川省成都市新都区',
+		create_time: Date.now(),
+	},
+]);
+const columns = ref([
+	{
+		prop: 'name',
+		label: '姓名',
+	},
+	{
+		prop: 'age',
+		label: '年龄',
+	},
+	{
+		prop: 'address',
+		label: '姓名',
+	},
+	{
+		prop: 'create_time',
+		label: '创建时间',
+		formatter: (row) => {
+			return new Date(row.create_time).toLocaleString();
+		},
+	},
+]);
+</script>
 ```
 
 :::

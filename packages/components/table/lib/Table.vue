@@ -101,7 +101,11 @@
 												:rowIndex="i"
 												:columnIndex="ii"
 											></component>
-											<span v-else>{{ v[vv?.props?.prop] }}</span>
+											<span v-else>{{
+												scope.props.formatter
+													? scope.props.formatter(v)
+													: v[vv?.props?.prop]
+											}}</span>
 										</div>
 									</td>
 								</template>
@@ -118,7 +122,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { computed, onMounted, ref, useSlots } from 'vue';
+import { VNode, computed, onMounted, ref, useSlots } from 'vue';
 
 import { isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
@@ -166,10 +170,22 @@ const props = withDefaults(defineProps<ITableProps>(), {
 const slots = useSlots();
 
 const computedColumns = computed(() => {
-	const columns = (slots?.default?.() || []).filter(
-		(v) =>
-			isStrictObject(v.type) && (v.type as any).name === V3TableColumn.name,
-	);
+	// table-column有可能是通过 v-for 遍历出来的，也可能是独立组件
+	let columns: VNode[] = [];
+	let children = slots?.default?.();
+	if (Array.isArray(children)) {
+		children.forEach((v) => {
+			if (isStrictObject(v) && (v?.type as any)?.name === V3TableColumn.name) {
+				columns.push(v);
+			} else if (Array.isArray(v?.children)) {
+				let _children: any[] = v?.children.filter(
+					// @ts-ignore
+					(vv) => isStrictObject(vv) && vv?.type?.name === V3TableColumn.name,
+				);
+				columns.push(..._children);
+			}
+		});
+	}
 	return columns;
 });
 
@@ -206,11 +222,6 @@ function updateScrollbarWidth() {
 	document.body.removeChild(div);
 }
 updateScrollbarWidth();
-
-// 表格宽度
-const computedTableWidth = computed(() => {
-	return tableRef.value ? tableRef.value.clientWidth : 0;
-});
 
 // 列宽
 const columnWidths = ref<
