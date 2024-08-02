@@ -122,9 +122,9 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { VNode, computed, onMounted, ref, useSlots } from 'vue';
+import { VNode, computed, onMounted, ref, useSlots, watch } from 'vue';
 
-import { isNumber, isStrictObject, subtract } from '@common/utils';
+import { divide, isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
 import { V3LoadingDirective, V3TableColumn } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
@@ -228,22 +228,39 @@ const columnWidths = ref<
 	Array<{
 		width: number;
 		minWidth: number;
-		isResized: boolean;
 	}>
 >([]);
 onMounted(() => {
-	columnWidths.value = computedColumns.value.map((v) => {
+	let newColumnWidths = computedColumns.value.map((v) => {
 		let propsWidth = Number.parseFloat(v?.props?.width);
 		let propsMinWidth = Number.parseFloat(
 			// @ts-ignore
 			v?.props?.minWidth || v?.type?.props?.minWidth?.default,
 		);
 		return {
-			width: propsWidth || 0,
+			width: propsWidth,
 			minWidth: propsMinWidth,
-			isResized: !Number.isNaN(propsWidth),
 		};
 	});
+	columnWidths.value = newColumnWidths;
+});
+watch(hasVerticalScrollbar, () => {
+	if (tableBodyRef.value) {
+		// 当滚动条显示/隐藏的时候，更新列宽，避免由于滚动条占位导致表头和表体无法对齐
+		let tableWidth = tableBodyRef.value.clientWidth;
+		let averageCount = columnWidths.value.filter((v) =>
+			Number.isNaN(v.width),
+		).length;
+		if (averageCount) {
+			let averageWidth = divide(tableWidth, averageCount);
+			columnWidths.value = columnWidths.value.map((v) => {
+				return {
+					...v,
+					width: Number.isNaN(v.width) ? Math.max(averageWidth, 120) : v.width,
+				};
+			});
+		}
+	}
 });
 
 function ReusableColgroup(props: { isHeader?: boolean }) {

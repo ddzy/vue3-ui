@@ -565,3 +565,135 @@ const columns = ref([
 ```
 
 :::
+
+## 固定列
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data" border maxHeight="200px">
+		<v3-table-column
+			v-for="v in columns"
+			v-bind="v"
+			:key="v.prop"
+		></v3-table-column>
+		<v3-table-column prop="handle" label="操作" fixed>
+			<v3-button type="text" icon="EditTwo"></v3-button>
+			<v3-divider></v3-divider>
+			<v3-button type="text" icon="Delete"></v3-button>
+		</v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref();
+setTimeout(() => {
+	data.value = [
+		{
+			name: 'Alice',
+			age: 20,
+			address: '辽宁省大连市沙河口区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'Bob',
+			age: 30,
+			address: '广东省河源市源城区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'Carl',
+			age: 40,
+			address: '四川省成都市新都区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'Davide',
+			age: 50,
+			address: '湖北省荆州市沙市区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'Emma',
+			age: 34,
+			address: '甘肃省兰州市城关区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'Alick',
+			age: 25,
+			address: '北京市朝阳区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'Bolice',
+			age: 11,
+			address: '广东省广州市越秀区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+		{
+			name: 'John',
+			age: 33,
+			address: '广东省东莞市南城区',
+			create_time: Date.now(),
+			update_time: Date.now(),
+			updater: 'admin',
+		},
+	];
+}, 1000);
+const columns = ref([
+	{
+		prop: 'name',
+		label: '姓名',
+		width: 200,
+	},
+	{
+		prop: 'age',
+		label: '年龄',
+		width: 200,
+	},
+	{
+		prop: 'address',
+		label: '姓名',
+		width: 200,
+	},
+	{
+		prop: 'create_time',
+		label: '创建时间',
+		formatter: (row) => {
+			return new Date(row.create_time).toLocaleString();
+		},
+	},
+	{
+		prop: 'update_time',
+		label: '修改时间',
+		formatter: (row) => {
+			return new Date(row.update_time).toLocaleString();
+		},
+	},
+	{
+		prop: 'updater',
+		label: '修改人',
+		fixed: true,
+	},
+]);
+</script>
+```
+
+:::
