@@ -17,16 +17,15 @@
 		}"
 		ref="tableRef"
 	>
-		<div v-if="props.showHeader" class="v3-table__header">
-			<table
-				:class="{
-					'v3-table__header-inner': true,
-					'has-shadow': !arrivedState.top,
-				}"
-				:style="{
-					transform: `translate3d(-${x}px, 0, 0)`,
-				}"
-			>
+		<div
+			v-if="props.showHeader"
+			:class="{
+				'v3-table__header': true,
+				'has-shadow': !arrivedState.top,
+			}"
+			ref="tableHeaderRef"
+		>
+			<table class="v3-table__header-inner">
 				<reusable-colgroup :isHeader="true"></reusable-colgroup>
 				<thead>
 					<tr
@@ -36,7 +35,7 @@
 							<component :is="v">
 								<template #default="scope">
 									<th
-										:class="`v3-table__cell v3-table__header-cell ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+										:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed ? 'is-fixed' : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
 										ref="tableHeaderCellRefs"
 									>
 										<div class="v3-table__cell-inner">
@@ -61,7 +60,7 @@
 							:style="{
 								width: `${scrollbarWidth}px`,
 							}"
-							class="v3-table__header-gap"
+							class="v3-table__header-gap is-fixed"
 						></th>
 					</tr>
 				</thead>
@@ -75,11 +74,7 @@
 				'show-bottom-border': !arrivedState.bottom,
 			}"
 		>
-			<table
-				:class="{
-					'v3-table__body-inner': true,
-				}"
-			>
+			<table class="v3-table__body-inner">
 				<reusable-colgroup></reusable-colgroup>
 				<tbody>
 					<tr
@@ -91,7 +86,7 @@
 							<component :is="vv">
 								<template #default="scope">
 									<td
-										:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+										:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -194,6 +189,7 @@ const computedMaxHeight = computed(() => {
 });
 
 const tableRef = ref<HTMLElement>();
+const tableHeaderRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 
@@ -210,6 +206,11 @@ useResizeObserver(tableBodyRef, () => {
 });
 const { arrivedState, x } = useScroll(tableBodyRef, {
 	throttle: 0,
+	onScroll() {
+		if (tableHeaderRef.value) {
+			tableHeaderRef.value.scrollLeft = x.value;
+		}
+	},
 });
 
 // 滚动条宽度
@@ -253,10 +254,13 @@ watch(hasVerticalScrollbar, () => {
 		).length;
 		if (averageCount) {
 			let averageWidth = divide(tableWidth, averageCount);
-			columnWidths.value = columnWidths.value.map((v) => {
+			columnWidths.value = columnWidths.value.map((v, i) => {
+				let width = Number.isNaN(v.width)
+					? Math.max(averageWidth, 120)
+					: v.width;
 				return {
 					...v,
-					width: Number.isNaN(v.width) ? Math.max(averageWidth, 120) : v.width,
+					width,
 				};
 			});
 		}

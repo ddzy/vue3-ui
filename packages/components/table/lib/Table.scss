@@ -102,16 +102,23 @@ $v3-table-border-color: $border-color-small;
 
 	.v3-table__header {
 		flex-shrink: 0;
-	}
-	.v3-table__header-inner {
-		font-weight: bold;
-		color: $font-color-small;
+		overflow: hidden;
 		&.has-shadow {
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 		}
 	}
+	.v3-table__header-inner {
+		font-weight: bold;
+		color: $font-color-small;
+	}
 	.v3-table__header-gap {
 		flex-shrink: 0;
+		&.is-fixed {
+			position: sticky;
+			right: 0;
+			top: 0;
+			z-index: 1;
+		}
 	}
 	.v3-table__header-cell {
 		position: relative;
@@ -130,10 +137,31 @@ $v3-table-border-color: $border-color-small;
 		color: #aaa;
 	}
 
+	.v3-table__cell {
+		background-color: #fff;
+		&.is-fixed {
+			position: sticky;
+			right: 0;
+			top: 0;
+			z-index: 1;
+			&::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: -10px;
+				overflow: hidden;
+				width: 10px;
+				bottom: -1px;
+				background-color: transparent;
+				touch-action: none;
+				pointer-events: none;
+				box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+			}
+		}
+	}
 	.v3-table__cell-inner {
 		padding: 0 $padding-small;
 	}
-
 	.v3-table__cell-resizer {
 		position: absolute;
 		top: 20%;
