@@ -26,7 +26,17 @@
 			ref="tableHeaderRef"
 		>
 			<table class="v3-table__header-inner">
-				<reusable-colgroup :isHeader="true"></reusable-colgroup>
+				<colgroup>
+					<template v-for="(v, i) in headerColumnWidths" :key="i">
+						<col
+							v-if="v.width"
+							:style="{
+								width: `${v.width ? `${v.width}px` : 'auto'}`,
+							}"
+							class="v3-table__col v3-table__header-col"
+						/>
+					</template>
+				</colgroup>
 				<thead>
 					<tr
 						:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
@@ -54,14 +64,6 @@
 								</template>
 							</component>
 						</template>
-						<!-- 填充滚动条宽度 -->
-						<th
-							v-show="hasVerticalScrollbar"
-							:style="{
-								width: `${scrollbarWidth}px`,
-							}"
-							class="v3-table__header-gap is-fixed"
-						></th>
 					</tr>
 				</thead>
 			</table>
@@ -75,7 +77,17 @@
 			}"
 		>
 			<table class="v3-table__body-inner">
-				<reusable-colgroup></reusable-colgroup>
+				<colgroup>
+					<template v-for="(v, i) in bodyColumnWidths" :key="i">
+						<col
+							v-if="v.width"
+							:style="{
+								width: `${v.width ? `${v.width}px` : 'auto'}`,
+							}"
+							class="v3-table__col v3-table__body-col"
+						/>
+					</template>
+				</colgroup>
 				<tbody>
 					<tr
 						v-for="(v, i) in data"
@@ -207,6 +219,7 @@ useResizeObserver(tableBodyRef, () => {
 const { arrivedState, x } = useScroll(tableBodyRef, {
 	throttle: 0,
 	onScroll() {
+		// 表体滚动的时候，实时更新表头的位置
 		if (tableHeaderRef.value) {
 			tableHeaderRef.value.scrollLeft = x.value;
 		}
@@ -224,13 +237,14 @@ function updateScrollbarWidth() {
 }
 updateScrollbarWidth();
 
-// 列宽
-const columnWidths = ref<
-	Array<{
-		width: number;
-		minWidth: number;
-	}>
->([]);
+interface IColumnWidth {
+	width: number;
+	minWidth: number;
+}
+// 表体列宽
+const bodyColumnWidths = ref<IColumnWidth[]>([]);
+// 表头列宽（由于表体可能会出现滚动条，挤压位置，所以分开计算）
+const headerColumnWidths = ref<IColumnWidth[]>([]);
 onMounted(() => {
 	let newColumnWidths = computedColumns.value.map((v) => {
 		let propsWidth = Number.parseFloat(v?.props?.width);
@@ -243,18 +257,19 @@ onMounted(() => {
 			minWidth: propsMinWidth,
 		};
 	});
-	columnWidths.value = newColumnWidths;
+	bodyColumnWidths.value = structuredClone(newColumnWidths);
+	headerColumnWidths.value = structuredClone(newColumnWidths);
 });
 watch(hasVerticalScrollbar, () => {
 	if (tableBodyRef.value) {
 		// 当滚动条显示/隐藏的时候，更新列宽，避免由于滚动条占位导致表头和表体无法对齐
 		let tableWidth = tableBodyRef.value.clientWidth;
-		let averageCount = columnWidths.value.filter((v) =>
+		let averageCount = bodyColumnWidths.value.filter((v) =>
 			Number.isNaN(v.width),
 		).length;
 		if (averageCount) {
 			let averageWidth = divide(tableWidth, averageCount);
-			columnWidths.value = columnWidths.value.map((v, i) => {
+			bodyColumnWidths.value = bodyColumnWidths.value.map((v, i) => {
 				let width = Number.isNaN(v.width)
 					? Math.max(averageWidth, 120)
 					: v.width;
@@ -263,30 +278,25 @@ watch(hasVerticalScrollbar, () => {
 					width,
 				};
 			});
+			headerColumnWidths.value = headerColumnWidths.value.map((v, i) => {
+				let width = Number.isNaN(v.width)
+					? Math.max(averageWidth, 120)
+					: v.width;
+				// 出现滚动条的时候，需要更新表头最后一列的宽度（需加上滚动条宽度）
+				if (
+					computedColumns.value[i]?.props?.fixed !== false &&
+					i === computedColumns.value.length - 1
+				) {
+					width += scrollbarWidth.value;
+				}
+				return {
+					...v,
+					width,
+				};
+			});
 		}
 	}
 });
-
-function ReusableColgroup(props: { isHeader?: boolean }) {
-	return (
-		<colgroup>
-			{columnWidths.value.map((v, i) => {
-				return v.width ? (
-					<col
-						key={i}
-						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
-						width={v.width}
-					></col>
-				) : (
-					<col
-						key={i}
-						class={`v3-table__col ${props.isHeader ? 'v3-table__header-col' : 'v3-table__body-col'}`}
-					></col>
-				);
-			})}
-		</colgroup>
-	);
-}
 
 // 表头拖拽
 const isResizerMouseDown = ref(false);
@@ -304,15 +314,35 @@ useEventListener(document, 'mousemove', (e) => {
 	if (isResizerMouseDown.value) {
 		const resizerEndPosition = e.pageX;
 		const diff = subtract(resizerEndPosition, resizerStartPosition.value);
-		// 所有列的列宽不能小于最小值
-		columnWidths.value = columnWidths.value.map((v, i) => {
+		// 表体所有列的列宽不能小于最小值
+		bodyColumnWidths.value = bodyColumnWidths.value.map((v, i) => {
 			let width = tableHeaderCellRefs.value[i].offsetWidth;
 			if (i === resizerIndex.value) {
 				width += diff;
 			} else if (i === resizerIndex.value + 1) {
 				width -= diff;
 			}
-			width = Math.max(width, columnWidths.value[resizerIndex.value].minWidth);
+			width = Math.max(
+				width,
+				bodyColumnWidths.value[resizerIndex.value].minWidth,
+			);
+			return {
+				...v,
+				width,
+			};
+		});
+		// 表头所有列的列宽不能小于最小值
+		headerColumnWidths.value = headerColumnWidths.value.map((v, i) => {
+			let width = tableHeaderCellRefs.value[i].offsetWidth;
+			if (i === resizerIndex.value) {
+				width += diff;
+			} else if (i === resizerIndex.value + 1) {
+				width -= diff;
+			}
+			width = Math.max(
+				width,
+				headerColumnWidths.value[resizerIndex.value].minWidth,
+			);
 			return {
 				...v,
 				width,
