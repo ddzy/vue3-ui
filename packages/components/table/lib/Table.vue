@@ -99,6 +99,7 @@
 								<template #default="scope">
 									<td
 										:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+										ref="tableBodyCellRefs"
 									>
 										<div class="v3-table__cell-inner">
 											<component
@@ -134,6 +135,7 @@ import { VNode, computed, onMounted, ref, useSlots, watch } from 'vue';
 import { divide, isNumber, isStrictObject, subtract } from '@common/utils';
 import '@common/utils/index';
 import { V3LoadingDirective, V3TableColumn } from '@components/main';
+import useElementBounding from '@hooks/useElementBounding';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
@@ -204,26 +206,76 @@ const tableRef = ref<HTMLElement>();
 const tableHeaderRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
+const tableBodyCellRefs = ref<HTMLElement[]>([]);
 
 // 表格是否出现了纵向滚动条
 const hasVerticalScrollbar = ref(false);
-function updateHasScrollbar() {
+function updateHasVerticalScrollbar() {
 	if (tableBodyRef.value) {
 		const { offsetWidth, clientWidth } = tableBodyRef.value;
 		hasVerticalScrollbar.value = offsetWidth !== clientWidth;
 	}
 }
 useResizeObserver(tableBodyRef, () => {
-	updateHasScrollbar();
+	updateHasVerticalScrollbar();
 });
-const { arrivedState, x } = useScroll(tableBodyRef, {
-	throttle: 0,
+
+// 表格是否出现了横向滚动条
+const hasHorizontalScrollbar = ref(false);
+function updateHasHorizontalScrollbar() {
+	if (tableBodyRef.value) {
+		const { offsetHeight, clientHeight } = tableBodyRef.value;
+		hasHorizontalScrollbar.value = offsetHeight !== clientHeight;
+	}
+}
+useResizeObserver(tableBodyRef, () => {
+	updateHasVerticalScrollbar();
+	updateHasHorizontalScrollbar();
+});
+
+const { arrivedState, x, directions } = useScroll(tableBodyRef, {
+	throttle: 20,
 	onScroll() {
 		// 表体滚动的时候，实时更新表头的位置
 		if (tableHeaderRef.value) {
 			tableHeaderRef.value.scrollLeft = x.value;
 		}
+		// 判断固定列是否处于可视区域（只在横向滚动时进行判断）
+		if (directions.left || directions.right) {
+			updateFixedColumnShadow();
+		}
 	},
+});
+
+// 固定的列是否出现阴影
+function updateFixedColumnShadow() {
+	// 表体
+	if (tableBodyRef.value) {
+		tableBodyCellRefs.value.forEach((cell) => {
+			let cellRect = useElementBounding(cell);
+			let tableBodyRect = useElementBounding(tableBodyRef);
+			cell.classList.toggle(
+				'has-fixed-shadow',
+				cellRect.right.value > tableBodyRect.right.value - scrollbarWidth.value, // 表体需要减去滚动条宽度
+			);
+		});
+	}
+	// 表头
+	if (tableHeaderRef.value) {
+		tableHeaderCellRefs.value.forEach((cell) => {
+			let cellRect = useElementBounding(cell);
+			let tableHeaderRect = useElementBounding(tableHeaderRef);
+			cell.classList.toggle(
+				'has-fixed-shadow',
+				cellRect.right.value > tableHeaderRect.right.value,
+			);
+		});
+	}
+}
+watch(hasHorizontalScrollbar, async () => {
+	setTimeout(() => {
+		updateFixedColumnShadow();
+	}, 0);
 });
 
 // 滚动条宽度

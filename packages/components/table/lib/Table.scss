@@ -115,8 +115,13 @@ $v3-table-border-color: $border-color-small;
 		background-color: #fff;
 		&.is-fixed {
 			position: sticky;
-			right: 0;
+			right: -0.1px;
 			z-index: 1;
+			&.has-fixed-shadow {
+				&::before {
+					box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+				}
+			}
 			&::before {
 				content: '';
 				position: absolute;
@@ -128,7 +133,6 @@ $v3-table-border-color: $border-color-small;
 				background-color: transparent;
 				touch-action: none;
 				pointer-events: none;
-				box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
 			}
 		}
 	}
