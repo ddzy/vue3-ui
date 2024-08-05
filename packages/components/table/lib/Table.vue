@@ -262,7 +262,8 @@ function updateFixedColumnShadow() {
 			let tableBodyRect = useElementBounding(tableBodyRef);
 			cell.classList.toggle(
 				'has-fixed-shadow',
-				cellRect.right.value > tableBodyRect.right.value - scrollbarWidth.value, // 表体需要减去滚动条宽度
+				cellRect.right.value >
+					tableBodyRect.right.value - horizontalScrollbarWidth.value, // 表体需要减去滚动条宽度
 			);
 		});
 	}
@@ -284,13 +285,16 @@ watch(hasHorizontalScrollbar, async () => {
 	}, 0);
 });
 
-// 滚动条宽度
-const scrollbarWidth = ref(0);
+// 纵向滚动条宽度
+const verticalScrollbarWidth = ref(0);
+// 横向滚动条宽度
+const horizontalScrollbarWidth = ref(0);
 function updateScrollbarWidth() {
 	const div = document.createElement('div');
 	div.style.cssText += `position: fixed; left: -99999px; top: -99999px; z-index: -1; overflow: scroll; width: 100px; height: 100px;`;
 	document.body.appendChild(div);
-	scrollbarWidth.value = div.offsetWidth - div.clientWidth;
+	verticalScrollbarWidth.value = div.offsetWidth - div.clientWidth;
+	horizontalScrollbarWidth.value = div.offsetHeight - div.clientHeight;
 	document.body.removeChild(div);
 }
 updateScrollbarWidth();
@@ -348,7 +352,7 @@ watch(hasVerticalScrollbar, () => {
 					computedColumns.value[i]?.props?.fixed !== false &&
 					i === computedColumns.value.length - 1
 				) {
-					width += scrollbarWidth.value;
+					width += verticalScrollbarWidth.value;
 				}
 				return {
 					...v,
