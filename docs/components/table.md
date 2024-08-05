@@ -572,7 +572,7 @@ const columns = ref([
 
 ```vue
 <template>
-	<v3-table :data="data" border maxHeight="200px">
+	<v3-table :data="data" border>
 		<v3-table-column
 			v-for="v in columns"
 			v-bind="v"

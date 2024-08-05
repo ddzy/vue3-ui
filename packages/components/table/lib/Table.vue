@@ -297,8 +297,12 @@ updateScrollbarWidth();
 
 interface IColumnWidth {
 	width: number;
-	minWidth: number;
+	/** 拖拽表头时的最小宽度 */
+	resizeMinWidth: number;
+	/** 当前列的宽度是否自定义的宽度 */
+	isCustom: boolean;
 }
+const COLUMN_DEFAULT_WIDTH = 120;
 // 表体列宽
 const bodyColumnWidths = ref<IColumnWidth[]>([]);
 // 表头列宽（由于表体可能会出现滚动条，挤压位置，所以分开计算）
@@ -311,8 +315,9 @@ onMounted(() => {
 			v?.props?.minWidth || v?.type?.props?.minWidth?.default,
 		);
 		return {
-			width: propsWidth,
-			minWidth: propsMinWidth,
+			width: propsWidth || COLUMN_DEFAULT_WIDTH,
+			resizeMinWidth: propsMinWidth,
+			isCustom: !Number.isNaN(propsWidth),
 		};
 	});
 	bodyColumnWidths.value = structuredClone(newColumnWidths);
@@ -322,14 +327,12 @@ watch(hasVerticalScrollbar, () => {
 	if (tableBodyRef.value) {
 		// 当滚动条显示/隐藏的时候，更新列宽，避免由于滚动条占位导致表头和表体无法对齐
 		let tableWidth = tableBodyRef.value.clientWidth;
-		let averageCount = bodyColumnWidths.value.filter((v) =>
-			Number.isNaN(v.width),
-		).length;
+		let averageCount = bodyColumnWidths.value.filter((v) => !v.isCustom).length;
 		if (averageCount) {
 			let averageWidth = divide(tableWidth, averageCount);
 			bodyColumnWidths.value = bodyColumnWidths.value.map((v, i) => {
-				let width = Number.isNaN(v.width)
-					? Math.max(averageWidth, 120)
+				let width = !v.isCustom
+					? Math.max(averageWidth, COLUMN_DEFAULT_WIDTH)
 					: v.width;
 				return {
 					...v,
@@ -337,8 +340,8 @@ watch(hasVerticalScrollbar, () => {
 				};
 			});
 			headerColumnWidths.value = headerColumnWidths.value.map((v, i) => {
-				let width = Number.isNaN(v.width)
-					? Math.max(averageWidth, 120)
+				let width = !v.isCustom
+					? Math.max(averageWidth, COLUMN_DEFAULT_WIDTH)
 					: v.width;
 				// 出现滚动条的时候，需要更新表头最后一列的宽度（需加上滚动条宽度）
 				if (
@@ -382,7 +385,7 @@ useEventListener(document, 'mousemove', (e) => {
 			}
 			width = Math.max(
 				width,
-				bodyColumnWidths.value[resizerIndex.value].minWidth,
+				bodyColumnWidths.value[resizerIndex.value].resizeMinWidth,
 			);
 			return {
 				...v,
@@ -399,7 +402,7 @@ useEventListener(document, 'mousemove', (e) => {
 			}
 			width = Math.max(
 				width,
-				headerColumnWidths.value[resizerIndex.value].minWidth,
+				headerColumnWidths.value[resizerIndex.value].resizeMinWidth,
 			);
 			return {
 				...v,
