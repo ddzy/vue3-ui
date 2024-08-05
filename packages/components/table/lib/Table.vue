@@ -43,7 +43,25 @@
 								<component :is="v">
 									<template #default="scope">
 										<th
-											:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed !== false ? 'is-fixed' : ''} ${scope.props.fixed !== false ? `is-fixed-${[true, 'left'].includes(scope.props.fixed) ? 'left' : 'right'}` : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											:class="`v3-table__cell v3-table__header-cell ${normalizeFixed(scope.props.fixed) ? 'is-fixed' : ''} ${normalizeFixed(scope.props.fixed) ? `is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											:style="{
+												left:
+													normalizeFixed(scope.props.fixed) === 'left'
+														? computedHeaderFixedLeftColumnOffset.find(
+																(vv) => vv.index === i,
+															)
+															? `${computedHeaderFixedLeftColumnOffset.find((vv) => vv.index === i)?.left}px`
+															: 'auto'
+														: 'auto',
+												right:
+													normalizeFixed(scope.props.fixed) === 'right'
+														? computedHeaderFixedRightColumnOffset.find(
+																(vv) => vv.index === i,
+															)
+															? `${computedHeaderFixedRightColumnOffset.find((vv) => vv.index === i)?.right}px`
+															: 'auto'
+														: 'auto',
+											}"
 											ref="tableHeaderCellRefs"
 										>
 											<div class="v3-table__cell-inner">
@@ -97,7 +115,25 @@
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed !== false ? 'is-fixed' : ''} ${scope.props.fixed !== false ? `is-fixed-${[true, 'left'].includes(scope.props.fixed) ? 'left' : 'right'}` : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${normalizeFixed(scope.props.fixed) ? 'is-fixed' : ''} ${normalizeFixed(scope.props.fixed) ? `is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:style="{
+												left:
+													normalizeFixed(scope.props.fixed) === 'left'
+														? computedBodyFixedLeftColumnOffset.find(
+																(vv) => vv.index === ii,
+															)
+															? `${computedBodyFixedLeftColumnOffset.find((vv) => vv.index === ii)?.left}px`
+															: 'auto'
+														: 'auto',
+												right:
+													normalizeFixed(scope.props.fixed) === 'right'
+														? computedBodyFixedRightColumnOffset.find(
+																(vv) => vv.index === ii,
+															)
+															? `${computedBodyFixedRightColumnOffset.find((vv) => vv.index === ii)?.right}px`
+															: 'auto'
+														: 'auto',
+											}"
 											ref="tableBodyCellRefs"
 										>
 											<div class="v3-table__cell-inner">
@@ -132,7 +168,13 @@
 <script lang="tsx" setup>
 import { VNode, computed, onMounted, ref, useSlots, watch } from 'vue';
 
-import { divide, isNumber, isStrictObject, subtract } from '@common/utils';
+import {
+	divide,
+	isNumber,
+	isStrictObject,
+	isString,
+	subtract,
+} from '@common/utils';
 import '@common/utils/index';
 import { V3LoadingDirective, V3TableColumn } from '@components/main';
 import useElementBounding from '@hooks/useElementBounding';
@@ -140,7 +182,7 @@ import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 
-import { ITableProps } from '@/public/typings';
+import { ITableColumnFixed, ITableProps } from '@/public/typings';
 
 defineOptions({
 	name: 'V3Table',
@@ -364,6 +406,128 @@ watch(hasVerticalScrollbar, () => {
 		}
 	}
 });
+
+interface IFixedColumn {
+	index: number;
+	left: number;
+	right: number;
+	width: number;
+}
+// 固定在左侧的列
+const fixedLeftColumns = ref<IFixedColumn[]>([]);
+// 固定在右侧的列
+const fixedRightColumns = ref<IFixedColumn[]>([]);
+watch(
+	computedColumns,
+	(newValue) => {
+		newValue.forEach((v, i) => {
+			let fixed = v?.props?.fixed;
+			if (fixed !== false) {
+				if ([true, 'left'].includes(fixed)) {
+					fixedLeftColumns.value.push({
+						index: i,
+						left: 0,
+						right: 0,
+						width: 0,
+					});
+				} else if (isString(fixed)) {
+					fixedRightColumns.value.push({
+						index: i,
+						left: 0,
+						right: 0,
+						width: 0,
+					});
+				}
+			}
+		});
+	},
+	{ immediate: true },
+);
+const computedHeaderFixedLeftColumnOffset = computed<IFixedColumn[]>(() => {
+	let result = fixedLeftColumns.value.map((v) => {
+		let width = headerColumnWidths.value[v.index]?.width || v.width;
+		return {
+			...v,
+			width,
+		};
+	});
+	result = result.map((v, i, o) => {
+		let left = i === 0 ? 0 : o[i - 1].left + o[i - 1].width;
+		return {
+			...v,
+			left,
+		};
+	});
+	return result;
+});
+const computedHeaderFixedRightColumnOffset = computed<IFixedColumn[]>(() => {
+	let result = fixedRightColumns.value
+		.slice()
+		.reverse()
+		.map((v) => {
+			let width = headerColumnWidths.value[v.index]?.width || v.width;
+			return {
+				...v,
+				width,
+			};
+		});
+	result = result.map((v, i, o) => {
+		let right = i === 0 ? 0 : o[i - 1].right + o[i - 1].width;
+		return {
+			...v,
+			right,
+		};
+	});
+	return result;
+});
+
+const computedBodyFixedLeftColumnOffset = computed<IFixedColumn[]>(() => {
+	let result = fixedLeftColumns.value.map((v) => {
+		let width = bodyColumnWidths.value[v.index]?.width || v.width;
+		return {
+			...v,
+			width,
+		};
+	});
+	result = result.map((v, i, o) => {
+		let left = i === 0 ? 0 : o[i - 1].left + o[i - 1].width;
+		return {
+			...v,
+			left,
+		};
+	});
+	return result;
+});
+const computedBodyFixedRightColumnOffset = computed<IFixedColumn[]>(() => {
+	let result = fixedRightColumns.value
+		.slice()
+		.reverse()
+		.map((v) => {
+			let width = bodyColumnWidths.value[v.index]?.width || v.width;
+			return {
+				...v,
+				width,
+			};
+		});
+	result = result.map((v, i, o) => {
+		let right = i === 0 ? 0 : o[i - 1].right + o[i - 1].width;
+		return {
+			...v,
+			right,
+		};
+	});
+	return result;
+});
+function normalizeFixed(fixed: ITableColumnFixed): string {
+	if (fixed !== false) {
+		if ([true, 'left'].includes(fixed)) {
+			return 'left';
+		} else if (isString(fixed)) {
+			return 'right';
+		}
+	}
+	return '';
+}
 
 // 表头拖拽
 const isResizerMouseDown = ref(false);

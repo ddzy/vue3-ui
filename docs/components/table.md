@@ -661,18 +661,16 @@ const columns = ref([
 	{
 		prop: 'name',
 		label: '姓名',
-		width: 200,
 		fixed: 'left',
 	},
 	{
 		prop: 'age',
 		label: '年龄',
-		width: 200,
+		fixed: 'left',
 	},
 	{
 		prop: 'address',
 		label: '姓名',
-		width: 200,
 	},
 	{
 		prop: 'create_time',
@@ -691,7 +689,7 @@ const columns = ref([
 	{
 		prop: 'updater',
 		label: '修改人',
-		fixed: true,
+		fixed: 'right',
 	},
 ]);
 </script>
