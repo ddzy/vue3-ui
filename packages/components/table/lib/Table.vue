@@ -43,7 +43,10 @@
 								<component :is="v">
 									<template #default="scope">
 										<th
-											:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed ? 'is-fixed' : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed !== false ? 'is-fixed' : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											:style="{
+												right: `${-0.1}px`,
+											}"
 											ref="tableHeaderCellRefs"
 										>
 											<div class="v3-table__cell-inner">
@@ -97,7 +100,7 @@
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed !== false ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 											ref="tableBodyCellRefs"
 										>
 											<div class="v3-table__cell-inner">

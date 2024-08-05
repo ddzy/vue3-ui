@@ -1,3 +1,5 @@
+import { SFCWithInstall } from "../utils/util";
+
 export interface ITableProps {
 	data?: any[];
 	border?: boolean;
@@ -36,7 +38,7 @@ export interface ITableColumnProps {
 	headerAlign?: ITableAlign;
 	width?: string | number;
 	minWidth?: string | number;
-	fixed?: boolean;
+	fixed?: ITableColumnFixed;
 	sortable?: ITableColumnSortable;
 	sortMethod?: <T = any>(a: T, b: T) => number;
 	resizable?: boolean;
@@ -47,8 +49,12 @@ export interface ITableColumnProps {
 export type ITableColumnType =
 	| 'default'
 	| 'checkbox'
-	| 'radio'
+	| 'radio' 
 	| 'index'
 	| 'expand';
 export type ITableAlign = 'left' | 'center' | 'right';
 export type ITableColumnSortable = boolean | 'custom';
+export type ITableColumnFixed = boolean | 'left' | 'right';
+
+export const V3Table: SFCWithInstall<ITableProps>;
+export const V3TableColumn: SFCWithInstall<ITableColumnProps>;

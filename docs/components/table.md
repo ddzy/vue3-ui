@@ -690,7 +690,7 @@ const columns = ref([
 	{
 		prop: 'updater',
 		label: '修改人',
-		fixed: false,
+		fixed: true,
 	},
 ]);
 </script>
