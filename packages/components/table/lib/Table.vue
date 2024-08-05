@@ -7,7 +7,6 @@
 			'has-border': props.border,
 			'has-vertical-scrollbar': hasVerticalScrollbar,
 			'is-stripe': props.stripe,
-			'is-highlight': props.highlightHoverRow,
 			'is-resizing': isResizerMouseDown,
 			'show-left-border': true,
 			'show-right-border': true,
@@ -17,111 +16,112 @@
 		}"
 		ref="tableRef"
 	>
-		<div
-			v-if="props.showHeader"
-			:class="{
-				'v3-table__header': true,
-				'has-shadow': !arrivedState.top,
-			}"
-			ref="tableHeaderRef"
-		>
-			<table class="v3-table__header-inner">
-				<colgroup>
-					<template v-for="(v, i) in headerColumnWidths" :key="i">
-						<col
-							v-if="v.width"
-							:style="{
-								width: `${v.width ? `${v.width}px` : 'auto'}`,
-							}"
-							class="v3-table__col v3-table__header-col"
-						/>
-					</template>
-				</colgroup>
-				<thead>
-					<tr
-						:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
-					>
-						<template v-for="(v, i) in computedColumns" :key="i">
-							<component :is="v">
-								<template #default="scope">
-									<th
-										:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed ? 'is-fixed' : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
-										ref="tableHeaderCellRefs"
-									>
-										<div class="v3-table__cell-inner">
-											<component
-												v-if="(v?.children as any)?.label"
-												:is="(v?.children as any)?.label"
-											></component>
-											<span v-else>{{ scope.props.label }}</span>
-										</div>
-										<a
-											v-if="scope.props.resizable"
-											class="v3-table__cell-resizer"
-											@mousedown="handleResizerMouseDown($event, i)"
-										></a>
-									</th>
-								</template>
-							</component>
+		<div v-if="props.showHeader" class="v3-table__header-wrapper">
+			<div class="v3-table__header-inner" ref="tableHeaderRef">
+				<table
+					:class="{
+						'v3-table__header': true,
+						'has-bottom-shadow': !arrivedState.top,
+					}"
+				>
+					<colgroup>
+						<template v-for="(v, i) in headerColumnWidths" :key="i">
+							<col
+								v-if="v.width"
+								:style="{
+									width: `${v.width ? `${v.width}px` : 'auto'}`,
+								}"
+								class="v3-table__col v3-table__header-col"
+							/>
 						</template>
-					</tr>
-				</thead>
-			</table>
+					</colgroup>
+					<thead>
+						<tr
+							:class="`${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
+						>
+							<template v-for="(v, i) in computedColumns" :key="i">
+								<component :is="v">
+									<template #default="scope">
+										<th
+											:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed ? 'is-fixed' : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											ref="tableHeaderCellRefs"
+										>
+											<div class="v3-table__cell-inner">
+												<component
+													v-if="(v?.children as any)?.label"
+													:is="(v?.children as any)?.label"
+												></component>
+												<span v-else>{{ scope.props.label }}</span>
+											</div>
+											<a
+												v-if="scope.props.resizable"
+												class="v3-table__cell-resizer"
+												@mousedown="handleResizerMouseDown($event, i)"
+											></a>
+										</th>
+									</template>
+								</component>
+							</template>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 		<div
 			v-if="props.data.length"
-			ref="tableBodyRef"
 			:class="{
-				'v3-table__body': true,
+				'v3-table__body-wrapper': true,
 				'show-bottom-border': !arrivedState.bottom,
 			}"
 		>
-			<table class="v3-table__body-inner">
-				<colgroup>
-					<template v-for="(v, i) in bodyColumnWidths" :key="i">
-						<col
-							v-if="v.width"
-							:style="{
-								width: `${v.width ? `${v.width}px` : 'auto'}`,
-							}"
-							class="v3-table__col v3-table__body-col"
-						/>
-					</template>
-				</colgroup>
-				<tbody>
-					<tr
-						v-for="(v, i) in data"
-						:key="i"
-						:class="`v3-table__row v3-table__row-${i} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
-					>
-						<template v-for="(vv, ii) in computedColumns" :key="ii">
-							<component :is="vv">
-								<template #default="scope">
-									<td
-										:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
-										ref="tableBodyCellRefs"
-									>
-										<div class="v3-table__cell-inner">
-											<component
-												v-if="(vv?.children as any)?.default"
-												:is="(vv?.children as any)?.default"
-												:row="v"
-												:rowIndex="i"
-												:columnIndex="ii"
-											></component>
-											<span v-else>{{
-												scope.props.formatter
-													? scope.props.formatter(v)
-													: v[vv?.props?.prop]
-											}}</span>
-										</div>
-									</td>
-								</template>
-							</component>
+			<div class="v3-table__body-inner" ref="tableBodyRef">
+				<table class="v3-table__body">
+					<colgroup>
+						<template v-for="(v, i) in bodyColumnWidths" :key="i">
+							<col
+								v-if="v.width"
+								:style="{
+									width: `${v.width ? `${v.width}px` : 'auto'}`,
+								}"
+								class="v3-table__col v3-table__body-col"
+							/>
 						</template>
-					</tr>
-				</tbody>
-			</table>
+					</colgroup>
+					<tbody>
+						<tr
+							v-for="(v, i) in data"
+							:key="i"
+							:class="`v3-table__row v3-table__row-${i} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
+						>
+							<template v-for="(vv, ii) in computedColumns" :key="ii">
+								<component :is="vv">
+									<template #default="scope">
+										<td
+											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											ref="tableBodyCellRefs"
+										>
+											<div class="v3-table__cell-inner">
+												<component
+													v-if="(vv?.children as any)?.default"
+													:is="(vv?.children as any)?.default"
+													:row="v"
+													:rowIndex="i"
+													:columnIndex="ii"
+												></component>
+												<span v-else>{{
+													scope.props.formatter
+														? scope.props.formatter(v)
+														: v[vv?.props?.prop]
+												}}</span>
+											</div>
+										</td>
+									</template>
+								</component>
+							</template>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<slot v-else-if="slots?.empty" name="empty"></slot>
 		<div v-else class="v3-table__empty">
