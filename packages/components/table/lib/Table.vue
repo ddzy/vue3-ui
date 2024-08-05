@@ -43,10 +43,7 @@
 								<component :is="v">
 									<template #default="scope">
 										<th
-											:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed !== false ? 'is-fixed' : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
-											:style="{
-												right: `${-0.1}px`,
-											}"
+											:class="`v3-table__cell v3-table__header-cell ${scope.props.fixed !== false ? 'is-fixed' : ''} ${scope.props.fixed !== false ? `is-fixed-${[true, 'left'].includes(scope.props.fixed) ? 'left' : 'right'}` : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
 											ref="tableHeaderCellRefs"
 										>
 											<div class="v3-table__cell-inner">
@@ -100,7 +97,7 @@
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed !== false ? 'is-fixed' : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${scope.props.fixed !== false ? 'is-fixed' : ''} ${scope.props.fixed !== false ? `is-fixed-${[true, 'left'].includes(scope.props.fixed) ? 'left' : 'right'}` : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 											ref="tableBodyCellRefs"
 										>
 											<div class="v3-table__cell-inner">
@@ -263,12 +260,13 @@ function updateFixedColumnShadow() {
 		tableBodyCellRefs.value.forEach((cell) => {
 			let cellRect = useElementBounding(cell);
 			let tableBodyRect = useElementBounding(tableBodyRef);
-			cell.classList.toggle(
-				'has-fixed-shadow',
+			// 如果有纵向滚动条，那么表体需要减去纵向滚动条宽度
+			let rightBoundary =
 				cellRect.right.value >
-					tableBodyRect.right.value -
-						(hasVerticalScrollbar.value ? verticalScrollbarWidth.value : 0), // 如果有纵向滚动条，那么表体需要减去纵向滚动条宽度
-			);
+				tableBodyRect.right.value -
+					(hasVerticalScrollbar.value ? verticalScrollbarWidth.value : 0);
+			let leftBoundary = cellRect.left.value < tableBodyRect.left.value;
+			cell.classList.toggle('has-fixed-shadow', rightBoundary || leftBoundary);
 		});
 	}
 	// 表头
@@ -276,10 +274,10 @@ function updateFixedColumnShadow() {
 		tableHeaderCellRefs.value.forEach((cell) => {
 			let cellRect = useElementBounding(cell);
 			let tableHeaderRect = useElementBounding(tableHeaderRef);
-			cell.classList.toggle(
-				'has-fixed-shadow',
-				cellRect.right.value > tableHeaderRect.right.value,
-			);
+			// 如果有纵向滚动条，那么表体需要减去纵向滚动条宽度
+			let rightBoundary = cellRect.right.value > tableHeaderRect.right.value;
+			let leftBoundary = cellRect.left.value < tableHeaderRect.left.value;
+			cell.classList.toggle('has-fixed-shadow', rightBoundary || leftBoundary);
 		});
 	}
 }

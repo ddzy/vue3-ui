@@ -136,24 +136,39 @@ $v3-table-border-color: $border-color-small;
 		background-color: #fff;
 		&.is-fixed {
 			position: sticky;
-			right: -0.1px;
 			z-index: 1;
-			&.has-fixed-shadow {
-				&::before {
-					box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
-				}
-			}
 			&::before {
 				content: '';
 				position: absolute;
 				top: 0;
-				left: -10px;
 				overflow: hidden;
 				width: 10px;
 				bottom: -1px;
 				background-color: transparent;
 				touch-action: none;
 				pointer-events: none;
+			}
+		}
+		&.is-fixed-left {
+			left: -0.1px;
+			&.has-fixed-shadow {
+				&::before {
+					box-shadow: inset 10px 0 10px -10px rgba(0, 0, 0, 0.15);
+				}
+			}
+			&::before {
+				right: -10px;
+			}
+		}
+		&.is-fixed-right {
+			right: -0.1px;
+			&.has-fixed-shadow {
+				&::before {
+					box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+				}
+			}
+			&::before {
+				left: -10px;
 			}
 		}
 	}

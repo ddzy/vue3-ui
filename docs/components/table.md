@@ -578,7 +578,7 @@ const columns = ref([
 			v-bind="v"
 			:key="v.prop"
 		></v3-table-column>
-		<v3-table-column prop="handle" label="操作" fixed>
+		<v3-table-column prop="handle" label="操作" fixed="right">
 			<v3-button type="text" icon="EditTwo"></v3-button>
 			<v3-divider></v3-divider>
 			<v3-button type="text" icon="Delete"></v3-button>
@@ -662,6 +662,7 @@ const columns = ref([
 		prop: 'name',
 		label: '姓名',
 		width: 200,
+		fixed: 'left',
 	},
 	{
 		prop: 'age',
