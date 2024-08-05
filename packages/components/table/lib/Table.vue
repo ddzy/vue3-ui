@@ -21,7 +21,7 @@
 				<table
 					:class="{
 						'v3-table__header': true,
-						'has-bottom-shadow': !arrivedState.top,
+						'has-bottom-shadow': !tableBodyScroller.arrivedState.top,
 					}"
 				>
 					<colgroup>
@@ -71,7 +71,7 @@
 			v-if="props.data.length"
 			:class="{
 				'v3-table__body-wrapper': true,
-				'show-bottom-border': !arrivedState.bottom,
+				'show-bottom-border': !tableBodyScroller.arrivedState.bottom,
 			}"
 		>
 			<div class="v3-table__body-inner" ref="tableBodyRef">
@@ -233,15 +233,21 @@ useResizeObserver(tableBodyRef, () => {
 	updateHasHorizontalScrollbar();
 });
 
-const { arrivedState, x, directions } = useScroll(tableBodyRef, {
+let prevTableBodyScrollX = ref(0);
+const tableBodyScroller = useScroll(tableBodyRef, {
 	throttle: 20,
 	onScroll() {
 		// 表体滚动的时候，实时更新表头的位置
 		if (tableHeaderRef.value) {
-			tableHeaderRef.value.scrollLeft = x.value;
+			let diff = tableBodyScroller.x.value - prevTableBodyScrollX.value;
+			tableHeaderRef.value.scrollLeft += diff;
+			prevTableBodyScrollX.value = tableBodyScroller.x.value;
 		}
 		// 判断固定列是否处于可视区域（只在横向滚动时进行判断）
-		if (directions.left || directions.right) {
+		if (
+			tableBodyScroller.directions.left ||
+			tableBodyScroller.directions.right
+		) {
 			updateFixedColumnShadow();
 		}
 	},
