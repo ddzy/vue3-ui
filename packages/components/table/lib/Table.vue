@@ -263,7 +263,8 @@ function updateFixedColumnShadow() {
 			cell.classList.toggle(
 				'has-fixed-shadow',
 				cellRect.right.value >
-					tableBodyRect.right.value - horizontalScrollbarWidth.value, // 表体需要减去滚动条宽度
+					tableBodyRect.right.value -
+						(hasVerticalScrollbar.value ? verticalScrollbarWidth.value : 0), // 如果有纵向滚动条，那么表体需要减去纵向滚动条宽度
 			);
 		});
 	}
