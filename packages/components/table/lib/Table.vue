@@ -345,7 +345,7 @@ function updateFixedColumnShadow() {
 	);
 	// 对于左侧固定的单元格，最后一列的所有单元格出现阴影
 	lastFixedLeftCells?.forEach((cell) => {
-		const boundary = tableBodyScroller.x.value > 0;
+		const boundary = !tableBodyScroller.arrivedState.left;
 		cell.classList.toggle('has-fixed-shadow', boundary);
 	});
 	// 对于右侧固定的单元格，第一列的所有单元格出现阴影
