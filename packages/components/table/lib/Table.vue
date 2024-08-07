@@ -6,10 +6,10 @@
 			'has-header': props.showHeader,
 			'has-border': props.border,
 			'has-vertical-scrollbar': hasVerticalScrollbar,
+			'has-horizontal-scrollbar': hasHorizontalScrollbar,
 			'is-stripe': props.stripe,
 			'is-resizing': isResizerMouseDown,
-			'show-left-border': true,
-			'show-right-border': true,
+			'highlight-hover-row': props.highlightHoverRow,
 		}"
 		:style="{
 			maxHeight: computedMaxHeight,
@@ -89,7 +89,6 @@
 			v-if="props.data.length"
 			:class="{
 				'v3-table__body-wrapper': true,
-				'show-bottom-border': !tableBodyScroller.arrivedState.bottom,
 			}"
 		>
 			<div class="v3-table__body-inner" ref="tableBodyRef">

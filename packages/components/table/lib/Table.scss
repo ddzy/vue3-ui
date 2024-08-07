@@ -3,6 +3,8 @@ $align-map: (left, center, right);
 $v3-table-border-width: 1px;
 $v3-table-border-style: solid;
 $v3-table-border-color: $border-color-small;
+$v3-table-border: $v3-table-border-width $v3-table-border-style
+	$v3-table-border-color;
 
 .v3-table {
 	display: flex;
@@ -10,47 +12,19 @@ $v3-table-border-color: $border-color-small;
 	position: relative;
 	overflow: hidden;
 	word-wrap: break-word;
+	border-bottom: $v3-table-border;
 
 	&.has-border {
-		border-left: $v3-table-border-width $v3-table-border-style transparent;
-		border-right: $v3-table-border-width $v3-table-border-style transparent;
-		.v3-table__header {
-			tr {
-				th {
-					border-top-width: $v3-table-border-width;
-					&:not(:first-child) {
-						border-left-width: $v3-table-border-width;
-					}
-					&:not(:last-child) {
-						border-right-width: $v3-table-border-width;
-					}
-				}
-			}
-		}
-		.v3-table__body-wrapper {
-			&.show-bottom-border {
-				border-bottom: $v3-table-border-width $v3-table-border-style
-					$v3-table-border-color;
-			}
-		}
+		border: $v3-table-border;
+		.v3-table__header,
 		.v3-table__body {
 			tr {
+				th,
 				td {
-					border-top-width: $v3-table-border-width;
-					&:not(:first-child) {
-						border-left-width: $v3-table-border-width;
-					}
 					&:not(:last-child) {
-						border-right-width: $v3-table-border-width;
+						border-right: $v3-table-border;
 					}
 				}
-			}
-		}
-	}
-	&.has-border.has-header {
-		.v3-table__body {
-			td {
-				border-top-width: 0px;
 			}
 		}
 	}
@@ -63,7 +37,7 @@ $v3-table-border-color: $border-color-small;
 			}
 		}
 	}
-	&.is-highlight {
+	&.highlight-hover-row {
 		.v3-table__body {
 			tr {
 				&:hover {
@@ -77,12 +51,6 @@ $v3-table-border-color: $border-color-small;
 	&.is-resizing {
 		user-select: none;
 		cursor: col-resize;
-	}
-	&.show-left-border {
-		border-left-color: $v3-table-border-color;
-	}
-	&.show-right-border {
-		border-right-color: $v3-table-border-color;
 	}
 
 	.v3-table__header-wrapper {
@@ -188,22 +156,36 @@ $v3-table-border-color: $border-color-small;
 		}
 	}
 
-	table {
+	.v3-table__header,
+	.v3-table__body {
 		width: 100%;
 		table-layout: fixed;
-		border-collapse: collapse;
-		td,
-		th {
-			padding: $padding-small 0;
-			border: $v3-table-border-width $v3-table-border-style
-				$v3-table-border-color;
-			border-top-width: 0;
-			border-left-width: 0;
-			border-right-width: 0;
-			vertical-align: middle;
-			@each $key in $align-map {
-				&.is-align-#{$key} {
-					text-align: $key;
+		border-collapse: separate;
+		tr {
+			td,
+			th {
+				padding: $padding-small 0;
+				vertical-align: middle;
+				@each $key in $align-map {
+					&.is-align-#{$key} {
+						text-align: $key;
+					}
+				}
+			}
+		}
+	}
+	.v3-table__header {
+		tr {
+			th {
+				border-bottom: $v3-table-border;
+			}
+		}
+	}
+	.v3-table__body {
+		tr {
+			&:not(:last-child) {
+				td {
+					border-bottom: $v3-table-border;
 				}
 			}
 		}
