@@ -102,6 +102,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 	}
 
 	.v3-table__cell {
+		position: relative;
 		background-color: #fff;
 		&.is-fixed {
 			position: sticky;
