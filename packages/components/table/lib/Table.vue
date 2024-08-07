@@ -62,7 +62,13 @@
 															: 'auto'
 														: 'auto',
 											}"
-											ref="tableHeaderCellRefs"
+											:ref="(el) => ((tableHeaderCellRefs.push(el as HTMLElement)), (
+												  normalizeFixed(scope.props.fixed) === 'left' 
+														? updateFixedLeftCells(el as HTMLElement, i)
+														: normalizeFixed(scope.props.fixed) === 'right' 
+															? updateFixedRightCells(el as HTMLElement, i)
+															: void 0
+											))"
 										>
 											<div class="v3-table__cell-inner">
 												<component
@@ -133,7 +139,13 @@
 															: 'auto'
 														: 'auto',
 											}"
-											ref="tableBodyCellRefs"
+											:ref="(el) => ((tableBodyCellRefs.push(el as HTMLElement)), (
+												  normalizeFixed(scope.props.fixed) === 'left' 
+														? updateFixedLeftCells(el as HTMLElement, ii)
+														: normalizeFixed(scope.props.fixed) === 'right' 
+															? updateFixedRightCells(el as HTMLElement, ii)
+															: void 0
+											))"
 										>
 											<div class="v3-table__cell-inner">
 												<component
@@ -172,11 +184,11 @@ import {
 	isNumber,
 	isStrictObject,
 	isString,
+	isUndefined,
 	subtract,
 } from '@common/utils';
 import '@common/utils/index';
 import { V3LoadingDirective, V3TableColumn } from '@components/main';
-import useElementBounding from '@hooks/useElementBounding';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
@@ -276,7 +288,7 @@ useResizeObserver(tableBodyRef, () => {
 
 let prevTableBodyScrollX = ref(0);
 const tableBodyScroller = useScroll(tableBodyRef, {
-	throttle: 20,
+	throttle: 0,
 	onScroll() {
 		// 表体滚动的时候，实时更新表头的位置
 		if (tableHeaderRef.value) {
@@ -294,33 +306,53 @@ const tableBodyScroller = useScroll(tableBodyRef, {
 	},
 });
 
-// 固定的列是否出现阴影
+// 固定的单元格出现阴影
+type IFixedCell = Map<number, Set<HTMLElement>>;
+const fixedLeftCells = ref<IFixedCell>(new Map());
+const fixedRightCells = ref<IFixedCell>(new Map());
+function updateFixedLeftCells(el: HTMLElement, index: number) {
+	if (!fixedLeftCells.value.has(index)) {
+		fixedLeftCells.value.set(index, new Set([el]));
+	} else {
+		fixedLeftCells.value.get(index)!.add(el);
+	}
+}
+function updateFixedRightCells(el: HTMLElement, index: number) {
+	if (!fixedRightCells.value.has(index)) {
+		fixedRightCells.value.set(index, new Set([el]));
+	} else {
+		fixedRightCells.value.get(index)!.add(el);
+	}
+}
+// 固定在左侧的最后一列的下标
+const lastFixedLeftColumnIndex = computed(() => {
+	const keys = [...fixedLeftCells.value.keys()];
+	const last = keys.pop();
+	return isUndefined(last) ? -1 : last;
+});
+// 固定在右侧的第一列的下标
+const firstFixedRightColumnIndex = computed(() => {
+	const keys = [...fixedRightCells.value.keys()];
+	const first = keys.shift();
+	return isUndefined(first) ? -1 : first;
+});
 function updateFixedColumnShadow() {
-	// 表体
-	if (tableBodyRef.value) {
-		tableBodyCellRefs.value.forEach((cell) => {
-			let cellRect = useElementBounding(cell);
-			let tableBodyRect = useElementBounding(tableBodyRef);
-			// 如果有纵向滚动条，那么表体需要减去纵向滚动条宽度
-			let rightBoundary =
-				cellRect.right.value >
-				tableBodyRect.right.value -
-					(hasVerticalScrollbar.value ? verticalScrollbarWidth.value : 0);
-			let leftBoundary = cellRect.left.value < tableBodyRect.left.value;
-			cell.classList.toggle('has-fixed-shadow', rightBoundary || leftBoundary);
-		});
-	}
-	// 表头
-	if (tableHeaderRef.value) {
-		tableHeaderCellRefs.value.forEach((cell) => {
-			let cellRect = useElementBounding(cell);
-			let tableHeaderRect = useElementBounding(tableHeaderRef);
-			// 如果有纵向滚动条，那么表体需要减去纵向滚动条宽度
-			let rightBoundary = cellRect.right.value > tableHeaderRect.right.value;
-			let leftBoundary = cellRect.left.value < tableHeaderRect.left.value;
-			cell.classList.toggle('has-fixed-shadow', rightBoundary || leftBoundary);
-		});
-	}
+	const lastFixedLeftCells = fixedLeftCells.value.get(
+		lastFixedLeftColumnIndex.value,
+	);
+	const firstFixedRightCells = fixedRightCells.value.get(
+		firstFixedRightColumnIndex.value,
+	);
+	// 对于左侧固定的单元格，最后一列的所有单元格出现阴影
+	lastFixedLeftCells?.forEach((cell) => {
+		const boundary = tableBodyScroller.x.value > 0;
+		cell.classList.toggle('has-fixed-shadow', boundary);
+	});
+	// 对于右侧固定的单元格，第一列的所有单元格出现阴影
+	firstFixedRightCells?.forEach((cell) => {
+		const boundary = !tableBodyScroller.arrivedState.right;
+		cell.classList.toggle('has-fixed-shadow', boundary);
+	});
 }
 watch(hasHorizontalScrollbar, async () => {
 	setTimeout(() => {
@@ -342,6 +374,7 @@ function updateScrollbarWidth() {
 }
 updateScrollbarWidth();
 
+// 列宽相关
 interface IColumnWidth {
 	width: number;
 	/** 拖拽表头时的最小宽度 */
@@ -420,23 +453,21 @@ watch(
 	computedColumns,
 	(newValue) => {
 		newValue.forEach((v, i) => {
-			let fixed = v?.props?.fixed;
-			if (fixed !== false) {
-				if ([true, 'left'].includes(fixed)) {
-					fixedLeftColumns.value.push({
-						index: i,
-						left: 0,
-						right: 0,
-						width: 0,
-					});
-				} else if (isString(fixed)) {
-					fixedRightColumns.value.push({
-						index: i,
-						left: 0,
-						right: 0,
-						width: 0,
-					});
-				}
+			let fixed = normalizeFixed(v?.props?.fixed);
+			if (fixed === 'left') {
+				fixedLeftColumns.value.push({
+					index: i,
+					left: 0,
+					right: 0,
+					width: 0,
+				});
+			} else if (fixed === 'right') {
+				fixedRightColumns.value.push({
+					index: i,
+					left: 0,
+					right: 0,
+					width: 0,
+				});
 			}
 		});
 	},

@@ -13,9 +13,10 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 	overflow: hidden;
 	word-wrap: break-word;
 	border-bottom: $v3-table-border;
-
 	&.has-border {
-		border: $v3-table-border;
+		border-left: $v3-table-border;
+		border-top: $v3-table-border;
+		border-right: $v3-table-border;
 		.v3-table__header,
 		.v3-table__body {
 			tr {
@@ -111,15 +112,16 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 				top: 0;
 				overflow: hidden;
 				width: 10px;
-				bottom: -1px;
+				bottom: 0;
 				background-color: transparent;
 				touch-action: none;
 				pointer-events: none;
 			}
 		}
 		&.is-fixed-left {
-			left: -0.1px;
+			left: 0;
 			&.has-fixed-shadow {
+				border-right-color: transparent !important;
 				&::before {
 					box-shadow: inset 10px 0 10px -10px rgba(0, 0, 0, 0.15);
 				}
@@ -129,7 +131,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 			}
 		}
 		&.is-fixed-right {
-			right: -0.1px;
+			right: 0;
 			&.has-fixed-shadow {
 				&::before {
 					box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);

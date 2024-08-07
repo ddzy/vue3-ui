@@ -666,7 +666,6 @@ const columns = ref([
 	{
 		prop: 'age',
 		label: '年龄',
-		fixed: 'left',
 	},
 	{
 		prop: 'address',
