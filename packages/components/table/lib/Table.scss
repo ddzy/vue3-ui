@@ -145,6 +145,25 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 	.v3-table__cell-inner {
 		padding: 0 $padding-small;
 	}
+	.v3-table__cell-sorter {
+		position: absolute;
+		right: 0;
+		top: 50%;
+		display: flex;
+		flex-direction: column;
+		transform: translate(0, -50%);
+		cursor: pointer;
+		user-select: none;
+		.v3-icon {
+			font-size: $font-size-large;
+			&:first-child {
+				margin-bottom: -0.3em;
+			}
+			&:last-child {
+				margin-top: -0.3em;
+			}
+		}
+	}
 	.v3-table__cell-resizer {
 		position: absolute;
 		top: 20%;

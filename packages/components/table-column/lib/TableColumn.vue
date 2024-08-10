@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	fixed: false,
 	/** 本列是否可排序 */
 	sortable: false,
+	/** 排序依据的顺序，默认为：（无 => 升序 => 降序...） */
+	sortBy: () => ['none', 'ascending', 'descending'],
 	/** 当不为自定义排序时，采用的排序策略（等同于 Array.sort 方法） */
 	sortMethod: () => -1,
 	resizable: false,

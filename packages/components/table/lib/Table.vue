@@ -77,6 +77,30 @@
 												></component>
 												<span v-else>{{ scope.props.label }}</span>
 											</div>
+											<div
+												v-if="scope.props.sortable !== false"
+												class="v3-table__cell-sorter"
+												@click="toggleSortKey(scope.props)"
+											>
+												<V3Icon
+													:theme="
+														sortMap[scope.props.prop] === 'ascending'
+															? 'filled'
+															: 'outline'
+													"
+													:strokeWidth="2"
+													type="UpOne"
+												/>
+												<V3Icon
+													:theme="
+														sortMap[scope.props.prop] === 'descending'
+															? 'filled'
+															: 'outline'
+													"
+													:strokeWidth="2"
+													type="DownOne"
+												/>
+											</div>
 											<a
 												v-if="scope.props.resizable"
 												class="v3-table__cell-resizer"
@@ -177,7 +201,15 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { VNode, computed, onMounted, ref, useSlots, watch } from 'vue';
+import {
+	VNode,
+	computed,
+	onMounted,
+	reactive,
+	ref,
+	useSlots,
+	watch,
+} from 'vue';
 
 import {
 	divide,
@@ -188,12 +220,18 @@ import {
 	subtract,
 } from '@common/utils';
 import '@common/utils/index';
-import { V3LoadingDirective, V3TableColumn } from '@components/main';
+import { V3Icon, V3LoadingDirective, V3TableColumn } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 
-import { ITableColumnFixed, ITableProps } from '@/public/typings';
+import {
+	ITableColumnFixed,
+	ITableColumnProps,
+	ITableColumnSortBy,
+	ITableDefaultSort,
+	ITableProps,
+} from '@/public/typings';
 
 defineOptions({
 	name: 'V3Table',
@@ -228,6 +266,8 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	emptyText: '暂无数据',
 	/** 表格是否加载中 */
 	loading: false,
+	/** 默认排序的列的顺序 */
+	// defaultSort: () => ({}),
 });
 const slots = useSlots();
 
@@ -612,6 +652,54 @@ useEventListener(document, 'mousemove', (e) => {
 		resizerStartPosition.value = e.pageX;
 	}
 });
+
+// 排序
+const sortMap = reactive<ITableDefaultSort>({});
+watch(
+	computedColumns,
+	(newValue) => {
+		newValue.forEach((v) => {
+			const prop = v?.props?.prop;
+			const sortable = v?.props?.sortable;
+			if (prop && sortable && !Object.hasOwn(sortMap, prop)) {
+				sortMap[prop] = 'none';
+			}
+		});
+	},
+	{ immediate: true },
+);
+watch(
+	() => props.defaultSort,
+	(newValue) => {
+		if (newValue) {
+			for (const key in newValue) {
+				if (Object.prototype.hasOwnProperty.call(newValue, key)) {
+					const value = newValue[key];
+					sortMap[key] = value;
+				}
+			}
+		}
+	},
+	{ immediate: true, deep: true },
+);
+function toggleSortKey(row: ITableColumnProps) {
+	const sortBy = (row.sortBy || []) as ITableColumnSortBy[];
+	const prop = row.prop;
+	if (prop && Object.hasOwn(sortMap, prop)) {
+		let currentIndex = sortBy.findIndex((v) => v === sortMap[prop]);
+		if (!currentIndex || currentIndex === -1) {
+			currentIndex = 0;
+		}
+
+		let nextIndex = currentIndex + 1;
+		if (nextIndex > sortBy.length - 1) {
+			nextIndex = 0;
+		} else if (nextIndex < 0) {
+			nextIndex = sortBy.length - 1;
+		}
+		sortMap[prop] = sortBy[nextIndex];
+	}
+}
 </script>
 <style lang="scss">
 @import './Table.scss';

@@ -16,6 +16,7 @@ export interface ITableProps {
 	rowKey?: string | ((data: { row: any; rowIndex: number }) => string);
 	emptyText?: string;
 	loading?: boolean;
+	defaultSort?: ITableDefaultSort;
 }
 export type ITableSize = 'small' | 'medium' | 'large';
 export type ITableRowClassName =
@@ -29,6 +30,9 @@ export type ITableCellClassName =
 			rowIndex: number;
 			columnIndex: number;
 	  }) => string);
+export interface ITableDefaultSort  {
+	[key: string]: ITableColumnSortBy
+}
 
 export interface ITableColumnProps {
 	prop?: string;
@@ -40,6 +44,7 @@ export interface ITableColumnProps {
 	minWidth?: string | number;
 	fixed?: ITableColumnFixed;
 	sortable?: ITableColumnSortable;
+	sortBy?: ITableColumnSortBy[];
 	sortMethod?: <T = any>(a: T, b: T) => number;
 	resizable?: boolean;
 	formatter?: (row: any) => any;
@@ -55,6 +60,7 @@ export type ITableColumnType =
 export type ITableAlign = 'left' | 'center' | 'right';
 export type ITableColumnSortable = boolean | 'custom';
 export type ITableColumnFixed = boolean | 'left' | 'right';
+export type ITableColumnSortBy = 'none' | 'ascending' | 'descending';
 
 export const V3Table: SFCWithInstall<ITableProps>;
 export const V3TableColumn: SFCWithInstall<ITableColumnProps>;
