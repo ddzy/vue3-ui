@@ -80,11 +80,12 @@
 											<div
 												v-if="scope.props.sortable !== false"
 												class="v3-table__cell-sorter"
-												@click="toggleSortKey(scope.props)"
+												@click="toggleSort(scope.props)"
 											>
 												<V3Icon
 													:theme="
-														sortMap[scope.props.prop] === 'ascending'
+														sort.prop === scope.props.prop &&
+														sort.order === 'ascending'
 															? 'filled'
 															: 'outline'
 													"
@@ -93,7 +94,8 @@
 												/>
 												<V3Icon
 													:theme="
-														sortMap[scope.props.prop] === 'descending'
+														sort.prop === scope.props.prop &&
+														sort.order === 'descending'
 															? 'filled'
 															: 'outline'
 													"
@@ -116,7 +118,7 @@
 			</div>
 		</div>
 		<div
-			v-if="props.data.length"
+			v-if="data.length"
 			:class="{
 				'v3-table__body-wrapper': true,
 			}"
@@ -224,6 +226,7 @@ import { V3Icon, V3LoadingDirective, V3TableColumn } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
+import { cloneDeep } from 'lodash-es';
 
 import {
 	ITableColumnFixed,
@@ -270,6 +273,18 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	// defaultSort: () => ({}),
 });
 const slots = useSlots();
+const emits = defineEmits<{
+	(e: 'sort', v: ITableColumnSortBy): void;
+}>();
+
+const data = ref<any[]>([]);
+watch(
+	() => props.data,
+	(newValue) => {
+		data.value = cloneDeep(newValue);
+	},
+	{ immediate: true },
+);
 
 const computedColumns = computed(() => {
 	// table-column有可能是通过 v-for 遍历出来的，也可能是独立组件
@@ -440,8 +455,8 @@ onMounted(() => {
 			isCustom: !Number.isNaN(propsWidth),
 		};
 	});
-	bodyColumnWidths.value = structuredClone(newColumnWidths);
-	headerColumnWidths.value = structuredClone(newColumnWidths);
+	bodyColumnWidths.value = cloneDeep(newColumnWidths);
+	headerColumnWidths.value = cloneDeep(newColumnWidths);
 });
 watch(hasVerticalScrollbar, () => {
 	if (tableBodyRef.value) {
@@ -654,50 +669,54 @@ useEventListener(document, 'mousemove', (e) => {
 });
 
 // 排序
-const sortMap = reactive<ITableDefaultSort>({});
+const sort = reactive<ITableDefaultSort>({
+	prop: props?.defaultSort?.prop || '',
+	order: props?.defaultSort?.order || 'none',
+});
 watch(
-	computedColumns,
-	(newValue) => {
-		newValue.forEach((v) => {
-			const prop = v?.props?.prop;
-			const sortable = v?.props?.sortable;
-			if (prop && sortable && !Object.hasOwn(sortMap, prop)) {
-				sortMap[prop] = 'none';
-			}
-		});
-	},
-	{ immediate: true },
-);
-watch(
-	() => props.defaultSort,
-	(newValue) => {
-		if (newValue) {
-			for (const key in newValue) {
-				if (Object.prototype.hasOwnProperty.call(newValue, key)) {
-					const value = newValue[key];
-					sortMap[key] = value;
-				}
-			}
-		}
+	() => props.data,
+	() => {
+		sortMethod();
 	},
 	{ immediate: true, deep: true },
 );
-function toggleSortKey(row: ITableColumnProps) {
-	const sortBy = (row.sortBy || []) as ITableColumnSortBy[];
+function toggleSort(row: ITableColumnProps) {
+	const sortBy = row.sortBy;
 	const prop = row.prop;
-	if (prop && Object.hasOwn(sortMap, prop)) {
-		let currentIndex = sortBy.findIndex((v) => v === sortMap[prop]);
+	const sortable = row.sortable;
+
+	if (sortable !== false && prop && sortBy) {
+		let currentIndex = sortBy.findIndex((v) => v === sort.order);
 		if (!currentIndex || currentIndex === -1) {
 			currentIndex = 0;
 		}
-
 		let nextIndex = currentIndex + 1;
 		if (nextIndex > sortBy.length - 1) {
 			nextIndex = 0;
 		} else if (nextIndex < 0) {
 			nextIndex = sortBy.length - 1;
 		}
-		sortMap[prop] = sortBy[nextIndex];
+
+		let nextSort = sortBy[nextIndex];
+		sort.prop = prop;
+		sort.order = nextSort;
+		// 数据排序
+		if (sortable === 'custom') {
+			emits('sort', nextSort);
+		} else {
+			sortMethod();
+		}
+	}
+}
+function sortMethod() {
+	if (sort.prop) {
+		if (sort.order === 'ascending') {
+			data.value.sort((a, b) => (a[sort.prop!] < b[sort.prop!] ? -1 : 1));
+		} else if (sort.order === 'descending') {
+			data.value.sort((a, b) => (b[sort.prop!] > a[sort.prop!] ? 1 : -1));
+		} else if (sort.order === 'none') {
+			data.value = cloneDeep(props.data);
+		}
 	}
 }
 </script>

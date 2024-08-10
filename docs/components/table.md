@@ -708,7 +708,8 @@ const columns = ref([
 	<v3-table
 		:data="data"
 		:defaultSort="{
-			age: 'descending',
+			prop: 'age',
+			order: 'descending',
 		}"
 		border
 	>

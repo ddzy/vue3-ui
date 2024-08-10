@@ -31,7 +31,8 @@ export type ITableCellClassName =
 			columnIndex: number;
 	  }) => string);
 export interface ITableDefaultSort  {
-	[key: string]: ITableColumnSortBy
+	prop?: string;
+	order?: ITableColumnSortBy
 }
 
 export interface ITableColumnProps {
@@ -45,7 +46,6 @@ export interface ITableColumnProps {
 	fixed?: ITableColumnFixed;
 	sortable?: ITableColumnSortable;
 	sortBy?: ITableColumnSortBy[];
-	sortMethod?: <T = any>(a: T, b: T) => number;
 	resizable?: boolean;
 	formatter?: (row: any) => any;
 	className?: string;
