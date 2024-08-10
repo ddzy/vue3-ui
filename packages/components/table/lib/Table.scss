@@ -141,6 +141,11 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 				left: -10px;
 			}
 		}
+		&.is-sortable.is-resizable {
+			.v3-table__cell-sorter {
+				right: 4px;
+			}
+		}
 	}
 	.v3-table__cell-inner {
 		padding: 0 $padding-small;
@@ -170,7 +175,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 		bottom: 20%;
 		right: 1px;
 		width: 2px;
-		background-color: #f3f4f5;
+		background-color: #ddd;
 		cursor: col-resize;
 		&:active {
 			background-color: $success-color;

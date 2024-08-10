@@ -798,6 +798,7 @@ const columns = ref([
 		label: '姓名',
 		fixed: 'left',
 		sortable: true,
+		resizable: true,
 	},
 	{
 		prop: 'age',

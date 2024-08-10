@@ -43,7 +43,7 @@
 								<component :is="v">
 									<template #default="scope">
 										<th
-											:class="`v3-table__cell v3-table__header-cell ${normalizeFixed(scope.props.fixed) ? 'is-fixed' : ''} ${normalizeFixed(scope.props.fixed) ? `is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} ${scope.props.resizable ? 'is-resizable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											:class="`v3-table__cell v3-table__header-cell ${normalizeFixed(scope.props.fixed) ? 'is-fixed' : ''} ${normalizeFixed(scope.props.fixed) ? `is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} ${scope.props.resizable ? 'is-resizable' : ''} ${scope.props.sortable ? 'is-sortable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
 											:style="{
 												left:
 													normalizeFixed(scope.props.fixed) === 'left'
@@ -89,7 +89,7 @@
 															? 'filled'
 															: 'outline'
 													"
-													:strokeWidth="2"
+													:strokeWidth="1"
 													type="UpOne"
 												/>
 												<V3Icon
@@ -99,7 +99,7 @@
 															? 'filled'
 															: 'outline'
 													"
-													:strokeWidth="2"
+													:strokeWidth="1"
 													type="DownOne"
 												/>
 											</div>
