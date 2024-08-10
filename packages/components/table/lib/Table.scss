@@ -43,7 +43,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 			tr {
 				&:hover {
 					td {
-						background-color: #f3f4f5;
+						background-color: #f7f7fa;
 					}
 				}
 			}
@@ -199,6 +199,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 		tr {
 			th {
 				border-bottom: $v3-table-border;
+				background-color: #fafafc;
 			}
 		}
 	}
