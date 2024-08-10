@@ -50,6 +50,7 @@ export interface ITableColumnProps {
 	formatter?: (row: any) => any;
 	className?: string;
 	labelClassName?: string;
+	showOverflowTooltip?: boolean; 
 }
 export type ITableColumnType =
 	| 'default'

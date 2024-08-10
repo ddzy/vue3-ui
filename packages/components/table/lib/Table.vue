@@ -146,7 +146,7 @@
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${normalizeFixed(scope.props.fixed) ? 'is-fixed' : ''} ${normalizeFixed(scope.props.fixed) ? `is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} is-align-${scope.props.align} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:class="`v3-table__cell v3-table__body-cell v3-table__cell-${i}-${ii} ${normalizeFixed(scope.props.fixed) ? 'is-fixed' : ''} ${normalizeFixed(scope.props.fixed) ? `is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} is-align-${scope.props.align} ${scope.props.showOverflowTooltip ? 'show-overflow-tooltip' : ''} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 											:style="{
 												left:
 													normalizeFixed(scope.props.fixed) === 'left'
@@ -203,15 +203,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import {
-	VNode,
-	computed,
-	onMounted,
-	reactive,
-	ref,
-	useSlots,
-	watch,
-} from 'vue';
+import { VNode, computed, reactive, ref, useSlots, watch } from 'vue';
 
 import {
 	divide,
@@ -431,10 +423,11 @@ updateScrollbarWidth();
 
 // 列宽相关
 interface IColumnWidth {
+	/** 列宽 */
 	width: number;
 	/** 拖拽表头时的最小宽度 */
 	resizeMinWidth: number;
-	/** 当前列的宽度是否自定义的宽度 */
+	/** 当前列的宽度是否设置了宽度 */
 	isCustom: boolean;
 }
 const COLUMN_DEFAULT_WIDTH = 120;
@@ -442,19 +435,45 @@ const COLUMN_DEFAULT_WIDTH = 120;
 const bodyColumnWidths = ref<IColumnWidth[]>([]);
 // 表头列宽（由于表体可能会出现滚动条，挤压位置，所以分开计算）
 const headerColumnWidths = ref<IColumnWidth[]>([]);
-onMounted(() => {
+watch(tableBodyRef, (newValue) => {
+	if (!newValue) {
+		return;
+	}
+	// 根据每列设置的props宽度，计算初始列宽
+	let remainingTableWidth = newValue.clientWidth;
+	// 对于没有设置宽度的列，会根据(表格剩余的可用宽度 / 未指定宽度的列)计算平均值
+	let averageCount = 0;
+	let averageWidth = 0;
 	let newColumnWidths = computedColumns.value.map((v) => {
 		let propsWidth = Number.parseFloat(v?.props?.width);
 		let propsMinWidth = Number.parseFloat(
 			// @ts-ignore
 			v?.props?.minWidth || v?.type?.props?.minWidth?.default,
 		);
+		let isCustom = !Number.isNaN(propsWidth);
+		averageCount += !isCustom ? 1 : 0;
+		remainingTableWidth -= isCustom ? propsWidth : 0;
 		return {
-			width: propsWidth || COLUMN_DEFAULT_WIDTH,
+			width: propsWidth,
 			resizeMinWidth: propsMinWidth,
-			isCustom: !Number.isNaN(propsWidth),
+			isCustom,
 		};
 	});
+	if (remainingTableWidth <= 0) {
+		averageWidth = COLUMN_DEFAULT_WIDTH;
+	} else {
+		averageWidth = Math.max(
+			divide(remainingTableWidth, averageCount),
+			COLUMN_DEFAULT_WIDTH,
+		);
+	}
+	newColumnWidths = newColumnWidths.map((v) => {
+		return {
+			...v,
+			width: v.isCustom ? v.width : averageWidth,
+		};
+	});
+
 	bodyColumnWidths.value = cloneDeep(newColumnWidths);
 	headerColumnWidths.value = cloneDeep(newColumnWidths);
 });

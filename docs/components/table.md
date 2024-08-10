@@ -712,6 +712,7 @@ const columns = ref([
 			order: 'descending',
 		}"
 		border
+		maxHeight="300px"
 	>
 		<v3-table-column
 			v-for="v in columns"
@@ -807,7 +808,7 @@ const columns = ref([
 	},
 	{
 		prop: 'address',
-		label: '姓名',
+		label: '地址',
 	},
 	{
 		prop: 'create_time',
@@ -828,6 +829,48 @@ const columns = ref([
 		label: '修改人',
 	},
 ]);
+</script>
+```
+
+:::
+
+## 溢出工具提示
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data">
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column
+			:show-overflow-tooltip="true"
+			prop="address"
+			label="地址"
+			width="120px"
+		></v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = [
+	{
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区，辽宁省大连市沙河口区，辽宁省大连市沙河口区',
+	},
+	{
+		name: 'Bob',
+		age: 30,
+		address: '广东省河源市源城区，广东省河源市源城区，广东省河源市源城区',
+	},
+	{
+		name: 'Carl',
+		age: 40,
+		address: '四川省成都市新都区',
+	},
+];
 </script>
 ```
 

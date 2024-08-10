@@ -29,6 +29,7 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	resizable: false,
 	className: '',
 	labelClassName: '',
+	showOverflowTooltip: false,
 });
 </script>
 <style lang="scss">
