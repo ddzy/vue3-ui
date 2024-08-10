@@ -403,7 +403,15 @@
       {
         _id: "Close",
         name: "Close",
-      }
+      },
+      {
+        _id: "UpOne",
+        name: "UpOne",
+      },
+      {
+        _id: "DownOne",
+        name: "DownOne",
+      },
     ]
   })
 

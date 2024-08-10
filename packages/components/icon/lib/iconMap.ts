@@ -91,4 +91,6 @@ export {
 	VolumeUp,
 	ZoomIn,
 	ZoomOut,
+	UpOne,
+	DownOne,
 } from '@icon-park/vue-next';
