@@ -25,15 +25,14 @@
 					}"
 				>
 					<colgroup>
-						<template v-for="(v, i) in headerColumnWidths" :key="i">
-							<col
-								v-if="v.width"
-								:style="{
-									width: `${v.width ? `${v.width}px` : 'auto'}`,
-								}"
-								class="v3-table__col v3-table__header-col"
-							/>
-						</template>
+						<col
+							v-for="(v, i) in headerColumnWidths"
+							:key="i"
+							:style="{
+								width: `${v.width ? `${v.width}px` : 'auto'}`,
+							}"
+							class="v3-table__col v3-table__header-col"
+						/>
 					</colgroup>
 					<thead>
 						<tr
@@ -126,15 +125,14 @@
 			<div class="v3-table__body-inner" ref="tableBodyRef">
 				<table class="v3-table__body">
 					<colgroup>
-						<template v-for="(v, i) in bodyColumnWidths" :key="i">
-							<col
-								v-if="v.width"
-								:style="{
-									width: `${v.width ? `${v.width}px` : 'auto'}`,
-								}"
-								class="v3-table__col v3-table__body-col"
-							/>
-						</template>
+						<col
+							v-for="(v, i) in bodyColumnWidths"
+							:key="i"
+							:style="{
+								width: `${v.width ? `${v.width}px` : 'auto'}`,
+							}"
+							class="v3-table__col v3-table__body-col"
+						/>
 					</colgroup>
 					<tbody>
 						<tr
