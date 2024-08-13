@@ -498,37 +498,17 @@ watch(tableBodyRef, (newValue) => {
 });
 watch(hasVerticalScrollbar, () => {
 	if (tableBodyRef.value) {
-		// 当滚动条显示/隐藏的时候，更新列宽，避免由于滚动条占位导致表头和表体无法对齐
-		let tableWidth = tableBodyRef.value.clientWidth;
-		let averageCount = bodyColumnWidths.value.filter((v) => !v.isCustom).length;
-		if (averageCount) {
-			let averageWidth = divide(tableWidth, averageCount);
-			bodyColumnWidths.value = bodyColumnWidths.value.map((v, i) => {
-				let width = !v.isCustom
-					? Math.max(averageWidth, COLUMN_DEFAULT_WIDTH)
-					: v.width;
-				return {
-					...v,
-					width,
-				};
-			});
-			headerColumnWidths.value = headerColumnWidths.value.map((v, i) => {
-				let width = !v.isCustom
-					? Math.max(averageWidth, COLUMN_DEFAULT_WIDTH)
-					: v.width;
-				// 出现滚动条的时候，需要更新表头最后一列的宽度（需加上滚动条宽度）
-				if (
-					computedColumns.value[i]?.props?.fixed !== false &&
-					i === computedColumns.value.length - 1
-				) {
-					width += verticalScrollbarWidth.value;
-				}
-				return {
-					...v,
-					width,
-				};
-			});
-		}
+		// 当滚动条显示/隐藏的时候，更新表头最后一列的宽度，避免由于滚动条占位导致表头和表体无法对齐
+		headerColumnWidths.value = headerColumnWidths.value.map((v, i) => {
+			let newWidth = v.width;
+			if (i === headerColumnWidths.value.length - 1) {
+				newWidth += verticalScrollbarWidth.value;
+			}
+			return {
+				...v,
+				width: newWidth,
+			};
+		});
 	}
 });
 
@@ -692,6 +672,10 @@ useEventListener(document, 'mousemove', (e) => {
 				width += diff;
 			} else if (i === resizerIndex.value + 1) {
 				width -= diff;
+			}
+			// 表头的最后一列需要加上滚动条宽度，避免表头和表体无法对齐
+			if (i === headerColumnWidths.value.length - 1) {
+				width += verticalScrollbarWidth.value;
 			}
 			width = Math.max(
 				width,
