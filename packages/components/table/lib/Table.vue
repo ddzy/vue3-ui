@@ -181,11 +181,27 @@
 													:rowIndex="i"
 													:columnIndex="ii"
 												></component>
-												<span v-else>{{
-													scope.props.formatter
-														? scope.props.formatter(v)
-														: v[vv?.props?.prop]
-												}}</span>
+												<v3-tooltip
+													v-else-if="scope.props.showOverflowTooltip"
+													:content="
+														scope.props.formatter
+															? scope.props.formatter(v)
+															: v[vv?.props?.prop]
+													"
+												>
+													<span>{{
+														scope.props.formatter
+															? scope.props.formatter(v)
+															: v[vv?.props?.prop]
+													}}</span>
+												</v3-tooltip>
+												<span v-else>
+													{{
+														scope.props.formatter
+															? scope.props.formatter(v)
+															: v[vv?.props?.prop]
+													}}
+												</span>
 											</div>
 										</td>
 									</template>
@@ -214,7 +230,12 @@ import {
 	subtract,
 } from '@common/utils';
 import '@common/utils/index';
-import { V3Icon, V3LoadingDirective, V3TableColumn } from '@components/main';
+import {
+	V3Icon,
+	V3LoadingDirective,
+	V3TableColumn,
+	V3Tooltip,
+} from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';

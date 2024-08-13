@@ -33,7 +33,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 		.v3-table__body {
 			tr:nth-child(even) {
 				td {
-					background-color: #f9f9f9;
+					background-color: #f7f8f9;
 				}
 			}
 		}
@@ -43,7 +43,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 			tr {
 				&:hover {
 					td {
-						background-color: #f7f7fa;
+						background-color: #f3f6f9;
 					}
 				}
 			}
@@ -147,7 +147,11 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 			}
 		}
 		&.show-overflow-tooltip {
-			word-wrap: normal;
+			.v3-tooltip__trigger {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 		}
 	}
 	.v3-table__cell-inner {
@@ -207,7 +211,7 @@ $v3-table-border: $v3-table-border-width $v3-table-border-style
 		tr {
 			th {
 				border-bottom: $v3-table-border;
-				background-color: #fafafc;
+				background-color: #f9f9f9;
 			}
 		}
 	}
