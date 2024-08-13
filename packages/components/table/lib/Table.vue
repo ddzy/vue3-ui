@@ -287,7 +287,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
 });
 const slots = useSlots();
 const emits = defineEmits<{
-	(e: 'sort', v: ITableColumnSortBy): void;
+	(event: 'sort', prop: string, order: ITableColumnSortBy): void;
 }>();
 
 const data = ref<any[]>([]);
@@ -742,7 +742,7 @@ function toggleSort(row: ITableColumnProps) {
 		sort.order = nextSort;
 		// 数据排序
 		if (sortable === 'custom') {
-			emits('sort', nextSort);
+			emits('sort', row.prop!, nextSort);
 		} else {
 			sortMethod();
 		}

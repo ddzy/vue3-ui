@@ -713,6 +713,7 @@ const columns = ref([
 		}"
 		border
 		maxHeight="300px"
+		@sort="handleSort"
 	>
 		<v3-table-column
 			v-for="v in columns"
@@ -724,7 +725,7 @@ const columns = ref([
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const data = ref();
+const data = ref([]);
 setTimeout(() => {
 	data.value = [
 		{
@@ -804,7 +805,7 @@ const columns = ref([
 	{
 		prop: 'age',
 		label: '年龄',
-		sortable: true,
+		sortable: 'custom',
 	},
 	{
 		prop: 'address',
@@ -829,6 +830,29 @@ const columns = ref([
 		label: '修改人',
 	},
 ]);
+
+function handleSort(prop: string, order: string) {
+	switch (order) {
+		case 'none': {
+			break;
+		}
+		case 'ascending': {
+			data.value.sort((a, b) => {
+				return a[prop] - b[prop];
+			});
+			break;
+		}
+		case 'descending': {
+			data.value.sort((a, b) => {
+				return b[prop] - a[prop];
+			});
+			break;
+		}
+		default: {
+			break;
+		}
+	}
+}
 </script>
 ```
 
