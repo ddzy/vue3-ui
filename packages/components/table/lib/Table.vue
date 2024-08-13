@@ -172,34 +172,39 @@
 											))"
 										>
 											<div class="v3-table__cell-inner">
-												<component
-													v-if="(vv?.children as any)?.default"
-													:is="(vv?.children as any)?.default"
-													:row="v"
-													:rowIndex="i"
-													:columnIndex="ii"
-												></component>
-												<v3-tooltip
-													v-else-if="scope.props.showOverflowTooltip"
-													:content="
-														scope.props.formatter
-															? scope.props.formatter(v)
-															: v[vv?.props?.prop]
-													"
-												>
-													<span>{{
-														scope.props.formatter
-															? scope.props.formatter(v)
-															: v[vv?.props?.prop]
-													}}</span>
-												</v3-tooltip>
-												<span v-else>
-													{{
-														scope.props.formatter
-															? scope.props.formatter(v)
-															: v[vv?.props?.prop]
-													}}
-												</span>
+												<template v-if="scope.props.type === 'default'">
+													<component
+														v-if="(vv?.children as any)?.default"
+														:is="(vv?.children as any)?.default"
+														:row="v"
+														:rowIndex="i"
+														:columnIndex="ii"
+													></component>
+													<v3-tooltip
+														v-else-if="scope.props.showOverflowTooltip"
+														:content="
+															scope.props.formatter
+																? scope.props.formatter(v)
+																: v[vv?.props?.prop]
+														"
+													>
+														<span>{{
+															scope.props.formatter
+																? scope.props.formatter(v)
+																: v[vv?.props?.prop]
+														}}</span>
+													</v3-tooltip>
+													<span v-else>
+														{{
+															scope.props.formatter
+																? scope.props.formatter(v)
+																: v[vv?.props?.prop]
+														}}
+													</span>
+												</template>
+												<template v-else-if="scope.props.type === 'index'">
+													<span>{{ i + 1 }}</span>
+												</template>
 											</div>
 										</td>
 									</template>
