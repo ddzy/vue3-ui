@@ -47,7 +47,6 @@ $checkbox-size-map: (
 
 .v3-checkbox {
 	display: inline-block;
-	margin-left: $margin-medium;
 
 	@each $key, $value in $checkbox-size-map {
 		&.is-size--#{$key}.is-bordered {
