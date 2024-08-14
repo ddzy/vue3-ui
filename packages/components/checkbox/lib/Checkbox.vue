@@ -127,7 +127,7 @@ export default defineComponent({
 		},
 		/** 复选框的值 */
 		label: {
-			type: [String, Number, Boolean] as PropType<TYPES.ICheckboxLabel>,
+			type: [String, Number, Boolean, Symbol] as PropType<TYPES.ICheckboxLabel>,
 			default: '',
 		},
 		/** 复选框是否为不确定状态 */

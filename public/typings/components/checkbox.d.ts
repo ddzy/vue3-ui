@@ -1,6 +1,6 @@
 import { SFCWithInstall } from '../index';
 
-export type ICheckboxLabel = string | boolean | number;
+export type ICheckboxLabel = string | boolean | number | symbol;
 export type ICheckboxSize = 'small' | 'medium' | 'large';
 export type ICheckboxGroupMin = number | undefined;
 export type ICheckboxGroupMax = number | undefined;
