@@ -67,7 +67,7 @@ export default defineComponent({
 		},
 		/** 单选框的值 */
 		label: {
-			type: [String, Number, Boolean] as PropType<TYPES.IRadioLabel>,
+			type: [String, Number, Boolean, Symbol] as PropType<TYPES.IRadioLabel>,
 			default: '',
 		},
 		modelValue: {
