@@ -10,6 +10,7 @@
 			'is-stripe': props.stripe,
 			'is-resizing': isResizerMouseDown,
 			'highlight-hover-row': props.highlightHoverRow,
+			'highlight-selected-row': props.highlightSelectedRow,
 		}"
 		:style="{
 			maxHeight: computedMaxHeight,
@@ -137,8 +138,8 @@
 					<tbody>
 						<tr
 							v-for="(v, i) in data"
-							:key="i"
-							:class="`v3-table__row ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
+							:key="normalizeRowKey(v, i) || i"
+							:class="`v3-table__row${normalizeRowKey(v, i) === radioValue ? ' is-selected' : ''} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
 						>
 							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
@@ -205,6 +206,12 @@
 												<template v-else-if="scope.props.type === 'index'">
 													<span>{{ i + 1 }}</span>
 												</template>
+												<template v-else-if="scope.props.type === 'radio'">
+													<v3-radio
+														v-model="radioValue"
+														:label="normalizeRowKey(v, i)"
+													></v3-radio>
+												</template>
 											</div>
 										</td>
 									</template>
@@ -224,27 +231,29 @@
 <script lang="tsx" setup>
 import { VNode, computed, reactive, ref, useSlots, watch } from 'vue';
 
-import {
-	divide,
-	isNumber,
-	isStrictObject,
-	isString,
-	isUndefined,
-	subtract,
-} from '@common/utils';
+import { divide, subtract } from '@common/utils';
 import '@common/utils/index';
 import {
 	V3Icon,
 	V3LoadingDirective,
+	V3Radio,
 	V3TableColumn,
 	V3Tooltip,
 } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
-import { cloneDeep } from 'lodash-es';
+import {
+	cloneDeep,
+	isFunction,
+	isNumber,
+	isPlainObject,
+	isString,
+	isUndefined,
+} from 'lodash-es';
 
 import {
+	ITableBaseRowKey,
 	ITableColumnFixed,
 	ITableColumnProps,
 	ITableColumnSortBy,
@@ -276,6 +285,8 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	showHeader: true,
 	/** 是否高亮当前hover的行 */
 	highlightHoverRow: true,
+	/** 是否高亮已选中的行 */
+	highlightSelectedRow: false,
 	rowClassName: '',
 	cellClassName: '',
 	headerRowClassName: '',
@@ -291,7 +302,29 @@ const props = withDefaults(defineProps<ITableProps>(), {
 const slots = useSlots();
 const emits = defineEmits<{
 	(event: 'sort', prop: string, order: ITableColumnSortBy): void;
+	(
+		event: 'selectionChange',
+		newValue?: ITableBaseRowKey,
+		oldValue?: ITableBaseRowKey,
+	): void;
 }>();
+
+function normalizeRowKey(row: any, rowIndex: number) {
+	const key = isFunction(props.rowKey)
+		? props.rowKey({ row, rowIndex })
+		: props.rowKey;
+	return key;
+}
+function normalizeFixed(fixed: ITableColumnFixed): string {
+	if (fixed !== false) {
+		if ([true, 'left'].includes(fixed)) {
+			return 'left';
+		} else if (isString(fixed)) {
+			return 'right';
+		}
+	}
+	return '';
+}
 
 const data = ref<any[]>([]);
 watch(
@@ -308,12 +341,12 @@ const computedColumns = computed(() => {
 	let children = slots?.default?.();
 	if (Array.isArray(children)) {
 		children.forEach((v) => {
-			if (isStrictObject(v) && (v?.type as any)?.name === V3TableColumn.name) {
+			if (isPlainObject(v) && (v?.type as any)?.name === V3TableColumn.name) {
 				columns.push(v);
 			} else if (Array.isArray(v?.children)) {
 				let _children: any[] = v?.children.filter(
 					// @ts-ignore
-					(vv) => isStrictObject(vv) && vv?.type?.name === V3TableColumn.name,
+					(vv) => isPlainObject(vv) && vv?.type?.name === V3TableColumn.name,
 				);
 				columns.push(..._children);
 			}
@@ -321,7 +354,6 @@ const computedColumns = computed(() => {
 	}
 	return columns;
 });
-
 const computedMaxHeight = computed(() => {
 	return isNumber(props.maxHeight) ? `${props.maxHeight}px` : props.maxHeight;
 });
@@ -626,16 +658,6 @@ const computedBodyFixedRightColumnOffset = computed<IFixedColumn[]>(() => {
 	});
 	return result;
 });
-function normalizeFixed(fixed: ITableColumnFixed): string {
-	if (fixed !== false) {
-		if ([true, 'left'].includes(fixed)) {
-			return 'left';
-		} else if (isString(fixed)) {
-			return 'right';
-		}
-	}
-	return '';
-}
 
 // 表头拖拽
 const isResizerMouseDown = ref(false);
@@ -746,6 +768,34 @@ function sortMethod() {
 		}
 	}
 }
+
+/**
+ * 表格单选
+ */
+const radioValue = ref<ITableBaseRowKey>();
+watch(radioValue, (newValue, oldValue) => {
+	emits('selectionChange', newValue, oldValue);
+});
+
+/**
+ * 【单选表格】设置当前选中的行
+ * @param rowKey
+ */
+function setCurrentRow(rowKey: ITableBaseRowKey) {
+	radioValue.value = rowKey;
+}
+/**
+ * 清空当前选中的所有行
+ * @param rowKey
+ */
+function clearSelection() {
+	radioValue.value = undefined;
+}
+
+defineExpose({
+	setCurrentRow,
+	clearSelection,
+});
 </script>
 <style lang="scss">
 @import './Table.scss';

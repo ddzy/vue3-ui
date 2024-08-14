@@ -937,3 +937,76 @@ const data = [
 ```
 
 :::
+
+## 单选列
+
+通过`type = 'radio'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectedRow`属性，高亮当前选中的所有行
+
+调用表格的`setCurrentRow`方法，可以手动选中某一行；
+调用表格的`clearSelection`方法，可以清空当前选中的所有行；
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<v3-button type="primary" @click="setCurrentRow">选中第2行</v3-button>
+		<v3-button type="danger" @click="clearSelection">清除选择</v3-button>
+	</v3-space>
+	<v3-space>
+		<p>选中的数据为：</p>
+		<p>{{ selectedData }}</p>
+	</v3-space>
+	<v3-table
+		:data="data"
+		:row-key="({ row }) => row._id"
+		:highlightSelectedRow="true"
+		ref="tableRef"
+		@selectionChange="handleSelectionChange"
+	>
+		<v3-table-column type="radio" label="单选"> </v3-table-column>
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="address" label="地址"></v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		_id: 1,
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+	},
+	{
+		_id: 2,
+		name: 'Bob',
+		age: 30,
+		address: '广东省河源市源城区',
+	},
+	{
+		_id: 3,
+		name: 'Carl',
+		age: 40,
+		address: '四川省成都市新都区',
+	},
+]);
+const tableRef = ref();
+
+const selectedData = ref<(typeof data.value)[0]>();
+function handleSelectionChange(newValue: number, oldValue: number) {
+	const found = data.value.find((v) => v._id === newValue);
+	selectedData.value = found;
+}
+function setCurrentRow() {
+	tableRef.value.setCurrentRow(2);
+}
+function clearSelection() {
+	tableRef.value.clearSelection();
+}
+</script>
+```
+
+:::

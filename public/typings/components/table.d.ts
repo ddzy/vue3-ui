@@ -9,11 +9,12 @@ export interface ITableProps {
 	size?: ITableSize;
 	showHeader?: boolean;
 	highlightHoverRow?: boolean;
+	highlightSelectedRow?: boolean;
 	rowClassName?: ITableRowClassName;
 	cellClassName?: ITableCellClassName;
 	headerRowClassName?: ITableRowClassName;
 	headerCellClassName?: ITableCellClassName;
-	rowKey?: string | ((data: { row: any; rowIndex: number }) => string);
+	rowKey?: ITableRowKey;
 	emptyText?: string;
 	loading?: boolean;
 	defaultSort?: ITableDefaultSort;
@@ -30,6 +31,8 @@ export type ITableCellClassName =
 			rowIndex: number;
 			columnIndex: number;
 	  }) => string);
+export type ITableBaseRowKey = string | number | symbol;
+export type ITableRowKey = ITableBaseRowKey | ((data: { row: any; rowIndex: number }) => ITableBaseRowKey);
 export interface ITableDefaultSort  {
 	prop?: string;
 	order?: ITableColumnSortBy
