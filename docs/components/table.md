@@ -942,7 +942,7 @@ const data = [
 
 通过`type = 'radio'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectedRow`属性，高亮当前选中的所有行
 
-调用表格的`setCurrentRow`方法，可以手动选中某一行；
+调用表格的`setCurrentRow`方法，可以手动选中某一行（单选表格）；
 调用表格的`clearSelection`方法，可以清空当前选中的所有行；
 
 :::demo
@@ -996,8 +996,8 @@ const data = ref([
 const tableRef = ref();
 
 const selectedData = ref<(typeof data.value)[0]>();
-function handleSelectionChange(newValue: number, oldValue: number) {
-	const found = data.value.find((v) => v._id === newValue);
+function handleSelectionChange(rowKey: number) {
+	const found = data.value.find((v) => v._id === rowKey);
 	selectedData.value = found;
 }
 function setCurrentRow() {
@@ -1005,6 +1005,120 @@ function setCurrentRow() {
 }
 function clearSelection() {
 	tableRef.value.clearSelection();
+}
+</script>
+```
+
+:::
+
+## 多选列
+
+通过`type = 'checkbox'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectedRow`属性，高亮当前选中的所有行
+
+调用表格的`toggleRowSelection`方法，可以手动选中某一行（多选表格）；
+调用表格的`clearSelection`方法，可以清空当前选中的所有行；
+
+:::demo
+
+```vue
+<template>
+	<v3-space>
+		<v3-button type="primary" @click="toggleRowSelection"
+			>切换选中第2行</v3-button
+		>
+		<v3-button type="primary" @click="toggleAllSelection">切换全选</v3-button>
+		<v3-button type="danger" @click="clearSelection">清除选择</v3-button>
+		<v3-button type="success" @click="getSelectionRows"
+			>获取已选中数据</v3-button
+		>
+	</v3-space>
+	<v3-space>
+		<p>选中的数据为：</p>
+		<p>{{ selectedData }}</p>
+	</v3-space>
+	<v3-table
+		:data="data"
+		:row-key="'_id'"
+		:highlightSelectedRow="true"
+		ref="tableRef"
+	>
+		<v3-table-column type="checkbox" label="全选"> </v3-table-column>
+		<v3-table-column prop="name" label="姓名"> </v3-table-column>
+		<v3-table-column prop="age" label="年龄"></v3-table-column>
+		<v3-table-column prop="address" label="地址"></v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		_id: '1',
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+	},
+	{
+		_id: '2',
+		name: 'Bob',
+		age: 30,
+		address: '广东省河源市源城区',
+	},
+	{
+		_id: '3',
+		name: 'Carl',
+		age: 40,
+		address: '四川省成都市新都区',
+	},
+	{
+		_id: '4',
+		name: 'Davide',
+		age: 50,
+		address: '湖北省荆州市沙市区',
+	},
+	{
+		_id: '5',
+		name: 'Emma',
+		age: 34,
+		address: '甘肃省兰州市城关区',
+	},
+	{
+		_id: '6',
+		name: 'Alick',
+		age: 25,
+		address: '北京市朝阳区',
+	},
+	{
+		_id: '7',
+		name: 'Bolice',
+		age: 11,
+		address: '广东省广州市越秀区',
+	},
+	{
+		_id: '8',
+		name: 'John',
+		age: 33,
+		address: '广东省东莞市南城区',
+	},
+]);
+const tableRef = ref();
+
+const selectedData = ref([]);
+function getSelectionRows() {
+	const rowKeys = tableRef.value.getSelectionRows();
+	selectedData.value = data.value.filter((v) => rowKeys.includes(v._id));
+}
+function clearSelection() {
+	tableRef.value.clearSelection();
+	getSelectionRows();
+}
+function toggleRowSelection() {
+	tableRef.value.toggleRowSelection('2');
+	getSelectionRows();
+}
+function toggleAllSelection() {
+	tableRef.value.toggleAllSelection();
+	getSelectionRows();
 }
 </script>
 ```

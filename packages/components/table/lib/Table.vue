@@ -71,11 +71,21 @@
 											))"
 										>
 											<div class="v3-table__cell-inner">
-												<component
-													v-if="(v?.children as any)?.label"
-													:is="(v?.children as any)?.label"
-												></component>
-												<span v-else>{{ scope.props.label }}</span>
+												<template v-if="scope.props.type === 'default'">
+													<component
+														v-if="(v?.children as any)?.label"
+														:is="(v?.children as any)?.label"
+													></component>
+													<span v-else>{{ scope.props.label }}</span>
+												</template>
+												<template v-else-if="scope.props.type === 'checkbox'">
+													<v3-checkbox
+														v-model="selectAllValue"
+														:indeterminate="selectAllIndeterminate"
+														style="display: block"
+														@change="handleSelectAllChange"
+													></v3-checkbox>
+												</template>
 											</div>
 											<div
 												v-if="scope.props.sortable !== false"
@@ -210,7 +220,19 @@
 													<v3-radio
 														v-model="radioValue"
 														:label="normalizeRowKey(v, i)"
+														@change="handleRadioChange"
 													></v3-radio>
+												</template>
+												<template v-else-if="scope.props.type === 'checkbox'">
+													<v3-checkbox
+														v-model="checkboxValue[normalizeRowKey(v, i)]"
+														@change="
+															handleCheckboxChange(
+																normalizeRowKey(v, i),
+																$event,
+															)
+														"
+													></v3-checkbox>
 												</template>
 											</div>
 										</td>
@@ -234,6 +256,7 @@ import { VNode, computed, reactive, ref, useSlots, watch } from 'vue';
 import { divide, subtract } from '@common/utils';
 import '@common/utils/index';
 import {
+	V3Checkbox,
 	V3Icon,
 	V3LoadingDirective,
 	V3Radio,
@@ -245,6 +268,7 @@ import useResizeObserver from '@hooks/useResizeObserver';
 import { useScroll } from '@vueuse/core';
 import {
 	cloneDeep,
+	has,
 	isFunction,
 	isNumber,
 	isPlainObject,
@@ -304,17 +328,11 @@ const emits = defineEmits<{
 	(event: 'sort', prop: string, order: ITableColumnSortBy): void;
 	(
 		event: 'selectionChange',
-		newValue?: ITableBaseRowKey,
-		oldValue?: ITableBaseRowKey,
+		rowKey?: ITableBaseRowKey,
+		selected?: boolean,
 	): void;
 }>();
 
-function normalizeRowKey(row: any, rowIndex: number) {
-	const key = isFunction(props.rowKey)
-		? props.rowKey({ row, rowIndex })
-		: props.rowKey;
-	return key;
-}
 function normalizeFixed(fixed: ITableColumnFixed): string {
 	if (fixed !== false) {
 		if ([true, 'left'].includes(fixed)) {
@@ -326,6 +344,9 @@ function normalizeFixed(fixed: ITableColumnFixed): string {
 	return '';
 }
 
+/**
+ * 表格数据本地备份（深拷贝）
+ */
 const data = ref<any[]>([]);
 watch(
 	() => props.data,
@@ -335,6 +356,9 @@ watch(
 	{ immediate: true },
 );
 
+/**
+ * 标准化传入的TableColumn
+ */
 const computedColumns = computed(() => {
 	// table-column有可能是通过 v-for 遍历出来的，也可能是独立组件
 	let columns: VNode[] = [];
@@ -364,7 +388,9 @@ const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 const tableBodyCellRefs = ref<HTMLElement[]>([]);
 
-// 表格是否出现了纵向滚动条
+/**
+ * 表格是否出现了纵向滚动条
+ */
 const hasVerticalScrollbar = ref(false);
 function updateHasVerticalScrollbar() {
 	if (tableBodyRef.value) {
@@ -376,7 +402,9 @@ useResizeObserver(tableBodyRef, () => {
 	updateHasVerticalScrollbar();
 });
 
-// 表格是否出现了横向滚动条
+/**
+ * 表格是否出现了横向滚动条
+ */
 const hasHorizontalScrollbar = ref(false);
 function updateHasHorizontalScrollbar() {
 	if (tableBodyRef.value) {
@@ -409,7 +437,9 @@ const tableBodyScroller = useScroll(tableBodyRef, {
 	},
 });
 
-// 固定的单元格出现阴影
+/**
+ * 固定的单元格出现阴影
+ */
 type IFixedCell = Map<number, Set<HTMLElement>>;
 const fixedLeftCells = ref<IFixedCell>(new Map());
 const fixedRightCells = ref<IFixedCell>(new Map());
@@ -477,7 +507,9 @@ function updateScrollbarWidth() {
 }
 updateScrollbarWidth();
 
-// 列宽相关
+/**
+ * 列宽相关
+ */
 interface IColumnWidth {
 	/** 列宽 */
 	width: number;
@@ -549,6 +581,9 @@ watch(hasVerticalScrollbar, () => {
 	}
 });
 
+/**
+ * 固定列
+ */
 interface IFixedColumn {
 	index: number;
 	left: number;
@@ -659,7 +694,9 @@ const computedBodyFixedRightColumnOffset = computed<IFixedColumn[]>(() => {
 	return result;
 });
 
-// 表头拖拽
+/**
+ * 表头拖拽
+ */
 const isResizerMouseDown = ref(false);
 const resizerStartPosition = ref(0);
 const resizerIndex = ref(-1);
@@ -717,7 +754,9 @@ useEventListener(document, 'mousemove', (e) => {
 	}
 });
 
-// 排序
+/**
+ * 排序
+ */
 const sort = reactive<ITableDefaultSort>({
 	prop: props?.defaultSort?.prop || '',
 	order: props?.defaultSort?.order || 'none',
@@ -773,9 +812,54 @@ function sortMethod() {
  * 表格单选
  */
 const radioValue = ref<ITableBaseRowKey>();
-watch(radioValue, (newValue, oldValue) => {
-	emits('selectionChange', newValue, oldValue);
+function handleRadioChange(rowKey: ITableBaseRowKey) {
+	emits('selectionChange', rowKey, true);
+}
+
+/**
+ * 表格多选
+ */
+const checkboxValue = reactive<Record<ITableBaseRowKey, boolean>>({});
+function handleCheckboxChange(rowKey: ITableBaseRowKey, selected: boolean) {
+	emits('selectionChange', rowKey, selected);
+}
+
+/**
+ * 表格全选
+ */
+const selectAllValue = ref(false);
+const selectAllIndeterminate = ref(false);
+function handleSelectAllChange(selected: boolean) {
+	Object.keys(checkboxValue).forEach((v) => {
+		checkboxValue[v] = selected;
+	});
+}
+watch(checkboxValue, (newValue) => {
+	let isSelectAll = Object.values(newValue).every(Boolean);
+	let isIndeterminate = Object.values(newValue).some(Boolean);
+	if (isSelectAll) {
+		selectAllValue.value = true;
+		selectAllIndeterminate.value = false;
+	} else if (isIndeterminate) {
+		selectAllIndeterminate.value = true;
+		selectAllValue.value = false;
+	} else {
+		selectAllValue.value = false;
+		selectAllIndeterminate.value = false;
+	}
 });
+
+function normalizeRowKey(row: any, rowIndex: number) {
+	const rowKey = isFunction(props.rowKey)
+		? props.rowKey({ row, rowIndex })
+		: row[props.rowKey];
+	// 初始化复选框map
+	if (!has(checkboxValue, rowKey)) {
+		checkboxValue[rowKey] = false;
+	}
+
+	return rowKey;
+}
 
 /**
  * 【单选表格】设置当前选中的行
@@ -785,16 +869,50 @@ function setCurrentRow(rowKey: ITableBaseRowKey) {
 	radioValue.value = rowKey;
 }
 /**
- * 清空当前选中的所有行
+ * 【单选+多选表格】清空当前选中的所有行
  * @param rowKey
  */
 function clearSelection() {
 	radioValue.value = undefined;
+	Object.keys(checkboxValue).forEach((v) => {
+		checkboxValue[v] = false;
+	});
+}
+/**
+ * 【多选表格】获取当前选中的所有行
+ */
+function getSelectionRows() {
+	return Object.keys(checkboxValue).filter((v) => checkboxValue[v]);
+}
+
+/**
+ * 【多选表格】切换单行的选择状态
+ * @description 如果指定了第二个参数，那么会直接设置该行是否选中
+ */
+function toggleRowSelection(rowKey: ITableBaseRowKey, selected?: boolean) {
+	if (has(checkboxValue, rowKey)) {
+		let newSelected = isUndefined(selected) ? !checkboxValue[rowKey] : selected;
+		checkboxValue[rowKey] = newSelected;
+	}
+}
+
+/**
+ * 【多选表格】切换表头的全选状态
+ * @description 如果指定了第一个参数，那么会直接设置是否选中
+ */
+function toggleAllSelection(selected?: boolean) {
+	let newSelected = isUndefined(selected) ? !selectAllValue.value : selected;
+	Object.keys(checkboxValue).forEach((v) => {
+		checkboxValue[v] = newSelected;
+	});
 }
 
 defineExpose({
 	setCurrentRow,
 	clearSelection,
+	getSelectionRows,
+	toggleRowSelection,
+	toggleAllSelection,
 });
 </script>
 <style lang="scss">
