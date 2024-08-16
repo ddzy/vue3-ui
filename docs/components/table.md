@@ -940,7 +940,7 @@ const data = [
 
 ## 单选列
 
-通过`type = 'radio'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectedRow`属性，高亮当前选中的所有行
+通过`type = 'radio'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectionRow`属性，高亮当前选中的所有行
 
 调用表格的`setCurrentRow`方法，可以手动选中某一行（单选表格）；
 调用表格的`clearSelection`方法，可以清空当前选中的所有行；
@@ -960,7 +960,7 @@ const data = [
 	<v3-table
 		:data="data"
 		:row-key="({ row }) => row._id"
-		:highlightSelectedRow="true"
+		:highlightSelectionRow="true"
 		ref="tableRef"
 		@selectionChange="handleSelectionChange"
 	>
@@ -1013,7 +1013,7 @@ function clearSelection() {
 
 ## 多选列
 
-通过`type = 'checkbox'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectedRow`属性，高亮当前选中的所有行
+通过`type = 'checkbox'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectionRow`属性，高亮当前选中的所有行
 
 调用表格的`toggleRowSelection`方法，可以手动选中某一行（多选表格）；
 调用表格的`clearSelection`方法，可以清空当前选中的所有行；
@@ -1039,7 +1039,7 @@ function clearSelection() {
 	<v3-table
 		:data="data"
 		:row-key="'_id'"
-		:highlightSelectedRow="true"
+		:highlightSelectionRow="true"
 		ref="tableRef"
 	>
 		<v3-table-column type="checkbox" label="全选"> </v3-table-column>

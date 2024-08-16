@@ -9,7 +9,7 @@ export interface ITableProps {
 	size?: ITableSize;
 	showHeader?: boolean;
 	highlightHoverRow?: boolean;
-	highlightSelectedRow?: boolean;
+	highlightSelectionRow?: boolean;
 	rowClassName?: ITableRowClassName;
 	cellClassName?: ITableCellClassName;
 	headerRowClassName?: ITableRowClassName;

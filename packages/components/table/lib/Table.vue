@@ -10,7 +10,7 @@
 			'is-stripe': props.stripe,
 			'is-resizing': isResizerMouseDown,
 			'highlight-hover-row': props.highlightHoverRow,
-			'highlight-selected-row': props.highlightSelectedRow,
+			'highlight-selected-row': props.highlightSelectionRow,
 		}"
 		:style="{
 			maxHeight: computedMaxHeight,
@@ -310,7 +310,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	/** 是否高亮当前hover的行 */
 	highlightHoverRow: true,
 	/** 是否高亮已选中的行 */
-	highlightSelectedRow: false,
+	highlightSelectionRow: false,
 	rowClassName: '',
 	cellClassName: '',
 	headerRowClassName: '',
