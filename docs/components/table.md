@@ -944,6 +944,7 @@ const data = [
 
 调用表格的`setCurrentRow`方法，可以手动选中某一行（单选表格）；
 调用表格的`clearSelection`方法，可以清空当前选中的所有行；
+调用表格的`getSelectionRows`方法，获取已选中的行；
 
 :::demo
 
@@ -952,6 +953,7 @@ const data = [
 	<v3-space>
 		<v3-button type="primary" @click="setCurrentRow">选中第2行</v3-button>
 		<v3-button type="danger" @click="clearSelection">清除选择</v3-button>
+		<v3-button type="danger" @click="getSelectionRows">获取选中的行</v3-button>
 	</v3-space>
 	<v3-space>
 		<p>选中的数据为：</p>
@@ -995,16 +997,21 @@ const data = ref([
 ]);
 const tableRef = ref();
 
-const selectedData = ref<(typeof data.value)[0]>();
-function handleSelectionChange(rowKey: number) {
-	const found = data.value.find((v) => v._id === rowKey);
-	selectedData.value = found;
+const selectedData = ref();
+function getSelectionRows() {
+	const rowKeys = tableRef.value.getSelectionRows();
+	selectedData.value = data.value.find((v) => v._id === rowKeys[0]);
 }
 function setCurrentRow() {
 	tableRef.value.setCurrentRow(2);
+	getSelectionRows();
 }
 function clearSelection() {
 	tableRef.value.clearSelection();
+	getSelectionRows();
+}
+function handleSelectionChange(rowKey: number) {
+	getSelectionRows();
 }
 </script>
 ```
@@ -1028,9 +1035,7 @@ function clearSelection() {
 		>
 		<v3-button type="primary" @click="toggleAllSelection">切换全选</v3-button>
 		<v3-button type="danger" @click="clearSelection">清除选择</v3-button>
-		<v3-button type="success" @click="getSelectionRows"
-			>获取已选中数据</v3-button
-		>
+		<v3-button type="success" @click="getSelectionRows">获取选中的行</v3-button>
 	</v3-space>
 	<v3-space>
 		<p>选中的数据为：</p>

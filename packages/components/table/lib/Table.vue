@@ -71,7 +71,13 @@
 											))"
 										>
 											<div class="v3-table__cell-inner">
-												<template v-if="scope.props.type === 'default'">
+												<template
+													v-if="
+														['default', 'index', 'radio'].includes(
+															scope.props.type,
+														)
+													"
+												>
 													<component
 														v-if="(v?.children as any)?.label"
 														:is="(v?.children as any)?.label"
@@ -868,6 +874,7 @@ function normalizeRowKey(row: any, rowIndex: number) {
 function setCurrentRow(rowKey: ITableBaseRowKey) {
 	radioValue.value = rowKey;
 }
+
 /**
  * 【单选+多选表格】清空当前选中的所有行
  * @param rowKey
@@ -879,10 +886,22 @@ function clearSelection() {
 	});
 }
 /**
- * 【多选表格】获取当前选中的所有行
+ * 【单选+多选表格】获取当前选中的所有行
  */
 function getSelectionRows() {
-	return Object.keys(checkboxValue).filter((v) => checkboxValue[v]);
+	// 选中的单选框
+	const selectedRadioKeys = [];
+	if (!isUndefined(radioValue.value)) {
+		selectedRadioKeys.push(radioValue.value);
+	}
+	// 选中的复选框
+	const selectedCheckboxKeys = Object.keys(checkboxValue).filter(
+		(v) => checkboxValue[v],
+	);
+	// 去重
+	const result = [...new Set([...selectedRadioKeys, ...selectedCheckboxKeys])];
+
+	return result;
 }
 
 /**
