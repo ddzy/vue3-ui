@@ -149,7 +149,7 @@
 						<tr
 							v-for="(v, i) in data"
 							:key="normalizeRowKey(v, i) || i"
-							:class="`v3-table__row${normalizeRowKey(v, i) === radioValue ? ' is-selected' : ''} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
+							:class="`v3-table__row${normalizeRowKey(v, i) === radioValue || checkboxValue[normalizeRowKey(v, i)] === true ? ' is-selected' : ''} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
 						>
 							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
