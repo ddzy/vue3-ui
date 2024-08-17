@@ -1033,8 +1033,7 @@ function clearSelection() {
 	getSelectionRows();
 }
 function handleSelectionChange(rowKeys: number[]) {
-	console.log('rowKeys :>> ', rowKeys);
-	selectedData.value = rowKeys[0];
+	selectedData.value = data.value.find((v) => v._id === rowKeys[0]);
 }
 </script>
 ```
@@ -1153,23 +1152,20 @@ function toggleAllSelection() {
 }
 
 function handleSelectAll({ rowKeys, column, selected }) {
-	console.log('<selectAll>{rowKeys, column, selected} :>> ', {
-		rowKeys,
-		column,
-		selected,
-	});
+	console.log('rowKeys, column, selected :>> ', rowKeys, column, selected);
 }
 function handleSelect({ rowKey, rowKeys, row, column, selected }) {
-	console.log('<select>{rowKey, rowKeys, row, column, selected} :>> ', {
+	console.log(
+		'rowKey, rowKeys, row, column, selected :>> ',
 		rowKey,
 		rowKeys,
 		row,
 		column,
 		selected,
-	});
+	);
 }
 function handleSelectionChange(rowKeys: string[]) {
-	console.log('<selectionChange>rowKeys :>> ', rowKeys);
+	selectedData.value = data.value.filter((v) => rowKeys.includes(v._id));
 }
 </script>
 ```

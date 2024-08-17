@@ -277,6 +277,7 @@ import { useScroll } from '@vueuse/core';
 import {
 	cloneDeep,
 	has,
+	isEqual,
 	isFunction,
 	isNil,
 	isNumber,
@@ -857,9 +858,6 @@ function clearSort() {
  */
 const radioValue = ref<ITableBaseRowKey>();
 function handleRadioChange(rowKey: ITableBaseRowKey) {}
-watch(radioValue, () => {
-	emits('selectionChange', getSelectionRows());
-});
 
 /**
  * 表格多选
@@ -879,8 +877,29 @@ function handleCheckboxChange(
 		selected,
 	});
 }
-watch(checkboxValue, () => {
-	emits('selectionChange', getSelectionRows());
+
+/**
+ * 计算选中的行（单选+多选合并到一个数组里面并去重）
+ */
+const computedSelectionRows = computed(() => {
+	// 选中的单选框
+	const selectedRadioKeys = [];
+	if (!isUndefined(radioValue.value)) {
+		selectedRadioKeys.push(radioValue.value);
+	}
+	// 选中的复选框
+	const selectedCheckboxKeys = Object.keys(checkboxValue).filter(
+		(v) => checkboxValue[v],
+	);
+	// 去重
+	const result = [...new Set([...selectedRadioKeys, ...selectedCheckboxKeys])];
+
+	return result;
+});
+watch(computedSelectionRows, (newValue, oldValue) => {
+	if (!isEqual(newValue, oldValue)) {
+		emits('selectionChange', newValue);
+	}
 });
 
 /**
@@ -951,19 +970,7 @@ function clearSelection() {
  * 【单选+多选表格】获取当前选中的所有行
  */
 function getSelectionRows() {
-	// 选中的单选框
-	const selectedRadioKeys = [];
-	if (!isUndefined(radioValue.value)) {
-		selectedRadioKeys.push(radioValue.value);
-	}
-	// 选中的复选框
-	const selectedCheckboxKeys = Object.keys(checkboxValue).filter(
-		(v) => checkboxValue[v],
-	);
-	// 去重
-	const result = [...new Set([...selectedRadioKeys, ...selectedCheckboxKeys])];
-
-	return result;
+	return computedSelectionRows.value;
 }
 
 /**
