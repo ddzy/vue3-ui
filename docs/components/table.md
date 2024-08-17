@@ -698,22 +698,35 @@ const columns = ref([
 
 ## 排序
 
-默认为自动排序，可以通过将`sortable`设置为`custom`来自定义排序；  
-默认的排序顺序为：无 -> 升序 -> 降序，可以通过`sortBy`指定排序的顺序
+默认为自动排序，可以通过将`sortable`设置为`custom`，并监听`sortChange`事件来自定义排序；  
+默认的排序顺序为：无 -> 升序 -> 降序，可以通过`sortBy`指定排序的顺序；
+也可以通过调用`table`提供的`sort`方法，传入`defaultSort`参数来手动排序;
+如果需要清除排序状态并恢复原始数据，可调用`table`提供的`clearSort`方法；
 
 :::demo
 
 ```vue
 <template>
+	<v3-space>
+		<v3-button type="primary" icon="Up" @click="sort('ascending')"
+			>升序</v3-button
+		>
+		<v3-button type="primary" icon="Down" @click="sort('descending')"
+			>降序</v3-button
+		>
+		<v3-button type="danger" icon="Close" @click="clearSort"
+			>清除排序</v3-button
+		>
+	</v3-space>
 	<v3-table
 		:data="data"
 		:defaultSort="{
 			prop: 'age',
 			order: 'descending',
 		}"
+		ref="tableRef"
 		border
-		maxHeight="300px"
-		@sort="handleSort"
+		@sortChange="handleSortChange"
 	>
 		<v3-table-column
 			v-for="v in columns"
@@ -806,6 +819,7 @@ const columns = ref([
 		prop: 'age',
 		label: '年龄',
 		sortable: 'custom',
+		fixed: 'left',
 	},
 	{
 		prop: 'address',
@@ -831,7 +845,9 @@ const columns = ref([
 	},
 ]);
 
-function handleSort(prop: string, order: string) {
+const tableRef = ref();
+
+function handleSortChange(prop: string, order: string) {
 	switch (order) {
 		case 'none': {
 			break;
@@ -852,6 +868,12 @@ function handleSort(prop: string, order: string) {
 			break;
 		}
 	}
+}
+function sort(order) {
+	tableRef.value.sort('age', order);
+}
+function clearSort() {
+	tableRef.value.clearSort();
 }
 </script>
 ```

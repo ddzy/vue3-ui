@@ -100,8 +100,8 @@
 											>
 												<V3Icon
 													:theme="
-														sort.prop === scope.props.prop &&
-														sort.order === 'ascending'
+														sortValue.prop === scope.props.prop &&
+														sortValue.order === 'ascending'
 															? 'filled'
 															: 'outline'
 													"
@@ -110,8 +110,8 @@
 												/>
 												<V3Icon
 													:theme="
-														sort.prop === scope.props.prop &&
-														sort.order === 'descending'
+														sortValue.prop === scope.props.prop &&
+														sortValue.order === 'descending'
 															? 'filled'
 															: 'outline'
 													"
@@ -327,11 +327,14 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	/** 表格是否加载中 */
 	loading: false,
 	/** 默认排序的列的顺序 */
-	// defaultSort: () => ({}),
+	defaultSort: () => ({
+		prop: '',
+		order: 'none',
+	}),
 });
 const slots = useSlots();
 const emits = defineEmits<{
-	(event: 'sort', prop: string, order: ITableColumnSortBy): void;
+	(event: 'sortChange', prop: string, order: ITableColumnSortBy): void;
 	(
 		event: 'selectionChange',
 		rowKey?: ITableBaseRowKey,
@@ -761,16 +764,15 @@ useEventListener(document, 'mousemove', (e) => {
 });
 
 /**
- * 排序
+ * 排序相关
  */
-const sort = reactive<ITableDefaultSort>({
-	prop: props?.defaultSort?.prop || '',
-	order: props?.defaultSort?.order || 'none',
+const sortValue = reactive<ITableDefaultSort>({
+	...props.defaultSort,
 });
 watch(
 	() => props.data,
 	() => {
-		sortMethod();
+		sort(sortValue.prop, sortValue.order);
 	},
 	{ immediate: true, deep: true },
 );
@@ -780,7 +782,7 @@ function toggleSort(row: ITableColumnProps) {
 	const sortable = row.sortable;
 
 	if (sortable !== false && prop && sortBy) {
-		let currentIndex = sortBy.findIndex((v) => v === sort.order);
+		let currentIndex = sortBy.findIndex((v) => v === sortValue.order);
 		if (!currentIndex || currentIndex === -1) {
 			currentIndex = 0;
 		}
@@ -792,26 +794,45 @@ function toggleSort(row: ITableColumnProps) {
 		}
 
 		let nextSort = sortBy[nextIndex];
-		sort.prop = prop;
-		sort.order = nextSort;
+		sortValue.prop = prop;
+		sortValue.order = nextSort;
 		// 数据排序
 		if (sortable === 'custom') {
-			emits('sort', row.prop!, nextSort);
+			emits('sortChange', row.prop!, nextSort);
 		} else {
-			sortMethod();
+			sort(sortValue.prop, sortValue.order);
 		}
 	}
 }
-function sortMethod() {
-	if (sort.prop) {
-		if (sort.order === 'ascending') {
-			data.value.sort((a, b) => (a[sort.prop!] < b[sort.prop!] ? -1 : 1));
-		} else if (sort.order === 'descending') {
-			data.value.sort((a, b) => (b[sort.prop!] > a[sort.prop!] ? 1 : -1));
-		} else if (sort.order === 'none') {
+/**
+ * 【可外部调用】手动排序
+ * @param prop 同`defaultSort.prop`
+ * @param order 同`defaultSort.order`
+ */
+function sort(
+	prop: ITableDefaultSort['prop'],
+	order: ITableDefaultSort['order'],
+) {
+	sortValue.prop = prop;
+	sortValue.order = order;
+
+	if (prop) {
+		if (order === 'ascending') {
+			data.value.sort((a, b) => (a[prop!] < b[prop!] ? -1 : 1));
+		} else if (order === 'descending') {
+			data.value.sort((a, b) => (b[prop!] > a[prop!] ? 1 : -1));
+		} else if (order === 'none') {
 			data.value = cloneDeep(props.data);
 		}
+	} else {
+		data.value = cloneDeep(props.data);
 	}
+}
+/**
+ * 【可外部调用】清除排序状态
+ */
+function clearSort() {
+	sort('', 'none');
 }
 
 /**
@@ -927,6 +948,8 @@ function toggleAllSelection(selected?: boolean) {
 }
 
 defineExpose({
+	sort,
+	clearSort,
 	setCurrentRow,
 	clearSelection,
 	getSelectionRows,
