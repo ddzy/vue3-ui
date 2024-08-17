@@ -1032,8 +1032,9 @@ function clearSelection() {
 	tableRef.value.clearSelection();
 	getSelectionRows();
 }
-function handleSelectionChange(rowKey: number) {
-	getSelectionRows();
+function handleSelectionChange(rowKeys: number[]) {
+	console.log('rowKeys :>> ', rowKeys);
+	selectedData.value = rowKeys[0];
 }
 </script>
 ```
@@ -1068,6 +1069,9 @@ function handleSelectionChange(rowKey: number) {
 		:row-key="'_id'"
 		:highlightSelectionRow="true"
 		ref="tableRef"
+		@selectAll="handleSelectAll"
+		@select="handleSelect"
+		@selectionChange="handleSelectionChange"
 	>
 		<v3-table-column type="checkbox" label="全选"> </v3-table-column>
 		<v3-table-column prop="name" label="姓名"> </v3-table-column>
@@ -1146,6 +1150,26 @@ function toggleRowSelection() {
 function toggleAllSelection() {
 	tableRef.value.toggleAllSelection();
 	getSelectionRows();
+}
+
+function handleSelectAll({ rowKeys, column, selected }) {
+	console.log('<selectAll>{rowKeys, column, selected} :>> ', {
+		rowKeys,
+		column,
+		selected,
+	});
+}
+function handleSelect({ rowKey, rowKeys, row, column, selected }) {
+	console.log('<select>{rowKey, rowKeys, row, column, selected} :>> ', {
+		rowKey,
+		rowKeys,
+		row,
+		column,
+		selected,
+	});
+}
+function handleSelectionChange(rowKeys: string[]) {
+	console.log('<selectionChange>rowKeys :>> ', rowKeys);
 }
 </script>
 ```

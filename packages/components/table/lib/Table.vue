@@ -89,7 +89,7 @@
 														v-model="selectAllValue"
 														:indeterminate="selectAllIndeterminate"
 														style="display: block"
-														@change="handleSelectAllChange"
+														@change="handleSelectAllChange($event, scope.props)"
 													></v3-checkbox>
 												</template>
 											</div>
@@ -235,6 +235,8 @@
 														@change="
 															handleCheckboxChange(
 																normalizeRowKey(v, i),
+																v,
+																scope.props,
 																$event,
 															)
 														"
@@ -276,6 +278,7 @@ import {
 	cloneDeep,
 	has,
 	isFunction,
+	isNil,
 	isNumber,
 	isPlainObject,
 	isString,
@@ -335,10 +338,24 @@ const props = withDefaults(defineProps<ITableProps>(), {
 const slots = useSlots();
 const emits = defineEmits<{
 	(event: 'sortChange', prop: string, order: ITableColumnSortBy): void;
+	(event: 'selectionChange', rowKeys: ITableBaseRowKey[]): void;
 	(
-		event: 'selectionChange',
-		rowKey?: ITableBaseRowKey,
-		selected?: boolean,
+		event: 'selectAll',
+		data: {
+			rowKeys: ITableBaseRowKey[];
+			column: ITableColumnProps;
+			selected: boolean;
+		},
+	): void;
+	(
+		event: 'select',
+		data: {
+			rowKey: ITableBaseRowKey;
+			rowKeys: ITableBaseRowKey[];
+			row: any;
+			column: ITableColumnProps;
+			selected: boolean;
+		},
 	): void;
 }>();
 
@@ -839,26 +856,46 @@ function clearSort() {
  * 表格单选
  */
 const radioValue = ref<ITableBaseRowKey>();
-function handleRadioChange(rowKey: ITableBaseRowKey) {
-	emits('selectionChange', rowKey, true);
-}
+function handleRadioChange(rowKey: ITableBaseRowKey) {}
+watch(radioValue, () => {
+	emits('selectionChange', getSelectionRows());
+});
 
 /**
  * 表格多选
  */
 const checkboxValue = reactive<Record<ITableBaseRowKey, boolean>>({});
-function handleCheckboxChange(rowKey: ITableBaseRowKey, selected: boolean) {
-	emits('selectionChange', rowKey, selected);
+function handleCheckboxChange(
+	rowKey: ITableBaseRowKey,
+	row: any,
+	column: ITableColumnProps,
+	selected: boolean,
+) {
+	emits('select', {
+		rowKey,
+		rowKeys: getSelectionRows(),
+		row,
+		column,
+		selected,
+	});
 }
+watch(checkboxValue, () => {
+	emits('selectionChange', getSelectionRows());
+});
 
 /**
  * 表格全选
  */
 const selectAllValue = ref(false);
 const selectAllIndeterminate = ref(false);
-function handleSelectAllChange(selected: boolean) {
+function handleSelectAllChange(selected: boolean, column: ITableColumnProps) {
 	Object.keys(checkboxValue).forEach((v) => {
 		checkboxValue[v] = selected;
+	});
+	emits('selectAll', {
+		rowKeys: getSelectionRows(),
+		column,
+		selected,
 	});
 }
 watch(checkboxValue, (newValue) => {
@@ -880,6 +917,10 @@ function normalizeRowKey(row: any, rowIndex: number) {
 	const rowKey = isFunction(props.rowKey)
 		? props.rowKey({ row, rowIndex })
 		: row[props.rowKey];
+
+	if (isNil(rowKey)) {
+		return;
+	}
 	// 初始化复选框map
 	if (!has(checkboxValue, rowKey)) {
 		checkboxValue[rowKey] = false;
