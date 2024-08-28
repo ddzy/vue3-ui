@@ -698,7 +698,7 @@ const columns = ref([
 
 ## 排序
 
-默认为自动排序，可以通过将`sortable`设置为`custom`，并监听`sortChange`事件来自定义排序；  
+默认为自动排序，可以通过将`sortable`设置为`custom`，并监听`sortChange`事件来自定义排序；
 默认的排序顺序为：无 -> 升序 -> 降序，可以通过`sortBy`指定排序的顺序；
 也可以通过调用`table`提供的`sort`方法，传入`defaultSort`参数来手动排序;
 如果需要清除排序状态并恢复原始数据，可调用`table`提供的`clearSort`方法；
@@ -1042,7 +1042,7 @@ function handleSelectionChange(rowKeys: number[]) {
 
 ## 多选列
 
-通过`type = 'checkbox'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectionRow`属性，高亮当前选中的所有行
+通过`type = 'checkbox'`开启多选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectionRow`属性，高亮当前选中的所有行
 
 调用表格的`toggleRowSelection`方法，可以手动选中某一行（多选表格）；
 调用表格的`clearSelection`方法，可以清空当前选中的所有行；
