@@ -6,16 +6,12 @@
 
 ```vue
 <template>
-	<v3-table :data="data">
-		<v3-table-column prop="name" label="姓名"> </v3-table-column>
-		<v3-table-column prop="age" label="年龄"></v3-table-column>
-		<v3-table-column prop="address" label="地址"></v3-table-column>
-	</v3-table>
+	<v3-table :data="data" :columns="columns"> </v3-table>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const data = [
+const data = ref([
 	{
 		name: 'Alice',
 		age: 20,
@@ -31,7 +27,79 @@ const data = [
 		age: 40,
 		address: '四川省成都市新都区',
 	},
-];
+]);
+const columns = ref([
+	{
+		prop: 'name',
+		label: '姓名',
+	},
+	{
+		prop: 'age',
+		label: '年龄',
+	},
+	{
+		prop: 'address',
+		label: '地址',
+	},
+]);
+</script>
+```
+
+:::
+
+## 自定义列
+
+:::demo
+
+```vue
+<template>
+	<v3-table :data="data" :columns="columns">
+		<v3-table-column prop="handle" label="操作">
+			<template v-slot="scope">
+				<v3-button type="text">编辑</v3-button>
+				<v3-divider direction="vertical"></v3-divider>
+				<v3-button type="text">删除</v3-button>
+			</template>
+		</v3-table-column>
+	</v3-table>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		name: 'Alice',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+	},
+	{
+		name: 'Bob',
+		age: 30,
+		address: '广东省河源市源城区',
+	},
+	{
+		name: 'Carl',
+		age: 40,
+		address: '四川省成都市新都区',
+	},
+]);
+const columns = ref([
+	{
+		prop: 'name',
+		label: '姓名',
+	},
+	{
+		prop: 'age',
+		label: '年龄',
+	},
+	{
+		prop: 'address',
+		label: '地址',
+	},
+	{
+		slot: 'handle',
+	},
+]);
 </script>
 ```
 

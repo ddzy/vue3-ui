@@ -2,6 +2,7 @@ import { SFCWithInstall } from "../utils/util";
 
 export interface ITableProps {
 	data?: any[];
+	columns?: ITableColumn[];
 	border?: boolean;
 	stripe?: boolean;
 	height?: string | number;
@@ -37,6 +38,10 @@ export interface ITableDefaultSort  {
 	prop?: string;
 	order?: ITableColumnSortBy
 }
+export type ITableColumn = ITableColumnProps & {
+	children?: ITableColumnProps[];
+	slot?: string;
+}
 
 export interface ITableColumnProps {
 	prop?: string;
@@ -53,12 +58,12 @@ export interface ITableColumnProps {
 	formatter?: (row: any) => any;
 	className?: string;
 	labelClassName?: string;
-	showOverflowTooltip?: boolean; 
+	showOverflowTooltip?: boolean;
 }
 export type ITableColumnType =
 	| 'default'
 	| 'checkbox'
-	| 'radio' 
+	| 'radio'
 	| 'index'
 	| 'expand';
 export type ITableAlign = 'left' | 'center' | 'right';

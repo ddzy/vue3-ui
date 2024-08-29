@@ -63,9 +63,9 @@
 														: 'auto',
 											}"
 											:ref="(el) => ((tableHeaderCellRefs.push(el as HTMLElement)), (
-												  normalizeFixed(scope.props.fixed) === 'left' 
+												  normalizeFixed(scope.props.fixed) === 'left'
 														? updateFixedLeftCells(el as HTMLElement, i)
-														: normalizeFixed(scope.props.fixed) === 'right' 
+														: normalizeFixed(scope.props.fixed) === 'right'
 															? updateFixedRightCells(el as HTMLElement, i)
 															: void 0
 											))"
@@ -181,9 +181,9 @@
 														: 'auto',
 											}"
 											:ref="(el) => ((tableBodyCellRefs.push(el as HTMLElement)), (
-												  normalizeFixed(scope.props.fixed) === 'left' 
+												  normalizeFixed(scope.props.fixed) === 'left'
 														? updateFixedLeftCells(el as HTMLElement, ii)
-														: normalizeFixed(scope.props.fixed) === 'right' 
+														: normalizeFixed(scope.props.fixed) === 'right'
 															? updateFixedRightCells(el as HTMLElement, ii)
 															: void 0
 											))"
@@ -259,7 +259,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { VNode, computed, reactive, ref, useSlots, watch } from 'vue';
+import { VNode, computed, h, reactive, ref, useSlots, watch } from 'vue';
 
 import { divide, subtract } from '@common/utils';
 import '@common/utils/index';
@@ -273,7 +273,7 @@ import {
 } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
-import { useScroll } from '@vueuse/core';
+import { hasOwn, useScroll } from '@vueuse/core';
 import {
 	cloneDeep,
 	has,
@@ -284,6 +284,7 @@ import {
 	isPlainObject,
 	isString,
 	isUndefined,
+	omit,
 } from 'lodash-es';
 
 import {
@@ -335,6 +336,10 @@ const props = withDefaults(defineProps<ITableProps>(), {
 		prop: '',
 		order: 'none',
 	}),
+	/**
+	 * 表格列，优先级比直接书写v3-table-column高
+	 */
+	columns: () => [],
 });
 const slots = useSlots();
 const emits = defineEmits<{
@@ -387,23 +392,43 @@ watch(
  * 标准化传入的TableColumn
  */
 const computedColumns = computed(() => {
-	// table-column有可能是通过 v-for 遍历出来的，也可能是独立组件
-	let columns: VNode[] = [];
+	// v3-table-column 有可能是通过 v-for 遍历出来的，也可能是独立组件
+	let slotColumns: VNode[] = [];
 	let children = slots?.default?.();
 	if (Array.isArray(children)) {
 		children.forEach((v) => {
 			if (isPlainObject(v) && (v?.type as any)?.name === V3TableColumn.name) {
-				columns.push(v);
+				slotColumns.push(v);
 			} else if (Array.isArray(v?.children)) {
 				let _children: any[] = v?.children.filter(
 					// @ts-ignore
 					(vv) => isPlainObject(vv) && vv?.type?.name === V3TableColumn.name,
 				);
-				columns.push(..._children);
+				slotColumns.push(..._children);
 			}
 		});
 	}
-	return columns;
+
+	// 解析props中的columns
+	let propColumns: VNode[] = [];
+	if (Array.isArray(props.columns) && props.columns.length) {
+		props.columns.forEach((v) => {
+			// 如果声明了 slot，表明该列是自定义列
+			if (hasOwn(v, 'slot')) {
+				const slotColumn = slotColumns.find((vv) => vv?.props?.prop === v.slot);
+				if (slotColumn) {
+					propColumns.push(slotColumn);
+				}
+			} else {
+				// 反之，创建V3TableColumn实例
+				const propColumn = h(V3TableColumn, omit(v, 'slot', 'children'));
+				propColumns.push(propColumn);
+			}
+		});
+		return propColumns;
+	}
+
+	return slotColumns;
 });
 const computedMaxHeight = computed(() => {
 	return isNumber(props.maxHeight) ? `${props.maxHeight}px` : props.maxHeight;
