@@ -289,6 +289,7 @@ import {
 
 import {
 	ITableBaseRowKey,
+	ITableColumn,
 	ITableColumnFixed,
 	ITableColumnProps,
 	ITableColumnSortBy,
@@ -439,6 +440,36 @@ const tableHeaderRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 const tableBodyCellRefs = ref<HTMLElement[]>([]);
+
+/**
+ * 表头分组
+ */
+const computedHeaderColumnsGroup = computed(() => {
+	// 行数
+	let rowCount = 0;
+	const _getDepth = (
+		children: ITableColumn[],
+		depth: number,
+		isRoot: boolean,
+	) => {
+		if (Array.isArray(children) && children.length) {
+			if (!isRoot) {
+				console.log('children :>> ', children);
+				depth += 1;
+			}
+			children.forEach((child) => {
+				_getDepth(child.children!, depth, false);
+			});
+		} else {
+			rowCount = Math.max(rowCount, depth);
+			return depth;
+		}
+	};
+	_getDepth(props.columns, 0, true);
+
+	console.log('rowCount :>> ', rowCount);
+});
+computedHeaderColumnsGroup.value;
 
 /**
  * 表格是否出现了纵向滚动条
