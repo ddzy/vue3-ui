@@ -155,13 +155,13 @@
 						<tr
 							v-for="(v, i) in data"
 							:key="normalizeRowKey(v, i) || i"
-							:class="`v3-table__row${normalizeRowKey(v, i) === radioValue || checkboxValue[normalizeRowKey(v, i)] === true ? ' is-selected' : ''} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
+							:class="`v3-table__row${normalizeRowKey(v, i) === radioValue || checkboxValue[normalizeRowKey(v, i)] === true ? ' is-selected' : ''}${expandRows.get(normalizeRowKey(v, i)) ? ' is-expanded' : ''} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
 						>
 							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="`v3-table__cell${normalizeFixed(scope.props.fixed) ? ' is-fixed' : ''}${normalizeFixed(scope.props.fixed) ? ` is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} is-align-${scope.props.align}${scope.props.showOverflowTooltip ? ' show-overflow-tooltip' : ''} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:class="`v3-table__cell${normalizeFixed(scope.props.fixed) ? ' is-fixed' : ''}${normalizeFixed(scope.props.fixed) ? ` is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} is-align-${scope.props.align}${scope.props.showOverflowTooltip ? ' show-overflow-tooltip' : ''}${scope.props.type === 'default' ? '' : ` is-type-${scope.props.type}`} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
 											:style="{
 												left:
 													normalizeFixed(scope.props.fixed) === 'left'
@@ -242,6 +242,12 @@
 														"
 													></v3-checkbox>
 												</template>
+												<template v-else-if="scope.props.type === 'expand'">
+													<V3Icon
+														type="Right"
+														@click="toggleExpansion(normalizeRowKey(v, i))"
+													/>
+												</template>
 											</div>
 										</td>
 									</template>
@@ -273,7 +279,7 @@ import {
 } from '@components/main';
 import useEventListener from '@hooks/useEventListener';
 import useResizeObserver from '@hooks/useResizeObserver';
-import { hasOwn, useScroll } from '@vueuse/core';
+import { useScroll } from '@vueuse/core';
 import {
 	cloneDeep,
 	has,
@@ -289,7 +295,6 @@ import {
 
 import {
 	ITableBaseRowKey,
-	ITableColumn,
 	ITableColumnFixed,
 	ITableColumnProps,
 	ITableColumnSortBy,
@@ -415,7 +420,7 @@ const computedColumns = computed(() => {
 	if (Array.isArray(props.columns) && props.columns.length) {
 		props.columns.forEach((v) => {
 			// 如果声明了 slot，表明该列是自定义列
-			if (hasOwn(v, 'slot')) {
+			if (v.slot) {
 				const slotColumn = slotColumns.find((vv) => vv?.props?.prop === v.slot);
 				if (slotColumn) {
 					propColumns.push(slotColumn);
@@ -440,36 +445,6 @@ const tableHeaderRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
 const tableHeaderCellRefs = ref<HTMLElement[]>([]);
 const tableBodyCellRefs = ref<HTMLElement[]>([]);
-
-/**
- * 表头分组
- */
-const computedHeaderColumnsGroup = computed(() => {
-	// 行数
-	let rowCount = 0;
-	const _getDepth = (
-		children: ITableColumn[],
-		depth: number,
-		isRoot: boolean,
-	) => {
-		if (Array.isArray(children) && children.length) {
-			if (!isRoot) {
-				console.log('children :>> ', children);
-				depth += 1;
-			}
-			children.forEach((child) => {
-				_getDepth(child.children!, depth, false);
-			});
-		} else {
-			rowCount = Math.max(rowCount, depth);
-			return depth;
-		}
-	};
-	_getDepth(props.columns, 0, true);
-
-	console.log('rowCount :>> ', rowCount);
-});
-computedHeaderColumnsGroup.value;
 
 /**
  * 表格是否出现了纵向滚动条
@@ -1049,6 +1024,14 @@ function toggleAllSelection(selected?: boolean) {
 	Object.keys(checkboxValue).forEach((v) => {
 		checkboxValue[v] = newSelected;
 	});
+}
+
+/**
+ * 展开列
+ */
+const expandRows = reactive(new Map());
+function toggleExpansion(rowKey: ITableBaseRowKey) {
+	expandRows.set(rowKey, !expandRows.get(rowKey));
 }
 
 defineExpose({

@@ -1240,13 +1240,21 @@ function handleSelectionChange(rowKeys: string[]) {
 
 :::
 
-## 表头分组
+## 树形数据
+
+必须指定`row-key`
 
 :::demo
 
 ```vue
 <template>
-	<v3-table :data="data" :columns="columns" ref="tableRef" border> </v3-table>
+	<v3-table :data="data" :columns="columns" ref="tableRef" rowKey="name" border>
+		<v3-table-column type="expand" prop="expand">
+			<template v-slot="scope">
+				<span>123</span>
+			</template>
+		</v3-table-column>
+	</v3-table>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
@@ -1319,42 +1327,37 @@ const data = ref([
 ]);
 const columns = ref([
 	{
+		slot: 'expand',
+	},
+	{
 		prop: 'name',
 		label: '姓名',
-		fixed: 'left',
-		children: [
-			{
-				label: 'Attrs',
-				children: [
-					{
-						prop: 'age',
-						label: '年龄',
-					},
-					{
-						prop: 'address',
-						label: '地址',
-					},
-					{
-						prop: 'create_time',
-						label: '创建时间',
-						formatter: (row) => {
-							return new Date(row.create_time).toLocaleString();
-						},
-					},
-					{
-						prop: 'update_time',
-						label: '修改时间',
-						formatter: (row) => {
-							return new Date(row.update_time).toLocaleString();
-						},
-					},
-					{
-						prop: 'updater',
-						label: '修改人',
-					},
-				],
-			},
-		],
+	},
+	{
+		prop: 'age',
+		label: '年龄',
+	},
+	{
+		prop: 'address',
+		label: '地址',
+	},
+	{
+		prop: 'create_time',
+		label: '创建时间',
+		formatter: (row) => {
+			return new Date(row.create_time).toLocaleString();
+		},
+	},
+	{
+		prop: 'update_time',
+		label: '修改时间',
+		formatter: (row) => {
+			return new Date(row.update_time).toLocaleString();
+		},
+	},
+	{
+		prop: 'updater',
+		label: '修改人',
 	},
 ]);
 

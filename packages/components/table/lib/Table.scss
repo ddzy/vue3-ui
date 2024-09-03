@@ -173,6 +173,13 @@ $align-map: (left, center, right);
 				text-overflow: ellipsis;
 			}
 		}
+		&.is-type-expand {
+			font-size: 1.2em;
+			cursor: pointer;
+			.v3-icon {
+				transition: all 0.3s ease;
+			}
+		}
 	}
 	.v3-table__cell-inner {
 		padding: 0 $padding-small;
@@ -240,6 +247,15 @@ $align-map: (left, center, right);
 			&:not(:last-child) {
 				td {
 					border-bottom: var(--v3-table-border);
+				}
+			}
+			&.is-expanded {
+				.v3-table__cell.is-type-expand {
+					.v3-table__cell-inner {
+						.v3-icon {
+							transform: rotateZ(90deg);
+						}
+					}
 				}
 			}
 		}
