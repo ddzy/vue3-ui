@@ -37,13 +37,36 @@
 					</colgroup>
 					<thead>
 						<tr
-							:class="`v3-table__row ${typeof props.headerRowClassName === 'function' ? props.headerRowClassName({ row: null, rowIndex: 0 }) : props.headerRowClassName}`"
+							:class="[
+								'v3-table__row',
+								typeof props.headerRowClassName === 'function'
+									? props.headerRowClassName({ row: null, rowIndex: 0 })
+									: props.headerRowClassName,
+							]"
 						>
 							<template v-for="(v, i) in computedColumns" :key="i">
 								<component :is="v">
 									<template #default="scope">
 										<th
-											:class="`v3-table__cell${normalizeFixed(scope.props.fixed) ? ' is-fixed' : ''}${normalizeFixed(scope.props.fixed) ? ` is-fixed-${normalizeFixed(scope.props.fixed)}` : ''}${scope.props.resizable ? ' is-resizable' : ''}${scope.props.sortable ? ' is-sortable' : ''} is-align-${scope.props.headerAlign} ${typeof props.headerCellClassName === 'function' ? props.headerCellClassName({ row: null, rowIndex: 0, column: scope.props, columnIndex: i }) : props.headerCellClassName} ${scope.props.labelClassName}`"
+											:class="[
+												'v3-table__cell',
+												normalizeFixed(scope.props.fixed) ? 'is-fixed' : '',
+												normalizeFixed(scope.props.fixed)
+													? `is-fixed-${normalizeFixed(scope.props.fixed)}`
+													: '',
+												scope.props.resizable ? 'is-resizable' : '',
+												scope.props.sortable ? 'is-sortable' : '',
+												`is-align-${scope.props.headerAlign}`,
+												typeof props.headerCellClassName === 'function'
+													? props.headerCellClassName({
+															row: null,
+															rowIndex: 0,
+															column: scope.props,
+															columnIndex: i,
+														})
+													: props.headerCellClassName,
+												scope.props.labelClassName,
+											]"
 											:style="{
 												left:
 													normalizeFixed(scope.props.fixed) === 'left'
@@ -155,13 +178,45 @@
 						<tr
 							v-for="(v, i) in data"
 							:key="normalizeRowKey(v, i) || i"
-							:class="`v3-table__row${normalizeRowKey(v, i) === radioValue || checkboxValue[normalizeRowKey(v, i)] === true ? ' is-selected' : ''}${expandRows.get(normalizeRowKey(v, i)) ? ' is-expanded' : ''} ${typeof props.rowClassName === 'function' ? props.rowClassName({ row: v, rowIndex: i }) : props.rowClassName}`"
+							:class="[
+								'v3-table__row',
+								normalizeRowKey(v, i) === radioValue ||
+								checkboxValue[normalizeRowKey(v, i)] === true
+									? 'is-selected'
+									: '',
+								expandRows.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
+								typeof props.rowClassName === 'function'
+									? props.rowClassName({ row: v, rowIndex: i })
+									: props.rowClassName,
+							]"
 						>
 							<template v-for="(vv, ii) in computedColumns" :key="ii">
 								<component :is="vv">
 									<template #default="scope">
 										<td
-											:class="`v3-table__cell${normalizeFixed(scope.props.fixed) ? ' is-fixed' : ''}${normalizeFixed(scope.props.fixed) ? ` is-fixed-${normalizeFixed(scope.props.fixed)}` : ''} is-align-${scope.props.align}${scope.props.showOverflowTooltip ? ' show-overflow-tooltip' : ''}${scope.props.type === 'default' ? '' : ` is-type-${scope.props.type}`} ${typeof props.cellClassName === 'function' ? props.cellClassName({ row: v, rowIndex: i, column: scope.props, columnIndex: ii }) : props.cellClassName} ${scope.props.className}`"
+											:class="[
+												'v3-table__cell',
+												normalizeFixed(scope.props.fixed) ? 'is-fixed' : '',
+												normalizeFixed(scope.props.fixed)
+													? `is-fixed-${normalizeFixed(scope.props.fixed)}`
+													: '',
+												`is-align-${scope.props.align}`,
+												scope.props.showOverflowTooltip
+													? 'show-overflow-tooltip'
+													: '',
+												scope.props.type === 'default'
+													? ''
+													: `is-type-${scope.props.type}`,
+												typeof props.cellClassName === 'function'
+													? props.cellClassName({
+															row: v,
+															rowIndex: i,
+															column: scope.props,
+															columnIndex: ii,
+														})
+													: props.cellClassName,
+												scope.props.className,
+											]"
 											:style="{
 												left:
 													normalizeFixed(scope.props.fixed) === 'left'
