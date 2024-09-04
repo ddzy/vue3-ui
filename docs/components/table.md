@@ -1240,14 +1240,21 @@ function handleSelectionChange(rowKeys: string[]) {
 
 :::
 
-## 展开列
+## 展开行
 
-必须指定`row-key`
+PS：必须指定`row-key`
+
+可以通过`table`提供的`toggleRowExpansion`方法，手动切换行的展开，如果提供第二个参数，可以指定行是否展开
 
 :::demo
 
 ```vue
 <template>
+	<v3-space>
+		<v3-button type="primary" @click="toggleRowExpansion"
+			>切换展开第二行</v3-button
+		>
+	</v3-space>
 	<v3-table :data="data" :columns="columns" ref="tableRef" rowKey="name" border>
 		<v3-table-column type="expand" prop="expand">
 			<template v-slot="scope">
@@ -1363,6 +1370,10 @@ const columns = ref([
 ]);
 
 const tableRef = ref();
+
+function toggleRowExpansion() {
+	tableRef.value.toggleRowExpansion('Bob');
+}
 </script>
 ```
 

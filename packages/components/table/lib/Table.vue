@@ -183,7 +183,7 @@
 									checkboxValue[normalizeRowKey(v, i)] === true
 										? 'is-selected'
 										: '',
-									expandRows.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
+									expandValue.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
 									typeof props.rowClassName === 'function'
 										? props.rowClassName({ row: v, rowIndex: i })
 										: props.rowClassName,
@@ -299,7 +299,7 @@
 													<template v-else-if="scope.props.type === 'expand'">
 														<V3Icon
 															type="Right"
-															@click="toggleExpansion(normalizeRowKey(v, i))"
+															@click="toggleRowExpansion(normalizeRowKey(v, i))"
 														/>
 													</template>
 												</div>
@@ -309,7 +309,7 @@
 								</template>
 							</tr>
 							<tr
-								v-show="expandRows.get(normalizeRowKey(v, i))"
+								v-show="expandValue.get(normalizeRowKey(v, i))"
 								class="v3-table__row v3-table__row--expansion"
 							>
 								<component :is="computedExpandColumn.column">
@@ -1128,9 +1128,12 @@ function toggleAllSelection(selected?: boolean) {
 /**
  * 展开的行
  */
-const expandRows = reactive(new Map());
-function toggleExpansion(rowKey: ITableBaseRowKey) {
-	expandRows.set(rowKey, !expandRows.get(rowKey));
+const expandValue = reactive(new Map());
+function toggleRowExpansion(rowKey: ITableBaseRowKey, expanded?: boolean) {
+	expandValue.set(
+		rowKey,
+		isUndefined(expanded) ? !expandValue.get(rowKey) : expanded,
+	);
 }
 
 defineExpose({
@@ -1141,6 +1144,7 @@ defineExpose({
 	getSelectionRows,
 	toggleRowSelection,
 	toggleAllSelection,
+	toggleRowExpansion,
 });
 </script>
 <style lang="scss">
