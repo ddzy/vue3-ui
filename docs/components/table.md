@@ -1240,7 +1240,7 @@ function handleSelectionChange(rowKeys: string[]) {
 
 :::
 
-## 树形数据
+## 展开列
 
 必须指定`row-key`
 
@@ -1251,7 +1251,8 @@ function handleSelectionChange(rowKeys: string[]) {
 	<v3-table :data="data" :columns="columns" ref="tableRef" rowKey="name" border>
 		<v3-table-column type="expand" prop="expand">
 			<template v-slot="scope">
-				<span>123</span>
+				<span>（{{ scope.rowIndex }}）：</span>
+				<span>{{ scope.row }}</span>
 			</template>
 		</v3-table-column>
 	</v3-table>

@@ -175,140 +175,170 @@
 						/>
 					</colgroup>
 					<tbody>
-						<tr
-							v-for="(v, i) in data"
-							:key="normalizeRowKey(v, i) || i"
-							:class="[
-								'v3-table__row',
-								normalizeRowKey(v, i) === radioValue ||
-								checkboxValue[normalizeRowKey(v, i)] === true
-									? 'is-selected'
-									: '',
-								expandRows.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
-								typeof props.rowClassName === 'function'
-									? props.rowClassName({ row: v, rowIndex: i })
-									: props.rowClassName,
-							]"
-						>
-							<template v-for="(vv, ii) in computedColumns" :key="ii">
-								<component :is="vv">
-									<template #default="scope">
-										<td
-											:class="[
-												'v3-table__cell',
-												normalizeFixed(scope.props.fixed) ? 'is-fixed' : '',
-												normalizeFixed(scope.props.fixed)
-													? `is-fixed-${normalizeFixed(scope.props.fixed)}`
-													: '',
-												`is-align-${scope.props.align}`,
-												scope.props.showOverflowTooltip
-													? 'show-overflow-tooltip'
-													: '',
-												scope.props.type === 'default'
-													? ''
-													: `is-type-${scope.props.type}`,
-												typeof props.cellClassName === 'function'
-													? props.cellClassName({
-															row: v,
-															rowIndex: i,
-															column: scope.props,
-															columnIndex: ii,
-														})
-													: props.cellClassName,
-												scope.props.className,
-											]"
-											:style="{
-												left:
-													normalizeFixed(scope.props.fixed) === 'left'
-														? computedBodyFixedLeftColumnOffset.find(
-																(vv) => vv.index === ii,
-															)
-															? `${computedBodyFixedLeftColumnOffset.find((vv) => vv.index === ii)?.left}px`
-															: 'auto'
-														: 'auto',
-												right:
-													normalizeFixed(scope.props.fixed) === 'right'
-														? computedBodyFixedRightColumnOffset.find(
-																(vv) => vv.index === ii,
-															)
-															? `${computedBodyFixedRightColumnOffset.find((vv) => vv.index === ii)?.right}px`
-															: 'auto'
-														: 'auto',
-											}"
-											:ref="(el) => ((tableBodyCellRefs.push(el as HTMLElement)), (
+						<template v-for="(v, i) in data" :key="normalizeRowKey(v, i) || i">
+							<tr
+								:class="[
+									'v3-table__row',
+									normalizeRowKey(v, i) === radioValue ||
+									checkboxValue[normalizeRowKey(v, i)] === true
+										? 'is-selected'
+										: '',
+									expandRows.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
+									typeof props.rowClassName === 'function'
+										? props.rowClassName({ row: v, rowIndex: i })
+										: props.rowClassName,
+								]"
+							>
+								<template v-for="(vv, ii) in computedColumns" :key="ii">
+									<component :is="vv">
+										<template #default="scope">
+											<td
+												:class="[
+													'v3-table__cell',
+													normalizeFixed(scope.props.fixed) ? 'is-fixed' : '',
+													normalizeFixed(scope.props.fixed)
+														? `is-fixed-${normalizeFixed(scope.props.fixed)}`
+														: '',
+													`is-align-${scope.props.align}`,
+													scope.props.showOverflowTooltip
+														? 'show-overflow-tooltip'
+														: '',
+													scope.props.type === 'default'
+														? ''
+														: `is-type-${scope.props.type}`,
+													typeof props.cellClassName === 'function'
+														? props.cellClassName({
+																row: v,
+																rowIndex: i,
+																column: scope.props,
+																columnIndex: ii,
+															})
+														: props.cellClassName,
+													scope.props.className,
+												]"
+												:style="{
+													left:
+														normalizeFixed(scope.props.fixed) === 'left'
+															? computedBodyFixedLeftColumnOffset.find(
+																	(vv) => vv.index === ii,
+																)
+																? `${computedBodyFixedLeftColumnOffset.find((vv) => vv.index === ii)?.left}px`
+																: 'auto'
+															: 'auto',
+													right:
+														normalizeFixed(scope.props.fixed) === 'right'
+															? computedBodyFixedRightColumnOffset.find(
+																	(vv) => vv.index === ii,
+																)
+																? `${computedBodyFixedRightColumnOffset.find((vv) => vv.index === ii)?.right}px`
+																: 'auto'
+															: 'auto',
+												}"
+												:ref="(el) => ((tableBodyCellRefs.push(el as HTMLElement)), (
 												  normalizeFixed(scope.props.fixed) === 'left'
 														? updateFixedLeftCells(el as HTMLElement, ii)
 														: normalizeFixed(scope.props.fixed) === 'right'
 															? updateFixedRightCells(el as HTMLElement, ii)
 															: void 0
 											))"
+											>
+												<div class="v3-table__cell-inner">
+													<template v-if="scope.props.type === 'default'">
+														<component
+															v-if="(vv?.children as any)?.default"
+															:is="(vv?.children as any)?.default"
+															:row="v"
+															:rowIndex="i"
+															:columnIndex="ii"
+														></component>
+														<v3-tooltip
+															v-else-if="scope.props.showOverflowTooltip"
+															:content="
+																scope.props.formatter
+																	? scope.props.formatter(v)
+																	: v[vv?.props?.prop]
+															"
+														>
+															<span>{{
+																scope.props.formatter
+																	? scope.props.formatter(v)
+																	: v[vv?.props?.prop]
+															}}</span>
+														</v3-tooltip>
+														<span v-else>
+															{{
+																scope.props.formatter
+																	? scope.props.formatter(v)
+																	: v[vv?.props?.prop]
+															}}
+														</span>
+													</template>
+													<template v-else-if="scope.props.type === 'index'">
+														<span>{{ i + 1 }}</span>
+													</template>
+													<template v-else-if="scope.props.type === 'radio'">
+														<v3-radio
+															v-model="radioValue"
+															:label="normalizeRowKey(v, i)"
+															@change="handleRadioChange"
+														></v3-radio>
+													</template>
+													<template v-else-if="scope.props.type === 'checkbox'">
+														<v3-checkbox
+															v-model="checkboxValue[normalizeRowKey(v, i)]"
+															@change="
+																handleCheckboxChange(
+																	normalizeRowKey(v, i),
+																	v,
+																	scope.props,
+																	$event,
+																)
+															"
+														></v3-checkbox>
+													</template>
+													<template v-else-if="scope.props.type === 'expand'">
+														<V3Icon
+															type="Right"
+															@click="toggleExpansion(normalizeRowKey(v, i))"
+														/>
+													</template>
+												</div>
+											</td>
+										</template>
+									</component>
+								</template>
+							</tr>
+							<tr
+								v-show="expandRows.get(normalizeRowKey(v, i))"
+								class="v3-table__row v3-table__row--expansion"
+							>
+								<component :is="computedExpandColumn.column">
+									<template #default="scope">
+										<td
+											:colspan="computedColumns.length"
+											class="v3-table__cell"
 										>
 											<div class="v3-table__cell-inner">
-												<template v-if="scope.props.type === 'default'">
-													<component
-														v-if="(vv?.children as any)?.default"
-														:is="(vv?.children as any)?.default"
-														:row="v"
-														:rowIndex="i"
-														:columnIndex="ii"
-													></component>
-													<v3-tooltip
-														v-else-if="scope.props.showOverflowTooltip"
-														:content="
-															scope.props.formatter
-																? scope.props.formatter(v)
-																: v[vv?.props?.prop]
-														"
-													>
-														<span>{{
-															scope.props.formatter
-																? scope.props.formatter(v)
-																: v[vv?.props?.prop]
-														}}</span>
-													</v3-tooltip>
-													<span v-else>
-														{{
-															scope.props.formatter
-																? scope.props.formatter(v)
-																: v[vv?.props?.prop]
-														}}
-													</span>
-												</template>
-												<template v-else-if="scope.props.type === 'index'">
-													<span>{{ i + 1 }}</span>
-												</template>
-												<template v-else-if="scope.props.type === 'radio'">
-													<v3-radio
-														v-model="radioValue"
-														:label="normalizeRowKey(v, i)"
-														@change="handleRadioChange"
-													></v3-radio>
-												</template>
-												<template v-else-if="scope.props.type === 'checkbox'">
-													<v3-checkbox
-														v-model="checkboxValue[normalizeRowKey(v, i)]"
-														@change="
-															handleCheckboxChange(
-																normalizeRowKey(v, i),
-																v,
-																scope.props,
-																$event,
-															)
-														"
-													></v3-checkbox>
-												</template>
-												<template v-else-if="scope.props.type === 'expand'">
-													<V3Icon
-														type="Right"
-														@click="toggleExpansion(normalizeRowKey(v, i))"
-													/>
-												</template>
+												<component
+													v-if="(computedExpandColumn.column?.children as any)?.default"
+													:is="(computedExpandColumn.column?.children as any)?.default"
+													:row="v"
+													:rowIndex="i"
+													:columnIndex="computedExpandColumn.columnIndex"
+												></component>
+												<span v-else>
+													{{
+														scope.props.formatter
+															? scope.props.formatter(v)
+															: v[computedExpandColumn.column?.props?.prop]
+													}}
+												</span>
 											</div>
 										</td>
 									</template>
 								</component>
-							</template>
-						</tr>
+							</tr>
+						</template>
 					</tbody>
 				</table>
 			</div>
@@ -490,6 +520,20 @@ const computedColumns = computed(() => {
 	}
 
 	return slotColumns;
+});
+/**
+ * 展开的列
+ */
+const computedExpandColumn = computed(() => {
+	const columnIndex = computedColumns.value.findIndex(
+		(v) => v?.props?.type === 'expand',
+	);
+	const column = computedColumns.value[columnIndex];
+
+	return {
+		column,
+		columnIndex,
+	};
 });
 const computedMaxHeight = computed(() => {
 	return isNumber(props.maxHeight) ? `${props.maxHeight}px` : props.maxHeight;
@@ -1082,7 +1126,7 @@ function toggleAllSelection(selected?: boolean) {
 }
 
 /**
- * 展开列
+ * 展开的行
  */
 const expandRows = reactive(new Map());
 function toggleExpansion(rowKey: ITableBaseRowKey) {
