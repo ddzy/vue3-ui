@@ -1062,6 +1062,7 @@ function RecursiveRow(
 					<tr
 						class={[
 							'v3-table__row',
+							`v3-table__row--level-${row.isRoot ? row.parentLevel : row.parentLevel + 1}`,
 							normalizeRowKey(v, i) === radioValue ||
 							checkboxValue[normalizeRowKey(v, i)] === true
 								? 'is-selected'
@@ -1073,9 +1074,6 @@ function RecursiveRow(
 							typeof props.rowClassName === 'function'
 								? props.rowClassName({ row: v, rowIndex: i })
 								: props.rowClassName,
-							row.isRoot
-								? `v3-table__row--level-0`
-								: `v3-table__row--level-${row.parentLevel}-${row.parentLevel + 1}`,
 						]}
 					>
 						{computedColumns.value.map((vv, ii) => {
@@ -1141,7 +1139,7 @@ function RecursiveRow(
 														style={{
 															display: 'inline-block',
 															height: '1em',
-															width: `calc(${10 * row.parentLevel}px + ${ii === 0 && hasChildren ? 0 : 1}em)`,
+															width: `calc(${10 * (row.parentLevel + 1)}px + ${ii === 0 && hasChildren ? 0 : 1}em)`,
 															verticalAlign: 'middle',
 														}}
 													></div>
@@ -1275,7 +1273,7 @@ function RecursiveRow(
 						<RecursiveRow
 							data={v[treeProps.children]}
 							isRoot={false}
-							parentLevel={row.parentLevel + 1}
+							parentLevel={row.isRoot ? row.parentLevel : row.parentLevel + 1}
 						/>
 					}
 				</Fragment>
