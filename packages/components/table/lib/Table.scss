@@ -215,6 +215,10 @@ $align-map: (left, center, right);
 			background-color: $success-color;
 		}
 	}
+	.v3-table__cell-tree-trigger {
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
 
 	.v3-table__header,
 	.v3-table__body {
@@ -251,6 +255,15 @@ $align-map: (left, center, right);
 			}
 			&.is-expanded {
 				.v3-table__cell.is-type-expand {
+					.v3-table__cell-inner {
+						.v3-icon {
+							transform: rotateZ(90deg);
+						}
+					}
+				}
+			}
+			&.is-tree-expanded {
+				.v3-table__cell {
 					.v3-table__cell-inner {
 						.v3-icon {
 							transform: rotateZ(90deg);

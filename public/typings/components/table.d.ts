@@ -1,7 +1,7 @@
 import { SFCWithInstall } from "../utils/util";
 
 export interface ITableProps {
-	data?: any[];
+	data?: ITableData[];
 	columns?: ITableColumn[];
 	border?: boolean;
 	stripe?: boolean;
@@ -19,7 +19,10 @@ export interface ITableProps {
 	emptyText?: string;
 	loading?: boolean;
 	defaultSort?: ITableDefaultSort;
+	treeLazyload?: boolean;
+	treeProps?: ITableTreeProps;
 }
+export type ITableData = any;
 export type ITableSize = 'small' | 'medium' | 'large';
 export type ITableRowClassName =
 	| string
@@ -41,6 +44,10 @@ export interface ITableDefaultSort  {
 export type ITableColumn = ITableColumnProps & {
 	children?: ITableColumnProps[];
 	slot?: string;
+}
+export type ITableTreeProps = {
+	children?: string;
+	hasChildren?: string;
 }
 
 export interface ITableColumnProps {

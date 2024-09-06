@@ -175,170 +175,7 @@
 						/>
 					</colgroup>
 					<tbody>
-						<template v-for="(v, i) in data" :key="normalizeRowKey(v, i) || i">
-							<tr
-								:class="[
-									'v3-table__row',
-									normalizeRowKey(v, i) === radioValue ||
-									checkboxValue[normalizeRowKey(v, i)] === true
-										? 'is-selected'
-										: '',
-									expandValue.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
-									typeof props.rowClassName === 'function'
-										? props.rowClassName({ row: v, rowIndex: i })
-										: props.rowClassName,
-								]"
-							>
-								<template v-for="(vv, ii) in computedColumns" :key="ii">
-									<component :is="vv">
-										<template #default="scope">
-											<td
-												:class="[
-													'v3-table__cell',
-													normalizeFixed(scope.props.fixed) ? 'is-fixed' : '',
-													normalizeFixed(scope.props.fixed)
-														? `is-fixed-${normalizeFixed(scope.props.fixed)}`
-														: '',
-													`is-align-${scope.props.align}`,
-													scope.props.showOverflowTooltip
-														? 'show-overflow-tooltip'
-														: '',
-													scope.props.type === 'default'
-														? ''
-														: `is-type-${scope.props.type}`,
-													typeof props.cellClassName === 'function'
-														? props.cellClassName({
-																row: v,
-																rowIndex: i,
-																column: scope.props,
-																columnIndex: ii,
-															})
-														: props.cellClassName,
-													scope.props.className,
-												]"
-												:style="{
-													left:
-														normalizeFixed(scope.props.fixed) === 'left'
-															? computedBodyFixedLeftColumnOffset.find(
-																	(vv) => vv.index === ii,
-																)
-																? `${computedBodyFixedLeftColumnOffset.find((vv) => vv.index === ii)?.left}px`
-																: 'auto'
-															: 'auto',
-													right:
-														normalizeFixed(scope.props.fixed) === 'right'
-															? computedBodyFixedRightColumnOffset.find(
-																	(vv) => vv.index === ii,
-																)
-																? `${computedBodyFixedRightColumnOffset.find((vv) => vv.index === ii)?.right}px`
-																: 'auto'
-															: 'auto',
-												}"
-												:ref="(el) => ((tableBodyCellRefs.push(el as HTMLElement)), (
-												  normalizeFixed(scope.props.fixed) === 'left'
-														? updateFixedLeftCells(el as HTMLElement, ii)
-														: normalizeFixed(scope.props.fixed) === 'right'
-															? updateFixedRightCells(el as HTMLElement, ii)
-															: void 0
-											))"
-											>
-												<div class="v3-table__cell-inner">
-													<template v-if="scope.props.type === 'default'">
-														<component
-															v-if="(vv?.children as any)?.default"
-															:is="(vv?.children as any)?.default"
-															:row="v"
-															:rowIndex="i"
-															:columnIndex="ii"
-														></component>
-														<v3-tooltip
-															v-else-if="scope.props.showOverflowTooltip"
-															:content="
-																scope.props.formatter
-																	? scope.props.formatter(v)
-																	: v[vv?.props?.prop]
-															"
-														>
-															<span>{{
-																scope.props.formatter
-																	? scope.props.formatter(v)
-																	: v[vv?.props?.prop]
-															}}</span>
-														</v3-tooltip>
-														<span v-else>
-															{{
-																scope.props.formatter
-																	? scope.props.formatter(v)
-																	: v[vv?.props?.prop]
-															}}
-														</span>
-													</template>
-													<template v-else-if="scope.props.type === 'index'">
-														<span>{{ i + 1 }}</span>
-													</template>
-													<template v-else-if="scope.props.type === 'radio'">
-														<v3-radio
-															v-model="radioValue"
-															:label="normalizeRowKey(v, i)"
-															@change="handleRadioChange"
-														></v3-radio>
-													</template>
-													<template v-else-if="scope.props.type === 'checkbox'">
-														<v3-checkbox
-															v-model="checkboxValue[normalizeRowKey(v, i)]"
-															@change="
-																handleCheckboxChange(
-																	normalizeRowKey(v, i),
-																	v,
-																	scope.props,
-																	$event,
-																)
-															"
-														></v3-checkbox>
-													</template>
-													<template v-else-if="scope.props.type === 'expand'">
-														<V3Icon
-															type="Right"
-															@click="toggleRowExpansion(normalizeRowKey(v, i))"
-														/>
-													</template>
-												</div>
-											</td>
-										</template>
-									</component>
-								</template>
-							</tr>
-							<tr
-								v-show="expandValue.get(normalizeRowKey(v, i))"
-								class="v3-table__row v3-table__row--expansion"
-							>
-								<component :is="computedExpandColumn.column">
-									<template #default="scope">
-										<td
-											:colspan="computedColumns.length"
-											class="v3-table__cell"
-										>
-											<div class="v3-table__cell-inner">
-												<component
-													v-if="(computedExpandColumn.column?.children as any)?.default"
-													:is="(computedExpandColumn.column?.children as any)?.default"
-													:row="v"
-													:rowIndex="i"
-													:columnIndex="computedExpandColumn.columnIndex"
-												></component>
-												<span v-else>
-													{{
-														scope.props.formatter
-															? scope.props.formatter(v)
-															: v[computedExpandColumn.column?.props?.prop]
-													}}
-												</span>
-											</div>
-										</td>
-									</template>
-								</component>
-							</tr>
-						</template>
+						<RecursiveRow :data="data" :isRoot="true" :parentLevel="0" />
 					</tbody>
 				</table>
 			</div>
@@ -350,10 +187,18 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { VNode, computed, h, reactive, ref, useSlots, watch } from 'vue';
+import {
+	Fragment,
+	VNode,
+	computed,
+	h,
+	reactive,
+	ref,
+	useSlots,
+	watch,
+} from 'vue';
 
 import { divide, subtract } from '@common/utils';
-import '@common/utils/index';
 import {
 	V3Checkbox,
 	V3Icon,
@@ -383,8 +228,10 @@ import {
 	ITableColumnFixed,
 	ITableColumnProps,
 	ITableColumnSortBy,
+	ITableData,
 	ITableDefaultSort,
 	ITableProps,
+	ITableTreeProps,
 } from '@/public/typings';
 
 defineOptions({
@@ -428,9 +275,23 @@ const props = withDefaults(defineProps<ITableProps>(), {
 		order: 'none',
 	}),
 	/**
-	 * 表格列，优先级比直接书写v3-table-column高
+	 * 表格列
+	 * 如果在`columns`中声明了slot属性，可以自定义列
 	 */
 	columns: () => [],
+	/**
+	 * 树形数据是否懒加载
+	 */
+	treeLazyload: false,
+	/**
+	 * 可以自行指定树形数据使用的key
+	 */
+	treeProps: () => ({
+		// 子数据列表
+		children: 'children',
+		// 该行是否有子数据
+		hasChildren: 'hasChildren',
+	}),
 });
 const slots = useSlots();
 const emits = defineEmits<{
@@ -1133,6 +994,293 @@ function toggleRowExpansion(rowKey: ITableBaseRowKey, expanded?: boolean) {
 	expandValue.set(
 		rowKey,
 		isUndefined(expanded) ? !expandValue.get(rowKey) : expanded,
+	);
+}
+
+/**
+ * 树形数据
+ */
+const treeProps = reactive<Required<ITableTreeProps>>({
+	children: 'children',
+	hasChildren: 'hasChildren',
+	...props.treeProps,
+});
+const treeValue = reactive<
+	Map<
+		ITableBaseRowKey,
+		{
+			visible: boolean;
+		}
+	>
+>(new Map());
+/**
+ * 异步获取树数据
+ * @param rowKey
+ * @param row
+ * @param rowIndex
+ * @param column
+ * @param columnIndex
+ */
+function loadTreeData(
+	rowKey: ITableBaseRowKey,
+	row: any,
+	rowIndex: number,
+	column: ITableColumnProps,
+	columnIndex: number,
+) {
+	if (!treeValue.get(rowKey)) {
+		treeValue.set(rowKey, {
+			visible: false,
+		});
+	}
+	const nextVisible = !treeValue.get(rowKey)?.visible;
+	treeValue.get(rowKey)!.visible = nextVisible;
+}
+
+/**
+ * 递归生成树形表格
+ * @param row
+ * @param options
+ */
+function RecursiveRow(
+	row: {
+		data: ITableData[];
+		parentLevel: number;
+		isRoot: boolean;
+	},
+	options: { emit: any },
+): any {
+	return (
+		Array.isArray(row.data) &&
+		row.data.map((v, i) => {
+			const hasChildren =
+				v[treeProps.hasChildren] ||
+				(Array.isArray(v[treeProps.children]) && v[treeProps.children].length);
+
+			return (
+				<Fragment>
+					<tr
+						class={[
+							'v3-table__row',
+							normalizeRowKey(v, i) === radioValue ||
+							checkboxValue[normalizeRowKey(v, i)] === true
+								? 'is-selected'
+								: '',
+							expandValue.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
+							treeValue.get(normalizeRowKey(v, i))?.visible
+								? 'is-tree-expanded'
+								: '',
+							typeof props.rowClassName === 'function'
+								? props.rowClassName({ row: v, rowIndex: i })
+								: props.rowClassName,
+							row.isRoot
+								? `v3-table__row--level-0`
+								: `v3-table__row--level-${row.parentLevel}-${row.parentLevel + 1}`,
+						]}
+					>
+						{computedColumns.value.map((vv, ii) => {
+							return h(vv, null, {
+								default: (scope: { props: Required<ITableColumnProps> }) => {
+									return (
+										<td
+											class={[
+												'v3-table__cell',
+												normalizeFixed(scope.props.fixed) ? 'is-fixed' : '',
+												normalizeFixed(scope.props.fixed)
+													? `is-fixed-${normalizeFixed(scope.props.fixed)}`
+													: '',
+												`is-align-${scope.props.align}`,
+												scope.props.showOverflowTooltip
+													? 'show-overflow-tooltip'
+													: '',
+												scope.props.type === 'default'
+													? ''
+													: `is-type-${scope.props.type}`,
+												typeof props.cellClassName === 'function'
+													? props.cellClassName({
+															row: v,
+															rowIndex: i,
+															column: scope.props,
+															columnIndex: ii,
+														})
+													: props.cellClassName,
+												scope.props.className,
+											]}
+											style={{
+												left:
+													normalizeFixed(scope.props.fixed) === 'left'
+														? computedBodyFixedLeftColumnOffset.value.find(
+																(vv) => vv.index === ii,
+															)
+															? `${computedBodyFixedLeftColumnOffset.value.find((vv) => vv.index === ii)?.left}px`
+															: 'auto'
+														: 'auto',
+												right:
+													normalizeFixed(scope.props.fixed) === 'right'
+														? computedBodyFixedRightColumnOffset.value.find(
+																(vv) => vv.index === ii,
+															)
+															? `${computedBodyFixedRightColumnOffset.value.find((vv) => vv.index === ii)?.right}px`
+															: 'auto'
+														: 'auto',
+											}}
+											ref={(el) => (
+												tableBodyCellRefs.value.push(el as HTMLElement),
+												normalizeFixed(scope.props.fixed) === 'left'
+													? updateFixedLeftCells(el as HTMLElement, ii)
+													: normalizeFixed(scope.props.fixed) === 'right'
+														? updateFixedRightCells(el as HTMLElement, ii)
+														: void 0
+											)}
+										>
+											<div class="v3-table__cell-inner">
+												{/* 树形数据缩进填充 */}
+												{!row.isRoot && (
+													<div
+														class="v3-table__cell-tree-indent"
+														style={{
+															display: 'inline-block',
+															height: '1em',
+															width: `calc(${10 * row.parentLevel}px + ${ii === 0 && hasChildren ? 0 : 1}em)`,
+															verticalAlign: 'middle',
+														}}
+													></div>
+												)}
+												{/* 树形数据折叠按钮 */}
+												{ii === 0 &&
+													hasChildren &&
+													h(V3Icon, {
+														type: 'Right',
+														class: 'v3-table__cell-tree-trigger',
+														onClick: () =>
+															loadTreeData(
+																normalizeRowKey(v, i),
+																v,
+																i,
+																scope.props,
+																ii,
+															),
+													})}
+												{/* 默认单元格 */}
+												{scope.props.type === 'default' && (
+													<Fragment>
+														{(vv?.children as any)?.default?.({
+															row: i,
+															rowIndex: i,
+															columnIndex: ii,
+														})}
+														{scope.props.showOverflowTooltip && (
+															<V3Tooltip>
+																{scope.props.formatter
+																	? scope.props.formatter(v)
+																	: v[vv?.props?.prop]}
+															</V3Tooltip>
+														)}
+														{!(vv?.children as any)?.default &&
+															!scope.props.showOverflowTooltip && (
+																<span>
+																	{scope.props.formatter
+																		? scope.props.formatter(v)
+																		: v[vv?.props?.prop]}
+																</span>
+															)}
+													</Fragment>
+												)}
+												{/* 序号单元格 */}
+												{scope.props.type === 'index' && <span>{i + 1}</span>}
+												{/* 单选单元格 */}
+												{scope.props.type === 'radio' &&
+													h(V3Radio, {
+														modelValue: radioValue.value,
+														'onUpdate:modelValue': (vvv) =>
+															options.emit('update:modelValue', vvv),
+														label: normalizeRowKey(v, i),
+														onChange: handleRadioChange,
+													})}
+												{/* 多选框单元格 */}
+												{scope.props.type === 'checkbox' &&
+													h(V3Checkbox, {
+														modelValue: checkboxValue[normalizeRowKey(v, i)],
+														'onUpdate:modelValue': (vvv) =>
+															options.emit('update:modelValue', vvv),
+														onChange: ($event) =>
+															handleCheckboxChange(
+																normalizeRowKey(v, i),
+																v,
+																scope.props,
+																$event,
+															),
+													})}
+												{/* 可展开单元格 */}
+												{scope.props.type === 'expand' &&
+													h(V3Icon, {
+														type: 'Right',
+														onClick: () =>
+															toggleRowExpansion(normalizeRowKey(v, i)),
+													})}
+											</div>
+										</td>
+									);
+								},
+							});
+						})}
+					</tr>
+					{/* 展开行 */}
+					{computedExpandColumn.value.column && (
+						<tr
+							style={{
+								display: expandValue.get(normalizeRowKey(v, i))
+									? 'block'
+									: 'none',
+							}}
+							class="v3-table__row v3-table__row--expansion"
+						>
+							{h(computedExpandColumn.value.column, null, {
+								default: (scope: { props: ITableColumnProps }) => {
+									return (
+										<td
+											class="v3-table__cell"
+											colspan={computedColumns.value.length}
+										>
+											<div class="v3-table__cell-inner">
+												{(computedExpandColumn.value.column?.children as any)
+													?.default ? (
+													h(
+														(computedExpandColumn.value.column?.children as any)
+															?.default,
+														{
+															row: v,
+															rowIndex: i,
+															columnIndex:
+																computedExpandColumn.value.columnIndex,
+														},
+													)
+												) : (
+													<span>
+														{scope.props.formatter
+															? scope.props.formatter(v)
+															: v[
+																	computedExpandColumn.value.column?.props?.prop
+																]}
+													</span>
+												)}
+											</div>
+										</td>
+									);
+								},
+							})}
+						</tr>
+					)}
+					{
+						<RecursiveRow
+							data={v[treeProps.children]}
+							isRoot={false}
+							parentLevel={row.parentLevel + 1}
+						/>
+					}
+				</Fragment>
+			);
+		})
 	);
 }
 
