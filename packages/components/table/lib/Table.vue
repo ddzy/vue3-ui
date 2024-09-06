@@ -1133,7 +1133,7 @@ function RecursiveRow(
 										>
 											<div class="v3-table__cell-inner">
 												{/* 树形数据缩进填充 */}
-												{!row.isRoot && (
+												{ii === 0 && !row.isRoot && (
 													<div
 														class="v3-table__cell-tree-indent"
 														style={{
@@ -1269,13 +1269,13 @@ function RecursiveRow(
 							})}
 						</tr>
 					)}
-					{
+					{treeValue.get(normalizeRowKey(v, i))?.visible && (
 						<RecursiveRow
 							data={v[treeProps.children]}
 							isRoot={false}
 							parentLevel={row.isRoot ? row.parentLevel : row.parentLevel + 1}
 						/>
-					}
+					)}
 				</Fragment>
 			);
 		})

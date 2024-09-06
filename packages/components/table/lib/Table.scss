@@ -216,6 +216,7 @@ $align-map: (left, center, right);
 		}
 	}
 	.v3-table__cell-tree-trigger {
+		margin-right: 6px;
 		cursor: pointer;
 		transition: all 0.3s ease;
 	}
