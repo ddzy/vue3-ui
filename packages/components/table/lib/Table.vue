@@ -1282,7 +1282,7 @@ function RecursiveRow(
 						<tr
 							style={{
 								display: expandValue.get(normalizeRowKey(v, i))
-									? 'block'
+									? 'table-row'
 									: 'none',
 							}}
 							class="v3-table__row v3-table__row--expansion"
@@ -1323,6 +1323,7 @@ function RecursiveRow(
 							})}
 						</tr>
 					)}
+					{/* 树形表格 */}
 					{treeValue.get(normalizeRowKey(v, i))?.visible && (
 						<RecursiveRow
 							data={v[treeProps.children]}
