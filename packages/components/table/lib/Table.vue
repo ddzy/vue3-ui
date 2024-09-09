@@ -1072,9 +1072,9 @@ function RecursiveRow(
 	return (
 		Array.isArray(row.data) &&
 		row.data.map((v, i) => {
-			const hasChildren =
-				v[treeProps.hasChildren] ||
-				(Array.isArray(v[treeProps.children]) && v[treeProps.children].length);
+			const hasChildren = props.treeLazyload
+				? v[treeProps.hasChildren]
+				: Array.isArray(v[treeProps.children]) && v[treeProps.children].length;
 
 			return (
 				<Fragment>

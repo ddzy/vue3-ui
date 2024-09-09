@@ -1381,7 +1381,12 @@ function toggleRowExpansion() {
 
 ## 树形数据与懒加载
 
-PS：必须指定`row-key`，可以通过`treeMethod`方法异步获取表格数据
+树形表格有两种形式:
+
+1. 非懒加载, 自动读取`children`字段;
+2. 异步获取, 可让后端设置`hasChildren`字段, 配置是否显示折叠按钮，可以通过`treeMethod`方法异步获取表格数据
+
+PS：必须指定`row-key`
 
 :::demo
 
@@ -1390,7 +1395,6 @@ PS：必须指定`row-key`，可以通过`treeMethod`方法异步获取表格数
 	<v3-table
 		:data="data"
 		:columns="columns"
-		:tree="true"
 		:treeProps="{
 			children: 'children',
 			hasChildren: 'hasChildren',
@@ -1404,7 +1408,6 @@ PS：必须指定`row-key`，可以通过`treeMethod`方法异步获取表格数
 	<v3-table
 		:data="data2"
 		:columns="columns"
-		:tree="true"
 		:treeLazyload="true"
 		:treeMethod="treeMethod"
 		ref="tableRef"
@@ -1541,6 +1544,7 @@ const columns = ref([
 	{
 		prop: 'name',
 		label: '姓名',
+		fixed: 'left',
 	},
 	{
 		prop: 'age',
