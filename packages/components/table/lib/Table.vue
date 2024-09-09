@@ -175,7 +175,7 @@
 						/>
 					</colgroup>
 					<tbody>
-						<RecursiveRow :data="data" :isRoot="true" :parentLevel="0" />
+						<RecursiveRow :data="data" :root="true" :parentLevel="0" />
 					</tbody>
 				</table>
 			</div>
@@ -1034,7 +1034,7 @@ const treeValue = reactive<
 	Map<
 		ITableBaseRowKey,
 		{
-			visible: boolean; // 是否显示子节点
+			expanded: boolean; // 子节点是否展开
 			loading: boolean; // 是否正在获取异步子节点
 			loaded: boolean; // 子节点只需获取一次
 		}
@@ -1054,30 +1054,39 @@ function loadTreeData(
 	rowIndex: number,
 	column: ITableColumnProps,
 	columnIndex: number,
+	root: boolean,
+	level: number,
 ) {
 	if (!treeValue.get(rowKey)) {
 		treeValue.set(rowKey, {
-			visible: false,
+			expanded: false,
 			loading: false,
 			loaded: false,
 		});
 	}
-	const nextVisible = !treeValue.get(rowKey)?.visible;
+	const nextExpanded = !treeValue.get(rowKey)?.expanded;
 	const loaded = treeValue.get(rowKey)?.loaded;
-	if (props.treeLazyload && nextVisible && props.treeMethod && !loaded) {
+	if (props.treeLazyload && nextExpanded && props.treeMethod && !loaded) {
 		treeValue.get(rowKey)!.loading = true;
 		props.treeMethod({
 			row,
+			node: {
+				key: rowKey,
+				root,
+				level,
+				loading: treeValue.get(rowKey)?.loading!,
+				expanded: treeValue.get(rowKey)?.expanded!,
+			},
 			resolve(newData) {
 				row.children = newData;
 				treeValue.get(rowKey)!.loading = false;
-				treeValue.get(rowKey)!.visible = true;
+				treeValue.get(rowKey)!.expanded = true;
 				treeValue.get(rowKey)!.loaded = true;
 			},
 		});
 	} else {
 		treeValue.get(rowKey)!.loading = false;
-		treeValue.get(rowKey)!.visible = nextVisible;
+		treeValue.get(rowKey)!.expanded = nextExpanded;
 	}
 }
 
@@ -1090,7 +1099,7 @@ function RecursiveRow(
 	row: {
 		data: ITableData[];
 		parentLevel: number;
-		isRoot: boolean;
+		root: boolean;
 	},
 	options: { emit: any },
 ): any {
@@ -1100,19 +1109,20 @@ function RecursiveRow(
 			const hasChildren = props.treeLazyload
 				? v[treeProps.hasChildren]
 				: Array.isArray(v[treeProps.children]) && v[treeProps.children].length;
+			const level = row.root ? row.parentLevel : row.parentLevel + 1;
 
 			return (
 				<Fragment>
 					<tr
 						class={[
 							'v3-table__row',
-							`v3-table__row--level-${row.isRoot ? row.parentLevel : row.parentLevel + 1}`,
+							`v3-table__row--level-${level}`,
 							normalizeRowKey(v, i) === radioValue ||
 							checkboxValue[normalizeRowKey(v, i)] === true
 								? 'is-selected'
 								: '',
 							expandValue.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
-							treeValue.get(normalizeRowKey(v, i))?.visible
+							treeValue.get(normalizeRowKey(v, i))?.expanded
 								? 'is-tree-expanded'
 								: '',
 							typeof props.rowClassName === 'function'
@@ -1177,13 +1187,13 @@ function RecursiveRow(
 										>
 											<div class="v3-table__cell-inner">
 												{/* 树形数据缩进填充 */}
-												{ii === 0 && !row.isRoot && (
+												{ii === 0 && !row.root && (
 													<div
 														class="v3-table__cell-tree-indent"
 														style={{
 															display: 'inline-block',
 															height: '1em',
-															width: `calc(${10 * (row.parentLevel + 1)}px + ${ii === 0 && hasChildren ? 0 : 1}em)`,
+															width: `calc(${10 * level}px + ${ii === 0 && hasChildren ? 0 : 1}em)`,
 															verticalAlign: 'middle',
 														}}
 													></div>
@@ -1202,6 +1212,8 @@ function RecursiveRow(
 																i,
 																scope.props,
 																ii,
+																row.root,
+																level,
 															),
 													})}
 												{/* 树形数据loading按钮 */}
@@ -1324,11 +1336,11 @@ function RecursiveRow(
 						</tr>
 					)}
 					{/* 树形表格 */}
-					{treeValue.get(normalizeRowKey(v, i))?.visible && (
+					{treeValue.get(normalizeRowKey(v, i))?.expanded && (
 						<RecursiveRow
 							data={v[treeProps.children]}
-							isRoot={false}
-							parentLevel={row.isRoot ? row.parentLevel : row.parentLevel + 1}
+							root={false}
+							parentLevel={level}
 						/>
 					)}
 				</Fragment>

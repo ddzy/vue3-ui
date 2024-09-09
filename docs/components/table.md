@@ -1575,7 +1575,8 @@ const columns = ref([
 ]);
 
 const tableRef = ref();
-function treeMethod({ row, resolve }) {
+function treeMethod({ row, node, resolve }) {
+	console.log('row, node :>> ', row, node);
 	setTimeout(() => {
 		resolve([
 			{

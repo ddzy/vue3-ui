@@ -50,7 +50,14 @@ export type ITableTreeProps = {
 	children?: string;
 	hasChildren?: string;
 }
-export type ITableTreeMethod = (options: { row: ITableData, resolve: (data: ITableData[]) => void }) => void;
+export type ITableTreeMethod = (options: { row: ITableData, node: ITableTreeNode, resolve: (data: ITableData[]) => void }) => void;
+export interface ITableTreeNode {
+	key: ITableBaseRowKey;
+	level: number;
+	root: boolean;
+	expanded: boolean;
+	loading: boolean;
+}
 
 export interface ITableColumnProps {
 	prop?: string;
