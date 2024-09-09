@@ -1261,7 +1261,7 @@ function RecursiveRow(
 													h(V3Radio, {
 														modelValue: radioValue.value,
 														'onUpdate:modelValue': (vvv) =>
-															options.emit('update:modelValue', vvv),
+															(radioValue.value = vvv),
 														label: rowKey,
 														onChange: handleRadioChange,
 													})}
@@ -1270,7 +1270,7 @@ function RecursiveRow(
 													h(V3Checkbox, {
 														modelValue: checkboxValue[rowKey],
 														'onUpdate:modelValue': (vvv) =>
-															options.emit('update:modelValue', vvv),
+															(checkboxValue[rowKey] = vvv),
 														onChange: ($event) =>
 															handleCheckboxChange(
 																rowKey,
