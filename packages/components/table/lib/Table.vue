@@ -1009,7 +1009,9 @@ const treeValue = reactive<
 	Map<
 		ITableBaseRowKey,
 		{
-			visible: boolean;
+			visible: boolean; // 是否显示子节点
+			loading: boolean; // 是否正在获取异步子节点
+			loaded: boolean; // 子节点只需获取一次
 		}
 	>
 >(new Map());
@@ -1031,10 +1033,27 @@ function loadTreeData(
 	if (!treeValue.get(rowKey)) {
 		treeValue.set(rowKey, {
 			visible: false,
+			loading: false,
+			loaded: false,
 		});
 	}
 	const nextVisible = !treeValue.get(rowKey)?.visible;
-	treeValue.get(rowKey)!.visible = nextVisible;
+	const loaded = treeValue.get(rowKey)?.loaded;
+	if (props.treeLazyload && nextVisible && props.treeMethod && !loaded) {
+		treeValue.get(rowKey)!.loading = true;
+		props.treeMethod({
+			row,
+			resolve(newData) {
+				row.children = newData;
+				treeValue.get(rowKey)!.loading = false;
+				treeValue.get(rowKey)!.visible = true;
+				treeValue.get(rowKey)!.loaded = true;
+			},
+		});
+	} else {
+		treeValue.get(rowKey)!.loading = false;
+		treeValue.get(rowKey)!.visible = nextVisible;
+	}
 }
 
 /**
@@ -1147,6 +1166,7 @@ function RecursiveRow(
 												{/* 树形数据折叠按钮 */}
 												{ii === 0 &&
 													hasChildren &&
+													!treeValue.get(normalizeRowKey(v, i))?.loading &&
 													h(V3Icon, {
 														type: 'Right',
 														class: 'v3-table__cell-tree-trigger',
@@ -1158,6 +1178,15 @@ function RecursiveRow(
 																scope.props,
 																ii,
 															),
+													})}
+												{/* 树形数据loading按钮 */}
+												{ii === 0 &&
+													hasChildren &&
+													treeValue.get(normalizeRowKey(v, i))?.loading &&
+													h(V3Icon, {
+														type: 'LoadingOne',
+														class: 'v3-table__cell-tree-trigger',
+														spin: true,
 													})}
 												{/* 默认单元格 */}
 												{scope.props.type === 'default' && (

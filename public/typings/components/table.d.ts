@@ -21,22 +21,23 @@ export interface ITableProps {
 	defaultSort?: ITableDefaultSort;
 	treeLazyload?: boolean;
 	treeProps?: ITableTreeProps;
+	treeMethod?: ITableTreeMethod;
 }
 export type ITableData = any;
 export type ITableSize = 'small' | 'medium' | 'large';
 export type ITableRowClassName =
 	| string
-	| ((data: { row: any; rowIndex: number }) => string);
+	| ((data: { row: ITableData; rowIndex: number }) => string);
 export type ITableCellClassName =
 	| string
 	| ((data: {
-			row: any;
+			row: ITableData;
 			column: ITableColumnProps;
 			rowIndex: number;
 			columnIndex: number;
 	  }) => string);
 export type ITableBaseRowKey = string | number | symbol;
-export type ITableRowKey = ITableBaseRowKey | ((data: { row: any; rowIndex: number }) => ITableBaseRowKey);
+export type ITableRowKey = ITableBaseRowKey | ((data: { row: ITableData; rowIndex: number }) => ITableBaseRowKey);
 export interface ITableDefaultSort  {
 	prop?: string;
 	order?: ITableColumnSortBy
@@ -49,6 +50,7 @@ export type ITableTreeProps = {
 	children?: string;
 	hasChildren?: string;
 }
+export type ITableTreeMethod = (options: { row: ITableData, resolve: (data: ITableData[]) => void }) => void;
 
 export interface ITableColumnProps {
 	prop?: string;
@@ -62,7 +64,7 @@ export interface ITableColumnProps {
 	sortable?: ITableColumnSortable;
 	sortBy?: ITableColumnSortBy[];
 	resizable?: boolean;
-	formatter?: (row: any) => any;
+	formatter?: (row: ITableData) => any;
 	className?: string;
 	labelClassName?: string;
 	showOverflowTooltip?: boolean;

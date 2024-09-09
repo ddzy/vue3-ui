@@ -1381,7 +1381,7 @@ function toggleRowExpansion() {
 
 ## 树形数据与懒加载
 
-PS：必须指定`row-key`
+PS：必须指定`row-key`，可以通过`treeMethod`方法异步获取表格数据
 
 :::demo
 
@@ -1395,6 +1395,18 @@ PS：必须指定`row-key`
 			children: 'children',
 			hasChildren: 'hasChildren',
 		}"
+		ref="tableRef"
+		rowKey="name"
+		border
+	>
+	</v3-table>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-table
+		:data="data2"
+		:columns="columns"
+		:tree="true"
+		:treeLazyload="true"
+		:treeMethod="treeMethod"
 		ref="tableRef"
 		rowKey="name"
 		border
@@ -1482,6 +1494,49 @@ const data = ref([
 		updater: 'admin',
 	},
 ]);
+const data2 = ref([
+	{
+		name: 'A',
+		age: 20,
+		address: '辽宁省大连市沙河口区',
+		create_time: Date.now(),
+		update_time: Date.now(),
+		updater: 'admin',
+		hasChildren: true,
+	},
+	{
+		name: 'B',
+		age: 34,
+		address: '甘肃省兰州市城关区',
+		create_time: Date.now(),
+		update_time: Date.now(),
+		updater: 'admin',
+	},
+	{
+		name: 'C',
+		age: 25,
+		address: '北京市朝阳区',
+		create_time: Date.now(),
+		update_time: Date.now(),
+		updater: 'admin',
+	},
+	{
+		name: 'D',
+		age: 11,
+		address: '广东省广州市越秀区',
+		create_time: Date.now(),
+		update_time: Date.now(),
+		updater: 'admin',
+	},
+	{
+		name: 'E',
+		age: 33,
+		address: '广东省东莞市南城区',
+		create_time: Date.now(),
+		update_time: Date.now(),
+		updater: 'admin',
+	},
+]);
 const columns = ref([
 	{
 		prop: 'name',
@@ -1516,6 +1571,36 @@ const columns = ref([
 ]);
 
 const tableRef = ref();
+function treeMethod({ row, resolve }) {
+	setTimeout(() => {
+		resolve([
+			{
+				name: 'A-1',
+				age: 30,
+				address: '广东省河源市源城区',
+				create_time: Date.now(),
+				update_time: Date.now(),
+				updater: 'admin',
+			},
+			{
+				name: 'A-2',
+				age: 40,
+				address: '四川省成都市新都区',
+				create_time: Date.now(),
+				update_time: Date.now(),
+				updater: 'admin',
+			},
+			{
+				name: 'A-3',
+				age: 50,
+				address: '湖北省荆州市沙市区',
+				create_time: Date.now(),
+				update_time: Date.now(),
+				updater: 'admin',
+			},
+		]);
+	}, 1000);
+}
 </script>
 ```
 
