@@ -331,13 +331,13 @@ function normalizeFixed(fixed: ITableColumnFixed): string {
 /**
  * 表格数据本地备份（深拷贝）
  */
-const data = ref<any[]>([]);
+const data = ref<ITableData[]>([]);
 watch(
 	() => props.data,
 	(newValue) => {
 		data.value = cloneDeep(newValue);
 	},
-	{ immediate: true },
+	{ immediate: true, deep: true },
 );
 
 /**
@@ -462,6 +462,9 @@ type IFixedCell = Map<number, Set<HTMLElement>>;
 const fixedLeftCells = ref<IFixedCell>(new Map());
 const fixedRightCells = ref<IFixedCell>(new Map());
 function updateFixedLeftCells(el: HTMLElement, index: number) {
+	if (!el) {
+		return;
+	}
 	if (!fixedLeftCells.value.has(index)) {
 		fixedLeftCells.value.set(index, new Set([el]));
 	} else {
@@ -469,19 +472,26 @@ function updateFixedLeftCells(el: HTMLElement, index: number) {
 	}
 }
 function updateFixedRightCells(el: HTMLElement, index: number) {
+	if (!el) {
+		return;
+	}
 	if (!fixedRightCells.value.has(index)) {
 		fixedRightCells.value.set(index, new Set([el]));
 	} else {
 		fixedRightCells.value.get(index)!.add(el);
 	}
 }
-// 固定在左侧的最后一列的下标
+/**
+ * 固定在左侧的最后一列的下标
+ */
 const lastFixedLeftColumnIndex = computed(() => {
 	const keys = [...fixedLeftCells.value.keys()];
 	const last = keys.pop();
 	return isUndefined(last) ? -1 : last;
 });
-// 固定在右侧的第一列的下标
+/**
+ * 固定在右侧的第一列的下标
+ */
 const firstFixedRightColumnIndex = computed(() => {
 	const keys = [...fixedRightCells.value.keys()];
 	const first = keys.shift();
@@ -510,10 +520,17 @@ watch(hasHorizontalScrollbar, async () => {
 		updateFixedColumnShadow();
 	}, 0);
 });
+useResizeObserver(tableBodyRef, () => {
+	updateFixedColumnShadow();
+});
 
-// 纵向滚动条宽度
+/**
+ * 纵向滚动条宽度
+ */
 const verticalScrollbarWidth = ref(0);
-// 横向滚动条宽度
+/**
+ * 横向滚动条宽度
+ */
 const horizontalScrollbarWidth = ref(0);
 function updateScrollbarWidth() {
 	const div = document.createElement('div');
@@ -537,9 +554,13 @@ interface IColumnWidth {
 	isCustom: boolean;
 }
 const COLUMN_DEFAULT_WIDTH = 120;
-// 表体列宽
+/**
+ * 表体列宽
+ */
 const bodyColumnWidths = ref<IColumnWidth[]>([]);
-// 表头列宽（由于表体可能会出现滚动条，挤压位置，所以分开计算）
+/**
+ * 表头列宽（由于表体可能会出现滚动条，挤压位置，所以分开计算）
+ */
 const headerColumnWidths = ref<IColumnWidth[]>([]);
 watch(tableBodyRef, (newValue) => {
 	if (!newValue) {
@@ -608,9 +629,13 @@ interface IFixedColumn {
 	right: number;
 	width: number;
 }
-// 固定在左侧的列
+/**
+ * 固定在左侧的列
+ */
 const fixedLeftColumns = ref<IFixedColumn[]>([]);
-// 固定在右侧的列
+/**
+ * 固定在右侧的列
+ */
 const fixedRightColumns = ref<IFixedColumn[]>([]);
 watch(
 	computedColumns,
