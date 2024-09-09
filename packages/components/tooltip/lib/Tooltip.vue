@@ -24,13 +24,7 @@ export default defineComponent({
 	components: {
 		V3BasePopper,
 	},
-	props: {
-		title: {
-			type: String,
-			default: '',
-		},
-	},
-	setup(props: Required<TYPES.ITooltipProps>, context) {
+	setup(props: TYPES.ITooltipProps, context) {
 		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
 

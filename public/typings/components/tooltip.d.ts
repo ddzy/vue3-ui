@@ -1,7 +1,6 @@
-import { SFCWithInstall } from '../index';
+import { IBasePopperProps, SFCWithInstall } from '../index';
 
-export interface ITooltipProps {
-	title?: string;
+export interface ITooltipProps extends IBasePopperProps {
 }
 
 export const V3Tooltip: SFCWithInstall<ITooltipProps>;

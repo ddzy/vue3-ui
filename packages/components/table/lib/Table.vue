@@ -1232,7 +1232,13 @@ function RecursiveRow(
 															columnIndex: ii,
 														})}
 														{scope.props.showOverflowTooltip && (
-															<V3Tooltip>
+															<V3Tooltip
+																content={
+																	scope.props.formatter
+																		? scope.props.formatter(v)
+																		: v[vv?.props?.prop]
+																}
+															>
 																{scope.props.formatter
 																	? scope.props.formatter(v)
 																	: v[vv?.props?.prop]}
