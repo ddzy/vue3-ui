@@ -1110,6 +1110,7 @@ function RecursiveRow(
 				? v[treeProps.hasChildren]
 				: Array.isArray(v[treeProps.children]) && v[treeProps.children].length;
 			const level = row.root ? row.parentLevel : row.parentLevel + 1;
+			const rowKey = normalizeRowKey(v, i);
 
 			return (
 				<Fragment>
@@ -1117,14 +1118,11 @@ function RecursiveRow(
 						class={[
 							'v3-table__row',
 							`v3-table__row--level-${level}`,
-							normalizeRowKey(v, i) === radioValue ||
-							checkboxValue[normalizeRowKey(v, i)] === true
+							rowKey === radioValue || checkboxValue[rowKey] === true
 								? 'is-selected'
 								: '',
-							expandValue.get(normalizeRowKey(v, i)) ? 'is-expanded' : '',
-							treeValue.get(normalizeRowKey(v, i))?.expanded
-								? 'is-tree-expanded'
-								: '',
+							expandValue.get(rowKey) ? 'is-expanded' : '',
+							treeValue.get(rowKey)?.expanded ? 'is-tree-expanded' : '',
 							typeof props.rowClassName === 'function'
 								? props.rowClassName({ row: v, rowIndex: i })
 								: props.rowClassName,
@@ -1201,13 +1199,13 @@ function RecursiveRow(
 												{/* 树形数据折叠按钮 */}
 												{ii === 0 &&
 													hasChildren &&
-													!treeValue.get(normalizeRowKey(v, i))?.loading &&
+													!treeValue.get(rowKey)?.loading &&
 													h(V3Icon, {
 														type: 'Right',
 														class: 'v3-table__cell-tree-trigger',
 														onClick: () =>
 															loadTreeData(
-																normalizeRowKey(v, i),
+																rowKey,
 																v,
 																i,
 																scope.props,
@@ -1219,7 +1217,7 @@ function RecursiveRow(
 												{/* 树形数据loading按钮 */}
 												{ii === 0 &&
 													hasChildren &&
-													treeValue.get(normalizeRowKey(v, i))?.loading &&
+													treeValue.get(rowKey)?.loading &&
 													h(V3Icon, {
 														type: 'LoadingOne',
 														class: 'v3-table__cell-tree-trigger',
@@ -1258,18 +1256,18 @@ function RecursiveRow(
 														modelValue: radioValue.value,
 														'onUpdate:modelValue': (vvv) =>
 															options.emit('update:modelValue', vvv),
-														label: normalizeRowKey(v, i),
+														label: rowKey,
 														onChange: handleRadioChange,
 													})}
 												{/* 多选框单元格 */}
 												{scope.props.type === 'checkbox' &&
 													h(V3Checkbox, {
-														modelValue: checkboxValue[normalizeRowKey(v, i)],
+														modelValue: checkboxValue[rowKey],
 														'onUpdate:modelValue': (vvv) =>
 															options.emit('update:modelValue', vvv),
 														onChange: ($event) =>
 															handleCheckboxChange(
-																normalizeRowKey(v, i),
+																rowKey,
 																v,
 																scope.props,
 																$event,
@@ -1279,8 +1277,7 @@ function RecursiveRow(
 												{scope.props.type === 'expand' &&
 													h(V3Icon, {
 														type: 'Right',
-														onClick: () =>
-															toggleRowExpansion(normalizeRowKey(v, i)),
+														onClick: () => toggleRowExpansion(rowKey),
 													})}
 											</div>
 										</td>
@@ -1293,9 +1290,7 @@ function RecursiveRow(
 					{computedExpandColumn.value.column && (
 						<tr
 							style={{
-								display: expandValue.get(normalizeRowKey(v, i))
-									? 'table-row'
-									: 'none',
+								display: expandValue.get(rowKey) ? 'table-row' : 'none',
 							}}
 							class="v3-table__row v3-table__row--expansion"
 						>
@@ -1335,8 +1330,8 @@ function RecursiveRow(
 							})}
 						</tr>
 					)}
-					{/* 树形表格 */}
-					{treeValue.get(normalizeRowKey(v, i))?.expanded && (
+					{/* 树形表格子节点（递归） */}
+					{treeValue.get(rowKey)?.expanded && (
 						<RecursiveRow
 							data={v[treeProps.children]}
 							root={false}
