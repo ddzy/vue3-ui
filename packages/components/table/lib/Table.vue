@@ -1227,7 +1227,7 @@ function RecursiveRow(
 												{scope.props.type === 'default' && (
 													<Fragment>
 														{(vv?.children as any)?.default?.({
-															row: i,
+															row: v,
 															rowIndex: i,
 															columnIndex: ii,
 														})}
