@@ -85,7 +85,7 @@
 															: 'auto'
 														: 'auto',
 											}"
-											:ref="(el) => ((tableHeaderCellRefs.push(el as HTMLElement)), (
+											:ref="(el) => ((tableHeaderCellRefs.set(i, el as HTMLElement)), (
 												  normalizeFixed(scope.props.fixed) === 'left'
 														? updateFixedLeftCells(el as HTMLElement, i)
 														: normalizeFixed(scope.props.fixed) === 'right'
@@ -403,8 +403,8 @@ const computedMaxHeight = computed(() => {
 const tableRef = ref<HTMLElement>();
 const tableHeaderRef = ref<HTMLElement>();
 const tableBodyRef = ref<HTMLElement>();
-const tableHeaderCellRefs = ref<HTMLElement[]>([]);
-const tableBodyCellRefs = ref<HTMLElement[]>([]);
+const tableHeaderCellRefs = ref<Map<number, HTMLElement>>(new Map());
+const tableBodyCellRefs = ref<Map<number, HTMLElement>>(new Map());
 
 /**
  * 表格是否出现了纵向滚动条
@@ -757,7 +757,7 @@ useEventListener(document, 'mousemove', (e) => {
 		const diff = subtract(resizerEndPosition, resizerStartPosition.value);
 		// 表体所有列的列宽不能小于最小值
 		bodyColumnWidths.value = bodyColumnWidths.value.map((v, i) => {
-			let width = tableHeaderCellRefs.value[i].offsetWidth;
+			let width = tableHeaderCellRefs.value.get(i)!.offsetWidth;
 			if (i === resizerIndex.value) {
 				width += diff;
 			} else if (i === resizerIndex.value + 1) {
@@ -774,14 +774,17 @@ useEventListener(document, 'mousemove', (e) => {
 		});
 		// 表头所有列的列宽不能小于最小值
 		headerColumnWidths.value = headerColumnWidths.value.map((v, i) => {
-			let width = tableHeaderCellRefs.value[i].offsetWidth;
+			let width = tableHeaderCellRefs.value.get(i)!.offsetWidth;
 			if (i === resizerIndex.value) {
 				width += diff;
 			} else if (i === resizerIndex.value + 1) {
 				width -= diff;
 			}
-			// 表头的最后一列需要加上滚动条宽度，避免表头和表体无法对齐
-			if (i === headerColumnWidths.value.length - 1) {
+			// 表头的最后一列需要加上纵向滚动条宽度，避免表头和表体无法对齐
+			if (
+				i === headerColumnWidths.value.length - 1 &&
+				hasVerticalScrollbar.value
+			) {
 				width += verticalScrollbarWidth.value;
 			}
 			width = Math.max(
@@ -1175,7 +1178,7 @@ function RecursiveRow(
 														: 'auto',
 											}}
 											ref={(el) => (
-												tableBodyCellRefs.value.push(el as HTMLElement),
+												tableBodyCellRefs.value.set(i, el as HTMLElement),
 												normalizeFixed(scope.props.fixed) === 'left'
 													? updateFixedLeftCells(el as HTMLElement, ii)
 													: normalizeFixed(scope.props.fixed) === 'right'
