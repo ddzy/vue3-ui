@@ -9,7 +9,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<ITableColumnProps>(), {
-	/** 对应 data 中的数据 */
+	/** data数据对应key */
 	prop: '',
 	/** 表头标题 */
 	label: '',
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<ITableColumnProps>(), {
 	fixed: false,
 	/** 本列是否可排序 */
 	sortable: false,
-	/** 排序依据的顺序，默认为：（无 => 升序 => 降序...） */
+	/** 排序顺序，默认为：（无 => 升序 => 降序） */
 	sortBy: () => ['none', 'ascending', 'descending'],
 	resizable: false,
 	className: '',

@@ -284,7 +284,7 @@ const props = withDefaults(defineProps<ITableProps>(), {
 	 */
 	treeLazyload: false,
 	/**
-	 * 可以自行指定树形数据使用的key
+	 * 可以自行指定树形数据使用的字段
 	 */
 	treeProps: () => ({
 		// 子数据列表
@@ -968,7 +968,7 @@ function normalizeRowKey(row: any, rowIndex: number) {
 }
 
 /**
- * 【单选表格】设置当前选中的行
+ * 【单选表格】选中某一行
  * @param rowKey
  */
 function setCurrentRow(rowKey: ITableBaseRowKey) {
@@ -1018,6 +1018,12 @@ function toggleAllSelection(selected?: boolean) {
  * 展开的行
  */
 const expandValue = reactive(new Map());
+/**
+ * 切换某一行是否展开
+ * @description 如果指定了第二个参数，那么则强制是否展开
+ * @param rowKey
+ * @param expanded
+ */
 function toggleRowExpansion(rowKey: ITableBaseRowKey, expanded?: boolean) {
 	expandValue.set(
 		rowKey,

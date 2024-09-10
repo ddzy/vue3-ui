@@ -505,7 +505,7 @@ const data = ref([
 
 ## 空状态
 
-可以通过`emptyText`自定义空文本，也可以通过`slot='empty'`自定义空状态显示的内容
+可以通过 `emptyText`自定义空文本，也可以通过 `slot='empty'`自定义空状态显示的内容
 
 :::demo
 
@@ -762,10 +762,10 @@ const columns = ref([
 
 ## 排序
 
-默认为自动排序，可以通过将`sortable`设置为`custom`，并监听`sortChange`事件来自定义排序；
-默认的排序顺序为：无 -> 升序 -> 降序，可以通过`sortBy`指定排序的顺序；
-也可以通过调用`table`提供的`sort`方法，传入`defaultSort`参数来手动排序;
-如果需要清除排序状态并恢复原始数据，可调用`table`提供的`clearSort`方法；
+默认为自动排序，可以通过将 `sortable`设置为 `custom`，并监听 `sortChange`事件来自定义排序；
+默认的排序顺序为：无 -> 升序 -> 降序，可以通过 `sortBy`指定排序的顺序；
+也可以通过调用 `table`提供的 `sort`方法，传入 `defaultSort`参数来手动排序;
+如果需要清除排序状态并恢复原始数据，可调用 `table`提供的 `clearSort`方法；
 
 :::demo
 
@@ -1027,11 +1027,11 @@ const data = [
 
 ## 单选列
 
-通过`type = 'radio'`开启单选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectionRow`属性，高亮当前选中的所有行
+通过 `type = 'radio'`开启单选列，需要注意的是，此时表格必须设置 `rowKey`属性，为每一行指定唯一的标识；同时表格可以开启 `highlightSelectionRow`属性，高亮当前选中的所有行
 
-调用表格的`setCurrentRow`方法，可以手动选中某一行（单选表格）；
-调用表格的`clearSelection`方法，可以清空当前选中的所有行；
-调用表格的`getSelectionRows`方法，获取已选中的行；
+调用表格的 `setCurrentRow`方法，可以手动选中某一行（单选表格）；
+调用表格的 `clearSelection`方法，可以清空当前选中的所有行；
+调用表格的 `getSelectionRows`方法，获取已选中的行；
 
 :::demo
 
@@ -1104,10 +1104,10 @@ function handleSelectionChange(rowKeys: number[]) {
 
 ## 多选列
 
-通过`type = 'checkbox'`开启多选列，需要注意的是，此时表格必须设置`rowKey`属性，为每一行指定唯一的标识；同时表格可以开启`highlightSelectionRow`属性，高亮当前选中的所有行
+通过 `type = 'checkbox'`开启多选列，需要注意的是，此时表格必须设置 `rowKey`属性，为每一行指定唯一的标识；同时表格可以开启 `highlightSelectionRow`属性，高亮当前选中的所有行
 
-调用表格的`toggleRowSelection`方法，可以手动选中某一行（多选表格）；
-调用表格的`clearSelection`方法，可以清空当前选中的所有行；
+调用表格的 `toggleRowSelection`方法，可以手动选中某一行（多选表格）；
+调用表格的 `clearSelection`方法，可以清空当前选中的所有行；
 
 :::demo
 
@@ -1228,9 +1228,9 @@ function handleSelectionChange(rowKeys: string[]) {
 
 ## 展开行
 
-PS：必须指定`row-key`
+PS：必须指定 `row-key`
 
-可以通过`table`提供的`toggleRowExpansion`方法，手动切换行的展开，如果提供第二个参数，可以指定行是否展开
+可以通过 `table`提供的 `toggleRowExpansion`方法，手动切换行的展开，如果提供第二个参数，可以指定行是否展开
 
 :::demo
 
@@ -1369,10 +1369,10 @@ function toggleRowExpansion() {
 
 树形表格有两种形式:
 
-1. 非懒加载, 自动读取`children`字段;
-2. 异步获取, 可让后端设置`hasChildren`字段, 配置是否显示折叠按钮，可以通过`treeMethod`方法异步获取表格数据
+1. 非懒加载, 自动读取 `children`字段;
+2. 异步获取, 可让后端设置 `hasChildren`字段, 配置是否显示折叠按钮，可以通过 `treeMethod`方法异步获取表格数据
 
-PS：必须指定`row-key`
+PS：必须指定 `row-key`
 
 :::demo
 
@@ -1596,3 +1596,73 @@ function treeMethod({ row, node, resolve }) {
 ```
 
 :::
+
+## API
+
+### Table Props
+
+|        参数名         | 说明                                              | 类型                                                           | 可选值 | 默认值                                                                                                                    | 是否必填 |
+| :-------------------: | ------------------------------------------------- | -------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+|         data          | 表格数据源                                        | any[]                                                          |        | []                                                                                                                        |          |
+|        border         | 是否显示边框                                      | boolean                                                        |        | false                                                                                                                     |          |
+|        stripe         | 是否显示条纹                                      | boolean                                                        |        | false                                                                                                                     |          |
+|        height         | 表格高度                                          | string / number                                                |        | 'auto'                                                                                                                    |          |
+|       maxHeight       | 表格最大高度                                      | string / number                                                |        | 'none'                                                                                                                    |          |
+|         size          | 表格尺寸                                          | 'small' / 'medium' / 'lage'                                    |        | 'medium'                                                                                                                  |          |
+|      showHeader       | 是否显示表头                                      | boolean                                                        |        | true                                                                                                                      |          |
+|   highlightHoverRow   | 是否高亮当前 `hover`的行                          | boolean                                                        |        | true                                                                                                                      |          |
+| highlightSelectionRow | 是否高亮已选中的行                                | boolean                                                        |        | false                                                                                                                     |          |
+|     rowClassName      | 自定义行的class                                   | string / Function                                              |        | ''                                                                                                                        |          |
+|     cellClassName     | 自定义单元格的class                               | string / Function                                              |        | ''                                                                                                                        |          |
+|  headerRowClassName   | 自定义表头的class                                 | string / Function                                              |        | ''                                                                                                                        |          |
+|  headerCellClassName  | 自定义表头单元格的class                           | string / Function                                              |        | ''                                                                                                                        |          |
+|        rowKey         | 每一行唯一的标识                                  | ITableBaseRowKey / Function                                    |        | ''                                                                                                                        |          |
+|       emptyText       | 表格为空时展示的文本，也可通过 `slot=empty`自定义 | string                                                         |        | ''                                                                                                                        |          |
+|        loading        | 表格是否加载中                                    | boolean                                                        |        | false                                                                                                                     |          |
+|      defaultSort      | 默认排序的列的顺序                                | {<br /> prop?: string;<br /> order?: ITableColumnSortBy<br />} |        | {<br />  prop: '',<br />  order: 'none',<br /> }                                                                          |          |
+|     treeLazyload      | 树形数据是否懒加载                                | boolean                                                        |        | false                                                                                                                     |          |
+|       treeProps       | 可以自行指定树形数据使用的字段                    | {<br /> children?: string;<br /> hasChildren?: string;<br />}  |        | {<br />  // 子数据列表<br />  children: 'children',<br />  // 该行是否有子数据<br />  hasChildren: 'hasChildren',<br /> } |          |
+|      treeMethod       | 异步获取树形数据                                  | Function                                                       |        |                                                                                                                           |          |
+|        columns        | 表格列                                            | ITableColumn[]                                                 |        | []                                                                                                                        |          |
+
+### Table Exposes
+
+| 属性名             | 说明                                                                             | 类型     |
+| ------------------ | -------------------------------------------------------------------------------- | -------- |
+| sort               | 手动排序                                                                         | Function |
+| clearSort          | 清除排序状态                                                                     | Function |
+| setCurrentRow      | 【单选表格】选中某一行                                                           | Function |
+| clearSelection     | 【单选+多选表格】清空当前选中的所有行                                            | Function |
+| getSelectionRows   | 【单选+多选表格】获取当前选中的所有行                                            | Function |
+| toggleRowSelection | 【多选表格】切换单行的选择状态，如果指定了第二个参数，那么会直接设置该行是否选中 | Function |
+| toggleAllSelection | 【多选表格】切换表头的全选状态，如果指定了第一个参数，那么会直接设置是否选中     | Function |
+| toggleRowExpansion | 切换某一行是否展开，如果指定了第二个参数，那么则强制是否展开                     | Function |
+
+### Table Emits
+
+| 事件名          | 说明                                  | 参数                                                                                                                       |
+| --------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| sortChange      | 当排序状态改变时触发                  | (prop: string, order: ITableColumnSortBy)                                                                                  |
+| selectionChange | 【单选+多选表格】当选择状态改变时触发 | (rowKeys: ITableBaseRowKey[])                                                                                              |
+| selectAll       | 【多选表格】表头全选时触发            | (data: { rowKeys: ITableBaseRowKey[]; column: ITableColumnProps; selected: boolean; })                                     |
+| select          | 【多选表格】选中某一行时触发          | (data: { rowKey: ITableBaseRowKey; rowKeys: ITableBaseRowKey[]; row: any; column: ITableColumnProps; selected: boolean; }) |
+
+### TableColumn Props
+
+| 参数名              | 说明                                     | 类型            | 可选值                                               | 默认值                              | 是否必填 |
+| ------------------- | ---------------------------------------- | --------------- | ---------------------------------------------------- | ----------------------------------- | -------- |
+| prop                | data数据对应key                          | string          |                                                      | ''                                  |          |
+| label               | 表头标题                                 | string          |                                                      | ''                                  |          |
+| type                | 表格列的类型                             | string          | 'default' / 'checkbox' / 'radio' / 'index' / 'expand | 'default'                           |          |
+| align               | 单元格内容的对齐方式                     | string          | 'left' / 'center' / 'right'                          | 'left'                              |          |
+| headerAlign         | 表头单元格内容的对齐方式                 | string          | 'left' / 'center' / 'right'                          | 'left'                              |          |
+| width               | 单元格宽度                               | string / number |                                                      | ''                                  |          |
+| minWidth            | 单元格最小宽度                           | string / number |                                                      | '30'                                |          |
+| fixed               | 是否固定                                 | boolean         |                                                      | false                               |          |
+| sortable            | 是否可排序                               | boolean         |                                                      | false                               |          |
+| sortBy              | 排序顺序，默认为：（无 => 升序 => 降序） | string[]        |                                                      | ['none', 'ascending', 'descending'] |          |
+| resizable           | 表头是否可拖动大小                       | boolean         |                                                      | false                               |          |
+| formatter           | 单元格内容格式化                         | Function        |                                                      |                                     |          |
+| className           | 本列的class                              | string          |                                                      | ''                                  |          |
+| labelClassName      | 本列表头的class                          | string          |                                                      | ''                                  |          |
+| showOverflowTooltip | 单元格内容是否溢出显示tooltip            | boolean         |                                                      | false                               |          |
