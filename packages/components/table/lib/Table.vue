@@ -236,11 +236,9 @@ import {
 
 defineOptions({
 	name: 'V3Table',
-	directives: {
-		[V3LoadingDirective.name]: V3LoadingDirective.directive,
-	},
 });
 
+const vLoading = V3LoadingDirective.directive;
 const props = withDefaults(defineProps<ITableProps>(), {
 	/** 表格数据 */
 	data: () => [],
