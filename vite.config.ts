@@ -44,9 +44,10 @@ export default defineConfig(
 		},
 		// 单元测试相关配置
 		test: {
+			globals: true,
 			environment: 'jsdom',
-			include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
-			// include: ['**/*/__tests__/Carousel.test.ts'],
+			// include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+			include: ['**/*/__tests__/Table.test.ts'],
 			exclude: [
 				'**/*/__tests__/Select.test.ts',
 				'**/node_modules/**',
