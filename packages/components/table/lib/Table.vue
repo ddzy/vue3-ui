@@ -7,7 +7,7 @@
 			'has-border': props.border,
 			'has-vertical-scrollbar': hasVerticalScrollbar,
 			'has-horizontal-scrollbar': hasHorizontalScrollbar,
-			'is-stripe': props.stripe,
+			'has-stripe': props.stripe,
 			'is-resizing': isResizerMouseDown,
 			'highlight-hover-row': props.highlightHoverRow,
 			'highlight-selected-row': props.highlightSelectionRow,

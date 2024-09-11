@@ -35,7 +35,7 @@ $align-map: (left, center, right);
 			}
 		}
 	}
-	&.is-stripe {
+	&.has-stripe {
 		.v3-table__body {
 			tr:nth-child(even) {
 				td {
