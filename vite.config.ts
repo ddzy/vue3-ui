@@ -47,7 +47,7 @@ export default defineConfig(
 			globals: true,
 			environment: 'jsdom',
 			// include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
-			include: ['**/*/__tests__/Table.test.ts'],
+			include: ['**/*/__tests__/Tooltip.test.ts'],
 			exclude: [
 				'**/*/__tests__/Select.test.ts',
 				'**/node_modules/**',

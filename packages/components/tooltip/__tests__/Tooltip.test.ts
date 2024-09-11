@@ -1,12 +1,15 @@
 import { V3Button, V3Tooltip } from '@components/main';
 import { mount } from '@vue/test-utils';
-import { afterEach, describe, expect, test, vi } from 'vitest';
-
-vi.useFakeTimers();
 
 describe('V3Tooltip 组件测试：', () => {
-	// 自动清理 DOM
+	beforeEach(() => {
+		vi.useFakeTimers();
+	});
+
 	afterEach(() => {
+		// 恢复正常定时器
+		vi.useRealTimers();
+		// 自动清理 DOM
 		document.getElementsByTagName('html')[0].innerHTML = '';
 	});
 
@@ -27,8 +30,10 @@ describe('V3Tooltip 组件测试：', () => {
 		});
 
 		await wrapper.find('.is-type-default').trigger('click');
-		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
-		expect(wrapper.find('.v3-base-popper__dropdown').text()).toBe('测试内容');
+		expect(document.querySelector('.v3-base-popper__dropdown')).toBeTruthy();
+		expect(
+			document.querySelector('.v3-base-popper__dropdown')?.textContent?.trim(),
+		).toBe('测试内容');
 	});
 
 	test('V3Tooltip 可以通过传入【slot="content"】来自定义内容', async () => {
@@ -53,8 +58,10 @@ describe('V3Tooltip 组件测试：', () => {
 		});
 
 		await wrapper.find('.is-type-default').trigger('click');
-		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
-		expect(wrapper.find('.v3-base-popper__dropdown').text()).toBe(
+		expect(document.querySelector('.v3-base-popper__dropdown')).toBeTruthy();
+		expect(
+			document.querySelector('.v3-base-popper__dropdown')?.textContent?.trim(),
+		).toBe(
 			'听过这样一句话，并不是每一条鱼，都生活在同一片海里。每个人都有自己的幸福阈值，如鱼饮水，冷暖自知。若用自己的经验随意去评价他人的生活，只会给彼此带来麻烦和困扰',
 		);
 	});
@@ -77,7 +84,7 @@ describe('V3Tooltip 组件测试：', () => {
 		});
 
 		await wrapper.find('.is-type-default').trigger('click');
-		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
+		expect(document.querySelector('.v3-base-popper__dropdown')).toBeFalsy();
 	});
 
 	test('V3Tooltip 可以传入【delay】配置项，用来自定义 tooltip 显示/隐藏的延时', async () => {
@@ -104,10 +111,10 @@ describe('V3Tooltip 组件测试：', () => {
 		}
 
 		await wrapper.find('.is-type-default').trigger('click');
-		expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeFalsy();
+		expect(document.querySelector('.v3-base-popper__dropdown')).toBeFalsy();
 
 		doAsync(() => {
-			expect(wrapper.find('.v3-base-popper__dropdown').exists()).toBeTruthy();
+			expect(document.querySelector('.v3-base-popper__dropdown')).toBeTruthy();
 		});
 
 		vi.advanceTimersByTime(1000);
