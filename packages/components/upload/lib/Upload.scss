@@ -1,6 +1,82 @@
+:root {
+	--v3-upload-item-padding: #{$padding-small} 0;
+}
+
+$status-list: (
+	pending: (
+		color: $font-color-default,
+		hover-color: $font-color-default,
+		background-color: #fff,
+		hover-background-color: $hover-background-color-default,
+		progress-background-color: transparent,
+	),
+	uploading: (
+		color: $font-color-default,
+		hover-color: $primary-color,
+		background-color: #fff,
+		hover-background-color: $primary-color-plain,
+		progress-background-color: $primary-color,
+	),
+	success: (
+		color: $font-color-default,
+		hover-color: $success-color,
+		background-color: #fff,
+		hover-background-color: $success-color-plain,
+		progress-background-color: $success-color,
+	),
+	failed: (
+		color: $font-color-default,
+		hover-color: $danger-color,
+		background-color: #fff,
+		hover-background-color: $danger-color-plain,
+		progress-background-color: $danger-color,
+	),
+);
+
 .v3-upload {
-	.v3-upload__trigger {
+	.v3-upload__list-wrapper {
+		margin-top: $margin-small;
 	}
-	.v3-upload__list {
+	@each $key, $value in $status-list {
+		.v3-upload__item {
+			&.is-#{$key} {
+				position: relative;
+				display: flex;
+				align-items: center;
+				padding: var(--v3-upload-item-padding);
+				color: map-get($map: $value, $key: color);
+				background-color: map-get($map: $value, $key: background-color);
+				&:hover {
+					color: map-get($map: $value, $key: hover-color);
+					background-color: map-get($map: $value, $key: hover-background-color);
+				}
+				.v3-icon {
+					cursor: pointer;
+				}
+				&::after {
+					position: absolute;
+					content: '';
+					left: 0;
+					right: 0;
+					bottom: 0;
+					height: 2px;
+					background-color: map-get(
+						$map: $value,
+						$key: progress-background-color
+					);
+				}
+			}
+		}
+	}
+	.v3-upload__item-name {
+		margin-left: 4px;
+	}
+	.v3-upload__item-preview,
+	.v3-upload__item-download,
+	.v3-upload__item-delete {
+		margin-right: $margin-small;
+	}
+	.v3-upload__item-preview {
+		margin-left: auto;
 	}
 }

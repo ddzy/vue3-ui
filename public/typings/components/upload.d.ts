@@ -22,10 +22,10 @@ export interface IUploadProps {
   showPreviewButton?: boolean;
   showCancelButton?: boolean;
   showDownloadButton?: boolean;
-  showRemoveButton?: boolean;
+  showDeleteButton?: boolean;
   showRetryButton?: boolean;
   onPreview?: (file: IUploadFile) => void;
-  onRemove?: (file: IUploadFile) => void;
+  onDelete?: (file: IUploadFile) => void;
   onSuccess?: (file: IUploadFile) => void;
   onFailed?: (file: IUploadFile) => void;
   onProgress?: (file: IUploadFile) => void;

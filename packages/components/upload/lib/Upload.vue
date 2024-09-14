@@ -11,9 +11,28 @@
 		<div class="v3-upload__trigger" @click="handleTrigger">
 			<slot></slot>
 		</div>
-		<div class="v3-upload__list">
-			<ul class="v3-upload__list-inner">
-				<li class="v3-upload__item"></li>
+		<div class="v3-upload__list-wrapper">
+			<ul class="v3-upload__list">
+				<li
+					v-for="(v, i) in fileList"
+					:key="i"
+					:class="['v3-upload__item', `is-${v.status}`]"
+				>
+					<V3Icon type="Link" class="v3-upload__item-thumb" />
+					<span class="v3-upload__item-name">{{ v.name }}</span>
+					<V3Icon
+						type="PreviewOpen"
+						class="v3-upload__item-preview"
+						title="预览"
+					/>
+					<V3Icon
+						type="Download"
+						class="v3-upload__item-download"
+						title="下载"
+					/>
+					<V3Icon type="Delete" class="v3-upload__item-delete" title="删除" />
+					<V3Icon type="Redo" class="v3-upload__item-retry" title="重试" />
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -21,6 +40,7 @@
 <script lang="tsx" setup>
 import { getCurrentInstance, ref, watch } from 'vue';
 
+import { V3Icon } from '@components/main';
 import { IUploadFile, IUploadProps } from '@typings/index';
 
 defineOptions({
@@ -47,7 +67,7 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 	showRemoveButton: true,
 	showRetryButton: true,
 	onPreview: undefined,
-	onRemove: undefined,
+	onDelete: undefined,
 	onSuccess: undefined,
 	onFailed: undefined,
 	onProgress: undefined,

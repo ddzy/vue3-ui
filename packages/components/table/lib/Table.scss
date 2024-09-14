@@ -6,7 +6,7 @@ $align-map: (left, center, right);
 	--v3-table-border-color: #{$border-color-small};
 	--v3-table-border: 1px solid var(--v3-table-border-color);
 	--v3-table-even-background-color: #f9f9f9;
-	--v3-table-hover-background-color: #f3f6f9;
+	--v3-table-hover-background-color: #{$hover-background-color-default};
 	--v3-table-header-background-color: #f7f8f9;
 	--v3-table-resizer-background-color: #ddd;
 	--v3-table-selected-background-color: rgba(223, 243, 255, 0.5);
