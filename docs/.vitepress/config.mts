@@ -105,6 +105,10 @@ export default defineConfig({
 							text: 'Switch 开关',
 							link: '/components/switch',
 						},
+						{
+							text: 'Upload 上传',
+							link: '/components/upload',
+						},
 					],
 				},
 				{
