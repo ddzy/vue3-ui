@@ -25,6 +25,8 @@ export {
 	Dollar,
 	Down,
 	Drag,
+	Download,
+	DownloadOne,
 	EditTwo,
 	Female,
 	Gift,

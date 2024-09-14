@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
   import { reactive, watch, getCurrentInstance } from 'vue';
-  import { useClipboard } from '@hooks/index'; 
+  import { useClipboard } from '@hooks/index';
 
   const clipboard = useClipboard();
   const app = getCurrentInstance().proxy;
@@ -229,10 +229,6 @@
         name: "Send",
       },
       {
-        _id: "Upload",
-        name: "Upload",
-      },
-      {
         _id: "Code",
         name: "Code",
       },
@@ -411,6 +407,14 @@
       {
         _id: "DownOne",
         name: "DownOne",
+      },
+      {
+        _id: "Download",
+        name: "Download",
+      },
+      {
+        _id: "DownloadOne",
+        name: "DownloadOne",
       },
     ]
   })
