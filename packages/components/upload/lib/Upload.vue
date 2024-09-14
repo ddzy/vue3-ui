@@ -40,8 +40,10 @@
 <script lang="tsx" setup>
 import { getCurrentInstance, ref, watch } from 'vue';
 
+import { divide } from '@common/utils';
 import { V3Icon } from '@components/main';
 import { IUploadFile, IUploadProps } from '@typings/index';
+import { forOwn, isFunction, isPlainObject } from 'lodash-es';
 
 defineOptions({
 	name: 'V3Upload',
@@ -100,6 +102,54 @@ function handleChange(e: Event) {
 		}) as IUploadFile;
 	});
 	fileList.value = fileList.value.concat(files);
+
+	if (props.autoUpload) {
+		startUpload();
+	}
+}
+
+function handleSuccess() {}
+
+function handleFailed() {}
+
+function handleProgress(percentage: number) {}
+
+function handleDelete() {}
+
+function handlePreview() {}
+
+async function startUpload() {
+	fileList.value.forEach(async (file) => {
+		// 上传前预处理
+		let canUpload = true;
+		if (isFunction(props.beforeUpload)) {
+			canUpload = await props.beforeUpload!(file);
+		}
+		if (canUpload) {
+			const xhr = new XMLHttpRequest();
+			xhr.open(props.method, props.action);
+			if (isPlainObject(props.headers)) {
+				forOwn(props.headers, (v, k) => {
+					xhr.setRequestHeader(k, v);
+				});
+			}
+			xhr.addEventListener('load', (e) => {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					handleSuccess();
+				}
+			});
+			xhr.addEventListener('error', (e) => {
+				handleFailed();
+			});
+			xhr.addEventListener('progress', (e) => {
+				if (e.lengthComputable) {
+					let percentage = divide(e.loaded, e.total);
+					handleProgress(percentage);
+				}
+			});
+			xhr.send();
+		}
+	});
 }
 </script>
 <style lang="scss">
