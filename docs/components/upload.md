@@ -120,3 +120,28 @@ function startUpload() {
 ```
 
 :::
+
+## 删除文件
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:onRemove="onRemove"
+		:multiple="true"
+	>
+		<v3-button>选择文件</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+function onRemove({ file }) {
+	alert(`删除成功：${file.raw.name}`);
+}
+</script>
+```
+
+:::

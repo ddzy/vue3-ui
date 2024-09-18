@@ -50,8 +50,9 @@
 						<V3Icon
 							v-if="v.status !== 'pending' && v.status !== 'uploading'"
 							type="Delete"
-							class="v3-upload__item-delete"
+							class="v3-upload__item-remove"
 							title="删除"
+							@click="handleRemove(v, i)"
 						/>
 						<V3Icon
 							v-if="v.status === 'failed'"
@@ -158,7 +159,7 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 	/**
 	 * 点击删除按钮时触发
 	 */
-	onDelete: undefined,
+	onRemove: undefined,
 	/**
 	 * 上传成功后触发
 	 */
@@ -210,7 +211,13 @@ function handleChange(e: Event) {
 	}
 }
 
-function handleDelete() {}
+function handleRemove(file: IUploadFile, fileIndex: number) {
+	file.status = 'removed';
+	fileList.value = fileList.value.filter((v) => v !== file);
+	if (props.onRemove) {
+		props.onRemove({ file });
+	}
+}
 
 function handlePreview() {}
 

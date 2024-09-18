@@ -25,7 +25,7 @@ export interface IUploadProps {
   showDeleteButton?: boolean;
   showRetryButton?: boolean;
   onPreview?: (options: {file: IUploadFile}) => void;
-  onDelete?: (options: {file: IUploadFile}) => void;
+  onRemove?: (options: {file: IUploadFile}) => void;
   onSuccess?: (options: {file: IUploadFile}) => void;
   onFailed?: (options: {file: IUploadFile}) => void;
   onProgress?: (options: {file: IUploadFile, progress: number}) => void;
