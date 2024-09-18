@@ -40,6 +40,7 @@
 							type="PreviewOpen"
 							class="v3-upload__item-preview"
 							title="预览"
+							@click="handlePreview(v, i)"
 						/>
 						<V3Icon
 							v-if="v.status === 'success'"
@@ -211,15 +212,22 @@ function handleChange(e: Event) {
 	}
 }
 
-function handleRemove(file: IUploadFile, fileIndex: number) {
-	file.status = 'removed';
-	fileList.value = fileList.value.filter((v) => v !== file);
+async function handleRemove(file: IUploadFile, fileIndex: number) {
+	let canRemove = true;
 	if (props.onRemove) {
-		props.onRemove({ file });
+		try {
+			canRemove = await props.onRemove({ file });
+		} catch (error) {
+			canRemove = false;
+		}
+	}
+	if (canRemove !== false) {
+		file.status = 'removed';
+		fileList.value = fileList.value.filter((v) => v !== file);
 	}
 }
 
-function handlePreview() {}
+function handlePreview(file: IUploadFile, fileIndex: number) {}
 
 function handleRetry(file: IUploadFile, fileIndex: number) {
 	file.status = 'pending';

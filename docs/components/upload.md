@@ -123,6 +123,8 @@ function startUpload() {
 
 ## 删除文件
 
+点击删除按钮时触发`onRemove`方法，该方法返回`false`或者`Promise<false>`或者`Promise.reject()`则阻止删除
+
 :::demo
 
 ```vue
@@ -134,12 +136,24 @@ function startUpload() {
 	>
 		<v3-button>选择文件</v3-button>
 	</v3-upload>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:onRemove="onStopRemove"
+		:multiple="true"
+	>
+		<v3-button>选择文件</v3-button>
+	</v3-upload>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
 function onRemove({ file }) {
 	alert(`删除成功：${file.raw.name}`);
+}
+
+function onStopRemove({ file }) {
+	return false;
 }
 </script>
 ```
