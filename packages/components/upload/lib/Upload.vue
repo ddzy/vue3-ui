@@ -21,7 +21,19 @@
 						'--progress': isNumber(v.progress) ? `${multiply(subtract(1, v.progress!), 100)}%` : 'auto',
 					}"
 				>
-					<V3Icon type="Link" class="v3-upload__item-thumb" />
+					<V3Icon
+						:type="
+							v.status === 'success'
+								? 'CheckOne'
+								: v.status === 'failed'
+									? 'CloseOne'
+									: v.status === 'uploading'
+										? 'LoadingOne'
+										: 'Link'
+						"
+						:spin="v.status === 'uploading'"
+						class="v3-upload__item-thumb"
+					/>
 					<span class="v3-upload__item-name">{{ v.name }}</span>
 					<div class="v3-upload__item-action">
 						<V3Icon

@@ -4,6 +4,7 @@
 
 $status-list: (
 	pending: (
+		thumb-color: $font-color-default,
 		color: $font-color-default,
 		hover-color: $font-color-default,
 		background-color: #fff,
@@ -12,6 +13,7 @@ $status-list: (
 		progress-height: 0,
 	),
 	uploading: (
+		thumb-color: $font-color-default,
 		color: $font-color-default,
 		hover-color: $primary-color,
 		background-color: #fff,
@@ -20,6 +22,7 @@ $status-list: (
 		progress-height: 2px,
 	),
 	success: (
+		thumb-color: $success-color,
 		color: $font-color-default,
 		hover-color: $success-color,
 		background-color: #fff,
@@ -28,6 +31,7 @@ $status-list: (
 		progress-height: 0,
 	),
 	failed: (
+		thumb-color: $danger-color,
 		color: $danger-color,
 		hover-color: $danger-color,
 		background-color: #fff,
@@ -65,6 +69,9 @@ $status-list: (
 						$key: progress-background-color
 					);
 					transition: right 0.3s ease;
+				}
+				.v3-upload__item-thumb {
+					color: map-get($map: $value, $key: thumb-color);
 				}
 			}
 		}
