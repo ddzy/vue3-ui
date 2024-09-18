@@ -23,18 +23,33 @@
 				>
 					<V3Icon type="Link" class="v3-upload__item-thumb" />
 					<span class="v3-upload__item-name">{{ v.name }}</span>
-					<V3Icon
-						type="PreviewOpen"
-						class="v3-upload__item-preview"
-						title="预览"
-					/>
-					<V3Icon
-						type="Download"
-						class="v3-upload__item-download"
-						title="下载"
-					/>
-					<V3Icon type="Delete" class="v3-upload__item-delete" title="删除" />
-					<V3Icon type="Redo" class="v3-upload__item-retry" title="重试" />
+					<div class="v3-upload__item-action">
+						<V3Icon
+							v-if="v.status === 'success'"
+							type="PreviewOpen"
+							class="v3-upload__item-preview"
+							title="预览"
+						/>
+						<V3Icon
+							v-if="v.status === 'success'"
+							type="Download"
+							class="v3-upload__item-download"
+							title="下载"
+						/>
+						<V3Icon
+							v-if="v.status !== 'pending' && v.status !== 'uploading'"
+							type="Delete"
+							class="v3-upload__item-delete"
+							title="删除"
+						/>
+						<V3Icon
+							v-if="v.status === 'failed'"
+							type="Redo"
+							class="v3-upload__item-retry"
+							title="重试"
+							@click="handleRetry(v, i)"
+						/>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -186,6 +201,13 @@ function handleChange(e: Event) {
 function handleDelete() {}
 
 function handlePreview() {}
+
+function handleRetry(file: IUploadFile, fileIndex: number) {
+	file.status = 'pending';
+	file.progress = 0;
+	fileList.value = fileList.value.slice();
+	startUpload();
+}
 
 function handleSuccess(file: IUploadFile) {
 	file.status = 'success';

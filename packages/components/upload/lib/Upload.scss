@@ -68,12 +68,14 @@ $status-list: (
 	.v3-upload__item-name {
 		margin-left: 4px;
 	}
-	.v3-upload__item-preview,
-	.v3-upload__item-download,
-	.v3-upload__item-delete {
-		margin-right: $margin-small;
-	}
-	.v3-upload__item-preview {
+	.v3-upload__item-action {
+		display: flex;
+		align-items: center;
 		margin-left: auto;
+		& > .v3-icon {
+			&:not(:last-child) {
+				margin-right: $margin-small;
+			}
+		}
 	}
 }
