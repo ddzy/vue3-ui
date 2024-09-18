@@ -25,7 +25,6 @@
 					<span class="v3-upload__item-name">{{ v.name }}</span>
 					<div class="v3-upload__item-action">
 						<V3Icon
-							v-if="v.status === 'success'"
 							type="PreviewOpen"
 							class="v3-upload__item-preview"
 							title="预览"
@@ -311,6 +310,10 @@ async function startUpload() {
 			}
 		});
 }
+
+defineExpose({
+	startUpload,
+});
 </script>
 <style lang="scss">
 @import './Upload.scss';

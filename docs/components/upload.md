@@ -89,3 +89,34 @@ async function customUploadFailed({ file, onSuccess, onFailed, onProgress }) {
 ```
 
 :::
+
+## 手动上传
+
+通过调用组件暴露的`startUpload`方法来手动上传文件
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		ref="uploadRef"
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		method="post"
+		:autoUpload="false"
+	>
+		<v3-button>选择文件</v3-button>
+	</v3-upload>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-button type="success" @click="startUpload">上传</v3-button>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const uploadRef = ref();
+function startUpload() {
+	uploadRef.value?.startUpload();
+}
+</script>
+```
+
+:::
