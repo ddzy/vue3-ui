@@ -44,3 +44,48 @@ function onFailed({ file }) {
 ```
 
 :::
+
+## 自定义上传
+
+可以通过`customRequest`方法自定义上传，此时`beforeUpload`依然有效，并且需要在上传时自行调用`onSuccess`等方法更改上传状态
+
+:::demo
+
+```vue
+<template>
+	<v3-upload action="#" :customUpload="customUploading">
+		<v3-button icon="Upload">上传中</v3-button>
+	</v3-upload>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-upload action="#" :customUpload="customUploadSuccess">
+		<v3-button icon="Upload">上传成功</v3-button>
+	</v3-upload>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-upload action="#" :customUpload="customUploadFailed">
+		<v3-button icon="Upload">上传失败</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+async function customUploading({ file, onSuccess, onFailed, onProgress }) {
+	for (let i = 0; i <= 100; i++) {
+		setTimeout(() => {
+			onProgress(i / 100);
+		}, i);
+	}
+}
+async function customUploadSuccess({ file, onSuccess, onFailed, onProgress }) {
+	setTimeout(() => {
+		onSuccess();
+	}, 1000);
+}
+async function customUploadFailed({ file, onSuccess, onFailed, onProgress }) {
+	setTimeout(() => {
+		onFailed();
+	}, 1000);
+}
+</script>
+```
+
+:::

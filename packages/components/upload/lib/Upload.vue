@@ -209,29 +209,38 @@ function handleRetry(file: IUploadFile, fileIndex: number) {
 	startUpload();
 }
 
-function handleSuccess(file: IUploadFile) {
+/**
+ * 文件上传成功
+ * @param file 文件对象
+ * @param shouldTrigger 是否需要调用传入的`onSuccess`回调
+ */
+function handleSuccess(file: IUploadFile, shouldTrigger: boolean = true) {
 	file.status = 'success';
 	file.progress = 1;
 	fileList.value = fileList.value.slice();
-	if (props.onSuccess) {
+	if (props.onSuccess && shouldTrigger) {
 		props.onSuccess({ file });
 	}
 }
 
-function handleFailed(file: IUploadFile) {
+function handleFailed(file: IUploadFile, shouldTrigger: boolean = true) {
 	file.status = 'failed';
 	file.progress = 1;
 	fileList.value = fileList.value.slice();
-	if (props.onFailed) {
+	if (props.onFailed && shouldTrigger) {
 		props.onFailed({ file });
 	}
 }
 
-function handleProgress(file: IUploadFile, progress: number) {
+function handleProgress(
+	file: IUploadFile,
+	progress: number,
+	shouldTrigger: boolean = true,
+) {
 	file.status = 'uploading';
 	file.progress = progress;
 	fileList.value = fileList.value.slice();
-	if (props.onProgress) {
+	if (props.onProgress && shouldTrigger) {
 		props.onProgress({ file, progress });
 	}
 }
@@ -247,42 +256,58 @@ async function startUpload() {
 				canUpload = await props.beforeUpload!(file);
 			}
 			if (canUpload) {
-				const formData = new FormData();
-				formData.append(props.name, file);
-				if (props.params) {
-					forOwn(props.params, (v, k) => {
-						formData.append(k, v);
+				if (props.customUpload) {
+					// 如果是自定义上传
+					props.customUpload({
+						file,
+						onSuccess() {
+							handleSuccess(file, false);
+						},
+						onFailed() {
+							handleFailed(file, false);
+						},
+						onProgress(progress) {
+							handleProgress(file, progress, false);
+						},
 					});
-				}
-				const headers: IUploadHeader = {
-					...(props.headers || {}),
-					'Content-Type': 'multipart/form-data',
-				};
+				} else {
+					const formData = new FormData();
+					formData.append(props.name, file);
+					if (props.params) {
+						forOwn(props.params, (v, k) => {
+							formData.append(k, v);
+						});
+					}
+					const headers: IUploadHeader = {
+						...(props.headers || {}),
+						'Content-Type': 'multipart/form-data',
+					};
 
-				const xhr = new XMLHttpRequest();
-				xhr.open(props.method, props.action, true);
-				if (isPlainObject(headers)) {
-					forOwn(headers, (v, k) => {
-						xhr.setRequestHeader(k, v);
+					const xhr = new XMLHttpRequest();
+					xhr.open(props.method, props.action, true);
+					if (isPlainObject(headers)) {
+						forOwn(headers, (v, k) => {
+							xhr.setRequestHeader(k, v);
+						});
+					}
+					xhr.addEventListener('load', (e) => {
+						if (xhr.readyState === 4 && xhr.status === 200) {
+							handleSuccess(file);
+						} else {
+							handleFailed(file);
+						}
 					});
-				}
-				xhr.addEventListener('load', (e) => {
-					if (xhr.readyState === 4 && xhr.status === 200) {
-						handleSuccess(file);
-					} else {
+					xhr.upload.addEventListener('error', (e) => {
 						handleFailed(file);
-					}
-				});
-				xhr.upload.addEventListener('error', (e) => {
-					handleFailed(file);
-				});
-				xhr.upload.addEventListener('progress', (e) => {
-					if (e.lengthComputable) {
-						let progress = divide(e.loaded, e.total);
-						handleProgress(file, progress);
-					}
-				});
-				xhr.send(formData);
+					});
+					xhr.upload.addEventListener('progress', (e) => {
+						if (e.lengthComputable) {
+							let progress = divide(e.loaded, e.total);
+							handleProgress(file, progress);
+						}
+					});
+					xhr.send(formData);
+				}
 			}
 		});
 }
