@@ -190,28 +190,28 @@ function handlePreview() {}
 function handleSuccess(file: IUploadFile) {
 	file.status = 'success';
 	file.progress = 1;
+	fileList.value = fileList.value.slice();
 	if (props.onSuccess) {
 		props.onSuccess({ file });
 	}
-	fileList.value = fileList.value.slice();
 }
 
 function handleFailed(file: IUploadFile) {
 	file.status = 'failed';
 	file.progress = 1;
-	if (props.onSuccess) {
-		props.onSuccess({ file });
-	}
 	fileList.value = fileList.value.slice();
+	if (props.onFailed) {
+		props.onFailed({ file });
+	}
 }
 
 function handleProgress(file: IUploadFile, progress: number) {
 	file.status = 'uploading';
 	file.progress = progress;
+	fileList.value = fileList.value.slice();
 	if (props.onProgress) {
 		props.onProgress({ file, progress });
 	}
-	fileList.value = fileList.value.slice();
 }
 
 async function startUpload() {
