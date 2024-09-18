@@ -5,12 +5,13 @@ export interface IUploadProps {
   method?: string;
   accpet?: string;
   headers?: IUploadHeader;
+  params?: Record<string, string>;
   autoUpload?: boolean;
   beforeUpload?: (file: IUploadFile) => boolean | Promise<boolean>;
   customUpload?: (options: {
     onSuccess: () => void;
     onFailed: () => void;
-    onProgress: (percentage: number) => void;
+    onProgress: (progress: number) => void;
     file: IUploadFile;
   }) => void;
   fileList?: IUploadFile[];
@@ -20,20 +21,19 @@ export interface IUploadProps {
   multiple?: boolean;
   name?: string;
   showPreviewButton?: boolean;
-  showCancelButton?: boolean;
   showDownloadButton?: boolean;
   showDeleteButton?: boolean;
   showRetryButton?: boolean;
-  onPreview?: (file: IUploadFile) => void;
-  onDelete?: (file: IUploadFile) => void;
-  onSuccess?: (file: IUploadFile) => void;
-  onFailed?: (file: IUploadFile) => void;
-  onProgress?: (file: IUploadFile) => void;
-  onChange?: (file: IUploadFile) => void;
+  onPreview?: (options: {file: IUploadFile}) => void;
+  onDelete?: (options: {file: IUploadFile}) => void;
+  onSuccess?: (options: {file: IUploadFile}) => void;
+  onFailed?: (options: {file: IUploadFile}) => void;
+  onProgress?: (options: {file: IUploadFile, progress: number}) => void;
+  onChange?: (options: {file: IUploadFile}) => void;
 }
 export type IUploadFile = File & {
   status?: IUploadFileStatus;
-  percentage?: number;
+  progress?: number;
 };
 export type IUploadHeader = Record<string, string>;
 export type IUploadListType = 'text' | 'thumb' | 'image-card'
