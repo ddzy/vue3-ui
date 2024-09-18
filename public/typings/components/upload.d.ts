@@ -31,9 +31,10 @@ export interface IUploadProps {
   onProgress?: (options: {file: IUploadFile, progress: number}) => void;
   onChange?: (options: {file: IUploadFile}) => void;
 }
-export type IUploadFile = File & {
-  status?: IUploadFileStatus;
-  progress?: number;
+export type IUploadFile = {
+  status: IUploadFileStatus;
+  progress: number;
+  raw: File;
 };
 export type IUploadHeader = Record<string, string>;
 export type IUploadListType = 'text' | 'thumb' | 'image-card'

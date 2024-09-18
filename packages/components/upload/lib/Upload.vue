@@ -34,7 +34,7 @@
 						:spin="v.status === 'uploading'"
 						class="v3-upload__item-thumb"
 					/>
-					<span class="v3-upload__item-name">{{ v.name }}</span>
+					<span class="v3-upload__item-name">{{ v.raw.name }}</span>
 					<div class="v3-upload__item-action">
 						<V3Icon
 							type="PreviewOpen"
@@ -197,10 +197,11 @@ function handleChange(e: Event) {
 	const target = e.target as HTMLInputElement;
 	const rawFiles = target.files ? Array.from(target.files) : [];
 	const files: IUploadFile[] = rawFiles.map((v) => {
-		return Object.assign(v, {
+		return {
 			status: 'pending',
 			progress: 0,
-		}) as IUploadFile;
+			raw: v,
+		} as IUploadFile;
 	});
 	fileList.value = fileList.value.concat(files);
 
@@ -283,7 +284,7 @@ async function startUpload() {
 					});
 				} else {
 					const formData = new FormData();
-					formData.append(props.name, file);
+					formData.append(props.name, file.raw);
 					if (props.params) {
 						forOwn(props.params, (v, k) => {
 							formData.append(k, v);

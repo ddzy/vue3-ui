@@ -30,14 +30,14 @@ const app = getCurrentInstance()!.proxy;
 function onSuccess({ file }) {
 	app?.$message?.({
 		type: 'success',
-		message: `上传成功：${file.name}`,
+		message: `上传成功：${file.raw.name}`,
 	});
 }
 
 function onFailed({ file }) {
 	app?.$message?.({
 		type: 'danger',
-		message: `上传失败：${file.name}`,
+		message: `上传失败：${file.raw.name}`,
 	});
 }
 </script>
