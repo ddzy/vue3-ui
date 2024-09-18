@@ -1,5 +1,5 @@
 :root {
-	--v3-upload-item-padding: #{$padding-medium} 0;
+	--v3-upload-item-padding: #{$padding-small} 0;
 }
 
 $status-list: (
@@ -9,6 +9,7 @@ $status-list: (
 		background-color: #fff,
 		hover-background-color: $hover-background-color-default,
 		progress-background-color: transparent,
+		progress-height: 0,
 	),
 	uploading: (
 		color: $font-color-default,
@@ -16,20 +17,23 @@ $status-list: (
 		background-color: #fff,
 		hover-background-color: $primary-color-plain,
 		progress-background-color: $primary-color,
+		progress-height: 2px,
 	),
 	success: (
 		color: $font-color-default,
 		hover-color: $success-color,
 		background-color: #fff,
 		hover-background-color: $success-color-plain,
-		progress-background-color: $success-color,
+		progress-background-color: transparent,
+		progress-height: 0,
 	),
 	failed: (
-		color: $font-color-default,
+		color: $danger-color,
 		hover-color: $danger-color,
 		background-color: #fff,
 		hover-background-color: $danger-color-plain,
-		progress-background-color: $danger-color,
+		progress-background-color: transparent,
+		progress-height: 0px,
 	),
 );
 
@@ -55,7 +59,7 @@ $status-list: (
 					left: 0;
 					right: var(--progress);
 					bottom: 0;
-					height: 2px;
+					height: map-get($map: $value, $key: progress-height);
 					background-color: map-get(
 						$map: $value,
 						$key: progress-background-color
