@@ -66,14 +66,31 @@
 				</li>
 			</ul>
 		</div>
+
+		<V3Dialog v-model="showPreviewDialog">
+			<img
+				v-if="currentFile?.raw.type.startsWith('image/')"
+				:src="previewUrl"
+				alt=""
+			/>
+			<video
+				v-if="currentFile?.raw.type.startsWith('video/')"
+				:src="previewUrl"
+				alt=""
+				autoplay
+				controls
+				muted
+			/>
+		</V3Dialog>
 	</div>
 </template>
 <script lang="tsx" setup>
 import { getCurrentInstance, ref, watch } from 'vue';
 
 import { divide, multiply, subtract } from '@common/utils';
-import { V3Icon } from '@components/main';
+import { V3Dialog, V3Icon } from '@components/main';
 import { IUploadFile, IUploadHeader, IUploadProps } from '@typings/index';
+import { useObjectUrl } from '@vueuse/core';
 import { forOwn, isFunction, isNumber, isPlainObject } from 'lodash-es';
 
 defineOptions({
@@ -154,11 +171,11 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 	 */
 	showRetryButton: true,
 	/**
-	 * 点击预览按钮时触发
+	 * 自定义预览
 	 */
 	onPreview: undefined,
 	/**
-	 * 点击删除按钮时触发
+	 * 删除文件（可返回false、Promise<false>、Promise.reject来阻止删除）
 	 */
 	onRemove: undefined,
 	/**
@@ -212,6 +229,8 @@ function handleChange(e: Event) {
 	}
 }
 
+const currentFile = ref<IUploadFile>();
+
 async function handleRemove(file: IUploadFile, fileIndex: number) {
 	let canRemove = true;
 	if (props.onRemove) {
@@ -227,7 +246,27 @@ async function handleRemove(file: IUploadFile, fileIndex: number) {
 	}
 }
 
-function handlePreview(file: IUploadFile, fileIndex: number) {}
+/**
+ * 图片预览
+ */
+const showPreviewDialog = ref(false);
+const previewUrl = ref<string>('');
+function handlePreview(file: IUploadFile, fileIndex: number) {
+	if (props.onPreview) {
+		props.onPreview({ file });
+	} else {
+		const fileType = file.raw.type;
+		currentFile.value = file;
+		previewUrl.value = useObjectUrl(file?.raw).value || '';
+		// 图片和视频用弹窗预览
+		if (fileType.startsWith('image/') || fileType.startsWith('video/')) {
+			showPreviewDialog.value = true;
+		} else {
+			// 其它文件在新标签页预览
+			window.open(previewUrl.value, '_blank');
+		}
+	}
+}
 
 function handleRetry(file: IUploadFile, fileIndex: number) {
 	file.status = 'pending';

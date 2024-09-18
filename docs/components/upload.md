@@ -159,3 +159,29 @@ function onStopRemove({ file }) {
 ```
 
 :::
+
+## 文件预览
+
+可以通过`onPreview`来自定义文件预览
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:multiple="true"
+	>
+		<v3-button>选择文件</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+function onPreview({ file }) {
+	return false;
+}
+</script>
+```
+
+:::
