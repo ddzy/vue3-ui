@@ -4,6 +4,7 @@
 			v-show="false"
 			:id="`v3-upload__trigger--${app?.uid}`"
 			:multiple="props.multiple"
+			:accept="props.accept"
 			type="file"
 			ref="inputRef"
 			@change="handleChange"

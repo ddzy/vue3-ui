@@ -3,7 +3,7 @@ import { SFCWithInstall } from '../index';
 export interface IUploadProps {
   action?: string;
   method?: string;
-  accpet?: string;
+  accept?: string;
   headers?: IUploadHeader;
   params?: Record<string, string>;
   autoUpload?: boolean;

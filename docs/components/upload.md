@@ -162,7 +162,9 @@ function onStopRemove({ file }) {
 
 ## 文件预览
 
-可以通过`onPreview`来自定义文件预览
+对于`image/`、`video/`类型的文件，会打开弹窗预览；对于其它文件，会生成`blob`链接在新标签页中预览
+
+也可以通过`onPreview`来自定义文件预览
 
 :::demo
 
@@ -172,14 +174,25 @@ function onStopRemove({ file }) {
 		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
 		:multiple="true"
 	>
-		<v3-button>选择文件</v3-button>
+		<v3-button>原生预览</v3-button>
 	</v3-upload>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:multiple="true"
+		:onPreview="onPreview"
+		accept="image/*"
+	>
+		<v3-button>自定义预览</v3-button>
+	</v3-upload>
+	<img :src="previewUrl" />
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+const previewUrl = ref<string>('');
 function onPreview({ file }) {
-	return false;
+	previewUrl.value = URL.createObjectURL(file.raw);
 }
 </script>
 ```
