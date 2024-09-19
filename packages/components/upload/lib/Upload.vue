@@ -16,7 +16,7 @@
 			<ul class="v3-upload__list">
 				<li
 					v-for="(v, i) in fileList"
-					:key="i"
+					:key="v.id"
 					:class="['v3-upload__item', `is-${v.status}`]"
 					:style="{
 						'--progress': isNumber(v.progress) ? `${multiply(subtract(1, v.progress!), 100)}%` : 'auto',
@@ -35,7 +35,7 @@
 						:spin="v.status === 'uploading'"
 						class="v3-upload__item-thumb"
 					/>
-					<span class="v3-upload__item-name">{{ v.raw.name }}</span>
+					<span class="v3-upload__item-name">{{ v.name }}</span>
 					<div class="v3-upload__item-action">
 						<V3Icon
 							v-if="props.showPreviewButton"
@@ -71,13 +71,9 @@
 		</div>
 
 		<V3Dialog v-model="showPreviewDialog">
-			<img
-				v-if="currentFile?.raw.type.startsWith('image/')"
-				:src="previewUrl"
-				alt=""
-			/>
+			<img v-if="isImageURL(currentFile?.name)" :src="previewUrl" alt="" />
 			<video
-				v-if="currentFile?.raw.type.startsWith('video/')"
+				v-else-if="isVideoURL(currentFile?.name)"
 				:src="previewUrl"
 				alt=""
 				autoplay
@@ -95,6 +91,7 @@ import { V3Dialog, V3Icon } from '@components/main';
 import { IUploadFile, IUploadHeader, IUploadProps } from '@typings/index';
 import { useObjectUrl } from '@vueuse/core';
 import { forOwn, isFunction, isNumber, isPlainObject } from 'lodash-es';
+import { v4 as uuidv4 } from 'uuid';
 
 defineOptions({
 	name: 'V3Upload',
@@ -204,6 +201,15 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 });
 const app = getCurrentInstance();
 
+function isImageURL(url: string = '') {
+	const imageRegex = /\.(jpg|jpeg|png|gif|bmp|svg)$/i;
+	return imageRegex.test(url);
+}
+function isVideoURL(url: string = '') {
+	const videoRegex = /\.(mp4|mkv|avi|mov|flv|wmv)$/i;
+	return videoRegex.test(url);
+}
+
 const inputRef = ref<HTMLInputElement>();
 function handleTrigger() {
 	inputRef.value?.click?.();
@@ -224,8 +230,12 @@ function handleChange(e: Event) {
 	const rawFiles = target.files ? Array.from(target.files) : [];
 	const files: IUploadFile[] = rawFiles.map((v) => {
 		return {
+			id: uuidv4(),
 			status: 'pending',
+			name: v.name,
+			type: v.type,
 			progress: 0,
+			size: v.size,
 			raw: v,
 		} as IUploadFile;
 	});
@@ -262,11 +272,10 @@ function handlePreview(file: IUploadFile, fileIndex: number) {
 	if (props.onPreview) {
 		props.onPreview({ file });
 	} else {
-		const fileType = file.raw.type;
 		currentFile.value = file;
-		previewUrl.value = useObjectUrl(file?.raw).value || '';
+		previewUrl.value = file.url || useObjectUrl(file?.raw).value || '';
 		// 图片和视频用弹窗预览
-		if (fileType.startsWith('image/') || fileType.startsWith('video/')) {
+		if (isImageURL(file.name) || isVideoURL(file.name)) {
 			showPreviewDialog.value = true;
 		} else {
 			// 其它文件在新标签页预览
@@ -287,7 +296,7 @@ async function handleDownload(file: IUploadFile, fileIndex: number) {
 		props.onDownload({ file });
 	} else {
 		const a = document.createElement('a');
-		a.download = file.raw.name;
+		a.download = file.name;
 		a.href = useObjectUrl(file.raw).value || '';
 		document.body.appendChild(a);
 		a.click();
@@ -336,6 +345,9 @@ async function startUpload() {
 	fileList.value
 		.filter((file) => file.status === 'pending')
 		.forEach(async (file) => {
+			if (!file.raw) {
+				return;
+			}
 			// 上传前预处理
 			let canUpload = true;
 			if (isFunction(props.beforeUpload)) {
@@ -363,7 +375,7 @@ async function startUpload() {
 					});
 				} else {
 					const formData = new FormData();
-					formData.append(props.name, file.raw);
+					formData.append(props.name, file.raw!);
 					if (props.params) {
 						forOwn(props.params, (v, k) => {
 							formData.append(k, v);

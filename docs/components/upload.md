@@ -76,6 +76,57 @@ function beforeUpload({ file }) {
 
 :::
 
+## 多选上传
+
+通过`multiple`开启多选文件，可以通过设置`fileList`传入初始的文件列表
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:multiple="true"
+		:fileList="fileList"
+	>
+		<v3-button icon="Upload">选择文件</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const fileList = ref([
+	{
+		id: 1,
+		status: 'pending',
+		name: '待上传.png',
+		url: 'https://picsum.photos/200',
+	},
+	{
+		id: 2,
+		status: 'uploading',
+		progress: 0.5,
+		name: '上传中.png',
+		url: 'https://picsum.photos/200',
+	},
+	{
+		id: 3,
+		status: 'success',
+		name: '上传成功.png',
+		url: 'https://picsum.photos/200',
+	},
+	{
+		id: 4,
+		status: 'failed',
+		name: '上传失败.png',
+		url: 'https://picsum.photos/200',
+	},
+]);
+</script>
+```
+
+:::
+
 ## 自定义上传
 
 可以通过`customRequest`方法自定义上传，此时`beforeUpload`依然有效，并且需要在上传时自行调用`onSuccess`等方法更改上传状态
@@ -135,7 +186,7 @@ async function customUploadFailed({ file, onSuccess, onFailed, onProgress }) {
 		method="post"
 		:autoUpload="false"
 	>
-		<v3-button>选择文件</v3-button>
+		<v3-button icon="Upload">选择文件</v3-button>
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-button type="success" @click="startUpload">上传</v3-button>
@@ -165,7 +216,7 @@ function startUpload() {
 		:onRemove="onRemove"
 		:multiple="true"
 	>
-		<v3-button>选择文件</v3-button>
+		<v3-button icon="Upload">选择文件</v3-button>
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-upload
@@ -173,7 +224,7 @@ function startUpload() {
 		:onRemove="onStopRemove"
 		:multiple="true"
 	>
-		<v3-button>选择文件</v3-button>
+		<v3-button icon="Upload">选择文件</v3-button>
 	</v3-upload>
 </template>
 <script lang="ts" setup>
@@ -205,7 +256,7 @@ function onStopRemove({ file }) {
 		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
 		:multiple="true"
 	>
-		<v3-button>原生预览</v3-button>
+		<v3-button icon="Upload">原生预览</v3-button>
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-upload
@@ -214,7 +265,7 @@ function onStopRemove({ file }) {
 		:onPreview="onPreview"
 		accept="image/*"
 	>
-		<v3-button>自定义预览</v3-button>
+		<v3-button icon="Upload">自定义预览</v3-button>
 	</v3-upload>
 	<img :src="previewUrl" />
 </template>
@@ -242,7 +293,7 @@ function onPreview({ file }) {
 		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
 		:multiple="true"
 	>
-		<v3-button>选择文件</v3-button>
+		<v3-button icon="Upload">选择文件</v3-button>
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-upload
@@ -250,7 +301,7 @@ function onPreview({ file }) {
 		:multiple="true"
 		:onDownload="onDownload"
 	>
-		<v3-button>自定义下载</v3-button>
+		<v3-button icon="Upload">自定义下载</v3-button>
 	</v3-upload>
 </template>
 <script lang="ts" setup>

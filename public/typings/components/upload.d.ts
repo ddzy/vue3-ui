@@ -33,9 +33,14 @@ export interface IUploadProps {
   onChange?: (options: {file: IUploadFile}) => void;
 }
 export type IUploadFile = {
+  id: string | number;
   status: IUploadFileStatus;
-  progress: number;
-  raw: File;
+  name: string;
+  type?: string;
+  progress?: number;
+  size?: number;
+  url?: string;
+  raw?: File;
 };
 export type IUploadHeader = Record<string, string>;
 export type IUploadListType = 'text' | 'thumb' | 'image-card'
