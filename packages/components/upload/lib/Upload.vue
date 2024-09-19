@@ -38,27 +38,32 @@
 					<span class="v3-upload__item-name">{{ v.raw.name }}</span>
 					<div class="v3-upload__item-action">
 						<V3Icon
+							v-if="props.showPreviewButton"
 							type="PreviewOpen"
 							class="v3-upload__item-preview"
 							title="预览"
 							@click="handlePreview(v, i)"
 						/>
 						<V3Icon
-							v-if="v.status === 'success'"
+							v-if="props.showDownloadButton && v.status === 'success'"
 							type="Download"
 							class="v3-upload__item-download"
 							title="下载"
 							@click="handleDownload(v, i)"
 						/>
 						<V3Icon
-							v-if="v.status !== 'pending' && v.status !== 'uploading'"
+							v-if="
+								props.showRemoveButton &&
+								v.status !== 'pending' &&
+								v.status !== 'uploading'
+							"
 							type="Delete"
 							class="v3-upload__item-remove"
 							title="删除"
 							@click="handleRemove(v, i)"
 						/>
 						<V3Icon
-							v-if="v.status === 'failed'"
+							v-if="props.showRetryButton && v.status === 'failed'"
 							type="Redo"
 							class="v3-upload__item-retry"
 							title="重试"
