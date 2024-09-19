@@ -198,3 +198,35 @@ function onPreview({ file }) {
 ```
 
 :::
+
+## 文件下载
+
+可以通过`onDownload`来自定义文件下载逻辑
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:multiple="true"
+	>
+		<v3-button>选择文件</v3-button>
+	</v3-upload>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		:multiple="true"
+		:onDownload="onDownload"
+	>
+		<v3-button>自定义下载</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+function onDownload({ file }) {}
+</script>
+```
+
+:::

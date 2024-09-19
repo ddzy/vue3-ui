@@ -48,6 +48,7 @@
 							type="Download"
 							class="v3-upload__item-download"
 							title="下载"
+							@click="handleDownload(v, i)"
 						/>
 						<V3Icon
 							v-if="v.status !== 'pending' && v.status !== 'uploading'"
@@ -180,6 +181,10 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 	 */
 	onRemove: undefined,
 	/**
+	 * 自定义下载文件
+	 */
+	onDownload: undefined,
+	/**
 	 * 上传成功后触发
 	 */
 	onSuccess: undefined,
@@ -274,6 +279,19 @@ function handleRetry(file: IUploadFile, fileIndex: number) {
 	file.progress = 0;
 	fileList.value = fileList.value.slice();
 	startUpload();
+}
+
+async function handleDownload(file: IUploadFile, fileIndex: number) {
+	if (props.onDownload) {
+		props.onDownload({ file });
+	} else {
+		const a = document.createElement('a');
+		a.download = file.raw.name;
+		a.href = useObjectUrl(file.raw).value || '';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	}
 }
 
 /**
