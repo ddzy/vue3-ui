@@ -45,6 +45,37 @@ function onFailed({ file }) {
 
 :::
 
+## 上传前预处理
+
+可以通过`beforeUpload`方法对文件进行预处理，如果返回`false`、`Promise<false>`、`Promise.reject()`则取消上传
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		method="post"
+		accept="image/*"
+		:beforeUpload="beforeUpload"
+	>
+		<v3-button icon="Upload">选择文件</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+function beforeUpload({ file }) {
+	if (file.raw.size / 1024 / 1024 > 2) {
+		alert('图片大小不能超过2M');
+		return false;
+	}
+}
+</script>
+```
+
+:::
+
 ## 自定义上传
 
 可以通过`customRequest`方法自定义上传，此时`beforeUpload`依然有效，并且需要在上传时自行调用`onSuccess`等方法更改上传状态

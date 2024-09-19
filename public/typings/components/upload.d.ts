@@ -7,7 +7,7 @@ export interface IUploadProps {
   headers?: IUploadHeader;
   params?: Record<string, string>;
   autoUpload?: boolean;
-  beforeUpload?: (file: IUploadFile) => boolean | Promise<boolean>;
+  beforeUpload?: (options: {file: IUploadFile}) => boolean | Promise<boolean>;
   customUpload?: (options: {
     onSuccess: () => void;
     onFailed: () => void;

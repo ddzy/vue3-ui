@@ -52,11 +52,7 @@
 							@click="handleDownload(v, i)"
 						/>
 						<V3Icon
-							v-if="
-								props.showRemoveButton &&
-								v.status !== 'pending' &&
-								v.status !== 'uploading'
-							"
+							v-if="props.showRemoveButton"
 							type="Delete"
 							class="v3-upload__item-remove"
 							title="删除"
@@ -343,7 +339,12 @@ async function startUpload() {
 			// 上传前预处理
 			let canUpload = true;
 			if (isFunction(props.beforeUpload)) {
-				canUpload = await props.beforeUpload!(file);
+				try {
+					let _canUpload = await props.beforeUpload!({ file });
+					canUpload = _canUpload !== false;
+				} catch (error) {
+					canUpload = false;
+				}
 			}
 			if (canUpload) {
 				if (props.customUpload) {
@@ -398,6 +399,8 @@ async function startUpload() {
 					});
 					xhr.send(formData);
 				}
+			} else {
+				fileList.value = fileList.value.filter((v) => v !== file);
 			}
 		});
 }
