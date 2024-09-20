@@ -105,7 +105,13 @@ import { getCurrentInstance, ref, toRef, useSlots, watch } from 'vue';
 import { divide, multiply, subtract } from '@common/utils';
 import { V3Dialog, V3Icon } from '@components/main';
 import { IUploadFile, IUploadHeader, IUploadProps } from '@typings/index';
-import { forOwn, isFunction, isNumber, isPlainObject } from 'lodash-es';
+import {
+	cloneDeep,
+	forOwn,
+	isFunction,
+	isNumber,
+	isPlainObject,
+} from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 
 defineOptions({
@@ -236,7 +242,7 @@ watch(
 	() => props.fileList,
 	(newValue) => {
 		if (newValue) {
-			fileList.value = newValue;
+			fileList.value = cloneDeep(newValue);
 		}
 	},
 	{ immediate: true, deep: true },

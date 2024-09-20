@@ -42,7 +42,7 @@ $status-list: (
 	failed: (
 		thumb-color: $danger-color,
 		color: $danger-color,
-		hover-color: $font-color-default,
+		hover-color: $danger-color,
 		background-color: #fff,
 		hover-background-color: $danger-color-plain,
 		progress-background-color: transparent,
