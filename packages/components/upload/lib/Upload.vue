@@ -1,5 +1,5 @@
 <template>
-	<div class="v3-upload">
+	<div :class="['v3-upload']">
 		<input
 			v-show="false"
 			:id="`v3-upload__trigger--${app?.uid}`"
@@ -9,10 +9,14 @@
 			ref="inputRef"
 			@change="handleChange"
 		/>
-		<span class="v3-upload__trigger" @click="handleTrigger">
+		<span
+			v-if="props.listType === 'text'"
+			class="v3-upload__trigger"
+			@click="handleTrigger"
+		>
 			<slot></slot>
 		</span>
-		<div class="v3-upload__list-wrapper">
+		<div :class="['v3-upload__list-wrapper', `is-list-${props.listType}`]">
 			<ul class="v3-upload__list">
 				<li
 					v-for="(v, i) in fileList"
@@ -20,9 +24,11 @@
 					:class="['v3-upload__item', `is-${v.status}`]"
 					:style="{
 						'--progress': isNumber(v.progress) ? `${multiply(subtract(1, v.progress!), 100)}%` : 'auto',
+						'--url': `url(${formatPreviewUrl(v)})`
 					}"
 				>
 					<V3Icon
+						v-if="props.listType === 'text'"
 						:type="
 							v.status === 'success'
 								? 'CheckOne'
@@ -35,7 +41,9 @@
 						:spin="v.status === 'uploading'"
 						class="v3-upload__item-thumb"
 					/>
-					<span class="v3-upload__item-name">{{ v.name }}</span>
+					<span v-if="props.listType === 'text'" class="v3-upload__item-name">{{
+						v.name
+					}}</span>
 					<div class="v3-upload__item-action">
 						<V3Icon
 							v-if="props.showPreviewButton"
@@ -67,6 +75,14 @@
 						/>
 					</div>
 				</li>
+				<li
+					v-if="props.listType === 'picture-wall'"
+					class="v3-upload__item is-uploader"
+					@click="handleTrigger"
+				>
+					<slot v-if="slots.default"></slot>
+					<V3Icon v-else type="Plus" size="20px" />
+				</li>
 			</ul>
 		</div>
 
@@ -84,12 +100,11 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { getCurrentInstance, ref, watch } from 'vue';
+import { getCurrentInstance, ref, toRef, useSlots, watch } from 'vue';
 
 import { divide, multiply, subtract } from '@common/utils';
 import { V3Dialog, V3Icon } from '@components/main';
 import { IUploadFile, IUploadHeader, IUploadProps } from '@typings/index';
-import { useObjectUrl } from '@vueuse/core';
 import { forOwn, isFunction, isNumber, isPlainObject } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -200,6 +215,7 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 	onChange: undefined,
 });
 const app = getCurrentInstance();
+const slots = useSlots();
 
 function isImageURL(url: string = '') {
 	const imageRegex = /\.(jpg|jpeg|png|gif|bmp|svg)$/i;
@@ -239,7 +255,7 @@ function handleChange(e: Event) {
 			raw: v,
 		} as IUploadFile;
 	});
-	fileList.value = fileList.value.concat(files);
+	fileList.value = fileList.value.concat(toRef(files).value);
 
 	if (props.autoUpload) {
 		startUpload();
@@ -273,7 +289,7 @@ function handlePreview(file: IUploadFile, fileIndex: number) {
 		props.onPreview({ file });
 	} else {
 		currentFile.value = file;
-		previewUrl.value = file.url || useObjectUrl(file?.raw).value || '';
+		previewUrl.value = formatPreviewUrl(file);
 		// 图片和视频用弹窗预览
 		if (isImageURL(file.name) || isVideoURL(file.name)) {
 			showPreviewDialog.value = true;
@@ -282,6 +298,9 @@ function handlePreview(file: IUploadFile, fileIndex: number) {
 			window.open(previewUrl.value, '_blank');
 		}
 	}
+}
+function formatPreviewUrl(file: IUploadFile) {
+	return file.url ? file.url : file.raw ? URL.createObjectURL(file.raw!) : '';
 }
 
 function handleRetry(file: IUploadFile, fileIndex: number) {
@@ -297,7 +316,7 @@ async function handleDownload(file: IUploadFile, fileIndex: number) {
 	} else {
 		const a = document.createElement('a');
 		a.download = file.name;
-		a.href = useObjectUrl(file.raw).value || '';
+		a.href = formatPreviewUrl(file);
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);

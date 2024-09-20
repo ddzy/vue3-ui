@@ -11,6 +11,7 @@ $status-list: (
 		hover-background-color: $hover-background-color-default,
 		progress-background-color: transparent,
 		progress-height: 0,
+		picture-wall-hover-background-color: #fff,
 	),
 	uploading: (
 		thumb-color: $font-color-default,
@@ -20,6 +21,7 @@ $status-list: (
 		hover-background-color: $primary-color-plain,
 		progress-background-color: $primary-color,
 		progress-height: 2px,
+		picture-wall-hover-background-color: #fff,
 	),
 	success: (
 		thumb-color: $success-color,
@@ -29,6 +31,7 @@ $status-list: (
 		hover-background-color: $success-color-plain,
 		progress-background-color: transparent,
 		progress-height: 0,
+		picture-wall-hover-background-color: #fff,
 	),
 	failed: (
 		thumb-color: $danger-color,
@@ -38,15 +41,66 @@ $status-list: (
 		hover-background-color: $danger-color-plain,
 		progress-background-color: transparent,
 		progress-height: 0px,
+		picture-wall-hover-background-color: $danger-color-medium,
 	),
 );
 
 .v3-upload {
 	.v3-upload__list-wrapper {
 		margin-top: $margin-small;
+		&.is-list-picture-wall {
+			.v3-upload__list {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.v3-upload__item {
+				@each $key, $value in $status-list {
+					width: 100px;
+					height: 100px;
+					margin: 0 10px 10px 0;
+					padding: 0;
+					border-radius: $border-radius-width-small;
+					border: 1px solid $border-color-default;
+					background: var(--url) no-repeat center center / 100% 100%;
+					&.is-#{$key} {
+						&:hover {
+							color: $font-color-default;
+							background-color: #fff;
+							.v3-upload__item-action {
+								opacity: 0.8;
+							}
+						}
+						.v3-upload__item-action {
+							justify-content: center;
+							flex-wrap: wrap;
+							width: 100%;
+							height: 100%;
+							opacity: 0;
+							transition: all 0.3s ease;
+							background-color: map-get(
+								$map: $value,
+								$key: picture-wall-hover-background-color
+							);
+						}
+					}
+					&.is-uploader {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						border-style: dashed;
+						background: #f7f8f9;
+						cursor: pointer;
+						transition: all 0.3s ease;
+						&:hover {
+							border-color: $primary-color;
+						}
+					}
+				}
+			}
+		}
 	}
-	@each $key, $value in $status-list {
-		.v3-upload__item {
+	.v3-upload__item {
+		@each $key, $value in $status-list {
 			&.is-#{$key} {
 				position: relative;
 				display: flex;

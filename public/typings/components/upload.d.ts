@@ -43,7 +43,7 @@ export type IUploadFile = {
   raw?: File;
 };
 export type IUploadHeader = Record<string, string>;
-export type IUploadListType = 'text' | 'thumb' | 'image-card'
+export type IUploadListType = 'text' | 'picture-wall'
 export type IUploadFileStatus = 'pending' | 'uploading' | "success" | 'failed' | 'removed';
 
 export const V3Upload: SFCWithInstall<IUploadProps>;

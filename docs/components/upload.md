@@ -7,7 +7,7 @@
 ```vue
 <template>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		method="post"
 		:onSuccess="onSuccess"
 	>
@@ -54,7 +54,7 @@ function onFailed({ file }) {
 ```vue
 <template>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		method="post"
 		accept="image/*"
 		:beforeUpload="beforeUpload"
@@ -85,7 +85,7 @@ function beforeUpload({ file }) {
 ```vue
 <template>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:multiple="true"
 		:fileList="fileList"
 	>
@@ -182,7 +182,7 @@ async function customUploadFailed({ file, onSuccess, onFailed, onProgress }) {
 <template>
 	<v3-upload
 		ref="uploadRef"
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		method="post"
 		:autoUpload="false"
 	>
@@ -212,7 +212,7 @@ function startUpload() {
 ```vue
 <template>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:onRemove="onRemove"
 		:multiple="true"
 	>
@@ -220,7 +220,7 @@ function startUpload() {
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:onRemove="onStopRemove"
 		:multiple="true"
 	>
@@ -253,14 +253,14 @@ function onStopRemove({ file }) {
 ```vue
 <template>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:multiple="true"
 	>
 		<v3-button icon="Upload">原生预览</v3-button>
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:multiple="true"
 		:onPreview="onPreview"
 		accept="image/*"
@@ -290,14 +290,14 @@ function onPreview({ file }) {
 ```vue
 <template>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:multiple="true"
 	>
 		<v3-button icon="Upload">选择文件</v3-button>
 	</v3-upload>
 	<v3-divider direction="horizontal"></v3-divider>
 	<v3-upload
-		action="https://run.mocky.io/v3/3ee2d053-03de-4e99-bb65-9db767a79eac"
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
 		:multiple="true"
 		:onDownload="onDownload"
 	>
@@ -308,6 +308,56 @@ function onPreview({ file }) {
 import { ref } from 'vue';
 
 function onDownload({ file }) {}
+</script>
+```
+
+:::
+
+## 照片墙
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
+		method="post"
+		list-type="picture-wall"
+		:multiple="true"
+		:fileList="fileList"
+	>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const fileList = ref([
+	{
+		id: 1,
+		status: 'pending',
+		name: '待上传.png',
+		url: 'https://picsum.photos/200',
+	},
+	{
+		id: 2,
+		status: 'uploading',
+		progress: 0.5,
+		name: '上传中.png',
+		url: 'https://picsum.photos/200',
+	},
+	{
+		id: 3,
+		status: 'success',
+		name: '上传成功.png',
+		url: 'https://picsum.photos/200',
+	},
+	{
+		id: 4,
+		status: 'failed',
+		name: '上传失败.png',
+		url: 'https://picsum.photos/200',
+	},
+]);
 </script>
 ```
 
