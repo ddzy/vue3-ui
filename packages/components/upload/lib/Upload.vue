@@ -23,8 +23,7 @@
 					:key="v.id"
 					:class="['v3-upload__item', `is-${v.status}`]"
 					:style="{
-						'--progress': isNumber(v.progress) ? `${multiply(subtract(1, v.progress!), 100)}%` : 'auto',
-						'--url': `url(${formatPreviewUrl(v)})`
+						'--url': `url(${formatPreviewUrl(v)})`,
 					}"
 				>
 					<V3Icon
@@ -74,6 +73,12 @@
 							@click="handleRetry(v, i)"
 						/>
 					</div>
+					<div
+						:style="{
+						right: isNumber(v.progress) ? `${multiply(subtract(1, v.progress!), 100)}%` : 'auto',
+					}"
+						class="v3-upload__item-progress"
+					></div>
 				</li>
 				<li
 					v-if="props.listType === 'picture-wall'"

@@ -327,6 +327,16 @@ function onDownload({ file }) {}
 		:fileList="fileList"
 	>
 	</v3-upload>
+	<v3-divider direction="horizontal">自定义内容</v3-divider>
+	<v3-upload
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
+		method="post"
+		list-type="picture-wall"
+		:multiple="true"
+		:fileList="fileList"
+	>
+		点击上传
+	</v3-upload>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';

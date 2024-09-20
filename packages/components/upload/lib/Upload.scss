@@ -105,7 +105,7 @@ $status-list: (
 					justify-content: center;
 					align-items: center;
 					border-style: dashed;
-					border-color: $border-color-default;
+					border-color: $border-color-large;
 					background: #f7f8f9;
 					cursor: pointer;
 					transition: all 0.3s ease;
@@ -132,18 +132,12 @@ $status-list: (
 				.v3-icon {
 					cursor: pointer;
 				}
-				&::after {
-					position: absolute;
-					content: '';
-					left: 0;
-					right: var(--progress);
-					bottom: 0;
+				.v3-upload__item-progress {
 					height: map-get($map: $value, $key: progress-height);
 					background-color: map-get(
 						$map: $value,
 						$key: progress-background-color
 					);
-					transition: right 0.3s ease;
 				}
 				.v3-upload__item-thumb {
 					color: map-get($map: $value, $key: thumb-color);
@@ -163,5 +157,11 @@ $status-list: (
 				margin-right: $margin-small;
 			}
 		}
+	}
+	.v3-upload__item-progress {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		transition: right 0.3s ease;
 	}
 }
