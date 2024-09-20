@@ -54,6 +54,20 @@ $status-list: (
 );
 
 .v3-upload {
+	&.is-disabled {
+		.v3-upload__trigger {
+			cursor: not-allowed;
+		}
+		.v3-upload__list-wrapper {
+			&.is-list-picture-wall {
+				.v3-upload__item {
+					&.is-uploader {
+						cursor: not-allowed;
+					}
+				}
+			}
+		}
+	}
 	.v3-upload__list-wrapper {
 		margin-top: $margin-small;
 		&.is-list-picture-wall {

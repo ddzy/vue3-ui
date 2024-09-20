@@ -1,5 +1,5 @@
 <template>
-	<div :class="['v3-upload']">
+	<div :class="['v3-upload', props.disabled && 'is-disabled']">
 		<input
 			v-show="false"
 			:id="`v3-upload__trigger--${app?.uid}`"
@@ -239,7 +239,9 @@ function isVideoURL(url: string = '') {
 
 const inputRef = ref<HTMLInputElement>();
 function handleTrigger() {
-	inputRef.value?.click?.();
+	if (!props.disabled) {
+		inputRef.value?.click?.();
+	}
 }
 
 const fileList = ref<IUploadFile[]>([]);
