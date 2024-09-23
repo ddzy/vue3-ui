@@ -257,7 +257,7 @@ watch(
 function handleChange(e: Event) {
 	const target = e.target as HTMLInputElement;
 	const rawFiles = target.files ? Array.from(target.files) : [];
-	const files: IUploadFile[] = rawFiles.map((v) => {
+	let files: IUploadFile[] = rawFiles.map((v) => {
 		return {
 			id: uuidv4(),
 			status: 'pending',
@@ -268,7 +268,15 @@ function handleChange(e: Event) {
 			raw: v,
 		} as IUploadFile;
 	});
-	fileList.value = fileList.value.concat(toRef(files).value);
+	files = fileList.value.concat(toRef(files).value);
+	// 上传文件不能超出限制
+	if (isNumber(props.max) && props.multiple && files.length > props.max) {
+		let exceeded = files.length - props.max;
+		for (let i = 0; i < exceeded; i++) {
+			files.pop();
+		}
+	}
+	fileList.value = files;
 
 	if (props.autoUpload) {
 		startUpload();

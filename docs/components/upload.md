@@ -402,3 +402,25 @@ import { ref } from 'vue';
 ```
 
 :::
+
+## 限制上传个数
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
+		method="post"
+		:multiple="true"
+		:max="3"
+	>
+		<v3-button icon="Upload">选择文件</v3-button>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+</script>
+```
+
+:::
