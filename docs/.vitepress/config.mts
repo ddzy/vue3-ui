@@ -195,6 +195,10 @@ export default defineConfig({
 							text: 'Table 表格',
 							link: '/components/table',
 						},
+						{
+							text: 'Tree 树形控件',
+							link: '/components/tree',
+						},
 					],
 				},
 				{
