@@ -47,7 +47,7 @@ function onFailed({ file }) {
 
 ## 上传前预处理
 
-可以通过`beforeUpload`方法对文件进行预处理，如果返回`false`、`Promise<false>`、`Promise.reject()`则取消上传
+可以通过 `beforeUpload`方法对文件进行预处理，如果返回 `false`、`Promise<false>`、`Promise.reject()`则取消上传
 
 :::demo
 
@@ -78,7 +78,7 @@ function beforeUpload({ file }) {
 
 ## 多选上传
 
-通过`multiple`开启多选文件，可以通过设置`fileList`传入初始的文件列表
+通过 `multiple`开启多选文件，可以通过设置 `fileList`传入初始的文件列表
 
 :::demo
 
@@ -129,7 +129,7 @@ const fileList = ref([
 
 ## 自定义上传
 
-可以通过`customRequest`方法自定义上传，此时`beforeUpload`依然有效，并且需要在上传时自行调用`onSuccess`等方法更改上传状态
+可以通过 `customRequest`方法自定义上传，此时 `beforeUpload`依然有效，并且需要在上传时自行调用 `onSuccess`等方法更改上传状态
 
 :::demo
 
@@ -174,7 +174,7 @@ async function customUploadFailed({ file, onSuccess, onFailed, onProgress }) {
 
 ## 手动上传
 
-通过调用组件暴露的`startUpload`方法来手动上传文件
+通过调用组件暴露的 `startUpload`方法来手动上传文件
 
 :::demo
 
@@ -205,7 +205,7 @@ function startUpload() {
 
 ## 删除文件
 
-点击删除按钮时触发`onRemove`方法，该方法返回`false`或者`Promise<false>`或者`Promise.reject()`则阻止删除
+点击删除按钮时触发 `onRemove`方法，该方法返回 `false`或者 `Promise<false>`或者 `Promise.reject()`则阻止删除
 
 :::demo
 
@@ -244,9 +244,9 @@ function onStopRemove({ file }) {
 
 ## 文件预览
 
-对于`image/`、`video/`类型的文件，会打开弹窗预览；对于其它文件，会生成`blob`链接在新标签页中预览
+对于 `image/`、`video/`类型的文件，会打开弹窗预览；对于其它文件，会生成 `blob`链接在新标签页中预览
 
-也可以通过`onPreview`来自定义文件预览
+也可以通过 `onPreview`来自定义文件预览
 
 :::demo
 
@@ -283,7 +283,7 @@ function onPreview({ file }) {
 
 ## 文件下载
 
-可以通过`onDownload`来自定义文件下载逻辑
+可以通过 `onDownload`来自定义文件下载逻辑
 
 :::demo
 
@@ -466,3 +466,65 @@ import { ref } from 'vue';
 ```
 
 :::
+
+## API
+
+### Upload Props
+
+|       参数名       | 说明                                                                 | 类型                                                                                                                                               | 可选值                  | 默认值 | 是否必填 |
+| :----------------: | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------ | -------- |
+|       action       | 上传的目标地址                                                       | string                                                                                                                                             |                         | '#'    |          |
+|       method       | 请求接口的方式                                                       | string                                                                                                                                             |                         | 'POST' |          |
+|       accept       | 指定可上传的文件类型                                                 | string                                                                                                                                             |                         |        |          |
+|      headers       | 自定义请求头                                                         | IUploadHeader                                                                                                                                      |                         | {}     |          |
+|       params       | 额外的请求参数，同 `FormData`                                        | Record<string, string>                                                                                                                             |                         |        |          |
+|     autoUpload     | 是否自动上传                                                         | boolean                                                                                                                                            |                         | true   |          |
+|    beforeUpload    | 上传前的处理，返回 `false`可终止上传                                 | `(options: {file: IUploadFile}) => boolean \| Promise<boolean>`                                                                                    |                         |        |          |
+|    customUpload    | 自定义上传方法                                                       | `(options: {     onSuccess: () => void;     onFailed: () => void;     onProgress: (progress: number) => void;     file: IUploadFile;   }) => void` |                         |        |          |
+|      fileList      | 开启多选情况下的默认文件列表                                         | IUploadFile[]                                                                                                                                      |                         |        |          |
+|      listType      | 以何种方式显示文件列表                                               | string                                                                                                                                             | 'text' / 'picture-wall' | 'text' |          |
+|      disabled      | 是否禁用上传                                                         | boolean                                                                                                                                            |                         | false  |          |
+|        max         | 限制可上传的最大个数                                                 | number                                                                                                                                             |                         |        |          |
+|      multiple      | 是否开启多选文件                                                     | boolean                                                                                                                                            |                         | false  |          |
+|        name        | FormData中文件对应的键                                               | string                                                                                                                                             |                         | 'file' |          |
+| showPreviewButton  | 是否显示预览按钮                                                     | boolean                                                                                                                                            |                         | true   |          |
+| showDownloadButton | 是否显示下载按钮                                                     | boolean                                                                                                                                            |                         | true   |          |
+|  showRemoveButton  | 是否显示删除按钮                                                     | boolean                                                                                                                                            |                         | true   |          |
+|  showRetryButton   | 是否显示重试按钮                                                     | boolean                                                                                                                                            |                         | true   |          |
+|      dropable      | 是否开启拖拽上传                                                     | boolean                                                                                                                                            |                         | false  |          |
+|     onPreview      | 自定义预览                                                           | `(options: {file: IUploadFile}) => void`                                                                                                           |                         |        |          |
+|      onRemove      | 删除文件（可返回false、Promise `<false>`、Promise.reject来阻止删除） | `(options: { file: IUploadFile }) => any`                                                                                                          |                         |        |          |
+|     onDownload     | 自定义下载文件                                                       | `(options: { file: IUploadFile }) => void`                                                                                                         |                         |        |          |
+|     onSuccess      | 上传成功后触发                                                       | `(options: {file: IUploadFile}) => void`                                                                                                           |                         |        |          |
+|      onFailed      | 上传失败后触发                                                       | `(options: {file: IUploadFile}) => void`                                                                                                           |                         |        |          |
+|     onProgress     | 上传中触发                                                           | `(options: {file: IUploadFile, progress: number}) => void`                                                                                         |                         |        |          |
+|      onChange      | 选择文件时触发                                                       | `(options: {file: IUploadFile}) => void`                                                                                                           |                         |        |          |
+
+### Upload Types
+
+```typescript
+export type IUploadFile = {
+	id: string | number;
+	status: IUploadFileStatus;
+	name: string;
+	type?: string;
+	progress?: number;
+	size?: number;
+	url?: string;
+	raw?: File;
+};
+export type IUploadHeader = Record<string, string>;
+export type IUploadListType = 'text' | 'picture-wall';
+export type IUploadFileStatus =
+	| 'pending'
+	| 'uploading'
+	| 'success'
+	| 'failed'
+	| 'removed';
+```
+
+### Upload Exposes
+
+| 属性名      | 说明                                              | 类型     |
+| ----------- | ------------------------------------------------- | -------- |
+| startUpload | 当 `autoUpload`为 `false`时，可调用该方法手动上传 | Function |
