@@ -30,3 +30,4 @@ export * from './tab';
 export * from './collapse';
 export * from './table';
 export * from './upload';
+export * from './tree';
