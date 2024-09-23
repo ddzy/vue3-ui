@@ -5,7 +5,7 @@
 		:type="props.nativeType"
 		:class="{
 			'v3-button': true,
-			[`v3-button--${props.type}`]: true,
+			[`is-type-${props.type}`]: true,
 			[`has-border--${props.borderType}`]: !!props.borderType,
 			[`is-plain`]: props.plain,
 			[`is-disabled`]: state.defaultProps.disabled,

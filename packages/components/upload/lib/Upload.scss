@@ -1,0 +1,196 @@
+:root {
+	--v3-upload-item-padding: 10px 0;
+}
+
+$status-list: (
+	pending: (
+		thumb-color: $font-color-default,
+		color: $font-color-default,
+		hover-color: $font-color-default,
+		background-color: #fff,
+		hover-background-color: $hover-background-color-default,
+		progress-background-color: transparent,
+		progress-height: 0,
+		picture-wall-background-color: #fff,
+		picture-wall-border-color: $border-color-default,
+		picture-wall-color: $font-color-default,
+	),
+	uploading: (
+		thumb-color: $font-color-default,
+		color: $font-color-default,
+		hover-color: $font-color-default,
+		background-color: #fff,
+		hover-background-color: $primary-color-plain,
+		progress-background-color: $primary-color,
+		progress-height: 2px,
+		picture-wall-background-color: #fff,
+		picture-wall-border-color: $border-color-default,
+		picture-wall-color: $font-color-default,
+	),
+	success: (
+		thumb-color: $success-color,
+		color: $font-color-default,
+		hover-color: $font-color-default,
+		background-color: #fff,
+		hover-background-color: $success-color-plain,
+		progress-background-color: transparent,
+		progress-height: 0,
+		picture-wall-background-color: #fff,
+		picture-wall-border-color: $border-color-default,
+		picture-wall-color: $font-color-default,
+	),
+	failed: (
+		thumb-color: $danger-color,
+		color: $danger-color,
+		hover-color: $danger-color,
+		background-color: #fff,
+		hover-background-color: $danger-color-plain,
+		progress-background-color: transparent,
+		progress-height: 0px,
+		picture-wall-background-color: $danger-color-plain,
+		picture-wall-border-color: $danger-color,
+		picture-wall-color: $danger-color,
+	),
+);
+
+.v3-upload,
+.v3-drop-upload {
+	&.is-disabled {
+		.v3-upload__trigger {
+			cursor: not-allowed;
+		}
+		.v3-upload__list-wrapper {
+			&.is-list-picture-wall {
+				.v3-upload__item {
+					&.is-uploader {
+						cursor: not-allowed;
+					}
+				}
+			}
+		}
+	}
+	.v3-upload__list-wrapper {
+		margin-top: $margin-small;
+		&.is-list-picture-wall {
+			.v3-upload__list {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.v3-upload__item {
+				overflow: hidden;
+				width: 100px;
+				height: 100px;
+				margin: 0 10px 10px 0;
+				padding: 0;
+				border-radius: $border-radius-width-small;
+				border-width: 1px;
+				border-style: solid;
+				border-color: $border-color-default;
+				background: var(--url) no-repeat center center / 100% 100%;
+				color: $font-color-default;
+				@each $key, $value in $status-list {
+					&.is-#{$key} {
+						border-color: map-get(
+							$map: $value,
+							$key: picture-wall-border-color
+						);
+						color: map-get($map: $value, $key: picture-wall-color);
+						&:hover {
+							background-color: #fff;
+							.v3-upload__item-action {
+								opacity: 0.8;
+							}
+						}
+						.v3-upload__item-action {
+							justify-content: center;
+							flex-wrap: wrap;
+							width: 100%;
+							height: 100%;
+							opacity: 0;
+							transition: all 0.3s ease;
+							background-color: map-get(
+								$map: $value,
+								$key: picture-wall-background-color
+							);
+						}
+					}
+				}
+				&.is-uploader {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					border-style: dashed;
+					border-color: $border-color-large;
+					background: #f7f8f9;
+					cursor: pointer;
+					transition: all 0.3s ease;
+					&:hover {
+						border-color: $primary-color;
+					}
+				}
+			}
+		}
+	}
+	.v3-upload__item {
+		@each $key, $value in $status-list {
+			&.is-#{$key} {
+				position: relative;
+				display: flex;
+				align-items: center;
+				padding: var(--v3-upload-item-padding);
+				color: map-get($map: $value, $key: color);
+				background-color: map-get($map: $value, $key: background-color);
+				&:hover {
+					color: map-get($map: $value, $key: hover-color);
+					background-color: map-get($map: $value, $key: hover-background-color);
+				}
+				.v3-icon {
+					cursor: pointer;
+				}
+				.v3-upload__item-progress {
+					height: map-get($map: $value, $key: progress-height);
+					background-color: map-get(
+						$map: $value,
+						$key: progress-background-color
+					);
+				}
+				.v3-upload__item-thumb {
+					color: map-get($map: $value, $key: thumb-color);
+				}
+			}
+		}
+	}
+	.v3-upload__item-name {
+		margin-left: 4px;
+	}
+	.v3-upload__item-action {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+		& > .v3-icon {
+			&:not(:last-child) {
+				margin-right: $margin-small;
+			}
+		}
+	}
+	.v3-upload__item-progress {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		transition: right 0.3s ease;
+	}
+}
+
+.v3-drop-upload {
+	.v3-upload__trigger {
+		display: block;
+		padding: $padding-large-2 0;
+		border: 1px dashed $border-color-default;
+		border-radius: $border-radius-width-default;
+		transition: all 0.3s ease;
+		&:hover,
+		&.is-drag-enter {
+			border-color: $primary-color;
+		}
+	}
+}

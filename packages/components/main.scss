@@ -28,3 +28,18 @@ body {
 * {
 	box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.06);
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 100px;
+	background-color: rgba(0, 0, 0, 0.12);
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+}

@@ -25,6 +25,8 @@ export {
 	Dollar,
 	Down,
 	Drag,
+	Download,
+	DownloadOne,
 	EditTwo,
 	Female,
 	Gift,
@@ -91,4 +93,6 @@ export {
 	VolumeUp,
 	ZoomIn,
 	ZoomOut,
+	UpOne,
+	DownOne,
 } from '@icon-park/vue-next';

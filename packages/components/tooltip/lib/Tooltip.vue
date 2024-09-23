@@ -1,5 +1,6 @@
 <template>
 	<v3-base-popper
+		:appendTo="appendTo"
 		customClass="v3-tooltip"
 		customDropdownClass="v3-tooltip__dropdown"
 		customTriggerClass="v3-tooltip__trigger"
@@ -23,13 +24,7 @@ export default defineComponent({
 	components: {
 		V3BasePopper,
 	},
-	props: {
-		title: {
-			type: String,
-			default: '',
-		},
-	},
-	setup(props: Required<TYPES.ITooltipProps>, context) {
+	setup(props: TYPES.ITooltipProps, context) {
 		const state: IState = reactive({});
 		const app = ref(getCurrentInstance()).value;
 
@@ -38,6 +33,7 @@ export default defineComponent({
 			app,
 			props,
 			context,
+			appendTo: document.body,
 		};
 	},
 });

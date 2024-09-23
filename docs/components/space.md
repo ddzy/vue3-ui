@@ -128,14 +128,15 @@ export default defineComponent({
 
 ### Space 参数
 
-| 参数名      | 说明                          | 类型          | 可选值                                | 默认值 | 必填 |
-| ----------- | ----------------------------- | ------------- | ------------------------------------- | ------ | ---- |
-| customClass | 自定义 space 容器的类名       | string        |                                       |        |      |
-| align       | 同 flex 布局的 align-items    | string        | start/end/center/flex-start/flex-end  | center |      |
-| direction   | 同 flex 布局的 flex-direction | string        | row/column/row-reverse/column-reverse | row    |      |
-| wrap        | 同 flex 布局的 flex-wrap      | boolean       |                                       | true   |      |
-| separator   | 自定义分隔符，默认为空格      | string/object |                                       |        |      |
-| size        | 间隔大小（px）                | number        |                                       | 6      |      |
+| 参数名      | 说明                               | 类型          | 可选值                                       | 默认值     | 必填 |
+| ----------- | ---------------------------------- | ------------- | -------------------------------------------- | ---------- | ---- |
+| customClass | 自定义 space 容器的类名            | string        |                                              |            |      |
+| justify     | 同 `flex` 布局的 `justify-content` | string        | start / end / center / flex-start / flex-end | flex-start |      |
+| align       | 同 `flex` 布局的 `align-items`     | string        | start / end / center / flex-start / flex-end | center     |      |
+| direction   | 同 `flex` 布局的 `flex-direction`  | string        | row / column / row-reverse / column-reverse  | row        |      |
+| wrap        | 同 `flex` 布局的 `flex-wrap`       | boolean       |                                              | true       |      |
+| separator   | 自定义分隔符，默认为空格           | string/object |                                              |            |      |
+| size        | 间隔大小（px）                     | number        |                                              | 6          |      |
 
 ### Space 插槽
 

@@ -1,5 +1,6 @@
 <template>
 	<v3-base-popper
+		:appendTo="appendTo"
 		customClass="v3-popconfirm"
 		customDropdownClass="v3-popconfirm__dropdown"
 		customTriggerClass="v3-popconfirm__trigger"
@@ -182,6 +183,7 @@ export default defineComponent({
 			app,
 			props,
 			context,
+			appendTo: document.body,
 			handleAction,
 		};
 	},

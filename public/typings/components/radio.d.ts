@@ -1,6 +1,6 @@
 import { SFCWithInstall } from '../index';
 
-export type IRadioLabel = boolean | string | number;
+export type IRadioLabel = boolean | string | number | symbol;
 export type IRadioGroupCallback = () => void | undefined;
 export type IRadioSize = 'small' | 'medium' | 'large';
 

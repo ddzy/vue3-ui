@@ -1,6 +1,6 @@
 $primary-color: rgba(0, 160, 255, 1);
 $success-color: rgba(99, 185, 49, 1);
-$danger-color: rgba(201, 27, 38, 1);
+$danger-color: rgba(255, 64, 64, 1);
 $warning-color: rgba(227, 160, 73, 1);
 $info-color: rgba(174, 166, 166, 1);
 
@@ -16,9 +16,9 @@ $danger-color-plain: rgba(250, 228, 229, 1);
 $warning-color-plain: rgba(253, 244, 234, 1);
 $info-color-plain: rgba(233, 233, 233, 1);
 
-$border-color-small: #eee;
-$border-color-default: #ddd;
-$border-color-large: #cdcdcd;
+$border-color-small: #ebeef5;
+$border-color-default: #e4e7ed;
+$border-color-large: #dcdfe6;
 
 $font-color-small: #666;
 $font-color-default: #333333;
@@ -40,7 +40,9 @@ $border-radius-width-small: 4px;
 $border-radius-width-default: 6px;
 $border-radius-width-large: 30px;
 
-$padding-small: 8px;
+$padding-small: 6px;
+$padding-small-1: 8px;
+$padding-small-2: 10px;
 $padding-medium: 12px;
 $padding-large-1: 16px;
 $padding-large-2: 20px;
@@ -62,3 +64,5 @@ $box-shadow-large:
 	6px 0 10px 0 rgba(238, 238, 238, 0.8),
 	0 10px 13px 0 rgba(238, 238, 238, 0.6),
 	-6px 0 10px 0 rgba(238, 238, 238, 0.6);
+
+$hover-background-color-default: #f3f6f9;

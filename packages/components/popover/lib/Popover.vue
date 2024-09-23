@@ -1,5 +1,6 @@
 <template>
 	<v3-base-popper
+		:appendTo="appendTo"
 		customClass="v3-popover"
 		customDropdownClass="v3-popover__dropdown"
 		customTriggerClass="v3-popover__trigger"
@@ -32,6 +33,7 @@ export default defineComponent({
 			app,
 			props,
 			context,
+			appendTo: document.body,
 		};
 	},
 });

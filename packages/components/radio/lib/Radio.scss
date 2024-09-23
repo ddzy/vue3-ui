@@ -21,7 +21,6 @@ $radio-size-map: (
 
 .v3-radio {
 	display: inline-block;
-	margin-left: $margin-medium;
 
 	@each $key, $value in $radio-size-map {
 		&.is-bordered.is-size--#{$key} {
