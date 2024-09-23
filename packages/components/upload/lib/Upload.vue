@@ -1,5 +1,11 @@
 <template>
-	<div :class="['v3-upload', props.disabled && 'is-disabled']">
+	<div
+		:class="[
+			'v3-upload',
+			props.dropable && 'v3-drop-upload',
+			props.disabled && 'is-disabled',
+		]"
+	>
 		<input
 			v-show="false"
 			:id="`v3-upload__trigger--${app?.uid}`"
@@ -11,8 +17,15 @@
 		/>
 		<span
 			v-if="props.listType === 'text'"
-			class="v3-upload__trigger"
+			:class="[
+				'v3-upload__trigger',
+				props.dropable && isDragEnter && 'is-drag-enter',
+			]"
 			@click="handleTrigger"
+			@drop="handleDrop"
+			@dragover="handleDragOver"
+			@dragenter="handleDragEnter"
+			@dragleave="handleDragLeave"
 		>
 			<slot></slot>
 		</span>
@@ -197,6 +210,10 @@ const props = withDefaults(defineProps<IUploadProps>(), {
 	 */
 	showRetryButton: true,
 	/**
+	 * 是否开启拖拽上传
+	 */
+	dropable: false,
+	/**
 	 * 自定义预览
 	 */
 	onPreview: undefined,
@@ -254,9 +271,7 @@ watch(
 	},
 	{ immediate: true, deep: true },
 );
-function handleChange(e: Event) {
-	const target = e.target as HTMLInputElement;
-	const rawFiles = target.files ? Array.from(target.files) : [];
+function updateFileList(rawFiles: File[]) {
 	let files: IUploadFile[] = rawFiles.map((v) => {
 		return {
 			id: uuidv4(),
@@ -281,6 +296,12 @@ function handleChange(e: Event) {
 	if (props.autoUpload) {
 		startUpload();
 	}
+}
+
+function handleChange(e: Event) {
+	const target = e.target as HTMLInputElement;
+	const rawFiles = target.files ? Array.from(target.files) : [];
+	updateFileList(rawFiles);
 }
 
 const currentFile = ref<IUploadFile>();
@@ -378,6 +399,33 @@ function handleProgress(
 	if (props.onProgress && shouldTrigger) {
 		props.onProgress({ file, progress });
 	}
+}
+
+const isDragEnter = ref(false);
+
+function handleDragOver(e: DragEvent) {
+	if (!props.dropable) {
+		return;
+	}
+	e.preventDefault();
+}
+
+function handleDrop(e: DragEvent) {
+	if (!props.dropable) {
+		return;
+	}
+	e.preventDefault();
+	isDragEnter.value = false;
+	const rawFiles = Array.from(e.dataTransfer?.files || []);
+	updateFileList(rawFiles);
+}
+
+function handleDragEnter() {
+	isDragEnter.value = true;
+}
+
+function handleDragLeave() {
+	isDragEnter.value = false;
 }
 
 async function startUpload() {

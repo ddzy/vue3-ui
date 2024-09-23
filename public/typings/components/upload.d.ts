@@ -24,6 +24,7 @@ export interface IUploadProps {
   showDownloadButton?: boolean;
   showRemoveButton?: boolean;
   showRetryButton?: boolean;
+  dropable?: boolean;
   onPreview?: (options: {file: IUploadFile}) => void;
   onRemove?: (options: { file: IUploadFile }) => any;
   onDownload?: (options: { file: IUploadFile }) => void;

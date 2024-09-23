@@ -424,3 +424,45 @@ import { ref } from 'vue';
 ```
 
 :::
+
+## 拖拽上传
+
+:::demo
+
+```vue
+<template>
+	<v3-upload
+		action="https://run.mocky.io/v3/09b76707-1cda-41cb-bb74-3e22c7d03f30"
+		method="post"
+		:dropable="true"
+		:multiple="true"
+	>
+		<div :class="$style['wrapper']">
+			<v3-icon :class="$style['icon']" type="Upload"></v3-icon>
+			<p :class="$style['text']">
+				拖动文件到此处，或<v3-button type="text">点击上传</v3-button>
+			</p>
+		</div>
+	</v3-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+</script>
+<style module>
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+.icon {
+	font-size: 30px;
+	color: rgba(0, 160, 255, 1);
+}
+.text {
+	margin-top: 20px;
+}
+</style>
+```
+
+:::

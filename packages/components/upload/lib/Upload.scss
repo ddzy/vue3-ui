@@ -53,7 +53,8 @@ $status-list: (
 	),
 );
 
-.v3-upload {
+.v3-upload,
+.v3-drop-upload {
 	&.is-disabled {
 		.v3-upload__trigger {
 			cursor: not-allowed;
@@ -177,5 +178,19 @@ $status-list: (
 		left: 0;
 		bottom: 0;
 		transition: right 0.3s ease;
+	}
+}
+
+.v3-drop-upload {
+	.v3-upload__trigger {
+		display: block;
+		padding: $padding-large-2 0;
+		border: 1px dashed $border-color-default;
+		border-radius: $border-radius-width-default;
+		transition: all 0.3s ease;
+		&:hover,
+		&.is-drag-enter {
+			border-color: $primary-color;
+		}
 	}
 }
