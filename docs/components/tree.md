@@ -89,3 +89,47 @@ const data = ref([
 ```
 
 :::
+
+## 不同的点击区域
+
+通过将`expandOnClickNode`设为`false`，限制为只能点击树节点的缩略图标来切换是否展开
+
+:::demo
+
+```vue
+<template>
+	<v3-tree :data="data" :expandOnClickNode="false"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+		children: [
+			{
+				key: '1-1',
+				label: '1-1',
+				children: [
+					{
+						key: '1-1-1',
+						label: '1-1-1',
+					},
+				],
+			},
+			{
+				key: '1-2',
+				label: '1-2',
+			},
+		],
+	},
+	{
+		key: '2',
+		label: '2',
+	},
+]);
+</script>
+```
+
+:::

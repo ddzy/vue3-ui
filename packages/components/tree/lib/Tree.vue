@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	/**
 	 * 是否在点击节点任意区域后展开该节点
 	 */
-	expandOnClickNode: false,
+	expandOnClickNode: true,
 	/**
 	 * 是否在点击节点任意区域后选中该节点
 	 */
@@ -171,6 +171,18 @@ function handleBeforeLeave(el: Element) {
 	element.style.cssText += `height: ${height}px`;
 }
 
+function handleNodeClick(node: ITreeNode): void {
+	if (props.expandOnClickNode) {
+		node.expanded = !node.expanded;
+	}
+}
+
+function handleNodeThumbClick(node: ITreeNode) {
+	if (!props.expandOnClickNode) {
+		node.expanded = !node.expanded;
+	}
+}
+
 function RecursiveTree(options: {
 	parentLevel?: number;
 	children?: ITreeNode[];
@@ -185,7 +197,7 @@ function RecursiveTree(options: {
 				<div class={['v3-tree-node', node.expanded && 'is-expanded']}>
 					<div
 						class="v3-tree-node__content"
-						onClick={() => (node.expanded = !node.expanded)}
+						onClick={() => handleNodeClick(node)}
 					>
 						{/* 树节点缩进 */}
 						<div
@@ -196,7 +208,11 @@ function RecursiveTree(options: {
 						></div>
 						{/* 切换图标 */}
 						{hasChildren && (
-							<V3Icon type="Right" class="v3-tree-node__thumb"></V3Icon>
+							<V3Icon
+								type="Right"
+								class="v3-tree-node__thumb"
+								onClick={() => handleNodeThumbClick(node)}
+							></V3Icon>
 						)}
 						{/* 复选框 */}
 						{props.selectable && (
