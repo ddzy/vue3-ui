@@ -1,2 +1,14 @@
 .v3-tree {
+	line-height: normal;
+	.v3-tree__node {
+		display: flex;
+		align-items: center;
+		padding: 4px 0;
+	}
+	.v3-tree__checkbox {
+		margin-left: 4px;
+	}
+	.v3-tree__label {
+		margin-left: 2px;
+	}
 }

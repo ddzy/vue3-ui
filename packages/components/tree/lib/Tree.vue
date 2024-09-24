@@ -1,8 +1,16 @@
 <template>
-	<div class="v3-tree"></div>
+	<div class="v3-tree">
+		<RecursiveTree :children="nodes" />
+	</div>
 </template>
 <script lang="tsx" setup>
-import { ITreeProps } from '@typings/index';
+import { reactive, ref, watch } from 'vue';
+import { Fragment } from 'vue/jsx-runtime';
+
+import { multiply } from '@common/utils';
+import { V3Checkbox, V3Icon } from '@components/main';
+import { ITreeData, ITreeNode, ITreeProp, ITreeProps } from '@typings/index';
+import { cloneDeep, isFunction, isUndefined } from 'lodash-es';
 
 defineOptions({
 	name: 'V3Tree',
@@ -60,7 +68,7 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	/**
 	 * 缩进的大小（单位为px）
 	 */
-	indent: 20,
+	indent: 12,
 	/**
 	 * 节点是否可拖动
 	 */
@@ -74,6 +82,97 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	 */
 	allowDrop: undefined,
 });
+
+const treeProps = reactive<Required<ITreeProp>>({
+	key: 'key',
+	label: 'label',
+	children: 'children',
+	...(props.props || {}),
+});
+
+/**
+ * 树节点列表（根据data生成）
+ */
+const nodes = ref<ITreeNode[]>([]);
+watch(
+	() => props.data,
+	(newValue) => {
+		const clonedData = cloneDeep(newValue);
+		function _recursive(data?: ITreeData[], parentNode?: ITreeNode) {
+			if (Array.isArray(data) && data.length) {
+				data.forEach((v) => {
+					let key = v[treeProps.key];
+					// nodeKey优先级高
+					if (props.nodeKey) {
+						if (isFunction(props.nodeKey)) {
+							key = props.nodeKey({ data: v });
+						} else {
+							key = v[props.nodeKey];
+						}
+					}
+					const hasChildren =
+						Array.isArray(v[treeProps.children]) &&
+						v[treeProps.children].length;
+					const node: ITreeNode = {
+						key,
+						label: v[treeProps.label] || '',
+						children: hasChildren ? [] : undefined,
+						selected: false,
+						loaded: false,
+						expanded: false,
+						disabled: false,
+						parent: parentNode,
+					};
+					if (!parentNode) {
+						nodes.value.push(node);
+					} else {
+						parentNode.children?.push(node);
+					}
+					if (hasChildren) {
+						_recursive(v[treeProps.children], node);
+					}
+				});
+			}
+		}
+		_recursive(clonedData);
+	},
+	{ immediate: true, deep: true },
+);
+
+function RecursiveTree(options: {
+	parentLevel?: number;
+	children?: ITreeNode[];
+}): any {
+	const level = isUndefined(options.parentLevel) ? 0 : options.parentLevel + 1;
+	return (
+		Array.isArray(options.children) &&
+		options.children.length &&
+		options.children.map((node) => {
+			const hasChildren = Array.isArray(node.children) && node.children.length;
+			return (
+				<Fragment>
+					<div class={['v3-tree__node']}>
+						<div
+							class="v3-tree__indent"
+							style={{
+								paddingLeft: `${multiply(props.indent, level)}px`,
+							}}
+						></div>
+						<V3Icon type="Right" class="v3-tree__thumb"></V3Icon>
+						<V3Checkbox class="v3-tree__checkbox"></V3Checkbox>
+						<span class="v3-tree__label">{node.label}</span>
+					</div>
+					{hasChildren && (
+						<RecursiveTree
+							parentLevel={level}
+							children={node.children}
+						></RecursiveTree>
+					)}
+				</Fragment>
+			);
+		})
+	);
+}
 </script>
 <style lang="scss">
 @import './Tree.scss';
