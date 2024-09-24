@@ -15,6 +15,7 @@ export interface ITreeProps {
   accordion?: boolean;
   indent?: number;
   draggable?: boolean;
+  defaultExpandAll?: boolean;
   allowDrag?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
   allowDrop?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
 }

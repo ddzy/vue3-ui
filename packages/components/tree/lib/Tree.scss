@@ -1,14 +1,45 @@
+:root {
+	--v3-tree-node-hover-background-color: #{$hover-background-color-default};
+}
+
 .v3-tree {
 	line-height: normal;
-	.v3-tree__node {
+	.v3-tree-node {
+		&.is-expanded {
+			& > .v3-tree-node__content {
+				.v3-tree-node__thumb {
+					transform: rotateZ(90deg);
+				}
+			}
+			& > .v3-tree-node__children {
+				display: block;
+			}
+		}
+	}
+
+	.v3-tree-node__content {
 		display: flex;
 		align-items: center;
-		padding: 4px 0;
+		padding: 4px $padding-small;
+		transition-duration: 0.3s;
+		transition-timing-function: ease;
+		transition-property: height;
+		cursor: default;
+		&:hover {
+			background-color: var(--v3-tree-node-hover-background-color);
+		}
 	}
-	.v3-tree__checkbox {
+	.v3-tree-node__thumb {
+		transition: all 0.3s ease;
+	}
+	.v3-tree-node__checkbox {
 		margin-left: 4px;
 	}
-	.v3-tree__label {
-		margin-left: 2px;
+	.v3-tree-node__label {
+		margin-left: 4px;
+	}
+
+	.v3-tree-node__children {
+		display: none;
 	}
 }

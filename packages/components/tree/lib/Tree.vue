@@ -5,9 +5,8 @@
 </template>
 <script lang="tsx" setup>
 import { reactive, ref, watch } from 'vue';
-import { Fragment } from 'vue/jsx-runtime';
 
-import { multiply } from '@common/utils';
+import { add, multiply } from '@common/utils';
 import { V3Checkbox, V3Icon } from '@components/main';
 import { ITreeData, ITreeNode, ITreeProp, ITreeProps } from '@typings/index';
 import { cloneDeep, isFunction, isUndefined } from 'lodash-es';
@@ -74,6 +73,10 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	 */
 	draggable: false,
 	/**
+	 * 所有节点是否默认展开
+	 */
+	defaultExpandAll: false,
+	/**
 	 * 对于每个节点，判断是否可拖动
 	 */
 	allowDrag: undefined,
@@ -113,13 +116,19 @@ watch(
 					const hasChildren =
 						Array.isArray(v[treeProps.children]) &&
 						v[treeProps.children].length;
+					const expanded = !isUndefined(props.defaultExpandAll)
+						? props.defaultExpandAll
+						: !isUndefined(parentNode?.expanded)
+							? parentNode.expanded
+							: false;
+
 					const node: ITreeNode = {
 						key,
 						label: v[treeProps.label] || '',
 						children: hasChildren ? [] : undefined,
 						selected: false,
 						loaded: false,
-						expanded: false,
+						expanded,
 						disabled: false,
 						parent: parentNode,
 					};
@@ -150,25 +159,37 @@ function RecursiveTree(options: {
 		options.children.map((node) => {
 			const hasChildren = Array.isArray(node.children) && node.children.length;
 			return (
-				<Fragment>
-					<div class={['v3-tree__node']}>
+				<div class={['v3-tree-node', node.expanded && 'is-expanded']}>
+					<div
+						class="v3-tree-node__content"
+						onClick={() => (node.expanded = !node.expanded)}
+					>
+						{/* 树节点缩进 */}
 						<div
-							class="v3-tree__indent"
+							class="v3-tree-node__indent"
 							style={{
-								paddingLeft: `${multiply(props.indent, level)}px`,
+								paddingLeft: `calc(${add(multiply(props.indent, level))}px + ${hasChildren ? 0 : 1}em)`,
 							}}
 						></div>
-						<V3Icon type="Right" class="v3-tree__thumb"></V3Icon>
-						<V3Checkbox class="v3-tree__checkbox"></V3Checkbox>
-						<span class="v3-tree__label">{node.label}</span>
+						{/* 切换图标 */}
+						{hasChildren && (
+							<V3Icon type="Right" class="v3-tree-node__thumb"></V3Icon>
+						)}
+						{/* 复选框 */}
+						{props.selectable && (
+							<V3Checkbox class="v3-tree-node__checkbox"></V3Checkbox>
+						)}
+						<span class="v3-tree-node__label">{node.label}</span>
 					</div>
 					{hasChildren && (
-						<RecursiveTree
-							parentLevel={level}
-							children={node.children}
-						></RecursiveTree>
+						<div class="v3-tree-node__children">
+							<RecursiveTree
+								children={node.children}
+								parentLevel={level}
+							></RecursiveTree>
+						</div>
 					)}
-				</Fragment>
+				</div>
 			);
 		})
 	);
