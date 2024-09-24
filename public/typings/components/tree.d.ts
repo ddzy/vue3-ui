@@ -6,7 +6,7 @@ export interface ITreeProps {
   emptyText?: string;
   props?: ITreeProp;
   lazy?: boolean;
-  lazyMethod?: (options: { node: ITreeNode, data: ITreeData, resolve: (children: ITreeNode[]) => void }) => void;
+  lazyMethod?: (options: { node: ITreeNode, data: ITreeData, resolve: (children: ITreeData[]) => void }) => void;
   selectable?: boolean;
   highlightFocusedNode?: boolean;
   selectIsolate?: boolean;
@@ -26,8 +26,10 @@ export interface ITreeNode {
   label: string;
   selected: boolean;
   loaded: boolean;
+  loading: boolean;
   expanded: boolean;
   disabled: boolean;
+  data: ITreeData;
   children?: ITreeNode[];
   parent?: ITreeNode;
 }

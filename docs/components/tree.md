@@ -220,3 +220,43 @@ const block = ref(false);
 ```
 
 :::
+
+## 节点懒加载
+
+:::demo
+
+```vue
+<template>
+	<v3-tree :data="data" :lazy="true" :lazyMethod="lazyMethod"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+	},
+	{
+		key: '2',
+		label: '2',
+	},
+]);
+
+function lazyMethod({ node, data, resolve }) {
+	let childrenLength = ~~(Math.random() * 5);
+	const children = [];
+	for (let i = 1; i <= childrenLength; i++) {
+		children.push({
+			key: `${data.key}-${i}`,
+			label: `${data.key}-${i}`,
+		});
+	}
+	setTimeout(() => {
+		resolve(children);
+	}, 1000);
+}
+</script>
+```
+
+:::

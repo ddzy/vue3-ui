@@ -106,53 +106,68 @@ const treeProps = reactive<Required<ITreeProp>>({
  * 树节点列表（根据data生成）
  */
 const nodes = ref<ITreeNode[]>([]);
+/**
+ * 根据传入的data，递归生成树形节点
+ * @param data 树形数据源
+ * @param parentNode 父节点
+ */
+function transformData2Node(data?: ITreeData[], parentNode?: ITreeNode) {
+	data = cloneDeep(data);
+	const result: ITreeNode[] = [];
+	function _recursive(data?: ITreeData[], parentNode?: ITreeNode) {
+		if (Array.isArray(data) && data.length) {
+			data.forEach((v) => {
+				let key = v[treeProps.key];
+				// nodeKey优先级高
+				if (props.nodeKey) {
+					if (isFunction(props.nodeKey)) {
+						key = props.nodeKey({ data: v });
+					} else {
+						key = v[props.nodeKey];
+					}
+				}
+				const hasChildren =
+					Array.isArray(v[treeProps.children]) && v[treeProps.children].length;
+				const expanded = !isUndefined(props.defaultExpandAll)
+					? props.defaultExpandAll
+					: !isUndefined(parentNode?.expanded)
+						? parentNode.expanded
+						: false;
+
+				const node: ITreeNode = {
+					key,
+					label: v[treeProps.label] || '',
+					children: hasChildren ? [] : undefined,
+					selected: false,
+					loaded: false,
+					loading: false,
+					expanded,
+					disabled: false,
+					data: v,
+					parent: parentNode,
+				};
+				if (!parentNode) {
+					result.push(node);
+				} else {
+					if (!Array.isArray(parentNode.children)) {
+						parentNode.children = [];
+					}
+					parentNode.children.push(node);
+				}
+				if (hasChildren) {
+					_recursive(v[treeProps.children], node);
+				}
+			});
+		}
+	}
+	_recursive(data, parentNode);
+
+	return result;
+}
 watch(
 	() => props.data,
 	(newValue) => {
-		const clonedData = cloneDeep(newValue);
-		function _recursive(data?: ITreeData[], parentNode?: ITreeNode) {
-			if (Array.isArray(data) && data.length) {
-				data.forEach((v) => {
-					let key = v[treeProps.key];
-					// nodeKey优先级高
-					if (props.nodeKey) {
-						if (isFunction(props.nodeKey)) {
-							key = props.nodeKey({ data: v });
-						} else {
-							key = v[props.nodeKey];
-						}
-					}
-					const hasChildren =
-						Array.isArray(v[treeProps.children]) &&
-						v[treeProps.children].length;
-					const expanded = !isUndefined(props.defaultExpandAll)
-						? props.defaultExpandAll
-						: !isUndefined(parentNode?.expanded)
-							? parentNode.expanded
-							: false;
-
-					const node: ITreeNode = {
-						key,
-						label: v[treeProps.label] || '',
-						children: hasChildren ? [] : undefined,
-						selected: false,
-						loaded: false,
-						expanded,
-						disabled: false,
-						parent: parentNode,
-					};
-					if (!parentNode) {
-						nodes.value.push(node);
-					} else {
-						parentNode.children?.push(node);
-					}
-					if (hasChildren) {
-						_recursive(v[treeProps.children], node);
-					}
-				});
-			}
-		}
-		_recursive(clonedData);
+		nodes.value = transformData2Node(newValue);
 	},
 	{ immediate: true, deep: true },
 );
@@ -189,7 +204,23 @@ function handleNodeClick(node: ITreeNode): void {
 	}
 }
 
-function handleNodeThumbClick(node: ITreeNode) {
+function handleNodeThumbClick(node: ITreeNode, data: ITreeData) {
+	if (props.lazy && !node.loaded) {
+		node.loading = true;
+		if (props.lazyMethod) {
+			props.lazyMethod({
+				node,
+				data,
+				resolve(newData) {
+					// 树形数据懒加载
+					transformData2Node(newData, node);
+					node.loading = false;
+					node.loaded = true;
+				},
+			});
+		}
+	} else {
+	}
 	if (!props.expandOnClickNode) {
 		node.expanded = !node.expanded;
 	}
@@ -226,11 +257,12 @@ function RecursiveTree(options: {
 							}}
 						></div>
 						{/* 切换图标 */}
-						{hasChildren &&
+						{(props.lazy || hasChildren) &&
 							h(V3Icon, {
-								type: 'Right',
+								type: props.lazy && node.loading ? 'LoadingOne' : 'Right',
+								spin: props.lazy && node.loading,
 								class: 'v3-tree-node__thumb',
-								onClick: () => handleNodeThumbClick(node),
+								onClick: () => handleNodeThumbClick(node, node.data),
 							})}
 						{/* 复选框 */}
 						{props.selectable && (
