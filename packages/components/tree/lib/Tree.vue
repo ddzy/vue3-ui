@@ -1,5 +1,5 @@
 <template>
-	<div class="v3-tree">
+	<div :class="['v3-tree', props.block && 'is-block']">
 		<RecursiveTree :children="nodes" />
 	</div>
 </template>
@@ -81,6 +81,10 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	 * 所有节点是否默认展开
 	 */
 	defaultExpandAll: false,
+	/**
+	 * 节点宽度是否撑开
+	 */
+	block: false,
 	/**
 	 * 对于每个节点，判断是否可拖动
 	 */

@@ -175,3 +175,48 @@ const data = ref([
 ```
 
 :::
+
+## 撑满宽度
+
+:::demo
+
+```vue
+<template>
+	<v3-checkbox v-model="block">block</v3-checkbox>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tree :data="data" :block="block"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+		children: [
+			{
+				key: '1-1',
+				label: '1-1',
+				children: [
+					{
+						key: '1-1-1',
+						label: '1-1-1',
+					},
+				],
+			},
+			{
+				key: '1-2',
+				label: '1-2',
+			},
+		],
+	},
+	{
+		key: '2',
+		label: '2',
+	},
+]);
+const block = ref(false);
+</script>
+```
+
+:::

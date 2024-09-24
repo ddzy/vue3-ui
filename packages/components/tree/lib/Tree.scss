@@ -5,7 +5,30 @@
 
 .v3-tree {
 	line-height: normal;
+	&.is-block {
+		.v3-tree-node {
+			width: auto;
+			&.is-focused {
+				& > .v3-tree-node__content {
+					background-color: var(--v3-tree-node-focus-background-color);
+					.v3-tree-node__label {
+						background-color: initial;
+					}
+				}
+			}
+		}
+		.v3-tree-node__content {
+			&:hover {
+				background-color: var(--v3-tree-node-hover-background-color);
+				.v3-tree-node__label {
+					background-color: initial;
+				}
+			}
+		}
+	}
+
 	.v3-tree-node {
+		width: fit-content;
 		&.is-expanded {
 			& > .v3-tree-node__content {
 				.v3-tree-node__thumb {
@@ -15,7 +38,9 @@
 		}
 		&.is-focused {
 			& > .v3-tree-node__content {
-				background-color: var(--v3-tree-node-focus-background-color);
+				.v3-tree-node__label {
+					background-color: var(--v3-tree-node-focus-background-color);
+				}
 			}
 		}
 	}
@@ -25,18 +50,19 @@
 		align-items: center;
 		padding: 4px $padding-small;
 		cursor: default;
-		&:hover {
-			background-color: var(--v3-tree-node-hover-background-color);
-		}
 	}
 	.v3-tree-node__thumb {
 		transition: all 0.3s ease;
 	}
 	.v3-tree-node__checkbox {
-		margin-left: 4px;
+		padding: 0 4px;
 	}
 	.v3-tree-node__label {
-		margin-left: 4px;
+		padding: 0 4px;
+		border-radius: $border-radius-width-small;
+		&:hover {
+			background-color: var(--v3-tree-node-hover-background-color);
+		}
 	}
 
 	.v3-tree-node__children {

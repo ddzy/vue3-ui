@@ -16,6 +16,7 @@ export interface ITreeProps {
   indent?: number;
   draggable?: boolean;
   defaultExpandAll?: boolean;
+  block?: boolean;
   allowDrag?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
   allowDrop?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
 }
