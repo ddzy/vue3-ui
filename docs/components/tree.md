@@ -133,3 +133,45 @@ const data = ref([
 ```
 
 :::
+
+## 所有节点默认展开
+
+:::demo
+
+```vue
+<template>
+	<v3-tree :data="data" :defaultExpandAll="true"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+		children: [
+			{
+				key: '1-1',
+				label: '1-1',
+				children: [
+					{
+						key: '1-1-1',
+						label: '1-1-1',
+					},
+				],
+			},
+			{
+				key: '1-2',
+				label: '1-2',
+			},
+		],
+	},
+	{
+		key: '2',
+		label: '2',
+	},
+]);
+</script>
+```
+
+:::
