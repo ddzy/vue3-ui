@@ -8,7 +8,7 @@ export interface ITreeProps {
   lazy?: boolean;
   lazyMethod?: (options: { node: ITreeNode, data: ITreeData, resolve: (children: ITreeNode[]) => void }) => void;
   selectable?: boolean;
-  highlightSelectionNode?: boolean;
+  highlightFocusedNode?: boolean;
   selectIsolate?: boolean;
   expandOnClickNode?: boolean;
   selectOnClickNode?: boolean;

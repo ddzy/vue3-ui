@@ -1,5 +1,6 @@
 :root {
 	--v3-tree-node-hover-background-color: #{$hover-background-color-default};
+	--v3-tree-node-focus-background-color: #{$primary-color-plain};
 }
 
 .v3-tree {
@@ -10,6 +11,11 @@
 				.v3-tree-node__thumb {
 					transform: rotateZ(90deg);
 				}
+			}
+		}
+		&.is-focused {
+			& > .v3-tree-node__content {
+				background-color: var(--v3-tree-node-focus-background-color);
 			}
 		}
 	}

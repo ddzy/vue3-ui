@@ -4,7 +4,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { Transition, reactive, ref, watch } from 'vue';
+import { Transition, h, reactive, ref, watch } from 'vue';
 
 import {
 	add,
@@ -50,9 +50,9 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	 */
 	selectable: false,
 	/**
-	 * 选中的节点是否高亮显示
+	 * 聚焦的节点是否高亮显示
 	 */
-	highlightSelectionNode: false,
+	highlightFocusedNode: true,
 	/**
 	 * 在节点可选择的情况下，父子节点是否独立选择
 	 */
@@ -171,9 +171,17 @@ function handleBeforeLeave(el: Element) {
 	element.style.cssText += `height: ${height}px`;
 }
 
+/**
+ * 当前聚焦的树节点
+ */
+const focusedNode = ref<ITreeNode>();
+
 function handleNodeClick(node: ITreeNode): void {
 	if (props.expandOnClickNode) {
 		node.expanded = !node.expanded;
+	}
+	if (props.highlightFocusedNode) {
+		focusedNode.value = node;
 	}
 }
 
@@ -188,13 +196,20 @@ function RecursiveTree(options: {
 	children?: ITreeNode[];
 }): any {
 	const level = isUndefined(options.parentLevel) ? 0 : options.parentLevel + 1;
+
 	return (
 		Array.isArray(options.children) &&
 		options.children.length &&
 		options.children.map((node) => {
 			const hasChildren = Array.isArray(node.children) && node.children.length;
 			return (
-				<div class={['v3-tree-node', node.expanded && 'is-expanded']}>
+				<div
+					class={[
+						'v3-tree-node',
+						node.expanded && 'is-expanded',
+						focusedNode.value === node && 'is-focused',
+					]}
+				>
 					<div
 						class="v3-tree-node__content"
 						onClick={() => handleNodeClick(node)}
@@ -207,13 +222,12 @@ function RecursiveTree(options: {
 							}}
 						></div>
 						{/* 切换图标 */}
-						{hasChildren && (
-							<V3Icon
-								type="Right"
-								class="v3-tree-node__thumb"
-								onClick={() => handleNodeThumbClick(node)}
-							></V3Icon>
-						)}
+						{hasChildren &&
+							h(V3Icon, {
+								type: 'Right',
+								class: 'v3-tree-node__thumb',
+								onClick: () => handleNodeThumbClick(node),
+							})}
 						{/* 复选框 */}
 						{props.selectable && (
 							<V3Checkbox class="v3-tree-node__checkbox"></V3Checkbox>
