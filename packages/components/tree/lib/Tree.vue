@@ -4,9 +4,14 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { reactive, ref, watch } from 'vue';
+import { Transition, reactive, ref, watch } from 'vue';
 
-import { add, multiply } from '@common/utils';
+import {
+	add,
+	handleTransitionEnter,
+	handleTransitionLeave,
+	multiply,
+} from '@common/utils';
 import { V3Checkbox, V3Icon } from '@components/main';
 import { ITreeData, ITreeNode, ITreeProp, ITreeProps } from '@typings/index';
 import { cloneDeep, isFunction, isUndefined } from 'lodash-es';
@@ -148,6 +153,24 @@ watch(
 	{ immediate: true, deep: true },
 );
 
+function handleEnter(el: Element) {
+	const element = el as HTMLElement;
+	handleTransitionEnter(element);
+}
+function handleLeave(el: Element) {
+	const element = el as HTMLElement;
+	handleTransitionLeave(element);
+}
+function handleAfterEnter(el: Element) {
+	const element = el as HTMLElement;
+	element.style.cssText += `height: auto`;
+}
+function handleBeforeLeave(el: Element) {
+	const element = el as HTMLElement;
+	const { height } = element.getBoundingClientRect();
+	element.style.cssText += `height: ${height}px`;
+}
+
 function RecursiveTree(options: {
 	parentLevel?: number;
 	children?: ITreeNode[];
@@ -182,12 +205,19 @@ function RecursiveTree(options: {
 						<span class="v3-tree-node__label">{node.label}</span>
 					</div>
 					{hasChildren && (
-						<div class="v3-tree-node__children">
-							<RecursiveTree
-								children={node.children}
-								parentLevel={level}
-							></RecursiveTree>
-						</div>
+						<Transition
+							onEnter={handleEnter}
+							onLeave={handleLeave}
+							onBeforeLeave={handleBeforeLeave}
+							onAfterEnter={handleAfterEnter}
+						>
+							<div v-show={node.expanded} class="v3-tree-node__children">
+								<RecursiveTree
+									children={node.children}
+									parentLevel={level}
+								></RecursiveTree>
+							</div>
+						</Transition>
 					)}
 				</div>
 			);

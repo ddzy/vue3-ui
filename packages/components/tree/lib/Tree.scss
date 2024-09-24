@@ -12,7 +12,6 @@
 				}
 			}
 			& > .v3-tree-node__children {
-				display: block;
 			}
 		}
 	}
@@ -21,9 +20,6 @@
 		display: flex;
 		align-items: center;
 		padding: 4px $padding-small;
-		transition-duration: 0.3s;
-		transition-timing-function: ease;
-		transition-property: height;
 		cursor: default;
 		&:hover {
 			background-color: var(--v3-tree-node-hover-background-color);
@@ -40,6 +36,7 @@
 	}
 
 	.v3-tree-node__children {
-		display: none;
+		overflow: hidden;
+		transition: height 0.3s ease;
 	}
 }
