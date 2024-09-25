@@ -4,7 +4,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { Transition, h, reactive, ref, watch } from 'vue';
+import { Fragment, Transition, h, reactive, ref, watch } from 'vue';
 
 import {
 	add,
@@ -232,9 +232,7 @@ function RecursiveTree(options: {
 }): any {
 	const level = isUndefined(options.parentLevel) ? 0 : options.parentLevel + 1;
 
-	return (
-		Array.isArray(options.children) &&
-		options.children.length &&
+	return Array.isArray(options.children) && options.children.length ? (
 		options.children.map((node) => {
 			const hasChildren = Array.isArray(node.children) && node.children.length;
 			return (
@@ -257,20 +255,25 @@ function RecursiveTree(options: {
 							}}
 						></div>
 						{/* 切换图标 */}
-						{(props.lazy || hasChildren) &&
+						{props.lazy || hasChildren ? (
 							h(V3Icon, {
 								type: props.lazy && node.loading ? 'LoadingOne' : 'Right',
 								spin: props.lazy && node.loading,
 								class: 'v3-tree-node__thumb',
 								onClick: () => handleNodeThumbClick(node, node.data),
-							})}
+							})
+						) : (
+							<Fragment></Fragment>
+						)}
 						{/* 复选框 */}
-						{props.selectable && (
+						{props.selectable ? (
 							<V3Checkbox class="v3-tree-node__checkbox"></V3Checkbox>
+						) : (
+							<Fragment></Fragment>
 						)}
 						<span class="v3-tree-node__label">{node.label}</span>
 					</div>
-					{hasChildren && (
+					{hasChildren ? (
 						<Transition
 							onEnter={handleEnter}
 							onLeave={handleLeave}
@@ -284,10 +287,14 @@ function RecursiveTree(options: {
 								></RecursiveTree>
 							</div>
 						</Transition>
+					) : (
+						<Fragment></Fragment>
 					)}
 				</div>
 			);
 		})
+	) : (
+		<Fragment></Fragment>
 	);
 }
 </script>
