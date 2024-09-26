@@ -8,6 +8,7 @@
 			'is-indeterminated': props.indeterminate,
 			[`is-size--${props.size}`]: props.size,
 		}"
+		@click="handleClick"
 	>
 		<label
 			class="v3-checkbox__label-wrapper"
@@ -170,7 +171,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	emits: ['change', 'update:modelValue'],
+	emits: ['change', 'click', 'update:modelValue'],
 	setup(props: Required<TYPES.ICheckboxProps>, context) {
 		const state = reactive({
 			defaultProps: {
@@ -279,11 +280,17 @@ export default defineComponent({
 			}
 		}
 
+		function handleClick(e: Event) {
+			context.emit('click', e);
+		}
+
 		return {
 			state,
 			props,
 			app,
+			context,
 			handleChange,
+			handleClick,
 			checkboxRef,
 			isCheckboxGroup,
 			computedIsCustomIcon,
