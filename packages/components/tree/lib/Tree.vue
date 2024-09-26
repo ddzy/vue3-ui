@@ -195,12 +195,17 @@ function handleBeforeLeave(el: Element) {
  */
 const focusedNode = ref<ITreeNode>();
 
-function handleNodeClick(node: ITreeNode, data: ITreeData): void {
+function handleNodeClick(
+	node: ITreeNode,
+	data: ITreeData,
+	forceExpand = false,
+): void {
 	if (props.highlightFocusedNode) {
 		focusedNode.value = node;
 	}
+	const expand = forceExpand || props.expandOnClickNode;
 	// 树形数据懒加载
-	if (props.lazy && !node.loaded) {
+	if (props.lazy && !node.loaded && expand) {
 		node.loading = true;
 		if (props.lazyMethod) {
 			props.lazyMethod({
@@ -210,41 +215,20 @@ function handleNodeClick(node: ITreeNode, data: ITreeData): void {
 					transformData2Node(newData, node);
 					node.loading = false;
 					node.loaded = true;
-					if (props.expandOnClickNode) {
-						node.expanded = !node.expanded;
-					}
+					node.expanded = !node.expanded;
 				},
 			});
 		}
 	} else {
-		if (props.expandOnClickNode) {
+		if (expand) {
 			node.expanded = !node.expanded;
 		}
 	}
 }
 
 function handleNodeThumbClick(node: ITreeNode, data: ITreeData) {
-	// 树形数据懒加载
-	if (props.lazy && !node.loaded) {
-		node.loading = true;
-		if (props.lazyMethod) {
-			props.lazyMethod({
-				node,
-				data,
-				resolve(newData) {
-					transformData2Node(newData, node);
-					node.loading = false;
-					node.loaded = true;
-					if (!props.expandOnClickNode) {
-						node.expanded = !node.expanded;
-					}
-				},
-			});
-		}
-	} else {
-		if (!props.expandOnClickNode) {
-			node.expanded = !node.expanded;
-		}
+	if (!props.expandOnClickNode) {
+		handleNodeClick(node, data, true);
 	}
 }
 
