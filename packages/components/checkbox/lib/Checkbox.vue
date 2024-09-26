@@ -77,7 +77,13 @@
 					></polyline>
 				</svg>
 			</div>
-			<div class="v3-checkbox__label">
+			<div
+				v-if="
+					app.slots.default ||
+					(isCheckboxGroup ? props.modelValue : props.label)
+				"
+				class="v3-checkbox__label"
+			>
 				<slot v-if="app.slots.default"></slot>
 				<span v-else>{{
 					isCheckboxGroup ? props.modelValue : props.label
