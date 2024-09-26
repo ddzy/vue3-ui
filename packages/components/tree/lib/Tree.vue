@@ -4,7 +4,7 @@
 	</div>
 </template>
 <script lang="tsx" setup>
-import { Fragment, Transition, h, reactive, ref, watch } from 'vue';
+import { Fragment, Transition, reactive, ref, watch, withModifiers } from 'vue';
 
 import {
 	add,
@@ -14,7 +14,7 @@ import {
 } from '@common/utils';
 import { V3Checkbox, V3Icon } from '@components/main';
 import { ITreeData, ITreeNode, ITreeProp, ITreeProps } from '@typings/index';
-import { cloneDeep, isFunction, isUndefined } from 'lodash-es';
+import { cloneDeep, isFunction, isUndefined, noop } from 'lodash-es';
 
 defineOptions({
 	name: 'V3Tree',
@@ -171,6 +171,23 @@ watch(
 	},
 	{ immediate: true, deep: true },
 );
+/**
+ * 递归遍历树节点（辅助函数）
+ * @param callback
+ */
+function traverseNodes(callback: (node: ITreeNode) => void) {
+	function _helper(children?: ITreeNode[]) {
+		if (Array.isArray(children) && children.length) {
+			children.forEach((v) => {
+				callback(v);
+				if (Array.isArray(v.children) && v.children.length) {
+					_helper(v.children);
+				}
+			});
+		}
+	}
+	_helper(nodes.value);
+}
 
 function handleEnter(el: Element) {
 	const element = el as HTMLElement;
@@ -195,22 +212,18 @@ function handleBeforeLeave(el: Element) {
  */
 const focusedNode = ref<ITreeNode>();
 
-function handleNodeClick(
-	node: ITreeNode,
-	data: ITreeData,
-	forceExpand = false,
-): void {
+function handleNodeClick(node: ITreeNode, forceExpand = false): void {
 	if (props.highlightFocusedNode) {
 		focusedNode.value = node;
 	}
-	const expand = forceExpand || props.expandOnClickNode;
+	const canExpand = forceExpand || props.expandOnClickNode;
 	// 树形数据懒加载
-	if (props.lazy && !node.loaded && expand) {
+	if (props.lazy && !node.loaded && canExpand) {
 		node.loading = true;
 		if (props.lazyMethod) {
 			props.lazyMethod({
 				node,
-				data,
+				data: node.data,
 				resolve(newData) {
 					transformData2Node(newData, node);
 					node.loading = false;
@@ -220,16 +233,31 @@ function handleNodeClick(
 			});
 		}
 	} else {
-		if (expand) {
+		if (canExpand) {
 			node.expanded = !node.expanded;
 		}
 	}
 }
 
-function handleNodeThumbClick(node: ITreeNode, data: ITreeData) {
+function handleNodeThumbClick(node: ITreeNode) {
 	if (!props.expandOnClickNode) {
-		handleNodeClick(node, data, true);
+		handleNodeClick(node, true);
 	}
+}
+
+function handleNodeSelect(node: ITreeNode) {}
+
+/**
+ * 获取选中的所有节点
+ */
+function getSelectionNodes() {
+	const selectedNodes: Set<ITreeNode> = new Set([]);
+	traverseNodes((node) => {
+		if (node.selected) {
+			selectedNodes.add(node);
+		}
+	});
+	return [...selectedNodes];
 }
 
 function RecursiveTree(options: {
@@ -263,18 +291,23 @@ function RecursiveTree(options: {
 						></div>
 						{/* 切换图标 */}
 						{showThumb ? (
-							h(V3Icon, {
-								type: props.lazy && node.loading ? 'LoadingOne' : 'Right',
-								spin: props.lazy && node.loading,
-								class: 'v3-tree-node__thumb',
-								onClick: () => handleNodeThumbClick(node, node.data),
-							})
+							<V3Icon
+								type={props.lazy && node.loading ? 'LoadingOne' : 'Right'}
+								spin={props.lazy && node.loading}
+								class="v3-tree-node__thumb"
+								onClick={() => handleNodeThumbClick(node)}
+							></V3Icon>
 						) : (
 							<Fragment></Fragment>
 						)}
 						{/* 复选框 */}
 						{props.selectable ? (
-							<V3Checkbox class="v3-tree-node__checkbox"></V3Checkbox>
+							<V3Checkbox
+								v-model={node.selected}
+								class="v3-tree-node__checkbox"
+								onChange={() => handleNodeSelect(node)}
+								onClick={withModifiers(noop, ['stop'])}
+							></V3Checkbox>
 						) : (
 							<Fragment></Fragment>
 						)}
@@ -304,6 +337,10 @@ function RecursiveTree(options: {
 		<Fragment></Fragment>
 	);
 }
+
+defineExpose({
+	getSelectionNodes,
+});
 </script>
 <style lang="scss">
 @import './Tree.scss';

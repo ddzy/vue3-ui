@@ -215,7 +215,7 @@ const data = ref([
 		label: '2',
 	},
 ]);
-const block = ref(false);
+const block = ref(true);
 </script>
 ```
 
@@ -255,6 +255,63 @@ function lazyMethod({ node, data, resolve }) {
 	setTimeout(() => {
 		resolve(children);
 	}, 1000);
+}
+</script>
+```
+
+:::
+
+## 节点可选择
+
+:::demo
+
+```vue
+<template>
+	<v3-button type="primary" @click="getSelectionNodes"
+		>获取选中的节点</v3-button
+	>
+	<div style="margin-top: 12px;">
+		<span>已选中：</span>
+		<span>{{ selectedNodes }}</span>
+	</div>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tree ref="treeRef" :data="data" :selectable="true"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const treeRef = ref();
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+		children: [
+			{
+				key: '1-1',
+				label: '1-1',
+				children: [
+					{
+						key: '1-1-1',
+						label: '1-1-1',
+					},
+				],
+			},
+			{
+				key: '1-2',
+				label: '1-2',
+			},
+		],
+	},
+	{
+		key: '2',
+		label: '2',
+	},
+]);
+
+const selectedNodes = ref([]);
+function getSelectionNodes() {
+	const nodes = treeRef.value?.getSelectionNodes();
+	selectedNodes.value = nodes.map((v) => v.key);
 }
 </script>
 ```
