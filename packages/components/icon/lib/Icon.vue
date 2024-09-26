@@ -68,6 +68,7 @@ export default defineComponent({
 			default: 4,
 		},
 	},
+	emits: ['click'],
 	setup() {
 		IconProvider({
 			...DEFAULT_ICON_CONFIGS,

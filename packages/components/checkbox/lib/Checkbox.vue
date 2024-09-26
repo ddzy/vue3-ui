@@ -22,6 +22,7 @@
 				:id="`v3-checkbox__input--${app.uid}`"
 				:disabled="state.defaultProps.disabled"
 				@change="handleChange"
+				@click.stop
 			/>
 
 			<div
