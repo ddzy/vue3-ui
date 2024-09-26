@@ -195,16 +195,11 @@ function handleBeforeLeave(el: Element) {
  */
 const focusedNode = ref<ITreeNode>();
 
-function handleNodeClick(node: ITreeNode): void {
-	if (props.expandOnClickNode) {
-		node.expanded = !node.expanded;
-	}
+function handleNodeClick(node: ITreeNode, data: ITreeData): void {
 	if (props.highlightFocusedNode) {
 		focusedNode.value = node;
 	}
-}
-
-function handleNodeThumbClick(node: ITreeNode, data: ITreeData) {
+	// 树形数据懒加载
 	if (props.lazy && !node.loaded) {
 		node.loading = true;
 		if (props.lazyMethod) {
@@ -212,17 +207,44 @@ function handleNodeThumbClick(node: ITreeNode, data: ITreeData) {
 				node,
 				data,
 				resolve(newData) {
-					// 树形数据懒加载
 					transformData2Node(newData, node);
 					node.loading = false;
 					node.loaded = true;
+					if (props.expandOnClickNode) {
+						node.expanded = !node.expanded;
+					}
 				},
 			});
 		}
 	} else {
+		if (props.expandOnClickNode) {
+			node.expanded = !node.expanded;
+		}
 	}
-	if (!props.expandOnClickNode) {
-		node.expanded = !node.expanded;
+}
+
+function handleNodeThumbClick(node: ITreeNode, data: ITreeData) {
+	// 树形数据懒加载
+	if (props.lazy && !node.loaded) {
+		node.loading = true;
+		if (props.lazyMethod) {
+			props.lazyMethod({
+				node,
+				data,
+				resolve(newData) {
+					transformData2Node(newData, node);
+					node.loading = false;
+					node.loaded = true;
+					if (!props.expandOnClickNode) {
+						node.expanded = !node.expanded;
+					}
+				},
+			});
+		}
+	} else {
+		if (!props.expandOnClickNode) {
+			node.expanded = !node.expanded;
+		}
 	}
 }
 
@@ -235,6 +257,7 @@ function RecursiveTree(options: {
 	return Array.isArray(options.children) && options.children.length ? (
 		options.children.map((node) => {
 			const hasChildren = Array.isArray(node.children) && node.children.length;
+			const showThumb = hasChildren || (!node.loaded && props.lazy);
 			return (
 				<div
 					class={[
@@ -245,17 +268,17 @@ function RecursiveTree(options: {
 				>
 					<div
 						class="v3-tree-node__content"
-						onClick={() => handleNodeClick(node)}
+						onClick={() => handleNodeClick(node, node.data)}
 					>
 						{/* 树节点缩进 */}
 						<div
 							class="v3-tree-node__indent"
 							style={{
-								paddingLeft: `calc(${add(multiply(props.indent, level))}px + ${hasChildren ? 0 : 1}em)`,
+								paddingLeft: `calc(${add(multiply(props.indent, level))}px + ${showThumb ? 0 : 1}em)`,
 							}}
 						></div>
 						{/* 切换图标 */}
-						{props.lazy || hasChildren ? (
+						{showThumb ? (
 							h(V3Icon, {
 								type: props.lazy && node.loading ? 'LoadingOne' : 'Right',
 								spin: props.lazy && node.loading,
