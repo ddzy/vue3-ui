@@ -139,6 +139,7 @@ function transformData2Node(data?: ITreeData[], parentNode?: ITreeNode) {
 					label: v[treeProps.label] || '',
 					children: hasChildren ? [] : undefined,
 					selected: false,
+					indeterminate: false,
 					loaded: false,
 					loading: false,
 					expanded,
@@ -175,7 +176,10 @@ watch(
  * 递归遍历树节点（辅助函数）
  * @param callback
  */
-function traverseNodes(callback: (node: ITreeNode) => void) {
+function traverseNodes(
+	nodes: ITreeNode[],
+	callback: (node: ITreeNode) => void,
+) {
 	function _helper(children?: ITreeNode[]) {
 		if (Array.isArray(children) && children.length) {
 			children.forEach((v) => {
@@ -186,7 +190,7 @@ function traverseNodes(callback: (node: ITreeNode) => void) {
 			});
 		}
 	}
-	_helper(nodes.value);
+	_helper(nodes);
 }
 
 function handleEnter(el: Element) {
@@ -245,14 +249,48 @@ function handleNodeThumbClick(node: ITreeNode) {
 	}
 }
 
-function handleNodeSelect(node: ITreeNode) {}
+function handleNodeSelect(node: ITreeNode) {
+	// 如果节点选择互相关联
+	if (
+		!props.selectIsolate &&
+		Array.isArray(node.children) &&
+		node.children.length
+	) {
+		// 选中当前节点，需要同时选中/取消选中所有后代节点
+		traverseNodes(node.children, (childNode) => {
+			childNode.selected = node.selected;
+			childNode.indeterminate = false;
+		});
+		// 选中当前节点，需要选中/取消选中其父级节点，同时区分父级节点是否为不确定状态
+		let parentNode;
+		while ((parentNode = node.parent)) {
+			console.log('parentNode :>> ', parentNode);
+			// let allSelected = !!parentNode.children?.every(
+			// 	(childNode) => childNode.selected,
+			// );
+			// let allNotSelected = parentNode.children?.every(
+			// 	(childNode) => !childNode.selected,
+			// );
+			// if (allSelected) {
+			// 	parentNode.selected = true;
+			// 	parentNode.indeterminate = false;
+			// } else if (allNotSelected) {
+			// 	parentNode.selected = false;
+			// 	parentNode.indeterminate = false;
+			// } else {
+			// 	parentNode.selected = false;
+			// 	parentNode.indeterminate = true;
+			// }
+		}
+	}
+}
 
 /**
  * 获取选中的所有节点
  */
 function getSelectionNodes() {
 	const selectedNodes: Set<ITreeNode> = new Set([]);
-	traverseNodes((node) => {
+	traverseNodes(nodes.value, (node) => {
 		if (node.selected) {
 			selectedNodes.add(node);
 		}
@@ -305,6 +343,7 @@ function RecursiveTree(options: {
 							<V3Checkbox
 								v-model={node.selected}
 								class="v3-tree-node__checkbox"
+								indeterminate={node.indeterminate}
 								onChange={() => handleNodeSelect(node)}
 								onClick={withModifiers(noop, ['stop'])}
 							></V3Checkbox>

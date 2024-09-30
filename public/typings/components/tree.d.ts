@@ -25,6 +25,7 @@ export interface ITreeNode {
   key: ITreeBaseKey;
   label: string;
   selected: boolean;
+  indeterminate: boolean;
   loaded: boolean;
   loading: boolean;
   expanded: boolean;
