@@ -251,36 +251,36 @@ function handleNodeThumbClick(node: ITreeNode) {
 
 function handleNodeSelect(node: ITreeNode) {
 	// 如果节点选择互相关联
-	if (
-		!props.selectIsolate &&
-		Array.isArray(node.children) &&
-		node.children.length
-	) {
+	if (!props.selectIsolate) {
 		// 选中当前节点，需要同时选中/取消选中所有后代节点
-		traverseNodes(node.children, (childNode) => {
-			childNode.selected = node.selected;
-			childNode.indeterminate = false;
-		});
+		if (Array.isArray(node.children)) {
+			traverseNodes(node.children, (childNode) => {
+				childNode.selected = node.selected;
+				childNode.indeterminate = false;
+			});
+		}
 		// 选中当前节点，需要选中/取消选中其父级节点，同时区分父级节点是否为不确定状态
-		let parentNode;
-		while ((parentNode = node.parent)) {
-			console.log('parentNode :>> ', parentNode);
-			// let allSelected = !!parentNode.children?.every(
-			// 	(childNode) => childNode.selected,
-			// );
-			// let allNotSelected = parentNode.children?.every(
-			// 	(childNode) => !childNode.selected,
-			// );
-			// if (allSelected) {
-			// 	parentNode.selected = true;
-			// 	parentNode.indeterminate = false;
-			// } else if (allNotSelected) {
-			// 	parentNode.selected = false;
-			// 	parentNode.indeterminate = false;
-			// } else {
-			// 	parentNode.selected = false;
-			// 	parentNode.indeterminate = true;
-			// }
+		let parentNode: ITreeNode | undefined = node;
+		while (parentNode) {
+			if (Array.isArray(parentNode.children)) {
+				let allSelected = parentNode.children.every(
+					(childNode) => childNode.selected,
+				);
+				let allNotSelected = parentNode.children.every(
+					(childNode) => !childNode.selected,
+				);
+				if (allSelected) {
+					parentNode.selected = true;
+					parentNode.indeterminate = false;
+				} else if (allNotSelected) {
+					parentNode.selected = false;
+					parentNode.indeterminate = false;
+				} else {
+					parentNode.selected = false;
+					parentNode.indeterminate = true;
+				}
+			}
+			parentNode = parentNode.parent;
 		}
 	}
 }
@@ -291,7 +291,7 @@ function handleNodeSelect(node: ITreeNode) {
 function getSelectionNodes() {
 	const selectedNodes: Set<ITreeNode> = new Set([]);
 	traverseNodes(nodes.value, (node) => {
-		if (node.selected) {
+		if (node.selected || node.indeterminate) {
 			selectedNodes.add(node);
 		}
 	});
