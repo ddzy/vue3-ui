@@ -270,6 +270,12 @@ function lazyMethod({ node, data, resolve }) {
 	<v3-button type="primary" @click="getSelectionNodes"
 		>获取选中的节点</v3-button
 	>
+	<v3-button
+		style="margin-left: 12px"
+		type="primary"
+		@click="toggleNodeSelection"
+		>切换选中指定节点</v3-button
+	>
 	<div style="margin-top: 12px;">
 		<span>已选中：</span>
 		<span>{{ selectedNodes }}</span>
@@ -312,6 +318,9 @@ const selectedNodes = ref([]);
 function getSelectionNodes() {
 	const nodes = treeRef.value?.getSelectionNodes();
 	selectedNodes.value = nodes.map((v) => v.key);
+}
+function toggleNodeSelection() {
+	treeRef.value?.toggleNodeSelection('1-1');
 }
 </script>
 ```

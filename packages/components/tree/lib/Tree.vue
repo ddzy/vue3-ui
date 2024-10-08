@@ -13,7 +13,13 @@ import {
 	multiply,
 } from '@common/utils';
 import { V3Checkbox, V3Icon } from '@components/main';
-import { ITreeData, ITreeNode, ITreeProp, ITreeProps } from '@typings/index';
+import {
+	ITreeBaseKey,
+	ITreeData,
+	ITreeNode,
+	ITreeProp,
+	ITreeProps,
+} from '@typings/index';
 import { cloneDeep, isFunction, isUndefined, noop } from 'lodash-es';
 
 defineOptions({
@@ -298,6 +304,24 @@ function getSelectionNodes() {
 	return [...selectedNodes];
 }
 
+/**
+ * 切换某个节点的选中状态
+ * @param nodeKey 节点key
+ * @param selected 如果设置了该参数，则强制将节点设置为选中/不选中
+ */
+function toggleNodeSelection(nodeKey: ITreeBaseKey, selected?: boolean) {
+	let findNode: ITreeNode | undefined;
+	traverseNodes(nodes.value, (node) => {
+		if (node.key === nodeKey) {
+			findNode = node;
+		}
+	});
+	if (findNode) {
+		findNode.selected = isUndefined(selected) ? !findNode.selected : selected;
+		handleNodeSelect(findNode);
+	}
+}
+
 function RecursiveTree(options: {
 	parentLevel?: number;
 	children?: ITreeNode[];
@@ -379,6 +403,7 @@ function RecursiveTree(options: {
 
 defineExpose({
 	getSelectionNodes,
+	toggleNodeSelection,
 });
 </script>
 <style lang="scss">
