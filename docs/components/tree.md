@@ -268,6 +268,9 @@ function lazyMethod({ node, data, resolve }) {
 ```vue
 <template>
 	<v3-checkbox v-model="selectIsolate">独立节点</v3-checkbox>
+	<v3-checkbox style="margin-left: 12px" v-model="selectOnClickNode"
+		>扩大选择区域</v3-checkbox
+	>
 	<v3-button style="margin-left: 12px" type="primary" @click="getSelectionNodes"
 		>获取选中的节点</v3-button
 	>
@@ -287,6 +290,7 @@ function lazyMethod({ node, data, resolve }) {
 		:data="data"
 		:selectable="true"
 		:selectIsolate="selectIsolate"
+		:selectOnClickNode="selectOnClickNode"
 	></v3-tree>
 </template>
 <script lang="ts" setup>
@@ -321,6 +325,7 @@ const data = ref([
 ]);
 
 const selectIsolate = ref(false);
+const selectOnClickNode = ref(false);
 const selectedNodes = ref([]);
 function getSelectionNodes() {
 	const nodes = treeRef.value?.getSelectionNodes();

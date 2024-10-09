@@ -222,11 +222,16 @@ function handleBeforeLeave(el: Element) {
  */
 const focusedNode = ref<ITreeNode>();
 
-function handleNodeClick(node: ITreeNode, forceExpand = false): void {
+function handleNodeClick(
+	node: ITreeNode,
+	forceExpand = false,
+	forceSelect = false,
+): void {
 	if (props.highlightFocusedNode) {
 		focusedNode.value = node;
 	}
 	const canExpand = forceExpand || props.expandOnClickNode;
+	const canSelect = forceSelect || props.selectOnClickNode;
 	// 树形数据懒加载
 	if (props.lazy && !node.loaded && canExpand) {
 		node.loading = true;
@@ -239,12 +244,20 @@ function handleNodeClick(node: ITreeNode, forceExpand = false): void {
 					node.loading = false;
 					node.loaded = true;
 					node.expanded = !node.expanded;
+					if (canSelect) {
+						node.selected = node.selected;
+						handleNodeSelect(node);
+					}
 				},
 			});
 		}
 	} else {
 		if (canExpand) {
 			node.expanded = !node.expanded;
+		}
+		if (canSelect) {
+			node.selected = !node.selected;
+			handleNodeSelect(node);
 		}
 	}
 }
