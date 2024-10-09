@@ -244,6 +244,19 @@ function handleNodeClick(
 					node.loading = false;
 					node.loaded = true;
 					node.expanded = !node.expanded;
+					// 如果是手风琴模式，需要收起同父节点下同级的其他节点
+					let parentChildren = node.parent ? node.parent.children : nodes.value;
+					if (
+						node.expanded &&
+						props.accordion &&
+						Array.isArray(parentChildren)
+					) {
+						parentChildren.forEach((v) => {
+							if (v !== node) {
+								v.expanded = false;
+							}
+						});
+					}
 					if (canSelect) {
 						node.selected = node.selected;
 						handleNodeSelect(node);
@@ -254,6 +267,15 @@ function handleNodeClick(
 	} else {
 		if (canExpand) {
 			node.expanded = !node.expanded;
+			// 如果是手风琴模式，需要收起同父节点下同级的其他节点
+			let parentChildren = node.parent ? node.parent.children : nodes.value;
+			if (node.expanded && props.accordion && Array.isArray(parentChildren)) {
+				parentChildren.forEach((v) => {
+					if (v !== node) {
+						v.expanded = false;
+					}
+				});
+			}
 		}
 		if (canSelect) {
 			node.selected = !node.selected;

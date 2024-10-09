@@ -338,3 +338,71 @@ function toggleNodeSelection() {
 ```
 
 :::
+
+## 手风琴模式
+
+:::demo
+
+```vue
+<template>
+	<v3-tree :data="data" :accordion="true"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+		children: [
+			{
+				key: '1-1',
+				label: '1-1',
+				children: [
+					{
+						key: '1-1-1',
+						label: '1-1-1',
+					},
+				],
+			},
+			{
+				key: '1-2',
+				label: '1-2',
+				children: [
+					{
+						key: '1-2-1',
+						label: '1-2-1',
+					},
+				],
+			},
+		],
+	},
+	{
+		key: '2',
+		label: '2',
+		children: [
+			{
+				key: '2-1',
+				label: '2-1',
+			},
+			{
+				key: '2-2',
+				label: '2-2',
+				children: [
+					{
+						key: '2-2-1',
+						label: '2-2-1',
+					},
+					{
+						key: '2-2-2',
+						label: '2-2-2',
+					},
+				],
+			},
+		],
+	},
+]);
+</script>
+```
+
+:::
