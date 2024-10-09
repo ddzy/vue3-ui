@@ -74,6 +74,11 @@ $checkbox-size-map: (
 	&.is-disabled {
 		.v3-checkbox__label-wrapper {
 			cursor: not-allowed;
+			.v3-checkbox__select {
+				rect {
+					fill: $disable-bg-color;
+				}
+			}
 		}
 	}
 
