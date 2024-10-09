@@ -94,17 +94,18 @@ const props = withDefaults(defineProps<ITreeProps>(), {
 	/**
 	 * 对于每个节点，判断是否可拖动
 	 */
-	allowDrag: undefined,
+	allowDragMethod: undefined,
 	/**
 	 * 对于某个节点，判断是否可放置
 	 */
-	allowDrop: undefined,
+	allowDropMethod: undefined,
 });
 
 const treeProps = reactive<Required<ITreeProp>>({
 	key: 'key',
 	label: 'label',
 	children: 'children',
+	disabled: 'disabled',
 	...(props.props || {}),
 });
 
@@ -149,7 +150,7 @@ function transformData2Node(data?: ITreeData[], parentNode?: ITreeNode) {
 					loaded: false,
 					loading: false,
 					expanded,
-					disabled: false,
+					disabled: v[treeProps.disabled] || false,
 					data: v,
 					parent: parentNode,
 				};
@@ -332,7 +333,7 @@ function handleNodeSelect(node: ITreeNode) {
 function getSelectionNodes() {
 	const selectedNodes: Set<ITreeNode> = new Set([]);
 	traverseNodes(nodes.value, (node) => {
-		if (node.selected || node.indeterminate) {
+		if (!node.disabled && (node.selected || node.indeterminate)) {
 			selectedNodes.add(node);
 		}
 	});
@@ -351,7 +352,7 @@ function toggleNodeSelection(nodeKey: ITreeBaseKey, selected?: boolean) {
 			findNode = node;
 		}
 	});
-	if (findNode) {
+	if (findNode && !findNode.disabled) {
 		findNode.selected = isUndefined(selected) ? !findNode.selected : selected;
 		handleNodeSelect(findNode);
 	}
@@ -402,6 +403,7 @@ function RecursiveTree(options: {
 							<V3Checkbox
 								v-model={node.selected}
 								class="v3-tree-node__checkbox"
+								disabled={node.disabled}
 								indeterminate={node.indeterminate}
 								onChange={() => handleNodeSelect(node)}
 								onClick={withModifiers(noop, ['stop'])}

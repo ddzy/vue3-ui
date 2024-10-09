@@ -406,3 +406,62 @@ const data = ref([
 ```
 
 :::
+
+## 禁用树节点
+
+可以禁用树节点的复选框
+
+:::demo
+
+```vue
+<template>
+	<v3-button @click="getSelectionNodes">获取已选中的节点</v3-button>
+	<div style="margin-top: 12px;">
+		<span>已选中：</span>
+		<span>{{ selectedNodes }}</span>
+	</div>
+	<v3-divider direction="horizontal"></v3-divider>
+	<v3-tree :data="data" :selectable="true" ref="treeRef"></v3-tree>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const data = ref([
+	{
+		key: '1',
+		label: '1',
+		children: [
+			{
+				key: '1-1',
+				label: '1-1',
+				children: [
+					{
+						key: '1-1-1',
+						label: '1-1-1',
+						disabled: true,
+					},
+				],
+			},
+			{
+				key: '1-2',
+				label: '1-2',
+			},
+		],
+	},
+	{
+		key: '2',
+		label: '2',
+		disabled: true,
+	},
+]);
+
+const treeRef = ref();
+const selectedNodes = ref([]);
+function getSelectionNodes() {
+	const nodes = treeRef.value?.getSelectionNodes();
+	selectedNodes.value = nodes.map((v) => v.key);
+}
+</script>
+```
+
+:::

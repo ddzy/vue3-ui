@@ -17,8 +17,8 @@ export interface ITreeProps {
   draggable?: boolean;
   defaultExpandAll?: boolean;
   block?: boolean;
-  allowDrag?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
-  allowDrop?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
+  allowDragMethod?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
+  allowDropMethod?: (options: { node: ITreeNode, data: ITreeData }) => boolean;
 }
 export type ITreeData = any;
 export interface ITreeNode {
@@ -40,6 +40,7 @@ export interface ITreeProp {
   key?: string;
   label?: string;
   children?: string;
+  disabled?: string;
 }
 
 export const V3Tree: SFCWithInstall<ITreeProps>;
