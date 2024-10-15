@@ -358,6 +358,58 @@ function toggleNodeSelection(nodeKey: ITreeBaseKey, selected?: boolean) {
 	}
 }
 
+const nodeLabelRefs = ref<Array<{ el: HTMLElement; node: ITreeNode }>>([]);
+
+/**
+ * 树节点拖拽
+ */
+const draggingNode = ref<ITreeNode>();
+function handleDragStart(e: DragEvent, node: ITreeNode) {
+	draggingNode.value = node;
+}
+function handleDragOver(e: DragEvent, node: ITreeNode) {
+	if (!props.draggable) {
+		return;
+	}
+	const target = e.currentTarget as HTMLElement;
+	// 阻止拖拽的默认行为
+	e.preventDefault();
+}
+function handleDragEnter(e: DragEvent, node: ITreeNode) {
+	const target = e.target as HTMLElement;
+	const paths = e.composedPath() as HTMLElement[];
+	// 如果放置到目标节点的内部
+	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
+		paths
+			.find((v) => v.classList.contains('v3-tree-node__label'))
+			?.classList.add('is-dragging--color');
+	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
+		paths?.[0]?.classList.add('is-dragging--border');
+	}
+}
+function handleDragLeave(e: DragEvent, node: ITreeNode) {
+	const target = e.currentTarget as HTMLElement;
+	const paths = e.composedPath() as HTMLElement[];
+	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
+		paths
+			.find((v) => v.classList.contains('v3-tree-node__label'))
+			?.classList.remove('is-dragging--color');
+	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
+		paths?.[0]?.classList.remove('is-dragging--border');
+	}
+}
+function handleDrop(e: DragEvent, node: ITreeNode) {
+	const target = e.currentTarget as HTMLElement;
+	const paths = e.composedPath() as HTMLElement[];
+	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
+		paths
+			.find((v) => v.classList.contains('v3-tree-node__label'))
+			?.classList.remove('is-dragging--color');
+	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
+		paths?.[0]?.classList.remove('is-dragging--border');
+	}
+}
+
 function RecursiveTree(options: {
 	parentLevel?: number;
 	children?: ITreeNode[];
@@ -375,9 +427,13 @@ function RecursiveTree(options: {
 						node.expanded && 'is-expanded',
 						focusedNode.value === node && 'is-focused',
 					]}
+					draggable={props.draggable}
+					onDragstart={(e) => handleDragStart(e, node)}
+					onDragenter={(e) => handleDragEnter(e, node)}
+					onDragover={(e) => handleDragOver(e, node)}
 				>
 					<div
-						class="v3-tree-node__content"
+						class={['v3-tree-node__content']}
 						onClick={() => handleNodeClick(node, node.data)}
 					>
 						{/* 树节点缩进 */}
@@ -411,7 +467,16 @@ function RecursiveTree(options: {
 						) : (
 							<Fragment></Fragment>
 						)}
-						<span class="v3-tree-node__label">{node.label}</span>
+						<div
+							ref={(el) =>
+								nodeLabelRefs.value.push({ el: el as HTMLElement, node })
+							}
+							class="v3-tree-node__label"
+							onDragleave={(e) => handleDragLeave(e, node)}
+							onDrop={(e) => handleDrop(e, node)}
+						>
+							<span class="v3-tree-node__label-text">{node.label}</span>
+						</div>
 					</div>
 					{hasChildren ? (
 						<Transition
