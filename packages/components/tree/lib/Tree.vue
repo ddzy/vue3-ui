@@ -381,10 +381,12 @@ function handleDragEnter(e: DragEvent, node: ITreeNode) {
 	// 如果放置到目标节点的内部
 	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
 		paths
-			.find((v) => v.classList.contains('v3-tree-node__label'))
+			.find((v) => v.classList.contains('v3-tree-node'))
 			?.classList.add('is-dragging--color');
 	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
-		paths?.[0]?.classList.add('is-dragging--border');
+		paths
+			.find((v) => v.classList.contains('v3-tree-node'))
+			?.classList.add('is-dragging--border');
 	}
 }
 function handleDragLeave(e: DragEvent, node: ITreeNode) {
@@ -392,10 +394,12 @@ function handleDragLeave(e: DragEvent, node: ITreeNode) {
 	const paths = e.composedPath() as HTMLElement[];
 	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
 		paths
-			.find((v) => v.classList.contains('v3-tree-node__label'))
+			.find((v) => v.classList.contains('v3-tree-node'))
 			?.classList.remove('is-dragging--color');
 	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
-		paths?.[0]?.classList.remove('is-dragging--border');
+		paths
+			.find((v) => v.classList.contains('v3-tree-node'))
+			?.classList.remove('is-dragging--border');
 	}
 }
 function handleDrop(e: DragEvent, node: ITreeNode) {
@@ -403,10 +407,12 @@ function handleDrop(e: DragEvent, node: ITreeNode) {
 	const paths = e.composedPath() as HTMLElement[];
 	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
 		paths
-			.find((v) => v.classList.contains('v3-tree-node__label'))
+			.find((v) => v.classList.contains('v3-tree-node'))
 			?.classList.remove('is-dragging--color');
 	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
-		paths?.[0]?.classList.remove('is-dragging--border');
+		paths
+			.find((v) => v.classList.contains('v3-tree-node'))
+			?.classList.remove('is-dragging--border');
 	}
 }
 
