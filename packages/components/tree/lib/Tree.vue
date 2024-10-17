@@ -20,6 +20,7 @@ import {
 	ITreeProp,
 	ITreeProps,
 } from '@typings/index';
+import { useElementBounding } from '@vueuse/core';
 import { cloneDeep, isFunction, isUndefined, noop } from 'lodash-es';
 
 defineOptions({
@@ -358,8 +359,6 @@ function toggleNodeSelection(nodeKey: ITreeBaseKey, selected?: boolean) {
 	}
 }
 
-const nodeLabelRefs = ref<Array<{ el: HTMLElement; node: ITreeNode }>>([]);
-
 /**
  * 树节点拖拽
  */
@@ -371,49 +370,53 @@ function handleDragOver(e: DragEvent, node: ITreeNode) {
 	if (!props.draggable) {
 		return;
 	}
-	const target = e.currentTarget as HTMLElement;
 	// 阻止拖拽的默认行为
 	e.preventDefault();
-}
-function handleDragEnter(e: DragEvent, node: ITreeNode) {
-	const target = e.target as HTMLElement;
+
 	const paths = e.composedPath() as HTMLElement[];
+
+	// 放置到的目标节点不可以是当前拖拽节点及其后代
+	let parentNode: ITreeNode | undefined = node;
+	while (parentNode) {
+		if (parentNode === draggingNode.value) {
+			return;
+		}
+		parentNode = parentNode.parent;
+	}
+
 	// 如果放置到目标节点的内部
 	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
-		paths
-			.find((v) => v.classList.contains('v3-tree-node'))
-			?.classList.add('is-dragging--color');
+		const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
+		nodeWrapper?.classList.add('is-dragging--color');
 	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
-		paths
-			.find((v) => v.classList.contains('v3-tree-node'))
-			?.classList.add('is-dragging--border');
+		// 如果放置到目标节点的前后
+		const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
+		const { height, bottom } = useElementBounding(nodeWrapper);
+		if (
+			e.clientY >= bottom.value - height.value / 2 &&
+			e.clientY <= bottom.value
+		) {
+			nodeWrapper?.classList.add('is-dragging--border-bottom');
+			nodeWrapper?.classList.remove('is-dragging--border-top');
+		} else {
+			nodeWrapper?.classList.add('is-dragging--border-top');
+			nodeWrapper?.classList.remove('is-dragging--border-bottom');
+		}
 	}
 }
 function handleDragLeave(e: DragEvent, node: ITreeNode) {
-	const target = e.currentTarget as HTMLElement;
 	const paths = e.composedPath() as HTMLElement[];
-	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
-		paths
-			.find((v) => v.classList.contains('v3-tree-node'))
-			?.classList.remove('is-dragging--color');
-	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
-		paths
-			.find((v) => v.classList.contains('v3-tree-node'))
-			?.classList.remove('is-dragging--border');
-	}
+	const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
+	nodeWrapper?.classList.remove('is-dragging--color');
+	nodeWrapper?.classList.remove('is-dragging--border-bottom');
+	nodeWrapper?.classList.remove('is-dragging--border-top');
 }
 function handleDrop(e: DragEvent, node: ITreeNode) {
-	const target = e.currentTarget as HTMLElement;
 	const paths = e.composedPath() as HTMLElement[];
-	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
-		paths
-			.find((v) => v.classList.contains('v3-tree-node'))
-			?.classList.remove('is-dragging--color');
-	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
-		paths
-			.find((v) => v.classList.contains('v3-tree-node'))
-			?.classList.remove('is-dragging--border');
-	}
+	const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
+	nodeWrapper?.classList.remove('is-dragging--color');
+	nodeWrapper?.classList.remove('is-dragging--border-bottom');
+	nodeWrapper?.classList.remove('is-dragging--border-top');
 }
 
 function RecursiveTree(options: {
@@ -434,9 +437,14 @@ function RecursiveTree(options: {
 						focusedNode.value === node && 'is-focused',
 					]}
 					draggable={props.draggable}
-					onDragstart={(e) => handleDragStart(e, node)}
-					onDragenter={(e) => handleDragEnter(e, node)}
-					onDragover={(e) => handleDragOver(e, node)}
+					onDragstart={withModifiers(
+						(e) => handleDragStart(e as DragEvent, node),
+						['stop'],
+					)}
+					onDragover={withModifiers(
+						(e) => handleDragOver(e as DragEvent, node),
+						['stop'],
+					)}
 				>
 					<div
 						class={['v3-tree-node__content']}
@@ -474,9 +482,6 @@ function RecursiveTree(options: {
 							<Fragment></Fragment>
 						)}
 						<div
-							ref={(el) =>
-								nodeLabelRefs.value.push({ el: el as HTMLElement, node })
-							}
 							class="v3-tree-node__label"
 							onDragleave={(e) => handleDragLeave(e, node)}
 							onDrop={(e) => handleDrop(e, node)}
