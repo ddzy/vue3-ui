@@ -21,7 +21,7 @@ import {
 	ITreeProps,
 } from '@typings/index';
 import { useElementBounding } from '@vueuse/core';
-import { cloneDeep, isFunction, isUndefined, noop } from 'lodash-es';
+import { cloneDeep, isFunction, isNumber, isUndefined, noop } from 'lodash-es';
 
 defineOptions({
 	name: 'V3Tree',
@@ -154,6 +154,7 @@ function transformData2Node(data?: ITreeData[], parentNode?: ITreeNode) {
 					disabled: v[treeProps.disabled] || false,
 					data: v,
 					parent: parentNode,
+					root: !parentNode,
 				};
 				if (!parentNode) {
 					result.push(node);
@@ -362,7 +363,14 @@ function toggleNodeSelection(nodeKey: ITreeBaseKey, selected?: boolean) {
 /**
  * 树节点拖拽
  */
+/**
+ * 当前拖拽的节点
+ */
 const draggingNode = ref<ITreeNode>();
+/**
+ * 放置到的目标位置
+ */
+const dropPlace = ref<'front' | 'behind' | 'inner'>();
 function handleDragStart(e: DragEvent, node: ITreeNode) {
 	draggingNode.value = node;
 }
@@ -378,7 +386,7 @@ function handleDragOver(e: DragEvent, node: ITreeNode) {
 	// 放置到的目标节点不可以是当前拖拽节点及其后代
 	let parentNode: ITreeNode | undefined = node;
 	while (parentNode) {
-		if (parentNode === draggingNode.value) {
+		if (parentNode.key === draggingNode.value?.key) {
 			return;
 		}
 		parentNode = parentNode.parent;
@@ -388,6 +396,7 @@ function handleDragOver(e: DragEvent, node: ITreeNode) {
 	if (paths?.[0]?.classList?.contains('v3-tree-node__label-text')) {
 		const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
 		nodeWrapper?.classList.add('is-dragging--color');
+		dropPlace.value = 'inner';
 	} else if (paths?.[0]?.classList?.contains('v3-tree-node__label')) {
 		// 如果放置到目标节点的前后
 		const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
@@ -398,9 +407,11 @@ function handleDragOver(e: DragEvent, node: ITreeNode) {
 		) {
 			nodeWrapper?.classList.add('is-dragging--border-bottom');
 			nodeWrapper?.classList.remove('is-dragging--border-top');
+			dropPlace.value = 'behind';
 		} else {
 			nodeWrapper?.classList.add('is-dragging--border-top');
 			nodeWrapper?.classList.remove('is-dragging--border-bottom');
+			dropPlace.value = 'front';
 		}
 	}
 }
@@ -417,6 +428,86 @@ function handleDrop(e: DragEvent, node: ITreeNode) {
 	nodeWrapper?.classList.remove('is-dragging--color');
 	nodeWrapper?.classList.remove('is-dragging--border-bottom');
 	nodeWrapper?.classList.remove('is-dragging--border-top');
+	if (!draggingNode.value) {
+		return;
+	}
+	switch (dropPlace.value) {
+		case 'behind': {
+			const dropParentChildren = node.root
+				? nodes.value
+				: node.parent?.children;
+			const draggingParentChildren = draggingNode.value.root
+				? nodes.value
+				: draggingNode.value.parent?.children;
+			const spliceIndex = dropParentChildren?.findIndex(
+				(v) => v.key === node.key,
+			);
+
+			if (spliceIndex !== -1 && isNumber(spliceIndex)) {
+				// 从拖拽节点的父节点移除该节点
+				const deleteIndex = draggingParentChildren?.findIndex(
+					(v) => v.key === draggingNode.value?.key,
+				);
+				if (deleteIndex !== -1) {
+					draggingParentChildren?.splice(deleteIndex as number, 1);
+				}
+				// 将拖拽的节点放到放置节点后面
+				dropParentChildren?.splice(spliceIndex + 1, 0, draggingNode.value);
+				// 重新设置拖拽节点的父节点
+				draggingNode.value.parent = node.parent;
+			}
+			break;
+		}
+		case 'front': {
+			const dropParentChildren = node.root
+				? nodes.value
+				: node.parent?.children;
+			const draggingParentChildren = draggingNode.value.root
+				? nodes.value
+				: draggingNode.value.parent?.children;
+			const spliceIndex = dropParentChildren?.findIndex(
+				(v) => v.key === node.key,
+			);
+
+			if (spliceIndex !== -1 && isNumber(spliceIndex)) {
+				// 从拖拽节点的父节点移除该节点
+				const deleteIndex = draggingParentChildren?.findIndex(
+					(v) => v.key === draggingNode.value?.key,
+				);
+				if (deleteIndex !== -1) {
+					draggingParentChildren?.splice(deleteIndex as number, 1);
+				}
+				// 将拖拽的节点放到放置节点前面
+				dropParentChildren?.splice(spliceIndex, 0, draggingNode.value);
+				// 重新设置拖拽节点的父节点
+				draggingNode.value.parent = node.parent;
+			}
+			break;
+		}
+		case 'inner': {
+			const draggingParentChildren = draggingNode.value.root
+				? nodes.value
+				: draggingNode.value.parent?.children;
+
+			// 从拖拽节点的父节点移除该节点
+			const deleteIndex = draggingParentChildren?.findIndex(
+				(v) => v.key === draggingNode.value?.key,
+			);
+			if (deleteIndex !== -1) {
+				draggingParentChildren?.splice(deleteIndex as number, 1);
+			}
+			// 将拖拽节点加入到放置节点内部
+			if (!node.children) {
+				node.children = [];
+			}
+			node.children.push(draggingNode.value);
+			draggingNode.value.parent = node;
+			break;
+		}
+		default: {
+			break;
+		}
+	}
 }
 
 function RecursiveTree(options: {
@@ -434,7 +525,7 @@ function RecursiveTree(options: {
 					class={[
 						'v3-tree-node',
 						node.expanded && 'is-expanded',
-						focusedNode.value === node && 'is-focused',
+						focusedNode.value?.key === node.key && 'is-focused',
 					]}
 					draggable={props.draggable}
 					onDragstart={withModifiers(

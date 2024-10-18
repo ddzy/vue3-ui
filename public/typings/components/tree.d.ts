@@ -31,6 +31,7 @@ export interface ITreeNode {
   expanded: boolean;
   disabled: boolean;
   data: ITreeData;
+  root: boolean;
   children?: ITreeNode[];
   parent?: ITreeNode;
 }
