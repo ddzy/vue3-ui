@@ -375,14 +375,16 @@ function handleDragStart(e: DragEvent, node: ITreeNode) {
 	draggingNode.value = node;
 }
 function handleDragOver(e: DragEvent, node: ITreeNode) {
-	if (!props.draggable) {
+	let dropable = props.allowDropMethod
+		? props.allowDropMethod({ node, data: node.data })
+		: true;
+	if (!dropable) {
 		return;
 	}
 	// 阻止拖拽的默认行为
 	e.preventDefault();
 
 	const paths = e.composedPath() as HTMLElement[];
-
 	// 放置到的目标节点不可以是当前拖拽节点及其后代
 	let parentNode: ITreeNode | undefined = node;
 	while (parentNode) {
@@ -423,6 +425,13 @@ function handleDragLeave(e: DragEvent, node: ITreeNode) {
 	nodeWrapper?.classList.remove('is-dragging--border-top');
 }
 function handleDrop(e: DragEvent, node: ITreeNode) {
+	let dropable = props.allowDropMethod
+		? props.allowDropMethod({ node, data: node.data })
+		: true;
+	if (!dropable) {
+		return;
+	}
+
 	const paths = e.composedPath() as HTMLElement[];
 	const nodeWrapper = paths.find((v) => v.classList.contains('v3-tree-node'));
 	nodeWrapper?.classList.remove('is-dragging--color');
@@ -524,6 +533,9 @@ function RecursiveTree(options: {
 		options.children.map((node) => {
 			const hasChildren = Array.isArray(node.children) && node.children.length;
 			const showThumb = hasChildren || (!node.loaded && props.lazy);
+			const draggable = props.allowDragMethod
+				? props.allowDragMethod({ node, data: node.data })
+				: props.draggable;
 			return (
 				<div
 					class={[
@@ -531,7 +543,7 @@ function RecursiveTree(options: {
 						node.expanded && 'is-expanded',
 						focusedNode.value?.key === node.key && 'is-focused',
 					]}
-					draggable={props.draggable}
+					draggable={draggable}
 					onDragstart={withModifiers(
 						(e) => handleDragStart(e as DragEvent, node),
 						['stop'],

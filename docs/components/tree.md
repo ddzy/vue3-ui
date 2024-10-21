@@ -468,6 +468,8 @@ function getSelectionNodes() {
 
 ## 树节点拖拽
 
+可以通过`allowDragMethod`方法判断单个树节点是否可以拖拽，可以通过`allowDropMethod`方法判断单个树节点是否可以放置
+
 :::demo
 
 ```vue
@@ -477,6 +479,8 @@ function getSelectionNodes() {
 		:draggable="true"
 		:block="true"
 		:selectable="true"
+		:allowDragMethod="allowDragMethod"
+		:allowDropMethod="allowDropMethod"
 	></v3-tree>
 </template>
 <script lang="ts" setup>
@@ -500,14 +504,48 @@ const data = ref([
 			{
 				key: '1-2',
 				label: '1-2',
+				children: [
+					{
+						key: '1-2-1',
+						label: '1-2-1',
+					},
+				],
 			},
 		],
 	},
 	{
 		key: '2',
 		label: '2',
+		children: [
+			{
+				key: '2-1',
+				label: '2-1',
+			},
+			{
+				key: '2-2',
+				label: '2-2',
+				children: [
+					{
+						key: '2-2-1',
+						label: '2-2-1',
+					},
+					{
+						key: '2-2-2',
+						label: '2-2-2',
+					},
+				],
+			},
+		],
 	},
 ]);
+
+function allowDragMethod({ node, data }) {
+	return node.key.startsWith('1');
+}
+
+function allowDropMethod({ node, data }) {
+	return node.key.startsWith('1');
+}
 </script>
 ```
 
