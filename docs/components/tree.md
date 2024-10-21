@@ -544,7 +544,7 @@ function allowDragMethod({ node, data }) {
 }
 
 function allowDropMethod({ node, data }) {
-	return node.key.startsWith('1');
+	return node.key.startsWith('2');
 }
 </script>
 ```
