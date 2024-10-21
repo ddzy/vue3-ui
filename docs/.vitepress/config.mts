@@ -208,6 +208,10 @@ export default defineConfig({
 							text: 'Back 返回',
 							link: '/components/back',
 						},
+						{
+							text: 'Watermark 水印',
+							link: '/components/watermark',
+						},
 					],
 				},
 			],

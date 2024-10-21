@@ -53,6 +53,7 @@ import V3Tag from './tag/main';
 import V3Tooltip from './tooltip/main';
 import V3Tree from './tree/main';
 import V3Upload from './upload/main';
+import V3Watermark from './watermark/main';
 
 declare module 'vue' {
 	interface ComponentCustomProperties {
@@ -111,6 +112,7 @@ export {
 	V3TableColumn,
 	V3Upload,
 	V3Tree,
+	V3Watermark,
 	V3LoadingDirective,
 };
 
@@ -160,6 +162,7 @@ export default function install(app: App) {
 	app.component(V3TableColumn.name!, V3TableColumn);
 	app.component(V3Upload.name!, V3Upload);
 	app.component(V3Tree.name!, V3Tree);
+	app.component(V3Watermark.name!, V3Watermark);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);
