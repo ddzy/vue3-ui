@@ -465,18 +465,18 @@ function handleDrop(e: DragEvent, node: ITreeNode) {
 			const draggingParentChildren = draggingNode.value.root
 				? nodes.value
 				: draggingNode.value.parent?.children;
+
+			// 从拖拽节点的父节点移除该节点
+			const deleteIndex = draggingParentChildren?.findIndex(
+				(v) => v.key === draggingNode.value?.key,
+			);
+			if (deleteIndex !== -1) {
+				draggingParentChildren?.splice(deleteIndex as number, 1);
+			}
 			const spliceIndex = dropParentChildren?.findIndex(
 				(v) => v.key === node.key,
 			);
-
 			if (spliceIndex !== -1 && isNumber(spliceIndex)) {
-				// 从拖拽节点的父节点移除该节点
-				const deleteIndex = draggingParentChildren?.findIndex(
-					(v) => v.key === draggingNode.value?.key,
-				);
-				if (deleteIndex !== -1) {
-					draggingParentChildren?.splice(deleteIndex as number, 1);
-				}
 				// 将拖拽的节点放到放置节点前面
 				dropParentChildren?.splice(spliceIndex, 0, draggingNode.value);
 				// 重新设置拖拽节点的父节点
@@ -508,6 +508,10 @@ function handleDrop(e: DragEvent, node: ITreeNode) {
 			break;
 		}
 	}
+	// 拖拽完成后，重新判断当前拖拽节点是否为根节点
+	draggingNode.value.root = !draggingNode.value.parent;
+	// 拖拽完成后，更新当前拖拽节点及其祖先、后代节点的选中状态
+	handleNodeSelect(draggingNode.value);
 }
 
 function RecursiveTree(options: {

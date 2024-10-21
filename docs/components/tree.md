@@ -472,7 +472,12 @@ function getSelectionNodes() {
 
 ```vue
 <template>
-	<v3-tree :data="data" :draggable="true" :block="true"></v3-tree>
+	<v3-tree
+		:data="data"
+		:draggable="true"
+		:block="true"
+		:selectable="true"
+	></v3-tree>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
