@@ -92,7 +92,7 @@ const data = ref([
 
 ## 不同的点击区域
 
-通过将`expandOnClickNode`设为`false`，限制为只能点击树节点的缩略图标来切换是否展开
+通过将 `expandOnClickNode`设为 `false`，限制为只能点击树节点的缩略图标来切换是否展开
 
 :::demo
 
@@ -468,7 +468,7 @@ function getSelectionNodes() {
 
 ## 树节点拖拽
 
-可以通过`allowDragMethod`方法判断单个树节点是否可以拖拽，可以通过`allowDropMethod`方法判断单个树节点是否可以放置
+可以通过 `allowDragMethod`方法判断单个树节点是否可以拖拽，可以通过 `allowDropMethod`方法判断单个树节点是否可以放置
 
 :::demo
 
@@ -550,3 +550,63 @@ function allowDropMethod({ node, data }) {
 ```
 
 :::
+
+## API
+
+### Tree Props
+
+|        参数名        | 说明                                       | 类型                                                                                         | 可选值 | 默认值 | 是否必填 |
+| :------------------: | ------------------------------------------ | -------------------------------------------------------------------------------------------- | ------ | ------ | -------- |
+|         data         | 树形数据源                                 | ITreeData[]                                                                                  |        | []     |          |
+|       nodeKey        | 唯一标识每个树节点                         | ITreeNodeKey                                                                                 |        |        |          |
+|        props         | 每个节点对应的 `data`中的键                | ITreeProp                                                                                    |        |        |          |
+|         lazy         | 节点是否懒加载                             | boolean                                                                                      |        | false  |          |
+|      lazyMethod      | 节点懒加载数据的方法                       | (options: { node:ITreeNode, data:ITreeData, resolve: (children:ITreeData[]) =>void }) =>void |        |        |          |
+|      selectable      | 节点是否可选择                             | boolean                                                                                      |        | false  |          |
+| highlightFocusedNode | 聚焦的节点是否高亮显示                     | boolean                                                                                      |        | true   |          |
+|    selectIsolate     | 在节点可选择的情况下，父子节点是否独立选择 | boolean                                                                                      |        | false  |          |
+|  expandOnClickNode   | 是否在点击节点任意区域后展开该节点         | boolean                                                                                      |        | true   |          |
+|  selectOnClickNode   | 是否在点击节点任意区域后选中该节点         | boolean                                                                                      |        | false  |          |
+|      accordion       | 手风琴模式，即同级节点只显示一个           | boolean                                                                                      |        | false  |          |
+|        indent        | 缩进的大小（单位为 `px`）                  | number                                                                                       |        | 12     |          |
+|      draggable       | 节点是否可拖动                             | boolean                                                                                      |        | false  |          |
+|   defaultExpandAll   | 所有节点是否默认展开                       | boolean                                                                                      |        | false  |          |
+|        block         | 节点宽度是否撑开                           | boolean                                                                                      |        | false  |          |
+|   allowDragMethod    | 对于每个节点，判断是否可拖动               | (options: { node:ITreeNode, data:ITreeData }) =>boolean                                      |        |        |          |
+|   allowDropMethod    | 对于某个节点，判断是否可放置               | (options: { node:ITreeNode, data:ITreeData }) =>boolean                                      |        |        |          |
+
+### Tree Types
+
+```typescript
+export type ITreeData = any;
+export interface ITreeNode {
+	key: ITreeBaseKey;
+	label: string;
+	selected: boolean;
+	indeterminate: boolean;
+	loaded: boolean;
+	loading: boolean;
+	expanded: boolean;
+	disabled: boolean;
+	data: ITreeData;
+	root: boolean;
+	children?: ITreeNode[];
+	parent?: ITreeNode;
+}
+export type ITreeBaseKey = string | number | symbol;
+export type ITreeNodeKey = ITreeBaseKey &
+	((options: { data: ITreeData }) => ITreeBaseKey);
+export interface ITreeProp {
+	key?: string;
+	label?: string;
+	children?: string;
+	disabled?: string;
+}
+```
+
+### Tree Exposes
+
+| 属性名              | 说明                   | 类型     |
+| ------------------- | ---------------------- | -------- |
+| getSelectionNodes   | 获取选中的所有节点     | Function |
+| toggleNodeSelection | 切换某个节点的选中状态 | Function |
