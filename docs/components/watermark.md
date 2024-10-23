@@ -35,3 +35,18 @@ const fullscreen = ref(false);
 ```
 
 :::
+
+## 多行文本
+
+:::demo
+
+```vue
+<template>
+	<v3-watermark content="重要机密，非常重要，特别重要，巨重要" :width="120">
+		<div style="height: 400px;"></div>
+	</v3-watermark>
+</template>
+<script lang="ts" setup></script>
+```
+
+:::

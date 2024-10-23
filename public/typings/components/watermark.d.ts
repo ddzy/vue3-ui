@@ -4,6 +4,7 @@ export interface IWatermarkProps {
   content: string | string[];
   width?: number;
   height?: number;
+  lineHeight?: number;
   rotate?: number;
   zIndex?: number;
   image?: string;
