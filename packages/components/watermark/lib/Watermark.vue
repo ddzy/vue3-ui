@@ -1,5 +1,5 @@
 <template>
-	<div class="v3-watermark">
+	<div :class="['v3-watermark', props.fullscreen && 'is-fullscreen']">
 		<slot></slot>
 		<div
 			class="v3-watermark__inner"
@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<IWatermarkProps>(), {
 	font: undefined,
 	gap: undefined,
 	offset: undefined,
+	fullscreen: false,
 });
 
 const computedContent = computed(() => {

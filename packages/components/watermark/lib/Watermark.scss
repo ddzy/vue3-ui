@@ -1,5 +1,10 @@
 .v3-watermark {
 	position: relative;
+	&.is-fullscreen {
+		.v3-watermark__inner {
+			position: fixed;
+		}
+	}
 	.v3-watermark__inner {
 		position: absolute;
 		left: 0;

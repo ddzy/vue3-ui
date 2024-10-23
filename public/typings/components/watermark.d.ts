@@ -10,6 +10,7 @@ export interface IWatermarkProps {
   font?: IWatermarkFont;
   gap?: IWatermarkGap;
   offset?: IWatermarkOffset;
+  fullscreen?: boolean;
 }
 export interface IWatermarkFont {
   color?: string;
