@@ -1,11 +1,13 @@
 <template>
-	<div
-		class="v3-watermark"
-		:style="{
-			backgroundImage: `url(${watermark})`,
-		}"
-	>
+	<div class="v3-watermark">
 		<slot></slot>
+		<div
+			class="v3-watermark__inner"
+			:style="{
+				backgroundImage: `url(${watermark})`,
+				zIndex: props.zIndex,
+			}"
+		></div>
 	</div>
 </template>
 <script lang="ts" setup>
