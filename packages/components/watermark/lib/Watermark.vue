@@ -82,8 +82,8 @@ const computedGap = computed(() => {
 });
 const computedOffset = computed(() => {
 	let defaultOffset = {
-		x: 0,
-		y: 0,
+		x: 10,
+		y: 10,
 	};
 	let result = isNumber(props.offset)
 		? {
@@ -103,8 +103,8 @@ const computedOffset = computed(() => {
 
 const watermark = ref();
 function updateWatermark() {
-	// 绘制文本
 	const canvas = document.createElement('canvas');
+	// 将宽度和高度设置为四个水印的大小
 	canvas.width =
 		computedOffset.value.x + (props.width + computedGap.value.x) * 2;
 	canvas.height =
@@ -118,36 +118,54 @@ function updateWatermark() {
 	ctx.font = `${computedFont.value.fontStyle} ${computedFont.value.fontWeight} ${computedFont.value.fontSize}px ${computedFont.value.fontFamily}`;
 	ctx.fillStyle = computedFont.value.color!;
 
+	// 绘制四个默认的水印，然后让图片平铺
 	ctx.save();
-	ctx.translate(props.width / 2, props.height / 2);
+	ctx.translate(
+		computedOffset.value.x + props.width / 2,
+		computedOffset.value.y + props.height / 2,
+	);
 	ctx.rotate((330 * Math.PI) / 180);
+	ctx.translate(-(props.width / 2), -(props.height / 2));
 	ctx.fillText(props.content as string, 0, 0);
 	ctx.restore();
 
 	ctx.save();
 	ctx.translate(
-		props.width / 2 + (props.width + computedGap.value.x) * 1,
-		props.height / 2 + (props.height + computedGap.value.y) * 1,
+		computedOffset.value.x +
+			props.width / 2 +
+			(props.width + computedGap.value.x) * 1,
+		computedOffset.value.y +
+			props.height / 2 +
+			(props.height + computedGap.value.y) * 1,
 	);
 	ctx.rotate((330 * Math.PI) / 180);
+	ctx.translate(-props.width / 2, -props.height / 2);
 	ctx.fillText(props.content as string, 0, 0);
 	ctx.restore();
 
 	ctx.save();
 	ctx.translate(
-		props.width / 2,
-		props.height / 2 + (props.height + computedGap.value.y) * 2,
+		computedOffset.value.x + props.width / 2,
+		computedOffset.value.y +
+			props.height / 2 +
+			(props.height + computedGap.value.y) * 2,
 	);
 	ctx.rotate((330 * Math.PI) / 180);
+	ctx.translate(-props.width / 2, -props.height / 2);
 	ctx.fillText(props.content as string, 0, 0);
 	ctx.restore();
 
 	ctx.save();
 	ctx.translate(
-		props.width / 2 + (props.width + computedGap.value.x) * 1,
-		props.height / 2 + (props.height + computedGap.value.y) * 3,
+		computedOffset.value.x +
+			props.width / 2 +
+			(props.width + computedGap.value.x) * 1,
+		computedOffset.value.y +
+			props.height / 2 +
+			(props.height + computedGap.value.y) * 3,
 	);
 	ctx.rotate((330 * Math.PI) / 180);
+	ctx.translate(-props.width / 2, -props.height / 2);
 	ctx.fillText(props.content as string, 0, 0);
 	ctx.restore();
 
