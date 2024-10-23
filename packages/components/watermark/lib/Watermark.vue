@@ -39,7 +39,7 @@ const computedContent = computed(() => {
 });
 const computedFont = computed(() => {
 	const defaultFont: IWatermarkFont = {
-		color: 'rgba(214, 209, 210, 1)',
+		color: 'rgba(233, 233, 233, 1)',
 		fontFamily: `Inter,
 		-apple-system,
 		BlinkMacSystemFont,
@@ -117,24 +117,40 @@ function updateWatermark() {
 	ctx.textBaseline = computedFont.value.textBaseline!;
 	ctx.font = `${computedFont.value.fontStyle} ${computedFont.value.fontWeight} ${computedFont.value.fontSize}px ${computedFont.value.fontFamily}`;
 	ctx.fillStyle = computedFont.value.color!;
+
 	ctx.save();
-	ctx.fillText('重要机密', computedOffset.value.x, computedOffset.value.y);
-	ctx.fillText(
-		'重要机密',
-		computedOffset.value.x + props.width + computedGap.value.x,
-		computedOffset.value.y + props.height + computedGap.value.y,
-	);
-	ctx.fillText(
-		'重要机密',
-		computedOffset.value.x,
-		computedOffset.value.y + (props.height + computedGap.value.y) * 2,
-	);
-	ctx.fillText(
-		'重要机密1',
-		computedOffset.value.x + props.width + computedGap.value.x,
-		computedOffset.value.y + (props.height + computedGap.value.y) * 3,
-	);
+	ctx.translate(props.width / 2, props.height / 2);
+	ctx.rotate((330 * Math.PI) / 180);
+	ctx.fillText(props.content as string, 0, 0);
 	ctx.restore();
+
+	ctx.save();
+	ctx.translate(
+		props.width / 2 + (props.width + computedGap.value.x) * 1,
+		props.height / 2 + (props.height + computedGap.value.y) * 1,
+	);
+	ctx.rotate((330 * Math.PI) / 180);
+	ctx.fillText(props.content as string, 0, 0);
+	ctx.restore();
+
+	ctx.save();
+	ctx.translate(
+		props.width / 2,
+		props.height / 2 + (props.height + computedGap.value.y) * 2,
+	);
+	ctx.rotate((330 * Math.PI) / 180);
+	ctx.fillText(props.content as string, 0, 0);
+	ctx.restore();
+
+	ctx.save();
+	ctx.translate(
+		props.width / 2 + (props.width + computedGap.value.x) * 1,
+		props.height / 2 + (props.height + computedGap.value.y) * 3,
+	);
+	ctx.rotate((330 * Math.PI) / 180);
+	ctx.fillText(props.content as string, 0, 0);
+	ctx.restore();
+
 	// 将canvas保存为图片
 	watermark.value = canvas.toDataURL();
 }
