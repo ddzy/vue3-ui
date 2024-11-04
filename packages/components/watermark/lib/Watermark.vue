@@ -73,7 +73,8 @@ const computedContent = computed(() => {
 const computedFont = computed(() => {
 	const defaultFont: IWatermarkFont = {
 		color: 'rgba(233, 233, 233, 1)',
-		fontFamily: `Inter,
+		fontFamily: `Courier New,
+		Inter,
 		-apple-system,
 		BlinkMacSystemFont,
 		'PingFang SC',
