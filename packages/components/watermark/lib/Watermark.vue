@@ -1,5 +1,8 @@
 <template>
-	<div :class="['v3-watermark', props.fullscreen && 'is-fullscreen']">
+	<div
+		:class="['v3-watermark', props.fullscreen && 'is-fullscreen']"
+		ref="wrapperRef"
+	>
 		<slot></slot>
 		<div
 			class="v3-watermark__inner"
@@ -14,6 +17,7 @@
 import { computed, onMounted, ref } from 'vue';
 
 import { multiply } from '@common/utils';
+import { useElementBounding } from '@vueuse/core';
 import { isPlainObject, isString } from 'lodash-es';
 import { isNumber } from 'mathjs';
 
@@ -130,6 +134,8 @@ const computedOffset = computed(() => {
 	return result;
 });
 
+const wrapperRef = ref<HTMLElement>();
+
 const watermark = ref();
 function updateWatermark() {
 	const canvas = document.createElement('canvas');
@@ -137,94 +143,74 @@ function updateWatermark() {
 	if (!ctx) {
 		return;
 	}
-	const matrix = ctx.measureText(props.content as string);
-	const height = multiply(props.lineHeight, computedFont.value.fontSize!);
+	// 每个水印的宽高
+	const eachWidth = props.width;
+	const eachHeight = multiply(props.lineHeight, computedFont.value.fontSize!);
 
 	// 将宽度和高度设置为四个水印的大小
-	canvas.width =
-		computedOffset.value.x + (props.width + computedGap.value.x) * 2;
-	canvas.height = computedOffset.value.y + (height + computedGap.value.y) * 4;
+	const wrapperBounding = useElementBounding(wrapperRef);
+	canvas.width = wrapperBounding.width.value;
+	canvas.height = wrapperBounding.height.value;
 	ctx.textAlign = computedFont.value.textAlign!;
 	ctx.textBaseline = computedFont.value.textBaseline!;
 	ctx.font = `${computedFont.value.fontStyle} ${computedFont.value.fontWeight} ${computedFont.value.fontSize}px ${computedFont.value.fontFamily}`;
 	ctx.fillStyle = computedFont.value.color!;
 
-	function _fillText() {
-		if (!ctx) {
-			return;
-		}
-		if (isString(props.content)) {
-			// 起始位置（水平方向）
-			let startXOfLine = 0;
-			// 起始位置（竖直方向）
-			let startYOfLine = 0;
-			let chars = props.content.split('');
-			chars.forEach((v) => {
-				// 逐个字符宽度相加
-				let nextWidth = startXOfLine + ctx.measureText(v).width;
-				// 如果字符宽度大于水印的最大宽度，表明需要换行
-				if (nextWidth > props.width) {
-					startYOfLine += height;
-					startXOfLine = 0;
-				} else {
-					startXOfLine = nextWidth;
+	// 根据canvas的宽高和每个水印的宽高，计算出需要绘制多少行、多少列
+	let rowCount = Math.ceil(
+		(canvas.width - computedOffset.value.x) / (eachWidth + computedGap.value.x),
+	);
+	let columnCount = Math.ceil(
+		(canvas.height - computedOffset.value.y) /
+			(eachHeight + computedGap.value.y),
+	);
+	let startY = 0;
+	for (let i = 0; i < columnCount; i++) {
+		startY = (eachHeight + computedGap.value.y) * i;
+		let startX = 0;
+		for (let j = 0; j < rowCount; j++) {
+			startX = (eachWidth + computedGap.value.x) * j;
+			ctx.save();
+			ctx.translate(
+				computedOffset.value.x + eachWidth / 2 + startX,
+				computedOffset.value.y + eachHeight / 2 + startY,
+			);
+			// 错位绘制
+			if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
+				ctx.rotate((330 * Math.PI) / 180);
+				ctx.translate(-(eachWidth / 2), -(eachHeight / 2));
+				if (isString(props.content)) {
+					// 起始位置（水平方向）
+					let startXOfLine = 0;
+					// 起始位置（竖直方向）
+					let startYOfLine = 0;
+					let chars = props.content.split('');
+					chars.forEach((v) => {
+						// 逐个字符宽度相加
+						let nextWidth = startXOfLine + ctx.measureText(v).width;
+						// 如果字符宽度大于水印的最大宽度，表明需要换行
+						if (nextWidth > eachWidth) {
+							startYOfLine += eachHeight;
+							startXOfLine = 0;
+						} else {
+							startXOfLine = nextWidth;
+						}
+						// 绘制文本
+						ctx.fillText(v, startXOfLine, startYOfLine);
+					});
 				}
-				// 绘制文本
-				ctx.fillText(v, startXOfLine, startYOfLine);
-			});
+			}
+			ctx.restore();
 		}
 	}
-
-	// 绘制四个默认的水印，然后让图片平铺
-	ctx.save();
-	ctx.translate(
-		computedOffset.value.x + props.width / 2,
-		computedOffset.value.y + height / 2,
-	);
-	ctx.rotate((330 * Math.PI) / 180);
-	ctx.translate(-(props.width / 2), -(height / 2));
-	_fillText();
-	ctx.restore();
-
-	ctx.save();
-	ctx.translate(
-		computedOffset.value.x +
-			props.width / 2 +
-			(props.width + computedGap.value.x) * 1,
-		computedOffset.value.y + height / 2 + (height + computedGap.value.y) * 1,
-	);
-	ctx.rotate((330 * Math.PI) / 180);
-	ctx.translate(-props.width / 2, -height / 2);
-	_fillText();
-	ctx.restore();
-
-	ctx.save();
-	ctx.translate(
-		computedOffset.value.x + props.width / 2,
-		computedOffset.value.y + height / 2 + (height + computedGap.value.y) * 2,
-	);
-	ctx.rotate((330 * Math.PI) / 180);
-	ctx.translate(-props.width / 2, -height / 2);
-	_fillText();
-	ctx.restore();
-
-	ctx.save();
-	ctx.translate(
-		computedOffset.value.x +
-			props.width / 2 +
-			(props.width + computedGap.value.x) * 1,
-		computedOffset.value.y + height / 2 + (height + computedGap.value.y) * 3,
-	);
-	ctx.rotate((330 * Math.PI) / 180);
-	ctx.translate(-props.width / 2, -height / 2);
-	_fillText();
-	ctx.restore();
 
 	// 将canvas保存为图片
 	watermark.value = canvas.toDataURL();
 }
 onMounted(() => {
-	updateWatermark();
+	setTimeout(() => {
+		updateWatermark();
+	}, 0);
 });
 </script>
 <style lang="scss">
