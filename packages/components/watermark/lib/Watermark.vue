@@ -14,7 +14,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { multiply } from '@common/utils';
 import { useElementBounding } from '@vueuse/core';
@@ -147,11 +147,15 @@ function updateWatermark() {
 	// 每个水印的宽高
 	const eachWidth = props.width;
 	const eachHeight = multiply(props.lineHeight, computedFont.value.fontSize!);
-
 	// 将宽度和高度设置为四个水印的大小
 	const wrapperBounding = useElementBounding(wrapperRef);
-	canvas.width = wrapperBounding.width.value;
-	canvas.height = wrapperBounding.height.value;
+	if (!props.fullscreen) {
+		canvas.width = wrapperBounding.width.value;
+		canvas.height = wrapperBounding.height.value;
+	} else {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+	}
 	ctx.textAlign = computedFont.value.textAlign!;
 	ctx.textBaseline = computedFont.value.textBaseline!;
 	ctx.font = `${computedFont.value.fontStyle} ${computedFont.value.fontWeight} ${computedFont.value.fontSize}px ${computedFont.value.fontFamily}`;
@@ -216,6 +220,14 @@ onMounted(() => {
 		updateWatermark();
 	}, 0);
 });
+watch(
+	() => props.fullscreen,
+	() => {
+		setTimeout(() => {
+			updateWatermark();
+		}, 0);
+	},
+);
 </script>
 <style lang="scss">
 @import './Watermark.scss';
