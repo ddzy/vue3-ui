@@ -116,8 +116,8 @@ const computedGap = computed(() => {
 });
 const computedOffset = computed(() => {
 	let defaultOffset = {
-		x: 10,
-		y: 10,
+		x: 0,
+		y: 0,
 	};
 	let result = isNumber(props.offset)
 		? {
@@ -184,10 +184,7 @@ function updateWatermark() {
 				let startXOfLine = 0;
 				// 起始位置（竖直方向）
 				let startYOfLine = 0;
-				computedContent.value.forEach((v) => {
-					// 数组中的每个文本都另起一行
-					startYOfLine += eachHeight;
-					startXOfLine = 0;
+				computedContent.value.forEach((v, i) => {
 					let chars = v.split('');
 					chars.forEach((v, i) => {
 						// 逐个字符宽度相加
@@ -202,6 +199,9 @@ function updateWatermark() {
 						// 绘制文本
 						ctx.fillText(v, startXOfLine, startYOfLine);
 					});
+					// 数组中的每一项都另起一行
+					startYOfLine += eachHeight;
+					startXOfLine = 0;
 				});
 			}
 			ctx.restore();
