@@ -50,3 +50,22 @@ const fullscreen = ref(false);
 ```
 
 :::
+
+## 手动多行文本
+
+`content`可以传入一个数组，手动指定多行文本
+
+:::demo
+
+```vue
+<template>
+	<v3-watermark
+		:content="['重要机密重要机密重要机密重要机密', '非常非常重要', '巨重要']"
+	>
+		<div style="height: 400px;"></div>
+	</v3-watermark>
+</template>
+<script lang="ts" setup></script>
+```
+
+:::
