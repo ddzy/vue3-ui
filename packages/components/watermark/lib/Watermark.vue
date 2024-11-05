@@ -180,12 +180,15 @@ function updateWatermark() {
 			if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
 				ctx.rotate((330 * Math.PI) / 180);
 				ctx.translate(-(eachWidth / 2), -(eachHeight / 2));
-				if (isString(props.content)) {
-					// 起始位置（水平方向）
-					let startXOfLine = 0;
-					// 起始位置（竖直方向）
-					let startYOfLine = 0;
-					let chars = props.content.split('');
+				// 起始位置（水平方向）
+				let startXOfLine = 0;
+				// 起始位置（竖直方向）
+				let startYOfLine = 0;
+				computedContent.value.forEach((v) => {
+					// 数组中的每个文本都另起一行
+					startYOfLine += eachHeight;
+					startXOfLine = 0;
+					let chars = v.split('');
 					chars.forEach((v, i) => {
 						// 逐个字符宽度相加
 						let nextWidth = startXOfLine + ctx.measureText(v).width;
@@ -199,31 +202,7 @@ function updateWatermark() {
 						// 绘制文本
 						ctx.fillText(v, startXOfLine, startYOfLine);
 					});
-				} else if (Array.isArray(props.content)) {
-					// 起始位置（水平方向）
-					let startXOfLine = 0;
-					// 起始位置（竖直方向）
-					let startYOfLine = 0;
-					props.content.forEach((v) => {
-						// 数组中的每个文本都另起一行
-						startYOfLine += eachHeight;
-						startXOfLine = 0;
-						let chars = v.split('');
-						chars.forEach((v, i) => {
-							// 逐个字符宽度相加
-							let nextWidth = startXOfLine + ctx.measureText(v).width;
-							// 如果字符宽度大于水印的最大宽度，表明需要换行
-							if (nextWidth > eachWidth) {
-								startYOfLine += eachHeight;
-								startXOfLine = 0;
-							} else {
-								startXOfLine = i === 0 ? 0 : nextWidth;
-							}
-							// 绘制文本
-							ctx.fillText(v, startXOfLine, startYOfLine);
-						});
-					});
-				}
+				});
 			}
 			ctx.restore();
 		}
