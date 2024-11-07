@@ -14,7 +14,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { multiply } from '@common/utils';
 import { useElementBounding } from '@vueuse/core';
@@ -144,8 +144,9 @@ function updateWatermark() {
 	if (!ctx) {
 		return;
 	}
-	// 每个水印的宽高
+	// 每个水印的宽度
 	const eachWidth = props.width;
+	// 每行水印文本的高度
 	const eachHeight = multiply(props.lineHeight, computedFont.value.fontSize!);
 	// 将宽度和高度设置为四个水印的大小
 	const wrapperBounding = useElementBounding(wrapperRef);
@@ -182,7 +183,7 @@ function updateWatermark() {
 			);
 			// 错位绘制
 			if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
-				ctx.rotate((330 * Math.PI) / 180);
+				ctx.rotate(((360 + props.rotate) * Math.PI) / 180);
 				ctx.translate(-(eachWidth / 2), -(eachHeight / 2));
 				// 起始位置（水平方向）
 				let startXOfLine = 0;
@@ -215,18 +216,14 @@ function updateWatermark() {
 	// 将canvas保存为图片
 	watermark.value = canvas.toDataURL();
 }
-onMounted(() => {
-	setTimeout(() => {
-		updateWatermark();
-	}, 0);
-});
 watch(
-	() => props.fullscreen,
+	() => props,
 	() => {
 		setTimeout(() => {
 			updateWatermark();
 		}, 0);
 	},
+	{ deep: true, immediate: true },
 );
 </script>
 <style lang="scss">
