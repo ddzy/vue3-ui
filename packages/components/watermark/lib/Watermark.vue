@@ -144,10 +144,6 @@ function updateWatermark() {
 	if (!ctx) {
 		return;
 	}
-	// 每个水印的宽度
-	const eachWidth = props.width;
-	// 每行水印文本的高度
-	const eachHeight = multiply(props.lineHeight, computedFont.value.fontSize!);
 	// 将宽度和高度设置为四个水印的大小
 	const wrapperBounding = useElementBounding(wrapperRef);
 	if (!props.fullscreen) {
@@ -162,52 +158,71 @@ function updateWatermark() {
 	ctx.font = `${computedFont.value.fontStyle} ${computedFont.value.fontWeight} ${computedFont.value.fontSize}px ${computedFont.value.fontFamily}`;
 	ctx.fillStyle = computedFont.value.color!;
 
+	// 每个水印的总宽度
+	const eachWidth = props.width;
+	// 水印每行文本的高度
+	const eachRowHeight = multiply(
+		props.lineHeight,
+		computedFont.value.fontSize!,
+	);
+	// 每个水印文本的总高度
+	const eachHeight = computeEachWatermark()! * eachRowHeight;
+	function computeEachWatermark(fillText?: boolean) {
+		if (!ctx) {
+			return;
+		}
+		// 每个水印文本有多少行
+		let eachRowCount = 0;
+		// 每个水印文本绘制的x轴起始位置
+		let eachStartX = 0;
+		// 每个水印文本绘制的y轴起始位置
+		let eachStartY = 0;
+		computedContent.value.forEach((v, i) => {
+			let chars = v.split('');
+			chars.forEach((v, i) => {
+				// 逐个字符宽度相加
+				let nextWidth = eachStartX + ctx.measureText(v).width;
+				// 如果字符宽度大于水印的最大宽度，表明需要换行
+				if (nextWidth > eachWidth) {
+					eachStartY += eachRowHeight;
+					eachStartX = 0;
+					eachRowCount += 1;
+				} else {
+					eachStartX = i === 0 ? 0 : nextWidth;
+				}
+				// 绘制文本
+				fillText && ctx.fillText(v, eachStartX, eachStartY);
+			});
+			// 数组中的每一项都另起一行
+			eachStartY += eachRowHeight;
+			eachStartX = 0;
+			eachRowCount += 1;
+		});
+
+		return eachRowCount;
+	}
 	// 根据canvas的宽高和每个水印的宽高，计算出需要绘制多少行、多少列
-	let rowCount = Math.ceil(
-		(canvas.width - computedOffset.value.x) / (eachWidth + computedGap.value.x),
-	);
-	let columnCount = Math.ceil(
-		(canvas.height - computedOffset.value.y) /
-			(eachHeight + computedGap.value.y),
-	);
+	// 保险起见，绘制两倍的水印
+	let columnCount = Math.ceil(canvas.width / eachWidth) * 2;
+	let rowCount = Math.ceil(canvas.height / eachHeight) * 2;
+	// 每行水印的起始位置
 	let startY = 0;
-	for (let i = 0; i < columnCount; i++) {
-		startY = (eachHeight + computedGap.value.y) * i;
+	for (let i = 0; i < rowCount; i++) {
+		startY = (eachRowHeight + computedGap.value.y) * i;
+		// 每行中每个水印的起始位置
 		let startX = 0;
-		for (let j = 0; j < rowCount; j++) {
+		for (let j = 0; j < columnCount; j++) {
 			startX = (eachWidth + computedGap.value.x) * j;
 			ctx.save();
 			ctx.translate(
 				computedOffset.value.x + eachWidth / 2 + startX,
-				computedOffset.value.y + eachHeight / 2 + startY,
+				computedOffset.value.y + eachRowHeight / 2 + startY,
 			);
 			// 错位绘制
 			if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
 				ctx.rotate(((360 + props.rotate) * Math.PI) / 180);
-				ctx.translate(-(eachWidth / 2), -(eachHeight / 2));
-				// 起始位置（水平方向）
-				let startXOfLine = 0;
-				// 起始位置（竖直方向）
-				let startYOfLine = 0;
-				computedContent.value.forEach((v, i) => {
-					let chars = v.split('');
-					chars.forEach((v, i) => {
-						// 逐个字符宽度相加
-						let nextWidth = startXOfLine + ctx.measureText(v).width;
-						// 如果字符宽度大于水印的最大宽度，表明需要换行
-						if (nextWidth > eachWidth) {
-							startYOfLine += eachHeight;
-							startXOfLine = 0;
-						} else {
-							startXOfLine = i === 0 ? 0 : nextWidth;
-						}
-						// 绘制文本
-						ctx.fillText(v, startXOfLine, startYOfLine);
-					});
-					// 数组中的每一项都另起一行
-					startYOfLine += eachHeight;
-					startXOfLine = 0;
-				});
+				ctx.translate(-(eachWidth / 2), -(eachRowHeight / 2));
+				computeEachWatermark(true);
 			}
 			ctx.restore();
 		}

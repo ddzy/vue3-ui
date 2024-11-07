@@ -36,7 +36,7 @@ const fullscreen = ref(false);
 
 :::
 
-## 多行文本
+## 文本自动换行
 
 :::demo
 
@@ -51,7 +51,7 @@ const fullscreen = ref(false);
 
 :::
 
-## 手动多行文本
+## 文本手动换行
 
 `content`可以传入一个数组，手动指定多行文本
 
@@ -60,7 +60,12 @@ const fullscreen = ref(false);
 ```vue
 <template>
 	<v3-watermark
-		:content="['重要机密重要机密重要机密重要机密', '非常非常重要', '巨重要']"
+		:content="[
+			'1. 重要机密重要机密重要机密重要机密重要机密',
+			'2. 非常非常重要',
+			'3. 巨重要',
+		]"
+		:gap="100"
 	>
 		<div style="height: 400px;"></div>
 	</v3-watermark>
@@ -70,7 +75,7 @@ const fullscreen = ref(false);
 
 :::
 
-## 水印调整
+## 水印参数
 
 :::demo
 
