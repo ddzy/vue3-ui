@@ -8,6 +8,7 @@
 			'is-indeterminated': props.indeterminate,
 			[`is-size--${props.size}`]: props.size,
 		}"
+		@click="handleClick"
 	>
 		<label
 			class="v3-checkbox__label-wrapper"
@@ -22,6 +23,7 @@
 				:id="`v3-checkbox__input--${app.uid}`"
 				:disabled="state.defaultProps.disabled"
 				@change="handleChange"
+				@click.stop
 			/>
 
 			<div
@@ -77,7 +79,13 @@
 					></polyline>
 				</svg>
 			</div>
-			<div class="v3-checkbox__label">
+			<div
+				v-if="
+					app.slots.default ||
+					(isCheckboxGroup ? props.modelValue : props.label)
+				"
+				class="v3-checkbox__label"
+			>
 				<slot v-if="app.slots.default"></slot>
 				<span v-else>{{
 					isCheckboxGroup ? props.modelValue : props.label
@@ -163,7 +171,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	emits: ['change', 'update:modelValue'],
+	emits: ['change', 'click', 'update:modelValue'],
 	setup(props: Required<TYPES.ICheckboxProps>, context) {
 		const state = reactive({
 			defaultProps: {
@@ -272,11 +280,17 @@ export default defineComponent({
 			}
 		}
 
+		function handleClick(e: Event) {
+			context.emit('click', e);
+		}
+
 		return {
 			state,
 			props,
 			app,
+			context,
 			handleChange,
+			handleClick,
 			checkboxRef,
 			isCheckboxGroup,
 			computedIsCustomIcon,

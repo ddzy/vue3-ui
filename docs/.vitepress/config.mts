@@ -195,6 +195,10 @@ export default defineConfig({
 							text: 'Table 表格',
 							link: '/components/table',
 						},
+						{
+							text: 'Tree 树形控件',
+							link: '/components/tree',
+						},
 					],
 				},
 				{
@@ -203,6 +207,10 @@ export default defineConfig({
 						{
 							text: 'Back 返回',
 							link: '/components/back',
+						},
+						{
+							text: 'Watermark 水印',
+							link: '/components/watermark',
 						},
 					],
 				},
