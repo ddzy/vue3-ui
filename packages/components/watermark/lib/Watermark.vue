@@ -68,7 +68,11 @@ const props = withDefaults(defineProps<IWatermarkProps>(), {
 });
 
 const computedContent = computed(() => {
-	return isString(props.content) ? [props.content] : props.content;
+	return !props.content
+		? []
+		: isString(props.content)
+			? [props.content]
+			: props.content;
 });
 const computedFont = computed(() => {
 	const defaultFont: IWatermarkFont = {
@@ -144,7 +148,7 @@ function updateWatermark() {
 	if (!ctx) {
 		return;
 	}
-	// 将宽度和高度设置为四个水印的大小
+	// 将宽度和高度设置为容器的大小
 	const wrapperBounding = useElementBounding(wrapperRef);
 	if (!props.fullscreen) {
 		canvas.width = wrapperBounding.width.value;
@@ -165,8 +169,18 @@ function updateWatermark() {
 		props.lineHeight,
 		computedFont.value.fontSize!,
 	);
-	// 每个水印文本的总高度
-	const eachHeight = computeEachWatermark()! * eachRowHeight;
+	// 每个水印的总高度
+	let eachHeight = 0;
+	if (props.image) {
+		eachHeight = props.height;
+	} else {
+		eachHeight = computeEachWatermark()! * eachRowHeight;
+	}
+	// 根据canvas的宽高和每个水印的宽高，计算出需要绘制多少行、多少列
+	// 保险起见，绘制两倍的水印
+	let columnCount = Math.ceil(canvas.width / eachWidth) * 2;
+	let rowCount = Math.ceil(canvas.height / eachHeight) * 2;
+
 	function computeEachWatermark(fillText?: boolean) {
 		if (!ctx) {
 			return;
@@ -201,35 +215,61 @@ function updateWatermark() {
 
 		return eachRowCount;
 	}
-	// 根据canvas的宽高和每个水印的宽高，计算出需要绘制多少行、多少列
-	// 保险起见，绘制两倍的水印
-	let columnCount = Math.ceil(canvas.width / eachWidth) * 2;
-	let rowCount = Math.ceil(canvas.height / eachHeight) * 2;
-	// 每行水印的起始位置
-	let startY = 0;
-	for (let i = 0; i < rowCount; i++) {
-		startY = (eachRowHeight + computedGap.value.y) * i;
-		// 每行中每个水印的起始位置
-		let startX = 0;
-		for (let j = 0; j < columnCount; j++) {
-			startX = (eachWidth + computedGap.value.x) * j;
-			ctx.save();
-			ctx.translate(
-				computedOffset.value.x + eachWidth / 2 + startX,
-				computedOffset.value.y + eachRowHeight / 2 + startY,
-			);
-			// 错位绘制
-			if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
-				ctx.rotate(((360 + props.rotate) * Math.PI) / 180);
-				ctx.translate(-(eachWidth / 2), -(eachRowHeight / 2));
-				computeEachWatermark(true);
+	if (!props.image) {
+		// 每行水印的起始位置
+		let startY = 0;
+		for (let i = 0; i < rowCount; i++) {
+			startY = (eachRowHeight + computedGap.value.y) * i;
+			for (let j = 0; j < columnCount; j++) {
+				// 每行中每个水印的起始位置
+				let startX = (eachWidth + computedGap.value.x) * j;
+				ctx.save();
+				ctx.translate(
+					computedOffset.value.x + eachWidth / 2 + startX,
+					computedOffset.value.y + eachRowHeight / 2 + startY,
+				);
+				// 错位绘制
+				if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
+					ctx.rotate(((360 + props.rotate) * Math.PI) / 180);
+					ctx.translate(-(eachWidth / 2), -(eachRowHeight / 2));
+					computeEachWatermark(true);
+				}
+				ctx.restore();
 			}
-			ctx.restore();
 		}
+		// 将canvas保存为图片
+		watermark.value = canvas.toDataURL();
+	} else {
+		const image = new Image();
+		image.width = eachWidth;
+		image.height = eachHeight;
+		image.src = props.image;
+		image.crossOrigin = 'anonymous';
+		image.onload = () => {
+			// 每行水印的起始位置
+			let startY = 0;
+			for (let i = 0; i < rowCount; i++) {
+				startY = (eachHeight + computedGap.value.y) * i;
+				for (let j = 0; j < columnCount; j++) {
+					// 每行中每个水印的起始位置
+					let startX = (computedGap.value.x + eachWidth) * j;
+					ctx.save();
+					ctx.translate(
+						computedOffset.value.x + eachWidth / 2 + startX,
+						computedOffset.value.y + eachHeight / 2 + startY,
+					);
+					// 错位绘制
+					if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
+						ctx.rotate(((360 + props.rotate) * Math.PI) / 180);
+						ctx.translate(-(eachWidth / 2), -(eachHeight / 2));
+						ctx.drawImage(image, 0, 0, image.width, image.height);
+					}
+					ctx.restore();
+				}
+			}
+			watermark.value = canvas.toDataURL();
+		};
 	}
-
-	// 将canvas保存为图片
-	watermark.value = canvas.toDataURL();
 }
 watch(
 	() => props,

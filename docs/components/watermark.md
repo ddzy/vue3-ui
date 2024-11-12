@@ -194,3 +194,18 @@ const font = reactive({
 ```
 
 :::
+
+## 图片水印
+
+:::demo
+
+```vue
+<template>
+	<v3-watermark image="https://picsum.photos/200/300">
+		<div style="height: 400px;"></div>
+	</v3-watermark>
+</template>
+<script lang="ts" setup></script>
+```
+
+:::

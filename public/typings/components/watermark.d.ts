@@ -1,7 +1,7 @@
 import { SFCWithInstall } from '../index';
 
 export interface IWatermarkProps {
-  content: string | string[];
+  content?: string | string[];
   width?: number;
   height?: number;
   lineHeight?: number;
