@@ -100,3 +100,4 @@ app.use(V3Card);
 |      Table       |       表格       |  ✅  |    ✅    |  ✅  |
 |      Upload      |       上传       |  ✅  |    ✅    |  ✅  |
 |       Tree       |     树形控件     |  ✅  |    ✅    |  ✅  |
+|    Watermark     |       水印       |  ✅  |    ✅    |  ✅  |
