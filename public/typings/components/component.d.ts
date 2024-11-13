@@ -32,3 +32,4 @@ export * from './table';
 export * from './upload';
 export * from './tree';
 export * from './watermark';
+export * from './pagination';

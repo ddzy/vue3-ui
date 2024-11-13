@@ -199,6 +199,10 @@ export default defineConfig({
 							text: 'Tree 树形控件',
 							link: '/components/tree',
 						},
+						{
+							text: 'Pagination 分页',
+							link: '/components/pagination',
+						},
 					],
 				},
 				{

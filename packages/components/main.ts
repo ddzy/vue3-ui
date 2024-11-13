@@ -32,6 +32,7 @@ import V3Loading, {
 } from './loading/main';
 import './main.scss';
 import V3Message, { useMessage } from './message/main';
+import V3Pagination from './pagination/main';
 import V3Popconfirm from './popconfirm/main';
 import V3Popover from './popover/main';
 import V3ProgressCircular from './progress-circular/main';
@@ -113,6 +114,7 @@ export {
 	V3Upload,
 	V3Tree,
 	V3Watermark,
+	V3Pagination,
 	V3LoadingDirective,
 };
 
@@ -163,6 +165,7 @@ export default function install(app: App) {
 	app.component(V3Upload.name!, V3Upload);
 	app.component(V3Tree.name!, V3Tree);
 	app.component(V3Watermark.name!, V3Watermark);
+	app.component(V3Pagination.name!, V3Pagination);
 	app.config.globalProperties.$message = V3Message;
 	app.config.globalProperties.$loading = V3Loading;
 	app.directive(V3LoadingDirective.name!, V3LoadingDirective.directive);
