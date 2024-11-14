@@ -416,6 +416,22 @@
         _id: "DownloadOne",
         name: "DownloadOne",
       },
+      {
+        _id: "DoubleLeft",
+        name: "DoubleLeft",
+      },
+      {
+        _id: "DoubleRight",
+        name: "DoubleRight",
+      },
+      {
+        _id: "DoubleUp",
+        name: "DoubleUp",
+      },
+      {
+        _id: "DoubleDown",
+        name: "DoubleDown",
+      },
     ]
   })
 

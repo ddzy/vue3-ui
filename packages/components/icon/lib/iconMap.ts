@@ -95,4 +95,8 @@ export {
 	ZoomOut,
 	UpOne,
 	DownOne,
+	DoubleLeft,
+	DoubleRight,
+	DoubleUp,
+	DoubleDown,
 } from '@icon-park/vue-next';
