@@ -112,6 +112,7 @@ import {
 import * as TYPES from '@typings/index';
 import V3Icon from '@components/icon/main';
 import V3Input from '@components/input/main';
+import { isNumber } from 'lodash-es';
 
 type ILocalProps = Omit<Required<TYPES.IInputNumberProps>, 'min' | 'max'> & {
 	min?: number;
@@ -182,7 +183,7 @@ export default defineComponent({
 		},
 		modelValue: {
 			type: Number,
-			required: true,
+			required: false,
 		},
 	},
 	setup(props: ILocalProps, context) {
@@ -274,7 +275,12 @@ export default defineComponent({
 		function handlePlus() {
 			// 在禁用、只读或者超出最大值的状态下不可点击
 			if (!props.disabled && !props.readonly && !state.isPlusDisabled) {
-				context.emit('update:modelValue', props.modelValue! + props.step);
+				context.emit(
+					'update:modelValue',
+					(!isNumber(props.modelValue) || isNaN(props.modelValue)
+						? props.min
+						: props.modelValue)! + props.step,
+				);
 			}
 		}
 
@@ -284,7 +290,12 @@ export default defineComponent({
 		function handleMinus() {
 			// 在禁用、只读或者超出最大值的状态下不可点击
 			if (!props.disabled && !props.readonly && !state.isMinusDisabled) {
-				context.emit('update:modelValue', props.modelValue! - props.step);
+				context.emit(
+					'update:modelValue',
+					(!isNumber(props.modelValue) || isNaN(props.modelValue)
+						? props.min
+						: props.modelValue)! - props.step,
+				);
 			}
 		}
 
