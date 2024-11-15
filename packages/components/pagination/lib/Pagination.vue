@@ -12,11 +12,23 @@
 				/>
 			</div>
 			<div class="v3-pagination__pages">
-				<div class="v3-pagination__pages-prev" @click="handlePrevPage">
+				<div
+					:class="[
+						'v3-pagination__pages-prev',
+						(props.disabled || currentPage <= 1) && 'is-disabled',
+					]"
+					@click="handlePrevPageClick"
+				>
 					<V3Icon :type="'Left'" />
 				</div>
-				<div class="v3-pagination__pages-first"></div>
 				<div
+					v-if="props.displayPageCount - 4 > 0"
+					class="v3-pagination__pages-first"
+				>
+					1
+				</div>
+				<div
+					v-if="props.displayPageCount - 4 > 0"
 					class="v3-pagination__pages-fast-backward"
 					@mouseenter="isHoverFastBackward = true"
 					@mouseleave="isHoverFastBackward = false"
@@ -24,8 +36,19 @@
 					<V3Icon v-if="!isHoverFastBackward" :type="'More'" />
 					<V3Icon v-else :type="'DoubleLeft'" />
 				</div>
-				<div class="v3-pagination__pages-item" @click="handleTogglePage">1</div>
 				<div
+					v-for="v in computedCurrentPages"
+					:key="v"
+					:class="[
+						'v3-pagination__pages-item',
+						currentPage === v && 'is-active',
+					]"
+					@click="handlePageClick(v)"
+				>
+					{{ v }}
+				</div>
+				<div
+					v-if="props.displayPageCount - 4 > 0"
 					class="v3-pagination__pages-fast-forward"
 					@mouseenter="isHoverFastForward = true"
 					@mouseleave="isHoverFastForward = false"
@@ -33,13 +56,25 @@
 					<V3Icon v-if="!isHoverFastForward" :type="'More'" />
 					<V3Icon v-else :type="'DoubleRight'" />
 				</div>
-				<div class="v3-pagination__pages-last"></div>
-				<div class="v3-pagination__pages-next" @click="handleNextPage">
+				<div
+					v-if="props.displayPageCount - 4 > 0"
+					class="v3-pagination__pages-last"
+				>
+					{{ computedTotalPage }}
+				</div>
+				<div
+					:class="[
+						'v3-pagination__pages-next',
+						(props.disabled || currentPage >= computedTotalPage) &&
+							'is-disabled',
+					]"
+					@click="handleNextPageClick"
+				>
 					<V3Icon :type="'Right'" />
 				</div>
 			</div>
 			<div class="v3-pagination__page-size-picker">
-				<V3Select v-model="customPageSize" size="small">
+				<V3Select v-model="currentPageSize" size="small">
 					<V3SelectOption
 						v-for="v in props.pageSizes"
 						:key="isNumber(v) ? v : v.value"
@@ -54,6 +89,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 
+import { divide } from '@common/utils';
 import { V3Icon, V3Input, V3Select } from '@components/main';
 import { isNumber } from 'lodash-es';
 
@@ -64,8 +100,8 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<IPaginationProps>(), {
-	page: 1,
-	pageSize: 20,
+	defaultPage: 1,
+	defaultPageSize: 20,
 	total: 0,
 	pageSizes: () => [
 		{
@@ -89,6 +125,7 @@ const props = withDefaults(defineProps<IPaginationProps>(), {
 	showPageJumper: true,
 	displayOrder: () => ['page-jumper', 'pages', 'page-size-picker'],
 	displayPageCount: 9,
+	disabled: false,
 	onPageChange: undefined,
 	onPageSizeChange: undefined,
 });
@@ -108,17 +145,81 @@ const computedCustomPage = computed(() => {
 });
 
 /**
- * n条/页
+ * hover时切换更多按钮的显示
  */
-const customPageSize = ref(10);
-
 const isHoverFastForward = ref(false);
-
 const isHoverFastBackward = ref(false);
 
-function handlePrevPage() {}
-function handleTogglePage() {}
-function handleNextPage() {}
+/**
+ * 当前选中第几页
+ */
+const currentPage = ref(props.defaultPage);
+/**
+ * 每页条数
+ */
+const currentPageSize = ref(props.defaultPageSize);
+/**
+ * 总页数
+ */
+const computedTotalPage = computed(() => {
+	return Math.ceil(divide(props.total, currentPageSize.value));
+});
+/**
+ * 当前展示的所有页码
+ */
+const computedCurrentPages = computed(() => {
+	// 页码可展示的个数
+	let availablePageCount = 0;
+	// 中间的页码
+	let halfAvailablePageCount = 0;
+	// 页码区域需要固定展示4个：首页页码、左快进、右快进、尾页页码
+	if (props.displayPageCount - 4 <= 0) {
+		availablePageCount = props.displayPageCount;
+	} else {
+		availablePageCount = props.displayPageCount - 4;
+	}
+	halfAvailablePageCount = Math.floor(availablePageCount / 2);
+
+	let pages = new Array(availablePageCount);
+	if (currentPage.value > halfAvailablePageCount) {
+		pages[halfAvailablePageCount] = currentPage.value;
+		for (let i = halfAvailablePageCount - 1; i >= 0; i--) {
+			pages[i] = pages[i + 1] - 1;
+		}
+		for (let i = halfAvailablePageCount + 1; i < availablePageCount; i++) {
+			pages[i] = pages[i - 1] + 1;
+		}
+	} else {
+		for (let i = 0; i < availablePageCount; i++) {
+			pages[i] = i + 1;
+		}
+	}
+
+	return pages;
+});
+function handlePrevPageClick() {
+	if (props.disabled) {
+		return;
+	}
+	let newCurrentPage = currentPage.value - 1;
+	if (newCurrentPage < 1) {
+		return;
+	}
+	currentPage.value = newCurrentPage;
+}
+function handlePageClick(v: number) {
+	currentPage.value = v;
+}
+function handleNextPageClick() {
+	if (props.disabled) {
+		return;
+	}
+	let newCurrentPage = currentPage.value + 1;
+	if (newCurrentPage > computedTotalPage.value) {
+		return;
+	}
+	currentPage.value = newCurrentPage;
+}
 </script>
 <style lang="scss">
 @import './Pagination.scss';
