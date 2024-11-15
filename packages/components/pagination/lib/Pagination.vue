@@ -23,7 +23,12 @@
 				</div>
 				<div
 					v-if="props.displayPageCount - 4 > 0"
-					class="v3-pagination__pages-first"
+					:class="[
+						'v3-pagination__pages-first',
+						'v3-pagination__pages-item',
+						currentPage === 1 && 'is-active',
+					]"
+					@click="handleFirstPageClick"
 				>
 					1
 				</div>
@@ -58,7 +63,12 @@
 				</div>
 				<div
 					v-if="props.displayPageCount - 4 > 0"
-					class="v3-pagination__pages-last"
+					:class="[
+						'v3-pagination__pages-last',
+						'v3-pagination__pages-item',
+						currentPage === computedTotalPage && 'is-active',
+					]"
+					@click="handleLastPageClick"
 				>
 					{{ computedTotalPage }}
 				</div>
@@ -169,29 +179,52 @@ const computedTotalPage = computed(() => {
  */
 const computedCurrentPages = computed(() => {
 	// 页码可展示的个数
+	// 需要注意：页码区域需要固定展示4个：首页页码、左快进、右快进、尾页页码
 	let availablePageCount = 0;
-	// 中间的页码
-	let halfAvailablePageCount = 0;
-	// 页码区域需要固定展示4个：首页页码、左快进、右快进、尾页页码
-	if (props.displayPageCount - 4 <= 0) {
-		availablePageCount = props.displayPageCount;
-	} else {
+	if (props.displayPageCount - 4 > 0) {
 		availablePageCount = props.displayPageCount - 4;
+	} else {
+		availablePageCount = props.displayPageCount;
 	}
-	halfAvailablePageCount = Math.floor(availablePageCount / 2);
 
-	let pages = new Array(availablePageCount);
-	if (currentPage.value > halfAvailablePageCount) {
-		pages[halfAvailablePageCount] = currentPage.value;
-		for (let i = halfAvailablePageCount - 1; i >= 0; i--) {
+	let pages = new Array(Math.min(availablePageCount, currentPage.value));
+	// 如果当前选中最大页码
+	if (currentPage.value === computedTotalPage.value) {
+		if (props.displayPageCount - 4 > 0) {
+			for (let i = pages.length - 1, j = 1; i >= 0; i--, j++) {
+				pages[i] = computedTotalPage.value - j;
+			}
+		} else {
+			for (let i = pages.length - 1, j = 0; i >= 0; i--, j++) {
+				pages[i] = computedTotalPage.value - j;
+			}
+		}
+	} else if (currentPage.value === 1) {
+		// 当前选中最小页码
+		if (props.displayPageCount - 4 > 0) {
+			for (let i = 0, j = 1; i < pages.length; i++, j++) {
+				pages[i] = 1 + j;
+			}
+		} else {
+			for (let i = 0, j = 0; i < pages.length; i++, j++) {
+				pages[i] = 1 + j;
+			}
+		}
+	} else {
+		// 选中其他页码
+		// 中间的页码
+		let middleOfPages = Math.floor(pages.length / 2);
+		if (currentPage.value === computedTotalPage.value - 1) {
+			middleOfPages = pages.length - 1;
+		} else if (currentPage.value === 2) {
+			middleOfPages = 0;
+		}
+		pages[middleOfPages] = currentPage.value;
+		for (let i = middleOfPages - 1; i >= 0; i--) {
 			pages[i] = pages[i + 1] - 1;
 		}
-		for (let i = halfAvailablePageCount + 1; i < availablePageCount; i++) {
+		for (let i = middleOfPages + 1; i < pages.length; i++) {
 			pages[i] = pages[i - 1] + 1;
-		}
-	} else {
-		for (let i = 0; i < availablePageCount; i++) {
-			pages[i] = i + 1;
 		}
 	}
 
@@ -219,6 +252,18 @@ function handleNextPageClick() {
 		return;
 	}
 	currentPage.value = newCurrentPage;
+}
+function handleFirstPageClick() {
+	if (props.disabled) {
+		return;
+	}
+	currentPage.value = 1;
+}
+function handleLastPageClick() {
+	if (props.disabled) {
+		return;
+	}
+	currentPage.value = computedTotalPage.value;
 }
 </script>
 <style lang="scss">
