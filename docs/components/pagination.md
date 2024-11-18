@@ -6,7 +6,7 @@
 
 ```vue
 <template>
-	<v3-pagination :displayPageCount="6" :total="100"></v3-pagination>
+	<v3-pagination :total="1000"></v3-pagination>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';

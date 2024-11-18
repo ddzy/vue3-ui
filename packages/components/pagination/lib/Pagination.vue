@@ -22,7 +22,7 @@
 					<V3Icon :type="'Left'" />
 				</div>
 				<div
-					v-if="props.displayPageCount - 4 > 0"
+					v-if="computedShowFastBtn"
 					:class="[
 						'v3-pagination__pages-first',
 						'v3-pagination__pages-item',
@@ -33,7 +33,7 @@
 					1
 				</div>
 				<div
-					v-if="props.displayPageCount - 4 > 0"
+					v-if="computedShowFastBtn"
 					class="v3-pagination__pages-fast-backward"
 					@mouseenter="isHoverFastBackward = true"
 					@mouseleave="isHoverFastBackward = false"
@@ -53,7 +53,7 @@
 					{{ v }}
 				</div>
 				<div
-					v-if="props.displayPageCount - 4 > 0"
+					v-if="computedShowFastBtn"
 					class="v3-pagination__pages-fast-forward"
 					@mouseenter="isHoverFastForward = true"
 					@mouseleave="isHoverFastForward = false"
@@ -62,7 +62,7 @@
 					<V3Icon v-else :type="'DoubleRight'" />
 				</div>
 				<div
-					v-if="props.displayPageCount - 4 > 0"
+					v-if="computedShowFastBtn"
 					:class="[
 						'v3-pagination__pages-last',
 						'v3-pagination__pages-item',
@@ -101,6 +101,7 @@ import { computed, ref } from 'vue';
 
 import { divide } from '@common/utils';
 import { V3Icon, V3Input, V3Select } from '@components/main';
+import { usePrevious } from '@vueuse/core';
 import { isNumber } from 'lodash-es';
 
 import { IPaginationProps } from '@/public/typings';
@@ -165,6 +166,10 @@ const isHoverFastBackward = ref(false);
  */
 const currentPage = ref(props.defaultPage);
 /**
+ * 上次选中第几页
+ */
+const prevPage = usePrevious<number>(currentPage);
+/**
  * 每页条数
  */
 const currentPageSize = ref(props.defaultPageSize);
@@ -175,22 +180,28 @@ const computedTotalPage = computed(() => {
 	return Math.ceil(divide(props.total, currentPageSize.value));
 });
 /**
+ * 页码区域需要固定展示4个按钮：首页页码、左快进、右快进、尾页页码
+ */
+const computedShowFastBtn = computed(() => {
+	return props.displayPageCount - 4 > 0;
+});
+/**
  * 当前展示的所有页码
  */
-const computedCurrentPages = computed(() => {
+const computedCurrentPages = computed<number[]>((oldPages) => {
 	// 页码可展示的个数
-	// 需要注意：页码区域需要固定展示4个：首页页码、左快进、右快进、尾页页码
 	let availablePageCount = 0;
-	if (props.displayPageCount - 4 > 0) {
+	if (computedShowFastBtn.value) {
 		availablePageCount = props.displayPageCount - 4;
 	} else {
 		availablePageCount = props.displayPageCount;
 	}
-
-	let pages = new Array(Math.min(availablePageCount, currentPage.value));
+	let pages = new Array(
+		Math.min(availablePageCount, computedTotalPage.value - 2),
+	);
 	// 如果当前选中最大页码
 	if (currentPage.value === computedTotalPage.value) {
-		if (props.displayPageCount - 4 > 0) {
+		if (computedShowFastBtn.value) {
 			for (let i = pages.length - 1, j = 1; i >= 0; i--, j++) {
 				pages[i] = computedTotalPage.value - j;
 			}
@@ -201,7 +212,7 @@ const computedCurrentPages = computed(() => {
 		}
 	} else if (currentPage.value === 1) {
 		// 当前选中最小页码
-		if (props.displayPageCount - 4 > 0) {
+		if (computedShowFastBtn.value) {
 			for (let i = 0, j = 1; i < pages.length; i++, j++) {
 				pages[i] = 1 + j;
 			}
@@ -212,19 +223,32 @@ const computedCurrentPages = computed(() => {
 		}
 	} else {
 		// 选中其他页码
-		// 中间的页码
-		let middleOfPages = Math.floor(pages.length / 2);
-		if (currentPage.value === computedTotalPage.value - 1) {
-			middleOfPages = pages.length - 1;
-		} else if (currentPage.value === 2) {
-			middleOfPages = 0;
+		let _oldPages = oldPages as number[];
+		function _increment() {
+			if (_oldPages[_oldPages.length - 1] + 1 >= computedTotalPage.value) {
+				pages = _oldPages;
+			} else {
+				pages = _oldPages.map((v) => v + 1);
+			}
 		}
-		pages[middleOfPages] = currentPage.value;
-		for (let i = middleOfPages - 1; i >= 0; i--) {
-			pages[i] = pages[i + 1] - 1;
+		function _decrement() {
+			if (_oldPages[0] - 1 <= 1) {
+				pages = _oldPages;
+			} else {
+				pages = _oldPages.map((v) => v - 1);
+			}
 		}
-		for (let i = middleOfPages + 1; i < pages.length; i++) {
-			pages[i] = pages[i - 1] + 1;
+		if (computedShowFastBtn.value && currentPage.value === _oldPages[0]) {
+			_decrement();
+		} else if (
+			computedShowFastBtn.value &&
+			currentPage.value === _oldPages[_oldPages.length - 1]
+		) {
+			_increment();
+		} else if (currentPage.value > prevPage.value!) {
+			_increment();
+		} else {
+			_decrement();
 		}
 	}
 
