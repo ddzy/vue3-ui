@@ -37,6 +37,7 @@
 					class="v3-pagination__pages-fast-backward"
 					@mouseenter="isHoverFastBackward = true"
 					@mouseleave="isHoverFastBackward = false"
+					@click="handleFastBackwardClick"
 				>
 					<V3Icon v-if="!isHoverFastBackward" :type="'More'" />
 					<V3Icon v-else :type="'DoubleLeft'" />
@@ -57,6 +58,7 @@
 					class="v3-pagination__pages-fast-forward"
 					@mouseenter="isHoverFastForward = true"
 					@mouseleave="isHoverFastForward = false"
+					@click="handleFastForwardClick"
 				>
 					<V3Icon v-if="!isHoverFastForward" :type="'More'" />
 					<V3Icon v-else :type="'DoubleRight'" />
@@ -102,7 +104,7 @@ import { computed, ref } from 'vue';
 import { divide } from '@common/utils';
 import { V3Icon, V3Input, V3Select } from '@components/main';
 import { usePrevious } from '@vueuse/core';
-import { isNumber } from 'lodash-es';
+import { isNil, isNumber } from 'lodash-es';
 
 import { IPaginationProps } from '@/public/typings';
 
@@ -185,6 +187,7 @@ const computedTotalPage = computed(() => {
 const computedShowFastBtn = computed(() => {
 	return props.displayPageCount - 4 > 0;
 });
+const pageStep = ref(1);
 /**
  * 当前展示的所有页码
  */
@@ -198,44 +201,47 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 	}
 	let pages = new Array(
 		Math.min(availablePageCount, computedTotalPage.value - 2),
-	);
+	).fill(null);
 	// 如果当前选中最大页码
 	if (currentPage.value === computedTotalPage.value) {
 		if (computedShowFastBtn.value) {
-			for (let i = pages.length - 1, j = 1; i >= 0; i--, j++) {
-				pages[i] = computedTotalPage.value - j;
-			}
+			pages = pages.map((v, i) => {
+				return computedTotalPage.value - pages.length + i;
+			});
 		} else {
-			for (let i = pages.length - 1, j = 0; i >= 0; i--, j++) {
-				pages[i] = computedTotalPage.value - j;
-			}
+			pages = pages.map((v, i) => {
+				return computedTotalPage.value - pages.length + i;
+			});
 		}
 	} else if (currentPage.value === 1) {
 		// 当前选中最小页码
 		if (computedShowFastBtn.value) {
-			for (let i = 0, j = 1; i < pages.length; i++, j++) {
-				pages[i] = 1 + j;
-			}
+			pages = pages.map((v, i) => {
+				return i + 2;
+			});
 		} else {
-			for (let i = 0, j = 0; i < pages.length; i++, j++) {
-				pages[i] = 1 + j;
-			}
+			pages = pages.map((v, i) => {
+				return i + 1;
+			});
 		}
 	} else {
 		// 选中其他页码
-		let _oldPages = oldPages as number[];
+		let _oldPages = oldPages || ([] as number[]);
 		function _increment() {
-			if (_oldPages[_oldPages.length - 1] + 1 >= computedTotalPage.value) {
+			if (
+				_oldPages[_oldPages.length - 1] + pageStep.value >=
+				computedTotalPage.value
+			) {
 				pages = _oldPages;
 			} else {
-				pages = _oldPages.map((v) => v + 1);
+				pages = _oldPages.map((v) => v + pageStep.value);
 			}
 		}
 		function _decrement() {
-			if (_oldPages[0] - 1 <= 1) {
+			if (_oldPages[0] - pageStep.value <= 1) {
 				pages = _oldPages;
 			} else {
-				pages = _oldPages.map((v) => v - 1);
+				pages = _oldPages.map((v) => v - pageStep.value);
 			}
 		}
 		if (computedShowFastBtn.value && currentPage.value === _oldPages[0]) {
@@ -252,7 +258,7 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 		}
 	}
 
-	return pages;
+	return pages.filter((v) => !isNil(v));
 });
 function handlePrevPageClick() {
 	if (props.disabled) {
@@ -262,9 +268,14 @@ function handlePrevPageClick() {
 	if (newCurrentPage < 1) {
 		return;
 	}
+	pageStep.value = 1;
 	currentPage.value = newCurrentPage;
 }
 function handlePageClick(v: number) {
+	if (props.disabled) {
+		return;
+	}
+	pageStep.value = 1;
 	currentPage.value = v;
 }
 function handleNextPageClick() {
@@ -275,19 +286,79 @@ function handleNextPageClick() {
 	if (newCurrentPage > computedTotalPage.value) {
 		return;
 	}
+	pageStep.value = 1;
 	currentPage.value = newCurrentPage;
 }
 function handleFirstPageClick() {
 	if (props.disabled) {
 		return;
 	}
+	pageStep.value = 1;
 	currentPage.value = 1;
 }
 function handleLastPageClick() {
 	if (props.disabled) {
 		return;
 	}
+	pageStep.value = 1;
 	currentPage.value = computedTotalPage.value;
+}
+function handleFastBackwardClick() {
+	if (props.disabled) {
+		return;
+	}
+	// 页码列表最小值
+	let minPage = computedShowFastBtn.value ? 2 : 1;
+	// 当前页码列表的最小值
+	let currentMinPage = computedCurrentPages.value[0];
+	let newPageStep = 0;
+	if (currentMinPage === minPage) {
+		newPageStep = 0;
+	} else if (currentPage.value === computedTotalPage.value) {
+		// 如果当前选中最大页码，那么需要多回退1个页码
+		newPageStep =
+			currentMinPage - (computedCurrentPages.value.length + 1) < minPage
+				? currentMinPage - minPage
+				: computedCurrentPages.value.length + 1;
+	} else {
+		newPageStep =
+			currentMinPage - computedCurrentPages.value.length < minPage
+				? currentMinPage - minPage
+				: computedCurrentPages.value.length;
+	}
+	let newCurrentPage = currentPage.value - newPageStep;
+	pageStep.value = newPageStep;
+	currentPage.value = newCurrentPage;
+}
+function handleFastForwardClick() {
+	if (props.disabled) {
+		return;
+	}
+	// 页码列表最大值
+	let maxPage = computedShowFastBtn.value
+		? computedTotalPage.value - 1
+		: computedTotalPage.value;
+	// 当前页码列表的最大值
+	let currentMaxPage =
+		computedCurrentPages.value[computedCurrentPages.value.length - 1];
+	let newPageStep = 0;
+	if (currentMaxPage === maxPage) {
+		newPageStep = 0;
+	} else if (currentPage.value === 1) {
+		// 如果当前选中最小页码，那么需要多前进1个页码
+		newPageStep =
+			currentMaxPage + (computedCurrentPages.value.length + 1) > maxPage
+				? maxPage - currentMaxPage
+				: computedCurrentPages.value.length + 1;
+	} else {
+		newPageStep =
+			currentMaxPage + computedCurrentPages.value.length > maxPage
+				? maxPage - currentMaxPage
+				: computedCurrentPages.value.length;
+	}
+	let newCurrentPage = currentPage.value + newPageStep;
+	pageStep.value = newPageStep;
+	currentPage.value = newCurrentPage;
 }
 </script>
 <style lang="scss">
