@@ -104,7 +104,7 @@ import { computed, ref } from 'vue';
 import { divide } from '@common/utils';
 import { V3Icon, V3Input, V3Select } from '@components/main';
 import { usePrevious } from '@vueuse/core';
-import { isNil, isNumber } from 'lodash-es';
+import { isNil, isNumber, sortBy } from 'lodash-es';
 
 import { IPaginationProps } from '@/public/typings';
 
@@ -202,6 +202,11 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 	let pages = new Array(
 		Math.min(availablePageCount, computedTotalPage.value - 2),
 	).fill(null);
+
+	if (!pages.length) {
+		return pages;
+	}
+
 	// 如果当前选中最大页码
 	if (currentPage.value === computedTotalPage.value) {
 		if (computedShowFastBtn.value) {
@@ -226,39 +231,37 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 		}
 	} else {
 		// 选中其他页码
-		let _oldPages = oldPages || ([] as number[]);
-		function _increment() {
-			if (
-				_oldPages[_oldPages.length - 1] + pageStep.value >=
-				computedTotalPage.value
-			) {
-				pages = _oldPages;
-			} else {
-				pages = _oldPages.map((v) => v + pageStep.value);
+		// 页码列表最小值
+		let minPage = computedShowFastBtn.value ? 2 : 1;
+		// 页码列表最大值
+		let maxPage = computedShowFastBtn.value
+			? computedTotalPage.value - 1
+			: computedTotalPage.value;
+		// 选中的页码始终保持在最中间
+		let middleIndex = Math.floor(pages.length / 2);
+		pages[middleIndex] = currentPage.value;
+		for (let i = middleIndex + 1; i < pages.length; i++) {
+			let _maxPage = Math.max(...pages.filter((v) => !isNil(v)));
+			let _page = _maxPage + 1;
+			if (_page > maxPage) {
+				let _minPage = Math.min(...pages.filter((v) => !isNil(v)));
+				_page = _minPage - 1;
 			}
+			pages[i] = _page;
 		}
-		function _decrement() {
-			if (_oldPages[0] - pageStep.value <= 1) {
-				pages = _oldPages;
-			} else {
-				pages = _oldPages.map((v) => v - pageStep.value);
+		for (let i = middleIndex - 1; i >= 0; i--) {
+			let _minPage = Math.min(...pages.filter((v) => !isNil(v)));
+			let _page = _minPage - 1;
+			if (_page < minPage) {
+				let _maxPage = Math.max(...pages.filter((v) => !isNil(v)));
+				_page = _maxPage + 1;
 			}
-		}
-		if (computedShowFastBtn.value && currentPage.value === _oldPages[0]) {
-			_decrement();
-		} else if (
-			computedShowFastBtn.value &&
-			currentPage.value === _oldPages[_oldPages.length - 1]
-		) {
-			_increment();
-		} else if (currentPage.value > prevPage.value!) {
-			_increment();
-		} else {
-			_decrement();
+			pages[i] = _page;
 		}
 	}
+	pages = sortBy(pages).filter((v) => !isNil(v));
 
-	return pages.filter((v) => !isNil(v));
+	return pages;
 });
 function handlePrevPageClick() {
 	if (props.disabled) {
