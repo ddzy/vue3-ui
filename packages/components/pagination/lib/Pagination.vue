@@ -215,7 +215,7 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 			});
 		} else {
 			pages = pages.map((v, i) => {
-				return computedTotalPage.value - pages.length + i;
+				return computedTotalPage.value + 1 - pages.length + i;
 			});
 		}
 	} else if (currentPage.value === 1) {
@@ -241,6 +241,7 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 		let middleIndex = Math.floor(pages.length / 2);
 		pages[middleIndex] = currentPage.value;
 		for (let i = middleIndex + 1; i < pages.length; i++) {
+			// 从中间的页码往上递增，如果页码超过最大值，则用最小页码递减来填充
 			let _maxPage = Math.max(...pages.filter((v) => !isNil(v)));
 			let _page = _maxPage + 1;
 			if (_page > maxPage) {
@@ -250,6 +251,7 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 			pages[i] = _page;
 		}
 		for (let i = middleIndex - 1; i >= 0; i--) {
+			// 从中间的页码往下递减，如果页码小于最小值，则用最大页码递增来填充
 			let _minPage = Math.min(...pages.filter((v) => !isNil(v)));
 			let _page = _minPage - 1;
 			if (_page < minPage) {
@@ -259,6 +261,7 @@ const computedCurrentPages = computed<number[]>((oldPages) => {
 			pages[i] = _page;
 		}
 	}
+	// 由于页码填充，所以需要重新排序
 	pages = sortBy(pages).filter((v) => !isNil(v));
 
 	return pages;
