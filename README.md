@@ -55,6 +55,19 @@ app.use(V3Card);
 </template>
 ```
 
+## 本地开发
+
+```bash
+# 安装依赖
+pnpm install
+# 编写&预览组件文档
+pnpm serve
+# 打包组件
+pnpm build:lib
+# 打包组件文档
+pnpm build:docs
+```
+
 ## 进度
 
 |       组件       |       简介       | 功能 | 单元测试 | 文档 |
