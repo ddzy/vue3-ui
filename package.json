@@ -113,5 +113,9 @@
 			"@volar/typescript": "2.3.1",
 			"@volar/language-core": "2.3.1"
 		}
+	},
+	"engines": {
+		"node": ">=24.18.0",
+		"pnpm": ">=10.0.0"
 	}
 }
