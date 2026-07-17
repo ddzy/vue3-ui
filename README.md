@@ -1,6 +1,6 @@
 # vue3-ui
 
-vue3 组件库，文档：https://yyge.top/vue3-ui/
+vue3 组件库，文档：https://vue3-ui.yyge.top
 
 ## 安装
 

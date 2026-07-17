@@ -10,7 +10,7 @@ overrides:
 
 patchedDependencies:
   vitepress-theme-demoblock@3.0.5:
-    hash: pksbzd4rypcf575wbusx47rozu
+    hash: a14234642102587f845dbfe252ae90d7f69f38c161720e72aee92001a5f45996
     path: patches/vitepress-theme-demoblock@3.0.5.patch
 
 importers:
@@ -137,7 +137,7 @@ importers:
         version: 1.2.2(@algolia/client-search@4.23.3)(@types/node@20.12.13)(change-case@4.1.2)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.4.5)
       vitepress-theme-demoblock:
         specifier: 3.0.5
-        version: 3.0.5(patch_hash=pksbzd4rypcf575wbusx47rozu)(@algolia/client-search@4.23.3)(@types/node@20.12.13)(change-case@4.1.2)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.4.5)
+        version: 3.0.5(patch_hash=a14234642102587f845dbfe252ae90d7f69f38c161720e72aee92001a5f45996)(@algolia/client-search@4.23.3)(@types/node@20.12.13)(change-case@4.1.2)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.4.5)
       vitest:
         specifier: 2.0.1
         version: 2.0.1(@types/node@20.12.13)(jsdom@20.0.3)(sass@1.62.0)(stylus@0.54.8)(terser@5.16.9)
@@ -7476,7 +7476,7 @@ snapshots:
       stylus: 0.54.8
       terser: 5.16.9
 
-  vitepress-theme-demoblock@3.0.5(patch_hash=pksbzd4rypcf575wbusx47rozu)(@algolia/client-search@4.23.3)(@types/node@20.12.13)(change-case@4.1.2)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.4.5):
+  vitepress-theme-demoblock@3.0.5(patch_hash=a14234642102587f845dbfe252ae90d7f69f38c161720e72aee92001a5f45996)(@algolia/client-search@4.23.3)(@types/node@20.12.13)(change-case@4.1.2)(nprogress@0.2.0)(postcss@8.4.38)(sass@1.62.0)(search-insights@2.13.0)(stylus@0.54.8)(terser@5.16.9)(typescript@5.4.5):
     dependencies:
       '@floating-ui/vue': 1.0.6(vue@3.4.27(typescript@5.4.5))
       '@mdit-vue/plugin-sfc': 2.1.2

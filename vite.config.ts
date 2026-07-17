@@ -39,9 +39,6 @@ export const baseConfig: InlineConfig = {
 // https://vitejs.dev/config/
 export default defineConfig(
 	mergeConfig(baseConfig, {
-		server: {
-			port: 5174,
-		},
 		// 单元测试相关配置
 		test: {
 			globals: true,

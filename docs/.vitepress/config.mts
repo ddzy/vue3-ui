@@ -11,16 +11,10 @@ import { baseConfig } from '../../vite.config';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 	lastUpdated: true,
-	base: '/vue3-ui/',
+	base: '/',
 	title: 'Vue3UI',
 	description: 'Vue3 组件库',
-	head: [
-		[
-			'link',
-			{ rel: 'icon', type: 'image/x-icon', href: '/vue3-ui/favicon.ico' },
-		],
-	],
-
+	head: [['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]],
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
@@ -234,8 +228,10 @@ export default defineConfig({
 	},
 	vite: mergeConfig(baseConfig, {
 		server: {
-			host: true,
+			port: 3006,
 			open: true,
+			host: '0.0.0.0',
+			strictPort: true,
 		},
 		plugins: [vueJsxPlugin(), demoblockVitePlugin() as any],
 		css: {
